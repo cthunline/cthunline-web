@@ -1,0 +1,33 @@
+{
+    "name": "cthunline-v2-client",
+    "private": true,
+    "version": "0.0.1",
+    "scripts": {
+        "dev": "vite",
+        "build": "tsc && vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2"
+    },
+    "devDependencies": {
+        "@types/react": "^17.0.39",
+        "@types/react-dom": "^17.0.11",
+        "@typescript-eslint/eslint-plugin": "^5.11.0",
+        "@typescript-eslint/parser": "^5.11.0",
+        "@vitejs/plugin-react": "^1.2.0",
+        "eslint": "^8.9.0",
+        "eslint-config-airbnb": "^19.0.4",
+        "eslint-config-airbnb-typescript": "^16.1.0",
+        "eslint-plugin-import": "^2.25.4",
+        "eslint-plugin-jsx-a11y": "^6.5.1",
+        "eslint-plugin-react": "^7.28.0",
+        "eslint-plugin-react-hooks": "^4.3.0",
+        "stylelint": "^14.5.0",
+        "stylelint-config-standard": "^25.0.0",
+        "stylelint-order": "^5.0.0",
+        "typescript": "^4.5.5",
+        "vite": "^2.8.1"
+    }
+}
