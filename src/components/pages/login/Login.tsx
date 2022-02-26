@@ -5,7 +5,6 @@ import { TextField, Button } from '@mui/material';
 import { GiD10 } from 'react-icons/gi';
 
 import { useAuth } from '../../contexts/Auth';
-import Page from '../../layout/page/Page';
 
 import './Login.css';
 
@@ -32,7 +31,7 @@ const Login = () => {
     };
 
     return (
-        <Page showNav={false}>
+        <>
             <div className="login-logo">
                 <GiD10 size={100} />
             </div>
@@ -97,7 +96,7 @@ const Login = () => {
                     </Form>
                 )}
             </Formik>
-        </Page>
+        </>
     );
 };
 

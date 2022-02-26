@@ -26,45 +26,45 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
 const Router: React.FC = () => {
     const { isLoggedIn, isLoading } = useAuth();
 
-    if (isLoading) {
-        return (
-            <Page showNav={false}>
-                <CircularProgress size={100} />
-            </Page>
-        );
-    }
-
     return (
-        <BrowserRouter>
-            <Routes>
-                <Route
-                    path="/login"
-                    element={
-                        isLoggedIn ? (
-                            <Navigate to="/home" />
-                        ) : (
-                            <Login />
-                        )
-                    }
-                />
-                <Route
-                    path="/"
-                    element={(
-                        <RequireAuth>
-                            <Navigate to="/home" />
-                        </RequireAuth>
-                    )}
-                />
-                <Route
-                    path="/home"
-                    element={(
-                        <RequireAuth>
-                            <Home />
-                        </RequireAuth>
-                    )}
-                />
-            </Routes>
-        </BrowserRouter>
+        <Page showNav={isLoggedIn}>
+            {
+                isLoading ? (
+                    <CircularProgress size={100} />
+                ) : (
+                    <BrowserRouter>
+                        <Routes>
+                            <Route
+                                path="/login"
+                                element={
+                                    isLoggedIn ? (
+                                        <Navigate to="/home" />
+                                    ) : (
+                                        <Login />
+                                    )
+                                }
+                            />
+                            <Route
+                                path="/"
+                                element={(
+                                    <RequireAuth>
+                                        <Navigate to="/home" />
+                                    </RequireAuth>
+                                )}
+                            />
+                            <Route
+                                path="/home"
+                                element={(
+                                    <RequireAuth>
+                                        <Home />
+                                    </RequireAuth>
+                                )}
+                            />
+                        </Routes>
+                    </BrowserRouter>
+                )
+            }
+        </Page>
     );
 };
 
