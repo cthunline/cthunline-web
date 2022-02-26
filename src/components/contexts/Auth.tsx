@@ -19,7 +19,7 @@ interface AuthData {
 }
 
 interface AuthContextData extends AuthData {
-    login: (email:string, password: string) => Promise<boolean>;
+    login: (email:string, password: string) => Promise<void>;
     logout: () => Promise<void>;
 }
 
@@ -33,7 +33,7 @@ const defaultAuthData: AuthData = {
 
 const AuthContext = createContext<AuthContextData>({
     ...defaultAuthData,
-    login: async () => false,
+    login: async () => {},
     logout: async () => {}
 });
 
@@ -66,7 +66,7 @@ export const AuthProvider:React.FC = ({ children }) => {
         removeCookie
     ]);
 
-    const login = useCallback(async (email: string, password: string): Promise<boolean> => {
+    const login = useCallback(async (email: string, password: string): Promise<void> => {
         try {
             const { userId, bearer } = await Api.call({
                 method: 'POST',
@@ -86,10 +86,9 @@ export const AuthProvider:React.FC = ({ children }) => {
                 user,
                 bearer
             });
-            return true;
         } catch (err) {
             await logout();
-            return false;
+            throw err;
         }
     }, [
         logout,

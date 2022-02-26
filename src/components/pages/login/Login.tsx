@@ -1,8 +1,10 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button } from '@mui/material';
 import { GiD10 } from 'react-icons/gi';
+import { MdLogin } from 'react-icons/md';
 
 import { useAuth } from '../../contexts/Auth';
 
@@ -26,8 +28,12 @@ const Login = () => {
         password: Yup.string().min(6, 'Too short').required('Required')
     });
 
-    const onSubmit = ({ email, password }: LoginFormData) => {
-        login(email, password);
+    const onSubmit = async ({ email, password }: LoginFormData) => {
+        try {
+            await login(email, password);
+        } catch {
+            toast.error('Invalid credentials');
+        }
     };
 
     return (
@@ -90,7 +96,12 @@ const Login = () => {
                                 />
                             )}
                         </Field>
-                        <Button type="submit" variant="contained" size="large">
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            size="large"
+                            startIcon={<MdLogin />}
+                        >
                             Login
                         </Button>
                     </Form>

@@ -9,8 +9,14 @@ import { CircularProgress } from '@mui/material';
 
 import { useAuth } from './contexts/Auth';
 import Page from './layout/page/Page';
-import Login from './pages/login/Login';
-import Home from './pages/home/Home';
+import {
+    Login,
+    Home,
+    Characters,
+    Settings,
+    Sessions,
+    NotFound
+} from './pages';
 
 interface RequireAuthProps {
     children: React.ReactElement;
@@ -26,13 +32,27 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
 const Router: React.FC = () => {
     const { isLoggedIn, isLoading } = useAuth();
 
+    const pages = [{
+        path: '/home',
+        element: <Home />
+    }, {
+        path: '/characters',
+        element: <Characters />
+    }, {
+        path: '/settings',
+        element: <Settings />
+    }, {
+        path: '/sessions',
+        element: <Sessions />
+    }];
+
     return (
-        <Page showNav={isLoggedIn}>
-            {
-                isLoading ? (
-                    <CircularProgress size={100} />
-                ) : (
-                    <BrowserRouter>
+        <BrowserRouter>
+            <Page showNav={isLoggedIn}>
+                {
+                    isLoading ? (
+                        <CircularProgress size={100} />
+                    ) : (
                         <Routes>
                             <Route
                                 path="/login"
@@ -52,19 +72,29 @@ const Router: React.FC = () => {
                                     </RequireAuth>
                                 )}
                             />
+                            {pages.map(({ path, element }) => (
+                                <Route
+                                    path={path}
+                                    element={(
+                                        <RequireAuth>
+                                            {element}
+                                        </RequireAuth>
+                                    )}
+                                />
+                            ))}
                             <Route
-                                path="/home"
+                                path="*"
                                 element={(
                                     <RequireAuth>
-                                        <Home />
+                                        <NotFound />
                                     </RequireAuth>
                                 )}
                             />
                         </Routes>
-                    </BrowserRouter>
-                )
-            }
-        </Page>
+                    )
+                }
+            </Page>
+        </BrowserRouter>
     );
 };
 

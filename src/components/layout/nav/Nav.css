@@ -2,13 +2,24 @@
     align-items: center;
     display: flex;
     flex-direction: row;
-    height: 50px;
+    height: 60px;
 }
 
-.nav-logo {
+.nav-left,
+.nav-middle,
+.nav-right {
     align-items: center;
     display: flex;
     flex-direction: row;
     justify-content: center;
     margin: 0 10px;
+}
+
+.nav-middle {
+    flex-grow: 1;
+    justify-content: left;
+}
+
+.nav-user-menu {
+    margin: 10px 10px 0 0;
 }

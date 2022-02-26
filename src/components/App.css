@@ -1,11 +1,16 @@
+/* global variables */
+
 :root {
     --palette-background: #111416;
     --palette-text: #fff;
 }
 
+/* structure */
+
 html,
 body {
     color: var(--palette-text);
+    font-family: Roboto, Helvetica, Arial, sans-serif;
     height: 100vh;
     margin: 0;
     padding: 0;
