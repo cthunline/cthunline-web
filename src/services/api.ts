@@ -29,6 +29,9 @@ const Api = {
         body,
         bearer
     }: ApiCallOptions) {
+        if (!Api.baseUrl) {
+            throw new Error('Unavailable base URL');
+        }
         const url = `${Api.baseUrl}${route}`;
         let headerBearer = '';
         if (bearer) {

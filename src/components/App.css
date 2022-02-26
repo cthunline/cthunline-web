@@ -1,7 +1,19 @@
+:root {
+    --palette-background: #111416;
+    --palette-text: #fff;
+}
+
 html,
 body {
-    height: 100%;
+    color: var(--palette-text);
+    height: 100vh;
     margin: 0;
     padding: 0;
+    width: 100vw;
+}
+
+#root {
+    background: var(--palette-background);
+    height: 100%;
     width: 100%;
 }

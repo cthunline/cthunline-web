@@ -8,10 +8,10 @@ import React, {
 } from 'react';
 import { useCookies } from 'react-cookie';
 
-import Api from '../../helpers/api';
+import Api from '../../services/api';
 
 interface AuthData {
-    loading: boolean;
+    isLoading: boolean;
     isLoggedIn: boolean;
     userId: number | null;
     user: Record<string, any> | null;
@@ -24,7 +24,7 @@ interface AuthContextData extends AuthData {
 }
 
 const defaultAuthData: AuthData = {
-    loading: false,
+    isLoading: true,
     isLoggedIn: false,
     userId: null,
     user: null,
@@ -58,7 +58,10 @@ export const AuthProvider:React.FC = ({ children }) => {
         }
         removeCookie('bearer');
         Api.bearer = null;
-        setAuthData(defaultAuthData);
+        setAuthData({
+            ...defaultAuthData,
+            isLoading: false
+        });
     }, [
         removeCookie
     ]);
@@ -77,7 +80,7 @@ export const AuthProvider:React.FC = ({ children }) => {
             Api.bearer = bearer;
             const user = await getUser(userId);
             setAuthData({
-                loading: false,
+                isLoading: false,
                 isLoggedIn: true,
                 userId,
                 user,
@@ -105,7 +108,7 @@ export const AuthProvider:React.FC = ({ children }) => {
                 Api.bearer = bearer;
                 const user = await getUser(userId);
                 setAuthData({
-                    loading: false,
+                    isLoading: false,
                     isLoggedIn: true,
                     userId,
                     user,

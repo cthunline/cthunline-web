@@ -5,8 +5,12 @@ import {
     Routes,
     Route
 } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 
 import { useAuth } from './contexts/Auth';
+import Page from './layout/page/Page';
+import Login from './pages/login/Login';
+import Home from './pages/home/Home';
 
 interface RequireAuthProps {
     children: React.ReactElement;
@@ -20,14 +24,27 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
 };
 
 const Router: React.FC = () => {
-    const { isLoggedIn } = useAuth();
+    const { isLoggedIn, isLoading } = useAuth();
+
+    if (isLoading) {
+        return (
+            <Page showNav={false}>
+                <CircularProgress size={100} />
+            </Page>
+        );
+    }
+
     return (
         <BrowserRouter>
             <Routes>
                 <Route
                     path="/login"
                     element={
-                        isLoggedIn ? <Navigate to="/home" /> : <div>Login</div>
+                        isLoggedIn ? (
+                            <Navigate to="/home" />
+                        ) : (
+                            <Login />
+                        )
                     }
                 />
                 <Route
@@ -42,7 +59,7 @@ const Router: React.FC = () => {
                     path="/home"
                     element={(
                         <RequireAuth>
-                            <div>Home</div>
+                            <Home />
                         </RequireAuth>
                     )}
                 />
