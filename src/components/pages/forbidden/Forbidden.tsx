@@ -2,18 +2,18 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { GiWizardFace } from 'react-icons/gi';
 
-import './NotFound.css';
+import './Forbidden.css';
 
-const NotFound = () => (
+const Forbidden = () => (
     <div className="flex-column center">
-        <GiWizardFace size={100} className="not-found-icon" />
+        <GiWizardFace size={100} className="forbidden-icon" />
         <Typography variant="h4" gutterBottom>
-            I have no memory of this place...
+            You shall not pass!
         </Typography>
         <Typography variant="h5" gutterBottom>
-            Page not found
+            Forbidden page
         </Typography>
     </div>
 );
 
-export default NotFound;
+export default Forbidden;

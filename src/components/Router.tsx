@@ -13,19 +13,30 @@ import {
     Login,
     Home,
     Characters,
-    Settings,
+    Profile,
+    Admin,
     Sessions,
-    NotFound
+    NotFound,
+    Forbidden
 } from './pages';
 
 interface RequireAuthProps {
     children: React.ReactElement;
+    admin?: boolean;
 }
 
-const RequireAuth: React.FC<RequireAuthProps> = ({ children }) => {
-    const { isLoggedIn } = useAuth();
+const RequireAuth: React.FC<RequireAuthProps> = ({ children, admin }) => {
+    const { isLoggedIn, user } = useAuth();
+    if (isLoggedIn) {
+        if (admin && !user?.isAdmin) {
+            return (
+                <Forbidden />
+            );
+        }
+        return children;
+    }
     return (
-        isLoggedIn ? children : <Navigate to="/login" />
+        <Navigate to="/login" />
     );
 };
 
@@ -39,8 +50,12 @@ const Router: React.FC = () => {
         path: '/characters',
         element: <Characters />
     }, {
-        path: '/settings',
-        element: <Settings />
+        path: '/profile',
+        element: <Profile />
+    }, {
+        path: '/admin',
+        element: <Admin />,
+        admin: true
     }, {
         path: '/sessions',
         element: <Sessions />
@@ -72,12 +87,12 @@ const Router: React.FC = () => {
                                     </RequireAuth>
                                 )}
                             />
-                            {pages.map(({ path, element }) => (
+                            {pages.map(({ path, element, admin }) => (
                                 <Route
                                     key={path}
                                     path={path}
                                     element={(
-                                        <RequireAuth>
+                                        <RequireAuth admin={admin}>
                                             {element}
                                         </RequireAuth>
                                     )}

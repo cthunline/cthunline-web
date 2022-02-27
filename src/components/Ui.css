@@ -16,6 +16,16 @@
     justify-content: center;
 }
 
+.flex-column.start {
+    align-items: flex-start;
+    justify-content: center;
+}
+
+.flex-column.end {
+    align-items: flex-end;
+    justify-content: center;
+}
+
 /* form */
 
 .form.flex-column .form-input {

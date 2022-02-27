@@ -11,6 +11,7 @@ import {
     ListItemIcon,
     ListItemText
 } from '@mui/material';
+import { AiOutlineUser } from 'react-icons/ai';
 import { GiD10, GiCharacter, GiTabletopPlayers } from 'react-icons/gi';
 import { MdOutlineContactPage, MdLogout } from 'react-icons/md';
 import { FiSettings } from 'react-icons/fi';
@@ -26,7 +27,7 @@ interface UserMenuProps {
 
 const UserMenu: React.FC<UserMenuProps> = ({ anchorEl, handleClose }) => {
     const navigate = useNavigate();
-    const { logout } = useAuth();
+    const { logout, user } = useAuth();
 
     return (
         <Menu
@@ -47,14 +48,27 @@ const UserMenu: React.FC<UserMenuProps> = ({ anchorEl, handleClose }) => {
                     Characters
                 </ListItemText>
             </MenuItem>
-            <MenuItem onClick={() => navigate('/settings')}>
+            <MenuItem onClick={() => navigate('/profile')}>
                 <ListItemIcon>
-                    <FiSettings size={20} />
+                    <AiOutlineUser size={20} />
                 </ListItemIcon>
                 <ListItemText>
-                    Settings
+                    Profile
                 </ListItemText>
             </MenuItem>
+            {user?.isAdmin ? (
+                <>
+                    <Divider />
+                    <MenuItem onClick={() => navigate('/admin')}>
+                        <ListItemIcon>
+                            <FiSettings size={20} />
+                        </ListItemIcon>
+                        <ListItemText>
+                            Administration
+                        </ListItemText>
+                    </MenuItem>
+                </>
+            ) : null}
             <Divider />
             <MenuItem onClick={() => logout()}>
                 <ListItemIcon>

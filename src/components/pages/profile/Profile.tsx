@@ -13,7 +13,7 @@ import { MdOutlineSave } from 'react-icons/md';
 import { useAuth } from '../../contexts/Auth';
 import Api from '../../../services/api';
 
-import './Settings.css';
+import './Profile.css';
 
 interface PasswordChangeData {
     oldPassword: string;
@@ -28,7 +28,7 @@ interface PasswordChangeFieldData {
     label: string;
 }
 
-const Settings = () => {
+const Profile = () => {
     const { user } = useAuth();
 
     const initialValues: PasswordChangeData = {
@@ -131,4 +131,4 @@ const Settings = () => {
     );
 };
 
-export default Settings;
+export default Profile;
