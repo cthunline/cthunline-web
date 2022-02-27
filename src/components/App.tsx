@@ -9,6 +9,7 @@ import theme from './theme';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
+import './Ui.css';
 
 const App = () => (
     <CookiesProvider>

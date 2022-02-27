@@ -1,16 +1,7 @@
 .login-logo {
-    margin: 0 0 20px;
+    text-align: center;
 }
 
-.login-form {
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.login {
     width: 300px;
-}
-
-.login-form .login-form-input {
-    margin: 0 0 20px;
-    width: 100%;
 }

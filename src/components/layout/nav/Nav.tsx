@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+    AppBar,
     Button,
     IconButton,
     Avatar,
@@ -83,31 +84,37 @@ const Nav: React.FC = () => {
     };
 
     return (
-        <nav className="nav">
-            <div className="nav-left">
-                <GiD10 size={40} />
-            </div>
-            <div className="nav-middle">
-                <Button
-                    variant="outlined"
-                    startIcon={<GiTabletopPlayers />}
-                    onClick={() => navigate('/sessions')}
-                >
-                    Play
-                </Button>
-            </div>
-            <div className="nav-right">
-                <IconButton size="small" onClick={onUserMenuClick}>
-                    <Avatar>
-                        <GiCharacter size={20} />
-                    </Avatar>
-                </IconButton>
-                <UserMenu
-                    anchorEl={userMenuAnchorEl}
-                    handleClose={onUserMenuClose}
-                />
-            </div>
-        </nav>
+        <AppBar position="static">
+            <nav className="nav">
+                <div className="nav-left">
+                    <GiD10
+                        className="nav-logo"
+                        size={40}
+                        onClick={() => navigate('/home')}
+                    />
+                </div>
+                <div className="nav-middle">
+                    <Button
+                        variant="outlined"
+                        startIcon={<GiTabletopPlayers />}
+                        onClick={() => navigate('/sessions')}
+                    >
+                        Play
+                    </Button>
+                </div>
+                <div className="nav-right">
+                    <IconButton size="small" onClick={onUserMenuClick}>
+                        <Avatar>
+                            <GiCharacter size={20} />
+                        </Avatar>
+                    </IconButton>
+                    <UserMenu
+                        anchorEl={userMenuAnchorEl}
+                        handleClose={onUserMenuClose}
+                    />
+                </div>
+            </nav>
+        </AppBar>
     );
 };
 

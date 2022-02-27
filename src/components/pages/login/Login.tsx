@@ -2,7 +2,7 @@ import React from 'react';
 import { toast } from 'react-toastify';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import { TextField, Button } from '@mui/material';
+import { Paper, TextField, Button } from '@mui/material';
 import { GiD10 } from 'react-icons/gi';
 import { MdLogin } from 'react-icons/md';
 
@@ -37,7 +37,7 @@ const Login = () => {
     };
 
     return (
-        <>
+        <Paper elevation={3} className="box">
             <div className="login-logo">
                 <GiD10 size={100} />
             </div>
@@ -52,7 +52,7 @@ const Login = () => {
                     handleChange,
                     handleBlur
                 }) => (
-                    <Form className="login-form">
+                    <Form className="form flex-column center login">
                         <Field
                             validateOnBlur
                             validateOnChange
@@ -60,7 +60,7 @@ const Login = () => {
                         >
                             {() => (
                                 <TextField
-                                    className="login-form-input"
+                                    className="form-input"
                                     label="Email"
                                     name="email"
                                     error={!!errors.email && !!touched.email}
@@ -81,7 +81,7 @@ const Login = () => {
                         >
                             {() => (
                                 <TextField
-                                    className="login-form-input"
+                                    className="form-input"
                                     label="Password"
                                     name="password"
                                     type="password"
@@ -97,6 +97,7 @@ const Login = () => {
                             )}
                         </Field>
                         <Button
+                            className="form-button"
                             type="submit"
                             variant="contained"
                             size="large"
@@ -107,7 +108,7 @@ const Login = () => {
                     </Form>
                 )}
             </Formik>
-        </>
+        </Paper>
     );
 };
 

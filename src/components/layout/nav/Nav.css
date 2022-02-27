@@ -20,6 +20,10 @@
     justify-content: left;
 }
 
+.nav-logo {
+    cursor: pointer;
+}
+
 .nav-user-menu {
     margin: 10px 10px 0 0;
 }

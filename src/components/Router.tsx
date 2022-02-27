@@ -74,6 +74,7 @@ const Router: React.FC = () => {
                             />
                             {pages.map(({ path, element }) => (
                                 <Route
+                                    key={path}
                                     path={path}
                                     element={(
                                         <RequireAuth>
