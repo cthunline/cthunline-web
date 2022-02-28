@@ -10,64 +10,74 @@ import {
 } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
-import { useAuth } from '../../contexts/Auth';
 import Api from '../../../services/api';
 
-import './Profile.css';
-
-interface PasswordChangeData {
-    oldPassword: string;
+interface UserFormData {
+    name: string;
+    email: string;
     password: string;
     passwordConfirm: string;
+    isAdmin: boolean;
 }
 
-type PasswordChangeField = keyof PasswordChangeData;
+type UserFormField = keyof UserFormData;
 
-interface PasswordChangeFieldData {
-    field: PasswordChangeField;
+interface UserFormFieldData {
+    field: UserFormField;
     label: string;
+    password?: boolean;
 }
 
-const fieldList: PasswordChangeFieldData[] = [{
-    field: 'oldPassword',
-    label: 'Old password'
+const fieldList: UserFormFieldData[] = [{
+    field: 'name',
+    label: 'Name'
+}, {
+    field: 'email',
+    label: 'Email'
 }, {
     field: 'password',
-    label: 'New password'
+    label: 'Password',
+    password: true
 }, {
     field: 'passwordConfirm',
-    label: 'Confirm new password'
+    label: 'Confirm password',
+    password: true
 }];
 
-const Profile = () => {
-    const { user } = useAuth();
-
-    const initialValues: PasswordChangeData = {
-        oldPassword: '',
+const UserForm = () => {
+    const initialValues: UserFormData = {
+        name: '',
+        email: '',
         password: '',
-        passwordConfirm: ''
+        passwordConfirm: '',
+        isAdmin: false
     };
 
     const validationSchema = Yup.object().shape({
-        oldPassword: Yup.string().min(6, 'Too short').required('Required'),
+        name: Yup.string().min(3, 'Too short').required('Required'),
+        email: Yup.string().email('Invalid email').required('Required'),
         password: Yup.string().min(6, 'Too short').required('Required'),
         passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     });
 
     const onSubmit = async ({
-        oldPassword,
-        password
-    }: PasswordChangeData) => {
+        name,
+        email,
+        password,
+        isAdmin
+    }: UserFormData) => {
         try {
             await Api.call({
                 method: 'POST',
-                route: `/users/${user?.id}`,
+                route: '/users',
                 body: {
-                    oldPassword,
-                    password
+                    name,
+                    email,
+                    password,
+                    isAdmin
                 }
             });
-            toast.success('Password changed');
+            toast.success('User created');
         } catch (err: any) {
             toast.error(err.message);
         }
@@ -76,7 +86,7 @@ const Profile = () => {
     return (
         <Paper elevation={3} className="box">
             <Typography variant="h6" gutterBottom>
-                Change password
+                New user
             </Typography>
             <Formik
                 initialValues={initialValues}
@@ -90,7 +100,7 @@ const Profile = () => {
                     handleBlur
                 }) => (
                     <Form className="form flex-column center password-change">
-                        {fieldList.map(({ field, label }) => (
+                        {fieldList.map(({ field, label, password }) => (
                             <Field
                                 key={field}
                                 validateOnBlur
@@ -102,7 +112,7 @@ const Profile = () => {
                                         className="form-input"
                                         label={label}
                                         name={field}
-                                        type="password"
+                                        type={password ? 'password' : 'text'}
                                         error={!!errors[field] && !!touched[field]}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
@@ -122,7 +132,7 @@ const Profile = () => {
                             size="large"
                             startIcon={<MdOutlineSave />}
                         >
-                            Save
+                            Create
                         </Button>
                     </Form>
                 )}
@@ -131,4 +141,4 @@ const Profile = () => {
     );
 };
 
-export default Profile;
+export default UserForm;

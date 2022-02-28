@@ -31,8 +31,8 @@ const Login = () => {
     const onSubmit = async ({ email, password }: LoginFormData) => {
         try {
             await login(email, password);
-        } catch {
-            toast.error('Invalid credentials');
+        } catch (err: any) {
+            toast.error(err.message);
         }
     };
 

@@ -14,10 +14,10 @@ import {
     Home,
     Characters,
     Profile,
-    Admin,
+    UserList,
+    UserForm,
     Sessions,
-    NotFound,
-    Forbidden
+    Error
 } from './pages';
 
 interface RequireAuthProps {
@@ -30,7 +30,7 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ children, admin }) => {
     if (isLoggedIn) {
         if (admin && !user?.isAdmin) {
             return (
-                <Forbidden />
+                <Error type="forbidden" />
             );
         }
         return children;
@@ -53,8 +53,12 @@ const Router: React.FC = () => {
         path: '/profile',
         element: <Profile />
     }, {
-        path: '/admin',
-        element: <Admin />,
+        path: '/users',
+        element: <UserList />,
+        admin: true
+    }, {
+        path: '/users/create',
+        element: <UserForm />,
         admin: true
     }, {
         path: '/sessions',
@@ -102,7 +106,7 @@ const Router: React.FC = () => {
                                 path="*"
                                 element={(
                                     <RequireAuth>
-                                        <NotFound />
+                                        <Error type="notFound" />
                                     </RequireAuth>
                                 )}
                             />

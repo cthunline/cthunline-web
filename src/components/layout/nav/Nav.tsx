@@ -14,7 +14,7 @@ import {
 import { AiOutlineUser } from 'react-icons/ai';
 import { GiD10, GiCharacter, GiTabletopPlayers } from 'react-icons/gi';
 import { MdOutlineContactPage, MdLogout } from 'react-icons/md';
-import { FiSettings } from 'react-icons/fi';
+import { FiUsers } from 'react-icons/fi';
 
 import { useAuth } from '../../contexts/Auth';
 
@@ -59,12 +59,12 @@ const UserMenu: React.FC<UserMenuProps> = ({ anchorEl, handleClose }) => {
             {user?.isAdmin ? (
                 <>
                     <Divider />
-                    <MenuItem onClick={() => navigate('/admin')}>
+                    <MenuItem onClick={() => navigate('/users')}>
                         <ListItemIcon>
-                            <FiSettings size={20} />
+                            <FiUsers size={20} />
                         </ListItemIcon>
                         <ListItemText>
-                            Administration
+                            Users
                         </ListItemText>
                     </MenuItem>
                 </>

@@ -2,18 +2,18 @@ import Login from './login/Login';
 import Home from './home/Home';
 import Characters from './characters/Characters';
 import Profile from './profile/Profile';
-import Admin from './admin/Admin';
+import UserList from './admin/UserList';
+import UserForm from './admin/UserForm';
 import Sessions from './sessions/Sessions';
-import NotFound from './notFound/NotFound';
-import Forbidden from './forbidden/Forbidden';
+import Error from './error/Error';
 
 export {
     Login,
     Home,
     Characters,
     Profile,
-    Admin,
+    UserList,
+    UserForm,
     Sessions,
-    NotFound,
-    Forbidden
+    Error
 };
