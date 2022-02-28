@@ -5,7 +5,6 @@ import {
     Typography,
     Button,
     Switch,
-    IconButton,
     Chip,
     Table,
     TableBody,
@@ -15,38 +14,26 @@ import {
     TableRow
 } from '@mui/material';
 import { HiPlus } from 'react-icons/hi';
-import { MdCheck, MdOutlineDeleteOutline } from 'react-icons/md';
+import { MdCheck } from 'react-icons/md';
 
 import useUser from '../../hooks/useUser';
 import { useAuth } from '../../contexts/Auth';
-import { useDialog } from '../../contexts/Dialog';
 
 import './UserList.css';
 
 const UserList: React.FC = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
-    const dialog = useDialog();
     const {
         userList,
-        editUser,
-        deleteUser
-    } = useUser(true);
+        editUser
+    } = useUser({
+        loadList: true,
+        listDisabled: true
+    });
 
     const onCreate = () => {
         navigate('/users/create');
-    };
-
-    const onDelete = (userId: string, name: string) => {
-        dialog(`Delete user ${name}?`, () => {
-            deleteUser(userId);
-        });
-    };
-
-    const onAdminChange = (userId:string, isAdmin: boolean) => {
-        editUser(userId, {
-            isAdmin
-        });
     };
 
     return (
@@ -61,7 +48,7 @@ const UserList: React.FC = () => {
                             <TableCell>Name</TableCell>
                             <TableCell>Email</TableCell>
                             <TableCell>Admin</TableCell>
-                            <TableCell />
+                            <TableCell>Enabled</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -69,13 +56,20 @@ const UserList: React.FC = () => {
                             id,
                             name,
                             email,
-                            isAdmin
+                            isAdmin,
+                            isEnabled
                         }) => {
                             const itsYou = id === user?.id;
                             return (
                                 <TableRow key={id}>
                                     <TableCell>
                                         {name}
+                                        {itsYou ? (
+                                            <>
+                                                {' '}
+                                                <Chip label="It's you!" size="small" />
+                                            </>
+                                        ) : null}
                                     </TableCell>
                                     <TableCell>
                                         {email}
@@ -90,22 +84,28 @@ const UserList: React.FC = () => {
                                                 onChange={(
                                                     e: React.ChangeEvent<HTMLInputElement>
                                                 ) => (
-                                                    onAdminChange(id, e.target.checked)
+                                                    editUser(id, {
+                                                        isAdmin: e.target.checked
+                                                    })
                                                 )}
                                             />
                                         )}
                                     </TableCell>
                                     <TableCell>
                                         {itsYou ? (
-                                            <Chip label="It's you!" size="small" />
+                                            <MdCheck size={25} />
                                         ) : (
-                                            <IconButton
-                                                size="medium"
-                                                onClick={() => onDelete(id, name)}
-                                                color="error"
-                                            >
-                                                <MdOutlineDeleteOutline />
-                                            </IconButton>
+                                            <Switch
+                                                size="small"
+                                                checked={isEnabled}
+                                                onChange={(
+                                                    e: React.ChangeEvent<HTMLInputElement>
+                                                ) => (
+                                                    editUser(id, {
+                                                        isEnabled: e.target.checked
+                                                    })
+                                                )}
+                                            />
                                         )}
                                     </TableCell>
                                 </TableRow>

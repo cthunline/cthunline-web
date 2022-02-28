@@ -1,19 +1,50 @@
-import { useState, useEffect } from 'react';
+import {
+    useState,
+    useEffect,
+    useCallback
+} from 'react';
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
 import { UserData } from '../../types/api';
 
-const useUser = (loadList: boolean = false) => {
+interface UserHookOptions {
+    loadList?: boolean;
+    listDisabled?: boolean;
+}
+
+const useUser = ({
+    loadList = false,
+    listDisabled = false
+}: UserHookOptions = {}) => {
     const [userList, setUserList] = useState<UserData[]>([]);
 
-    const refreshUserList = async () => {
+    const refreshUserList = useCallback(async () => {
         try {
+            const urlQuery = listDisabled ? '?disabled=true' : '';
             const { users } = await Api.call({
                 method: 'GET',
-                route: '/users'
+                route: `/users${urlQuery}`
             });
             setUserList(users);
+        } catch (err: any) {
+            toast.error(err.message);
+        }
+    }, [
+        listDisabled
+    ]);
+
+    const createUser = async (data: object) => {
+        try {
+            await Api.call({
+                method: 'POST',
+                route: '/users',
+                body: data
+            });
+            if (loadList) {
+                await refreshUserList();
+            }
+            toast.success('User created');
         } catch (err: any) {
             toast.error(err.message);
         }
@@ -35,31 +66,19 @@ const useUser = (loadList: boolean = false) => {
         }
     };
 
-    const deleteUser = async (userId: string) => {
-        try {
-            await Api.call({
-                method: 'DELETE',
-                route: `/users/${userId}`
-            });
-            if (loadList) {
-                await refreshUserList();
-            }
-            toast.success('User deleted');
-        } catch (err: any) {
-            toast.error(err.message);
-        }
-    };
-
     useEffect(() => {
         if (loadList) {
             refreshUserList();
         }
-    }, [loadList]);
+    }, [
+        loadList,
+        refreshUserList
+    ]);
 
     return {
         userList,
-        editUser,
-        deleteUser
+        createUser,
+        editUser
     };
 };
 

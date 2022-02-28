@@ -25,6 +25,7 @@ type PasswordChangeField = keyof PasswordChangeData;
 interface PasswordChangeFieldData {
     field: PasswordChangeField;
     label: string;
+    preventComplete?: boolean;
 }
 
 const fieldList: PasswordChangeFieldData[] = [{
@@ -32,10 +33,12 @@ const fieldList: PasswordChangeFieldData[] = [{
     label: 'Old password'
 }, {
     field: 'password',
-    label: 'New password'
+    label: 'New password',
+    preventComplete: true
 }, {
     field: 'passwordConfirm',
-    label: 'Confirm new password'
+    label: 'Confirm new password',
+    preventComplete: true
 }];
 
 const Profile = () => {
@@ -80,8 +83,8 @@ const Profile = () => {
                     handleChange,
                     handleBlur
                 }) => (
-                    <Form className="form flex-column center password-change">
-                        {fieldList.map(({ field, label }) => (
+                    <Form className="form flex-column center profile">
+                        {fieldList.map(({ field, label, preventComplete }) => (
                             <Field
                                 key={field}
                                 validateOnBlur
@@ -91,6 +94,7 @@ const Profile = () => {
                                 {() => (
                                     <TextField
                                         className="form-input"
+                                        autoComplete={preventComplete ? 'new-password' : ''}
                                         label={label}
                                         name={field}
                                         type="password"

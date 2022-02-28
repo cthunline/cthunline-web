@@ -1,5 +1,5 @@
 import React from 'react';
-import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -10,7 +10,9 @@ import {
 } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
-import Api from '../../../services/api';
+import useUser from '../../hooks/useUser';
+
+import './UserForm.css';
 
 interface UserFormData {
     name: string;
@@ -45,6 +47,9 @@ const fieldList: UserFormFieldData[] = [{
 }];
 
 const UserForm = () => {
+    const navigate = useNavigate();
+    const { createUser } = useUser();
+
     const initialValues: UserFormData = {
         name: '',
         email: '',
@@ -60,27 +65,9 @@ const UserForm = () => {
         passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     });
 
-    const onSubmit = async ({
-        name,
-        email,
-        password,
-        isAdmin
-    }: UserFormData) => {
-        try {
-            await Api.call({
-                method: 'POST',
-                route: '/users',
-                body: {
-                    name,
-                    email,
-                    password,
-                    isAdmin
-                }
-            });
-            toast.success('User created');
-        } catch (err: any) {
-            toast.error(err.message);
-        }
+    const onSubmit = async ({ passwordConfirm, ...data }: UserFormData) => {
+        await createUser(data);
+        navigate('/users');
     };
 
     return (
@@ -99,7 +86,7 @@ const UserForm = () => {
                     handleChange,
                     handleBlur
                 }) => (
-                    <Form className="form flex-column center password-change">
+                    <Form className="form flex-column center user-form">
                         {fieldList.map(({ field, label, password }) => (
                             <Field
                                 key={field}
@@ -110,6 +97,7 @@ const UserForm = () => {
                                 {() => (
                                     <TextField
                                         className="form-input"
+                                        autoComplete="new-password"
                                         label={label}
                                         name={field}
                                         type={password ? 'password' : 'text'}
