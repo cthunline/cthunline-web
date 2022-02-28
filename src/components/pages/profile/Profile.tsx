@@ -1,5 +1,4 @@
 import React from 'react';
-import { toast } from 'react-toastify';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -10,8 +9,8 @@ import {
 } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
+import useUser from '../../hooks/useUser';
 import { useAuth } from '../../contexts/Auth';
-import Api from '../../../services/api';
 
 import './Profile.css';
 
@@ -41,6 +40,7 @@ const fieldList: PasswordChangeFieldData[] = [{
 
 const Profile = () => {
     const { user } = useAuth();
+    const { editUser } = useUser(true);
 
     const initialValues: PasswordChangeData = {
         oldPassword: '',
@@ -54,23 +54,14 @@ const Profile = () => {
         passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
     });
 
-    const onSubmit = async ({
+    const onSubmit = ({
         oldPassword,
         password
     }: PasswordChangeData) => {
-        try {
-            await Api.call({
-                method: 'POST',
-                route: `/users/${user?.id}`,
-                body: {
-                    oldPassword,
-                    password
-                }
-            });
-            toast.success('Password changed');
-        } catch (err: any) {
-            toast.error(err.message);
-        }
+        editUser(user?.id, {
+            oldPassword,
+            password
+        });
     };
 
     return (

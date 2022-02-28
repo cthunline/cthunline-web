@@ -56,19 +56,20 @@ const UserMenu: React.FC<UserMenuProps> = ({ anchorEl, handleClose }) => {
                     Profile
                 </ListItemText>
             </MenuItem>
-            {user?.isAdmin ? (
-                <>
-                    <Divider />
-                    <MenuItem onClick={() => navigate('/users')}>
-                        <ListItemIcon>
-                            <FiUsers size={20} />
-                        </ListItemIcon>
-                        <ListItemText>
-                            Users
-                        </ListItemText>
-                    </MenuItem>
-                </>
-            ) : null}
+            {user?.isAdmin ? [
+                <Divider key="admin-divider" />,
+                <MenuItem
+                    key="admin-users"
+                    onClick={() => navigate('/users')}
+                >
+                    <ListItemIcon>
+                        <FiUsers size={20} />
+                    </ListItemIcon>
+                    <ListItemText>
+                        Users
+                    </ListItemText>
+                </MenuItem>
+            ] : null}
             <Divider />
             <MenuItem onClick={() => logout()}>
                 <ListItemIcon>

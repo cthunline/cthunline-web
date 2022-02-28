@@ -4,6 +4,7 @@ import { ThemeProvider } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 
 import { AuthProvider } from './contexts/Auth';
+import { DialogProvider } from './contexts/Dialog';
 import Router from './Router';
 import theme from './theme';
 
@@ -15,8 +16,10 @@ const App = () => (
     <CookiesProvider>
         <AuthProvider>
             <ThemeProvider theme={theme}>
-                <Router />
-                <ToastContainer theme="dark" />
+                <DialogProvider>
+                    <Router />
+                    <ToastContainer theme="dark" />
+                </DialogProvider>
             </ThemeProvider>
         </AuthProvider>
     </CookiesProvider>
