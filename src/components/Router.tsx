@@ -12,7 +12,8 @@ import Page from './layout/page/Page';
 import {
     Login,
     Home,
-    Characters,
+    CharacterList,
+    CharacterForm,
     Profile,
     UserList,
     UserForm,
@@ -48,7 +49,13 @@ const Router: React.FC = () => {
         element: <Home />
     }, {
         path: '/characters',
-        element: <Characters />
+        element: <CharacterList />
+    }, {
+        path: '/characters/create/:gameId',
+        element: <CharacterForm />
+    }, {
+        path: '/characters/:characterId',
+        element: <CharacterForm />
     }, {
         path: '/profile',
         element: <Profile />

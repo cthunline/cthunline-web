@@ -36,3 +36,14 @@
 .form.flex-column .form-button {
     margin: 10px 0 0;
 }
+
+/* lists */
+
+.page-list {
+    width: 750px;
+}
+
+.page-list .create-button {
+    align-self: flex-end;
+    margin: 20px 0 0;
+}

@@ -19,8 +19,6 @@ import { MdCheck } from 'react-icons/md';
 import useUser from '../../hooks/useUser';
 import { useAuth } from '../../contexts/Auth';
 
-import './UserList.css';
-
 const UserList: React.FC = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
@@ -37,7 +35,7 @@ const UserList: React.FC = () => {
     };
 
     return (
-        <Paper elevation={3} className="user-list box flex-column start">
+        <Paper elevation={3} className="page-list box flex-column start">
             <Typography variant="h6" gutterBottom>
                 Users
             </Typography>

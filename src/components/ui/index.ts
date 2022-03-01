@@ -1,6 +1,7 @@
-import ConfirmDialog from './dialog/ConfirmDialog';
+import CustomDialog from './dialog/CustomDialog';
+import CallOfCthulhuSheet from './sheets/CallOfCthulhuSheet';
 
 export {
-    // eslint-disable-next-line import/prefer-default-export
-    ConfirmDialog
+    CustomDialog,
+    CallOfCthulhuSheet
 };

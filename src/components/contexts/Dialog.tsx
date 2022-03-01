@@ -2,36 +2,66 @@ import React, {
     createContext,
     useState,
     useContext,
-    useCallback
+    useCallback,
+    useMemo
 } from 'react';
 
-import { ConfirmDialog } from '../ui';
+import { CustomDialog } from '../ui';
 
-interface ConfirmDialogData {
+interface DialogData {
     open: boolean;
-    text: string;
-    onConfirm: () => void;
+    title: string;
+    content: JSX.Element | null;
+    onConfirm: (() => void) | null;
 }
 
-const DialogContext = createContext(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    (text: string, onConfirm: () => void) => {}
-);
+interface DialogOptions {
+    title: string;
+    content: JSX.Element;
+}
+
+interface DialogContextData {
+    confirmDialog: (text: string, onConfirm: () => void) => void;
+    openDialog: (options: DialogOptions) => void;
+    closeDialog: () => void;
+}
+
+const defaultDialogData: DialogContextData = {
+    confirmDialog: () => {},
+    openDialog: () => {},
+    closeDialog: () => {}
+};
+
+const DialogContext = createContext<DialogContextData>(defaultDialogData);
 
 export const DialogProvider:React.FC = ({ children }) => {
-    const [dialogOptions, setDialogOptions] = useState<ConfirmDialogData>({
+    const [dialogOptions, setDialogOptions] = useState<DialogData>({
         open: false,
-        text: '',
-        onConfirm: () => {}
+        title: '',
+        content: null,
+        onConfirm: null
     });
 
-    const openDialog = useCallback((text: string, onConfirm: () => void) => {
+    // opens a simple confirmation dialog
+    const confirmDialog = useCallback((title: string, onConfirm: () => void) => {
         setDialogOptions({
             open: true,
-            text,
+            title,
+            content: null,
             onConfirm
         });
     }, []);
+
+    // opens a dialog box
+    // used when content is more complex than a siple confirmation dialog
+    const openDialog = ({ title, content }: DialogOptions) => {
+        setDialogOptions({
+            open: true,
+            title,
+            content,
+            onConfirm: null
+        });
+    };
 
     const closeDialog = () => {
         setDialogOptions((previousOptions) => ({
@@ -40,17 +70,23 @@ export const DialogProvider:React.FC = ({ children }) => {
         }));
     };
 
+    const contextValue = useMemo(() => ({
+        confirmDialog,
+        openDialog,
+        closeDialog
+    }), [
+        confirmDialog
+    ]);
+
     return (
-        <DialogContext.Provider value={openDialog}>
+        <DialogContext.Provider value={contextValue}>
             {children}
-            <ConfirmDialog
+            <CustomDialog
                 open={dialogOptions.open}
-                text={dialogOptions.text}
-                onConfirm={() => {
-                    closeDialog();
-                    dialogOptions.onConfirm();
-                }}
-                onCancel={() => {
+                title={dialogOptions.title}
+                content={dialogOptions.content}
+                onConfirm={dialogOptions.onConfirm}
+                onClose={() => {
                     closeDialog();
                 }}
             />
