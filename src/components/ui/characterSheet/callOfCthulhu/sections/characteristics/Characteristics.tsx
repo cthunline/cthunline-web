@@ -9,8 +9,8 @@ import {
     CoCPoints,
     CoCPoint,
     CoCSanity
-} from '../../../../../types/games/callOfCthulhu';
-import { CharacterSheetContentProps } from '../../characterSheetProps';
+} from '../../../../../../types/games/callOfCthulhu';
+import { CharacterSheetContentProps } from '../../../characterSheetProps';
 import Characteristic from './Characteristic';
 import {
     charKeys,

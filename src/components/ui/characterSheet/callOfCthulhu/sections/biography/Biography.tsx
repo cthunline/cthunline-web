@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField } from '@mui/material';
 
-import { CoCBiography, CoCCharacterData } from '../../../../../types/games/callOfCthulhu';
-import { CharacterSheetContentProps } from '../../characterSheetProps';
+import { CoCBiography, CoCCharacterData } from '../../../../../../types/games/callOfCthulhu';
+import { CharacterSheetContentProps } from '../../../characterSheetProps';
 import { BioField, fields } from './biography.data';
 
 const Biography: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({

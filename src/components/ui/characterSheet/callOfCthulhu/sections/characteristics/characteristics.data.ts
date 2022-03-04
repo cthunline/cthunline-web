@@ -5,7 +5,7 @@ import {
     CoCPoints,
     CoCPoint,
     CoCSanity
-} from '../../../../../types/games/callOfCthulhu';
+} from '../../../../../../types/games/callOfCthulhu';
 
 export interface FieldData<DataType> {
     field: keyof DataType;

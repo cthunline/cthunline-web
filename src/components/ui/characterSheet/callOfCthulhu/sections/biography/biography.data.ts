@@ -1,4 +1,4 @@
-import { CoCBiography } from '../../../../../types/games/callOfCthulhu';
+import { CoCBiography } from '../../../../../../types/games/callOfCthulhu';
 
 export type BioField = keyof CoCBiography;
 

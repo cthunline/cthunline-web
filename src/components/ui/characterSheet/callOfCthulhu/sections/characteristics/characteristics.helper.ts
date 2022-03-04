@@ -2,7 +2,7 @@ import {
     CoCCharacteristic,
     CoCPoint,
     CoCSanity
-} from '../../../../../types/games/callOfCthulhu';
+} from '../../../../../../types/games/callOfCthulhu';
 
 export const controlCharacteristic = (charData: CoCCharacteristic): CoCCharacteristic => {
     const char = charData;

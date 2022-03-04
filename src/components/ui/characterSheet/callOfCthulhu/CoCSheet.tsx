@@ -3,8 +3,9 @@ import { Box, Typography } from '@mui/material';
 
 import { CoCCharacterData } from '../../../../types/games/callOfCthulhu';
 import { CharacterSheetContentProps } from '../characterSheetProps';
-import Biography from './sections/Biography';
-import Characteristics from './sections/Characteristics';
+import Biography from './sections/biography/Biography';
+import Characteristics from './sections/characteristics/Characteristics';
+import Status from './sections/status/Status';
 
 const CoCSheet: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
     readonly,
@@ -33,6 +34,17 @@ const CoCSheet: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
         </Typography>
         <Box gridColumn="span 12">
             <Characteristics
+                readonly={readonly}
+                data={data}
+                onChange={onChange}
+            />
+        </Box>
+        {/* status */}
+        <Typography variant="h6" gridColumn="span 12">
+            Status
+        </Typography>
+        <Box gridColumn="span 12">
+            <Status
                 readonly={readonly}
                 data={data}
                 onChange={onChange}
