@@ -1,7 +1,7 @@
 import CustomDialog from './dialog/CustomDialog';
-import CallOfCthulhuSheet from './sheets/CallOfCthulhuSheet';
+import CharacterSheet from './characterSheet/CharacterSheet';
 
 export {
     CustomDialog,
-    CallOfCthulhuSheet
+    CharacterSheet
 };

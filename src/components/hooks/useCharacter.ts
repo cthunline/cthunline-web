@@ -7,18 +7,35 @@ import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
 import { useAuth } from '../contexts/Auth';
-import { CharacterData } from '../../types/api';
+import { Character } from '../../types';
 
 interface CharacterHookOptions {
     loadList?: boolean;
+    characterId?: string;
 }
 
 const useCharacter = ({
-    loadList = false
+    loadList = false,
+    characterId
 }: CharacterHookOptions = {}) => {
     const { user } = useAuth();
 
-    const [characterList, setCharacterList] = useState<CharacterData[]>([]);
+    const [characterList, setCharacterList] = useState<Character[]>([]);
+    const [character, setCharacter] = useState<Character>();
+
+    const refreshCharacter = useCallback(async (charId: string) => {
+        try {
+            const char = await Api.call({
+                method: 'GET',
+                route: `/users/${user?.id}/characters/${charId}`
+            });
+            setCharacter(char);
+        } catch (err: any) {
+            toast.error(err.message);
+        }
+    }, [
+        user
+    ]);
 
     const refreshCharacterList = useCallback(async () => {
         try {
@@ -34,6 +51,26 @@ const useCharacter = ({
         user
     ]);
 
+    const refresh = useCallback(async () => {
+        const tasks = [];
+        if (characterId) {
+            tasks.push(
+                refreshCharacter(characterId)
+            );
+        }
+        if (loadList) {
+            tasks.push(
+                refreshCharacterList()
+            );
+        }
+        await Promise.all(tasks);
+    }, [
+        loadList,
+        characterId,
+        refreshCharacter,
+        refreshCharacterList
+    ]);
+
     const createCharacter = async (data: object) => {
         try {
             await Api.call({
@@ -41,40 +78,34 @@ const useCharacter = ({
                 route: `/users/${user?.id}/characters`,
                 body: data
             });
-            if (loadList) {
-                await refreshCharacterList();
-            }
+            await refresh();
             toast.success('Character created');
         } catch (err: any) {
             toast.error(err.message);
         }
     };
 
-    const editCharacter = async (characterId: string, data: object) => {
+    const editCharacter = async (charId: string, data: object) => {
         try {
             await Api.call({
                 method: 'POST',
-                route: `/users/${user?.id}/characters/${characterId}`,
+                route: `/users/${user?.id}/characters/${charId}`,
                 body: data
             });
-            if (loadList) {
-                await refreshCharacterList();
-            }
+            await refresh();
             toast.success('Character edited');
         } catch (err: any) {
             toast.error(err.message);
         }
     };
 
-    const deleteCharacter = async (characterId: string) => {
+    const deleteCharacter = async (charId: string) => {
         try {
             await Api.call({
                 method: 'DELETE',
-                route: `/users/${user?.id}/characters/${characterId}`
+                route: `/users/${user?.id}/characters/${charId}`
             });
-            if (loadList) {
-                await refreshCharacterList();
-            }
+            await refresh();
             toast.success('Character deleted');
         } catch (err: any) {
             toast.error(err.message);
@@ -82,15 +113,13 @@ const useCharacter = ({
     };
 
     useEffect(() => {
-        if (loadList) {
-            refreshCharacterList();
-        }
+        refresh();
     }, [
-        loadList,
-        refreshCharacterList
+        refresh
     ]);
 
     return {
+        character,
         characterList,
         createCharacter,
         editCharacter,

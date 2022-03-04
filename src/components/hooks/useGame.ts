@@ -2,10 +2,10 @@ import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
-import { GameData } from '../../types/api';
+import { Game } from '../../types';
 
 const useGame = () => {
-    const [gameList, setGameList] = useState<GameData[]>([]);
+    const [gameList, setGameList] = useState<Game[]>([]);
 
     const getGame = (gameId: string) => (
         gameList.find(({ id }) => gameId === id)

@@ -24,7 +24,7 @@ interface ErrorProps {
 const Error: React.FC<ErrorProps> = ({ type }) => {
     const { title, message } = errors[type];
     return (
-        <div className="flex-column center">
+        <div className="flex column center">
             <GiWizardFace size={100} className="error-icon" />
             <Typography variant="h4" gutterBottom>
                 {title}

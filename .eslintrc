@@ -23,6 +23,7 @@
         "comma-dangle": "off",
         "indent": "off",
         "lines-between-class-members": "off",
+        "radix": "off",
         "react/function-component-definition": [2, {
             "namedComponents": "arrow-function"
         }],

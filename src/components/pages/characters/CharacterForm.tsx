@@ -1,13 +1,27 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 
-const CharacterForm = () => {
-    const { gameId } = useParams();
+// import { CharacterData } from '../../../types';
+import useCharacter from '../../hooks/useCharacter';
+import { CharacterSheet } from '../../ui';
 
-    const text = `Game: ${gameId}`;
+const CharacterForm = () => {
+    const { gameId, characterId } = useParams();
+    const { character } = useCharacter({
+        characterId
+    });
+
+    const onChange = (/* data: CharacterData */) => {
+        // console.log(data);
+    };
 
     return (
-        <div>{text}</div>
+        <CharacterSheet
+            readonly={false}
+            gameId={character?.gameId ?? String(gameId)}
+            data={character?.data}
+            onChange={onChange}
+        />
     );
 };
 

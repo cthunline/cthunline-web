@@ -15,6 +15,11 @@ interface LoginFormData {
     password: string;
 }
 
+const validationSchema = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Required'),
+    password: Yup.string().min(6, 'Too short').required('Required')
+});
+
 const Login = () => {
     const { login } = useAuth();
 
@@ -22,11 +27,6 @@ const Login = () => {
         email: '',
         password: ''
     };
-
-    const validationSchema = Yup.object().shape({
-        email: Yup.string().email('Invalid email').required('Required'),
-        password: Yup.string().min(6, 'Too short').required('Required')
-    });
 
     const onSubmit = async ({ email, password }: LoginFormData) => {
         try {
@@ -52,7 +52,7 @@ const Login = () => {
                     handleChange,
                     handleBlur
                 }) => (
-                    <Form className="form flex-column center login">
+                    <Form className="form flex column center login">
                         <Field
                             validateOnBlur
                             validateOnChange

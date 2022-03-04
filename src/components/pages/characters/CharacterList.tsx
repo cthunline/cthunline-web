@@ -17,13 +17,13 @@ import {
 import { HiPlus } from 'react-icons/hi';
 import { MdEdit, MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { GameData } from '../../../types/api';
+import { Game } from '../../../types';
 import { useDialog } from '../../contexts/Dialog';
 import useCharacter from '../../hooks/useCharacter';
 import useGame from '../../hooks/useGame';
 
 interface GameSelectorProps {
-    games: GameData[];
+    games: Game[];
     onSelect: (id: string) => void;
 }
 
@@ -84,7 +84,7 @@ const CharacterList: React.FC = () => {
     };
 
     return (
-        <Paper elevation={3} className="page-list box flex-column start">
+        <Paper elevation={3} className="page-list box flex column start">
             <Typography variant="h6" gutterBottom>
                 Characters
             </Typography>

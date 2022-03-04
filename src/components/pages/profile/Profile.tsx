@@ -41,21 +41,21 @@ const fieldList: PasswordChangeFieldData[] = [{
     preventComplete: true
 }];
 
+const validationSchema = Yup.object().shape({
+    oldPassword: Yup.string().min(6, 'Too short').required('Required'),
+    password: Yup.string().min(6, 'Too short').required('Required'),
+    passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
+});
+
 const Profile = () => {
     const { user } = useAuth();
-    const { editUser } = useUser(true);
+    const { editUser } = useUser();
 
     const initialValues: PasswordChangeData = {
         oldPassword: '',
         password: '',
         passwordConfirm: ''
     };
-
-    const validationSchema = Yup.object().shape({
-        oldPassword: Yup.string().min(6, 'Too short').required('Required'),
-        password: Yup.string().min(6, 'Too short').required('Required'),
-        passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
-    });
 
     const onSubmit = ({
         oldPassword,
@@ -83,7 +83,7 @@ const Profile = () => {
                     handleChange,
                     handleBlur
                 }) => (
-                    <Form className="form flex-column center profile">
+                    <Form className="form flex column center profile">
                         {fieldList.map(({ field, label, preventComplete }) => (
                             <Field
                                 key={field}

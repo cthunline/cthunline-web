@@ -6,34 +6,41 @@
 
 /* flex */
 
-.flex-column {
+.flex {
     display: flex;
+}
+
+.flex.column {
     flex-direction: column;
 }
 
-.flex-column.center {
+.flex.row {
+    flex-direction: row;
+}
+
+.flex.center {
     align-items: center;
     justify-content: center;
 }
 
-.flex-column.start {
+.flex.start {
     align-items: flex-start;
     justify-content: center;
 }
 
-.flex-column.end {
+.flex.end {
     align-items: flex-end;
     justify-content: center;
 }
 
 /* form */
 
-.form.flex-column .form-input {
+.form.flex.column .form-input {
     margin: 10px 0;
     width: 100%;
 }
 
-.form.flex-column .form-button {
+.form.flex.column .form-button {
     margin: 10px 0 0;
 }
 

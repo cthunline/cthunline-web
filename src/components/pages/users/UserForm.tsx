@@ -46,6 +46,13 @@ const fieldList: UserFormFieldData[] = [{
     password: true
 }];
 
+const validationSchema = Yup.object().shape({
+    name: Yup.string().min(3, 'Too short').required('Required'),
+    email: Yup.string().email('Invalid email').required('Required'),
+    password: Yup.string().min(6, 'Too short').required('Required'),
+    passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
+});
+
 const UserForm = () => {
     const navigate = useNavigate();
     const { createUser } = useUser();
@@ -57,13 +64,6 @@ const UserForm = () => {
         passwordConfirm: '',
         isAdmin: false
     };
-
-    const validationSchema = Yup.object().shape({
-        name: Yup.string().min(3, 'Too short').required('Required'),
-        email: Yup.string().email('Invalid email').required('Required'),
-        password: Yup.string().min(6, 'Too short').required('Required'),
-        passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
-    });
 
     const onSubmit = async ({ passwordConfirm, ...data }: UserFormData) => {
         await createUser(data);
@@ -86,7 +86,7 @@ const UserForm = () => {
                     handleChange,
                     handleBlur
                 }) => (
-                    <Form className="form flex-column center user-form">
+                    <Form className="form flex column center user-form">
                         {fieldList.map(({ field, label, password }) => (
                             <Field
                                 key={field}

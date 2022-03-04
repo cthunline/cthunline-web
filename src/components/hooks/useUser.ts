@@ -6,7 +6,7 @@ import {
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
-import { UserData } from '../../types/api';
+import { User } from '../../types';
 
 interface UserHookOptions {
     loadList?: boolean;
@@ -17,7 +17,7 @@ const useUser = ({
     loadList = false,
     listDisabled = false
 }: UserHookOptions = {}) => {
-    const [userList, setUserList] = useState<UserData[]>([]);
+    const [userList, setUserList] = useState<User[]>([]);
 
     const refreshUserList = useCallback(async () => {
         try {
