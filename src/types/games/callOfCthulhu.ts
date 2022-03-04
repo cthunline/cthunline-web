@@ -140,7 +140,9 @@ export const defaultData = {
         appearance: { ...defaultCharacteristic },
         education: { ...defaultCharacteristic },
         intelligence: { ...defaultCharacteristic },
-        power: { ...defaultCharacteristic },
+        power: { ...defaultCharacteristic }
+    },
+    points: {
         hitPoints: {
             current: 0,
             maximum: 0
@@ -148,16 +150,16 @@ export const defaultData = {
         magicPoints: {
             current: 0,
             maximum: 0
-        },
-        luck: {
-            starting: 0,
-            current: 0
-        },
-        sanity: {
-            starting: 0,
-            current: 0,
-            maximum: 0
         }
+    },
+    luck: {
+        starting: 0,
+        current: 0
+    },
+    sanity: {
+        starting: 0,
+        current: 0,
+        maximum: 0
     },
     status: {
         temporaryInsanity: false,

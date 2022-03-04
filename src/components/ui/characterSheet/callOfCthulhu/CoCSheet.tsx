@@ -6,6 +6,7 @@ import { CharacterSheetContentProps } from '../characterSheetProps';
 import Biography from './sections/biography/Biography';
 import Characteristics from './sections/characteristics/Characteristics';
 import Status from './sections/status/Status';
+import Skills from './sections/skills/Skills';
 
 const CoCSheet: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
     readonly,
@@ -45,6 +46,17 @@ const CoCSheet: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
         </Typography>
         <Box gridColumn="span 12">
             <Status
+                readonly={readonly}
+                data={data}
+                onChange={onChange}
+            />
+        </Box>
+        {/* skills */}
+        <Typography variant="h6" gridColumn="span 12">
+            Skills
+        </Typography>
+        <Box gridColumn="span 12">
+            <Skills
                 readonly={readonly}
                 data={data}
                 onChange={onChange}

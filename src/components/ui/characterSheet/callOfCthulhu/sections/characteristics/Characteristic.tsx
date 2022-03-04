@@ -36,7 +36,6 @@ const Characteristic: (
     gridRow
 }) => (
     <Box
-        key={label}
         gridColumn={gridColumn}
         gridRow={gridRow}
         display="grid"
