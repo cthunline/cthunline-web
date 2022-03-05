@@ -14,8 +14,27 @@ interface CharacterHookOptions {
     characterId?: string;
 }
 
+interface CreateOptions {
+    data: Omit<Character, 'id' | 'userId'>;
+    isRefresh?: boolean;
+    isToast?: boolean;
+}
+
+interface EditOptions {
+    characterId: string;
+    data: Omit<Character, 'id' | 'userId' | 'gameId'>;
+    isRefresh?: boolean;
+    isToast?: boolean;
+}
+
+interface DeleteOptions {
+    characterId: string;
+    isRefresh?: boolean;
+    isToast?: boolean;
+}
+
 const useCharacter = ({
-    loadList = false,
+    loadList,
     characterId
 }: CharacterHookOptions = {}) => {
     const { user } = useAuth();
@@ -72,42 +91,67 @@ const useCharacter = ({
         refreshCharacterList
     ]);
 
-    const createCharacter = async (data: object) => {
+    const createCharacter = async ({
+        data,
+        isRefresh = true,
+        isToast = true
+    }: CreateOptions) => {
         try {
             await Api.call({
                 method: 'POST',
                 route: `/users/${user?.id}/characters`,
                 body: data
             });
-            await refresh();
-            toast.success('Character created');
+            if (isRefresh) {
+                await refresh();
+            }
+            if (isToast) {
+                toast.success('Character created');
+            }
         } catch (err: any) {
             toast.error(err.message);
         }
     };
 
-    const editCharacter = async (charId: string, data: object) => {
+    const editCharacter = async ({
+        characterId: charId,
+        data,
+        isRefresh = true,
+        isToast = true
+    }: EditOptions) => {
         try {
             await Api.call({
                 method: 'POST',
                 route: `/characters/${charId}`,
                 body: data
             });
-            await refresh();
-            toast.success('Character edited');
+            if (isRefresh) {
+                await refresh();
+            }
+            if (isToast) {
+                toast.success('Character edited');
+            }
         } catch (err: any) {
             toast.error(err.message);
         }
     };
 
-    const deleteCharacter = async (charId: string) => {
+    const deleteCharacter = async ({
+        characterId: charId,
+        isRefresh = true,
+        isToast = true
+    }: DeleteOptions) => {
         try {
             await Api.call({
                 method: 'DELETE',
                 route: `/characters/${charId}`
             });
-            await refresh();
-            toast.success('Character deleted');
+            if (isRefresh) {
+                await refresh();
+            }
+            if (isToast) {
+                toast.success('Character deleted');
+            }
         } catch (err: any) {
             toast.error(err.message);
         }
@@ -121,7 +165,6 @@ const useCharacter = ({
 
     return {
         character,
-        setCharacter,
         characterList,
         createCharacter,
         editCharacter,

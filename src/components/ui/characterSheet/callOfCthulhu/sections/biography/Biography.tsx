@@ -1,24 +1,38 @@
-import React from 'react';
+import React, {
+    useState,
+    useEffect,
+    useRef
+} from 'react';
 import { Box, TextField } from '@mui/material';
 
-import { CoCCharacterData } from '../../../../../../types/games/callOfCthulhu';
+import { CoCCharacterData, CoCBiography } from '../../../../../../types/games/callOfCthulhu';
 import { CharacterSheetContentProps } from '../../../characterSheetProps';
-import { BioField, fields } from './biography.data';
+import { fields } from './biography.data';
 
 const Biography: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
     readonly,
     data,
     onChange
 }) => {
-    const handleChange = (field: BioField, value: string | number) => {
-        onChange?.({
-            ...data,
-            biography: {
-                ...data.biography,
-                [field]: value
-            }
-        });
-    };
+    const [biography, setBiography] = useState<CoCBiography>(
+        data.biography
+    );
+
+    const initialRender = useRef(true);
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false;
+        } else {
+            onChange?.({
+                ...data,
+                biography
+            });
+        }
+    }, [
+        onChange,
+        data,
+        biography
+    ]);
 
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
@@ -36,11 +50,14 @@ const Biography: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
                         size="small"
                         label={label}
                         name={field}
-                        value={data.biography[field]}
+                        value={biography[field]}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             const { value } = e.target;
                             const parsedValue = type === 'number' ? parseInt(value) : value;
-                            handleChange(field, parsedValue);
+                            setBiography((previous) => ({
+                                ...previous,
+                                [field]: parsedValue
+                            }));
                         }}
                     />
                 </Box>

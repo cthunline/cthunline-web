@@ -79,7 +79,9 @@ const CharacterList: React.FC = () => {
 
     const onDelete = (characterId: string, name: string) => {
         confirmDialog(`Delete character ${name} ?`, () => {
-            deleteCharacter(characterId);
+            deleteCharacter({
+                characterId
+            });
         });
     };
 

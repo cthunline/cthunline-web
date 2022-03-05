@@ -1,4 +1,8 @@
-import React from 'react';
+import React, {
+    useState,
+    useEffect,
+    useRef
+} from 'react';
 import { Box, FormControlLabel, Checkbox } from '@mui/material';
 
 import { CoCStatus, CoCCharacterData } from '../../../../../../types/games/callOfCthulhu';
@@ -10,15 +14,30 @@ const Status: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
     data,
     onChange
 }) => {
+    const [status, setStatus] = useState<CoCStatus>(data.status);
+
     const handleChange = (field: keyof CoCStatus, checked: boolean) => {
-        onChange?.({
-            ...data,
-            status: {
-                ...data.status,
-                [field]: checked
-            }
-        });
+        setStatus((previous) => ({
+            ...previous,
+            [field]: checked
+        }));
     };
+
+    const initialRender = useRef(true);
+    useEffect(() => {
+        if (initialRender.current) {
+            initialRender.current = false;
+        } else {
+            onChange?.({
+                ...data,
+                status
+            });
+        }
+    }, [
+        onChange,
+        data,
+        status
+    ]);
 
     return (
         <Box display="grid" gridTemplateColumns="repeat(10, 1fr)" gap={2}>
@@ -30,7 +49,7 @@ const Status: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
                         control={(
                             <Checkbox
                                 disabled={readonly}
-                                checked={data.status[field]}
+                                checked={status[field]}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                                     handleChange(field, e.target.checked);
                                 }}

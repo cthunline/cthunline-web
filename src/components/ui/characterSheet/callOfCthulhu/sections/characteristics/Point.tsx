@@ -9,41 +9,41 @@ import {
     Tooltip
 } from '@mui/material';
 
-import { CoCCharacteristic } from '../../../../../../types/games/callOfCthulhu';
-import { charKeys } from './characteristics.data';
-import { controlCharacteristic } from './characteristics.helper';
+import { CoCPoint } from '../../../../../../types/games/callOfCthulhu';
+import { pointsKeys } from './characteristics.data';
+import { controlPoint } from './characteristics.helper';
 
-interface CharacteristicProps {
+interface PointProps {
     label: string;
     shortLabel?: string;
-    data: CoCCharacteristic;
+    data: CoCPoint;
     readonly: boolean;
-    handleChange: (data: CoCCharacteristic) => void;
+    handleChange: (data: CoCPoint) => void;
 }
 
-const Characteristic: React.FC<CharacteristicProps> = ({
+const Point: React.FC<PointProps> = ({
     label,
     shortLabel,
     data,
     readonly,
     handleChange
 }) => {
-    const [characteristic, setCharacteristic] = useState<CoCCharacteristic>(data);
+    const [point, setPoint] = useState<CoCPoint>(data);
 
     const initialRender = useRef(true);
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false;
         } else {
-            handleChange(characteristic);
+            handleChange(point);
         }
     }, [
         handleChange,
-        characteristic
+        point
     ]);
 
     return (
-        <Box gridColumn="span 6" display="grid" gridTemplateColumns="repeat(12, 1fr)">
+        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)">
             <Box
                 gridColumn="span 3"
                 display="grid"
@@ -55,7 +55,7 @@ const Characteristic: React.FC<CharacteristicProps> = ({
                     </Tooltip>
                 ) : label}
             </Box>
-            {charKeys.map(({ key, label: keyLabel, editable }) => (
+            {pointsKeys.map(({ key, label: keyLabel, editable }) => (
                 <Box
                     key={key.toString()}
                     gridColumn="span 3"
@@ -70,10 +70,10 @@ const Characteristic: React.FC<CharacteristicProps> = ({
                         type="text"
                         size="small"
                         label={keyLabel}
-                        value={characteristic[key]}
+                        value={point[key]}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setCharacteristic((previous) => (
-                                controlCharacteristic({
+                            setPoint((previous) => (
+                                controlPoint({
                                     ...previous,
                                     [key]: Number(e.target.value)
                                 })
@@ -86,4 +86,4 @@ const Characteristic: React.FC<CharacteristicProps> = ({
     );
 };
 
-export default Characteristic;
+export default Point;
