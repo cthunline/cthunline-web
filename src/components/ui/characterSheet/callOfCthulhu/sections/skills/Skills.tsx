@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Box } from '@mui/material';
 
 import { CharacterSheetContentProps } from '../../../characterSheetProps';
@@ -12,32 +12,21 @@ const Skills: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
     readonly,
     onChange
 }) => {
-    const [skills, setSkills] = useState<CoCSkill[]>(data.skills);
-
     const handleChange = (
         index: number,
         key: keyof CoCSkill,
         value: string | number | boolean
     ) => {
-        skills[index] = controlSkill({
-            ...skills[index],
+        const updatedSkills = [...data.skills];
+        updatedSkills[index] = controlSkill({
+            ...data.skills[index],
             [key]: value
         });
-        setSkills(skills);
+        onChange?.({
+            ...data,
+            skills: updatedSkills
+        });
     };
-
-    useEffect(() => {
-        if (onChange) {
-            onChange({
-                ...data,
-                skills
-            });
-        }
-    }, [
-        onChange,
-        data,
-        skills
-    ]);
 
     return (
         <Box
@@ -46,8 +35,9 @@ const Skills: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
             gridTemplateColumns="repeat(12, 1fr)"
             gap={2}
         >
-            {skills.map((skill, idx) => (
+            {data.skills.map((skill, idx) => (
                 <Skill
+                    key={`skill-${idx.toString()}`}
                     index={idx}
                     data={skill}
                     readonly={readonly}

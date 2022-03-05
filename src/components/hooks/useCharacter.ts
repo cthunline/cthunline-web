@@ -27,14 +27,14 @@ const useCharacter = ({
         try {
             const char = await Api.call({
                 method: 'GET',
-                route: `/users/${user?.id}/characters/${charId}`
+                route: `/characters/${charId}`
             });
             setCharacter(char);
         } catch (err: any) {
             toast.error(err.message);
         }
     }, [
-        user
+        setCharacter
     ]);
 
     const refreshCharacterList = useCallback(async () => {
@@ -48,7 +48,8 @@ const useCharacter = ({
             toast.error(err.message);
         }
     }, [
-        user
+        user,
+        setCharacterList
     ]);
 
     const refresh = useCallback(async () => {
@@ -89,7 +90,7 @@ const useCharacter = ({
         try {
             await Api.call({
                 method: 'POST',
-                route: `/users/${user?.id}/characters/${charId}`,
+                route: `/characters/${charId}`,
                 body: data
             });
             await refresh();
@@ -103,7 +104,7 @@ const useCharacter = ({
         try {
             await Api.call({
                 method: 'DELETE',
-                route: `/users/${user?.id}/characters/${charId}`
+                route: `/characters/${charId}`
             });
             await refresh();
             toast.success('Character deleted');
@@ -120,6 +121,7 @@ const useCharacter = ({
 
     return {
         character,
+        setCharacter,
         characterList,
         createCharacter,
         editCharacter,

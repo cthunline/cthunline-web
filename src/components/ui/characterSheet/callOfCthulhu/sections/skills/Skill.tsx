@@ -46,7 +46,7 @@ const Skill: React.FC<SkillProps> = ({
                 size="small"
                 value={data.name}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    handleChange(index, 'name', Number(e.target.value));
+                    handleChange(index, 'name', e.target.value);
                 }}
             />
         </Box>
@@ -61,7 +61,7 @@ const Skill: React.FC<SkillProps> = ({
                 label="Base"
                 value={data.base}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    handleChange(index, 'base', Number(e.target.value));
+                    handleChange(index, 'base', e.target.value);
                 }}
             />
         </Box>
