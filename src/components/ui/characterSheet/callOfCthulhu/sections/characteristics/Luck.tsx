@@ -1,8 +1,4 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
+import React, { useState } from 'react';
 import { Box, TextField } from '@mui/material';
 
 import { CoCLuck } from '../../../../../../types/games/callOfCthulhu';
@@ -20,18 +16,6 @@ const Luck: React.FC<LuckProps> = ({
     handleChange
 }) => {
     const [luck, setLuck] = useState<CoCLuck>(data);
-
-    const initialRender = useRef(true);
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-        } else {
-            handleChange(luck);
-        }
-    }, [
-        handleChange,
-        luck
-    ]);
 
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)">
@@ -59,6 +43,10 @@ const Luck: React.FC<LuckProps> = ({
                                 ...previous,
                                 [key]: Number(e.target.value)
                             }));
+                            handleChange({
+                                ...data,
+                                [key]: Number(e.target.value)
+                            });
                         }}
                     />
                 </Box>

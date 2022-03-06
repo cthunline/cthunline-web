@@ -1,9 +1,11 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
-import { Box, TextField, Checkbox } from '@mui/material';
+import React, { useState } from 'react';
+import {
+    Box,
+    TextField,
+    Checkbox,
+    IconButton
+} from '@mui/material';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
 
 import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
 import { skillKeys } from './skills.data';
@@ -13,26 +15,16 @@ interface SkillProps {
     data: CoCSkill;
     readonly: boolean;
     handleChange: (data: CoCSkill) => void;
+    handleDelete: () => void;
 }
 
 const Skill: React.FC<SkillProps> = ({
     data,
     readonly,
-    handleChange
+    handleChange,
+    handleDelete
 }) => {
     const [skill, setSkill] = useState<CoCSkill>(data);
-
-    const initialRender = useRef(true);
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-        } else {
-            handleChange(skill);
-        }
-    }, [
-        handleChange,
-        skill
-    ]);
 
     return (
         <Box
@@ -51,28 +43,18 @@ const Skill: React.FC<SkillProps> = ({
                                     developed: e.target.checked
                                 })
                             ));
+                            handleChange(
+                                controlSkill({
+                                    ...data,
+                                    developed: e.target.checked
+                                })
+                            );
                         }}
                     />
                 ) : null}
             </Box>
-            <Box gridColumn="span 6" display="grid" alignItems="center">
-                <TextField
-                    fullWidth
-                    InputProps={{
-                        readOnly: readonly
-                    }}
-                    type="text"
-                    size="small"
-                    value={skill.name}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setSkill((previous) => (
-                            controlSkill({
-                                ...previous,
-                                name: e.target.value
-                            })
-                        ));
-                    }}
-                />
+            <Box gridColumn="span 5" display="grid" alignItems="center">
+                {skill.name}
             </Box>
             <Box gridColumn="span 2" display="grid" alignItems="center">
                 <TextField
@@ -91,6 +73,12 @@ const Skill: React.FC<SkillProps> = ({
                                 base: e.target.value
                             })
                         ));
+                        handleChange(
+                            controlSkill({
+                                ...data,
+                                base: e.target.value
+                            })
+                        );
                     }}
                 />
             </Box>
@@ -117,10 +105,25 @@ const Skill: React.FC<SkillProps> = ({
                                     [key]: Number(e.target.value)
                                 })
                             ));
+                            handleChange(
+                                controlSkill({
+                                    ...data,
+                                    [key]: Number(e.target.value)
+                                })
+                            );
                         }}
                     />
                 </Box>
             ))}
+            <Box gridColumn="span 1" alignItems="center">
+                <IconButton
+                    size="medium"
+                    color="error"
+                    onClick={handleDelete}
+                >
+                    <MdOutlineDeleteOutline />
+                </IconButton>
+            </Box>
         </Box>
     );
 };

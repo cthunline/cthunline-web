@@ -1,8 +1,4 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
+import React, { useState } from 'react';
 import { Box, TextField } from '@mui/material';
 
 import { CoCCharacterData, CoCBiography } from '../../../../../../types/games/callOfCthulhu';
@@ -17,22 +13,6 @@ const Biography: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
     const [biography, setBiography] = useState<CoCBiography>(
         data.biography
     );
-
-    const initialRender = useRef(true);
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-        } else {
-            onChange?.({
-                ...data,
-                biography
-            });
-        }
-    }, [
-        onChange,
-        data,
-        biography
-    ]);
 
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
@@ -58,6 +38,13 @@ const Biography: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
                                 ...previous,
                                 [field]: parsedValue
                             }));
+                            onChange?.({
+                                ...data,
+                                biography: {
+                                    ...data.biography,
+                                    [field]: parsedValue
+                                }
+                            });
                         }}
                     />
                 </Box>

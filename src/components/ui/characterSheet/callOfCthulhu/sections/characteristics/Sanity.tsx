@@ -1,8 +1,4 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
+import React, { useState } from 'react';
 import { Box, TextField } from '@mui/material';
 
 import { CoCSanity } from '../../../../../../types/games/callOfCthulhu';
@@ -21,18 +17,6 @@ const Sanity: React.FC<SanityProps> = ({
     handleChange
 }) => {
     const [sanity, setSanity] = useState<CoCSanity>(data);
-
-    const initialRender = useRef(true);
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-        } else {
-            handleChange(sanity);
-        }
-    }, [
-        handleChange,
-        sanity
-    ]);
 
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)">
@@ -62,6 +46,12 @@ const Sanity: React.FC<SanityProps> = ({
                                     [key]: Number(e.target.value)
                                 })
                             ));
+                            handleChange(
+                                controlSanity({
+                                    ...data,
+                                    [key]: Number(e.target.value)
+                                })
+                            );
                         }}
                     />
                 </Box>

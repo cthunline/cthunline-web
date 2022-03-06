@@ -1,8 +1,4 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     TextField,
@@ -29,18 +25,6 @@ const Point: React.FC<PointProps> = ({
     handleChange
 }) => {
     const [point, setPoint] = useState<CoCPoint>(data);
-
-    const initialRender = useRef(true);
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-        } else {
-            handleChange(point);
-        }
-    }, [
-        handleChange,
-        point
-    ]);
 
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)">
@@ -78,6 +62,12 @@ const Point: React.FC<PointProps> = ({
                                     [key]: Number(e.target.value)
                                 })
                             ));
+                            handleChange(
+                                controlPoint({
+                                    ...data,
+                                    [key]: Number(e.target.value)
+                                })
+                            );
                         }}
                     />
                 </Box>

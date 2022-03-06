@@ -1,8 +1,4 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
+import React, { useState } from 'react';
 import {
     Box,
     TextField,
@@ -29,18 +25,6 @@ const Characteristic: React.FC<CharacteristicProps> = ({
     handleChange
 }) => {
     const [characteristic, setCharacteristic] = useState<CoCCharacteristic>(data);
-
-    const initialRender = useRef(true);
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-        } else {
-            handleChange(characteristic);
-        }
-    }, [
-        handleChange,
-        characteristic
-    ]);
 
     return (
         <Box gridColumn="span 6" display="grid" gridTemplateColumns="repeat(12, 1fr)">
@@ -78,6 +62,12 @@ const Characteristic: React.FC<CharacteristicProps> = ({
                                     [key]: Number(e.target.value)
                                 })
                             ));
+                            handleChange(
+                                controlCharacteristic({
+                                    ...data,
+                                    [key]: Number(e.target.value)
+                                })
+                            );
                         }}
                     />
                 </Box>

@@ -3,7 +3,9 @@ import { Box } from '@mui/material';
 
 import { CharacterSheetContentProps } from '../../../characterSheetProps';
 import { CoCSkill, CoCCharacterData } from '../../../../../../types/games/callOfCthulhu';
+// import { controlSkills } from './skills.helper';
 import Skill from './Skill';
+import SkillAdd from './SkillAdd';
 
 const Skills: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
     data,
@@ -24,10 +26,25 @@ const Skills: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
                 handleChange={(skillData: CoCSkill) => {
                     const updatedData = { ...data };
                     updatedData.skills[index] = skillData;
-                    onChange?.(updatedData);
+                    onChange?.({ ...data });
+                }}
+                handleDelete={() => {
+                    onChange?.({
+                        ...data,
+                        skills: data.skills.filter((s, idx) => (
+                            index !== idx
+                        ))
+                    }, true);
                 }}
             />
         ))}
+        {!readonly ? (
+            <SkillAdd
+                handleCreate={() => {
+                    // controlSkills
+                }}
+            />
+        ) : null}
         {/*
         TODO
         https://mui.com/components/autocomplete/#creatable

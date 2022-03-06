@@ -1,8 +1,4 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
+import React, { useState } from 'react';
 import { Box, FormControlLabel, Checkbox } from '@mui/material';
 
 import { CoCStatus, CoCCharacterData } from '../../../../../../types/games/callOfCthulhu';
@@ -16,29 +12,6 @@ const Status: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
 }) => {
     const [status, setStatus] = useState<CoCStatus>(data.status);
 
-    const handleChange = (field: keyof CoCStatus, checked: boolean) => {
-        setStatus((previous) => ({
-            ...previous,
-            [field]: checked
-        }));
-    };
-
-    const initialRender = useRef(true);
-    useEffect(() => {
-        if (initialRender.current) {
-            initialRender.current = false;
-        } else {
-            onChange?.({
-                ...data,
-                status
-            });
-        }
-    }, [
-        onChange,
-        data,
-        status
-    ]);
-
     return (
         <Box display="grid" gridTemplateColumns="repeat(10, 1fr)" gap={2}>
             {fields.map(({ field, label }) => (
@@ -51,7 +24,17 @@ const Status: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
                                 disabled={readonly}
                                 checked={status[field]}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    handleChange(field, e.target.checked);
+                                    setStatus((previous) => ({
+                                        ...previous,
+                                        [field]: e.target.checked
+                                    }));
+                                    onChange?.({
+                                        ...data,
+                                        status: {
+                                            ...data.status,
+                                            [field]: e.target.checked
+                                        }
+                                    });
                                 }}
                             />
                         )}

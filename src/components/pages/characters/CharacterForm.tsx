@@ -13,23 +13,33 @@ const CharacterForm = () => {
 
     const changeTime = 1000;
     const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const onChange = (data: CharacterData) => {
+    const onChange = (data: CharacterData, instantRefresh?: boolean) => {
         if (characterId) {
-            if (changeTimer.current) {
-                clearTimeout(changeTimer.current);
-            }
-            changeTimer.current = setTimeout(() => {
-                const { name, occupation } = data.biography;
+            const { name, occupation } = data.biography;
+            const editData = {
+                characterId,
+                data: {
+                    name: `${name} (${occupation})`,
+                    data
+                },
+                isToast: false
+            };
+            if (instantRefresh) {
                 editCharacter({
-                    characterId,
-                    data: {
-                        name: `${name} (${occupation})`,
-                        data
-                    },
-                    isRefresh: false,
-                    isToast: false
+                    ...editData,
+                    isRefresh: true
                 });
-            }, changeTime);
+            } else {
+                if (changeTimer.current) {
+                    clearTimeout(changeTimer.current);
+                }
+                changeTimer.current = setTimeout(() => {
+                    editCharacter({
+                        ...editData,
+                        isRefresh: false
+                    });
+                }, changeTime);
+            }
         }
     };
 
