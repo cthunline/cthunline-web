@@ -1,87 +1,106 @@
-import React from 'react';
+import React, { memo, useCallback } from 'react';
 import { Box } from '@mui/material';
 
 import {
     CoCCharacterData,
     CoCCharacteristic,
-    CoCLuck,
+    CoCCharacteristics,
+    CoCPoints,
     CoCPoint,
+    CoCLuck,
     CoCSanity
 } from '../../../../../../types/games/callOfCthulhu';
-import { CharacterSheetContentProps } from '../../../characterSheetProps';
 import Characteristic from './Characteristic';
 import Point from './Point';
 import Luck from './Luck';
 import Sanity from './Sanity';
 import { charFields, pointsFields } from './characteristics.data';
 
-const Characteristics: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
-    readonly,
-    data,
-    onChange
-}) => (
-    <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-        <Box gridColumn="span 8" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-            {charFields.map(({ field, label, shortLabel }) => (
-                <Characteristic
-                    key={field}
-                    label={label}
-                    shortLabel={shortLabel}
-                    data={data.characteristics[field]}
-                    readonly={readonly}
-                    handleChange={(characteristic: CoCCharacteristic) => {
-                        onChange?.({
-                            ...data,
-                            characteristics: {
-                                ...data.characteristics,
-                                [field]: characteristic
-                            }
-                        });
-                    }}
-                />
-            ))}
-        </Box>
-        <Box gridColumn="span 4" display="grid" gap={2}>
-            {pointsFields.map(({ field, label, shortLabel }) => (
-                <Point
-                    key={field}
-                    label={label}
-                    shortLabel={shortLabel}
-                    data={data.points[field]}
-                    readonly={readonly}
-                    handleChange={(point: CoCPoint) => {
-                        onChange?.({
-                            ...data,
-                            points: {
-                                ...data.points,
-                                [field]: point
-                            }
-                        });
-                    }}
-                />
-            ))}
-            <Luck
-                data={data.luck}
-                readonly={readonly}
-                handleChange={(luck: CoCLuck) => {
-                    onChange?.({
-                        ...data,
-                        luck
-                    });
-                }}
-            />
-            <Sanity
-                data={data.sanity}
-                readonly={readonly}
-                handleChange={(sanity: CoCSanity) => {
-                    onChange?.({
-                        ...data,
-                        sanity
-                    });
-                }}
-            />
-        </Box>
-    </Box>
-);
+interface CharacteristicsProps {
+    characteristics: CoCCharacteristics;
+    points: CoCPoints;
+    luck: CoCLuck;
+    sanity: CoCSanity;
+    readonly: boolean;
+    onCharacteristicsChange: (data: Partial<CoCCharacteristics>) => void;
+    onPointsChange: (data: Partial<CoCPoints>) => void;
+    onLuckOrSanityChange: (data: Partial<CoCCharacterData>) => void;
+}
 
-export default Characteristics;
+const Characteristics: React.FC<CharacteristicsProps> = ({
+    readonly,
+    characteristics,
+    points,
+    luck,
+    sanity,
+    onCharacteristicsChange,
+    onPointsChange,
+    onLuckOrSanityChange
+}) => {
+    const onCharacteristicChange = useCallback((field: string, char: CoCCharacteristic) => {
+        onCharacteristicsChange({
+            [field]: char
+        });
+    }, [onCharacteristicsChange]);
+
+    const onPointChange = useCallback((field: string, point: CoCPoint) => {
+        onPointsChange({
+            [field]: point
+        });
+    }, [onPointsChange]);
+
+    const onLuckChange = useCallback((updatedLuck: CoCLuck) => {
+        onLuckOrSanityChange({
+            luck: updatedLuck
+        });
+    }, [onLuckOrSanityChange]);
+
+    const onSanityChange = useCallback((updatedSanity: CoCSanity) => {
+        onLuckOrSanityChange({
+            sanity: updatedSanity
+        });
+    }, [onLuckOrSanityChange]);
+
+    return (
+        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+            <Box gridColumn="span 8" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                {charFields.map(({ field, label, shortLabel }) => (
+                    <Characteristic
+                        key={field}
+                        field={field}
+                        label={label}
+                        shortLabel={shortLabel}
+                        data={characteristics[field]}
+                        readonly={readonly}
+                        onChange={onCharacteristicChange}
+                    />
+                ))}
+            </Box>
+            <Box gridColumn="span 4" display="grid" gap={2}>
+                {pointsFields.map(({ field, label, shortLabel }) => (
+                    <Point
+                        key={field}
+                        field={field}
+                        label={label}
+                        shortLabel={shortLabel}
+                        data={points[field]}
+                        readonly={readonly}
+                        onChange={onPointChange}
+                    />
+                ))}
+                <Luck
+                    data={luck}
+                    readonly={readonly}
+                    onChange={onLuckChange}
+                />
+                <Sanity
+                    data={sanity}
+                    readonly={readonly}
+                    onChange={onSanityChange}
+                />
+            </Box>
+        </Box>
+    );
+};
+
+export default memo(Characteristics);

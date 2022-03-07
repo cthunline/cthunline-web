@@ -42,33 +42,51 @@ const useCharacter = ({
     const [characterList, setCharacterList] = useState<Character[]>([]);
     const [character, setCharacter] = useState<Character>();
 
-    const refreshCharacter = useCallback(async (charId: string) => {
+    const getCharacters = useCallback(async (userId: string) => {
+        try {
+            const { characters } = await Api.call({
+                method: 'GET',
+                route: `/users/${userId}/characters`
+            });
+            return characters;
+        } catch (err: any) {
+            toast.error(err.message);
+            return undefined;
+        }
+    }, []);
+
+    const getCharacter = useCallback(async (charId: string) => {
         try {
             const char = await Api.call({
                 method: 'GET',
                 route: `/characters/${charId}`
             });
-            setCharacter(char);
+            return char;
         } catch (err: any) {
             toast.error(err.message);
+            return undefined;
+        }
+    }, []);
+
+    const refreshCharacter = useCallback(async (charId: string) => {
+        const char = await getCharacter(charId);
+        if (char) {
+            setCharacter(char);
         }
     }, [
-        setCharacter
+        getCharacter
     ]);
 
     const refreshCharacterList = useCallback(async () => {
-        try {
-            const { characters } = await Api.call({
-                method: 'GET',
-                route: `/users/${user?.id}/characters`
-            });
-            setCharacterList(characters);
-        } catch (err: any) {
-            toast.error(err.message);
+        if (user?.id) {
+            const chars = await getCharacters(user.id);
+            if (chars) {
+                setCharacterList(chars);
+            }
         }
     }, [
         user,
-        setCharacterList
+        getCharacters
     ]);
 
     const refresh = useCallback(async () => {
@@ -166,6 +184,8 @@ const useCharacter = ({
     return {
         character,
         characterList,
+        getCharacter,
+        getCharacters,
         createCharacter,
         editCharacter,
         deleteCharacter

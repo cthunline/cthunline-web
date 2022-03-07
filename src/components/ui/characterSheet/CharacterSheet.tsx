@@ -2,10 +2,17 @@ import React from 'react';
 import { Paper } from '@mui/material';
 
 import { defaultData as defaultCoCData } from '../../../types/games/callOfCthulhu';
-import { CharacterSheetProps } from './characterSheetProps';
 import CoCSheet from './callOfCthulhu/CoCSheet';
+import { CharacterData } from '../../../types';
 
 import './CharacterSheet.css';
+
+export interface CharacterSheetProps {
+    readonly: boolean;
+    gameId: string;
+    data?: CharacterData;
+    onChange?: (data: CharacterData, instantRefresh?: boolean) => void;
+}
 
 const CharacterSheet: React.FC<CharacterSheetProps> = ({
     readonly,

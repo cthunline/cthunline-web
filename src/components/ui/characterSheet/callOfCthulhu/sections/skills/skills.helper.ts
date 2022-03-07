@@ -7,9 +7,3 @@ export const controlSkill = (skillData: CoCSkill): CoCSkill => {
     skill.fifth = Math.floor(skill.regular / 5);
     return skill;
 };
-
-export const controlSkills = (skills: CoCSkill[]): CoCSkill[] => (
-    skills.sort((a, b) => (
-        a.name.localeCompare(b.name)
-    ))
-);

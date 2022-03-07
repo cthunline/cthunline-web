@@ -1,48 +1,42 @@
-import React, { useState } from 'react';
+import React, { memo } from 'react';
 import { Box, FormControlLabel, Checkbox } from '@mui/material';
 
-import { CoCStatus, CoCCharacterData } from '../../../../../../types/games/callOfCthulhu';
-import { CharacterSheetContentProps } from '../../../characterSheetProps';
+import { CoCStatus } from '../../../../../../types/games/callOfCthulhu';
 import { fields } from './status.data';
 
-const Status: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
+interface StatusProps {
+    status: CoCStatus;
+    readonly: boolean;
+    onChange: (data: CoCStatus) => void;
+}
+
+const Status: React.FC<StatusProps> = ({
     readonly,
-    data,
+    status,
     onChange
-}) => {
-    const [status, setStatus] = useState<CoCStatus>(data.status);
+}) => (
+    <Box display="grid" gridTemplateColumns="repeat(10, 1fr)" gap={2}>
+        {fields.map(({ field, label }) => (
+            <Box key={field} gridColumn="span 2">
+                <FormControlLabel
+                    label={label}
+                    labelPlacement="start"
+                    control={(
+                        <Checkbox
+                            disabled={readonly}
+                            checked={status[field]}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                onChange({
+                                    ...status,
+                                    [field]: e.target.checked
+                                });
+                            }}
+                        />
+                    )}
+                />
+            </Box>
+        ))}
+    </Box>
+);
 
-    return (
-        <Box display="grid" gridTemplateColumns="repeat(10, 1fr)" gap={2}>
-            {fields.map(({ field, label }) => (
-                <Box key={field} gridColumn="span 2">
-                    <FormControlLabel
-                        label={label}
-                        labelPlacement="start"
-                        control={(
-                            <Checkbox
-                                disabled={readonly}
-                                checked={status[field]}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    setStatus((previous) => ({
-                                        ...previous,
-                                        [field]: e.target.checked
-                                    }));
-                                    onChange?.({
-                                        ...data,
-                                        status: {
-                                            ...data.status,
-                                            [field]: e.target.checked
-                                        }
-                                    });
-                                }}
-                            />
-                        )}
-                    />
-                </Box>
-            ))}
-        </Box>
-    );
-};
-
-export default Status;
+export default memo(Status);

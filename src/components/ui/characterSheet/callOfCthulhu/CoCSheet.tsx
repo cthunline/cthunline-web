@@ -1,68 +1,174 @@
-import React from 'react';
+import React, {
+    useCallback,
+    useEffect,
+    useState
+} from 'react';
 import { Box, Typography } from '@mui/material';
 
-import { CoCCharacterData } from '../../../../types/games/callOfCthulhu';
-import { CharacterSheetContentProps } from '../characterSheetProps';
+import {
+    CoCCharacterData,
+    CoCBiography,
+    CoCStatus,
+    CoCSkill,
+    CoCCharacteristics,
+    CoCPoints
+} from '../../../../types/games/callOfCthulhu';
+import { CharacterData } from '../../../../types';
 import Biography from './sections/biography/Biography';
 import Characteristics from './sections/characteristics/Characteristics';
 import Status from './sections/status/Status';
 import Skills from './sections/skills/Skills';
 
-const CoCSheet: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
+export interface CoCSheetProps {
+    readonly: boolean;
+    data: CoCCharacterData;
+    onChange?: (data: CharacterData, instantRefresh?: boolean) => void;
+}
+
+const CoCSheet: React.FC<CoCSheetProps> = ({
     readonly,
     data,
     onChange
-}) => (
-    <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-        {/* biography */}
-        <Box gridColumn="span 9" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-            <Typography variant="h6" gridColumn="span 12">
-                Biography
+}) => {
+    const [characterData, setCharacterData] = useState<CoCCharacterData>(data);
+
+    useEffect(() => {
+        onChange?.(characterData);
+    }, [
+        onChange,
+        characterData
+    ]);
+
+    const onBiographyChange = useCallback((biography: CoCBiography) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            biography
+        }));
+    }, []);
+
+    const onCharacteristicsChange = useCallback((partialChars: Partial<CoCCharacteristics>) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            characteristics: {
+                ...previous.characteristics,
+                ...partialChars
+            }
+        }));
+    }, []);
+
+    const onPointsChange = useCallback((partialPoints: Partial<CoCPoints>) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            points: {
+                ...previous.points,
+                ...partialPoints
+            }
+        }));
+    }, []);
+
+    const onLuckOrSanityChange = useCallback((partialData: Partial<CoCCharacterData>) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            ...partialData
+        }));
+    }, []);
+
+    const onStatusChange = useCallback((status: CoCStatus) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            status
+        }));
+    }, []);
+
+    const onSkillChange = useCallback((index: number, updatedSkill: CoCSkill) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            skills: previous.skills.map((skill, idx) => (
+                idx === index ? updatedSkill : skill
+            ))
+        }));
+    }, []);
+
+    const onSkillDelete = useCallback((index: number) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            skills: previous.skills.filter((s, idx) => (
+                idx !== index
+            ))
+        }));
+    }, []);
+
+    const onSkillCreate = useCallback((newSkill: CoCSkill) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            skills: [
+                ...previous.skills,
+                newSkill
+            ].sort((a, b) => (
+                a.name.localeCompare(b.name)
+            ))
+        }));
+    }, []);
+
+    return (
+        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+            {/* biography */}
+            <Box gridColumn="span 9" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                <Typography variant="h6" gridColumn="span 12">
+                    Biography
+                </Typography>
+                <Box gridColumn="span 12">
+                    <Biography
+                        readonly={readonly}
+                        biography={characterData.biography}
+                        onChange={onBiographyChange}
+                    />
+                </Box>
+            </Box>
+            {/* portrait */}
+            <Box gridColumn="span 3" gridRow="span 2" style={{ background: 'grey' }} />
+            {/* characteristics */}
+            <Typography variant="h6" gridColumn="span 9">
+                Characteristics
             </Typography>
             <Box gridColumn="span 12">
-                <Biography
+                <Characteristics
                     readonly={readonly}
-                    data={data}
-                    onChange={onChange}
+                    characteristics={characterData.characteristics}
+                    points={characterData.points}
+                    luck={characterData.luck}
+                    sanity={characterData.sanity}
+                    onCharacteristicsChange={onCharacteristicsChange}
+                    onPointsChange={onPointsChange}
+                    onLuckOrSanityChange={onLuckOrSanityChange}
+                />
+            </Box>
+            {/* status */}
+            <Typography variant="h6" gridColumn="span 12">
+                Status
+            </Typography>
+            <Box gridColumn="span 12">
+                <Status
+                    readonly={readonly}
+                    status={characterData.status}
+                    onChange={onStatusChange}
+                />
+            </Box>
+            {/* skills */}
+            <Typography variant="h6" gridColumn="span 12">
+                Skills
+            </Typography>
+            <Box gridColumn="span 12">
+                <Skills
+                    readonly={readonly}
+                    skills={characterData.skills}
+                    onChange={onSkillChange}
+                    onDelete={onSkillDelete}
+                    onCreate={onSkillCreate}
                 />
             </Box>
         </Box>
-        {/* portrait */}
-        <Box gridColumn="span 3" gridRow="span 2" style={{ background: 'grey' }} />
-        {/* characteristics */}
-        <Typography variant="h6" gridColumn="span 9">
-            Characteristics
-        </Typography>
-        <Box gridColumn="span 12">
-            <Characteristics
-                readonly={readonly}
-                data={data}
-                onChange={onChange}
-            />
-        </Box>
-        {/* status */}
-        <Typography variant="h6" gridColumn="span 12">
-            Status
-        </Typography>
-        <Box gridColumn="span 12">
-            <Status
-                readonly={readonly}
-                data={data}
-                onChange={onChange}
-            />
-        </Box>
-        {/* skills */}
-        <Typography variant="h6" gridColumn="span 12">
-            Skills
-        </Typography>
-        <Box gridColumn="span 12">
-            <Skills
-                readonly={readonly}
-                data={data}
-                onChange={onChange}
-            />
-        </Box>
-    </Box>
-);
+    );
+};
 
 export default CoCSheet;

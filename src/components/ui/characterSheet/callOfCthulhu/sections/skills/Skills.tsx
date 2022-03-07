@@ -1,16 +1,24 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Box } from '@mui/material';
 
-import { CharacterSheetContentProps } from '../../../characterSheetProps';
-import { CoCSkill, CoCCharacterData } from '../../../../../../types/games/callOfCthulhu';
-// import { controlSkills } from './skills.helper';
+import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
 import Skill from './Skill';
 import SkillAdd from './SkillAdd';
 
-const Skills: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
-    data,
+interface SkillsProps {
+    skills: CoCSkill[];
+    readonly: boolean;
+    onChange: (index: number, data: CoCSkill) => void;
+    onDelete: (index: number) => void;
+    onCreate: (data: CoCSkill) => void;
+}
+
+const Skills: React.FC<SkillsProps> = ({
+    skills,
     readonly,
-    onChange
+    onChange,
+    onDelete,
+    onCreate
 }) => (
     <Box
         gridColumn="span 12"
@@ -18,44 +26,20 @@ const Skills: React.FC<CharacterSheetContentProps<CoCCharacterData>> = ({
         gridTemplateColumns="repeat(12, 1fr)"
         gap={2}
     >
-        {data.skills.map((skill, index) => (
+        {skills.map((skill, index) => (
             <Skill
                 key={`skill-${index.toString()}`}
+                index={index}
                 data={skill}
                 readonly={readonly}
-                handleChange={(skillData: CoCSkill) => {
-                    const updatedData = { ...data };
-                    updatedData.skills[index] = skillData;
-                    onChange?.({ ...data });
-                }}
-                handleDelete={() => {
-                    onChange?.({
-                        ...data,
-                        skills: data.skills.filter((s, idx) => (
-                            index !== idx
-                        ))
-                    }, true);
-                }}
+                onChange={onChange}
+                onDelete={onDelete}
             />
         ))}
         {!readonly ? (
-            <SkillAdd
-                handleCreate={() => {
-                    // controlSkills
-                }}
-            />
+            <SkillAdd onSubmit={onCreate} />
         ) : null}
-        {/*
-        TODO
-        https://mui.com/components/autocomplete/#creatable
-        add a creatable input to add a new skill
-        set skillList as datalist on the input
-        add another input to set base
-        if new skill is selected from the datalist fill the base input
-        add a button + to add the skill then empty the create inputs
-        new added skills have development to true
-        */}
     </Box>
 );
 
-export default Skills;
+export default memo(Skills);

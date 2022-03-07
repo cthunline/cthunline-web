@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     Box,
     TextField,
@@ -11,13 +11,37 @@ import { FiPlusCircle } from 'react-icons/fi';
 import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
 
 interface SkillAddProps {
-    handleCreate: (data: CoCSkill) => void;
+    onSubmit: (data: CoCSkill) => void;
 }
 
-const SkillAdd: React.FC<SkillAddProps> = ({ handleCreate }) => {
+const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
     const [name, setName] = useState<string>('');
+    const [nameError, setNameError] = useState<boolean>(false);
     const [base, setBase] = useState<string>('');
+    const [baseError, setBaseError] = useState<boolean>(false);
     const [development, setDevelopment] = useState<boolean>(true);
+
+    const controlForm = (): boolean => {
+        if (!name) { setNameError(true); }
+        if (!base) { setBaseError(true); }
+        return !!name && !!base;
+    };
+
+    const resetForm = () => {
+        setName('');
+        setNameError(false);
+        setBase('');
+        setBaseError(false);
+        setDevelopment(true);
+    };
+
+    useEffect(() => {
+        if (name) { setNameError(false); }
+        if (base) { setBaseError(false); }
+    }, [
+        name,
+        base
+    ]);
 
     return (
         <Box
@@ -32,6 +56,7 @@ const SkillAdd: React.FC<SkillAddProps> = ({ handleCreate }) => {
                     size="small"
                     label="Skill Name"
                     value={name}
+                    error={nameError}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setName(e.target.value);
                     }}
@@ -44,6 +69,7 @@ const SkillAdd: React.FC<SkillAddProps> = ({ handleCreate }) => {
                     size="small"
                     label="Base"
                     value={base}
+                    error={baseError}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setBase(e.target.value);
                     }}
@@ -66,15 +92,20 @@ const SkillAdd: React.FC<SkillAddProps> = ({ handleCreate }) => {
             <Box gridColumn="span 1" alignItems="center">
                 <IconButton
                     size="medium"
-                    onClick={() => handleCreate({
-                        name,
-                        base,
-                        development,
-                        developed: false,
-                        regular: 0,
-                        half: 0,
-                        fifth: 0
-                    })}
+                    onClick={() => {
+                        if (controlForm()) {
+                            resetForm();
+                            onSubmit({
+                                name,
+                                base,
+                                development,
+                                developed: false,
+                                regular: 0,
+                                half: 0,
+                                fifth: 0
+                            });
+                        }
+                    }}
                 >
                     <FiPlusCircle />
                 </IconButton>
