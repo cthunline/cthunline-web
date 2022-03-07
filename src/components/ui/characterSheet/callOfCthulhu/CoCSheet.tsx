@@ -22,7 +22,11 @@ import Skills from './sections/skills/Skills';
 export interface CoCSheetProps {
     readonly: boolean;
     data: CoCCharacterData;
-    onChange?: (data: CharacterData, instantRefresh?: boolean) => void;
+    onChange: (
+        name: string,
+        data: CharacterData,
+        instantRefresh?: boolean
+    ) => void;
 }
 
 const CoCSheet: React.FC<CoCSheetProps> = ({
@@ -33,7 +37,9 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
     const [characterData, setCharacterData] = useState<CoCCharacterData>(data);
 
     useEffect(() => {
-        onChange?.(characterData);
+        const { name, occupation } = characterData.biography;
+        const characterName = `${name} (${occupation})`;
+        onChange(characterName, characterData);
     }, [
         onChange,
         characterData

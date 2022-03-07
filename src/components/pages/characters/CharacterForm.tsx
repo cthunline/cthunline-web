@@ -1,5 +1,5 @@
 import React, {
-    // useRef,
+    useRef,
     useCallback,
     useEffect,
     useState
@@ -7,27 +7,24 @@ import React, {
 import { useParams } from 'react-router-dom';
 
 import useCharacter from '../../hooks/useCharacter';
-// import { Character, CharacterData } from '../../../types';
-import { Character } from '../../../types';
+import { Character, CharacterData } from '../../../types';
 import { CharacterSheet } from '../../ui';
 
 const CharacterForm = () => {
     // const { gameId, characterId } = useParams();
-    // const { getCharacter, editCharacter } = useCharacter();
     const { characterId } = useParams();
-    const { getCharacter } = useCharacter();
+    const { getCharacter, editCharacter } = useCharacter();
 
     const [character, setCharacter] = useState<Character>();
 
-    const onChange = useCallback((/* data: CharacterData */) => {
-        // console.log('changed');
-        // console.log(data);
-        // setCharacter((previous) => (
-        //     previous ? {
-        //         ...previous,
-        //         data
-        //     } : previous
-        // ));
+    const onChange = useCallback((name: string, data: CharacterData) => {
+        setCharacter((previous) => (
+            previous ? {
+                ...previous,
+                name,
+                data
+            } : previous
+        ));
     }, []);
 
     useEffect(() => {
@@ -42,39 +39,31 @@ const CharacterForm = () => {
         getCharacter
     ]);
 
-    // const changeTime = 1000;
-    // const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-    // const onChange = (data: CharacterData, instantRefresh?: boolean) => {
-    //     console.log('changed');
-    //     console.log(data);
-    //     if (characterId) {
-    //         const { name, occupation } = data.biography;
-    //         const editData = {
-    //             characterId,
-    //             data: {
-    //                 name: `${name} (${occupation})`,
-    //                 data
-    //             },
-    //             isToast: false
-    //         };
-    //         if (instantRefresh) {
-    //             editCharacter({
-    //                 ...editData,
-    //                 isRefresh: true
-    //             });
-    //         } else {
-    //             if (changeTimer.current) {
-    //                 clearTimeout(changeTimer.current);
-    //             }
-    //             changeTimer.current = setTimeout(() => {
-    //                 editCharacter({
-    //                     ...editData,
-    //                     isRefresh: false
-    //                 });
-    //             }, changeTime);
-    //         }
-    //     }
-    // };
+    const changeTime = 1000;
+    const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    useEffect(() => {
+        if (characterId && character) {
+            if (changeTimer.current) {
+                clearTimeout(changeTimer.current);
+            }
+            changeTimer.current = setTimeout(() => {
+                const { name, data } = character;
+                editCharacter({
+                    characterId,
+                    data: {
+                        name,
+                        data
+                    },
+                    isToast: false,
+                    isRefresh: false
+                });
+            }, changeTime);
+        }
+    }, [
+        characterId,
+        character,
+        editCharacter
+    ]);
 
     return character ? (
         <CharacterSheet

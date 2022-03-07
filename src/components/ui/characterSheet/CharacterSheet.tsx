@@ -11,14 +11,18 @@ export interface CharacterSheetProps {
     readonly: boolean;
     gameId: string;
     data?: CharacterData;
-    onChange?: (data: CharacterData, instantRefresh?: boolean) => void;
+    onChange?: (
+        name: string,
+        data: CharacterData,
+        instantRefresh?: boolean
+    ) => void;
 }
 
 const CharacterSheet: React.FC<CharacterSheetProps> = ({
     readonly,
     gameId,
     data,
-    onChange
+    onChange = () => {}
 }) => {
     const getContent = (): JSX.Element | null => {
         switch (gameId) {
