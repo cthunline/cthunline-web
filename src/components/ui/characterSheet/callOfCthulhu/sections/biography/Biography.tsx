@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 
+import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCBiography } from '../../../../../../types/games/callOfCthulhu';
 import { fields } from './biography.data';
 
@@ -33,7 +34,9 @@ const Biography: React.FC<BiographyProps> = ({
                     value={biography[field]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const { value } = e.target;
-                        const parsedValue = type === 'number' ? parseInt(value) : value;
+                        const parsedValue = type === 'number' ? (
+                            Number(onlyNumbers(value))
+                        ) : value;
                         onChange({
                             ...biography,
                             [field]: parsedValue

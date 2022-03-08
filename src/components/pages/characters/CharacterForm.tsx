@@ -11,7 +11,6 @@ import { Character, CharacterData } from '../../../types';
 import { CharacterSheet } from '../../ui';
 
 const CharacterForm = () => {
-    // const { gameId, characterId } = useParams();
     const { characterId } = useParams();
     const { getCharacter, editCharacter } = useCharacter();
 
@@ -41,26 +40,30 @@ const CharacterForm = () => {
 
     const changeTime = 1000;
     const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const initialRender = useRef(true);
     useEffect(() => {
-        if (characterId && character) {
-            if (changeTimer.current) {
-                clearTimeout(changeTimer.current);
+        if (character) {
+            if (initialRender.current) {
+                initialRender.current = false;
+            } else {
+                if (changeTimer.current) {
+                    clearTimeout(changeTimer.current);
+                }
+                changeTimer.current = setTimeout(() => {
+                    const { name, data } = character;
+                    editCharacter({
+                        characterId: character.id,
+                        data: {
+                            name,
+                            data
+                        },
+                        isToast: false,
+                        isRefresh: false
+                    });
+                }, changeTime);
             }
-            changeTimer.current = setTimeout(() => {
-                const { name, data } = character;
-                editCharacter({
-                    characterId,
-                    data: {
-                        name,
-                        data
-                    },
-                    isToast: false,
-                    isRefresh: false
-                });
-            }, changeTime);
         }
     }, [
-        characterId,
         character,
         editCharacter
     ]);

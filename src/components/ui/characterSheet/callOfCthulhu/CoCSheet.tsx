@@ -1,6 +1,7 @@
 import React, {
     useCallback,
     useEffect,
+    useRef,
     useState
 } from 'react';
 import { Box, Typography } from '@mui/material';
@@ -12,7 +13,8 @@ import {
     CoCSkill,
     CoCCharacteristics,
     CoCPoints,
-    CoCWeapon
+    CoCWeapon,
+    CoCStory
 } from '../../../../types/games/callOfCthulhu';
 import { CharacterData } from '../../../../types';
 import Biography from './sections/biography/Biography';
@@ -21,6 +23,7 @@ import Status from './sections/status/Status';
 import Skills from './sections/skills/Skills';
 import Combat from './sections/combat/Combat';
 import Weapons from './sections/weapons/Weapons';
+import Story from './sections/story/Story';
 import { controlCharacterData } from './cocSheet.helper';
 
 export interface CoCSheetProps {
@@ -40,10 +43,15 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
 }) => {
     const [characterData, setCharacterData] = useState<CoCCharacterData>(data);
 
+    const initialRender = useRef(true);
     useEffect(() => {
-        const { name, occupation } = characterData.biography;
-        const characterName = `${name} (${occupation})`;
-        onChange(characterName, characterData);
+        if (initialRender.current) {
+            initialRender.current = false;
+        } else {
+            const { name, occupation } = characterData.biography;
+            const characterName = `${name} (${occupation})`;
+            onChange(characterName, characterData);
+        }
     }, [
         onChange,
         characterData
@@ -172,6 +180,15 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
         ));
     }, []);
 
+    const onStoryChange = useCallback((story: CoCStory) => {
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                story
+            })
+        ));
+    }, []);
+
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
             {/* biography */}
@@ -247,6 +264,17 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                     onChange={onWeaponChange}
                     onDelete={onWeaponDelete}
                     onCreate={onWeaponCreate}
+                />
+            </Box>
+            {/* story */}
+            <Typography variant="h6" gridColumn="span 12">
+                Story
+            </Typography>
+            <Box gridColumn="span 12">
+                <Story
+                    readonly={readonly}
+                    story={characterData.story}
+                    onChange={onStoryChange}
                 />
             </Box>
         </Box>
