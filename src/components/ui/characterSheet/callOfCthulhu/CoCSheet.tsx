@@ -19,7 +19,9 @@ import Biography from './sections/biography/Biography';
 import Characteristics from './sections/characteristics/Characteristics';
 import Status from './sections/status/Status';
 import Skills from './sections/skills/Skills';
+import Combat from './sections/combat/Combat';
 import Weapons from './sections/weapons/Weapons';
+import { controlCharacterData } from './cocSheet.helper';
 
 export interface CoCSheetProps {
     readonly: boolean;
@@ -48,104 +50,126 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
     ]);
 
     const onBiographyChange = useCallback((biography: CoCBiography) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            biography
-        }));
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                biography
+            })
+        ));
     }, []);
 
     const onCharacteristicsChange = useCallback((partialChars: Partial<CoCCharacteristics>) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            characteristics: {
-                ...previous.characteristics,
-                ...partialChars
-            }
-        }));
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                characteristics: {
+                    ...previous.characteristics,
+                    ...partialChars
+                }
+            })
+        ));
     }, []);
 
     const onPointsChange = useCallback((partialPoints: Partial<CoCPoints>) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            points: {
-                ...previous.points,
-                ...partialPoints
-            }
-        }));
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                points: {
+                    ...previous.points,
+                    ...partialPoints
+                }
+            })
+        ));
     }, []);
 
     const onLuckOrSanityChange = useCallback((partialData: Partial<CoCCharacterData>) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            ...partialData
-        }));
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                ...partialData
+            })
+        ));
     }, []);
 
     const onStatusChange = useCallback((status: CoCStatus) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            status
-        }));
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                status
+            })
+        ));
     }, []);
 
     const onSkillChange = useCallback((index: number, updatedSkill: CoCSkill) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            skills: previous.skills.map((skill, idx) => (
-                idx === index ? updatedSkill : skill
-            ))
-        }));
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                skills: previous.skills.map((skill, idx) => (
+                    idx === index ? updatedSkill : skill
+                ))
+            })
+        ));
     }, []);
 
     const onSkillDelete = useCallback((index: number) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            skills: previous.skills.filter((s, idx) => (
-                idx !== index
-            ))
-        }));
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                skills: previous.skills.filter((s, idx) => (
+                    idx !== index
+                ))
+            })
+        ));
     }, []);
 
     const onSkillCreate = useCallback((newSkill: CoCSkill) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            skills: [
-                ...previous.skills,
-                newSkill
-            ].sort((a, b) => (
-                a.name.localeCompare(b.name)
-            ))
-        }));
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                skills: [
+                    ...previous.skills,
+                    newSkill
+                ].sort((a, b) => (
+                    a.name.localeCompare(b.name)
+                ))
+            })
+        ));
     }, []);
 
     const onWeaponChange = useCallback((index: number, updatedWeapon: CoCWeapon) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            weapons: previous.weapons.map((weapon, idx) => (
-                idx === index ? updatedWeapon : weapon
-            ))
-        }));
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                weapons: previous.weapons.map((weapon, idx) => (
+                    idx === index ? updatedWeapon : weapon
+                ))
+            })
+        ));
     }, []);
 
     const onWeaponDelete = useCallback((index: number) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            weapons: previous.weapons.filter((s, idx) => (
-                idx !== index
-            ))
-        }));
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                weapons: previous.weapons.filter((s, idx) => (
+                    idx !== index
+                ))
+            })
+        ));
     }, []);
 
     const onWeaponCreate = useCallback((newWeapon: CoCWeapon) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            weapons: [
-                ...previous.weapons,
-                newWeapon
-            ].sort((a, b) => (
-                a.name.localeCompare(b.name)
-            ))
-        }));
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                weapons: [
+                    ...previous.weapons,
+                    newWeapon
+                ].sort((a, b) => (
+                    a.name.localeCompare(b.name)
+                ))
+            })
+        ));
     }, []);
 
     return (
@@ -204,6 +228,13 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                     onDelete={onSkillDelete}
                     onCreate={onSkillCreate}
                 />
+            </Box>
+            {/* combat */}
+            <Typography variant="h6" gridColumn="span 12">
+                Combat
+            </Typography>
+            <Box gridColumn="span 12">
+                <Combat combat={data.combat} />
             </Box>
             {/* weapons */}
             <Typography variant="h6" gridColumn="span 12">

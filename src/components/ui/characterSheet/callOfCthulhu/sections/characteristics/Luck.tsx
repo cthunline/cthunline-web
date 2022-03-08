@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 
+import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCLuck } from '../../../../../../types/games/callOfCthulhu';
 import { luckKeys } from './characteristics.data';
 
@@ -38,7 +39,7 @@ const Luck: React.FC<LuckProps> = ({
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         onChange({
                             ...data,
-                            [key]: Number(e.target.value)
+                            [key]: Number(onlyNumbers(e.target.value))
                         });
                     }}
                 />

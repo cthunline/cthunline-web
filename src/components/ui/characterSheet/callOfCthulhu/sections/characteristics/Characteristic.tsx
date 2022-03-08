@@ -5,9 +5,10 @@ import {
     Tooltip
 } from '@mui/material';
 
+import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCCharacteristic } from '../../../../../../types/games/callOfCthulhu';
 import { charKeys } from './characteristics.data';
-import { controlCharacteristic } from './characteristics.helper';
+import { controlCharacteristic } from '../../cocSheet.helper';
 
 interface CharacteristicProps {
     field: string;
@@ -40,7 +41,7 @@ const Characteristic: React.FC<CharacteristicProps> = ({
         </Box>
         {charKeys.map(({ key, label: keyLabel, editable }) => (
             <Box
-                key={key.toString()}
+                key={`characteristic-${key}`}
                 gridColumn="span 3"
                 alignItems="center"
             >
@@ -59,7 +60,7 @@ const Characteristic: React.FC<CharacteristicProps> = ({
                             field,
                             controlCharacteristic({
                                 ...data,
-                                [key]: Number(e.target.value)
+                                [key]: Number(onlyNumbers(e.target.value))
                             })
                         );
                     }}

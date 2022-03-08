@@ -1,9 +1,10 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 
+import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCSanity } from '../../../../../../types/games/callOfCthulhu';
 import { sanityKeys } from './characteristics.data';
-import { controlSanity } from './characteristics.helper';
+import { controlSanity } from '../../cocSheet.helper';
 
 interface SanityProps {
     data: CoCSanity;
@@ -40,7 +41,7 @@ const Sanity: React.FC<SanityProps> = ({
                         onChange(
                             controlSanity({
                                 ...data,
-                                [key]: Number(e.target.value)
+                                [key]: Number(onlyNumbers(e.target.value))
                             })
                         );
                     }}

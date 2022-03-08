@@ -7,9 +7,10 @@ import {
 } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
+import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
 import { skillKeys } from './skills.data';
-import { controlSkill } from './skills.helper';
+import { controlSkill } from '../../cocSheet.helper';
 
 interface SkillProps {
     index: number;
@@ -81,7 +82,7 @@ const Skill: React.FC<SkillProps> = ({
                             index,
                             controlSkill({
                                 ...data,
-                                [key]: Number(e.target.value)
+                                [key]: Number(onlyNumbers(e.target.value))
                             })
                         );
                     }}

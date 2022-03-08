@@ -100,8 +100,7 @@ export const sanityKeys: KeyData<CoCSanity>[] = [{
     editable: true
 }, {
     key: 'starting',
-    label: 'Start',
-    editable: true
+    label: 'Start'
 }, {
     key: 'maximum',
     label: 'Max'

@@ -5,9 +5,10 @@ import {
     Tooltip
 } from '@mui/material';
 
+import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCPoint } from '../../../../../../types/games/callOfCthulhu';
 import { pointsKeys } from './characteristics.data';
-import { controlPoint } from './characteristics.helper';
+import { controlPoint } from '../../cocSheet.helper';
 
 interface PointProps {
     field: string;
@@ -59,7 +60,7 @@ const Point: React.FC<PointProps> = ({
                             field,
                             controlPoint({
                                 ...data,
-                                [key]: Number(e.target.value)
+                                [key]: Number(onlyNumbers(e.target.value))
                             })
                         );
                     }}
