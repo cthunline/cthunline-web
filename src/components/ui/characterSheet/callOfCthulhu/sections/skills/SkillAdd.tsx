@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
     Box,
     TextField,
@@ -9,9 +9,16 @@ import {
 import { FiPlusCircle } from 'react-icons/fi';
 
 import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
+import SkillSelector from './SkillSelector';
 
 interface SkillAddProps {
     onSubmit: (data: CoCSkill) => void;
+}
+
+interface SelectorResult {
+    name: string;
+    base: string;
+    development: boolean;
 }
 
 const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
@@ -43,6 +50,16 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
         base
     ]);
 
+    const onSelectorChange = useCallback((result: SelectorResult | null) => {
+        if (result) {
+            setName(result.name);
+            setBase(result.base);
+            setDevelopment(result.development);
+        } else {
+            resetForm();
+        }
+    }, []);
+
     return (
         <Box
             gridColumn="span 12"
@@ -50,16 +67,11 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
             gridTemplateColumns="repeat(12, 1fr)"
         >
             <Box gridColumn="span 6" display="grid" alignItems="center">
-                <TextField
-                    fullWidth
-                    type="text"
+                <SkillSelector
+                    label="Select or create Skill"
                     size="small"
-                    label="Skill Name"
-                    value={name}
                     error={nameError}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setName(e.target.value);
-                    }}
+                    onChange={onSelectorChange}
                 />
             </Box>
             <Box gridColumn="span 2" display="grid" alignItems="center">

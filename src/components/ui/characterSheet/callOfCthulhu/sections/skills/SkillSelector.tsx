@@ -4,7 +4,10 @@ import { Autocomplete, TextField, createFilterOptions } from '@mui/material';
 import { skillList } from './skills.data';
 
 interface SkillSelectorProps {
-    onChange: (value: SkillSelectorData) => void;
+    label: string;
+    onChange: (value: SkillSelectorData | null) => void;
+    size?: 'medium' | 'small';
+    error?: boolean;
 }
 
 interface SkillSelectorData {
@@ -22,8 +25,13 @@ const defaultValue = {
     development: true
 };
 
-const SkillSelector: React.FC<SkillSelectorProps> = ({ onChange }) => {
-    const [value, setValue] = useState<SkillSelectorData>(defaultValue);
+const SkillSelector: React.FC<SkillSelectorProps> = ({
+    label,
+    onChange,
+    size,
+    error
+}) => {
+    const [value, setValue] = useState<SkillSelectorData | null>(defaultValue);
 
     useEffect(() => {
         onChange(value);
@@ -34,6 +42,7 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({ onChange }) => {
 
     return (
         <Autocomplete
+            size={size}
             selectOnFocus
             clearOnBlur
             handleHomeEndKeys
@@ -44,7 +53,7 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({ onChange }) => {
                 <li {...props}>{option.name}</li>
             )}
             renderInput={(params) => (
-                <TextField {...params} label="Skill Name" />
+                <TextField {...params} error={error} label={label} />
             )}
             onChange={(e, val) => {
                 if (val && typeof val === 'object') {
@@ -61,6 +70,8 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({ onChange }) => {
                         ...defaultValue,
                         name: String(val)
                     });
+                } else {
+                    setValue(null);
                 }
             }}
             filterOptions={(options, params) => {
@@ -72,7 +83,6 @@ const SkillSelector: React.FC<SkillSelectorProps> = ({ onChange }) => {
                 if (inputValue && !isExisting) {
                     filtered.push({
                         ...defaultValue,
-                        inputValue,
                         name: `Add "${inputValue}"`
                     });
                 }
