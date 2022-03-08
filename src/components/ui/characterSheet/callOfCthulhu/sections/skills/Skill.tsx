@@ -53,22 +53,11 @@ const Skill: React.FC<SkillProps> = ({
         <Box gridColumn="span 2" display="grid" alignItems="center">
             <TextField
                 fullWidth
-                InputProps={{
-                    readOnly: readonly
-                }}
+                disabled
                 type="text"
                 size="small"
                 label="Base"
                 value={data.base}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange(
-                        index,
-                        controlSkill({
-                            ...data,
-                            base: e.target.value
-                        })
-                    );
-                }}
             />
         </Box>
         {skillKeys.map(({ key, label, editable }) => (

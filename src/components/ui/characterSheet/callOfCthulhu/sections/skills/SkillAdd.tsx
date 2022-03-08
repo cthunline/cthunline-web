@@ -1,4 +1,9 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {
+    useCallback,
+    useEffect,
+    useRef,
+    useState
+} from 'react';
 import {
     Box,
     TextField,
@@ -15,48 +20,63 @@ interface SkillAddProps {
     onSubmit: (data: CoCSkill) => void;
 }
 
-interface SelectorResult {
+interface SkillAddValues {
     name: string;
     base: string;
     development: boolean;
 }
 
+interface SkillAddErrors {
+    name: boolean;
+    base: boolean;
+}
+
+const defaultValues = {
+    name: '',
+    base: '',
+    development: true
+};
+
+const defaultErrors = {
+    name: false,
+    base: false
+};
+
 const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
-    const [name, setName] = useState<string>('');
-    const [nameError, setNameError] = useState<boolean>(false);
-    const [base, setBase] = useState<string>('');
-    const [baseError, setBaseError] = useState<boolean>(false);
-    const [development, setDevelopment] = useState<boolean>(true);
+    const [selectorValue, setSelectorValue] = useState<SkillAddValues | null>(null);
+    const [values, setValues] = useState<SkillAddValues>(defaultValues);
+    const [errors, setErrors] = useState<SkillAddErrors>(defaultErrors);
 
-    const controlForm = (): boolean => {
-        if (!name) { setNameError(true); }
-        if (!base) { setBaseError(true); }
+    const controlForm = useCallback((): boolean => {
+        const { name, base } = values;
+        setErrors({
+            name: !name,
+            base: !base
+        });
         return !!name && !!base;
-    };
+    }, [values]);
 
-    const resetForm = () => {
-        setName('');
-        setNameError(false);
-        setBase('');
-        setBaseError(false);
-        setDevelopment(true);
-    };
-
+    const initialRender = useRef<boolean>(true);
     useEffect(() => {
-        if (name) { setNameError(false); }
-        if (base) { setBaseError(false); }
-    }, [
-        name,
-        base
-    ]);
-
-    const onSelectorChange = useCallback((result: SelectorResult | null) => {
-        if (result) {
-            setName(result.name);
-            setBase(result.base);
-            setDevelopment(result.development);
+        if (!initialRender.current) {
+            const updatedErrors: Partial<SkillAddErrors> = {};
+            if (values.name) { updatedErrors.name = false; }
+            if (values.base) { updatedErrors.base = false; }
+            setErrors((previous) => ({
+                ...previous,
+                ...updatedErrors
+            }));
         } else {
-            resetForm();
+            initialRender.current = false;
+        }
+    }, [values]);
+
+    const onSelectorChange = useCallback((result: SkillAddValues | null) => {
+        setSelectorValue(result);
+        if (result) {
+            setValues(result);
+        } else {
+            setValues(defaultValues);
         }
     }, []);
 
@@ -69,8 +89,9 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
             <Box gridColumn="span 6" display="grid" alignItems="center">
                 <SkillSelector
                     label="Select or create Skill"
+                    value={selectorValue}
                     size="small"
-                    error={nameError}
+                    error={errors.name}
                     onChange={onSelectorChange}
                 />
             </Box>
@@ -80,10 +101,13 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
                     type="text"
                     size="small"
                     label="Base"
-                    value={base}
-                    error={baseError}
+                    value={values.base}
+                    error={errors.base}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setBase(e.target.value);
+                        setValues((previous) => ({
+                            ...previous,
+                            base: e.target.value
+                        }));
                     }}
                 />
             </Box>
@@ -93,9 +117,12 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
                     labelPlacement="start"
                     control={(
                         <Switch
-                            checked={development}
+                            checked={values.development}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                setDevelopment(e.target.checked);
+                                setValues((previous) => ({
+                                    ...previous,
+                                    development: e.target.checked
+                                }));
                             }}
                         />
                     )}
@@ -106,16 +133,15 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
                     size="medium"
                     onClick={() => {
                         if (controlForm()) {
-                            resetForm();
                             onSubmit({
-                                name,
-                                base,
-                                development,
+                                ...values,
                                 developed: false,
                                 regular: 0,
                                 half: 0,
                                 fifth: 0
                             });
+                            setSelectorValue(null);
+                            setValues(defaultValues);
                         }
                     }}
                 >

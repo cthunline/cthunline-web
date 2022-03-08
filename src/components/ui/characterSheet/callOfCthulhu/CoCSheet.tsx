@@ -11,13 +11,15 @@ import {
     CoCStatus,
     CoCSkill,
     CoCCharacteristics,
-    CoCPoints
+    CoCPoints,
+    CoCWeapon
 } from '../../../../types/games/callOfCthulhu';
 import { CharacterData } from '../../../../types';
 import Biography from './sections/biography/Biography';
 import Characteristics from './sections/characteristics/Characteristics';
 import Status from './sections/status/Status';
 import Skills from './sections/skills/Skills';
+import Weapons from './sections/weapons/Weapons';
 
 export interface CoCSheetProps {
     readonly: boolean;
@@ -116,6 +118,36 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
         }));
     }, []);
 
+    const onWeaponChange = useCallback((index: number, updatedWeapon: CoCWeapon) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            weapons: previous.weapons.map((weapon, idx) => (
+                idx === index ? updatedWeapon : weapon
+            ))
+        }));
+    }, []);
+
+    const onWeaponDelete = useCallback((index: number) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            weapons: previous.weapons.filter((s, idx) => (
+                idx !== index
+            ))
+        }));
+    }, []);
+
+    const onWeaponCreate = useCallback((newWeapon: CoCWeapon) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            weapons: [
+                ...previous.weapons,
+                newWeapon
+            ].sort((a, b) => (
+                a.name.localeCompare(b.name)
+            ))
+        }));
+    }, []);
+
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
             {/* biography */}
@@ -171,6 +203,19 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                     onChange={onSkillChange}
                     onDelete={onSkillDelete}
                     onCreate={onSkillCreate}
+                />
+            </Box>
+            {/* weapons */}
+            <Typography variant="h6" gridColumn="span 12">
+                Weapons
+            </Typography>
+            <Box gridColumn="span 12">
+                <Weapons
+                    readonly={readonly}
+                    weapons={characterData.weapons}
+                    onChange={onWeaponChange}
+                    onDelete={onWeaponDelete}
+                    onCreate={onWeaponCreate}
                 />
             </Box>
         </Box>

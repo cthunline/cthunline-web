@@ -1,22 +1,20 @@
 import React, { memo } from 'react';
 import {
-    Box
-    // TextField,
-    // Checkbox,
-    // IconButton
+    Box,
+    TextField,
+    IconButton
 } from '@mui/material';
-// import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-// import { CoCWeapon } from '../../../../../../types/games/callOfCthulhu';
-// import { skillKeys } from './skills.data';
-// import { controlSkill } from './skills.helper';
+import { CoCWeapon } from '../../../../../../types/games/callOfCthulhu';
+import { weaponKeys } from './weapons.data';
 
 interface WeaponProps {
-    // index: number;
-    // data: CoCWeapon;
-    // readonly: boolean;
-    // onChange: (index: number, data: CoCWeapon) => void;
-    // onDelete: (index: number) => void;
+    index: number;
+    data: CoCWeapon;
+    readonly: boolean;
+    onChange: (index: number, data: CoCWeapon) => void;
+    onDelete: (index: number) => void;
 }
 /*
 "name" : "Unarmed",
@@ -26,55 +24,29 @@ interface WeaponProps {
 "ammo" : "",
 "malfunction" : 0
 */
-
-/*
-{
+const Weapon: React.FC<WeaponProps> = ({
     index,
     data,
     readonly,
     onChange,
     onDelete
-}
-*/
-const Weapon: React.FC<WeaponProps> = () => (
+}) => (
     <Box
         gridColumn="span 12"
         display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
+        gridTemplateColumns="repeat(24, 1fr)"
     >
-        {/* <Box gridColumn="span 5" display="grid" alignItems="center">
+        <Box gridColumn="span 8" display="grid" alignItems="center">
             {data.name}
         </Box>
-        <Box gridColumn="span 2" display="grid" alignItems="center">
-            <TextField
-                fullWidth
-                InputProps={{
-                    readOnly: readonly
-                }}
-                type="text"
-                size="small"
-                label="Base"
-                value={data.base}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    onChange(
-                        index,
-                        controlSkill({
-                            ...data,
-                            base: e.target.value
-                        })
-                    );
-                }}
-            />
-        </Box>
-        {skillKeys.map(({ key, label, editable }) => (
+        {weaponKeys.map(({ key, label, gridColumn }) => (
             <Box
-                key={key.toString()}
-                gridColumn="span 1"
+                key={`weapon-${key}`}
+                gridColumn={`span ${gridColumn}`}
                 alignItems="center"
             >
                 <TextField
                     fullWidth
-                    disabled={!editable}
                     InputProps={{
                         readOnly: readonly
                     }}
@@ -83,18 +55,15 @@ const Weapon: React.FC<WeaponProps> = () => (
                     label={label}
                     value={data[key]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange(
-                            index,
-                            controlSkill({
-                                ...data,
-                                [key]: Number(e.target.value)
-                            })
-                        );
+                        onChange(index, {
+                            ...data,
+                            [key]: e.target.value
+                        });
                     }}
                 />
             </Box>
         ))}
-        <Box gridColumn="span 1" alignItems="center">
+        <Box gridColumn="span 2" alignItems="center">
             <IconButton
                 size="medium"
                 color="error"
@@ -102,7 +71,7 @@ const Weapon: React.FC<WeaponProps> = () => (
             >
                 <MdOutlineDeleteOutline />
             </IconButton>
-        </Box> */}
+        </Box>
     </Box>
 );
 

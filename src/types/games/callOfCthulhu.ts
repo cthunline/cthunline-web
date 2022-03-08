@@ -91,7 +91,7 @@ export interface CoCWeapon {
     attacks: string;
     range: string;
     ammo: string;
-    malfunction: number;
+    malfunction: string;
 }
 
 export interface CoCStory {
