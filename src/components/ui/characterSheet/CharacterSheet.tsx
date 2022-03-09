@@ -11,7 +11,7 @@ export interface CharacterSheetProps {
     readonly: boolean;
     gameId: string;
     data?: CharacterData;
-    onChange?: (
+    onChange: (
         name: string,
         data: CharacterData,
         instantRefresh?: boolean

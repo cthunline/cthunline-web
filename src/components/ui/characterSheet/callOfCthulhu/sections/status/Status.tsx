@@ -23,13 +23,14 @@ const Status: React.FC<StatusProps> = ({
                     labelPlacement="start"
                     control={(
                         <Checkbox
-                            disabled={readonly}
                             checked={status[field]}
                             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                onChange({
-                                    ...status,
-                                    [field]: e.target.checked
-                                });
+                                if (!readonly) {
+                                    onChange({
+                                        ...status,
+                                        [field]: e.target.checked
+                                    });
+                                }
                             }}
                         />
                     )}

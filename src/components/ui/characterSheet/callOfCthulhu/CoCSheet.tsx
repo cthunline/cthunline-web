@@ -17,7 +17,7 @@ import {
     CoCStory
 } from '../../../../types/games/callOfCthulhu';
 import { CharacterData } from '../../../../types';
-import Portrait from './sections/portrait/Portrait';
+import Portrait from '../generic/portrait/Portrait';
 import Biography from './sections/biography/Biography';
 import Characteristics from './sections/characteristics/Characteristics';
 import Status from './sections/status/Status';
@@ -199,7 +199,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             {/* portrait */}
             <Box gridColumn="span 3" gridRow="span 2">
                 <Portrait
-                    portrait={characterData.portrait}
+                    base64={characterData.portrait}
                     readonly={readonly}
                     onChange={onPortraitChange}
                 />

@@ -16,14 +16,7 @@ interface WeaponProps {
     onChange: (index: number, data: CoCWeapon) => void;
     onDelete: (index: number) => void;
 }
-/*
-"name" : "Unarmed",
-"damage" : "1D3 + DB",
-"attacks" : "1",
-"range" : "",
-"ammo" : "",
-"malfunction" : 0
-*/
+
 const Weapon: React.FC<WeaponProps> = ({
     index,
     data,
@@ -36,7 +29,7 @@ const Weapon: React.FC<WeaponProps> = ({
         display="grid"
         gridTemplateColumns="repeat(24, 1fr)"
     >
-        <Box gridColumn="span 8" display="grid" alignItems="center">
+        <Box gridColumn={`span ${readonly ? '10' : '8'}`} display="grid" alignItems="center">
             {data.name}
         </Box>
         {weaponKeys.map(({ key, label, gridColumn }) => (
@@ -63,15 +56,17 @@ const Weapon: React.FC<WeaponProps> = ({
                 />
             </Box>
         ))}
-        <Box gridColumn="span 2" alignItems="center">
-            <IconButton
-                size="medium"
-                color="error"
-                onClick={() => onDelete(index)}
-            >
-                <MdOutlineDeleteOutline />
-            </IconButton>
-        </Box>
+        {readonly ? null : (
+            <Box gridColumn="span 2" alignItems="center">
+                <IconButton
+                    size="medium"
+                    color="error"
+                    onClick={() => onDelete(index)}
+                >
+                    <MdOutlineDeleteOutline />
+                </IconButton>
+            </Box>
+        )}
     </Box>
 );
 

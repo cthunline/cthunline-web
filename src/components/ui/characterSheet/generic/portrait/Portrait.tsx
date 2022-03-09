@@ -1,13 +1,14 @@
 import React, { memo } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { MdUploadFile, MdOutlineDeleteOutline } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
-import { getInputFileBase64 } from '../../../../../../services/tools';
+import { getInputFileBase64 } from '../../../../../services/tools';
 
 import './Portrait.css';
 
 interface PortraitProps {
-    portrait: string;
+    base64: string;
     readonly: boolean;
     onChange: (base64: string) => void;
 }
@@ -17,8 +18,10 @@ const allowedMimeTypes = [
     'image/png'
 ];
 
+const limitSizeInKb = 250;
+
 const Portrait: React.FC<PortraitProps> = ({
-    portrait,
+    base64,
     readonly,
     onChange
 }) => {
@@ -26,32 +29,30 @@ const Portrait: React.FC<PortraitProps> = ({
         const file = e.target.files?.[0];
         if (file) {
             const base64String = await getInputFileBase64(file);
-            onChange(base64String);
+            const sizeInKb = file.size / 1000;
+            if (sizeInKb > limitSizeInKb) {
+                toast.error(`File size is too large (max ${limitSizeInKb}Kb)`);
+            } else {
+                onChange(base64String);
+            }
         }
     };
 
-    /*
-    TODO
-    handle when image is smaller than container (position?)
-    handle delete button
-    when in readonly mode and no portrait -> default image?
-    */
-
     return (
-        <Box className="coc-portrait-container">
-            <Box className="coc-portrait-inner">
-                {portrait ? (
+        <Box className="character-portrait-container">
+            <Box className="character-portrait-inner">
+                {base64 ? (
                     <img
-                        className="coc-portrait-image"
-                        src={portrait}
+                        className="character-portrait-image"
+                        src={base64}
                         alt="Character Portrait"
                     />
                 ) : null}
                 {readonly ? null : (
                     <>
-                        <label htmlFor="coc-portrait-input">
+                        <label htmlFor="character-portrait-input">
                             <input
-                                id="coc-portrait-input"
+                                id="character-portrait-input"
                                 type="file"
                                 accept={allowedMimeTypes.join(',')}
                                 onChange={handleFileChange}
@@ -60,9 +61,11 @@ const Portrait: React.FC<PortraitProps> = ({
                                 <MdUploadFile size={40} />
                             </IconButton>
                         </label>
-                        <IconButton color="error" onClick={() => {}}>
-                            <MdOutlineDeleteOutline size={40} />
-                        </IconButton>
+                        {base64 ? (
+                            <IconButton color="error" onClick={() => onChange('')}>
+                                <MdOutlineDeleteOutline size={40} />
+                            </IconButton>
+                        ) : null}
                     </>
                 )}
             </Box>

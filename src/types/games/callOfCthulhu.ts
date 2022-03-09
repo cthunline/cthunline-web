@@ -124,7 +124,8 @@ const defaultCharacteristic = {
     fifth: 0
 };
 
-export const defaultData = {
+export const defaultData: CoCCharacterData = {
+    portrait: '',
     biography: {
         name: '',
         birthPlace: '',

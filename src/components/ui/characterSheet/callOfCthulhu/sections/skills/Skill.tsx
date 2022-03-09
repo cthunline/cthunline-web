@@ -37,18 +37,20 @@ const Skill: React.FC<SkillProps> = ({
                 <Checkbox
                     checked={data.developed}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange(
-                            index,
-                            controlSkill({
-                                ...data,
-                                developed: e.target.checked
-                            })
-                        );
+                        if (!readonly) {
+                            onChange(
+                                index,
+                                controlSkill({
+                                    ...data,
+                                    developed: e.target.checked
+                                })
+                            );
+                        }
                     }}
                 />
             ) : null}
         </Box>
-        <Box gridColumn="span 5" display="grid" alignItems="center">
+        <Box gridColumn={`span ${readonly ? '6' : '5'}`} display="grid" alignItems="center">
             {data.name}
         </Box>
         <Box gridColumn="span 2" display="grid" alignItems="center">
@@ -89,15 +91,17 @@ const Skill: React.FC<SkillProps> = ({
                 />
             </Box>
         ))}
-        <Box gridColumn="span 1" alignItems="center">
-            <IconButton
-                size="medium"
-                color="error"
-                onClick={() => onDelete(index)}
-            >
-                <MdOutlineDeleteOutline />
-            </IconButton>
-        </Box>
+        {readonly ? null : (
+            <Box gridColumn="span 1" alignItems="center">
+                <IconButton
+                    size="medium"
+                    color="error"
+                    onClick={() => onDelete(index)}
+                >
+                    <MdOutlineDeleteOutline />
+                </IconButton>
+            </Box>
+        )}
     </Box>
 );
 
