@@ -17,6 +17,7 @@ import {
     CoCStory
 } from '../../../../types/games/callOfCthulhu';
 import { CharacterData } from '../../../../types';
+import Portrait from './sections/portrait/Portrait';
 import Biography from './sections/biography/Biography';
 import Characteristics from './sections/characteristics/Characteristics';
 import Status from './sections/status/Status';
@@ -66,6 +67,13 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
         ));
     }, []);
 
+    const onPortraitChange = useCallback((portrait: string) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            portrait
+        }));
+    }, []);
+
     const onCharacteristicsChange = useCallback((partialChars: Partial<CoCCharacteristics>) => {
         setCharacterData((previous) => (
             controlCharacterData({
@@ -100,93 +108,77 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
     }, []);
 
     const onStatusChange = useCallback((status: CoCStatus) => {
-        setCharacterData((previous) => (
-            controlCharacterData({
-                ...previous,
-                status
-            })
-        ));
+        setCharacterData((previous) => ({
+            ...previous,
+            status
+        }));
     }, []);
 
     const onSkillChange = useCallback((index: number, updatedSkill: CoCSkill) => {
-        setCharacterData((previous) => (
-            controlCharacterData({
-                ...previous,
-                skills: previous.skills.map((skill, idx) => (
-                    idx === index ? updatedSkill : skill
-                ))
-            })
-        ));
+        setCharacterData((previous) => ({
+            ...previous,
+            skills: previous.skills.map((skill, idx) => (
+                idx === index ? updatedSkill : skill
+            ))
+        }));
     }, []);
 
     const onSkillDelete = useCallback((index: number) => {
-        setCharacterData((previous) => (
-            controlCharacterData({
-                ...previous,
-                skills: previous.skills.filter((s, idx) => (
-                    idx !== index
-                ))
-            })
-        ));
+        setCharacterData((previous) => ({
+            ...previous,
+            skills: previous.skills.filter((s, idx) => (
+                idx !== index
+            ))
+        }));
     }, []);
 
     const onSkillCreate = useCallback((newSkill: CoCSkill) => {
-        setCharacterData((previous) => (
-            controlCharacterData({
-                ...previous,
-                skills: [
-                    ...previous.skills,
-                    newSkill
-                ].sort((a, b) => (
-                    a.name.localeCompare(b.name)
-                ))
-            })
-        ));
+        setCharacterData((previous) => ({
+            ...previous,
+            skills: [
+                ...previous.skills,
+                newSkill
+            ].sort((a, b) => (
+                a.name.localeCompare(b.name)
+            ))
+        }));
     }, []);
 
     const onWeaponChange = useCallback((index: number, updatedWeapon: CoCWeapon) => {
-        setCharacterData((previous) => (
-            controlCharacterData({
-                ...previous,
-                weapons: previous.weapons.map((weapon, idx) => (
-                    idx === index ? updatedWeapon : weapon
-                ))
-            })
-        ));
+        setCharacterData((previous) => ({
+            ...previous,
+            weapons: previous.weapons.map((weapon, idx) => (
+                idx === index ? updatedWeapon : weapon
+            ))
+        }));
     }, []);
 
     const onWeaponDelete = useCallback((index: number) => {
-        setCharacterData((previous) => (
-            controlCharacterData({
-                ...previous,
-                weapons: previous.weapons.filter((s, idx) => (
-                    idx !== index
-                ))
-            })
-        ));
+        setCharacterData((previous) => ({
+            ...previous,
+            weapons: previous.weapons.filter((s, idx) => (
+                idx !== index
+            ))
+        }));
     }, []);
 
     const onWeaponCreate = useCallback((newWeapon: CoCWeapon) => {
-        setCharacterData((previous) => (
-            controlCharacterData({
-                ...previous,
-                weapons: [
-                    ...previous.weapons,
-                    newWeapon
-                ].sort((a, b) => (
-                    a.name.localeCompare(b.name)
-                ))
-            })
-        ));
+        setCharacterData((previous) => ({
+            ...previous,
+            weapons: [
+                ...previous.weapons,
+                newWeapon
+            ].sort((a, b) => (
+                a.name.localeCompare(b.name)
+            ))
+        }));
     }, []);
 
     const onStoryChange = useCallback((story: CoCStory) => {
-        setCharacterData((previous) => (
-            controlCharacterData({
-                ...previous,
-                story
-            })
-        ));
+        setCharacterData((previous) => ({
+            ...previous,
+            story
+        }));
     }, []);
 
     return (
@@ -205,7 +197,13 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 </Box>
             </Box>
             {/* portrait */}
-            <Box gridColumn="span 3" gridRow="span 2" style={{ background: 'grey' }} />
+            <Box gridColumn="span 3" gridRow="span 2">
+                <Portrait
+                    portrait={characterData.portrait}
+                    readonly={readonly}
+                    onChange={onPortraitChange}
+                />
+            </Box>
             {/* characteristics */}
             <Typography variant="h6" gridColumn="span 9">
                 Characteristics

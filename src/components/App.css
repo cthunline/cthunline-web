@@ -2,6 +2,7 @@
 
 :root {
     --palette-background: #111416;
+    --palette-gray: rgba(255 255 255 / 50%);
     --palette-text: #fff;
 }
 
@@ -9,12 +10,17 @@
 
 html,
 body {
+    box-sizing: border-box;
     color: var(--palette-text);
     font-family: Roboto, Helvetica, Arial, sans-serif;
     height: 100vh;
     margin: 0;
     padding: 0;
-    width: 100vw;
+    width: 100%;
+}
+
+html * {
+    box-sizing: inherit;
 }
 
 #root {

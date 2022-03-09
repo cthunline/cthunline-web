@@ -27,7 +27,7 @@ const Biography: React.FC<BiographyProps> = ({
                 <TextField
                     fullWidth
                     InputProps={{ readOnly: readonly }}
-                    type={type ?? 'text'}
+                    type="text"
                     size="small"
                     label={label}
                     name={field}
