@@ -50,7 +50,9 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             initialRender.current = false;
         } else {
             const { name, occupation } = characterData.biography;
-            const characterName = `${name} (${occupation})`;
+            const characterName = (
+                `${name ?? '[No Name]'} ${occupation ? `(${occupation})` : ''}`
+            );
             onChange(characterName, characterData);
         }
     }, [

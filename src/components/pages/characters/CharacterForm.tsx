@@ -4,15 +4,29 @@ import React, {
     useEffect,
     useState
 } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
+import { CircularProgress } from '@mui/material';
 
 import useCharacter from '../../hooks/useCharacter';
-import { Character, CharacterData } from '../../../types';
 import { CharacterSheet } from '../../ui';
+import {
+    Character,
+    CharacterData,
+    getDefaultData
+} from '../../../types';
 
-const CharacterForm = () => {
-    const { characterId } = useParams();
-    const { getCharacter, editCharacter } = useCharacter();
+interface CharacterFormProps {
+    create?: boolean;
+}
+
+const CharacterForm: React.FC<CharacterFormProps> = ({ create }) => {
+    const navigate = useNavigate();
+    const { characterId, gameId } = useParams();
+    const {
+        getCharacter,
+        editCharacter,
+        createCharacter
+    } = useCharacter();
 
     const [character, setCharacter] = useState<Character>();
 
@@ -28,14 +42,36 @@ const CharacterForm = () => {
 
     useEffect(() => {
         (async () => {
-            if (characterId) {
+            if (create && gameId) {
+                const data = getDefaultData(gameId);
+                if (data) {
+                    const char = await createCharacter({
+                        data: {
+                            gameId,
+                            name: '[No Name]',
+                            data
+                        },
+                        isRefresh: false,
+                        isToast: false
+                    });
+                    if (char) {
+                        navigate(`/characters/${char.id}`, {
+                            replace: true
+                        });
+                    }
+                }
+            } else if (characterId) {
                 const char = await getCharacter(characterId);
                 setCharacter(char);
             }
         })();
     }, [
+        create,
+        navigate,
         characterId,
-        getCharacter
+        gameId,
+        getCharacter,
+        createCharacter
     ]);
 
     const changeTime = 1000;
@@ -75,7 +111,9 @@ const CharacterForm = () => {
             data={character.data}
             onChange={onChange}
         />
-    ) : null;
+    ) : (
+        <CircularProgress size={100} />
+    );
 };
 
 export default CharacterForm;

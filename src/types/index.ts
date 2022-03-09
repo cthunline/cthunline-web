@@ -1,4 +1,7 @@
-import { CoCCharacterData } from './games/callOfCthulhu';
+import {
+    CoCCharacterData,
+    defaultData as cocDefaultData
+} from './games/callOfCthulhu';
 
 export interface User {
     id: string;
@@ -22,3 +25,12 @@ export interface Game {
     id: string;
     name: string;
 }
+
+export const getDefaultData = (gameId: string) => {
+    switch (gameId) {
+        case 'callOfCthulhu':
+            return cocDefaultData;
+        default:
+            return null;
+    }
+};

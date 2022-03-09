@@ -109,13 +109,13 @@ const useCharacter = ({
         refreshCharacterList
     ]);
 
-    const createCharacter = async ({
+    const createCharacter = useCallback(async ({
         data,
         isRefresh = true,
         isToast = true
-    }: CreateOptions) => {
+    }: CreateOptions): Promise<Character | null> => {
         try {
-            await Api.call({
+            const char = await Api.call({
                 method: 'POST',
                 route: `/users/${user?.id}/characters`,
                 body: data
@@ -126,12 +126,17 @@ const useCharacter = ({
             if (isToast) {
                 toast.success('Character created');
             }
+            return char;
         } catch (err: any) {
             toast.error(err.message);
+            return null;
         }
-    };
+    }, [
+        refresh,
+        user
+    ]);
 
-    const editCharacter = async ({
+    const editCharacter = useCallback(async ({
         characterId: charId,
         data,
         isRefresh = true,
@@ -152,9 +157,11 @@ const useCharacter = ({
         } catch (err: any) {
             toast.error(err.message);
         }
-    };
+    }, [
+        refresh
+    ]);
 
-    const deleteCharacter = async ({
+    const deleteCharacter = useCallback(async ({
         characterId: charId,
         isRefresh = true,
         isToast = true
@@ -173,7 +180,9 @@ const useCharacter = ({
         } catch (err: any) {
             toast.error(err.message);
         }
-    };
+    }, [
+        refresh
+    ]);
 
     useEffect(() => {
         refresh();

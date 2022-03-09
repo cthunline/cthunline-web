@@ -52,7 +52,7 @@ const Router: React.FC = () => {
         element: <CharacterList />
     }, {
         path: '/characters/create/:gameId',
-        element: <CharacterForm />
+        element: <CharacterForm create />
     }, {
         path: '/characters/:characterId',
         element: <CharacterForm />
