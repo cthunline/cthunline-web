@@ -11,6 +11,7 @@ import {
     TableHead,
     TableRow
 } from '@mui/material';
+import { toast } from 'react-toastify';
 import { HiMusicNote } from 'react-icons/hi';
 import { MdUploadFile, MdOutlineDeleteOutline } from 'react-icons/md';
 import { GrImage } from 'react-icons/gr';
@@ -18,25 +19,40 @@ import { GrImage } from 'react-icons/gr';
 import { useDialog } from '../../contexts/Dialog';
 import useAsset from '../../hooks/useAsset';
 
+const allowedMimeTypes = [
+    'image/jpeg',
+    'image/png',
+    'image/svg+xml',
+    'audio/mpeg'
+];
+
+const limitSizeInMb = 10;
+
 const Assets: React.FC = () => {
     const { confirmDialog } = useDialog();
     const {
         assetList,
-        // uploadAsset,
+        uploadAsset,
         deleteAsset
     } = useAsset({
         loadList: true
     });
 
-    const onUpload = () => {
-        // TODO
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            const sizeInMb = file.size / 1000000;
+            if (sizeInMb > limitSizeInMb) {
+                toast.error(`File size is too large (max ${limitSizeInMb}Mb)`);
+            } else {
+                uploadAsset({ file });
+            }
+        }
     };
 
     const onDelete = (assetId: string, name: string) => {
         confirmDialog(`Delete asset ${name} ?`, () => {
-            deleteAsset({
-                assetId
-            });
+            deleteAsset({ assetId });
         });
     };
 
@@ -85,15 +101,23 @@ const Assets: React.FC = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button
-                className="create-button"
-                variant="contained"
-                size="medium"
-                startIcon={<MdUploadFile />}
-                onClick={onUpload}
-            >
-                Upload
-            </Button>
+            <label className="create-button" htmlFor="assets-input">
+                <input
+                    id="assets-input"
+                    className="hidden"
+                    type="file"
+                    accept={allowedMimeTypes.join(',')}
+                    onChange={handleFileChange}
+                />
+                <Button
+                    variant="contained"
+                    size="medium"
+                    component="span"
+                    startIcon={<MdUploadFile />}
+                >
+                    Upload
+                </Button>
+            </label>
         </Paper>
     );
 };

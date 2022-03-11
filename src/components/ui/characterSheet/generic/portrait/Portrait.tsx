@@ -53,6 +53,7 @@ const Portrait: React.FC<PortraitProps> = ({
                         <label htmlFor="character-portrait-input">
                             <input
                                 id="character-portrait-input"
+                                className="hidden"
                                 type="file"
                                 accept={allowedMimeTypes.join(',')}
                                 onChange={handleFileChange}
