@@ -71,7 +71,7 @@ export const AuthProvider:React.FC = ({ children }) => {
             const { userId, bearer } = await Api.call({
                 method: 'POST',
                 route: '/auth',
-                body: {
+                data: {
                     email,
                     password
                 }

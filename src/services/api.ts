@@ -1,22 +1,13 @@
-class FetchError extends Error {
-    status: number;
-    data: object | null;
-
-    constructor(json: Record<string, any>) {
-        super(json.error);
-        this.status = json.code;
-        this.data = json.data ?? null;
-    }
-}
+import Axios from 'axios';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 interface ApiCallOptions {
+    bearer?: string | null;
     method: HttpMethod;
     route: string;
-    body?: object;
-    formData?: FormData;
-    bearer?: string | null;
+    data?: object | FormData;
+    progress?: (percent: number) => void
 }
 
 const Api = {
@@ -25,11 +16,11 @@ const Api = {
     bearer: null,
 
     async call({
+        bearer,
         method,
         route,
-        body,
-        formData,
-        bearer
+        data,
+        progress
     }: ApiCallOptions) {
         if (!Api.baseUrl) {
             throw new Error('Unavailable base URL');
@@ -41,29 +32,29 @@ const Api = {
         } else if (Api.bearer) {
             headerBearer = Api.bearer;
         }
-        const contentHeaders: object = formData ? {} : {
+        const contentHeaders: object = data instanceof FormData ? {} : {
             Accept: 'application/json',
             'Content-Type': 'application/json'
         };
-        let bodyData;
-        if (body) {
-            bodyData = JSON.stringify(body);
-        } else if (formData) {
-            bodyData = formData;
-        }
-        const response = await fetch(url, {
+        const response = await Axios({
             method,
+            url,
             headers: {
                 Authorization: `Bearer ${headerBearer}`,
                 ...contentHeaders
             },
-            body: bodyData
+            data,
+            onUploadProgress: progress ? (
+                (progressEvent) => {
+                    progress(
+                        Math.round(
+                            (progressEvent.loaded * 100) / progressEvent.total
+                        )
+                    );
+                }
+            ) : undefined
         });
-        if (response.ok) {
-            return response.json();
-        }
-        const json = await response.json();
-        throw new FetchError(json);
+        return response.data;
     }
 
 };

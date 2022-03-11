@@ -39,7 +39,7 @@ const useUser = ({
             await Api.call({
                 method: 'POST',
                 route: '/users',
-                body: data
+                data
             });
             if (loadList) {
                 await refreshUserList();
@@ -55,7 +55,7 @@ const useUser = ({
             await Api.call({
                 method: 'POST',
                 route: `/users/${userId}`,
-                body: data
+                data
             });
             if (loadList) {
                 await refreshUserList();

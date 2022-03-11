@@ -15,6 +15,7 @@ interface AssetHookOptions {
 
 interface UploadOptions {
     file: File;
+    progress?: (percent: number) => void;
     isRefresh?: boolean;
     isToast?: boolean;
 }
@@ -57,6 +58,7 @@ const useAsset = ({ loadList }: AssetHookOptions = {}) => {
 
     const uploadAsset = useCallback(async ({
         file,
+        progress,
         isRefresh = true,
         isToast = true
     }: UploadOptions): Promise<Asset | null> => {
@@ -66,7 +68,8 @@ const useAsset = ({ loadList }: AssetHookOptions = {}) => {
             const asset = await Api.call({
                 method: 'POST',
                 route: `/users/${user?.id}/assets`,
-                formData
+                data: formData,
+                progress
             });
             if (isRefresh && loadList) {
                 await refreshAssetList();

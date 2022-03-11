@@ -118,7 +118,7 @@ const useCharacter = ({
             const char = await Api.call({
                 method: 'POST',
                 route: `/users/${user?.id}/characters`,
-                body: data
+                data
             });
             if (isRefresh) {
                 await refresh();
@@ -146,7 +146,7 @@ const useCharacter = ({
             await Api.call({
                 method: 'POST',
                 route: `/characters/${charId}`,
-                body: data
+                data
             });
             if (isRefresh) {
                 await refresh();

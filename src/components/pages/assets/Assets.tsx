@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Paper,
     Typography,
@@ -9,12 +9,16 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow
+    TableRow,
+    CircularProgress
 } from '@mui/material';
 import { toast } from 'react-toastify';
 import { HiMusicNote } from 'react-icons/hi';
-import { MdUploadFile, MdOutlineDeleteOutline } from 'react-icons/md';
-import { GrImage } from 'react-icons/gr';
+import {
+    MdUploadFile,
+    MdOutlineDeleteOutline,
+    MdOutlineImage
+} from 'react-icons/md';
 
 import { useDialog } from '../../contexts/Dialog';
 import useAsset from '../../hooks/useAsset';
@@ -38,14 +42,22 @@ const Assets: React.FC = () => {
         loadList: true
     });
 
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const [progress, setProgress] = useState<number | null>(null);
+
+    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
             const sizeInMb = file.size / 1000000;
             if (sizeInMb > limitSizeInMb) {
                 toast.error(`File size is too large (max ${limitSizeInMb}Mb)`);
             } else {
-                uploadAsset({ file });
+                await uploadAsset({
+                    file,
+                    progress: (percent: number) => {
+                        setProgress(percent);
+                    }
+                });
+                setProgress(null);
             }
         }
     };
@@ -79,9 +91,9 @@ const Assets: React.FC = () => {
                             <TableRow key={id}>
                                 <TableCell>
                                     {type === 'audio' ? (
-                                        <HiMusicNote />
+                                        <HiMusicNote size={25} />
                                     ) : (
-                                        <GrImage />
+                                        <MdOutlineImage size={25} />
                                     )}
                                 </TableCell>
                                 <TableCell>
@@ -101,23 +113,27 @@ const Assets: React.FC = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <label className="create-button" htmlFor="assets-input">
-                <input
-                    id="assets-input"
-                    className="hidden"
-                    type="file"
-                    accept={allowedMimeTypes.join(',')}
-                    onChange={handleFileChange}
-                />
-                <Button
-                    variant="contained"
-                    size="medium"
-                    component="span"
-                    startIcon={<MdUploadFile />}
-                >
-                    Upload
-                </Button>
-            </label>
+            {progress ? (
+                <CircularProgress variant="determinate" value={progress} />
+            ) : (
+                <label className="create-button" htmlFor="assets-input">
+                    <input
+                        id="assets-input"
+                        className="hidden"
+                        type="file"
+                        accept={allowedMimeTypes.join(',')}
+                        onChange={handleFileChange}
+                    />
+                    <Button
+                        variant="contained"
+                        size="medium"
+                        component="span"
+                        startIcon={<MdUploadFile />}
+                    >
+                        Upload
+                    </Button>
+                </label>
+            )}
         </Paper>
     );
 };
