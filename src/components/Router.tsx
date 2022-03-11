@@ -14,6 +14,7 @@ import {
     Home,
     CharacterList,
     CharacterForm,
+    Assets,
     Profile,
     UserList,
     UserForm,
@@ -56,6 +57,9 @@ const Router: React.FC = () => {
     }, {
         path: '/characters/:characterId',
         element: <CharacterForm />
+    }, {
+        path: '/assets',
+        element: <Assets />
     }, {
         path: '/profile',
         element: <Profile />

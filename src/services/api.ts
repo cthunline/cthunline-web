@@ -15,6 +15,7 @@ interface ApiCallOptions {
     method: HttpMethod;
     route: string;
     body?: object;
+    formData?: FormData;
     bearer?: string | null;
 }
 
@@ -27,6 +28,7 @@ const Api = {
         method,
         route,
         body,
+        formData,
         bearer
     }: ApiCallOptions) {
         if (!Api.baseUrl) {
@@ -39,14 +41,23 @@ const Api = {
         } else if (Api.bearer) {
             headerBearer = Api.bearer;
         }
+        const contentHeaders: object = formData ? {} : {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+        };
+        let bodyData;
+        if (body) {
+            bodyData = JSON.stringify(body);
+        } else if (formData) {
+            bodyData = formData;
+        }
         const response = await fetch(url, {
             method,
             headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${headerBearer}`
+                Authorization: `Bearer ${headerBearer}`,
+                ...contentHeaders
             },
-            body: body ? JSON.stringify(body) : undefined
+            body: bodyData
         });
         if (response.ok) {
             return response.json();

@@ -9,11 +9,8 @@ import { CircularProgress } from '@mui/material';
 
 import useCharacter from '../../hooks/useCharacter';
 import { CharacterSheet } from '../../ui';
-import {
-    Character,
-    CharacterData,
-    getDefaultData
-} from '../../../types';
+import { Character, CharacterData } from '../../../types';
+import { getDefaultData } from '../../ui/characterSheet/characterSheet.helper';
 
 interface CharacterFormProps {
     create?: boolean;

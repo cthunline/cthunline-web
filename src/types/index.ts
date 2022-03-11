@@ -1,7 +1,4 @@
-import {
-    CoCCharacterData,
-    defaultData as cocDefaultData
-} from './games/callOfCthulhu';
+import { CoCCharacterData } from './games/callOfCthulhu';
 
 export interface User {
     id: string;
@@ -9,6 +6,14 @@ export interface User {
     email: string;
     isAdmin: boolean;
     isEnabled: boolean;
+}
+
+export interface Asset {
+    id: string;
+    userId: string;
+    type: 'audio' | 'image';
+    name: string;
+    path: string;
 }
 
 export type CharacterData = CoCCharacterData;
@@ -25,12 +30,3 @@ export interface Game {
     id: string;
     name: string;
 }
-
-export const getDefaultData = (gameId: string) => {
-    switch (gameId) {
-        case 'callOfCthulhu':
-            return cocDefaultData;
-        default:
-            return null;
-    }
-};

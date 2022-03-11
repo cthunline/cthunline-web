@@ -14,7 +14,7 @@ import {
 import { AiOutlineUser } from 'react-icons/ai';
 import { GiD10, GiCharacter, GiTabletopPlayers } from 'react-icons/gi';
 import { MdOutlineContactPage, MdLogout } from 'react-icons/md';
-import { FiUsers } from 'react-icons/fi';
+import { FiUsers, FiFolder } from 'react-icons/fi';
 
 import { useAuth } from '../../contexts/Auth';
 
@@ -46,6 +46,14 @@ const UserMenu: React.FC<UserMenuProps> = ({ anchorEl, handleClose }) => {
                 </ListItemIcon>
                 <ListItemText>
                     Characters
+                </ListItemText>
+            </MenuItem>
+            <MenuItem onClick={() => navigate('/assets')}>
+                <ListItemIcon>
+                    <FiFolder size={20} />
+                </ListItemIcon>
+                <ListItemText>
+                    Assets
                 </ListItemText>
             </MenuItem>
             <MenuItem onClick={() => navigate('/profile')}>
