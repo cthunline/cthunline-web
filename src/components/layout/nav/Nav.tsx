@@ -64,6 +64,7 @@ const Nav: React.FC = () => {
                 <div className="nav-middle">
                     {navMenuItems.map(({ icon, route, text }: NavMenuItem) => (
                         <Button
+                            key={`nav-menu-${route}`}
                             startIcon={icon}
                             onClick={() => navigate(route)}
                         >

@@ -8,6 +8,7 @@ import Users from './users/Users';
 import UserForm from './users/UserForm';
 import Sessions from './sessions/Sessions';
 import SessionForm from './sessions/SessionForm';
+import Play from './play/Play';
 import Error from './error/Error';
 
 export {
@@ -21,5 +22,6 @@ export {
     UserForm,
     Sessions,
     SessionForm,
+    Play,
     Error
 };

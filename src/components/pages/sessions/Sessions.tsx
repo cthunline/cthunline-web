@@ -11,28 +11,79 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TableRow
+    TableRow,
+    List,
+    ListItemButton
 } from '@mui/material';
 import { HiPlus } from 'react-icons/hi';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { GiRollingDices } from 'react-icons/gi';
+import { toast } from 'react-toastify';
 
 import { useDialog } from '../../contexts/Dialog';
 import { useAuth } from '../../contexts/Auth';
 import useGame from '../../hooks/useGame';
+import useCharacter from '../../hooks/useCharacter';
 import useSession from '../../hooks/useSession';
+import { Character } from '../../../types';
+
+interface CharacterSelectorProps {
+    characters: Character[];
+    onSelect: (id: string) => void;
+}
+
+const CharacterSelector: React.FC<CharacterSelectorProps> = ({
+    characters,
+    onSelect
+}) => (
+    <List>
+        {characters.map(({ id, name }) => (
+            <ListItemButton
+                key={id}
+                onClick={() => onSelect(id)}
+            >
+                {name}
+            </ListItemButton>
+        ))}
+    </List>
+);
 
 const Sessions: React.FC = () => {
     const navigate = useNavigate();
-    const { confirmDialog } = useDialog();
+    const {
+        confirmDialog,
+        openDialog,
+        closeDialog
+    } = useDialog();
     const { user } = useAuth();
     const { getGame } = useGame();
+    const { characterList } = useCharacter({
+        loadList: true
+    });
     const { sessionList, deleteSession } = useSession({
         loadList: true
     });
 
-    const onJoin = (sessionId: string) => {
-        navigate(`/play/${sessionId}`);
+    const onJoin = (gameId: string, sessionId: string) => {
+        const charList = characterList.filter(({ gameId: charGameId }) => (
+            charGameId === gameId
+        ));
+        if (charList.length) {
+            openDialog({
+                title: 'Select a character',
+                content: (
+                    <CharacterSelector
+                        characters={charList}
+                        onSelect={(characterId) => {
+                            closeDialog();
+                            navigate(`/play/${sessionId}/${characterId}`);
+                        }}
+                    />
+                )
+            });
+        } else {
+            toast.error('No character available for this game');
+        }
     };
 
     const onCreate = () => {
@@ -77,7 +128,7 @@ const Sessions: React.FC = () => {
                                         <IconButton
                                             size="medium"
                                             color="primary"
-                                            onClick={() => onJoin(id)}
+                                            onClick={() => onJoin(gameId, id)}
                                         >
                                             <GiRollingDices />
                                         </IconButton>

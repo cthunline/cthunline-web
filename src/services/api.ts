@@ -12,7 +12,7 @@ interface ApiCallOptions {
 
 const Api = {
 
-    baseUrl: import.meta.env.VITE_API_URL,
+    baseUrl: String(import.meta.env.VITE_API_URL),
     bearer: null,
 
     async call({

@@ -20,6 +20,7 @@ import {
     UserForm,
     Sessions,
     SessionForm,
+    Play,
     Error
 } from './pages';
 
@@ -78,6 +79,9 @@ const Router: React.FC = () => {
     }, {
         path: '/sessions/create',
         element: <SessionForm />
+    }, {
+        path: '/play/:sessionId/:characterId',
+        element: <Play />
     }];
 
     return (
