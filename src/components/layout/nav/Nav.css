@@ -24,6 +24,8 @@
     cursor: pointer;
 }
 
-.nav-user-menu {
-    margin: 10px 10px 0 0;
+.nav-middle button {
+    color: var(--palette-text);
+    font-weight: 600;
+    margin: 0 10px;
 }

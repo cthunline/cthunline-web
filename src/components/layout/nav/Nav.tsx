@@ -4,92 +4,37 @@ import {
     AppBar,
     Button,
     IconButton,
-    Avatar,
-    Menu,
-    MenuItem,
-    Divider,
-    ListItemIcon,
-    ListItemText
+    Avatar
 } from '@mui/material';
-import { AiOutlineUser } from 'react-icons/ai';
-import { GiD10, GiCharacter, GiTabletopPlayers } from 'react-icons/gi';
-import { MdOutlineContactPage, MdLogout } from 'react-icons/md';
-import { FiUsers, FiFolder } from 'react-icons/fi';
+import { GiD10, GiRollingDices } from 'react-icons/gi';
+import { MdOutlineContactPage, MdOutlineSettings } from 'react-icons/md';
+import { FiFolder } from 'react-icons/fi';
 
-import { useAuth } from '../../contexts/Auth';
+import SettingsMenu from './SettingsMenu';
 
 import './Nav.css';
 
-interface UserMenuProps {
-    anchorEl: HTMLElement | null;
-    handleClose: () => void;
+/* eslint-disable react/no-unused-prop-types */
+interface NavMenuItem {
+    icon: JSX.Element;
+    route: string;
+    text: string;
 }
+/* eslint-enable react/no-unused-prop-types */
 
-const UserMenu: React.FC<UserMenuProps> = ({ anchorEl, handleClose }) => {
-    const navigate = useNavigate();
-    const { logout, user } = useAuth();
-
-    return (
-        <Menu
-            anchorEl={anchorEl}
-            id="account-menu"
-            open={!!anchorEl}
-            onClose={handleClose}
-            onClick={handleClose}
-            PaperProps={{
-                className: 'nav-user-menu'
-            }}
-        >
-            <MenuItem onClick={() => navigate('/characters')}>
-                <ListItemIcon>
-                    <MdOutlineContactPage size={20} />
-                </ListItemIcon>
-                <ListItemText>
-                    Characters
-                </ListItemText>
-            </MenuItem>
-            <MenuItem onClick={() => navigate('/assets')}>
-                <ListItemIcon>
-                    <FiFolder size={20} />
-                </ListItemIcon>
-                <ListItemText>
-                    Assets
-                </ListItemText>
-            </MenuItem>
-            <MenuItem onClick={() => navigate('/profile')}>
-                <ListItemIcon>
-                    <AiOutlineUser size={20} />
-                </ListItemIcon>
-                <ListItemText>
-                    Profile
-                </ListItemText>
-            </MenuItem>
-            {user?.isAdmin ? [
-                <Divider key="admin-divider" />,
-                <MenuItem
-                    key="admin-users"
-                    onClick={() => navigate('/users')}
-                >
-                    <ListItemIcon>
-                        <FiUsers size={20} />
-                    </ListItemIcon>
-                    <ListItemText>
-                        Users
-                    </ListItemText>
-                </MenuItem>
-            ] : null}
-            <Divider />
-            <MenuItem onClick={() => logout()}>
-                <ListItemIcon>
-                    <MdLogout size={20} />
-                </ListItemIcon>
-                <ListItemText>
-                    Logout
-                </ListItemText>
-            </MenuItem>
-        </Menu>
-    );
-};
+const navMenuItems: NavMenuItem[] = [{
+    icon: <GiRollingDices size={20} />,
+    route: '/sessions',
+    text: 'Play'
+}, {
+    icon: <MdOutlineContactPage size={20} />,
+    route: '/characters',
+    text: 'Characters'
+}, {
+    icon: <FiFolder size={20} />,
+    route: '/assets',
+    text: 'Assets'
+}];
 
 const Nav: React.FC = () => {
     const navigate = useNavigate();
@@ -117,21 +62,22 @@ const Nav: React.FC = () => {
                     />
                 </div>
                 <div className="nav-middle">
-                    <Button
-                        variant="outlined"
-                        startIcon={<GiTabletopPlayers />}
-                        onClick={() => navigate('/sessions')}
-                    >
-                        Play
-                    </Button>
+                    {navMenuItems.map(({ icon, route, text }: NavMenuItem) => (
+                        <Button
+                            startIcon={icon}
+                            onClick={() => navigate(route)}
+                        >
+                            {text}
+                        </Button>
+                    ))}
                 </div>
                 <div className="nav-right">
                     <IconButton size="small" onClick={onUserMenuClick}>
                         <Avatar>
-                            <GiCharacter size={20} />
+                            <MdOutlineSettings size={30} />
                         </Avatar>
                     </IconButton>
-                    <UserMenu
+                    <SettingsMenu
                         anchorEl={userMenuAnchorEl}
                         handleClose={onUserMenuClose}
                     />
