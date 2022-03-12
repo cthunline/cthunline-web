@@ -12,8 +12,6 @@ import { MdOutlineSave } from 'react-icons/md';
 import useUser from '../../hooks/useUser';
 import { useAuth } from '../../contexts/Auth';
 
-import './Profile.css';
-
 interface PasswordChangeData {
     oldPassword: string;
     password: string;
@@ -61,9 +59,12 @@ const Profile = () => {
         oldPassword,
         password
     }: PasswordChangeData) => {
-        editUser(user?.id, {
-            oldPassword,
-            password
+        editUser({
+            userId: user?.id,
+            data: {
+                oldPassword,
+                password
+            }
         });
     };
 
@@ -83,7 +84,7 @@ const Profile = () => {
                     handleChange,
                     handleBlur
                 }) => (
-                    <Form className="form flex column center profile">
+                    <Form className="form small flex column center">
                         {fieldList.map(({ field, label, preventComplete }) => (
                             <Field
                                 key={field}

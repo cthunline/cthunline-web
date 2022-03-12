@@ -8,8 +8,6 @@ import { MdLogin } from 'react-icons/md';
 
 import { useAuth } from '../../contexts/Auth';
 
-import './Login.css';
-
 interface LoginFormData {
     email: string;
     password: string;
@@ -38,7 +36,7 @@ const Login = () => {
 
     return (
         <Paper elevation={3} className="box">
-            <div className="login-logo">
+            <div className="center-text">
                 <GiD10 size={100} />
             </div>
             <Formik
@@ -52,7 +50,7 @@ const Login = () => {
                     handleChange,
                     handleBlur
                 }) => (
-                    <Form className="form flex column center login">
+                    <Form className="form small flex column center">
                         <Field
                             validateOnBlur
                             validateOnChange

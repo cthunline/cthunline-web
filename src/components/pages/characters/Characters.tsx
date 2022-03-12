@@ -43,7 +43,7 @@ const GameSelector: React.FC<GameSelectorProps> = ({
     </List>
 );
 
-const CharacterList: React.FC = () => {
+const Characters: React.FC = () => {
     const navigate = useNavigate();
     const {
         confirmDialog,
@@ -146,4 +146,4 @@ const CharacterList: React.FC = () => {
     );
 };
 
-export default CharacterList;
+export default Characters;

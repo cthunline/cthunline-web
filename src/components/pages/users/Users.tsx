@@ -19,7 +19,7 @@ import { MdCheck } from 'react-icons/md';
 import useUser from '../../hooks/useUser';
 import { useAuth } from '../../contexts/Auth';
 
-const UserList: React.FC = () => {
+const Users: React.FC = () => {
     const navigate = useNavigate();
     const { user } = useAuth();
     const {
@@ -82,8 +82,11 @@ const UserList: React.FC = () => {
                                                 onChange={(
                                                     e: React.ChangeEvent<HTMLInputElement>
                                                 ) => (
-                                                    editUser(id, {
-                                                        isAdmin: e.target.checked
+                                                    editUser({
+                                                        userId: id,
+                                                        data: {
+                                                            isAdmin: e.target.checked
+                                                        }
                                                     })
                                                 )}
                                             />
@@ -99,8 +102,11 @@ const UserList: React.FC = () => {
                                                 onChange={(
                                                     e: React.ChangeEvent<HTMLInputElement>
                                                 ) => (
-                                                    editUser(id, {
-                                                        isEnabled: e.target.checked
+                                                    editUser({
+                                                        userId: id,
+                                                        data: {
+                                                            isEnabled: e.target.checked
+                                                        }
                                                     })
                                                 )}
                                             />
@@ -125,4 +131,4 @@ const UserList: React.FC = () => {
     );
 };
 
-export default UserList;
+export default Users;

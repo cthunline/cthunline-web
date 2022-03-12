@@ -4,6 +4,10 @@
     display: none;
 }
 
+.center-text {
+    text-align: center;
+}
+
 /* box */
 
 .box {
@@ -40,6 +44,10 @@
 }
 
 /* form */
+
+.form.small {
+    width: 300px;
+}
 
 .form.flex.column .form-input {
     margin: 10px 0;

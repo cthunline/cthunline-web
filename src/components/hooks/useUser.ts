@@ -6,11 +6,28 @@ import {
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
-import { User } from '../../types';
+import {
+    User,
+    UserCreateBody,
+    UserEditBody
+} from '../../types';
 
 interface UserHookOptions {
     loadList?: boolean;
     listDisabled?: boolean;
+}
+
+interface CreateOptions {
+    data: UserCreateBody;
+    isRefresh?: boolean;
+    isToast?: boolean;
+}
+
+interface EditOptions {
+    userId: string;
+    data: UserEditBody;
+    isRefresh?: boolean;
+    isToast?: boolean;
 }
 
 const useUser = ({
@@ -34,33 +51,46 @@ const useUser = ({
         listDisabled
     ]);
 
-    const createUser = async (data: object) => {
+    const createUser = async ({
+        data,
+        isRefresh = true,
+        isToast = true
+    }: CreateOptions) => {
         try {
             await Api.call({
                 method: 'POST',
                 route: '/users',
                 data
             });
-            if (loadList) {
+            if (isRefresh && loadList) {
                 await refreshUserList();
             }
-            toast.success('User created');
+            if (isToast) {
+                toast.success('User created');
+            }
         } catch (err: any) {
             toast.error(err.message);
         }
     };
 
-    const editUser = async (userId: string, data: object) => {
+    const editUser = async ({
+        userId,
+        data,
+        isRefresh = true,
+        isToast = true
+    }: EditOptions) => {
         try {
             await Api.call({
                 method: 'POST',
                 route: `/users/${userId}`,
                 data
             });
-            if (loadList) {
+            if (isRefresh && loadList) {
                 await refreshUserList();
             }
-            toast.success('User edited');
+            if (isToast) {
+                toast.success('User edited');
+            }
         } catch (err: any) {
             toast.error(err.message);
         }

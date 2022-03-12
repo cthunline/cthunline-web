@@ -7,7 +7,11 @@ import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
 import { useAuth } from '../contexts/Auth';
-import { Character } from '../../types';
+import {
+    Character,
+    CharacterCreateBody,
+    CharacterEditBody
+} from '../../types';
 
 interface CharacterHookOptions {
     loadList?: boolean;
@@ -15,14 +19,14 @@ interface CharacterHookOptions {
 }
 
 interface CreateOptions {
-    data: Omit<Character, 'id' | 'userId'>;
+    data: CharacterCreateBody;
     isRefresh?: boolean;
     isToast?: boolean;
 }
 
 interface EditOptions {
     characterId: string;
-    data: Omit<Character, 'id' | 'userId' | 'gameId'>;
+    data: CharacterEditBody;
     isRefresh?: boolean;
     isToast?: boolean;
 }

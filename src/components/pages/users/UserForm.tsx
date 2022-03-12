@@ -11,15 +11,10 @@ import {
 import { MdOutlineSave } from 'react-icons/md';
 
 import useUser from '../../hooks/useUser';
+import { UserCreateBody } from '../../../types';
 
-import './UserForm.css';
-
-interface UserFormData {
-    name: string;
-    email: string;
-    password: string;
+interface UserFormData extends UserCreateBody {
     passwordConfirm: string;
-    isAdmin: boolean;
 }
 
 type UserFormField = keyof UserFormData;
@@ -66,7 +61,7 @@ const UserForm = () => {
     };
 
     const onSubmit = async ({ passwordConfirm, ...data }: UserFormData) => {
-        await createUser(data);
+        await createUser({ data });
         navigate('/users');
     };
 
@@ -86,7 +81,7 @@ const UserForm = () => {
                     handleChange,
                     handleBlur
                 }) => (
-                    <Form className="form flex column center user-form">
+                    <Form className="form small flex column center">
                         {fieldList.map(({ field, label, password }) => (
                             <Field
                                 key={field}

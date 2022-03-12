@@ -12,13 +12,14 @@ import Page from './layout/page/Page';
 import {
     Login,
     Home,
-    CharacterList,
+    Characters,
     CharacterForm,
     Assets,
     Profile,
-    UserList,
+    Users,
     UserForm,
     Sessions,
+    SessionForm,
     Error
 } from './pages';
 
@@ -50,7 +51,7 @@ const Router: React.FC = () => {
         element: <Home />
     }, {
         path: '/characters',
-        element: <CharacterList />
+        element: <Characters />
     }, {
         path: '/characters/create/:gameId',
         element: <CharacterForm create />
@@ -65,7 +66,7 @@ const Router: React.FC = () => {
         element: <Profile />
     }, {
         path: '/users',
-        element: <UserList />,
+        element: <Users />,
         admin: true
     }, {
         path: '/users/create',
@@ -74,6 +75,9 @@ const Router: React.FC = () => {
     }, {
         path: '/sessions',
         element: <Sessions />
+    }, {
+        path: '/sessions/create',
+        element: <SessionForm />
     }];
 
     return (

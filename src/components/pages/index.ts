@@ -1,23 +1,25 @@
 import Login from './login/Login';
 import Home from './home/Home';
-import CharacterList from './characters/CharacterList';
+import Characters from './characters/Characters';
 import CharacterForm from './characters/CharacterForm';
 import Assets from './assets/Assets';
 import Profile from './profile/Profile';
-import UserList from './users/UserList';
+import Users from './users/Users';
 import UserForm from './users/UserForm';
 import Sessions from './sessions/Sessions';
+import SessionForm from './sessions/SessionForm';
 import Error from './error/Error';
 
 export {
     Login,
     Home,
-    CharacterList,
+    Characters,
     CharacterForm,
     Assets,
     Profile,
-    UserList,
+    Users,
     UserForm,
     Sessions,
+    SessionForm,
     Error
 };
