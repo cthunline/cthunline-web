@@ -1,0 +1,14 @@
+.console-container {
+    height: 150px;
+    width: 350px;
+}
+
+.console-inner {
+    height: 100%;
+    width: 100%;
+}
+
+.console-log {
+    font-size: 0.85rem;
+    margin: 10px;
+}

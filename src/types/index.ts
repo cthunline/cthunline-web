@@ -1,3 +1,5 @@
+import { Socket } from 'socket.io-client';
+
 import { CoCCharacterData } from './games/callOfCthulhu';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ user
@@ -82,4 +84,25 @@ export type CharacterEditBody = Partial<Omit<CharacterCreateBody, 'gameId'>>;
 export interface Game {
     id: string;
     name: string;
+}
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ play
+
+export interface PlaySocket extends Socket {
+    sessionId: string;
+    isMaster: boolean;
+    characterId?: string;
+}
+
+export interface PlayLog {
+    date: Date;
+    text: string;
+}
+
+export enum PlayWidget {
+    character = 'character',
+    characters = 'characters',
+    dices = 'dices',
+    sketch = 'sketch',
+    jukebox = 'jukebox'
 }

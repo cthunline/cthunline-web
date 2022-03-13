@@ -39,7 +39,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
     };
 
     return (
-        <Paper elevation={3} className="character-sheet box">
+        <Paper elevation={3} className="character-sheet box scroll">
             {getContent()}
         </Paper>
     );

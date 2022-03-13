@@ -1,0 +1,10 @@
+.play-container {
+    height: 100%;
+    width: 100%;
+}
+
+.play-content {
+    flex-grow: 1;
+    padding: 25px;
+    width: calc(100% - 60px);
+}

@@ -9,20 +9,8 @@ import { CircularProgress } from '@mui/material';
 
 import { useAuth } from './contexts/Auth';
 import Page from './layout/page/Page';
-import {
-    Login,
-    Home,
-    Characters,
-    CharacterForm,
-    Assets,
-    Profile,
-    Users,
-    UserForm,
-    Sessions,
-    SessionForm,
-    Play,
-    Error
-} from './pages';
+import { Login, Error } from './pages';
+import { pages } from './router.data';
 
 interface RequireAuthProps {
     children: React.ReactElement;
@@ -47,46 +35,9 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ children, admin }) => {
 const Router: React.FC = () => {
     const { isLoggedIn, isLoading } = useAuth();
 
-    const pages = [{
-        path: '/home',
-        element: <Home />
-    }, {
-        path: '/characters',
-        element: <Characters />
-    }, {
-        path: '/characters/create/:gameId',
-        element: <CharacterForm create />
-    }, {
-        path: '/characters/:characterId',
-        element: <CharacterForm />
-    }, {
-        path: '/assets',
-        element: <Assets />
-    }, {
-        path: '/profile',
-        element: <Profile />
-    }, {
-        path: '/users',
-        element: <Users />,
-        admin: true
-    }, {
-        path: '/users/create',
-        element: <UserForm />,
-        admin: true
-    }, {
-        path: '/sessions',
-        element: <Sessions />
-    }, {
-        path: '/sessions/create',
-        element: <SessionForm />
-    }, {
-        path: '/play/:sessionId/:characterId',
-        element: <Play />
-    }];
-
     return (
         <BrowserRouter>
-            <Page showNav={isLoggedIn}>
+            <Page>
                 {
                     isLoading ? (
                         <CircularProgress size={100} />

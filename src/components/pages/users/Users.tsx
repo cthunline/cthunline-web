@@ -35,7 +35,7 @@ const Users: React.FC = () => {
     };
 
     return (
-        <Paper elevation={3} className="page-list box flex column start">
+        <Paper elevation={3} className="page-list box flex column start-x center-y">
             <Typography variant="h6" gutterBottom>
                 Users
             </Typography>

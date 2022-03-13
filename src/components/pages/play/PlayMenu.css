@@ -1,0 +1,18 @@
+.play-menu {
+    height: 100%;
+    width: 60px;
+}
+
+.play-menu-item {
+    height: 60px;
+    margin: 10px 0 0;
+    width: 60px;
+}
+
+.play-menu-icon {
+    cursor: pointer;
+}
+
+.play-menu-tooltip {
+    font-size: 1rem;
+}

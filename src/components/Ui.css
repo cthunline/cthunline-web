@@ -8,6 +8,14 @@
     text-align: center;
 }
 
+.scroll {
+    overflow-y: auto;
+}
+
+.scroll-always {
+    overflow-y: scroll;
+}
+
 /* box */
 
 .box {
@@ -33,14 +41,38 @@
     justify-content: center;
 }
 
+.flex.center-x {
+    align-items: center;
+}
+
+.flex.center-y {
+    justify-content: center;
+}
+
 .flex.start {
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
+}
+
+.flex.start-x {
+    align-items: flex-start;
+}
+
+.flex.start-y {
+    justify-content: flex-start;
 }
 
 .flex.end {
     align-items: flex-end;
-    justify-content: center;
+    justify-content: flex-end;
+}
+
+.flex.end-x {
+    align-items: flex-end;
+}
+
+.flex.end-y {
+    justify-content: flex-end;
 }
 
 /* form */

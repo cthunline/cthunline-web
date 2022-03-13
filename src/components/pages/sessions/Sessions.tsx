@@ -64,11 +64,13 @@ const Sessions: React.FC = () => {
         loadList: true
     });
 
-    const onJoin = (gameId: string, sessionId: string) => {
+    const onJoin = (gameId: string, sessionId: string, isMaster: boolean = false) => {
         const charList = characterList.filter(({ gameId: charGameId }) => (
             charGameId === gameId
         ));
-        if (charList.length) {
+        if (isMaster) {
+            navigate(`/play/${sessionId}`);
+        } else if (charList.length) {
             openDialog({
                 title: 'Select a character',
                 content: (
@@ -99,7 +101,7 @@ const Sessions: React.FC = () => {
     };
 
     return (
-        <Paper elevation={3} className="page-list box flex column start">
+        <Paper elevation={3} className="page-list box flex column start-x center-y">
             <Typography variant="h6" gutterBottom>
                 Sessions
             </Typography>
@@ -121,14 +123,14 @@ const Sessions: React.FC = () => {
                             gameId,
                             master
                         }) => {
-                            const itsYou = master?.id === user?.id;
+                            const isMaster = master?.id === user?.id;
                             return (
                                 <TableRow key={id}>
                                     <TableCell>
                                         <IconButton
                                             size="medium"
                                             color="primary"
-                                            onClick={() => onJoin(gameId, id)}
+                                            onClick={() => onJoin(gameId, id, isMaster)}
                                         >
                                             <GiRollingDices />
                                         </IconButton>
@@ -141,7 +143,7 @@ const Sessions: React.FC = () => {
                                     </TableCell>
                                     <TableCell>
                                         {master?.name}
-                                        {itsYou ? (
+                                        {isMaster ? (
                                             <>
                                                 {' '}
                                                 <Chip label="It's you!" size="small" />
@@ -149,7 +151,7 @@ const Sessions: React.FC = () => {
                                         ) : null}
                                     </TableCell>
                                     <TableCell align="right">
-                                        {itsYou ? (
+                                        {isMaster ? (
                                             <IconButton
                                                 size="medium"
                                                 color="error"
