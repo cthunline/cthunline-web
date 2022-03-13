@@ -7,7 +7,7 @@ import {
 
 import usePlay from '../../hooks/usePlay';
 import PlayMenu from './PlayMenu';
-import { Console } from '../../ui';
+import { Widget, Console } from '../../ui';
 
 import './Play.css';
 
@@ -21,7 +21,8 @@ const Play = () => {
     return socket ? (
         <Box className="play-container flex row">
             <PlayMenu isMaster={socket.isMaster} />
-            <Box className="play-content flex column end">
+            <Box id="play-content" className="play-content flex column end">
+                <Widget />
                 <Console logs={logs} />
             </Box>
         </Box>

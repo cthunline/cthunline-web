@@ -75,6 +75,18 @@
     justify-content: flex-end;
 }
 
+.flex .grow {
+    flex-grow: 1;
+}
+
+.flex .align-start {
+    align-self: flex-start;
+}
+
+.flex .align-end {
+    align-self: flex-end;
+}
+
 /* form */
 
 .form.small {
