@@ -89,6 +89,7 @@ export interface Game {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ play
 
 export interface PlaySocket extends Socket {
+    user: User;
     sessionId: string;
     isMaster: boolean;
     characterId?: string;

@@ -9,12 +9,13 @@ import React, {
 import { useCookies } from 'react-cookie';
 
 import Api from '../../services/api';
+import { User } from '../../types';
 
 interface AuthData {
     isLoading: boolean;
     isLoggedIn: boolean;
     userId: number | null;
-    user: Record<string, any> | null;
+    user: User | null;
     bearer: string | null;
 }
 

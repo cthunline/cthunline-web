@@ -3,12 +3,17 @@
     width: 350px;
 }
 
+.console-paper,
 .console-inner {
     height: 100%;
     width: 100%;
 }
 
+.console-paper {
+    padding: 10px;
+}
+
 .console-log {
-    font-size: 0.85rem;
-    margin: 10px;
+    font-size: 0.8rem;
+    margin: 5px 0;
 }

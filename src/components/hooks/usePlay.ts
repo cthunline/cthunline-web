@@ -1,14 +1,15 @@
 import {
     useState,
     useCallback,
-    useEffect
+    useEffect,
+    useRef
 } from 'react';
 import { io } from 'socket.io-client';
 
 import Api from '../../services/api';
 import { useAuth } from '../contexts/Auth';
 import useSession from './useSession';
-import { PlaySocket, PlayLog } from '../../types';
+import { User, PlaySocket, PlayLog } from '../../types';
 
 interface PlayHooksOptions {
     sessionId?: string;
@@ -34,23 +35,32 @@ const usePlay = ({
     const [logs, setLogs] = useState<PlayLog[]>([]);
 
     const pushLog = useCallback((text: string) => {
-        setLogs((previous) => {
-            previous.push({
+        setLogs((previous) => (
+            [...previous, {
                 date: new Date(),
                 text
-            });
-            return previous.slice(-100);
-        });
+            }].slice(-100)
+        ));
     }, []);
+
+    const getLogUserName = (logUser: User, isMaster: boolean) => (
+        `[${isMaster ? 'GM ' : ''}${logUser?.name}]`
+    );
 
     const bindSocketEvents = useCallback((sock: PlaySocket) => {
         sock.on('connect', () => {
-            pushLog(`${user?.name} joined the session`);
+            pushLog(`${getLogUserName(sock.user, sock.isMaster)} joined the session`);
             setSocket(sock);
         });
         sock.on('disconnect', () => {
             pushLog(`${user?.name} left the session`);
             setSocket(null);
+        });
+        sock.on('join', ({ user: joinUser, isMaster }) => {
+            pushLog(`${getLogUserName(joinUser, isMaster)} joined the session`);
+        });
+        sock.on('leave', ({ user: joinUser, isMaster }) => {
+            pushLog(`${getLogUserName(joinUser, isMaster)} left the session`);
         });
     }, [
         pushLog,
@@ -71,19 +81,23 @@ const usePlay = ({
                 characterId: charId
             }
         }) as PlaySocket;
+        sock.user = user as User;
         sock.sessionId = sessId;
         sock.isMaster = isMaster;
         sock.characterId = charId;
         bindSocketEvents(sock);
         return sock;
     }, [
+        user,
         bearer,
         bindSocketEvents
     ]);
 
+    const initialConnection = useRef(true);
     useEffect(() => {
         (async () => {
-            if (session && !socket && sessionId) {
+            if (initialConnection.current && session && sessionId) {
+                initialConnection.current = false;
                 const isMaster = session.masterId === user?.id;
                 setSocket(
                     connectSocket({
@@ -97,7 +111,6 @@ const usePlay = ({
     }, [
         user,
         session,
-        socket,
         sessionId,
         characterId,
         connectSocket
