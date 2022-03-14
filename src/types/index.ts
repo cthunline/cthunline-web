@@ -100,7 +100,7 @@ export interface PlayLog {
     text: string;
 }
 
-export enum PlayWidget {
+export enum WidgetType {
     character = 'character',
     characters = 'characters',
     dices = 'dices',

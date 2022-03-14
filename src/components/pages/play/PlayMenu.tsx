@@ -3,31 +3,32 @@ import { Box, Tooltip } from '@mui/material';
 import { GiRollingDiceCup } from 'react-icons/gi';
 import { MdOutlineContactPage } from 'react-icons/md';
 
-import { PlayWidget } from '../../../types';
+import { WidgetType } from '../../../types';
 
 import './PlayMenu.css';
 
 interface PlayMenuProps {
-    isMaster: boolean;
+    // isMaster: boolean;
+    onWidgetOpen: (widget: WidgetType) => void;
 }
 
 interface PlayMenuItem {
     icon: JSX.Element;
     text: string;
-    widget: PlayWidget;
+    widget: WidgetType;
 }
 
 const playMenuItems: PlayMenuItem[] = [{
     icon: <GiRollingDiceCup size={40} />,
     text: 'Dices',
-    widget: PlayWidget.dices
+    widget: WidgetType.dices
 }, {
     icon: <MdOutlineContactPage size={40} />,
     text: 'Character',
-    widget: PlayWidget.character
+    widget: WidgetType.character
 }];
 
-const PlayMenu: React.FC<PlayMenuProps> = () => (
+const PlayMenu: React.FC<PlayMenuProps> = ({ onWidgetOpen }) => (
     <Box className="play-menu flex column">
         {playMenuItems.map(({
             icon,
@@ -46,7 +47,7 @@ const PlayMenu: React.FC<PlayMenuProps> = () => (
                 >
                     <Box
                         className="play-menu-icon"
-                        onClick={() => {}}
+                        onClick={() => onWidgetOpen(widget)}
                     >
                         {icon}
                     </Box>

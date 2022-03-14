@@ -9,12 +9,14 @@
 .widget-paper,
 .widget-inner {
     height: 100%;
+    min-height: 100px;
+    min-width: 200px;
     width: 100%;
 }
 
 .widget-bar {
     background: var(--palette-darkgray);
-    height: 25px;
+    height: 30px;
     width: 100%;
 }
 
@@ -23,7 +25,8 @@
 }
 
 .widget-content {
-    height: calc(100% - 25px);
+    height: calc(100% - 30px);
+    min-height: 70px;
     padding: 10px;
     width: 100%;
 }
