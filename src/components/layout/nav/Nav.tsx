@@ -56,7 +56,7 @@ const Nav: React.FC = () => {
             <nav className="nav">
                 <div className="nav-left">
                     <GiD10
-                        className="nav-logo"
+                        className="clickable"
                         size={40}
                         onClick={() => navigate('/home')}
                     />

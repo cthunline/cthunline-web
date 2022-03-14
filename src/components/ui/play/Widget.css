@@ -20,8 +20,8 @@
     width: 100%;
 }
 
-.widget-bar-icon {
-    cursor: pointer;
+.widget-bar-title {
+    padding: 0 5px;
 }
 
 .widget-content {

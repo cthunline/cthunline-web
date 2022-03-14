@@ -1,0 +1,15 @@
+.dices-widget-content {
+    width: 400px;
+}
+
+.dices-widget-content > div:not(:first-child) {
+    margin: 25px 0 0;
+}
+
+.dice-selected {
+    font-size: 1.5rem;
+}
+
+.dice-selected-multipler {
+    margin-right: 5px;
+}

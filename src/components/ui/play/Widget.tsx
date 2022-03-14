@@ -54,11 +54,11 @@ const Widget: React.FC<WidgetProps> = ({
                 >
                     <Box className="widget-inner flex column">
                         <Box id="widget-bar" className="widget-bar flex row center">
-                            <Box className="grow">
+                            <Box className="widget-bar-title grow">
                                 {title ?? ''}
                             </Box>
                             <MdClose
-                                className="widget-bar-icon"
+                                className="clickable"
                                 size={25}
                                 onClick={onClose}
                             />

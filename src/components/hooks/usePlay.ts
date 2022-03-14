@@ -5,11 +5,17 @@ import {
     useRef
 } from 'react';
 import { io } from 'socket.io-client';
+import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
 import { useAuth } from '../contexts/Auth';
 import useSession from './useSession';
-import { User, PlaySocket, PlayLog } from '../../types';
+import {
+    User,
+    PlaySocket,
+    PlayLog,
+    DicesRequest
+} from '../../types';
 
 interface PlayHooksOptions {
     sessionId?: string;
@@ -43,28 +49,67 @@ const usePlay = ({
         ));
     }, []);
 
-    const getLogUserName = (logUser: User, isMaster: boolean) => (
+    const getLogUsername = useCallback((logUser: User, isMaster: boolean) => (
         `[${isMaster ? 'GM ' : ''}${logUser?.name}]`
-    );
+    ), []);
+
+    const getDiceResultLog = useCallback((
+        requestUser: User,
+        isMaster: boolean,
+        request: DicesRequest,
+        result: number,
+        isPrivate: boolean = false
+    ) => {
+        const username = getLogUsername(requestUser, isMaster);
+        const requestText = Object.entries(request).map(([type, count]) => (
+            `${count}${type}`
+        )).join(' + ');
+        const privatly = isPrivate ? 'privatly ' : '';
+        return `${username} ${privatly}rolled ${requestText} and the result is ${result}`;
+    }, [
+        getLogUsername
+    ]);
 
     const bindSocketEvents = useCallback((sock: PlaySocket) => {
         sock.on('connect', () => {
-            pushLog(`${getLogUserName(sock.user, sock.isMaster)} joined the session`);
+            pushLog(`${getLogUsername(sock.user, sock.isMaster)} joined the session`);
             setSocket(sock);
         });
         sock.on('disconnect', () => {
             pushLog(`${user?.name} left the session`);
             setSocket(null);
         });
+        sock.on('error', ({ status }) => {
+            toast.error(`Socket ${status} error`);
+        });
         sock.on('join', ({ user: joinUser, isMaster }) => {
-            pushLog(`${getLogUserName(joinUser, isMaster)} joined the session`);
+            pushLog(`${getLogUsername(joinUser, isMaster)} joined the session`);
         });
         sock.on('leave', ({ user: joinUser, isMaster }) => {
-            pushLog(`${getLogUserName(joinUser, isMaster)} left the session`);
+            pushLog(`${getLogUsername(joinUser, isMaster)} left the session`);
+        });
+        sock.on('diceResult', ({
+            user: requestUser,
+            isMaster,
+            isPrivate,
+            request,
+            result
+        }) => {
+            pushLog(
+                getDiceResultLog(
+                    requestUser,
+                    isMaster,
+                    request,
+                    result,
+                    isPrivate
+                )
+            );
         });
     }, [
         pushLog,
-        user
+        user,
+        getDiceResultLog,
+        getLogUsername
     ]);
 
     const connectSocket = useCallback(({
@@ -93,6 +138,12 @@ const usePlay = ({
         bindSocketEvents
     ]);
 
+    const requestDice = useCallback((request: DicesRequest, isPrivate: boolean) => {
+        socket?.emit(isPrivate ? 'dicePrivateRequest' : 'diceRequest', request);
+    }, [
+        socket
+    ]);
+
     const initialConnection = useRef(true);
     useEffect(() => {
         (async () => {
@@ -118,7 +169,8 @@ const usePlay = ({
 
     return {
         socket,
-        logs
+        logs,
+        requestDice
     };
 };
 

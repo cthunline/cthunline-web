@@ -16,6 +16,10 @@
     overflow-y: scroll;
 }
 
+.clickable {
+    cursor: pointer;
+}
+
 /* box */
 
 .box {

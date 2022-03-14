@@ -20,10 +20,6 @@
     justify-content: left;
 }
 
-.nav-logo {
-    cursor: pointer;
-}
-
 .nav-middle button {
     color: var(--palette-text);
     font-weight: 600;
