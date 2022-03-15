@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 
 import { useDialog } from '../../contexts/Dialog';
-import usePlay from '../../hooks/usePlay';
+import { PlayProvider, usePlay } from '../../contexts/Play';
 import PlayMenu from './PlayMenu';
 import { WidgetType } from '../../../types';
 import {
@@ -20,17 +20,14 @@ import './Play.css';
 const Play = () => {
     const navigate = useNavigate();
     const { confirmDialog } = useDialog();
-    const { sessionId, characterId } = useParams();
     const {
+        characterId,
         socket,
         disconnectSocket,
         logs,
         requestDice,
         characterUpdate
-    } = usePlay({
-        sessionId,
-        characterId
-    });
+    } = usePlay();
 
     const [openWidgets, setOpenWidgets] = useState<WidgetType[]>([]);
 
@@ -108,4 +105,16 @@ const Play = () => {
     );
 };
 
-export default Play;
+const PlayWrapper = () => {
+    const { sessionId, characterId } = useParams();
+    return sessionId ? (
+        <PlayProvider
+            sessionId={sessionId}
+            characterId={characterId}
+        >
+            <Play />
+        </PlayProvider>
+    ) : null;
+};
+
+export default PlayWrapper;

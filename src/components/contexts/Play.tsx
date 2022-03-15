@@ -1,27 +1,39 @@
-import {
+import React, {
+    createContext,
     useState,
-    useCallback,
     useEffect,
-    useRef
+    useContext,
+    useCallback,
+    useRef,
+    useMemo
 } from 'react';
 import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
-import { useAuth } from '../contexts/Auth';
-import useSession from './useSession';
+import { useAuth } from './Auth';
+import useSession from '../hooks/useSession';
 import {
     User,
     PlaySocket,
     PlayLog,
-    DicesRequest,
-    Character
+    DicesRequest
 } from '../../types';
 
-interface PlayHooksOptions {
-    sessionId?: string;
+interface PlayProviderProps {
+    children: JSX.Element | JSX.Element[];
+    sessionId: string;
     characterId?: string;
-    onCharacterUpdate?: (character: Character) => void;
+}
+
+interface PlayContextData {
+    sessionId: string;
+    characterId?: string;
+    socket: PlaySocket | null;
+    disconnectSocket: () => void;
+    logs: PlayLog[];
+    requestDice: (request: DicesRequest, isPrivate: boolean) => void;
+    characterUpdate: () => void;
 }
 
 interface ConnectOptions {
@@ -30,11 +42,22 @@ interface ConnectOptions {
     characterId?: string;
 }
 
-const usePlay = ({
+const defaultPlayData: PlayContextData = {
+    sessionId: '',
+    socket: null,
+    disconnectSocket: () => {},
+    logs: [],
+    requestDice: () => {},
+    characterUpdate: () => {}
+};
+
+const PlayContext = createContext<PlayContextData>(defaultPlayData);
+
+export const PlayProvider:React.FC<PlayProviderProps> = ({
     sessionId,
     characterId,
-    onCharacterUpdate
-}: PlayHooksOptions) => {
+    children
+}) => {
     const { user, bearer } = useAuth();
     const { session } = useSession({
         sessionId
@@ -114,14 +137,12 @@ const usePlay = ({
             character
         }) => {
             pushLog(`${getLogUsername(sockUser, isMaster)} edited character ${character.name}`);
-            onCharacterUpdate?.(character);
         });
     }, [
         pushLog,
         user,
         getDiceResultLog,
-        getLogUsername,
-        onCharacterUpdate
+        getLogUsername
     ]);
 
     const connectSocket = useCallback(({
@@ -191,13 +212,35 @@ const usePlay = ({
         connectSocket
     ]);
 
-    return {
+    const contextValue = useMemo(() => ({
+        sessionId,
+        characterId,
         socket,
         disconnectSocket,
         logs,
         requestDice,
         characterUpdate
-    };
+    }), [
+        sessionId,
+        characterId,
+        socket,
+        disconnectSocket,
+        logs,
+        requestDice,
+        characterUpdate
+    ]);
+
+    return (
+        <PlayContext.Provider value={contextValue}>
+            {children}
+        </PlayContext.Provider>
+    );
 };
 
-export default usePlay;
+export function usePlay() {
+    const context = useContext(PlayContext);
+    if (!context) {
+        throw new Error('usePlay must be used within an PlayProvider');
+    }
+    return context;
+}
