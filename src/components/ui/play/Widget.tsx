@@ -11,6 +11,7 @@ import './Widget.css';
 interface WidgetProps {
     title?: string;
     className?: string;
+    actions?: JSX.Element | JSX.Element[];
     children?: JSX.Element | JSX.Element[] | string;
     onClose?: () => void;
 }
@@ -18,6 +19,7 @@ interface WidgetProps {
 const Widget: React.FC<WidgetProps> = ({
     title,
     className,
+    actions,
     children,
     onClose
 }) => {
@@ -54,8 +56,11 @@ const Widget: React.FC<WidgetProps> = ({
                 >
                     <Box className="widget-inner flex column">
                         <Box id="widget-bar" className="widget-bar flex row center">
-                            <Box className="widget-bar-title grow">
+                            <Box className="widget-bar-title">
                                 {title ?? ''}
+                            </Box>
+                            <Box className="widget-bar-actions grow flex row centerY">
+                                {actions}
                             </Box>
                             <MdClose
                                 className="clickable"

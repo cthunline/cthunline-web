@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     Box,
@@ -23,8 +23,10 @@ const Play = () => {
     const { sessionId, characterId } = useParams();
     const {
         socket,
+        disconnectSocket,
         logs,
-        requestDice
+        requestDice,
+        characterUpdate
     } = usePlay({
         sessionId,
         characterId
@@ -72,6 +74,8 @@ const Play = () => {
                     return (
                         <CharacterWidget
                             key={key}
+                            characterId={characterId ?? ''}
+                            onUpdate={characterUpdate}
                             onClose={onWidgetClose}
                         />
                     );
@@ -80,6 +84,12 @@ const Play = () => {
             }
         })
     );
+
+    useEffect(() => (
+        () => disconnectSocket()
+    ), [
+        disconnectSocket
+    ]);
 
     return socket ? (
         <Box className="play-container flex row">

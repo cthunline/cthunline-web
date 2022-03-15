@@ -14,12 +14,14 @@ import {
     User,
     PlaySocket,
     PlayLog,
-    DicesRequest
+    DicesRequest,
+    Character
 } from '../../types';
 
 interface PlayHooksOptions {
     sessionId?: string;
     characterId?: string;
+    onCharacterUpdate?: (character: Character) => void;
 }
 
 interface ConnectOptions {
@@ -30,7 +32,8 @@ interface ConnectOptions {
 
 const usePlay = ({
     sessionId,
-    characterId
+    characterId,
+    onCharacterUpdate
 }: PlayHooksOptions) => {
     const { user, bearer } = useAuth();
     const { session } = useSession({
@@ -82,14 +85,14 @@ const usePlay = ({
         sock.on('error', ({ status }) => {
             toast.error(`Socket ${status} error`);
         });
-        sock.on('join', ({ user: joinUser, isMaster }) => {
-            pushLog(`${getLogUsername(joinUser, isMaster)} joined the session`);
+        sock.on('join', ({ user: sockUser, isMaster }) => {
+            pushLog(`${getLogUsername(sockUser, isMaster)} joined the session`);
         });
-        sock.on('leave', ({ user: joinUser, isMaster }) => {
-            pushLog(`${getLogUsername(joinUser, isMaster)} left the session`);
+        sock.on('leave', ({ user: sockUser, isMaster }) => {
+            pushLog(`${getLogUsername(sockUser, isMaster)} left the session`);
         });
         sock.on('diceResult', ({
-            user: requestUser,
+            user: sockUser,
             isMaster,
             isPrivate,
             request,
@@ -97,7 +100,7 @@ const usePlay = ({
         }) => {
             pushLog(
                 getDiceResultLog(
-                    requestUser,
+                    sockUser,
                     isMaster,
                     request,
                     result,
@@ -105,11 +108,20 @@ const usePlay = ({
                 )
             );
         });
+        sock.on('characterUpdate', ({
+            user: sockUser,
+            isMaster,
+            character
+        }) => {
+            pushLog(`${getLogUsername(sockUser, isMaster)} edited character ${character.name}`);
+            onCharacterUpdate?.(character);
+        });
     }, [
         pushLog,
         user,
         getDiceResultLog,
-        getLogUsername
+        getLogUsername,
+        onCharacterUpdate
     ]);
 
     const connectSocket = useCallback(({
@@ -144,6 +156,18 @@ const usePlay = ({
         socket
     ]);
 
+    const characterUpdate = useCallback(() => {
+        socket?.emit('characterUpdate');
+    }, [
+        socket
+    ]);
+
+    const disconnectSocket = useCallback(() => {
+        socket?.disconnect();
+    }, [
+        socket
+    ]);
+
     const initialConnection = useRef(true);
     useEffect(() => {
         (async () => {
@@ -169,8 +193,10 @@ const usePlay = ({
 
     return {
         socket,
+        disconnectSocket,
         logs,
-        requestDice
+        requestDice,
+        characterUpdate
     };
 };
 
