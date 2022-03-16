@@ -95,6 +95,11 @@ export interface PlaySocket extends Socket {
     characterId?: string;
 }
 
+export interface SessionUser extends User {
+    character: Character;
+    isMaster: boolean;
+}
+
 export interface PlayLog {
     date: Date;
     text: string;

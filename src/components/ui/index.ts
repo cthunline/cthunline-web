@@ -4,8 +4,9 @@ import Selector from './selector/Selector';
 import AutoScroll from './autoScroll/AutoScroll';
 import Console from './play/Console';
 import Widget from './play/Widget';
-import DicesWidget from './play/widgets/DicesWidget';
-import CharacterWidget from './play/widgets/CharacterWidget';
+import DicesWidget from './widgets/DicesWidget';
+import CharacterWidget from './widgets/CharacterWidget';
+import CharactersWidget from './widgets/CharactersWidget';
 
 export {
     CustomDialog,
@@ -15,5 +16,6 @@ export {
     Widget,
     AutoScroll,
     DicesWidget,
-    CharacterWidget
+    CharacterWidget,
+    CharactersWidget
 };

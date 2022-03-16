@@ -17,7 +17,9 @@ import {
     User,
     PlaySocket,
     PlayLog,
-    DicesRequest
+    DicesRequest,
+    SessionUser,
+    Character
 } from '../../types';
 
 interface PlayProviderProps {
@@ -30,6 +32,7 @@ interface PlayContextData {
     sessionId: string;
     characterId?: string;
     socket: PlaySocket | null;
+    users: SessionUser[];
     disconnectSocket: () => void;
     logs: PlayLog[];
     requestDice: (request: DicesRequest, isPrivate: boolean) => void;
@@ -45,6 +48,7 @@ interface ConnectOptions {
 const defaultPlayData: PlayContextData = {
     sessionId: '',
     socket: null,
+    users: [],
     disconnectSocket: () => {},
     logs: [],
     requestDice: () => {},
@@ -64,6 +68,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     });
 
     const [socket, setSocket] = useState<PlaySocket | null>(null);
+    const [users, setUsers] = useState<SessionUser[]>([]);
     const [logs, setLogs] = useState<PlayLog[]>([]);
 
     const pushLog = useCallback((text: string) => {
@@ -96,23 +101,34 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         getLogUsername
     ]);
 
+    const updateUserCharacter = useCallback((userId: string, character: Character) => {
+        setUsers((previous) => (
+            previous.map((sessionUser: SessionUser) => (
+                sessionUser.id === userId ? {
+                    ...sessionUser,
+                    character
+                } : sessionUser
+            ))
+        ));
+    }, []);
+
     const bindSocketEvents = useCallback((sock: PlaySocket) => {
         sock.on('connect', () => {
-            pushLog(`${getLogUsername(sock.user, sock.isMaster)} joined the session`);
             setSocket(sock);
         });
         sock.on('disconnect', () => {
-            pushLog(`${user?.name} left the session`);
             setSocket(null);
         });
         sock.on('error', ({ status }) => {
             toast.error(`Socket ${status} error`);
         });
-        sock.on('join', ({ user: sockUser, isMaster }) => {
+        sock.on('join', ({ user: sockUser, users: sessionUsers, isMaster }) => {
             pushLog(`${getLogUsername(sockUser, isMaster)} joined the session`);
+            setUsers(sessionUsers);
         });
-        sock.on('leave', ({ user: sockUser, isMaster }) => {
+        sock.on('leave', ({ user: sockUser, users: sessionUsers, isMaster }) => {
             pushLog(`${getLogUsername(sockUser, isMaster)} left the session`);
+            setUsers(sessionUsers);
         });
         sock.on('diceResult', ({
             user: sockUser,
@@ -137,12 +153,13 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             character
         }) => {
             pushLog(`${getLogUsername(sockUser, isMaster)} edited character ${character.name}`);
+            updateUserCharacter(sockUser.id, character);
         });
     }, [
         pushLog,
-        user,
         getDiceResultLog,
-        getLogUsername
+        getLogUsername,
+        updateUserCharacter
     ]);
 
     const connectSocket = useCallback(({
@@ -216,6 +233,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         sessionId,
         characterId,
         socket,
+        users,
         disconnectSocket,
         logs,
         requestDice,
@@ -224,6 +242,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         sessionId,
         characterId,
         socket,
+        users,
         disconnectSocket,
         logs,
         requestDice,

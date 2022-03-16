@@ -14,14 +14,14 @@ import {
     GiDiceTwentyFacesTwenty
 } from 'react-icons/gi';
 
-import Widget from '../Widget';
+import Widget from '../play/Widget';
 import {
     WidgetType,
     DiceType,
     DicesData,
     DicesRequest,
     diceTypes
-} from '../../../../types';
+} from '../../../types';
 
 import './DicesWidget.css';
 

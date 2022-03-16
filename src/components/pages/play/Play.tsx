@@ -12,7 +12,8 @@ import { WidgetType } from '../../../types';
 import {
     Console,
     DicesWidget,
-    CharacterWidget
+    CharacterWidget,
+    CharactersWidget
 } from '../../ui';
 
 import './Play.css';
@@ -23,6 +24,7 @@ const Play = () => {
     const {
         characterId,
         socket,
+        users,
         disconnectSocket,
         logs,
         requestDice,
@@ -73,6 +75,14 @@ const Play = () => {
                             key={key}
                             characterId={characterId ?? ''}
                             onUpdate={characterUpdate}
+                            onClose={onWidgetClose}
+                        />
+                    );
+                case WidgetType.characters:
+                    return (
+                        <CharactersWidget
+                            key={key}
+                            users={users.filter(({ isMaster }) => !isMaster)}
                             onClose={onWidgetClose}
                         />
                     );

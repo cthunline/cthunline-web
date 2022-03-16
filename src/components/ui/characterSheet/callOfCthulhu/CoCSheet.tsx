@@ -44,6 +44,12 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
 }) => {
     const [characterData, setCharacterData] = useState<CoCCharacterData>(data);
 
+    useEffect(() => {
+        setCharacterData(data);
+    }, [
+        data
+    ]);
+
     const initialRender = useRef(true);
     useEffect(() => {
         if (initialRender.current) {
@@ -56,6 +62,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             onChange(characterName, characterData);
         }
     }, [
+        readonly,
         onChange,
         characterData
     ]);
