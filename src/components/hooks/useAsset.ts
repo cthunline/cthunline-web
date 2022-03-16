@@ -11,6 +11,7 @@ import { Asset } from '../../types';
 
 interface AssetHookOptions {
     loadList?: boolean;
+    type?: 'audio' | 'image';
 }
 
 interface UploadOptions {
@@ -26,23 +27,26 @@ interface DeleteOptions {
     isToast?: boolean;
 }
 
-const useAsset = ({ loadList }: AssetHookOptions = {}) => {
+const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
     const { user } = useAuth();
 
     const [assetList, setAssetList] = useState<Asset[]>([]);
 
     const getAssets = useCallback(async (userId: string) => {
         try {
+            const query = type ? `?type=${type}` : '';
             const { assets } = await Api.call({
                 method: 'GET',
-                route: `/users/${userId}/assets`
+                route: `/users/${userId}/assets${query}`
             });
             return assets;
         } catch (err: any) {
             toast.error(err.message);
             return undefined;
         }
-    }, []);
+    }, [
+        type
+    ]);
 
     const refreshAssetList = useCallback(async () => {
         if (user?.id) {

@@ -106,7 +106,7 @@ const Sessions: React.FC = () => {
                 Sessions
             </Typography>
             <TableContainer>
-                <Table>
+                <Table stickyHeader>
                     <TableHead>
                         <TableRow>
                             <TableCell />

@@ -7,6 +7,7 @@ import Widget from './play/Widget';
 import DicesWidget from './widgets/DicesWidget';
 import CharacterWidget from './widgets/CharacterWidget';
 import CharactersWidget from './widgets/CharactersWidget';
+import JukeboxWidget from './widgets/JukeboxWidget';
 
 export {
     CustomDialog,
@@ -17,5 +18,6 @@ export {
     AutoScroll,
     DicesWidget,
     CharacterWidget,
-    CharactersWidget
+    CharactersWidget,
+    JukeboxWidget
 };

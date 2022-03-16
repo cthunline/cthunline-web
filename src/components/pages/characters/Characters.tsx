@@ -91,7 +91,7 @@ const Characters: React.FC = () => {
                 Characters
             </Typography>
             <TableContainer>
-                <Table>
+                <Table stickyHeader>
                     <TableHead>
                         <TableRow>
                             <TableCell>Game</TableCell>

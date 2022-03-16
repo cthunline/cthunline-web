@@ -30,7 +30,7 @@ const allowedMimeTypes = [
     'audio/mpeg'
 ];
 
-const limitSizeInMb = 10;
+const limitSizeInMb = 20;
 
 const Assets: React.FC = () => {
     const { confirmDialog } = useDialog();
@@ -74,7 +74,7 @@ const Assets: React.FC = () => {
                 Assets
             </Typography>
             <TableContainer>
-                <Table>
+                <Table stickyHeader>
                     <TableHead>
                         <TableRow>
                             <TableCell>Type</TableCell>

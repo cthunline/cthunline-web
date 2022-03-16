@@ -109,6 +109,7 @@
 /* lists */
 
 .page-list {
+    max-height: 100%;
     width: 750px;
 }
 

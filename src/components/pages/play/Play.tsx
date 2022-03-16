@@ -13,7 +13,8 @@ import {
     Console,
     DicesWidget,
     CharacterWidget,
-    CharactersWidget
+    CharactersWidget,
+    JukeboxWidget
 } from '../../ui';
 
 import './Play.css';
@@ -83,6 +84,14 @@ const Play = () => {
                         <CharactersWidget
                             key={key}
                             users={users.filter(({ isMaster }) => !isMaster)}
+                            onClose={onWidgetClose}
+                        />
+                    );
+                case WidgetType.jukebox:
+                    return (
+                        <JukeboxWidget
+                            key={key}
+                            onPlay={() => {}}
                             onClose={onWidgetClose}
                         />
                     );

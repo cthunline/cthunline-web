@@ -40,7 +40,7 @@ const Users: React.FC = () => {
                 Users
             </Typography>
             <TableContainer>
-                <Table>
+                <Table stickyHeader>
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>

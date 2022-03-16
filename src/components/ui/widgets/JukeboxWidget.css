@@ -1,0 +1,13 @@
+.jukebox-widget-content {
+    width: 400px;
+}
+
+.jukebox-assets {
+    height: 250px;
+    overflow-y: scroll;
+}
+
+.jukebox-player {
+    margin: 10px 0 0;
+    width: 100%;
+}
