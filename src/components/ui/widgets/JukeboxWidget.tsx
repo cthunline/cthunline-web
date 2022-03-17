@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
     Box,
     List,
@@ -16,14 +16,14 @@ import useAsset from '../../hooks/useAsset';
 import './JukeboxWidget.css';
 
 interface JukeboxWidgetProps {
-    onPlay: (assetId: string) => void;
-    // onStop: () => void;
+    onPlay: (assetId: string, time: number) => void;
+    onStop: () => void;
     onClose: (widget: WidgetType) => void;
 }
 
 const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
     onPlay,
-    // onStop,
+    onStop,
     onClose
 }) => {
     const { assetList } = useAsset({
@@ -33,15 +33,31 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
 
     const [selectedAsset, setSelectedAsset] = useState<Asset>();
 
+    const audioElement = useRef<HTMLAudioElement>() as (
+        React.MutableRefObject<HTMLAudioElement>
+    );
+
     const onSelect = (asset: Asset) => {
         setSelectedAsset(asset);
-        onPlay(asset.id);
+    };
+
+    const onAudioPlay = () => {
+        if (selectedAsset && audioElement.current) {
+            onPlay(
+                selectedAsset.id,
+                audioElement.current.currentTime
+            );
+        }
+    };
+
+    const onAudioPause = () => {
+        onStop();
     };
 
     return (
         <Widget
             title="Dices"
-            onClose={() => onClose(WidgetType.dices)}
+            onClose={() => onClose(WidgetType.jukebox)}
         >
             <Box className="jukebox-widget-content">
                 <List className="jukebox-assets">
@@ -61,12 +77,17 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
                 {selectedAsset ? (
                     // eslint-disable-next-line jsx-a11y/media-has-caption
                     <audio
+                        ref={audioElement}
                         className="jukebox-player"
-                        controls
                         src={new URL(
                             `/static/${selectedAsset.path}`,
                             Api.baseUrl
                         ).href}
+                        crossOrigin="anonymous"
+                        controls
+                        autoPlay={false}
+                        onPlay={onAudioPlay}
+                        onPause={onAudioPause}
                     />
                 ) : null}
             </Box>

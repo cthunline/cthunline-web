@@ -37,12 +37,8 @@ interface PlayContextData {
     logs: PlayLog[];
     requestDice: (request: DicesRequest, isPrivate: boolean) => void;
     characterUpdate: () => void;
-}
-
-interface ConnectOptions {
-    sessionId: string;
-    isMaster: boolean;
-    characterId?: string;
+    audioPlay: (assetId: string, time: number) => void;
+    audioStop: () => void;
 }
 
 const defaultPlayData: PlayContextData = {
@@ -52,8 +48,16 @@ const defaultPlayData: PlayContextData = {
     disconnectSocket: () => {},
     logs: [],
     requestDice: () => {},
-    characterUpdate: () => {}
+    characterUpdate: () => {},
+    audioPlay: () => {},
+    audioStop: () => {}
 };
+
+interface ConnectOptions {
+    sessionId: string;
+    isMaster: boolean;
+    characterId?: string;
+}
 
 const PlayContext = createContext<PlayContextData>(defaultPlayData);
 
@@ -188,6 +192,12 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         bindSocketEvents
     ]);
 
+    const disconnectSocket = useCallback(() => {
+        socket?.disconnect();
+    }, [
+        socket
+    ]);
+
     const requestDice = useCallback((request: DicesRequest, isPrivate: boolean) => {
         socket?.emit(isPrivate ? 'dicePrivateRequest' : 'diceRequest', request);
     }, [
@@ -200,8 +210,17 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         socket
     ]);
 
-    const disconnectSocket = useCallback(() => {
-        socket?.disconnect();
+    const audioPlay = useCallback((assetId: string, time: number) => {
+        socket?.emit('audioPlay', {
+            assetId,
+            time
+        });
+    }, [
+        socket
+    ]);
+
+    const audioStop = useCallback(() => {
+        socket?.emit('audioStop');
     }, [
         socket
     ]);
@@ -237,7 +256,9 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         disconnectSocket,
         logs,
         requestDice,
-        characterUpdate
+        characterUpdate,
+        audioPlay,
+        audioStop
     }), [
         sessionId,
         characterId,
@@ -246,7 +267,9 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         disconnectSocket,
         logs,
         requestDice,
-        characterUpdate
+        characterUpdate,
+        audioPlay,
+        audioStop
     ]);
 
     return (
