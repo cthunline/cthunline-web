@@ -15,7 +15,7 @@ interface AssetHookOptions {
 }
 
 interface UploadOptions {
-    file: File;
+    files: File[];
     progress?: (percent: number) => void;
     isRefresh?: boolean;
     isToast?: boolean;
@@ -60,16 +60,18 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
         getAssets
     ]);
 
-    const uploadAsset = useCallback(async ({
-        file,
+    const uploadAssets = useCallback(async ({
+        files,
         progress,
         isRefresh = true,
         isToast = true
-    }: UploadOptions): Promise<Asset | null> => {
+    }: UploadOptions): Promise<Asset[] | null> => {
         try {
             const formData = new FormData();
-            formData.append('asset', file);
-            const asset = await Api.call({
+            [...files].forEach((file) => {
+                formData.append('assets', file);
+            });
+            const { assets } = await Api.call({
                 method: 'POST',
                 route: `/users/${user?.id}/assets`,
                 data: formData,
@@ -79,9 +81,10 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
                 await refreshAssetList();
             }
             if (isToast) {
-                toast.success('Asset created');
+                const s = assets.length > 1 ? 's' : '';
+                toast.success(`Asset${s} uploaded`);
             }
-            return asset;
+            return assets;
         } catch (err: any) {
             toast.error(err.message);
             return null;
@@ -129,7 +132,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
     return {
         assetList,
         getAssets,
-        uploadAsset,
+        uploadAssets,
         deleteAsset
     };
 };

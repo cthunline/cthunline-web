@@ -36,7 +36,7 @@ const Assets: React.FC = () => {
     const { confirmDialog } = useDialog();
     const {
         assetList,
-        uploadAsset,
+        uploadAssets,
         deleteAsset
     } = useAsset({
         loadList: true
@@ -45,14 +45,19 @@ const Assets: React.FC = () => {
     const [progress, setProgress] = useState<number | null>(null);
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            const sizeInMb = file.size / 1000000;
-            if (sizeInMb > limitSizeInMb) {
-                toast.error(`File size is too large (max ${limitSizeInMb}Mb)`);
-            } else {
-                await uploadAsset({
-                    file,
+        if (e.target.files?.length) {
+            const files: File[] = [...e.target.files];
+            let valid = true;
+            files.forEach((file) => {
+                const sizeInMb = file.size / (1024 * 1024);
+                if (sizeInMb > limitSizeInMb) {
+                    toast.error(`Size of file ${file.name} is too large (max ${limitSizeInMb}Mb)`);
+                    valid = false;
+                }
+            });
+            if (valid) {
+                await uploadAssets({
+                    files,
                     progress: (percent: number) => {
                         setProgress(percent);
                     }
@@ -121,6 +126,7 @@ const Assets: React.FC = () => {
                         id="assets-input"
                         className="hidden"
                         type="file"
+                        multiple
                         accept={allowedMimeTypes.join(',')}
                         onChange={handleFileChange}
                     />
