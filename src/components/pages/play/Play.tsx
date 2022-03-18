@@ -14,7 +14,8 @@ import {
     DicesWidget,
     CharacterWidget,
     CharactersWidget,
-    JukeboxWidget
+    JukeboxWidget,
+    Audio
 } from '../../ui';
 
 import './Play.css';
@@ -119,6 +120,7 @@ const Play = () => {
             />
             <Box id="play-content" className="play-content flex column end">
                 {getWidgets(openWidgets)}
+                {!socket.isMaster ? <Audio /> : null }
                 <Console logs={logs} />
             </Box>
         </Box>

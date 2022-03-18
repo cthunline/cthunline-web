@@ -79,10 +79,7 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
                     <audio
                         ref={audioElement}
                         className="jukebox-player"
-                        src={new URL(
-                            `/static/${selectedAsset.path}`,
-                            Api.baseUrl
-                        ).href}
+                        src={Api.getAssetUrl(selectedAsset.path)}
                         crossOrigin="anonymous"
                         controls
                         autoPlay={false}

@@ -55,7 +55,14 @@ const Api = {
             ) : undefined
         });
         return response.data;
-    }
+    },
+
+    getAssetUrl: (path: string) => (
+        new URL(
+            `/static/${path}`,
+            Api.baseUrl
+        ).href
+    )
 
 };
 

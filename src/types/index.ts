@@ -120,3 +120,8 @@ export type DicesData = Record<DiceType, number>;
 export type DicesRequest = Partial<DicesData>;
 
 export const diceTypes: DiceType[] = ['D4', 'D6', 'D8', 'D10', 'D12', 'D20', 'D100'];
+
+export interface AudioData extends Asset {
+    time: number;
+    playing: boolean;
+}

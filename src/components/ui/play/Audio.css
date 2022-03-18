@@ -1,0 +1,7 @@
+.audio {
+    position: absolute;
+    right: 30px;
+    top: 10px;
+    width: 150px;
+    z-index: 0;
+}
