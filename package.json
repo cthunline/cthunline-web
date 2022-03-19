@@ -16,7 +16,6 @@
         "axios": "^0.26.1",
         "formik": "^2.2.9",
         "react": "^17.0.2",
-        "react-cookie": "^4.1.1",
         "react-dom": "^17.0.2",
         "react-draggable": "^4.4.4",
         "react-icons": "^4.3.1",

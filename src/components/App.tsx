@@ -1,5 +1,4 @@
 import React from 'react';
-import { CookiesProvider } from 'react-cookie';
 import { ThemeProvider } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 
@@ -13,16 +12,14 @@ import './App.css';
 import './Ui.css';
 
 const App = () => (
-    <CookiesProvider>
-        <AuthProvider>
-            <ThemeProvider theme={theme}>
-                <DialogProvider>
-                    <Router />
-                    <ToastContainer theme="dark" />
-                </DialogProvider>
-            </ThemeProvider>
-        </AuthProvider>
-    </CookiesProvider>
+    <AuthProvider>
+        <ThemeProvider theme={theme}>
+            <DialogProvider>
+                <Router />
+                <ToastContainer theme="dark" />
+            </DialogProvider>
+        </ThemeProvider>
+    </AuthProvider>
 );
 
 export default App;

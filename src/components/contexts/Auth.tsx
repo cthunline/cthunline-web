@@ -6,7 +6,6 @@ import React, {
     useMemo,
     useCallback
 } from 'react';
-import { useCookies } from 'react-cookie';
 
 import Api from '../../services/api';
 import { User } from '../../types';
@@ -16,7 +15,6 @@ interface AuthData {
     isLoggedIn: boolean;
     userId: number | null;
     user: User | null;
-    bearer: string | null;
 }
 
 interface AuthContextData extends AuthData {
@@ -28,8 +26,7 @@ const defaultAuthData: AuthData = {
     isLoading: true,
     isLoggedIn: false,
     userId: null,
-    user: null,
-    bearer: null
+    user: null
 };
 
 const AuthContext = createContext<AuthContextData>({
@@ -39,8 +36,6 @@ const AuthContext = createContext<AuthContextData>({
 });
 
 export const AuthProvider:React.FC = ({ children }) => {
-    const [cookies, setCookie, removeCookie] = useCookies(['bearer']);
-
     const [authData, setAuthData] = useState<AuthData>(defaultAuthData);
 
     const getUser = async (userId: number) => (
@@ -50,26 +45,22 @@ export const AuthProvider:React.FC = ({ children }) => {
         })
     );
 
-    const logout = useCallback(async (callApi: boolean = false) => {
+    const logout = useCallback(async (callApi: boolean = true) => {
         if (callApi) {
             await Api.call({
                 method: 'DELETE',
                 route: '/auth'
             });
         }
-        removeCookie('bearer');
-        Api.bearer = null;
         setAuthData({
             ...defaultAuthData,
             isLoading: false
         });
-    }, [
-        removeCookie
-    ]);
+    }, []);
 
     const login = useCallback(async (email: string, password: string): Promise<void> => {
         try {
-            const { userId, bearer } = await Api.call({
+            const { userId } = await Api.call({
                 method: 'POST',
                 route: '/auth',
                 data: {
@@ -77,50 +68,41 @@ export const AuthProvider:React.FC = ({ children }) => {
                     password
                 }
             });
-            setCookie('bearer', bearer);
-            Api.bearer = bearer;
             const user = await getUser(userId);
             setAuthData({
                 isLoading: false,
                 isLoggedIn: true,
                 userId,
-                user,
-                bearer
+                user
             });
         } catch (err) {
-            await logout();
+            await logout(false);
             throw err;
         }
     }, [
-        logout,
-        setCookie
+        logout
     ]);
 
     useEffect(() => {
         (async () => {
             try {
-                const cookieBearer = cookies.bearer;
-                const { userId, bearer } = await Api.call({
+                const { userId } = await Api.call({
                     method: 'GET',
-                    route: '/auth',
-                    bearer: cookieBearer
+                    route: '/auth'
                 });
-                Api.bearer = bearer;
                 const user = await getUser(userId);
                 setAuthData({
                     isLoading: false,
                     isLoggedIn: true,
                     userId,
-                    user,
-                    bearer
+                    user
                 });
             } catch (err: any) {
-                await logout();
+                await logout(false);
             }
         })();
     }, [
-        logout,
-        cookies
+        logout
     ]);
 
     const contextValue = useMemo(() => ({

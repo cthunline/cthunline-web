@@ -1,9 +1,8 @@
-import Axios from 'axios';
+import Axios, { AxiosRequestHeaders } from 'axios';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 interface ApiCallOptions {
-    bearer?: string | null;
     method: HttpMethod;
     route: string;
     data?: object | FormData;
@@ -13,10 +12,8 @@ interface ApiCallOptions {
 const Api = {
 
     baseUrl: String(import.meta.env.VITE_API_URL),
-    bearer: null,
 
     async call({
-        bearer,
         method,
         route,
         data,
@@ -26,23 +23,15 @@ const Api = {
             throw new Error('Unavailable base URL');
         }
         const url = `${Api.baseUrl}${route}`;
-        let headerBearer = '';
-        if (bearer) {
-            headerBearer = bearer;
-        } else if (Api.bearer) {
-            headerBearer = Api.bearer;
-        }
-        const contentHeaders: object = data instanceof FormData ? {} : {
+        const headers: AxiosRequestHeaders = data instanceof FormData ? {} : {
             Accept: 'application/json',
             'Content-Type': 'application/json'
         };
         const response = await Axios({
+            withCredentials: true,
             method,
             url,
-            headers: {
-                Authorization: `Bearer ${headerBearer}`,
-                ...contentHeaders
-            },
+            headers,
             data,
             onUploadProgress: progress ? (
                 (progressEvent) => {

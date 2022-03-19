@@ -70,7 +70,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     characterId,
     children
 }) => {
-    const { user, bearer } = useAuth();
+    const { user } = useAuth();
     const { session } = useSession({
         sessionId
     });
@@ -122,14 +122,18 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     }, []);
 
     const bindSocketEvents = useCallback((sock: PlaySocket) => {
+        sock.on('connect_error', (/* { message } */) => {
+            toast.error('Socket connection error');
+            // console.log(message);
+        });
+        sock.on('error', ({ status }) => {
+            toast.error(`Socket ${status} error`);
+        });
         sock.on('connect', () => {
             setSocket(sock);
         });
         sock.on('disconnect', () => {
             setSocket(null);
-        });
-        sock.on('error', ({ status }) => {
-            toast.error(`Socket ${status} error`);
         });
         sock.on('join', ({ user: sockUser, users: sessionUsers, isMaster }) => {
             pushLog(`${getLogUsername(sockUser, isMaster)} joined the session`);
@@ -187,13 +191,11 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         characterId: charId
     }: ConnectOptions): PlaySocket => {
         const sock = io(Api.baseUrl, {
-            auth: {
-                token: bearer
-            },
             query: {
                 sessionId: sessId,
                 characterId: charId
-            }
+            },
+            withCredentials: true
         }) as PlaySocket;
         sock.user = user as User;
         sock.sessionId = sessId;
@@ -203,7 +205,6 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         return sock;
     }, [
         user,
-        bearer,
         bindSocketEvents
     ]);
 
