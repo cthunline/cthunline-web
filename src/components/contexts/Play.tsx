@@ -20,7 +20,8 @@ import {
     DicesRequest,
     SessionUser,
     Character,
-    AudioData
+    AudioData,
+    Asset
 } from '../../types';
 
 interface PlayProviderProps {
@@ -38,8 +39,8 @@ interface PlayContextData {
     logs: PlayLog[];
     requestDice: (request: DicesRequest, isPrivate: boolean) => void;
     characterUpdate: () => void;
-    audioPlay: (assetId: string, time: number) => void;
-    audioStop: () => void;
+    playAudio: (asset: Asset, time: number) => void;
+    stopAudio: () => void;
     audioData: AudioData | null;
 }
 
@@ -51,8 +52,8 @@ const defaultPlayData: PlayContextData = {
     logs: [],
     requestDice: () => {},
     characterUpdate: () => {},
-    audioPlay: () => {},
-    audioStop: () => {},
+    playAudio: () => {},
+    stopAudio: () => {},
     audioData: null
 };
 
@@ -171,19 +172,13 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             });
         });
         sock.on('audioStop', () => {
-            if (audioData) {
-                setAudioData((previous) => ({
-                    ...previous,
-                    playing: false
-                } as AudioData));
-            }
+            setAudioData(null);
         });
     }, [
         pushLog,
         getDiceResultLog,
         getLogUsername,
-        updateUserCharacter,
-        audioData
+        updateUserCharacter
     ]);
 
     const connectSocket = useCallback(({
@@ -230,16 +225,16 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         socket
     ]);
 
-    const audioPlay = useCallback((assetId: string, time: number) => {
+    const playAudio = useCallback((asset: Asset, time: number) => {
         socket?.emit('audioPlay', {
-            assetId,
+            assetId: asset.id,
             time
         });
     }, [
         socket
     ]);
 
-    const audioStop = useCallback(() => {
+    const stopAudio = useCallback(() => {
         socket?.emit('audioStop');
     }, [
         socket
@@ -277,8 +272,8 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         logs,
         requestDice,
         characterUpdate,
-        audioPlay,
-        audioStop,
+        playAudio,
+        stopAudio,
         audioData
     }), [
         sessionId,
@@ -289,8 +284,8 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         logs,
         requestDice,
         characterUpdate,
-        audioPlay,
-        audioStop,
+        playAudio,
+        stopAudio,
         audioData
     ]);
 

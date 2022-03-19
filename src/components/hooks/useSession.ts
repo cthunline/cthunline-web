@@ -60,7 +60,7 @@ const useSession = ({
         sessId: string
     ): Promise<Session | null> => {
         try {
-            return Api.call({
+            return await Api.call({
                 method: 'GET',
                 route: `/sessions/${sessId}`
             });

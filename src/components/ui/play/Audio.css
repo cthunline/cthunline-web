@@ -5,3 +5,7 @@
     width: 150px;
     z-index: 0;
 }
+
+.audio-volume-icon {
+    margin-right: 10px;
+}

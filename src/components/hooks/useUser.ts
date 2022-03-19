@@ -78,9 +78,9 @@ const useUser = ({
         data,
         isRefresh = true,
         isToast = true
-    }: EditOptions) => {
+    }: EditOptions): Promise<User | null> => {
         try {
-            await Api.call({
+            const user = await Api.call({
                 method: 'POST',
                 route: `/users/${userId}`,
                 data
@@ -91,8 +91,10 @@ const useUser = ({
             if (isToast) {
                 toast.success('User edited');
             }
+            return user;
         } catch (err: any) {
             toast.error(err.message);
+            return null;
         }
     };
 

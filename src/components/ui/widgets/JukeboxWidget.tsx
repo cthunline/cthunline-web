@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     Box,
     List,
@@ -16,7 +16,7 @@ import useAsset from '../../hooks/useAsset';
 import './JukeboxWidget.css';
 
 interface JukeboxWidgetProps {
-    onPlay: (assetId: string, time: number) => void;
+    onPlay: (asset: Asset, time: number) => void;
     onStop: () => void;
     onClose: (widget: WidgetType) => void;
 }
@@ -38,13 +38,16 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
     );
 
     const onSelect = (asset: Asset) => {
+        if (selectedAsset?.id !== asset.id) {
+            onStop();
+        }
         setSelectedAsset(asset);
     };
 
     const onAudioPlay = () => {
         if (selectedAsset && audioElement.current) {
             onPlay(
-                selectedAsset.id,
+                selectedAsset,
                 audioElement.current.currentTime
             );
         }
@@ -53,6 +56,8 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
     const onAudioPause = () => {
         onStop();
     };
+
+    useEffect(() => onStop);
 
     return (
         <Widget

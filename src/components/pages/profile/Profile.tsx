@@ -1,5 +1,10 @@
 import React from 'react';
-import { Formik, Form, Field } from 'formik';
+import {
+    Formik,
+    Form,
+    Field,
+    FormikHelpers
+} from 'formik';
 import * as Yup from 'yup';
 import {
     Paper,
@@ -55,17 +60,22 @@ const Profile = () => {
         passwordConfirm: ''
     };
 
-    const onSubmit = ({
+    const onSubmit = async ({
         oldPassword,
         password
-    }: PasswordChangeData) => {
-        editUser({
-            userId: user?.id,
+    }: PasswordChangeData, {
+        resetForm
+    }: FormikHelpers<PasswordChangeData>) => {
+        const editedUser = await editUser({
+            userId: user?.id ?? '',
             data: {
                 oldPassword,
                 password
             }
         });
+        if (editedUser) {
+            resetForm();
+        }
     };
 
     return (
@@ -82,7 +92,8 @@ const Profile = () => {
                     errors,
                     touched,
                     handleChange,
-                    handleBlur
+                    handleBlur,
+                    values
                 }) => (
                     <Form className="form small flex column center">
                         {fieldList.map(({ field, label, preventComplete }) => (
@@ -99,6 +110,7 @@ const Profile = () => {
                                         label={label}
                                         name={field}
                                         type="password"
+                                        value={values[field]}
                                         error={!!errors[field] && !!touched[field]}
                                         onChange={handleChange}
                                         onBlur={handleBlur}

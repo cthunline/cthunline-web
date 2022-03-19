@@ -31,8 +31,8 @@ const Play = () => {
         logs,
         requestDice,
         characterUpdate,
-        audioPlay,
-        audioStop
+        playAudio,
+        stopAudio
     } = usePlay();
 
     const [openWidgets, setOpenWidgets] = useState<WidgetType[]>([]);
@@ -94,8 +94,8 @@ const Play = () => {
                     return (
                         <JukeboxWidget
                             key={key}
-                            onPlay={audioPlay}
-                            onStop={audioStop}
+                            onPlay={playAudio}
+                            onStop={stopAudio}
                             onClose={onWidgetClose}
                         />
                     );

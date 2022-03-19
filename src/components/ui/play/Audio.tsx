@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Slider } from '@mui/material';
 import {
-    MdVolumeMute,
-    MdVolumeUp,
-    MdVolumeOff
-} from 'react-icons/md';
+    IoVolumeOff,
+    IoVolumeLow,
+    IoVolumeMedium,
+    IoVolumeHigh,
+    IoVolumeMute
+} from 'react-icons/io5';
 
 import Api from '../../../services/api';
 import { usePlay } from '../../contexts/Play';
@@ -34,9 +36,9 @@ const Audio = () => {
             const url = Api.getAssetUrl(path);
             if (audioElement.current.src !== url) {
                 audioElement.current.src = url;
-                audioElement.current.currentTime = time;
-                audioElement.current.play();
             }
+            audioElement.current.currentTime = time;
+            audioElement.current.play();
         } else {
             audioElement.current.pause();
         }
@@ -55,33 +57,29 @@ const Audio = () => {
 
     const getIcon = () => {
         if (isMute) {
-            return (
-                <MdVolumeMute
-                    className="clickable"
-                    size={45}
-                    onClick={() => setIsMute(false)}
-                />
-            );
+            return <IoVolumeMute size={40} />;
         }
-        return audioData?.playing ? (
-            <MdVolumeUp
-                className="clickable"
-                size={45}
-                onClick={() => setIsMute(true)}
-            />
-        ) : (
-            <MdVolumeOff
-                className="clickable"
-                size={45}
-                onClick={() => setIsMute(true)}
-            />
-        );
+        if (audioData?.playing) {
+            if (volumePercent > 66) {
+                return <IoVolumeHigh size={40} />;
+            }
+            if (volumePercent > 33) {
+                return <IoVolumeMedium size={40} />;
+            }
+            return <IoVolumeLow size={40} />;
+        }
+        return <IoVolumeOff size={40} />;
     };
 
     return (
         <Box className="audio">
             <Box className="flex row center">
-                {getIcon()}
+                <Box
+                    className="audio-volume-icon clickable flex center"
+                    onClick={() => setIsMute(!isMute)}
+                >
+                    {getIcon()}
+                </Box>
                 <Slider
                     value={volumePercent}
                     onChange={onVolumeChange}

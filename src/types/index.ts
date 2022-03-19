@@ -98,6 +98,7 @@ export interface PlaySocket extends Socket {
 export interface SessionUser extends User {
     character: Character;
     isMaster: boolean;
+    socketId: string;
 }
 
 export interface PlayLog {
