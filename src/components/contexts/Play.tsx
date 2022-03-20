@@ -42,6 +42,10 @@ interface PlayContextData {
     playAudio: (asset: Asset, time: number) => void;
     stopAudio: () => void;
     audioData: AudioData | null;
+    isSketchDisplayed: boolean;
+    setIsSketchDisplayed: (value: boolean) => void;
+    isFreeDrawing: boolean;
+    setIsFreeDrawing: (value: boolean) => void;
 }
 
 const defaultPlayData: PlayContextData = {
@@ -54,7 +58,11 @@ const defaultPlayData: PlayContextData = {
     characterUpdate: () => {},
     playAudio: () => {},
     stopAudio: () => {},
-    audioData: null
+    audioData: null,
+    isSketchDisplayed: false,
+    setIsSketchDisplayed: () => {},
+    isFreeDrawing: false,
+    setIsFreeDrawing: () => {}
 };
 
 interface ConnectOptions {
@@ -79,6 +87,8 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     const [users, setUsers] = useState<SessionUser[]>([]);
     const [audioData, setAudioData] = useState<AudioData | null>(null);
     const [logs, setLogs] = useState<PlayLog[]>([]);
+    const [isSketchDisplayed, setIsSketchDisplayed] = useState<boolean>(false);
+    const [isFreeDrawing, setIsFreeDrawing] = useState<boolean>(false);
 
     const pushLog = useCallback((text: string) => {
         setLogs((previous) => (
@@ -275,7 +285,11 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         characterUpdate,
         playAudio,
         stopAudio,
-        audioData
+        audioData,
+        isSketchDisplayed,
+        setIsSketchDisplayed,
+        isFreeDrawing,
+        setIsFreeDrawing
     }), [
         sessionId,
         characterId,
@@ -287,7 +301,11 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         characterUpdate,
         playAudio,
         stopAudio,
-        audioData
+        audioData,
+        isSketchDisplayed,
+        setIsSketchDisplayed,
+        isFreeDrawing,
+        setIsFreeDrawing
     ]);
 
     return (

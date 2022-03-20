@@ -5,10 +5,12 @@ import AutoScroll from './autoScroll/AutoScroll';
 import Console from './play/Console';
 import Widget from './play/Widget';
 import Audio from './play/Audio';
+import Sketch from './play/Sketch';
 import DicesWidget from './widgets/DicesWidget';
 import CharacterWidget from './widgets/CharacterWidget';
 import CharactersWidget from './widgets/CharactersWidget';
 import JukeboxWidget from './widgets/JukeboxWidget';
+import SketchWidget from './widgets/SketchWidget';
 
 export {
     CustomDialog,
@@ -17,9 +19,11 @@ export {
     Console,
     Widget,
     Audio,
+    Sketch,
     AutoScroll,
     DicesWidget,
     CharacterWidget,
     CharactersWidget,
-    JukeboxWidget
+    JukeboxWidget,
+    SketchWidget
 };

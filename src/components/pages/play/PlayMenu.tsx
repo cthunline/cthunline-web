@@ -1,8 +1,12 @@
 import React from 'react';
 import { Box, Tooltip } from '@mui/material';
 import { GiRollingDiceCup } from 'react-icons/gi';
-import { MdOutlineContactPage, MdLogout } from 'react-icons/md';
 import { HiMusicNote } from 'react-icons/hi';
+import {
+    MdOutlineContactPage,
+    MdLogout,
+    MdDraw
+} from 'react-icons/md';
 
 import { WidgetType } from '../../../types';
 
@@ -40,6 +44,11 @@ const playMenuItems: PlayMenuItemData[] = [{
     icon: <HiMusicNote size={40} />,
     text: 'Jukebox',
     widget: WidgetType.jukebox,
+    adminOnly: true
+}, {
+    icon: <MdDraw size={40} />,
+    text: 'Sketch',
+    widget: WidgetType.sketch,
     adminOnly: true
 }];
 

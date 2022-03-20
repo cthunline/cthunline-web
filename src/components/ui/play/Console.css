@@ -1,6 +1,10 @@
 .console-container {
+    bottom: 20px;
     height: 150px;
+    position: absolute;
+    right: 20px;
     width: 350px;
+    z-index: 0;
 }
 
 .console-paper,

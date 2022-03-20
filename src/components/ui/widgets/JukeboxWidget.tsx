@@ -77,21 +77,21 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
                         </ListItem>
                     ))}
                 </List>
-            </Box>
-            <Box>
-                {selectedAsset ? (
-                    // eslint-disable-next-line jsx-a11y/media-has-caption
-                    <audio
-                        ref={audioElement}
-                        className="jukebox-player"
-                        src={Api.getAssetUrl(selectedAsset.path)}
-                        crossOrigin="anonymous"
-                        controls
-                        autoPlay={false}
-                        onPlay={onAudioPlay}
-                        onPause={onAudioPause}
-                    />
-                ) : null}
+                <Box>
+                    {selectedAsset ? (
+                        // eslint-disable-next-line jsx-a11y/media-has-caption
+                        <audio
+                            ref={audioElement}
+                            className="jukebox-player"
+                            src={Api.getAssetUrl(selectedAsset.path)}
+                            crossOrigin="anonymous"
+                            controls
+                            autoPlay={false}
+                            onPlay={onAudioPlay}
+                            onPause={onAudioPause}
+                        />
+                    ) : null}
+                </Box>
             </Box>
         </Widget>
     );

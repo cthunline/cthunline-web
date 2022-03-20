@@ -15,7 +15,9 @@ import {
     CharacterWidget,
     CharactersWidget,
     JukeboxWidget,
-    Audio
+    SketchWidget,
+    Audio,
+    Sketch
 } from '../../ui';
 
 import './Play.css';
@@ -99,6 +101,13 @@ const Play = () => {
                             onClose={onWidgetClose}
                         />
                     );
+                case WidgetType.sketch:
+                    return (
+                        <SketchWidget
+                            key={key}
+                            onClose={onWidgetClose}
+                        />
+                    );
                 default:
                     return null;
             }
@@ -118,8 +127,9 @@ const Play = () => {
                 onWidgetOpen={onWidgetOpen}
                 onExit={onExit}
             />
-            <Box id="play-content" className="play-content flex column end">
+            <Box id="play-content" className="play-content flex column">
                 {getWidgets(openWidgets)}
+                <Sketch />
                 {!socket.isMaster ? <Audio /> : null }
                 <Console logs={logs} />
             </Box>
