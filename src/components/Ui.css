@@ -20,6 +20,10 @@
     cursor: pointer;
 }
 
+.opacity-half {
+    opacity: 0.5;
+}
+
 /* box */
 
 .box {

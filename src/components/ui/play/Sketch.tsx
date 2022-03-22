@@ -17,69 +17,80 @@ interface Coordinates {
 const Sketch = () => {
     const {
         isFreeDrawing,
-        isSketchDisplayed
+        isSketchDisplayed,
+        sketchData,
+        addSketchDrawPath
     } = usePlay();
 
-    const [paths, setPaths] = useState<Coordinates[][]>([]);
+    const [paths, setPaths] = useState<string[]>([]);
     const [svgPoint, setSvgPoint] = useState<DOMPoint>();
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
+
+    const coordinates = useRef<Coordinates[]>([]);
 
     const svgRef = useRef<SVGSVGElement>() as (
         React.MutableRefObject<SVGSVGElement>
     );
 
-    useEffect(() => {
-        setSvgPoint(svgRef.current.createSVGPoint());
-    }, [svgRef]);
+    const coordinatesToPath = (coords: Coordinates[]): string => {
+        if (coords.length) {
+            let path = `M ${coords[0].x} ${coords[0].y}`;
+            let p1; let p2; let end;
+            for (let i = 1; i < coords.length - 2; i += 2) {
+                p1 = coords[i];
+                p2 = coords[i + 1];
+                end = coords[i + 2];
+                path += ` C ${p1.x} ${p1.y}, ${p2.x} ${p2.y}, ${end.x} ${end.y}`;
+            }
+            return path;
+        }
+        return '';
+    };
 
     const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
         if (isFreeDrawing && !isDrawing) {
             e.preventDefault();
-            setPaths((previous) => [...previous, []]);
+            coordinates.current = [];
+            setPaths((previous) => (
+                [...previous, '']
+            ));
             setIsDrawing(true);
         }
     };
 
     const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
         if (isFreeDrawing && isDrawing && svgPoint) {
-            const activePath = paths.pop();
-            if (activePath) {
-                svgPoint.x = e.clientX;
-                svgPoint.y = e.clientY;
-                const { x, y } = svgPoint.matrixTransform(
-                    svgRef.current.getScreenCTM()?.inverse()
-                );
-                const newCoord = { x, y };
-                setPaths((previous) => ([
-                    ...previous,
-                    [...activePath, newCoord]
-                ]));
-            }
+            svgPoint.x = e.clientX;
+            svgPoint.y = e.clientY;
+            const { x, y } = svgPoint.matrixTransform(
+                svgRef.current.getScreenCTM()?.inverse()
+            );
+            coordinates.current.push({ x, y });
+            const pathsClone = [...paths];
+            pathsClone[pathsClone.length - 1] = (
+                coordinatesToPath(coordinates.current)
+            );
+            setPaths(pathsClone);
         }
     };
 
     const handleMouseUpOrLeave = () => {
         if (isFreeDrawing && isDrawing) {
             setIsDrawing(false);
+            const lastPath = paths.at(-1);
+            if (lastPath) {
+                addSketchDrawPath(lastPath);
+            }
         }
     };
 
-    const getSvgPaths = () => (
-        paths.map((coords) => {
-            if (coords.length) {
-                let path = `M ${coords[0].x} ${coords[0].y}`;
-                let p1; let p2; let end;
-                for (let i = 1; i < coords.length - 2; i += 2) {
-                    p1 = coords[i];
-                    p2 = coords[i + 1];
-                    end = coords[i + 2];
-                    path += ` C ${p1.x} ${p1.y}, ${p2.x} ${p2.y}, ${end.x} ${end.y}`;
-                }
-                return path;
-            }
-            return '';
-        }).filter((p) => p)
-    );
+    useEffect(() => {
+        setSvgPoint(svgRef.current.createSVGPoint());
+    }, [svgRef]);
+
+    useEffect(() => {
+        setPaths(sketchData.paths);
+    }, [sketchData]);
 
     return (
         <Box className={`sketch-container ${isSketchDisplayed ? '' : 'hidden'}`}>
@@ -93,10 +104,9 @@ const Sketch = () => {
                 onMouseUp={handleMouseUpOrLeave}
                 onMouseLeave={handleMouseUpOrLeave}
             >
-                <image x={0} y={0} height={500} width={500} />
-                {getSvgPaths().map((path, index) => (
+                {paths.map((path, index) => (
                     <path
-                        key={`path-${index.toString()}`}
+                        key={`sketch-path-${index.toString()}`}
                         stroke="white"
                         strokeWidth={5}
                         d={path}

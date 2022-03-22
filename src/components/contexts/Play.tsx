@@ -21,7 +21,9 @@ import {
     SessionUser,
     Character,
     AudioData,
-    Asset
+    Asset,
+    SketchData,
+    SketchEvent
 } from '../../types';
 
 interface PlayProviderProps {
@@ -42,6 +44,11 @@ interface PlayContextData {
     playAudio: (asset: Asset, time: number) => void;
     stopAudio: () => void;
     audioData: AudioData | null;
+    sketchData: SketchData;
+    addSketchDrawPath: (path: string) => void;
+    undoSketch: () => void;
+    clearSketch: () => void;
+    setSketchData: React.Dispatch<React.SetStateAction<SketchData>>;
     isSketchDisplayed: boolean;
     setIsSketchDisplayed: (value: boolean) => void;
     isFreeDrawing: boolean;
@@ -59,6 +66,14 @@ const defaultPlayData: PlayContextData = {
     playAudio: () => {},
     stopAudio: () => {},
     audioData: null,
+    sketchData: {
+        paths: [],
+        events: []
+    },
+    addSketchDrawPath: () => {},
+    undoSketch: () => {},
+    clearSketch: () => {},
+    setSketchData: () => {},
     isSketchDisplayed: false,
     setIsSketchDisplayed: () => {},
     isFreeDrawing: false,
@@ -83,12 +98,27 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         sessionId
     });
 
-    const [socket, setSocket] = useState<PlaySocket | null>(null);
-    const [users, setUsers] = useState<SessionUser[]>([]);
-    const [audioData, setAudioData] = useState<AudioData | null>(null);
-    const [logs, setLogs] = useState<PlayLog[]>([]);
-    const [isSketchDisplayed, setIsSketchDisplayed] = useState<boolean>(false);
-    const [isFreeDrawing, setIsFreeDrawing] = useState<boolean>(false);
+    const [socket, setSocket] = useState<PlaySocket | null>(
+        defaultPlayData.socket
+    );
+    const [users, setUsers] = useState<SessionUser[]>(
+        defaultPlayData.users
+    );
+    const [audioData, setAudioData] = useState<AudioData | null>(
+        defaultPlayData.audioData
+    );
+    const [logs, setLogs] = useState<PlayLog[]>(
+        defaultPlayData.logs
+    );
+    const [sketchData, setSketchData] = useState<SketchData>(
+        defaultPlayData.sketchData
+    );
+    const [isSketchDisplayed, setIsSketchDisplayed] = useState<boolean>(
+        defaultPlayData.isSketchDisplayed
+    );
+    const [isFreeDrawing, setIsFreeDrawing] = useState<boolean>(
+        defaultPlayData.isFreeDrawing
+    );
 
     const pushLog = useCallback((text: string) => {
         setLogs((previous) => (
@@ -134,7 +164,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     const bindSocketEvents = useCallback((sock: PlaySocket) => {
         sock.on('connect_error', (/* { message } */) => {
             toast.error('Socket connection error');
-            // console.log(message);
+            // console.error(message);
         });
         sock.on('error', ({ status }) => {
             toast.error(`Socket ${status} error`);
@@ -251,6 +281,44 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         socket
     ]);
 
+    const addSketchDrawPath = useCallback((path: string) => {
+        setSketchData((previous) => ({
+            ...previous,
+            paths: [
+                ...previous.paths,
+                path
+            ],
+            events: [
+                ...previous.events,
+                SketchEvent.draw
+            ]
+        }));
+    }, []);
+
+    const undoSketch = useCallback(() => {
+        const lastEvent = sketchData.events.at(-1);
+        if (lastEvent) {
+            const pathsClone = [...sketchData.paths];
+            const eventsClone = [...sketchData.events];
+            switch (lastEvent) {
+                case SketchEvent.draw:
+                    pathsClone.pop();
+                    eventsClone.pop();
+                    setSketchData((previous) => ({
+                        ...previous,
+                        paths: pathsClone,
+                        events: eventsClone
+                    }));
+                    break;
+                default:
+            }
+        }
+    }, [sketchData]);
+
+    const clearSketch = useCallback(() => {
+        setSketchData(defaultPlayData.sketchData);
+    }, []);
+
     const initialConnection = useRef(true);
     useEffect(() => {
         (async () => {
@@ -286,6 +354,11 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         playAudio,
         stopAudio,
         audioData,
+        sketchData,
+        addSketchDrawPath,
+        setSketchData,
+        undoSketch,
+        clearSketch,
         isSketchDisplayed,
         setIsSketchDisplayed,
         isFreeDrawing,
@@ -302,6 +375,11 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         playAudio,
         stopAudio,
         audioData,
+        sketchData,
+        setSketchData,
+        addSketchDrawPath,
+        undoSketch,
+        clearSketch,
         isSketchDisplayed,
         setIsSketchDisplayed,
         isFreeDrawing,

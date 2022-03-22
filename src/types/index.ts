@@ -126,3 +126,12 @@ export interface AudioData extends Asset {
     time: number;
     playing: boolean;
 }
+
+export enum SketchEvent {
+    draw = 'draw'
+}
+
+export interface SketchData {
+    paths: string[];
+    events: SketchEvent[];
+}

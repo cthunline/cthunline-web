@@ -6,7 +6,8 @@ import React, {
     useMemo
 } from 'react';
 
-import { CustomDialog } from '../ui';
+// do not import from ui index to avoid circular dependency
+import CustomDialog from '../ui/dialog/CustomDialog';
 
 interface DialogData {
     open: boolean;
