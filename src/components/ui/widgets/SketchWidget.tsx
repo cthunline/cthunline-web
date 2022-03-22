@@ -44,7 +44,8 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
         setIsFreeDrawing,
         sketchData,
         undoSketch,
-        clearSketch
+        clearSketch,
+        addSketchImage
     } = usePlay();
     const { assetList } = useAsset({
         loadList: true,
@@ -134,15 +135,14 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
                                     <ImageListItem key={`asset-${index.toString()}`}>
                                         <img
                                             src={`${src}?w=248&fit=crop&auto=format`}
-                                            srcSet={`${src}?w=248&fit=crop&auto=format&dpr=2 2x`}
                                             alt={name}
                                             loading="lazy"
-                                            crossOrigin="anonymous"
+                                            crossOrigin="use-credentials"
                                         />
                                         <ImageListItemBar
                                             title={name}
                                             actionIcon={(
-                                                <IconButton>
+                                                <IconButton onClick={() => addSketchImage(src)}>
                                                     <HiPlus />
                                                 </IconButton>
                                             )}

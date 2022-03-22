@@ -6,6 +6,7 @@ import React, {
 import { Box } from '@mui/material';
 
 import { usePlay } from '../../contexts/Play';
+import { SketchImage } from '../../../types';
 
 import './Sketch.css';
 
@@ -23,6 +24,7 @@ const Sketch = () => {
     } = usePlay();
 
     const [paths, setPaths] = useState<string[]>([]);
+    const [images, setImages] = useState<SketchImage[]>([]);
     const [svgPoint, setSvgPoint] = useState<DOMPoint>();
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
@@ -90,6 +92,7 @@ const Sketch = () => {
 
     useEffect(() => {
         setPaths(sketchData.paths);
+        setImages(sketchData.images);
     }, [sketchData]);
 
     return (
@@ -104,6 +107,22 @@ const Sketch = () => {
                 onMouseUp={handleMouseUpOrLeave}
                 onMouseLeave={handleMouseUpOrLeave}
             >
+                {images.map(({
+                    url,
+                    width,
+                    x,
+                    y
+                }, index) => (
+                    <image
+                        key={`sketch-image-${index.toString()}`}
+                        xlinkHref={url}
+                        x={x.toString()}
+                        y={y.toString()}
+                        width={width.toString()}
+                        visibility="visible"
+                        // crossOrigin="use-credentials"
+                    />
+                ))}
                 {paths.map((path, index) => (
                     <path
                         key={`sketch-path-${index.toString()}`}

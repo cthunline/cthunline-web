@@ -91,7 +91,7 @@ const Audio = () => {
             <audio
                 ref={audioElement}
                 className="hidden"
-                crossOrigin="anonymous"
+                crossOrigin="use-credentials"
                 autoPlay={false}
             />
         </Box>

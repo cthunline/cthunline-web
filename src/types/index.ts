@@ -128,10 +128,19 @@ export interface AudioData extends Asset {
 }
 
 export enum SketchEvent {
-    draw = 'draw'
+    draw = 'draw',
+    imageAdd = 'imageAdd'
+}
+
+export interface SketchImage {
+    url: string;
+    width: number;
+    x: number;
+    y: number;
 }
 
 export interface SketchData {
     paths: string[];
+    images: SketchImage[];
     events: SketchEvent[];
 }

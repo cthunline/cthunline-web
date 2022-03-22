@@ -48,6 +48,7 @@ interface PlayContextData {
     addSketchDrawPath: (path: string) => void;
     undoSketch: () => void;
     clearSketch: () => void;
+    addSketchImage: (url: string) => void;
     setSketchData: React.Dispatch<React.SetStateAction<SketchData>>;
     isSketchDisplayed: boolean;
     setIsSketchDisplayed: (value: boolean) => void;
@@ -68,11 +69,13 @@ const defaultPlayData: PlayContextData = {
     audioData: null,
     sketchData: {
         paths: [],
+        images: [],
         events: []
     },
     addSketchDrawPath: () => {},
     undoSketch: () => {},
     clearSketch: () => {},
+    addSketchImage: () => {},
     setSketchData: () => {},
     isSketchDisplayed: false,
     setIsSketchDisplayed: () => {},
@@ -284,10 +287,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     const addSketchDrawPath = useCallback((path: string) => {
         setSketchData((previous) => ({
             ...previous,
-            paths: [
-                ...previous.paths,
-                path
-            ],
+            paths: [...previous.paths, path],
             events: [
                 ...previous.events,
                 SketchEvent.draw
@@ -317,6 +317,22 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
 
     const clearSketch = useCallback(() => {
         setSketchData(defaultPlayData.sketchData);
+    }, []);
+
+    const addSketchImage = useCallback((url: string) => {
+        setSketchData((previous) => ({
+            ...previous,
+            images: [...previous.images, {
+                url,
+                width: 200,
+                x: 0,
+                y: 0
+            }],
+            events: [
+                ...previous.events,
+                SketchEvent.imageAdd
+            ]
+        }));
     }, []);
 
     const initialConnection = useRef(true);
@@ -359,6 +375,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         setSketchData,
         undoSketch,
         clearSketch,
+        addSketchImage,
         isSketchDisplayed,
         setIsSketchDisplayed,
         isFreeDrawing,
@@ -380,6 +397,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         addSketchDrawPath,
         undoSketch,
         clearSketch,
+        addSketchImage,
         isSketchDisplayed,
         setIsSketchDisplayed,
         isFreeDrawing,
