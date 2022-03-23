@@ -21,6 +21,11 @@ interface MovingImageData {
     deltaY: number;
 }
 
+const viewBox = {
+    width: 1920,
+    height: 1080
+};
+
 const Sketch = () => {
     const {
         isFreeDrawing,
@@ -31,6 +36,7 @@ const Sketch = () => {
 
     const [paths, setPaths] = useState<string[]>([]);
     const [images, setImages] = useState<SketchImage[]>([]);
+    const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
     const [svgPoint, setSvgPoint] = useState<DOMPoint>();
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
@@ -60,8 +66,20 @@ const Sketch = () => {
         return '';
     };
 
-    // handles mouse down for drawing
+    // gets coordinates of a mouse event transformed
+    const getMouseSvgCoordinates = (e: React.MouseEvent, domPoint: DOMPoint) => {
+        const point = domPoint;
+        point.x = e.clientX;
+        point.y = e.clientY;
+        const { x, y } = point.matrixTransform(
+            svgRef.current.getScreenCTM()?.inverse()
+        );
+        return { x, y };
+    };
+
     const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
+        const target = e.target as Element;
+        // handles mouse down for drawing
         if (isFreeDrawing && !isDrawing) {
             e.preventDefault();
             coordinates.current = [];
@@ -69,17 +87,22 @@ const Sketch = () => {
                 [...previous, '']
             ));
             setIsDrawing(true);
+        } else if (
+            selectedImageIndex !== null
+            && !target.classList.contains('sketch-image')
+        ) {
+            // handles outside click to deselect image
+            const selectedImage = imagesRef.current[selectedImageIndex];
+            if (selectedImage && e.target !== selectedImage) {
+                setSelectedImageIndex(null);
+            }
         }
     };
 
     const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
         // handles mouse move for drawing
         if (isFreeDrawing && isDrawing && svgPoint) {
-            svgPoint.x = e.clientX;
-            svgPoint.y = e.clientY;
-            const { x, y } = svgPoint.matrixTransform(
-                svgRef.current.getScreenCTM()?.inverse()
-            );
+            const { x, y } = getMouseSvgCoordinates(e, svgPoint);
             coordinates.current.push({ x, y });
             const pathsClone = [...paths];
             pathsClone[pathsClone.length - 1] = (
@@ -96,11 +119,7 @@ const Sketch = () => {
             } = movingImage.current;
             const imageEl = imagesRef.current[index];
             if (imageEl) {
-                svgPoint.x = e.clientX;
-                svgPoint.y = e.clientY;
-                const { x, y } = svgPoint.matrixTransform(
-                    svgRef.current.getScreenCTM()?.inverse()
-                );
+                const { x, y } = getMouseSvgCoordinates(e, svgPoint);
                 const newX = x - deltaX;
                 const newY = y - deltaY;
                 imageEl.setAttributeNS(null, 'x', newX.toString());
@@ -132,16 +151,13 @@ const Sketch = () => {
             if (imageEl) {
                 const imageX = parseInt(imageEl.getAttributeNS(null, 'x') ?? '');
                 const imageY = parseInt(imageEl.getAttributeNS(null, 'y') ?? '');
-                svgPoint.x = e.clientX;
-                svgPoint.y = e.clientY;
-                const { x, y } = svgPoint.matrixTransform(
-                    svgRef.current.getScreenCTM()?.inverse()
-                );
+                const { x, y } = getMouseSvgCoordinates(e, svgPoint);
                 movingImage.current = {
                     index,
                     deltaX: x - imageX,
                     deltaY: y - imageY
                 };
+                setSelectedImageIndex(index);
             }
         }
     };
@@ -155,18 +171,54 @@ const Sketch = () => {
         setImages(sketchData.images);
     }, [sketchData]);
 
+    useEffect(() => {
+        if (isFreeDrawing) {
+            setSelectedImageIndex(null);
+        }
+    }, [isFreeDrawing]);
+
     return (
         <Box className={`sketch-container ${isSketchDisplayed ? '' : 'hidden'}`}>
             <svg
                 ref={svgRef}
                 width="100%"
                 height="100%"
-                viewBox="0 0 1920 1080"
+                viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUpOrLeave}
                 onMouseLeave={handleMouseUpOrLeave}
             >
+                <defs>
+                    {/* filter that puts the "selected" border on images */}
+                    <filter id="selected">
+                        {/* Make four copies of the image alpha,
+                        each moved to a different corner */}
+                        <feOffset result="nw" in="SourceAlpha" dx="-5" dy="-5" />
+                        <feOffset result="ne" in="SourceAlpha" dx="5" dy="-5" />
+                        <feOffset result="se" in="SourceAlpha" dx="5" dy="5" />
+                        <feOffset result="sw" in="SourceAlpha" dx="-5" dy="5" />
+                        {/* Merge those four copies together */}
+                        <feMerge result="border">
+                            <feMergeNode in="nw" />
+                            <feMergeNode in="ne" />
+                            <feMergeNode in="se" />
+                            <feMergeNode in="sw" />
+                        </feMerge>
+                        {/* Create a filter primitive that is just a solid
+                        block of what will be the new border colour */}
+                        <feFlood floodColor="var(--palette-lightblue)" />
+                        {/* Use the "in" operator to merge the blackborder with the
+                        colored fill. Any parts of the colored fill that are"in"-side
+                        the back shape will remain. The rest will me masked out. */}
+                        <feComposite in2="border" operator="in" result="colored-border" />
+                        {/* Finally, merge the new colored border with the original image */}
+                        <feMerge>
+                            <feMergeNode in="colored-border" />
+                            <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                    </filter>
+                </defs>
                 {images.map(({
                     url,
                     width,
@@ -178,6 +230,10 @@ const Sketch = () => {
                         ref={(el) => {
                             imagesRef.current[index] = el;
                         }}
+                        className="sketch-image"
+                        filter={selectedImageIndex === index ? (
+                            'url(#selected)'
+                        ) : ''}
                         xlinkHref={url}
                         x={x.toString()}
                         y={y.toString()}
