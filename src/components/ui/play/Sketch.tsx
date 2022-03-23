@@ -48,7 +48,7 @@ const Sketch = () => {
 
     const movingImage = useRef<MovingImageData | null>(null);
 
-    const imagesRef = useRef<(SVGImageElement | null)[]>([]);
+    const imagesRef = useRef<(SVGSVGElement | null)[]>([]);
 
     // convert path coordinate data to path d attribute string
     const coordinatesToPath = (coords: Coordinates[]): string => {
@@ -78,7 +78,7 @@ const Sketch = () => {
     };
 
     const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
-        const target = e.target as Element;
+        const target = e.target as SVGSVGElement;
         // handles mouse down for drawing
         if (isFreeDrawing && !isDrawing) {
             e.preventDefault();
@@ -87,13 +87,10 @@ const Sketch = () => {
                 [...previous, '']
             ));
             setIsDrawing(true);
-        } else if (
-            selectedImageIndex !== null
-            && !target.classList.contains('sketch-image')
-        ) {
+        } else if (selectedImageIndex !== null && !target.classList.contains('sketch-image')) {
             // handles outside click to deselect image
             const selectedImage = imagesRef.current[selectedImageIndex];
-            if (selectedImage && e.target !== selectedImage) {
+            if (selectedImage && !selectedImage.contains(e.target as Node)) {
                 setSelectedImageIndex(null);
             }
         }
@@ -119,11 +116,17 @@ const Sketch = () => {
             } = movingImage.current;
             const imageEl = imagesRef.current[index];
             if (imageEl) {
+                const { width, height } = imageEl.getBBox();
                 const { x, y } = getMouseSvgCoordinates(e, svgPoint);
                 const newX = x - deltaX;
                 const newY = y - deltaY;
-                imageEl.setAttributeNS(null, 'x', newX.toString());
-                imageEl.setAttributeNS(null, 'y', newY.toString());
+                if (
+                    newX >= 0 && newX + width <= viewBox.width
+                    && newY >= 0 && newY + height <= viewBox.height
+                ) {
+                    imageEl.setAttributeNS(null, 'x', newX.toString());
+                    imageEl.setAttributeNS(null, 'y', newY.toString());
+                }
             }
         }
     };
@@ -144,7 +147,7 @@ const Sketch = () => {
     };
 
     // handle mouse down for images
-    const handleImageMouseDown = (e: React.MouseEvent<SVGImageElement>, index: number) => {
+    const handleImageMouseDown = (e: React.MouseEvent<SVGSVGElement>, index: number) => {
         if (!isFreeDrawing && svgPoint) {
             e.preventDefault();
             const imageEl = imagesRef.current[index];
@@ -178,11 +181,12 @@ const Sketch = () => {
     }, [isFreeDrawing]);
 
     return (
-        <Box className={`sketch-container ${isSketchDisplayed ? '' : 'hidden'}`}>
+        <Box className={`sketch-container center-text ${isSketchDisplayed ? '' : 'hidden'}`}>
             <svg
                 ref={svgRef}
-                width="100%"
-                height="100%"
+                className="svg-container"
+                // width="100%"
+                // height="100%"
                 viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
@@ -225,22 +229,36 @@ const Sketch = () => {
                     x,
                     y
                 }, index) => (
-                    <image
+                    <svg
                         key={`sketch-image-${index.toString()}`}
+                        className="sketch-image"
                         ref={(el) => {
                             imagesRef.current[index] = el;
                         }}
-                        className="sketch-image"
+                        width={width.toString()}
+                        x={x.toString()}
+                        y={y.toString()}
                         filter={selectedImageIndex === index ? (
                             'url(#selected)'
                         ) : ''}
-                        xlinkHref={url}
-                        x={x.toString()}
-                        y={y.toString()}
-                        width={width.toString()}
-                        visibility="visible"
-                        onMouseDown={(e) => handleImageMouseDown(e, index)}
-                    />
+                        onMouseDown={(e) => (
+                            handleImageMouseDown(e, index)
+                        )}
+                    >
+                        <image
+                            className="sketch-image"
+                            width="100%"
+                            xlinkHref={url}
+                        />
+                        <rect
+                            className="sketch-image"
+                            width="50px"
+                            height="50px"
+                            x="50px"
+                            y="50px"
+                            fill="red"
+                        />
+                    </svg>
                 ))}
                 {paths.map((path, index) => (
                     <path

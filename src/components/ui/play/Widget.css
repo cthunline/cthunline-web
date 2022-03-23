@@ -15,7 +15,7 @@
 }
 
 .widget-bar {
-    background: var(--palette-darkgray);
+    background: var(--palette-gray);
     height: 30px;
     width: 100%;
 }

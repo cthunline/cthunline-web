@@ -2,3 +2,9 @@
     height: 100%;
     width: 100%;
 }
+
+.svg-container {
+    background: var(--palette-darkgray);
+    max-height: 100%;
+    max-width: 100%;
+}

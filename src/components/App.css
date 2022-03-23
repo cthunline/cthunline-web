@@ -2,8 +2,9 @@
 
 :root {
     --palette-background: #111416;
-    --palette-darkgray: rgba(255 255 255 / 10%);
-    --palette-gray: rgba(255 255 255 / 50%);
+    --palette-darkgray: rgba(255 255 255 / 4%);
+    --palette-gray: rgba(255 255 255 / 15%);
+    --palette-lightgrey: rgba(255 255 255 / 50%);
     --palette-text: #fff;
     --palette-lightblue: #90caf9;
 }
