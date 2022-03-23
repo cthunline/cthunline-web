@@ -13,17 +13,20 @@ import { toast } from 'react-toastify';
 import Api from '../../services/api';
 import { useAuth } from './Auth';
 import useSession from '../hooks/useSession';
+import useSketch from '../hooks/play/useSketch';
+import useLogs from '../hooks/play/useLogs';
+import useAudio from '../hooks/play/useAudio';
+import useDice from '../hooks/play/useDice';
+import useUsers from '../hooks/play/useUsers';
 import {
     User,
     PlaySocket,
     PlayLog,
     DicesRequest,
     SessionUser,
-    Character,
     AudioData,
     Asset,
-    SketchData,
-    SketchEvent
+    SketchData
 } from '../../types';
 
 interface PlayProviderProps {
@@ -96,73 +99,39 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     characterId,
     children
 }) => {
-    const { user } = useAuth();
-    const { session } = useSession({
-        sessionId
-    });
-
     const [socket, setSocket] = useState<PlaySocket | null>(
         defaultPlayData.socket
     );
-    const [users, setUsers] = useState<SessionUser[]>(
-        defaultPlayData.users
-    );
-    const [audioData, setAudioData] = useState<AudioData | null>(
-        defaultPlayData.audioData
-    );
-    const [logs, setLogs] = useState<PlayLog[]>(
-        defaultPlayData.logs
-    );
-    const [sketchData, setSketchData] = useState<SketchData>(
-        defaultPlayData.sketchData
-    );
-    const [isSketchDisplayed, setIsSketchDisplayed] = useState<boolean>(
-        defaultPlayData.isSketchDisplayed
-    );
-    const [isFreeDrawing, setIsFreeDrawing] = useState<boolean>(
-        defaultPlayData.isFreeDrawing
-    );
 
-    const pushLog = useCallback((text: string) => {
-        setLogs((previous) => (
-            [...previous, {
-                date: new Date(),
-                text
-            }].slice(-100)
-        ));
-    }, []);
-
-    const getLogUsername = useCallback((logUser: User, isMaster: boolean) => (
-        `[${isMaster ? 'GM ' : ''}${logUser?.name}]`
-    ), []);
-
-    const getDiceResultLog = useCallback((
-        requestUser: User,
-        isMaster: boolean,
-        request: DicesRequest,
-        result: number,
-        isPrivate: boolean = false
-    ) => {
-        const username = getLogUsername(requestUser, isMaster);
-        const requestText = Object.entries(request).map(([type, count]) => (
-            `${count}${type}`
-        )).join(' + ');
-        const privatly = isPrivate ? 'privatly ' : '';
-        return `${username} ${privatly}rolled ${requestText} and the result is ${result}`;
-    }, [
-        getLogUsername
-    ]);
-
-    const updateUserCharacter = useCallback((userId: string, character: Character) => {
-        setUsers((previous) => (
-            previous.map((sessionUser: SessionUser) => (
-                sessionUser.id === userId ? {
-                    ...sessionUser,
-                    character
-                } : sessionUser
-            ))
-        ));
-    }, []);
+    const { user } = useAuth();
+    const { session } = useSession({ sessionId });
+    const { logs, pushLog } = useLogs();
+    const {
+        users,
+        setUsers,
+        updateUserCharacter,
+        characterUpdate
+    } = useUsers(socket);
+    const { getDiceResultLog, requestDice } = useDice(socket);
+    const {
+        audioData,
+        setAudioTrack,
+        clearAudioTrack,
+        playAudio,
+        stopAudio
+    } = useAudio(socket);
+    const {
+        sketchData,
+        setSketchData,
+        isSketchDisplayed,
+        setIsSketchDisplayed,
+        isFreeDrawing,
+        setIsFreeDrawing,
+        addSketchDrawPath,
+        addSketchImage,
+        undoSketch,
+        clearSketch
+    } = useSketch();
 
     const bindSocketEvents = useCallback((sock: PlaySocket) => {
         sock.on('connect_error', (/* { message } */) => {
@@ -179,11 +148,11 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             setSocket(null);
         });
         sock.on('join', ({ user: sockUser, users: sessionUsers, isMaster }) => {
-            pushLog(`${getLogUsername(sockUser, isMaster)} joined the session`);
+            pushLog(sockUser, isMaster, 'joined the session');
             setUsers(sessionUsers);
         });
         sock.on('leave', ({ user: sockUser, users: sessionUsers, isMaster }) => {
-            pushLog(`${getLogUsername(sockUser, isMaster)} left the session`);
+            pushLog(sockUser, isMaster, 'left the session');
             setUsers(sessionUsers);
         });
         sock.on('diceResult', ({
@@ -194,9 +163,9 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             result
         }) => {
             pushLog(
+                sockUser,
+                isMaster,
                 getDiceResultLog(
-                    sockUser,
-                    isMaster,
                     request,
                     result,
                     isPrivate
@@ -208,24 +177,22 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             isMaster,
             character
         }) => {
-            pushLog(`${getLogUsername(sockUser, isMaster)} edited character ${character.name}`);
+            pushLog(sockUser, isMaster, `edited character ${character.name}`);
             updateUserCharacter(sockUser.id, character);
         });
         sock.on('audioPlay', ({ asset, time }) => {
-            setAudioData({
-                ...asset,
-                time,
-                playing: true
-            });
+            setAudioTrack(asset, time);
         });
         sock.on('audioStop', () => {
-            setAudioData(null);
+            clearAudioTrack();
         });
     }, [
         pushLog,
+        updateUserCharacter,
+        setAudioTrack,
+        clearAudioTrack,
         getDiceResultLog,
-        getLogUsername,
-        updateUserCharacter
+        setUsers
     ]);
 
     const connectSocket = useCallback(({
@@ -256,84 +223,6 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     }, [
         socket
     ]);
-
-    const requestDice = useCallback((request: DicesRequest, isPrivate: boolean) => {
-        socket?.emit(isPrivate ? 'dicePrivateRequest' : 'diceRequest', request);
-    }, [
-        socket
-    ]);
-
-    const characterUpdate = useCallback(() => {
-        socket?.emit('characterUpdate');
-    }, [
-        socket
-    ]);
-
-    const playAudio = useCallback((asset: Asset, time: number) => {
-        socket?.emit('audioPlay', {
-            assetId: asset.id,
-            time
-        });
-    }, [
-        socket
-    ]);
-
-    const stopAudio = useCallback(() => {
-        socket?.emit('audioStop');
-    }, [
-        socket
-    ]);
-
-    const addSketchDrawPath = useCallback((path: string) => {
-        setSketchData((previous) => ({
-            ...previous,
-            paths: [...previous.paths, path],
-            events: [
-                ...previous.events,
-                SketchEvent.draw
-            ]
-        }));
-    }, []);
-
-    const undoSketch = useCallback(() => {
-        const lastEvent = sketchData.events.at(-1);
-        if (lastEvent) {
-            const pathsClone = [...sketchData.paths];
-            const eventsClone = [...sketchData.events];
-            switch (lastEvent) {
-                case SketchEvent.draw:
-                    pathsClone.pop();
-                    eventsClone.pop();
-                    setSketchData((previous) => ({
-                        ...previous,
-                        paths: pathsClone,
-                        events: eventsClone
-                    }));
-                    break;
-                default:
-            }
-        }
-    }, [sketchData]);
-
-    const clearSketch = useCallback(() => {
-        setSketchData(defaultPlayData.sketchData);
-    }, []);
-
-    const addSketchImage = useCallback((url: string) => {
-        setSketchData((previous) => ({
-            ...previous,
-            images: [...previous.images, {
-                url,
-                width: 200,
-                x: 0,
-                y: 0
-            }],
-            events: [
-                ...previous.events,
-                SketchEvent.imageAdd
-            ]
-        }));
-    }, []);
 
     const initialConnection = useRef(true);
     useEffect(() => {

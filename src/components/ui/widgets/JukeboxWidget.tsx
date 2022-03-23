@@ -61,7 +61,7 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
 
     return (
         <Widget
-            title="Dices"
+            title="Jukebox"
             onClose={() => onClose(WidgetType.jukebox)}
         >
             <Box className="jukebox-widget-content">
