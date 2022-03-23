@@ -15,6 +15,12 @@ interface Coordinates {
     y: number;
 }
 
+interface MovingImageData {
+    index: number;
+    deltaX: number;
+    deltaY: number;
+}
+
 const Sketch = () => {
     const {
         isFreeDrawing,
@@ -28,12 +34,17 @@ const Sketch = () => {
     const [svgPoint, setSvgPoint] = useState<DOMPoint>();
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
-    const coordinates = useRef<Coordinates[]>([]);
-
     const svgRef = useRef<SVGSVGElement>() as (
         React.MutableRefObject<SVGSVGElement>
     );
 
+    const coordinates = useRef<Coordinates[]>([]);
+
+    const movingImage = useRef<MovingImageData | null>(null);
+
+    const imagesRef = useRef<(SVGImageElement | null)[]>([]);
+
+    // convert path coordinate data to path d attribute string
     const coordinatesToPath = (coords: Coordinates[]): string => {
         if (coords.length) {
             let path = `M ${coords[0].x} ${coords[0].y}`;
@@ -49,6 +60,7 @@ const Sketch = () => {
         return '';
     };
 
+    // handles mouse down for drawing
     const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
         if (isFreeDrawing && !isDrawing) {
             e.preventDefault();
@@ -61,6 +73,7 @@ const Sketch = () => {
     };
 
     const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
+        // handles mouse move for drawing
         if (isFreeDrawing && isDrawing && svgPoint) {
             svgPoint.x = e.clientX;
             svgPoint.y = e.clientY;
@@ -74,14 +87,61 @@ const Sketch = () => {
             );
             setPaths(pathsClone);
         }
+        // handles mouse move for images
+        if (movingImage.current && svgPoint) {
+            const {
+                index,
+                deltaX,
+                deltaY
+            } = movingImage.current;
+            const imageEl = imagesRef.current[index];
+            if (imageEl) {
+                svgPoint.x = e.clientX;
+                svgPoint.y = e.clientY;
+                const { x, y } = svgPoint.matrixTransform(
+                    svgRef.current.getScreenCTM()?.inverse()
+                );
+                const newX = x - deltaX;
+                const newY = y - deltaY;
+                imageEl.setAttributeNS(null, 'x', newX.toString());
+                imageEl.setAttributeNS(null, 'y', newY.toString());
+            }
+        }
     };
 
     const handleMouseUpOrLeave = () => {
+        // handle mouse up or leave for drawing
         if (isFreeDrawing && isDrawing) {
             setIsDrawing(false);
             const lastPath = paths.at(-1);
             if (lastPath) {
                 addSketchDrawPath(lastPath);
+            }
+        }
+        // handle mouse up or leave for images
+        if (movingImage.current) {
+            movingImage.current = null;
+        }
+    };
+
+    // handle mouse down for images
+    const handleImageMouseDown = (e: React.MouseEvent<SVGImageElement>, index: number) => {
+        if (!isFreeDrawing && svgPoint) {
+            e.preventDefault();
+            const imageEl = imagesRef.current[index];
+            if (imageEl) {
+                const imageX = parseInt(imageEl.getAttributeNS(null, 'x') ?? '');
+                const imageY = parseInt(imageEl.getAttributeNS(null, 'y') ?? '');
+                svgPoint.x = e.clientX;
+                svgPoint.y = e.clientY;
+                const { x, y } = svgPoint.matrixTransform(
+                    svgRef.current.getScreenCTM()?.inverse()
+                );
+                movingImage.current = {
+                    index,
+                    deltaX: x - imageX,
+                    deltaY: y - imageY
+                };
             }
         }
     };
@@ -115,11 +175,15 @@ const Sketch = () => {
                 }, index) => (
                     <image
                         key={`sketch-image-${index.toString()}`}
+                        ref={(el) => {
+                            imagesRef.current[index] = el;
+                        }}
                         xlinkHref={url}
                         x={x.toString()}
                         y={y.toString()}
                         width={width.toString()}
                         visibility="visible"
+                        onMouseDown={(e) => handleImageMouseDown(e, index)}
                     />
                 ))}
                 {paths.map((path, index) => (

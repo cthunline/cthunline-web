@@ -30,8 +30,8 @@ const useSketch = () => {
             images: [...previous.images, {
                 url,
                 width: 200,
-                x: 0,
-                y: 0
+                x: 50,
+                y: 50
             }],
             events: [
                 ...previous.events,
