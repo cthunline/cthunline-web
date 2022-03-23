@@ -1,5 +1,7 @@
 import Axios, { AxiosRequestHeaders } from 'axios';
 
+import { pathJoin } from './tools';
+
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
 
 interface ApiCallOptions {
@@ -22,7 +24,7 @@ const Api = {
         if (!Api.baseUrl) {
             throw new Error('Unavailable base URL');
         }
-        const url = `${Api.baseUrl}${route}`;
+        const url = pathJoin('/api', route);
         const headers: AxiosRequestHeaders = data instanceof FormData ? {} : {
             Accept: 'application/json',
             'Content-Type': 'application/json'
@@ -47,10 +49,7 @@ const Api = {
     },
 
     getAssetUrl: (path: string) => (
-        new URL(
-            `/static/${path}`,
-            Api.baseUrl
-        ).href
+        `/static/${path}`
     )
 
 };

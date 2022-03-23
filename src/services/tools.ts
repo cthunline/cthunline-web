@@ -18,3 +18,15 @@ export const getInputFileBase64 = async (file: File): Promise<string> => (
         };
     })
 );
+
+export const pathJoin = (...parts: string[]) => (
+    parts.map((part, index) => {
+        if (index) {
+            return part.replace(/^\//, '');
+        }
+        if (index !== parts.length - 1) {
+            return part.replace(/\/$/, '');
+        }
+        return part;
+    }).join('/')
+);

@@ -120,7 +120,6 @@ const Sketch = () => {
                         y={y.toString()}
                         width={width.toString()}
                         visibility="visible"
-                        // crossOrigin="use-credentials"
                     />
                 ))}
                 {paths.map((path, index) => (

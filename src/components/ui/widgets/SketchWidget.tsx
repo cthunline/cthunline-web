@@ -137,7 +137,6 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
                                             src={`${src}?w=248&fit=crop&auto=format`}
                                             alt={name}
                                             loading="lazy"
-                                            crossOrigin="use-credentials"
                                         />
                                         <ImageListItemBar
                                             title={name}

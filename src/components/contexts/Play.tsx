@@ -10,7 +10,6 @@ import React, {
 import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
 
-import Api from '../../services/api';
 import { useAuth } from './Auth';
 import useSession from '../hooks/useSession';
 import useSketch from '../hooks/play/useSketch';
@@ -200,7 +199,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         isMaster,
         characterId: charId
     }: ConnectOptions): PlaySocket => {
-        const sock = io(Api.baseUrl, {
+        const sock = io({
             query: {
                 sessionId: sessId,
                 characterId: charId
