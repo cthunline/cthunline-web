@@ -8,3 +8,7 @@
     max-height: 100%;
     max-width: 100%;
 }
+
+.svg-container.free-drawing {
+    cursor: crosshair;
+}

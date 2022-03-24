@@ -40,6 +40,15 @@ const useSketch = () => {
         }));
     };
 
+    const deleteSketchImage = (index: number) => {
+        setSketchData((previous) => ({
+            ...previous,
+            images: previous.images.filter((i, idx) => (
+                idx !== index
+            ))
+        }));
+    };
+
     const undoSketch = () => {
         const lastEvent = sketchData.events.at(-1);
         if (lastEvent) {
@@ -73,6 +82,7 @@ const useSketch = () => {
         setIsFreeDrawing,
         addSketchDrawPath,
         addSketchImage,
+        deleteSketchImage,
         undoSketch,
         clearSketch
     };

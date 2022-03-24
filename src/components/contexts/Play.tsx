@@ -51,6 +51,7 @@ interface PlayContextData {
     undoSketch: () => void;
     clearSketch: () => void;
     addSketchImage: (url: string) => void;
+    deleteSketchImage: (index: number) => void;
     setSketchData: React.Dispatch<React.SetStateAction<SketchData>>;
     isSketchDisplayed: boolean;
     setIsSketchDisplayed: (value: boolean) => void;
@@ -78,6 +79,7 @@ const defaultPlayData: PlayContextData = {
     undoSketch: () => {},
     clearSketch: () => {},
     addSketchImage: () => {},
+    deleteSketchImage: () => {},
     setSketchData: () => {},
     isSketchDisplayed: false,
     setIsSketchDisplayed: () => {},
@@ -128,6 +130,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         setIsFreeDrawing,
         addSketchDrawPath,
         addSketchImage,
+        deleteSketchImage,
         undoSketch,
         clearSketch
     } = useSketch();
@@ -264,6 +267,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         undoSketch,
         clearSketch,
         addSketchImage,
+        deleteSketchImage,
         isSketchDisplayed,
         setIsSketchDisplayed,
         isFreeDrawing,
@@ -286,6 +290,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         undoSketch,
         clearSketch,
         addSketchImage,
+        deleteSketchImage,
         isSketchDisplayed,
         setIsSketchDisplayed,
         isFreeDrawing,

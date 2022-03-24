@@ -1,5 +1,7 @@
 import React, { useRef } from 'react';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
 
+import SvgIconButton from './SvgIconButton';
 import { CardinalDirection } from '../../../../types';
 
 import './SketchImage.css';
@@ -11,6 +13,7 @@ interface SketchImageProps {
     y: number;
     selected?: boolean;
     moving?: boolean;
+    resizing?: boolean;
     onRef?: (el: SVGSVGElement | null) => void;
     onMouseDown?: (e: React.MouseEvent<SVGSVGElement>) => void;
     onImageMouseDown?: (e: React.MouseEvent<SVGImageElement>) => void;
@@ -19,6 +22,7 @@ interface SketchImageProps {
         direction: CardinalDirection
     ) => void;
     onLoad?: () => void;
+    onDelete?: () => void;
 }
 
 const resizeRects: CardinalDirection[] = [
@@ -35,11 +39,13 @@ const SketchImage: React.FC<SketchImageProps> = ({
     y,
     selected,
     moving,
+    resizing,
     onRef,
     onMouseDown,
     onImageMouseDown,
     onResizeMouseDown,
-    onLoad
+    onLoad,
+    onDelete
 }) => {
     const imageRef = useRef<SVGSVGElement | null>(null);
 
@@ -54,7 +60,13 @@ const SketchImage: React.FC<SketchImageProps> = ({
     return (
         <svg
             className={
-                `sketch-image ${selected ? 'selected' : ''} ${moving ? 'moving' : ''}`
+                `sketch-image container ${
+                    selected ? 'selected' : ''
+                } ${
+                    moving ? 'moving' : ''
+                } ${
+                    resizing ? 'resizing' : ''
+                }`
             }
             ref={(el) => {
                 imageRef.current = el;
@@ -76,8 +88,9 @@ const SketchImage: React.FC<SketchImageProps> = ({
                 onMouseDown={onImageMouseDown}
             />
             {selected ? (
-                resizeRects.map((direcion) => (
+                resizeRects.map((direcion, index) => (
                     <rect
+                        key={`sketch-image-resize-button-${index.toString()}`}
                         className={`sketch-image sketch-image-resizer ${direcion}`}
                         width="20px"
                         height="20px"
@@ -89,6 +102,12 @@ const SketchImage: React.FC<SketchImageProps> = ({
                     />
                 ))
             ) : null}
+            <SvgIconButton
+                className="sketch-image-delete-button"
+                icon={<MdOutlineDeleteOutline />}
+                size={45}
+                onClick={onDelete}
+            />
         </svg>
     );
 };

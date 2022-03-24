@@ -1,18 +1,26 @@
-.sketch-image.selected {
-    outline: 5px solid var(--palette-lightblue);
+.svg-container:not(.free-drawing) .sketch-image.container:not(.selected) {
+    cursor: pointer;
 }
 
-.sketch-image.selected .sketch-image {
+.sketch-image.container.selected {
+    outline: 3px solid var(--palette-lightblue);
+}
+
+.sketch-image.container.selected .sketch-image {
     cursor: grab;
 }
 
-.sketch-image.selected.moving .sketch-image {
+.sketch-image.container.selected.moving .sketch-image {
     cursor: grabbing;
 }
 
 .sketch-image-resizer {
     fill: var(--palette-lightblue);
-    outline: 2px solid var(--palette-darkgray);
+    opacity: 0.75;
+}
+
+.sketch-image.container:not(.resizing):not(:hover) .sketch-image-resizer {
+    display: none;
 }
 
 .sketch-image-resizer.se {
@@ -27,12 +35,24 @@
     transform: translateY(calc(100% - 20px));
 }
 
-.sketch-image.selected .sketch-image-resizer.nw,
-.sketch-image.selected .sketch-image-resizer.se {
+.sketch-image.container.selected .sketch-image-resizer.nw,
+.sketch-image.container.selected .sketch-image-resizer.se {
     cursor: nwse-resize;
 }
 
-.sketch-image.selected .sketch-image-resizer.ne,
-.sketch-image.selected .sketch-image-resizer.sw {
+.sketch-image.container.selected .sketch-image-resizer.ne,
+.sketch-image.container.selected .sketch-image-resizer.sw {
     cursor: nesw-resize;
+}
+
+.sketch-image-delete-button {
+    cursor: pointer;
+    transform: translate(calc(100% - 70px), 30px);
+}
+
+.sketch-image.container.resizing .sketch-image-delete-button,
+.sketch-image.container.moving .sketch-image-delete-button,
+.sketch-image.container:not(.selected) .sketch-image-delete-button,
+.sketch-image.container:not(:hover) .sketch-image-delete-button {
+    display: none;
 }

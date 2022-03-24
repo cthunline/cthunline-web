@@ -129,7 +129,36 @@ export interface AudioData extends Asset {
 
 export enum SketchEvent {
     draw = 'draw',
-    imageAdd = 'imageAdd'
+    imageAdd = 'imageAdd',
+    imageMove = 'imageMove',
+    imageResize = 'imageResize'
+}
+
+export interface SketchCoordinates {
+    x: number;
+    y: number;
+}
+
+export interface SketchSize {
+    width: number;
+    height: number;
+}
+
+export interface SketchMovingImageData {
+    index: number;
+    deltaX: number;
+    deltaY: number;
+}
+
+export interface SketchResizingImageData {
+    index: number;
+    direction: CardinalDirection;
+    initialX: number;
+    initialY: number;
+    initialWidth: number;
+    initialHeight: number;
+    initialMouseX: number;
+    initialMouseY: number;
 }
 
 export interface SketchImageData {
