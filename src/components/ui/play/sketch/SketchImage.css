@@ -1,0 +1,38 @@
+.sketch-image.selected {
+    outline: 5px solid var(--palette-lightblue);
+}
+
+.sketch-image.selected .sketch-image {
+    cursor: grab;
+}
+
+.sketch-image.selected.moving .sketch-image {
+    cursor: grabbing;
+}
+
+.sketch-image-resizer {
+    fill: var(--palette-lightblue);
+    outline: 2px solid var(--palette-darkgray);
+}
+
+.sketch-image-resizer.se {
+    transform: translate(calc(100% - 20px), calc(100% - 20px));
+}
+
+.sketch-image-resizer.ne {
+    transform: translateX(calc(100% - 20px));
+}
+
+.sketch-image-resizer.sw {
+    transform: translateY(calc(100% - 20px));
+}
+
+.sketch-image.selected .sketch-image-resizer.nw,
+.sketch-image.selected .sketch-image-resizer.se {
+    cursor: nwse-resize;
+}
+
+.sketch-image.selected .sketch-image-resizer.ne,
+.sketch-image.selected .sketch-image-resizer.sw {
+    cursor: nesw-resize;
+}

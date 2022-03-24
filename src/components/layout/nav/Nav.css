@@ -21,7 +21,7 @@
 }
 
 .nav-middle button {
-    color: var(--palette-text);
+    color: var(--palette-white);
     font-weight: 600;
     margin: 0 10px;
 }

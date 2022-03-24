@@ -6,7 +6,8 @@ import React, {
 import { Box } from '@mui/material';
 
 import { usePlay } from '../../contexts/Play';
-import { SketchImage } from '../../../types';
+import { CardinalDirection, SketchImageData } from '../../../types';
+import SketchImage from './sketch/SketchImage';
 
 import './Sketch.css';
 
@@ -20,6 +21,19 @@ interface MovingImageData {
     deltaX: number;
     deltaY: number;
 }
+
+interface ResizingImageData {
+    index: number;
+    direction: CardinalDirection;
+    initialX: number;
+    initialY: number;
+    initialWidth: number;
+    initialHeight: number;
+    initialMouseX: number;
+    initialMouseY: number;
+}
+
+const imageMinSize = 100;
 
 const viewBox = {
     width: 1920,
@@ -35,8 +49,10 @@ const Sketch = () => {
     } = usePlay();
 
     const [paths, setPaths] = useState<string[]>([]);
-    const [images, setImages] = useState<SketchImage[]>([]);
+    const [images, setImages] = useState<SketchImageData[]>([]);
     const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+    const [movingImage, setMovingImage] = useState<MovingImageData | null>(null);
+    const [resizingImage, setResizingImage] = useState<ResizingImageData | null>(null);
     const [svgPoint, setSvgPoint] = useState<DOMPoint>();
     const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
@@ -45,8 +61,6 @@ const Sketch = () => {
     );
 
     const coordinates = useRef<Coordinates[]>([]);
-
-    const movingImage = useRef<MovingImageData | null>(null);
 
     const imagesRef = useRef<(SVGSVGElement | null)[]>([]);
 
@@ -107,13 +121,13 @@ const Sketch = () => {
             );
             setPaths(pathsClone);
         }
-        // handles mouse move for images
-        if (movingImage.current && svgPoint) {
+        // handles mouse move for moving image
+        if (movingImage && svgPoint) {
             const {
                 index,
                 deltaX,
                 deltaY
-            } = movingImage.current;
+            } = movingImage;
             const imageEl = imagesRef.current[index];
             if (imageEl) {
                 const { width, height } = imageEl.getBBox();
@@ -129,6 +143,70 @@ const Sketch = () => {
                 }
             }
         }
+        // handles mouse move for image resizing
+        if (resizingImage && svgPoint) {
+            const {
+                index,
+                direction,
+                initialX,
+                initialY,
+                initialWidth,
+                initialHeight,
+                initialMouseX,
+                initialMouseY
+            } = resizingImage;
+            const imageEl = imagesRef.current[index];
+            if (imageEl) {
+                const { x, y } = getMouseSvgCoordinates(e, svgPoint);
+                const mouseDiffX = x - initialMouseX;
+                const mouseDiffY = y - initialMouseY;
+                const sizeRatio = initialWidth / initialHeight;
+                const movingX = (
+                    direction === CardinalDirection.nw
+                    || direction === CardinalDirection.sw
+                );
+                const movingY = (
+                    direction === CardinalDirection.nw
+                    || direction === CardinalDirection.ne
+                );
+                let newWidth;
+                let newHeight;
+                let newX = initialX;
+                let newY = initialY;
+                if (mouseDiffX > mouseDiffY) {
+                    newWidth = initialWidth + (mouseDiffX * (movingX ? -1 : 1));
+                    newHeight = newWidth / sizeRatio;
+                } else {
+                    newHeight = initialHeight + mouseDiffY * (movingY ? -1 : 1);
+                    newWidth = newHeight * sizeRatio;
+                }
+                if (movingX) {
+                    newX = initialX - (newWidth - initialWidth);
+                }
+                if (movingY) {
+                    newY = initialY - (newHeight - initialHeight);
+                }
+                const controlPositionX = initialX + newWidth;
+                const controlPositionY = initialY + newHeight;
+                if (
+                    newWidth >= imageMinSize
+                    && newHeight >= imageMinSize
+                    && newX >= 0
+                    && newY >= 0
+                    && controlPositionX <= viewBox.width
+                    && controlPositionY <= viewBox.height
+                ) {
+                    imageEl.setAttribute('width', newWidth.toString());
+                    imageEl.setAttribute('height', newHeight.toString());
+                    if (movingX) {
+                        imageEl.setAttributeNS(null, 'x', newX.toString());
+                    }
+                    if (movingY) {
+                        imageEl.setAttributeNS(null, 'y', newY.toString());
+                    }
+                }
+            }
+        }
     };
 
     const handleMouseUpOrLeave = () => {
@@ -141,13 +219,16 @@ const Sketch = () => {
             }
         }
         // handle mouse up or leave for images
-        if (movingImage.current) {
-            movingImage.current = null;
+        if (movingImage) {
+            setMovingImage(null);
+        }
+        if (resizingImage) {
+            setResizingImage(null);
         }
     };
 
-    // handle mouse down for images
-    const handleImageMouseDown = (e: React.MouseEvent<SVGSVGElement>, index: number) => {
+    // handle mouse down for image move
+    const handleImageMouseDown = (e: React.MouseEvent<SVGImageElement>, index: number) => {
         if (!isFreeDrawing && svgPoint) {
             e.preventDefault();
             const imageEl = imagesRef.current[index];
@@ -155,12 +236,39 @@ const Sketch = () => {
                 const imageX = parseInt(imageEl.getAttributeNS(null, 'x') ?? '');
                 const imageY = parseInt(imageEl.getAttributeNS(null, 'y') ?? '');
                 const { x, y } = getMouseSvgCoordinates(e, svgPoint);
-                movingImage.current = {
+                setMovingImage({
                     index,
                     deltaX: x - imageX,
                     deltaY: y - imageY
-                };
+                });
                 setSelectedImageIndex(index);
+            }
+        }
+    };
+
+    // handle mouse down for image resize
+    const handleResizeMouseDown = (
+        e: React.MouseEvent<SVGRectElement>,
+        index: number,
+        direction: CardinalDirection
+    ) => {
+        if (!isFreeDrawing && svgPoint) {
+            const imageEl = imagesRef.current[index];
+            if (imageEl) {
+                const imageX = parseInt(imageEl.getAttributeNS(null, 'x') ?? '');
+                const imageY = parseInt(imageEl.getAttributeNS(null, 'y') ?? '');
+                const { width, height } = imageEl.getBBox();
+                const { x, y } = getMouseSvgCoordinates(e, svgPoint);
+                setResizingImage({
+                    index,
+                    direction,
+                    initialX: imageX,
+                    initialY: imageY,
+                    initialWidth: width,
+                    initialHeight: height,
+                    initialMouseX: x,
+                    initialMouseY: y
+                });
             }
         }
     };
@@ -185,80 +293,39 @@ const Sketch = () => {
             <svg
                 ref={svgRef}
                 className="svg-container"
-                // width="100%"
-                // height="100%"
                 viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUpOrLeave}
                 onMouseLeave={handleMouseUpOrLeave}
             >
-                <defs>
-                    {/* filter that puts the "selected" border on images */}
-                    <filter id="selected">
-                        {/* Make four copies of the image alpha,
-                        each moved to a different corner */}
-                        <feOffset result="nw" in="SourceAlpha" dx="-5" dy="-5" />
-                        <feOffset result="ne" in="SourceAlpha" dx="5" dy="-5" />
-                        <feOffset result="se" in="SourceAlpha" dx="5" dy="5" />
-                        <feOffset result="sw" in="SourceAlpha" dx="-5" dy="5" />
-                        {/* Merge those four copies together */}
-                        <feMerge result="border">
-                            <feMergeNode in="nw" />
-                            <feMergeNode in="ne" />
-                            <feMergeNode in="se" />
-                            <feMergeNode in="sw" />
-                        </feMerge>
-                        {/* Create a filter primitive that is just a solid
-                        block of what will be the new border colour */}
-                        <feFlood floodColor="var(--palette-lightblue)" />
-                        {/* Use the "in" operator to merge the blackborder with the
-                        colored fill. Any parts of the colored fill that are"in"-side
-                        the back shape will remain. The rest will me masked out. */}
-                        <feComposite in2="border" operator="in" result="colored-border" />
-                        {/* Finally, merge the new colored border with the original image */}
-                        <feMerge>
-                            <feMergeNode in="colored-border" />
-                            <feMergeNode in="SourceGraphic" />
-                        </feMerge>
-                    </filter>
-                </defs>
                 {images.map(({
                     url,
                     width,
                     x,
                     y
                 }, index) => (
-                    <svg
+                    <SketchImage
                         key={`sketch-image-${index.toString()}`}
-                        className="sketch-image"
-                        ref={(el) => {
+                        url={url}
+                        width={width}
+                        x={x}
+                        y={y}
+                        selected={selectedImageIndex === index}
+                        moving={movingImage?.index === index}
+                        onRef={(el) => {
                             imagesRef.current[index] = el;
                         }}
-                        width={width.toString()}
-                        x={x.toString()}
-                        y={y.toString()}
-                        filter={selectedImageIndex === index ? (
-                            'url(#selected)'
-                        ) : ''}
-                        onMouseDown={(e) => (
-                            handleImageMouseDown(e, index)
-                        )}
-                    >
-                        <image
-                            className="sketch-image"
-                            width="100%"
-                            xlinkHref={url}
-                        />
-                        <rect
-                            className="sketch-image"
-                            width="50px"
-                            height="50px"
-                            x="50px"
-                            y="50px"
-                            fill="red"
-                        />
-                    </svg>
+                        onImageMouseDown={(e) => {
+                            handleImageMouseDown(e, index);
+                        }}
+                        onResizeMouseDown={(
+                            e: React.MouseEvent<SVGRectElement>,
+                            direction: CardinalDirection
+                        ) => {
+                            handleResizeMouseDown(e, index, direction);
+                        }}
+                    />
                 ))}
                 {paths.map((path, index) => (
                     <path

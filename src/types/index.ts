@@ -132,7 +132,7 @@ export enum SketchEvent {
     imageAdd = 'imageAdd'
 }
 
-export interface SketchImage {
+export interface SketchImageData {
     url: string;
     width: number;
     x: number;
@@ -141,6 +141,13 @@ export interface SketchImage {
 
 export interface SketchData {
     paths: string[];
-    images: SketchImage[];
+    images: SketchImageData[];
     events: SketchEvent[];
+}
+
+export enum CardinalDirection {
+    nw = 'nw',
+    ne = 'ne',
+    se = 'se',
+    sw = 'sw'
 }

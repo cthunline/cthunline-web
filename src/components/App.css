@@ -2,10 +2,10 @@
 
 :root {
     --palette-background: #111416;
-    --palette-darkgray: rgba(255 255 255 / 4%);
-    --palette-gray: rgba(255 255 255 / 15%);
-    --palette-lightgrey: rgba(255 255 255 / 50%);
-    --palette-text: #fff;
+    --palette-darkgray: #1a1d1f;
+    --palette-gray: #454545;
+    --palette-lightgray: #888a8b;
+    --palette-white: #fff;
     --palette-lightblue: #90caf9;
 }
 
@@ -14,7 +14,7 @@
 html,
 body {
     box-sizing: border-box;
-    color: var(--palette-text);
+    color: var(--palette-white);
     font-family: Roboto, Helvetica, Arial, sans-serif;
     height: 100vh;
     margin: 0;
