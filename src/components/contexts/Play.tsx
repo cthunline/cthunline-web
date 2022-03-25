@@ -25,7 +25,8 @@ import {
     SessionUser,
     AudioData,
     Asset,
-    SketchData
+    SketchData,
+    SketchImageData
 } from '../../types';
 
 interface PlayProviderProps {
@@ -39,7 +40,6 @@ interface PlayContextData {
     characterId?: string;
     socket: PlaySocket | null;
     users: SessionUser[];
-    disconnectSocket: () => void;
     logs: PlayLog[];
     requestDice: (request: DicesRequest, isPrivate: boolean) => void;
     characterUpdate: () => void;
@@ -47,14 +47,14 @@ interface PlayContextData {
     stopAudio: () => void;
     audioData: AudioData | null;
     sketchData: SketchData;
-    addSketchDrawPath: (path: string) => void;
-    undoSketch: () => void;
-    clearSketch: () => void;
-    addSketchImage: (url: string) => void;
-    deleteSketchImage: (index: number) => void;
-    setSketchData: React.Dispatch<React.SetStateAction<SketchData>>;
-    isSketchDisplayed: boolean;
-    setIsSketchDisplayed: (value: boolean) => void;
+    addSketchDrawPath: (path: string, emit?: boolean) => void;
+    undoSketch: (emit?: boolean) => void;
+    clearSketch: (emit?: boolean) => void;
+    addSketchImage: (url: string, emit?: boolean) => void;
+    updateSketchImage: (index: number, image: SketchImageData, emit?: boolean) => void;
+    updateSketchImages: (images: SketchImageData[], emit?: boolean) => void;
+    deleteSketchImage: (index: number, emit?: boolean) => void;
+    setSketchDisplay: (value: boolean) => void;
     isFreeDrawing: boolean;
     setIsFreeDrawing: (value: boolean) => void;
 }
@@ -63,7 +63,6 @@ const defaultPlayData: PlayContextData = {
     sessionId: '',
     socket: null,
     users: [],
-    disconnectSocket: () => {},
     logs: [],
     requestDice: () => {},
     characterUpdate: () => {},
@@ -71,6 +70,7 @@ const defaultPlayData: PlayContextData = {
     stopAudio: () => {},
     audioData: null,
     sketchData: {
+        displayed: false,
         paths: [],
         images: [],
         events: []
@@ -79,10 +79,10 @@ const defaultPlayData: PlayContextData = {
     undoSketch: () => {},
     clearSketch: () => {},
     addSketchImage: () => {},
+    updateSketchImage: () => {},
+    updateSketchImages: () => {},
     deleteSketchImage: () => {},
-    setSketchData: () => {},
-    isSketchDisplayed: false,
-    setIsSketchDisplayed: () => {},
+    setSketchDisplay: () => {},
     isFreeDrawing: false,
     setIsFreeDrawing: () => {}
 };
@@ -92,6 +92,15 @@ interface ConnectOptions {
     isMaster: boolean;
     characterId?: string;
 }
+
+const socketIoConnectOptions = {
+    withCredentials: true,
+    timeout: 3000,
+    reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 1000,
+    reconnectionAttempts: 10
+};
 
 const PlayContext = createContext<PlayContextData>(defaultPlayData);
 
@@ -124,30 +133,46 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     const {
         sketchData,
         setSketchData,
-        isSketchDisplayed,
-        setIsSketchDisplayed,
+        setSketchDisplay,
         isFreeDrawing,
         setIsFreeDrawing,
         addSketchDrawPath,
         addSketchImage,
+        updateSketchImage,
+        updateSketchImages,
         deleteSketchImage,
         undoSketch,
         clearSketch
-    } = useSketch();
+    } = useSketch(socket);
+
+    const isConnecting = useRef(false);
 
     const bindSocketEvents = useCallback((sock: PlaySocket) => {
-        sock.on('connect_error', (/* { message } */) => {
+        sock.on('connect_error', (/* err */) => {
             toast.error('Socket connection error');
-            // console.error(message);
+            // console.error(err);
         });
         sock.on('error', ({ status }) => {
             toast.error(`Socket ${status} error`);
+            // console.error(data);
         });
         sock.on('connect', () => {
+            isConnecting.current = false;
             setSocket(sock);
         });
-        sock.on('disconnect', () => {
-            setSocket(null);
+        sock.io.on('reconnect_attempt', () => {
+            isConnecting.current = true;
+            pushLog(sock.user, sock.isMaster, 'attempting reconnection...');
+        });
+        sock.io.on('reconnect', () => {
+            isConnecting.current = false;
+        });
+        sock.on('disconnect', (reason) => {
+            if (reason === 'io server disconnect') {
+                setSocket(null);
+            } else {
+                pushLog(sock.user, sock.isMaster, 'disconnected');
+            }
         });
         sock.on('join', ({ user: sockUser, users: sessionUsers, isMaster }) => {
             pushLog(sockUser, isMaster, 'joined the session');
@@ -188,13 +213,17 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         sock.on('audioStop', () => {
             clearAudioTrack();
         });
+        sock.on('sketchUpdate', ({ sketch }) => {
+            setSketchData(sketch);
+        });
     }, [
         pushLog,
         updateUserCharacter,
         setAudioTrack,
         clearAudioTrack,
         getDiceResultLog,
-        setUsers
+        setUsers,
+        setSketchData
     ]);
 
     const connectSocket = useCallback(({
@@ -203,11 +232,11 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         characterId: charId
     }: ConnectOptions): PlaySocket => {
         const sock = io({
+            ...socketIoConnectOptions,
             query: {
                 sessionId: sessId,
                 characterId: charId
-            },
-            withCredentials: true
+            }
         }) as PlaySocket;
         sock.user = user as User;
         sock.sessionId = sessId;
@@ -226,11 +255,15 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         socket
     ]);
 
-    const initialConnection = useRef(true);
     useEffect(() => {
         (async () => {
-            if (initialConnection.current && session && sessionId) {
-                initialConnection.current = false;
+            if (
+                (!socket || !socket.connected)
+                && !isConnecting.current
+                && session
+                && sessionId
+            ) {
+                isConnecting.current = true;
                 const isMaster = session.masterId === user?.id;
                 setSocket(
                     connectSocket({
@@ -242,6 +275,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             }
         })();
     }, [
+        socket,
         user,
         session,
         sessionId,
@@ -249,12 +283,17 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         connectSocket
     ]);
 
+    useEffect(() => (
+        () => disconnectSocket()
+    ), [
+        disconnectSocket
+    ]);
+
     const contextValue = useMemo(() => ({
         sessionId,
         characterId,
         socket,
         users,
-        disconnectSocket,
         logs,
         requestDice,
         characterUpdate,
@@ -263,13 +302,13 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         audioData,
         sketchData,
         addSketchDrawPath,
-        setSketchData,
         undoSketch,
         clearSketch,
         addSketchImage,
+        updateSketchImage,
+        updateSketchImages,
         deleteSketchImage,
-        isSketchDisplayed,
-        setIsSketchDisplayed,
+        setSketchDisplay,
         isFreeDrawing,
         setIsFreeDrawing
     }), [
@@ -277,7 +316,6 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         characterId,
         socket,
         users,
-        disconnectSocket,
         logs,
         requestDice,
         characterUpdate,
@@ -285,14 +323,14 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         stopAudio,
         audioData,
         sketchData,
-        setSketchData,
         addSketchDrawPath,
         undoSketch,
         clearSketch,
         addSketchImage,
+        updateSketchImage,
+        updateSketchImages,
         deleteSketchImage,
-        isSketchDisplayed,
-        setIsSketchDisplayed,
+        setSketchDisplay,
         isFreeDrawing,
         setIsFreeDrawing
     ]);

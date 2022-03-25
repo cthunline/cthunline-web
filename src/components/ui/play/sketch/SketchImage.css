@@ -1,4 +1,4 @@
-.svg-container:not(.free-drawing) .sketch-image.container:not(.selected) {
+.svg-container:not(.free-drawing) .sketch-image.selectable.container:not(.selected) {
     cursor: pointer;
 }
 
@@ -50,9 +50,7 @@
     transform: translate(calc(100% - 70px), 30px);
 }
 
-.sketch-image.container.resizing .sketch-image-delete-button,
-.sketch-image.container.moving .sketch-image-delete-button,
-.sketch-image.container:not(.selected) .sketch-image-delete-button,
-.sketch-image.container:not(:hover) .sketch-image-delete-button {
+.sketch-image.container:not(.resizing):not(.selected) .sketch-image-delete-button,
+.sketch-image.container:not(.resizing):not(:hover) .sketch-image-delete-button {
     display: none;
 }

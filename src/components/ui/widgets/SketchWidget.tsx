@@ -38,11 +38,10 @@ interface SketchWidgetProps {
 const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
     const { confirmDialog } = useDialog();
     const {
-        isSketchDisplayed,
-        setIsSketchDisplayed,
         isFreeDrawing,
         setIsFreeDrawing,
         sketchData,
+        setSketchDisplay,
         undoSketch,
         clearSketch,
         addSketchImage
@@ -88,15 +87,15 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
                         labelPlacement="start"
                         control={(
                             <Switch
-                                checked={isSketchDisplayed}
+                                checked={sketchData.displayed}
                                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    setIsSketchDisplayed(e.target.checked);
+                                    setSketchDisplay(e.target.checked);
                                 }}
                             />
                         )}
                     />
                 </Box>
-                {isSketchDisplayed ? (
+                {sketchData.displayed ? (
                     <Box className="flex row center">
                         {actionButtons.map(({
                             text,
@@ -119,7 +118,7 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
                         ))}
                     </Box>
                 ) : null}
-                {isSketchDisplayed ? (
+                {sketchData.displayed ? (
                     <Box>
                         <Typography variant="h6" gutterBottom>
                             Assets
@@ -141,7 +140,11 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
                                         <ImageListItemBar
                                             title={name}
                                             actionIcon={(
-                                                <IconButton onClick={() => addSketchImage(src)}>
+                                                <IconButton
+                                                    onClick={() => (
+                                                        addSketchImage(src, false)
+                                                    )}
+                                                >
                                                     <HiPlus />
                                                 </IconButton>
                                             )}

@@ -127,21 +127,21 @@ export interface AudioData extends Asset {
     playing: boolean;
 }
 
-export enum SketchEvent {
-    draw = 'draw',
-    imageAdd = 'imageAdd',
-    imageMove = 'imageMove',
-    imageResize = 'imageResize'
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ play sketch
+
+export interface SketchData {
+    displayed: boolean;
+    paths: string[];
+    images: SketchImageData[];
+    events: SketchEvent[];
 }
 
-export interface SketchCoordinates {
+export interface SketchImageData {
+    url: string;
+    width: number;
+    height?: number;
     x: number;
     y: number;
-}
-
-export interface SketchSize {
-    width: number;
-    height: number;
 }
 
 export interface SketchMovingImageData {
@@ -161,18 +161,21 @@ export interface SketchResizingImageData {
     initialMouseY: number;
 }
 
-export interface SketchImageData {
-    url: string;
-    width: number;
-    height?: number;
+export enum SketchEvent {
+    draw = 'draw',
+    imageAdd = 'imageAdd',
+    imageMove = 'imageMove',
+    imageResize = 'imageResize'
+}
+
+export interface SketchCoordinates {
     x: number;
     y: number;
 }
 
-export interface SketchData {
-    paths: string[];
-    images: SketchImageData[];
-    events: SketchEvent[];
+export interface SketchSize {
+    width: number;
+    height: number;
 }
 
 export enum CardinalDirection {

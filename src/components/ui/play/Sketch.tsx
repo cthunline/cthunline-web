@@ -8,11 +8,11 @@ import { Box } from '@mui/material';
 import { usePlay } from '../../contexts/Play';
 import SketchImage from './sketch/SketchImage';
 import {
-    CardinalDirection,
     SketchImageData,
     SketchCoordinates,
     SketchMovingImageData,
-    SketchResizingImageData
+    SketchResizingImageData,
+    CardinalDirection
 } from '../../../types';
 import {
     viewBox,
@@ -24,13 +24,17 @@ import {
 
 import './Sketch.css';
 
-const Sketch = () => {
+interface SketchProps {
+    isMaster?: boolean;
+}
+
+const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     const {
         isFreeDrawing,
-        isSketchDisplayed,
         sketchData,
-        setSketchData,
         addSketchDrawPath,
+        updateSketchImage,
+        updateSketchImages,
         deleteSketchImage
     } = usePlay();
 
@@ -71,7 +75,7 @@ const Sketch = () => {
     const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
         const target = e.target as SVGSVGElement;
         // handles mouse down for drawing
-        if (isFreeDrawing && !isDrawing) {
+        if (isMaster && isFreeDrawing && !isDrawing) {
             e.preventDefault();
             // initializes coordinates list for the new drawing path
             coordinates.current = [];
@@ -81,8 +85,11 @@ const Sketch = () => {
             ));
             // set isDrawing state
             setIsDrawing(true);
-        } else if (selectedImageIndex !== null && !target.classList.contains('sketch-image')) {
-            // handles outside click to deselect image
+        } else if ( // handles outside click to deselect image
+            isMaster
+            && selectedImageIndex !== null
+            && !target.classList.contains('sketch-image')
+        ) {
             const selectedImage = imagesRef.current[selectedImageIndex];
             if (selectedImage && !selectedImage.contains(e.target as Node)) {
                 // unselect image
@@ -94,7 +101,7 @@ const Sketch = () => {
     // handles mouseMove on the main svg container element
     const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
         // handles mouse move for drawing
-        if (isFreeDrawing && isDrawing && svgPoint) {
+        if (isMaster && isFreeDrawing && isDrawing && svgPoint) {
             // get svg-transformed mouse coordinates
             const { x, y } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
             // push coordinates in the current drawing path coordinates
@@ -107,7 +114,7 @@ const Sketch = () => {
             setPaths(pathsClone);
         }
         // handles mouse move for moving image
-        if (movingImage && svgPoint) {
+        if (isMaster && movingImage && svgPoint) {
             const {
                 index,
                 deltaX,
@@ -135,7 +142,7 @@ const Sketch = () => {
             }
         }
         // handles mouse move for image resizing
-        if (resizingImage && svgPoint) {
+        if (isMaster && resizingImage && svgPoint) {
             const { index } = resizingImage;
             const imageData = images[index];
             const imageEl = imagesRef.current[index];
@@ -161,17 +168,17 @@ const Sketch = () => {
     // handles mouseUp of mouseLeave on the main svg container element
     const handleMouseUpOrLeave = () => {
         // handle mouse up or leave for drawing
-        if (isFreeDrawing && isDrawing) {
+        if (isMaster && isFreeDrawing && isDrawing) {
             // stops drawing path
             setIsDrawing(false);
-            // insert new draw path to the context data
+            // insert new draw path to context sketchData
             const lastPath = paths.at(-1);
             if (lastPath) {
                 addSketchDrawPath(lastPath);
             }
         }
         // handle mouse up or leave for images
-        if (movingImage || resizingImage) {
+        if (isMaster && (movingImage || resizingImage)) {
             if (movingImage) {
                 // stops movement
                 setMovingImage(null);
@@ -180,17 +187,14 @@ const Sketch = () => {
                 // stops resizing
                 setResizingImage(null);
             }
-            // saves images data in play context sketchData
-            setSketchData((previous) => ({
-                ...previous,
-                images
-            }));
+            // updates images data in play context sketchData
+            updateSketchImages(images);
         }
     };
 
     // handle mouseDown on images
     const handleImageMouseDown = (e: React.MouseEvent<SVGImageElement>, index: number) => {
-        if (!isFreeDrawing && svgPoint) {
+        if (isMaster && !isFreeDrawing && svgPoint) {
             e.preventDefault();
             const imageData = images[index];
             const imageEl = imagesRef.current[index];
@@ -217,7 +221,7 @@ const Sketch = () => {
         index: number,
         direction: CardinalDirection
     ) => {
-        if (!isFreeDrawing && svgPoint) {
+        if (isMaster && !isFreeDrawing && svgPoint) {
             const imageData = images[index];
             const imageEl = imagesRef.current[index];
             if (imageData && imageEl) {
@@ -262,7 +266,7 @@ const Sketch = () => {
         const imageEl = imagesRef.current[index];
         if (imageData && imageEl) {
             const { height } = imageEl.getBBox();
-            setImage(index, {
+            updateSketchImage(index, {
                 ...imageData,
                 height
             });
@@ -288,7 +292,7 @@ const Sketch = () => {
     }, [isFreeDrawing]);
 
     return (
-        <Box className={`sketch-container center-text ${isSketchDisplayed ? '' : 'hidden'}`}>
+        <Box className="sketch-container center-text">
             {/* main svg container */}
             <svg
                 ref={svgRef}
@@ -310,6 +314,7 @@ const Sketch = () => {
                 }, index) => (
                     <SketchImage
                         key={`sketch-image-${index.toString()}`}
+                        isMaster={isMaster}
                         url={url}
                         width={width}
                         height={height}

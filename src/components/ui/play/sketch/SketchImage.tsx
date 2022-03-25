@@ -7,6 +7,7 @@ import { CardinalDirection } from '../../../../types';
 import './SketchImage.css';
 
 interface SketchImageProps {
+    isMaster?: boolean;
     url: string;
     width: number;
     height?: number;
@@ -34,6 +35,7 @@ const resizeRects: CardinalDirection[] = [
 ];
 
 const SketchImage: React.FC<SketchImageProps> = ({
+    isMaster,
     url,
     width,
     height,
@@ -53,6 +55,8 @@ const SketchImage: React.FC<SketchImageProps> = ({
     <svg
         className={
             `sketch-image container ${
+                isMaster ? 'selectable' : ''
+            } ${
                 selected ? 'selected' : ''
             } ${
                 moving ? 'moving' : ''
@@ -76,7 +80,7 @@ const SketchImage: React.FC<SketchImageProps> = ({
             onMouseDown={onImageMouseDown}
         />
         {/* resize rectangles buttons */}
-        {selected ? (
+        {isMaster && selected ? (
             resizeRects.map((direcion, index) => (
                 <rect
                     key={`sketch-image-resize-button-${index.toString()}`}
@@ -92,12 +96,14 @@ const SketchImage: React.FC<SketchImageProps> = ({
             ))
         ) : null}
         {/* delete button */}
-        <SvgIconButton
-            className="sketch-image-delete-button"
-            icon={<MdOutlineDeleteOutline />}
-            size={45}
-            onClick={onDelete}
-        />
+        {isMaster ? (
+            <SvgIconButton
+                className="sketch-image-delete-button"
+                icon={<MdOutlineDeleteOutline />}
+                size={45}
+                onClick={onDelete}
+            />
+        ) : null}
     </svg>
 );
 

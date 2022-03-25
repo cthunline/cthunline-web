@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
     Box,
@@ -29,12 +29,12 @@ const Play = () => {
         characterId,
         socket,
         users,
-        disconnectSocket,
         logs,
         requestDice,
         characterUpdate,
         playAudio,
-        stopAudio
+        stopAudio,
+        sketchData
     } = usePlay();
 
     const [openWidgets, setOpenWidgets] = useState<WidgetType[]>([]);
@@ -114,12 +114,6 @@ const Play = () => {
         })
     );
 
-    useEffect(() => (
-        () => disconnectSocket()
-    ), [
-        disconnectSocket
-    ]);
-
     return socket ? (
         <Box className="play-container flex row">
             <PlayMenu
@@ -129,8 +123,12 @@ const Play = () => {
             />
             <Box id="play-content" className="play-content flex column">
                 {getWidgets(openWidgets)}
-                <Sketch />
-                {!socket.isMaster ? <Audio /> : null }
+                {sketchData.displayed ? (
+                    <Sketch isMaster={socket?.isMaster} />
+                ) : null}
+                {!socket.isMaster ? (
+                    <Audio />
+                ) : null }
                 <Console logs={logs} />
             </Box>
         </Box>
