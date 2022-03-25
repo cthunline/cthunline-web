@@ -29,6 +29,7 @@ const Sketch = () => {
         isFreeDrawing,
         isSketchDisplayed,
         sketchData,
+        setSketchData,
         addSketchDrawPath,
         deleteSketchImage
     } = usePlay();
@@ -56,6 +57,15 @@ const Sketch = () => {
 
     // array of references to the images in the sketch
     const imagesRef = useRef<(SVGSVGElement | null)[]>([]);
+
+    // helper to change an item of the images state array
+    const setImage = (index: number, imageData: SketchImageData) => {
+        setImages((previous) => (
+            previous.map((img, idx) => (
+                idx === index ? imageData : img
+            ))
+        ));
+    };
 
     // handles mouseDown on the main svg container element
     const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
@@ -103,8 +113,9 @@ const Sketch = () => {
                 deltaX,
                 deltaY
             } = movingImage;
+            const imageData = images[index];
             const imageEl = imagesRef.current[index];
-            if (imageEl) {
+            if (imageData && imageEl) {
                 // gets moving image new coordinates
                 const coord = getMovingImageCoordinates({
                     event: e,
@@ -116,16 +127,19 @@ const Sketch = () => {
                 });
                 if (coord) {
                     // assign new coordinates
-                    imageEl.setAttributeNS(null, 'x', coord.x.toString());
-                    imageEl.setAttributeNS(null, 'y', coord.y.toString());
+                    setImage(index, {
+                        ...imageData,
+                        ...coord
+                    });
                 }
             }
         }
         // handles mouse move for image resizing
         if (resizingImage && svgPoint) {
             const { index } = resizingImage;
+            const imageData = images[index];
             const imageEl = imagesRef.current[index];
-            if (imageEl) {
+            if (imageData && imageEl) {
                 // gets new coordinates and position for resizing image
                 const data = getResizingImageCoordAndPos({
                     event: e,
@@ -135,14 +149,10 @@ const Sketch = () => {
                 });
                 if (data) {
                     // set new image size and position
-                    imageEl.setAttribute('width', data.width.toString());
-                    imageEl.setAttribute('height', data.height.toString());
-                    if (Object.hasOwn(data, 'x')) {
-                        imageEl.setAttributeNS(null, 'x', data.x?.toString() ?? '');
-                    }
-                    if (Object.hasOwn(data, 'y')) {
-                        imageEl.setAttributeNS(null, 'y', data.y?.toString() ?? '');
-                    }
+                    setImage(index, {
+                        ...imageData,
+                        ...data
+                    });
                 }
             }
         }
@@ -161,13 +171,20 @@ const Sketch = () => {
             }
         }
         // handle mouse up or leave for images
-        if (movingImage) {
-            // stops movement
-            setMovingImage(null);
-        }
-        if (resizingImage) {
-            // stops resizing
-            setResizingImage(null);
+        if (movingImage || resizingImage) {
+            if (movingImage) {
+                // stops movement
+                setMovingImage(null);
+            }
+            if (resizingImage) {
+                // stops resizing
+                setResizingImage(null);
+            }
+            // saves images data in play context sketchData
+            setSketchData((previous) => ({
+                ...previous,
+                images
+            }));
         }
     };
 
@@ -175,11 +192,11 @@ const Sketch = () => {
     const handleImageMouseDown = (e: React.MouseEvent<SVGImageElement>, index: number) => {
         if (!isFreeDrawing && svgPoint) {
             e.preventDefault();
+            const imageData = images[index];
             const imageEl = imagesRef.current[index];
-            if (imageEl) {
+            if (imageData && imageEl) {
                 // gets image position
-                const imageX = parseInt(imageEl.getAttributeNS(null, 'x') ?? '');
-                const imageY = parseInt(imageEl.getAttributeNS(null, 'y') ?? '');
+                const { x: imageX, y: imageY } = imageData;
                 // get svg-transformed mouse coordinates
                 const { x, y } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
                 // set moving image data in state
@@ -201,27 +218,54 @@ const Sketch = () => {
         direction: CardinalDirection
     ) => {
         if (!isFreeDrawing && svgPoint) {
+            const imageData = images[index];
             const imageEl = imagesRef.current[index];
-            if (imageEl) {
+            if (imageData && imageEl) {
                 // gets image position
-                const imageX = parseInt(imageEl.getAttributeNS(null, 'x') ?? '');
-                const imageY = parseInt(imageEl.getAttributeNS(null, 'y') ?? '');
+                const { x: initialX, y: initialY } = imageData;
                 // gets image size
-                const { width, height } = imageEl.getBBox();
+                const {
+                    width: initialWidth,
+                    height: initialHeight
+                } = imageEl.getBBox();
                 // gets svg-transformed mouse coordinates
-                const { x, y } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
+                const {
+                    x: initialMouseX,
+                    y: initialMouseY
+                } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
                 // set resizing image data in state
                 setResizingImage({
                     index,
                     direction,
-                    initialX: imageX,
-                    initialY: imageY,
-                    initialWidth: width,
-                    initialHeight: height,
-                    initialMouseX: x,
-                    initialMouseY: y
+                    initialX,
+                    initialY,
+                    initialWidth,
+                    initialHeight,
+                    initialMouseX,
+                    initialMouseY
                 });
             }
+        }
+    };
+
+    // handles deletion of an image
+    const handleImageDelete = (index: number) => {
+        deleteSketchImage(index);
+        setSelectedImageIndex(null);
+    };
+
+    // gets image height from its bounding box and set it in image data
+    // used because when adding images their height are auto and we want
+    // to set a fixed value
+    const updateImageHeight = (index: number) => {
+        const imageData = images[index];
+        const imageEl = imagesRef.current[index];
+        if (imageData && imageEl) {
+            const { height } = imageEl.getBBox();
+            setImage(index, {
+                ...imageData,
+                height
+            });
         }
     };
 
@@ -260,6 +304,7 @@ const Sketch = () => {
                 {images.map(({
                     url,
                     width,
+                    height,
                     x,
                     y
                 }, index) => (
@@ -267,6 +312,7 @@ const Sketch = () => {
                         key={`sketch-image-${index.toString()}`}
                         url={url}
                         width={width}
+                        height={height}
                         x={x}
                         y={y}
                         selected={selectedImageIndex === index}
@@ -274,6 +320,9 @@ const Sketch = () => {
                         resizing={resizingImage?.index === index}
                         onRef={(el) => {
                             imagesRef.current[index] = el;
+                        }}
+                        onLoad={() => {
+                            updateImageHeight(index);
                         }}
                         onImageMouseDown={(e) => {
                             handleImageMouseDown(e, index);
@@ -284,7 +333,7 @@ const Sketch = () => {
                         ) => {
                             handleResizeMouseDown(e, index, direction);
                         }}
-                        onDelete={() => deleteSketchImage(index)}
+                        onDelete={() => handleImageDelete(index)}
                     />
                 ))}
                 {/* drawing paths */}

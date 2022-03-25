@@ -164,6 +164,7 @@ export interface SketchResizingImageData {
 export interface SketchImageData {
     url: string;
     width: number;
+    height?: number;
     x: number;
     y: number;
 }
