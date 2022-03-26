@@ -46,7 +46,7 @@ export interface Session {
     master?: User;
     gameId: string;
     name: string;
-    sketch: object;
+    sketch: SketchData;
     createdAt: string;
     updatedAt: string;
 }
@@ -148,6 +148,8 @@ export interface SketchMovingImageData {
     index: number;
     deltaX: number;
     deltaY: number;
+    initialX: number;
+    initialY: number;
 }
 
 export interface SketchResizingImageData {
@@ -161,11 +163,21 @@ export interface SketchResizingImageData {
     initialMouseY: number;
 }
 
-export enum SketchEvent {
+export enum SketchEventType {
     draw = 'draw',
     imageAdd = 'imageAdd',
     imageMove = 'imageMove',
-    imageResize = 'imageResize'
+    imageResize = 'imageResize',
+    imageDelete = 'imageDelete'
+}
+
+export interface SketchEvent {
+    // type of event
+    type: SketchEventType;
+    // index of event concerned by the event
+    imageIndex?: number;
+    // image data to restore if event is undone
+    imageData?: SketchImageData;
 }
 
 export interface SketchCoordinates {

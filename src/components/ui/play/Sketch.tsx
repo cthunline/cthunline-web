@@ -12,7 +12,8 @@ import {
     SketchCoordinates,
     SketchMovingImageData,
     SketchResizingImageData,
-    CardinalDirection
+    CardinalDirection,
+    SketchEventType
 } from '../../../types';
 import {
     viewBox,
@@ -180,15 +181,44 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
         // handle mouse up or leave for images
         if (isMaster && (movingImage || resizingImage)) {
             if (movingImage) {
-                // stops movement
+                // updates images data in play context sketchData
+                const { initialX: x, initialY: y } = movingImage;
+                updateSketchImages(
+                    images,
+                    SketchEventType.imageMove,
+                    movingImage.index,
+                    {
+                        ...images[movingImage.index],
+                        x,
+                        y
+                    }
+                );
+                // stops moving
                 setMovingImage(null);
             }
             if (resizingImage) {
+                // updates images data in play context sketchData
+                const {
+                    initialX: x,
+                    initialY: y,
+                    initialWidth: width,
+                    initialHeight: height
+                } = resizingImage;
+                updateSketchImages(
+                    images,
+                    SketchEventType.imageResize,
+                    resizingImage.index,
+                    {
+                        ...images[resizingImage.index],
+                        x,
+                        y,
+                        width,
+                        height
+                    }
+                );
                 // stops resizing
                 setResizingImage(null);
             }
-            // updates images data in play context sketchData
-            updateSketchImages(images);
         }
     };
 
@@ -208,7 +238,9 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                 setMovingImage({
                     index,
                     deltaX: x - imageX,
-                    deltaY: y - imageY
+                    deltaY: y - imageY,
+                    initialX: imageX,
+                    initialY: imageY
                 });
                 setSelectedImageIndex(index);
             }
@@ -254,7 +286,8 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
 
     // handles deletion of an image
     const handleImageDelete = (index: number) => {
-        deleteSketchImage(index);
+        const imageData = images[index];
+        deleteSketchImage(index, imageData);
         setSelectedImageIndex(null);
     };
 
@@ -264,7 +297,8 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     const updateImageHeight = (index: number) => {
         const imageData = images[index];
         const imageEl = imagesRef.current[index];
-        if (imageData && imageEl) {
+        const heightAttr = imageEl?.getAttributeNS(null, 'height');
+        if (heightAttr === 'auto' && imageData && imageEl) {
             const { height } = imageEl.getBBox();
             updateSketchImage(index, {
                 ...imageData,

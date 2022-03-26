@@ -4,6 +4,7 @@ import {
     PlaySocket,
     SketchData,
     SketchEvent,
+    SketchEventType,
     SketchImageData
 } from '../../../types';
 
@@ -33,29 +34,27 @@ const useSketch = (socket: PlaySocket | null) => {
         updater: (previous: SketchData) => SketchData,
         emit: boolean = true
     ) => {
-        if (emit) {
-            const { events, ...socketData } = updater(sketchData);
-            socket?.emit('sketchUpdate', socketData);
+        if (emit && socket?.isMaster) {
+            socket?.emit('sketchUpdate', updater(sketchData));
         }
         setSketchData(updater as SetStateAction<SketchData>);
     };
 
-    const setSketchDisplay = (displayed: boolean, emit: boolean = true) => {
+    const setSketchDisplay = (displayed: boolean) => {
         updateSketch((previous) => ({
             ...previous,
             displayed
-        }), emit);
+        }));
     };
 
-    const addSketchDrawPath = (path: string, emit: boolean = true) => {
+    const addSketchDrawPath = (path: string) => {
         updateSketch((previous) => ({
             ...previous,
             paths: [...previous.paths, path],
-            events: [
-                ...previous.events,
-                SketchEvent.draw
-            ]
-        }), emit);
+            events: [...previous.events, {
+                type: SketchEventType.draw
+            }]
+        }));
     };
 
     const addSketchImage = (url: string, emit: boolean = true) => {
@@ -65,69 +64,120 @@ const useSketch = (socket: PlaySocket | null) => {
                 ...previous.images,
                 getDefaultImageData(url)
             ],
-            events: [
-                ...previous.events,
-                SketchEvent.imageAdd
-            ]
+            events: [...previous.events, {
+                type: SketchEventType.imageAdd,
+                imageIndex: previous.images.length
+            }]
         }), emit);
     };
 
     const updateSketchImage = (
         index: number,
         image: SketchImageData,
-        emit: boolean = true
+        events?: SketchEvent[]
     ) => {
         updateSketch((previous) => ({
             ...previous,
             images: previous.images.map((img, idx) => (
                 idx === index ? image : img
-            ))
-        }), emit);
+            )),
+            events: events ?? previous.events
+        }));
     };
 
-    const updateSketchImages = (images: SketchImageData[], emit: boolean = true) => {
+    const updateSketchImages = (
+        images: SketchImageData[],
+        eventType: SketchEventType,
+        imageIndex: number,
+        imageData: SketchImageData
+    ) => {
         updateSketch((previous) => ({
             ...previous,
-            images
-        }), emit);
+            images,
+            events: [...previous.events, {
+                type: eventType,
+                imageIndex,
+                imageData
+            }]
+        }));
     };
 
-    const deleteSketchImage = (index: number, emit: boolean = true) => {
+    const deleteSketchImage = (index: number, imageData: SketchImageData) => {
         updateSketch((previous) => ({
             ...previous,
             images: previous.images.filter((i, idx) => (
                 idx !== index
-            ))
-        }), emit);
+            )),
+            events: [...previous.events, {
+                type: SketchEventType.imageDelete,
+                imageIndex: index,
+                imageData
+            }]
+        }));
     };
 
-    // TODO TODO TODO
     // handle undo for image add / delete / move / resize
-    const undoSketch = (emit: boolean = true) => {
+    const undoSketch = () => {
         const lastEvent = sketchData.events.at(-1);
         if (lastEvent) {
             const pathsClone = [...sketchData.paths];
             const eventsClone = [...sketchData.events];
-            switch (lastEvent) {
-                case SketchEvent.draw:
+            eventsClone.pop();
+            switch (lastEvent.type) {
+                case SketchEventType.draw:
                     pathsClone.pop();
-                    eventsClone.pop();
                     updateSketch((previous) => ({
                         ...previous,
                         paths: pathsClone,
                         events: eventsClone
-                    }), emit);
+                    }));
+                    break;
+                case SketchEventType.imageAdd:
+                    if (typeof lastEvent.imageIndex === 'number') {
+                        updateSketch((previous) => ({
+                            ...previous,
+                            images: previous.images.filter((i, idx) => (
+                                idx !== lastEvent.imageIndex
+                            )),
+                            events: eventsClone
+                        }));
+                    }
+                    break;
+                case SketchEventType.imageMove:
+                case SketchEventType.imageResize:
+                    if (typeof lastEvent.imageIndex === 'number' && lastEvent.imageData) {
+                        updateSketchImage(
+                            lastEvent.imageIndex,
+                            lastEvent.imageData,
+                            eventsClone
+                        );
+                    }
+                    break;
+                case SketchEventType.imageDelete:
+                    if (typeof lastEvent.imageIndex === 'number' && lastEvent.imageData) {
+                        const index = lastEvent.imageIndex;
+                        const data = lastEvent.imageData;
+                        updateSketch((previous) => ({
+                            ...previous,
+                            images: [
+                                ...previous.images.slice(0, index),
+                                data,
+                                ...previous.images.slice(index)
+                            ],
+                            events: eventsClone
+                        }));
+                    }
                     break;
                 default:
             }
         }
     };
 
-    const clearSketch = (emit: boolean = true) => {
+    const clearSketch = () => {
         updateSketch((previous) => ({
             ...defaultSketchData,
             displayed: previous.displayed
-        }), emit);
+        }));
     };
 
     return {

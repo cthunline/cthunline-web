@@ -26,7 +26,8 @@ import {
     AudioData,
     Asset,
     SketchData,
-    SketchImageData
+    SketchImageData,
+    SketchEventType
 } from '../../types';
 
 interface PlayProviderProps {
@@ -47,13 +48,18 @@ interface PlayContextData {
     stopAudio: () => void;
     audioData: AudioData | null;
     sketchData: SketchData;
-    addSketchDrawPath: (path: string, emit?: boolean) => void;
+    addSketchDrawPath: (path: string) => void;
     undoSketch: (emit?: boolean) => void;
     clearSketch: (emit?: boolean) => void;
     addSketchImage: (url: string, emit?: boolean) => void;
-    updateSketchImage: (index: number, image: SketchImageData, emit?: boolean) => void;
-    updateSketchImages: (images: SketchImageData[], emit?: boolean) => void;
-    deleteSketchImage: (index: number, emit?: boolean) => void;
+    updateSketchImage: (index: number, image: SketchImageData) => void;
+    updateSketchImages: (
+        images: SketchImageData[],
+        eventType: SketchEventType,
+        imageIndex: number,
+        imageData: SketchImageData
+    ) => void;
+    deleteSketchImage: (index: number, imageData: SketchImageData) => void;
     setSketchDisplay: (value: boolean) => void;
     isFreeDrawing: boolean;
     setIsFreeDrawing: (value: boolean) => void;
@@ -166,6 +172,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         });
         sock.io.on('reconnect', () => {
             isConnecting.current = false;
+            pushLog(sock.user, sock.isMaster, 'reconnected');
         });
         sock.on('disconnect', (reason) => {
             if (reason === 'io server disconnect') {
@@ -260,8 +267,8 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             if (
                 (!socket || !socket.connected)
                 && !isConnecting.current
-                && session
                 && sessionId
+                && session
             ) {
                 isConnecting.current = true;
                 const isMaster = session.masterId === user?.id;
@@ -280,7 +287,17 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         session,
         sessionId,
         characterId,
-        connectSocket
+        connectSocket,
+        setSketchData
+    ]);
+
+    useEffect(() => {
+        if (session) {
+            setSketchData(session.sketch);
+        }
+    }, [
+        session,
+        setSketchData
     ]);
 
     useEffect(() => (
