@@ -1,10 +1,22 @@
-import React from 'react';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
+import React, { useState } from 'react';
+import {
+    Menu,
+    MenuItem,
+    Divider
+} from '@mui/material';
+import { MdMenu } from 'react-icons/md';
 
 import SvgIconButton from './SvgIconButton';
 import { CardinalDirection } from '../../../../types';
 
 import './SketchImage.css';
+
+const resizeRects: CardinalDirection[] = [
+    CardinalDirection.nw,
+    CardinalDirection.ne,
+    CardinalDirection.se,
+    CardinalDirection.sw
+];
 
 interface SketchImageProps {
     isMaster?: boolean;
@@ -24,15 +36,10 @@ interface SketchImageProps {
         direction: CardinalDirection
     ) => void;
     onLoad?: () => void;
+    onForward?: () => void;
+    onBackward?: () => void;
     onDelete?: () => void;
 }
-
-const resizeRects: CardinalDirection[] = [
-    CardinalDirection.nw,
-    CardinalDirection.ne,
-    CardinalDirection.se,
-    CardinalDirection.sw
-];
 
 const SketchImage: React.FC<SketchImageProps> = ({
     isMaster,
@@ -49,62 +56,94 @@ const SketchImage: React.FC<SketchImageProps> = ({
     onImageMouseDown,
     onResizeMouseDown,
     onLoad,
+    onForward,
+    onBackward,
     onDelete
-}) => (
-    // image container
-    <svg
-        className={
-            `sketch-image container ${
-                isMaster ? 'selectable' : ''
-            } ${
-                selected ? 'selected' : ''
-            } ${
-                moving ? 'moving' : ''
-            } ${
-                resizing ? 'resizing' : ''
-            }`
-        }
-        ref={onRef}
-        width={width.toString()}
-        height={height ? height.toString() : 'auto'}
-        x={x.toString()}
-        y={y.toString()}
-        onMouseDown={onMouseDown}
-    >
-        {/* image element */}
-        <image
-            className="sketch-image"
-            width="100%"
-            xlinkHref={url}
-            onLoad={onLoad}
-            onMouseDown={onImageMouseDown}
-        />
-        {/* resize rectangles buttons */}
-        {isMaster && selected ? (
-            resizeRects.map((direcion, index) => (
-                <rect
-                    key={`sketch-image-resize-button-${index.toString()}`}
-                    className={`sketch-image sketch-image-resizer ${direcion}`}
-                    width="20px"
-                    height="20px"
-                    x="0"
-                    y="0"
-                    onMouseDown={(e) => {
-                        onResizeMouseDown?.(e, direcion);
-                    }}
-                />
-            ))
-        ) : null}
-        {/* delete button */}
-        {isMaster ? (
-            <SvgIconButton
-                className="sketch-image-delete-button"
-                icon={<MdOutlineDeleteOutline />}
-                size={45}
-                onClick={onDelete}
+}) => {
+    const [menuAnchor, setMenuAnchor] = useState<SVGCircleElement | null>(null);
+
+    const onMenuOpen = (e: React.MouseEvent<SVGCircleElement>) => {
+        setMenuAnchor(e.currentTarget);
+    };
+
+    const onMenuClose = () => {
+        setMenuAnchor(null);
+    };
+
+    const onMenuSelect = (eventToCall?: Function) => {
+        eventToCall?.();
+        setMenuAnchor(null);
+    };
+
+    return (
+        // image container
+        <svg
+            className={
+                `sketch-image container ${
+                    isMaster ? 'selectable' : ''
+                } ${
+                    selected ? 'selected' : ''
+                } ${
+                    moving ? 'moving' : ''
+                } ${
+                    resizing ? 'resizing' : ''
+                }`
+            }
+            ref={onRef}
+            width={width.toString()}
+            height={height ? height.toString() : 'auto'}
+            x={x.toString()}
+            y={y.toString()}
+            onMouseDown={onMouseDown}
+        >
+            {/* image element */}
+            <image
+                className="sketch-image"
+                width="100%"
+                xlinkHref={url}
+                onLoad={onLoad}
+                onMouseDown={onImageMouseDown}
             />
-        ) : null}
-    </svg>
-);
+            {/* resize rectangles buttons */}
+            {isMaster && selected ? (
+                resizeRects.map((direcion, index) => (
+                    <rect
+                        key={`sketch-image-resize-button-${index.toString()}`}
+                        className={`sketch-image sketch-image-resizer ${direcion}`}
+                        width="20px"
+                        height="20px"
+                        x="0"
+                        y="0"
+                        onMouseDown={(e) => {
+                            onResizeMouseDown?.(e, direcion);
+                        }}
+                    />
+                ))
+            ) : null}
+            {/* delete button */}
+            {isMaster ? (
+                <SvgIconButton
+                    className={`sketch-image-menu-button ${menuAnchor ? 'open' : ''}`}
+                    icon={<MdMenu />}
+                    size={40}
+                    onClick={onMenuOpen}
+                />
+            ) : null}
+            {/* image context menu */}
+            <Menu anchorEl={menuAnchor} open={!!menuAnchor} onClose={onMenuClose}>
+                <MenuItem onClick={() => onMenuSelect(onForward)}>
+                    Forward
+                </MenuItem>
+                <MenuItem onClick={() => onMenuSelect(onBackward)}>
+                    Backward
+                </MenuItem>
+                <Divider />
+                <MenuItem onClick={() => onMenuSelect(onDelete)}>
+                    Delete
+                </MenuItem>
+            </Menu>
+        </svg>
+    );
+};
 
 export default SketchImage;

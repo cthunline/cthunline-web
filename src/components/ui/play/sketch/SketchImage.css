@@ -45,12 +45,12 @@
     cursor: nesw-resize;
 }
 
-.sketch-image-delete-button {
+.sketch-image-menu-button {
     cursor: pointer;
     transform: translate(calc(100% - 70px), 30px);
 }
 
-.sketch-image.container:not(.resizing):not(.selected) .sketch-image-delete-button,
-.sketch-image.container:not(.resizing):not(:hover) .sketch-image-delete-button {
+.sketch-image.container:not(.resizing):not(.selected) .sketch-image-menu-button:not(.open),
+.sketch-image.container:not(.resizing):not(:hover) .sketch-image-menu-button:not(.open) {
     display: none;
 }

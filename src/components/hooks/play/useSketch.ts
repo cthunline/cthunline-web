@@ -7,6 +7,10 @@ import {
     SketchEventType,
     SketchImageData
 } from '../../../types';
+import {
+    forwardImage,
+    backwardImage
+} from '../../../services/sketch';
 
 const defaultSketchData: SketchData = {
     displayed: false,
@@ -89,16 +93,19 @@ const useSketch = (socket: PlaySocket | null) => {
         images: SketchImageData[],
         eventType: SketchEventType,
         imageIndex: number,
-        imageData: SketchImageData
+        imageData?: SketchImageData
     ) => {
+        const event: SketchEvent = {
+            type: eventType,
+            imageIndex
+        };
+        if (imageData) {
+            event.imageData = imageData;
+        }
         updateSketch((previous) => ({
             ...previous,
             images,
-            events: [...previous.events, {
-                type: eventType,
-                imageIndex,
-                imageData
-            }]
+            events: [...previous.events, event]
         }));
     };
 
@@ -164,6 +171,26 @@ const useSketch = (socket: PlaySocket | null) => {
                                 data,
                                 ...previous.images.slice(index)
                             ],
+                            events: eventsClone
+                        }));
+                    }
+                    break;
+                case SketchEventType.imageForward:
+                    if (typeof lastEvent.imageIndex === 'number') {
+                        const index = lastEvent.imageIndex;
+                        updateSketch((previous) => ({
+                            ...previous,
+                            images: backwardImage(previous.images, index),
+                            events: eventsClone
+                        }));
+                    }
+                    break;
+                case SketchEventType.imageBackward:
+                    if (typeof lastEvent.imageIndex === 'number') {
+                        const index = lastEvent.imageIndex;
+                        updateSketch((previous) => ({
+                            ...previous,
+                            images: forwardImage(previous.images, index),
                             events: eventsClone
                         }));
                     }

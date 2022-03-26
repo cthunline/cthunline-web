@@ -168,7 +168,9 @@ export enum SketchEventType {
     imageAdd = 'imageAdd',
     imageMove = 'imageMove',
     imageResize = 'imageResize',
-    imageDelete = 'imageDelete'
+    imageDelete = 'imageDelete',
+    imageForward = 'imageForward',
+    imageBackward = 'imageBackward'
 }
 
 export interface SketchEvent {

@@ -57,7 +57,7 @@ interface PlayContextData {
         images: SketchImageData[],
         eventType: SketchEventType,
         imageIndex: number,
-        imageData: SketchImageData
+        imageData?: SketchImageData
     ) => void;
     deleteSketchImage: (index: number, imageData: SketchImageData) => void;
     setSketchDisplay: (value: boolean) => void;

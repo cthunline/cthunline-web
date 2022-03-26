@@ -1,4 +1,5 @@
 import {
+    SketchImageData,
     SketchCoordinates,
     SketchSize,
     CardinalDirection,
@@ -173,3 +174,21 @@ export const getResizingImageCoordAndPos = ({
     }
     return null;
 };
+
+// swap images in images list so the given index is increased by 1
+// used to bring image forward in the sketch image stack
+export const forwardImage = (images: SketchImageData[], index: number) => ([
+    ...images.slice(0, index),
+    images[index + 1],
+    images[index],
+    ...images.slice(index + 2)
+]);
+
+// swap images in images list so the given index is decreased by 1
+// used to send image backward in the sketch image stack
+export const backwardImage = (images: SketchImageData[], index: number) => ([
+    ...images.slice(0, index - 1),
+    images[index],
+    images[index - 1],
+    ...images.slice(index + 1)
+]);

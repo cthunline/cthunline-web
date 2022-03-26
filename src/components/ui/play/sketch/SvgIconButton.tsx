@@ -6,7 +6,7 @@ interface SvgIconButtonProps {
     icon: JSX.Element;
     size: number;
     className?: string;
-    onClick?: () => void;
+    onClick?: (e: React.MouseEvent<SVGCircleElement>) => void;
 }
 
 const SvgIconButton: React.FC<SvgIconButtonProps> = ({
@@ -31,7 +31,7 @@ const SvgIconButton: React.FC<SvgIconButtonProps> = ({
             className={`svg-icon-button ${className}`}
             width={buttonSize.toString()}
             height={buttonSize.toString()}
-            viewBox={`0 0 ${buttonSize.toString()}$ ${buttonSize.toString()}`}
+            viewBox={`0 0 ${buttonSize.toString()} ${buttonSize.toString()}`}
         >
             {iconWithProps}
             <circle
