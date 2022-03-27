@@ -90,10 +90,10 @@ const SketchImage: React.FC<SketchImageProps> = ({
                 }`
             }
             ref={onRef}
-            width={width.toString()}
-            height={height ? height.toString() : 'auto'}
-            x={x.toString()}
-            y={y.toString()}
+            width={width}
+            height={height ?? 'auto'}
+            x={x}
+            y={y}
             onMouseDown={onMouseDown}
         >
             {/* image element */}

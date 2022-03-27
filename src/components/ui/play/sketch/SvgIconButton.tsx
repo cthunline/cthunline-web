@@ -29,16 +29,16 @@ const SvgIconButton: React.FC<SvgIconButtonProps> = ({
     return (
         <svg
             className={`svg-icon-button ${className}`}
-            width={buttonSize.toString()}
-            height={buttonSize.toString()}
-            viewBox={`0 0 ${buttonSize.toString()} ${buttonSize.toString()}`}
+            width={buttonSize}
+            height={buttonSize}
+            viewBox={`0 0 ${buttonSize} ${buttonSize}`}
         >
             {iconWithProps}
             <circle
                 className="sketch-image-delete-button-circle"
-                cx={circleRadius.toString()}
-                cy={circleRadius.toString()}
-                r={circleRadius.toString()}
+                cx={circleRadius}
+                cy={circleRadius}
+                r={circleRadius}
                 onClick={onClick}
             />
         </svg>

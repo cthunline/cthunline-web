@@ -7,6 +7,7 @@ import { Box, ClickAwayListener } from '@mui/material';
 
 import { usePlay } from '../../contexts/Play';
 import SketchImage from './sketch/SketchImage';
+// import SketchToken from './sketch/SketchToken';
 import {
     SketchImageData,
     SketchCoordinates,
@@ -33,6 +34,7 @@ interface SketchProps {
 
 const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     const {
+        // users,
         isFreeDrawing,
         sketchData,
         addSketchDrawPath,
@@ -434,6 +436,13 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                             fill="none"
                         />
                     ))}
+                    {/*  */}
+                    {/* {users[0] ? (
+                        <SketchToken
+                            size={50}
+                            user={users[0]}
+                        />
+                    ) : null} */}
                 </svg>
             </ClickAwayListener>
         </Box>

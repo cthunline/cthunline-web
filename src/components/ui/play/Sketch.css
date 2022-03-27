@@ -1,5 +1,6 @@
 .sketch-container {
     height: 100%;
+    user-select: none;
     width: 100%;
 }
 

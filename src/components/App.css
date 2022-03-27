@@ -7,6 +7,14 @@
     --palette-lightgray: #888a8b;
     --palette-white: #fff;
     --palette-lightblue: #90caf9;
+    --palette-token-yellow: #ffba08;
+    --palette-token-orange: #f77f00;
+    --palette-token-red: #d00000;
+    --palette-token-blue: #00a6fb;
+    --palette-token-darkblue: #003554;
+    --palette-token-purple: #7b2cbf;
+    --palette-token-green: #2dc653;
+    --palette-token-darkgreen: #155d27;
 }
 
 /* structure */
