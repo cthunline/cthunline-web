@@ -30,3 +30,21 @@ export const pathJoin = (...parts: string[]) => (
         return part;
     }).join('/')
 );
+
+const computedStyle = window.getComputedStyle(document.body);
+export const getCssVar = (name: string) => (
+    computedStyle.getPropertyValue(name)
+);
+
+export const isClickType = (e: React.MouseEvent | MouseEvent | TouchEvent, code: number) => {
+    const eMouse = e as React.MouseEvent;
+    return Object.hasOwn(eMouse, 'button') && eMouse.button === code;
+};
+
+export const isMainClick = (e: React.MouseEvent | MouseEvent | TouchEvent) => (
+    isClickType(e, 0)
+);
+
+export const isSecondaryClick = (e: React.MouseEvent | MouseEvent | TouchEvent) => (
+    isClickType(e, 2)
+);

@@ -25,6 +25,7 @@ import {
     forwardImage,
     backwardImage
 } from '../../../services/sketch';
+import { isMainClick } from '../../../services/tools';
 
 import './Sketch.css';
 
@@ -82,36 +83,40 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     };
 
     // handles mouseDown outside of the sketch
-    const handleMouseDownAway = () => {
-        // unselect image
-        if (isMaster && selectedImageIndex !== null) {
-            setSelectedImageIndex(null);
+    const handleMouseDownAway = (e: MouseEvent | TouchEvent) => {
+        if (isMainClick(e)) {
+            // unselect image
+            if (isMaster && selectedImageIndex !== null) {
+                setSelectedImageIndex(null);
+            }
         }
     };
 
     // handles mouseDown on the main svg container element
     const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
-        const target = e.target as SVGSVGElement;
-        // handles mouse down for drawing
-        if (isMaster && isFreeDrawing && !isDrawing) {
-            e.preventDefault();
-            // initializes coordinates list for the new drawing path
-            coordinates.current = [];
-            // set fresh value for the new path in paths state
-            setPaths((previous) => (
-                [...previous, '']
-            ));
-            // set isDrawing state
-            setIsDrawing(true);
-        } else if ( // handles outside click to deselect image
-            isMaster
-            && selectedImageIndex !== null
-            && !target.classList.contains('sketch-image')
-        ) {
-            const selectedImage = imagesRef.current[selectedImageIndex];
-            if (selectedImage && !selectedImage.contains(e.target as Node)) {
-                // unselect image
-                setSelectedImageIndex(null);
+        if (isMainClick(e)) {
+            const target = e.target as SVGSVGElement;
+            // handles mouse down for drawing
+            if (isMaster && isFreeDrawing && !isDrawing) {
+                e.preventDefault();
+                // initializes coordinates list for the new drawing path
+                coordinates.current = [];
+                // set fresh value for the new path in paths state
+                setPaths((previous) => (
+                    [...previous, '']
+                ));
+                // set isDrawing state
+                setIsDrawing(true);
+            } else if ( // handles outside click to deselect image
+                isMaster
+                && selectedImageIndex !== null
+                && !target.classList.contains('sketch-image')
+            ) {
+                const selectedImage = imagesRef.current[selectedImageIndex];
+                if (selectedImage && !selectedImage.contains(e.target as Node)) {
+                    // unselect image
+                    setSelectedImageIndex(null);
+                }
             }
         }
     };
@@ -248,26 +253,28 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
 
     // handle mouseDown on images
     const handleImageMouseDown = (e: React.MouseEvent<SVGImageElement>, index: number) => {
-        if (isMaster && !isFreeDrawing && svgPoint) {
-            e.preventDefault();
-            const imageData = images[index];
-            const imageEl = imagesRef.current[index];
-            if (imageData && imageEl) {
-                imageHasMovedOfResized.current = false;
-                // gets image position
-                const { x: imageX, y: imageY } = imageData;
-                // get svg-transformed mouse coordinates
-                const { x, y } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
-                // set moving image data in state
-                // with delta to keep mouse where it was in the image when moving started
-                setMovingImage({
-                    index,
-                    deltaX: x - imageX,
-                    deltaY: y - imageY,
-                    initialX: imageX,
-                    initialY: imageY
-                });
-                setSelectedImageIndex(index);
+        if (isMainClick(e)) {
+            if (isMaster && !isFreeDrawing && svgPoint) {
+                e.preventDefault();
+                const imageData = images[index];
+                const imageEl = imagesRef.current[index];
+                if (imageData && imageEl) {
+                    imageHasMovedOfResized.current = false;
+                    // gets image position
+                    const { x: imageX, y: imageY } = imageData;
+                    // get svg-transformed mouse coordinates
+                    const { x, y } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
+                    // set moving image data in state
+                    // with delta to keep mouse where it was in the image when moving started
+                    setMovingImage({
+                        index,
+                        deltaX: x - imageX,
+                        deltaY: y - imageY,
+                        initialX: imageX,
+                        initialY: imageY
+                    });
+                    setSelectedImageIndex(index);
+                }
             }
         }
     };
@@ -278,34 +285,36 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
         index: number,
         direction: CardinalDirection
     ) => {
-        if (isMaster && !isFreeDrawing && svgPoint) {
-            const imageData = images[index];
-            const imageEl = imagesRef.current[index];
-            if (imageData && imageEl) {
-                imageHasMovedOfResized.current = false;
-                // gets image position
-                const { x: initialX, y: initialY } = imageData;
-                // gets image size
-                const {
-                    width: initialWidth,
-                    height: initialHeight
-                } = imageEl.getBBox();
-                // gets svg-transformed mouse coordinates
-                const {
-                    x: initialMouseX,
-                    y: initialMouseY
-                } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
-                // set resizing image data in state
-                setResizingImage({
-                    index,
-                    direction,
-                    initialX,
-                    initialY,
-                    initialWidth,
-                    initialHeight,
-                    initialMouseX,
-                    initialMouseY
-                });
+        if (isMainClick(e)) {
+            if (isMaster && !isFreeDrawing && svgPoint) {
+                const imageData = images[index];
+                const imageEl = imagesRef.current[index];
+                if (imageData && imageEl) {
+                    imageHasMovedOfResized.current = false;
+                    // gets image position
+                    const { x: initialX, y: initialY } = imageData;
+                    // gets image size
+                    const {
+                        width: initialWidth,
+                        height: initialHeight
+                    } = imageEl.getBBox();
+                    // gets svg-transformed mouse coordinates
+                    const {
+                        x: initialMouseX,
+                        y: initialMouseY
+                    } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
+                    // set resizing image data in state
+                    setResizingImage({
+                        index,
+                        direction,
+                        initialX,
+                        initialY,
+                        initialWidth,
+                        initialHeight,
+                        initialMouseX,
+                        initialMouseY
+                    });
+                }
             }
         }
     };
@@ -355,6 +364,12 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
         }
     };
 
+    // handles context menu on main sketch container
+    const handleContextMenu = (e: React.MouseEvent) => {
+        // disables context menu on sketch
+        e.preventDefault();
+    };
+
     useEffect(() => {
         // initializes svg DOMPoint in state when reference to svg container is set
         setSvgPoint(svgRef.current.createSVGPoint());
@@ -386,6 +401,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                     onMouseMove={handleMouseMove}
                     onMouseUp={handleMouseUpOrLeave}
                     onMouseLeave={handleMouseUpOrLeave}
+                    onContextMenu={handleContextMenu}
                 >
                     {/* sketch images */}
                     {images.map(({

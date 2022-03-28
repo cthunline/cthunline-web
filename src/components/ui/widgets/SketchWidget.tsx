@@ -10,10 +10,12 @@ import {
     Typography,
     Tooltip
 } from '@mui/material';
-import { GiToken } from 'react-icons/gi';
 import { HiPlus } from 'react-icons/hi';
 import { GoPencil } from 'react-icons/go';
 import { MdOutlineDeleteOutline, MdUndo } from 'react-icons/md';
+import { BsEraserFill } from 'react-icons/bs';
+import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
+import { IoPeopleCircle } from 'react-icons/io5';
 
 import Api from '../../../services/api';
 import Widget from '../play/Widget';
@@ -60,8 +62,20 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
         icon: <GoPencil size={25} className={isFreeDrawing ? '' : 'opacity-half'} />,
         handler: toogleIsFreeDrawing
     }, {
-        text: 'Player tokens',
-        icon: <GiToken size={30} className="opacity-half" />,
+        text: 'Erase drawings',
+        icon: <BsEraserFill size={25} />,
+        handler: () => {}
+    }, {
+        text: 'Add token',
+        icon: <IoMdAddCircle size={30} />,
+        handler: () => {}
+    }, {
+        text: 'Spawn player tokens',
+        icon: <IoPeopleCircle size={30} />,
+        handler: () => {}
+    }, {
+        text: 'Remove tokens',
+        icon: <IoMdCloseCircle size={30} />,
         handler: () => {}
     }, {
         text: 'Undo',

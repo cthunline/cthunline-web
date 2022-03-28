@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
-import {
-    Menu,
-    MenuItem,
-    Divider
-} from '@mui/material';
-import { MdMenu } from 'react-icons/md';
 
-import SvgIconButton from './SvgIconButton';
 import { CardinalDirection } from '../../../../types';
+import SketchImageContextMenu from './SketchImageContextMenu';
 
 import './SketchImage.css';
 
@@ -17,6 +11,11 @@ const resizeRects: CardinalDirection[] = [
     CardinalDirection.se,
     CardinalDirection.sw
 ];
+
+interface ContextMenuData {
+    left: number;
+    top: number;
+}
 
 interface SketchImageProps {
     isMaster?: boolean;
@@ -60,19 +59,34 @@ const SketchImage: React.FC<SketchImageProps> = ({
     onBackward,
     onDelete
 }) => {
-    const [menuAnchor, setMenuAnchor] = useState<SVGCircleElement | null>(null);
+    const [contextMenu, setContextMenu] = useState<ContextMenuData | null>(null);
 
-    const onMenuOpen = (e: React.MouseEvent<SVGCircleElement>) => {
-        setMenuAnchor(e.currentTarget);
+    const onContextMenuOpen = (e: React.MouseEvent) => {
+        e.preventDefault();
+        setContextMenu(contextMenu ? null : {
+            left: e.clientX,
+            top: e.clientY
+        });
     };
 
-    const onMenuClose = () => {
-        setMenuAnchor(null);
+    const onContextMenuClose = () => {
+        setContextMenu(null);
     };
 
-    const onMenuSelect = (eventToCall?: Function) => {
-        eventToCall?.();
-        setMenuAnchor(null);
+    const onContextMenuSelect = (action: string) => {
+        switch (action) {
+            case 'onForward':
+                onForward?.();
+                break;
+            case 'onBackward':
+                onBackward?.();
+                break;
+            case 'onDelete':
+                onDelete?.();
+                break;
+            default:
+        }
+        setContextMenu(null);
     };
 
     return (
@@ -95,6 +109,7 @@ const SketchImage: React.FC<SketchImageProps> = ({
             x={x}
             y={y}
             onMouseDown={onMouseDown}
+            onContextMenu={onContextMenuOpen}
         >
             {/* image element */}
             <image
@@ -106,42 +121,26 @@ const SketchImage: React.FC<SketchImageProps> = ({
             />
             {/* resize rectangles buttons */}
             {isMaster && selected ? (
-                resizeRects.map((direcion, index) => (
+                resizeRects.map((direction, index) => (
                     <rect
                         key={`sketch-image-resize-button-${index.toString()}`}
-                        className={`sketch-image sketch-image-resizer ${direcion}`}
+                        className={`sketch-image sketch-image-resizer ${direction}`}
                         width="20px"
                         height="20px"
                         x="0"
                         y="0"
                         onMouseDown={(e) => {
-                            onResizeMouseDown?.(e, direcion);
+                            onResizeMouseDown?.(e, direction);
                         }}
                     />
                 ))
             ) : null}
-            {/* delete button */}
-            {isMaster ? (
-                <SvgIconButton
-                    className={`sketch-image-menu-button ${menuAnchor ? 'open' : ''}`}
-                    icon={<MdMenu />}
-                    size={40}
-                    onClick={onMenuOpen}
-                />
-            ) : null}
-            {/* image context menu */}
-            <Menu anchorEl={menuAnchor} open={!!menuAnchor} onClose={onMenuClose}>
-                <MenuItem onClick={() => onMenuSelect(onForward)}>
-                    Forward
-                </MenuItem>
-                <MenuItem onClick={() => onMenuSelect(onBackward)}>
-                    Backward
-                </MenuItem>
-                <Divider />
-                <MenuItem onClick={() => onMenuSelect(onDelete)}>
-                    Delete
-                </MenuItem>
-            </Menu>
+            <SketchImageContextMenu
+                open={!!contextMenu}
+                position={contextMenu ?? undefined}
+                onSelect={onContextMenuSelect}
+                onClose={onContextMenuClose}
+            />
         </svg>
     );
 };
