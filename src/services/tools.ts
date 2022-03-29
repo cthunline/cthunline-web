@@ -38,7 +38,7 @@ export const getCssVar = (name: string) => (
 
 export const isClickType = (e: React.MouseEvent | MouseEvent | TouchEvent, code: number) => {
     const eMouse = e as React.MouseEvent;
-    return Object.hasOwn(eMouse, 'button') && eMouse.button === code;
+    return typeof eMouse.button === 'number' && eMouse.button === code;
 };
 
 export const isMainClick = (e: React.MouseEvent | MouseEvent | TouchEvent) => (

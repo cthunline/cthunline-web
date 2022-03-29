@@ -28,8 +28,7 @@ interface SketchImageProps {
     moving?: boolean;
     resizing?: boolean;
     onRef?: (el: SVGSVGElement | null) => void;
-    onMouseDown?: (e: React.MouseEvent<SVGSVGElement>) => void;
-    onImageMouseDown?: (e: React.MouseEvent<SVGImageElement>) => void;
+    onMouseDown?: (e: React.MouseEvent<SVGImageElement>) => void;
     onResizeMouseDown?: (
         e: React.MouseEvent<SVGRectElement>,
         direction: CardinalDirection
@@ -52,7 +51,6 @@ const SketchImage: React.FC<SketchImageProps> = ({
     resizing,
     onRef,
     onMouseDown,
-    onImageMouseDown,
     onResizeMouseDown,
     onLoad,
     onForward,
@@ -108,7 +106,6 @@ const SketchImage: React.FC<SketchImageProps> = ({
             height={height ?? 'auto'}
             x={x}
             y={y}
-            onMouseDown={onMouseDown}
             onContextMenu={onContextMenuOpen}
         >
             {/* image element */}
@@ -117,7 +114,7 @@ const SketchImage: React.FC<SketchImageProps> = ({
                 width="100%"
                 xlinkHref={url}
                 onLoad={onLoad}
-                onMouseDown={onImageMouseDown}
+                onMouseDown={onMouseDown}
             />
             {/* resize rectangles buttons */}
             {isMaster && selected ? (

@@ -49,34 +49,34 @@ export const getMouseEventSvgCoordinates = (
     return { x, y };
 };
 
-interface GetMovingImageCoordinatesOptions {
+interface GetMovingItemCoordinatesOptions {
     event: React.MouseEvent<SVGSVGElement>;
     svgContainer: SVGSVGElement;
     svgPoint: DOMPoint;
-    image: SVGSVGElement;
+    item: SVGSVGElement;
     deltaX: number;
     deltaY: number;
 }
 
-// gets new coordinates for moving image
-export const getMovingImageCoordinates = ({
+// gets new coordinates for moving item (image or token)
+export const getMovingItemCoordinates = ({
     event,
     svgContainer,
     svgPoint,
-    image,
+    item,
     deltaX,
     deltaY
-}: GetMovingImageCoordinatesOptions): SketchCoordinates | null => {
-    // current size of the image
-    const { width, height } = image.getBBox();
+}: GetMovingItemCoordinatesOptions): SketchCoordinates | null => {
+    // current size of the item
+    const { width, height } = item.getBBox();
     // get svg-transformed mouse coordinates
     const { x, y } = getMouseEventSvgCoordinates(event, svgContainer, svgPoint);
-    // get new image position
+    // get new item position
     // delta values are subtracted so we keep the mouse pointer
-    // where it was in the image at the beginning of the movement
+    // where it was in the item at the beginning of the movement
     const newX = x - deltaX;
     const newY = y - deltaY;
-    // controls image does not move outside the svg container
+    // controls item does not move outside the svg container
     if (
         newX >= 0 && newX + width <= viewBox.width
         && newY >= 0 && newY + height <= viewBox.height

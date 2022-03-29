@@ -46,7 +46,10 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
         setSketchDisplay,
         undoSketch,
         clearSketch,
-        addSketchImage
+        addSketchImage,
+        clearDrawings,
+        addSketchToken,
+        clearTokens
     } = usePlay();
     const { assetList } = useAsset({
         loadList: true,
@@ -64,11 +67,11 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
     }, {
         text: 'Erase drawings',
         icon: <BsEraserFill size={25} />,
-        handler: () => {}
+        handler: clearDrawings
     }, {
         text: 'Add token',
         icon: <IoMdAddCircle size={30} />,
-        handler: () => {}
+        handler: addSketchToken
     }, {
         text: 'Spawn player tokens',
         icon: <IoPeopleCircle size={30} />,
@@ -76,7 +79,9 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
     }, {
         text: 'Remove tokens',
         icon: <IoMdCloseCircle size={30} />,
-        handler: () => {}
+        handler: () => {
+            confirmDialog('Clear the tokens ?', clearTokens);
+        }
     }, {
         text: 'Undo',
         icon: <MdUndo size={30} className={sketchData.events.length ? '' : 'opacity-half'} />,

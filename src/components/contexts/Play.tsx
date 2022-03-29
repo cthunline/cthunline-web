@@ -27,7 +27,8 @@ import {
     Asset,
     SketchData,
     SketchImageData,
-    SketchEventType
+    SketchEventType,
+    SketchTokenData
 } from '../../types';
 
 interface PlayProviderProps {
@@ -49,8 +50,9 @@ interface PlayContextData {
     audioData: AudioData | null;
     sketchData: SketchData;
     addSketchDrawPath: (path: string) => void;
-    undoSketch: (emit?: boolean) => void;
-    clearSketch: (emit?: boolean) => void;
+    clearDrawings: () => void;
+    undoSketch: () => void;
+    clearSketch: () => void;
     addSketchImage: (url: string, emit?: boolean) => void;
     updateSketchImage: (index: number, image: SketchImageData) => void;
     updateSketchImages: (
@@ -60,6 +62,14 @@ interface PlayContextData {
         imageData?: SketchImageData
     ) => void;
     deleteSketchImage: (index: number, imageData: SketchImageData) => void;
+    addSketchToken: () => void;
+    updateSketchTokens: (
+        tokens: SketchTokenData[],
+        eventType: SketchEventType,
+        tokenIndex: number,
+        tokenData?: SketchTokenData
+    ) => void;
+    clearTokens: () => void;
     setSketchDisplay: (value: boolean) => void;
     isFreeDrawing: boolean;
     setIsFreeDrawing: (value: boolean) => void;
@@ -79,15 +89,20 @@ const defaultPlayData: PlayContextData = {
         displayed: false,
         paths: [],
         images: [],
+        tokens: [],
         events: []
     },
     addSketchDrawPath: () => {},
+    clearDrawings: () => {},
     undoSketch: () => {},
     clearSketch: () => {},
     addSketchImage: () => {},
     updateSketchImage: () => {},
     updateSketchImages: () => {},
     deleteSketchImage: () => {},
+    addSketchToken: () => {},
+    updateSketchTokens: () => {},
+    clearTokens: () => {},
     setSketchDisplay: () => {},
     isFreeDrawing: false,
     setIsFreeDrawing: () => {}
@@ -143,10 +158,14 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         isFreeDrawing,
         setIsFreeDrawing,
         addSketchDrawPath,
+        clearDrawings,
         addSketchImage,
         updateSketchImage,
         updateSketchImages,
         deleteSketchImage,
+        addSketchToken,
+        updateSketchTokens,
+        clearTokens,
         undoSketch,
         clearSketch
     } = useSketch(socket);
@@ -319,12 +338,16 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         audioData,
         sketchData,
         addSketchDrawPath,
+        clearDrawings,
         undoSketch,
         clearSketch,
         addSketchImage,
         updateSketchImage,
         updateSketchImages,
         deleteSketchImage,
+        addSketchToken,
+        updateSketchTokens,
+        clearTokens,
         setSketchDisplay,
         isFreeDrawing,
         setIsFreeDrawing
@@ -344,9 +367,13 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         undoSketch,
         clearSketch,
         addSketchImage,
+        clearDrawings,
         updateSketchImage,
         updateSketchImages,
         deleteSketchImage,
+        addSketchToken,
+        updateSketchTokens,
+        clearTokens,
         setSketchDisplay,
         isFreeDrawing,
         setIsFreeDrawing

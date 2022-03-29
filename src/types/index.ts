@@ -26,6 +26,12 @@ export interface UserEditBody extends Partial<UserCreateBody> {
     isEnabled?: boolean;
 }
 
+export interface SessionUser extends User {
+    character: Character;
+    isMaster: boolean;
+    socketId: string;
+}
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ asset
 
 export interface Asset {
@@ -95,12 +101,6 @@ export interface PlaySocket extends Socket {
     characterId?: string;
 }
 
-export interface SessionUser extends User {
-    character: Character;
-    isMaster: boolean;
-    socketId: string;
-}
-
 export interface PlayLog {
     date: Date;
     text: string;
@@ -133,6 +133,7 @@ export interface SketchData {
     displayed: boolean;
     paths: string[];
     images: SketchImageData[];
+    tokens: SketchTokenData[];
     events: SketchEvent[];
 }
 
@@ -144,7 +145,13 @@ export interface SketchImageData {
     y: number;
 }
 
-export interface SketchMovingImageData {
+export enum SketchItemType {
+    image = 'image',
+    token = 'token'
+}
+
+export interface SketchMovingItemData {
+    type: SketchItemType;
     index: number;
     deltaX: number;
     deltaY: number;
@@ -163,6 +170,30 @@ export interface SketchResizingImageData {
     initialMouseY: number;
 }
 
+export interface SketchTokenData {
+    color: SketchTokenColor;
+    user: { id: string, name: string } | null;
+    x: number;
+    y: number;
+}
+
+export type SketchTokenUser = Pick<User, 'id' | 'name'>;
+
+export enum SketchTokenColor {
+    yellow = 'yellow',
+    orange = 'orange',
+    red = 'red',
+    blue = 'blue',
+    darkblue = 'darkblue',
+    purple = 'purple',
+    green = 'green',
+    darkgreen = 'darkgreen',
+    brown = 'brown',
+    turquoise = 'turquoise',
+    gray = 'gray',
+    darkgray = 'darkgray'
+}
+
 export enum SketchEventType {
     draw = 'draw',
     imageAdd = 'imageAdd',
@@ -170,16 +201,23 @@ export enum SketchEventType {
     imageResize = 'imageResize',
     imageDelete = 'imageDelete',
     imageForward = 'imageForward',
-    imageBackward = 'imageBackward'
+    imageBackward = 'imageBackward',
+    tokenAdd = 'tokenAdd',
+    tokenMove = 'tokenMove',
+    tokenDelete = 'tokenDelete'
 }
 
 export interface SketchEvent {
     // type of event
     type: SketchEventType;
-    // index of event concerned by the event
+    // index of image concerned by the event
     imageIndex?: number;
     // image data to restore if event is undone
     imageData?: SketchImageData;
+    // index of token concerned by the event
+    tokenIndex?: number;
+    // token data to restore if event is undone
+    tokenData?: SketchTokenData;
 }
 
 export interface SketchCoordinates {

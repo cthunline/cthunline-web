@@ -1,20 +1,28 @@
 import React from 'react';
 
-import { SessionUser } from '../../../../types';
+import { SketchTokenColor, SketchTokenUser } from '../../../../types';
 
 import './SketchToken.css';
 
 interface SketchTokenProps {
     size: number;
-    user: SessionUser;
+    color: SketchTokenColor;
+    user: SketchTokenUser | null;
+    x: number;
+    y: number;
     className?: string;
+    onRef?: (el: SVGSVGElement | null) => void;
     onMouseDown?: (e: React.MouseEvent<SVGCircleElement>) => void;
 }
 
 const SketchToken: React.FC<SketchTokenProps> = ({
     size,
+    color,
     user,
+    x,
+    y,
     className,
+    onRef,
     onMouseDown
 }) => {
     const tokenPadding = size / 15;
@@ -25,14 +33,19 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     const textX = '50%';
     const textY = fontSize + tokenPadding;
 
-    const userLetter = user.name.charAt(0).toLocaleUpperCase();
+    const userLetter = user ? (
+        user.name.charAt(0).toLocaleUpperCase()
+    ) : null;
 
     return (
         <svg
+            ref={onRef}
             className={`sketch-token ${className}`}
+            viewBox={`0 0 ${tokenSize} ${tokenSize}`}
             width={tokenSize}
             height={tokenSize}
-            viewBox={`0 0 ${tokenSize} ${tokenSize}`}
+            x={x}
+            y={y}
         >
             <circle
                 className="sketch-token-circle"
@@ -41,6 +54,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                 r={circleRadius}
                 stroke="red"
                 strokeWidth={circleStrokeSize}
+                fill={`var(--palette-token-${color})`}
                 onMouseDown={onMouseDown}
             />
             <text

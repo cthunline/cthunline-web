@@ -5,17 +5,22 @@ import {
     SketchData,
     SketchEvent,
     SketchEventType,
-    SketchImageData
+    SketchImageData,
+    SketchTokenData,
+    SketchTokenColor
 } from '../../../types';
 import {
     forwardImage,
     backwardImage
 } from '../../../services/sketch';
 
+type SketchColorUses = Record<SketchTokenColor, number>;
+
 const defaultSketchData: SketchData = {
     displayed: false,
     paths: [],
     images: [],
+    tokens: [],
     events: []
 };
 
@@ -25,6 +30,12 @@ const defaultImageData: Omit<SketchImageData, 'url'> = {
     y: 100
 };
 
+const defaultTokenData: Omit<SketchTokenData, 'color'> = {
+    user: null,
+    x: 50,
+    y: 50
+};
+
 const useSketch = (socket: PlaySocket | null) => {
     const [sketchData, setSketchData] = useState<SketchData>(defaultSketchData);
     const [isFreeDrawing, setIsFreeDrawing] = useState<boolean>(false);
@@ -32,6 +43,31 @@ const useSketch = (socket: PlaySocket | null) => {
     const getDefaultImageData = (url: string): SketchImageData => ({
         url,
         ...defaultImageData
+    });
+
+    const getNewTokenColor = (currentTokens: SketchTokenData[]): SketchTokenColor => {
+        const colorUses = Object.fromEntries(
+            Object.values(SketchTokenColor).map((color) => [color, 0])
+        ) as SketchColorUses;
+        currentTokens.map(({ color }) => color).forEach((color) => {
+            colorUses[color] += 1;
+        });
+        const minUsesCount = Math.min(...Object.values(colorUses));
+        const filteredColors: Partial<SketchColorUses> = Object.fromEntries(
+            Object.entries(colorUses).filter(([, usesCount]) => (
+                usesCount === minUsesCount
+            ))
+        );
+        const pickedColor: SketchTokenColor = (
+            (Object.keys(filteredColors) as SketchTokenColor[]).shift()
+            ?? Object.values(SketchTokenColor)[0]
+        );
+        return pickedColor;
+    };
+
+    const getDefaultTokenData = (currentTokens: SketchTokenData[]): SketchTokenData => ({
+        color: getNewTokenColor(currentTokens),
+        ...defaultTokenData
     });
 
     const updateSketch = (
@@ -58,6 +94,16 @@ const useSketch = (socket: PlaySocket | null) => {
             events: [...previous.events, {
                 type: SketchEventType.draw
             }]
+        }));
+    };
+
+    const clearDrawings = () => {
+        updateSketch((previous) => ({
+            ...previous,
+            paths: [],
+            events: previous.events.filter(({ type }) => (
+                type !== SketchEventType.draw
+            ))
         }));
     };
 
@@ -120,6 +166,64 @@ const useSketch = (socket: PlaySocket | null) => {
                 imageIndex: index,
                 imageData
             }]
+        }));
+    };
+
+    const addSketchToken = (emit: boolean = true) => {
+        updateSketch((previous) => ({
+            ...previous,
+            tokens: [
+                ...previous.tokens,
+                getDefaultTokenData(previous.tokens)
+            ],
+            events: [...previous.events, {
+                type: SketchEventType.tokenAdd,
+                tokenIndex: previous.tokens.length
+            }]
+        }), emit);
+    };
+
+    const updateSketchToken = (
+        index: number,
+        token: SketchTokenData,
+        events?: SketchEvent[]
+    ) => {
+        updateSketch((previous) => ({
+            ...previous,
+            tokens: previous.tokens.map((tok, idx) => (
+                idx === index ? token : tok
+            )),
+            events: events ?? previous.events
+        }));
+    };
+
+    const updateSketchTokens = (
+        tokens: SketchTokenData[],
+        eventType: SketchEventType,
+        tokenIndex: number,
+        tokenData?: SketchTokenData
+    ) => {
+        const event: SketchEvent = {
+            type: eventType,
+            tokenIndex
+        };
+        if (tokenData) {
+            event.tokenData = tokenData;
+        }
+        updateSketch((previous) => ({
+            ...previous,
+            tokens,
+            events: [...previous.events, event]
+        }));
+    };
+
+    const clearTokens = () => {
+        updateSketch((previous) => ({
+            ...previous,
+            tokens: [],
+            events: previous.events.filter(({ type }) => (
+                !type.startsWith('token')
+            ))
         }));
     };
 
@@ -195,6 +299,41 @@ const useSketch = (socket: PlaySocket | null) => {
                         }));
                     }
                     break;
+                case SketchEventType.tokenAdd:
+                    if (typeof lastEvent.tokenIndex === 'number') {
+                        updateSketch((previous) => ({
+                            ...previous,
+                            tokens: previous.tokens.filter((i, idx) => (
+                                idx !== lastEvent.tokenIndex
+                            )),
+                            events: eventsClone
+                        }));
+                    }
+                    break;
+                case SketchEventType.tokenMove:
+                    if (typeof lastEvent.tokenIndex === 'number' && lastEvent.tokenData) {
+                        updateSketchToken(
+                            lastEvent.tokenIndex,
+                            lastEvent.tokenData,
+                            eventsClone
+                        );
+                    }
+                    break;
+                case SketchEventType.tokenDelete:
+                    if (typeof lastEvent.tokenIndex === 'number' && lastEvent.tokenData) {
+                        const index = lastEvent.tokenIndex;
+                        const data = lastEvent.tokenData;
+                        updateSketch((previous) => ({
+                            ...previous,
+                            tokens: [
+                                ...previous.tokens.slice(0, index),
+                                data,
+                                ...previous.tokens.slice(index)
+                            ],
+                            events: eventsClone
+                        }));
+                    }
+                    break;
                 default:
             }
         }
@@ -214,10 +353,14 @@ const useSketch = (socket: PlaySocket | null) => {
         isFreeDrawing,
         setIsFreeDrawing,
         addSketchDrawPath,
+        clearDrawings,
         addSketchImage,
         updateSketchImage,
         updateSketchImages,
         deleteSketchImage,
+        addSketchToken,
+        updateSketchTokens,
+        clearTokens,
         undoSketch,
         clearSketch
     };
