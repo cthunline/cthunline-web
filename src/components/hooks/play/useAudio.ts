@@ -6,6 +6,18 @@ import {
     Asset
 } from '../../../types';
 
+export interface AudioHookExport {
+    audioData: AudioData | null;
+    playAudio: (asset: Asset, time: number) => void;
+    stopAudio: () => void;
+}
+
+export const defaultAudioHookExport: AudioHookExport = {
+    audioData: null,
+    playAudio: () => {},
+    stopAudio: () => {}
+};
+
 const useAudio = (socket: PlaySocket | null) => {
     const [audioData, setAudioData] = useState<AudioData | null>(null);
 

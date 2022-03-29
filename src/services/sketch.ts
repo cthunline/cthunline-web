@@ -3,7 +3,7 @@ import {
     SketchCoordinates,
     SketchSize,
     CardinalDirection,
-    SketchResizingImageData
+    SketchResizingItemData
 } from '../types';
 
 // main svg container viewbox size
@@ -53,7 +53,7 @@ interface GetMovingItemCoordinatesOptions {
     event: React.MouseEvent<SVGSVGElement>;
     svgContainer: SVGSVGElement;
     svgPoint: DOMPoint;
-    item: SVGSVGElement;
+    itemElement: SVGSVGElement;
     deltaX: number;
     deltaY: number;
 }
@@ -63,12 +63,12 @@ export const getMovingItemCoordinates = ({
     event,
     svgContainer,
     svgPoint,
-    item,
+    itemElement,
     deltaX,
     deltaY
 }: GetMovingItemCoordinatesOptions): SketchCoordinates | null => {
     // current size of the item
-    const { width, height } = item.getBBox();
+    const { width, height } = itemElement.getBBox();
     // get svg-transformed mouse coordinates
     const { x, y } = getMouseEventSvgCoordinates(event, svgContainer, svgPoint);
     // get new item position
@@ -86,24 +86,24 @@ export const getMovingItemCoordinates = ({
     return null;
 };
 
-interface GetResizingImageCoordAndPosOptions {
+interface GetResizingItemCoordAndPosOptions {
     event: React.MouseEvent<SVGSVGElement>;
     svgContainer: SVGSVGElement;
     svgPoint: DOMPoint;
-    resizingImageData: SketchResizingImageData;
+    resizingItemData: SketchResizingItemData;
 }
 
-type GetResizingImageCoordAndPosResult = (
+type GetResizingItemCoordAndPosResult = (
     SketchSize & Partial<SketchCoordinates> | null
 );
 
-// gets new coordinates and position for resizing image
-export const getResizingImageCoordAndPos = ({
+// gets new coordinates and position for resizing item
+export const getResizingItemCoordAndPos = ({
     event,
     svgContainer,
     svgPoint,
-    resizingImageData
-}: GetResizingImageCoordAndPosOptions): GetResizingImageCoordAndPosResult => {
+    resizingItemData
+}: GetResizingItemCoordAndPosOptions): GetResizingItemCoordAndPosResult => {
     const {
         direction,
         initialX,
@@ -112,20 +112,20 @@ export const getResizingImageCoordAndPos = ({
         initialHeight,
         initialMouseX,
         initialMouseY
-    } = resizingImageData;
+    } = resizingItemData;
     // get svg-transformed mouse coordinates
     const { x, y } = getMouseEventSvgCoordinates(event, svgContainer, svgPoint);
     // difference between the current mouse position and initial mouse position
     const mouseDiffX = x - initialMouseX;
     const mouseDiffY = y - initialMouseY;
-    // ratio between image width and height
+    // ratio between item width and height
     const sizeRatio = initialWidth / initialHeight;
-    // if image X position should be moving while resizing (NW and SW resize buttons)
+    // if item X position should be moving while resizing (NW and SW resize buttons)
     const movingX = (
         direction === CardinalDirection.nw
         || direction === CardinalDirection.sw
     );
-    // if image Y position should be moving while resizing (NW and NE resize buttons)
+    // if item Y position should be moving while resizing (NW and NE resize buttons)
     const movingY = (
         direction === CardinalDirection.nw
         || direction === CardinalDirection.ne
@@ -134,7 +134,7 @@ export const getResizingImageCoordAndPos = ({
     let newHeight;
     let newX = initialX;
     let newY = initialY;
-    // calculates new image size
+    // calculates new item size
     if (mouseDiffX > mouseDiffY) {
         newWidth = initialWidth + (mouseDiffX * (movingX ? -1 : 1));
         newHeight = newWidth / sizeRatio;
@@ -142,14 +142,14 @@ export const getResizingImageCoordAndPos = ({
         newHeight = initialHeight + mouseDiffY * (movingY ? -1 : 1);
         newWidth = newHeight * sizeRatio;
     }
-    // calculates image movement if needed
+    // calculates item movement if needed
     if (movingX) {
         newX = initialX - (newWidth - initialWidth);
     }
     if (movingY) {
         newY = initialY - (newHeight - initialHeight);
     }
-    // controls if image does not move outside the svg container
+    // controls if item does not move outside the svg container
     const controlPositionX = initialX + newWidth;
     const controlPositionY = initialY + newHeight;
     if (
@@ -160,7 +160,7 @@ export const getResizingImageCoordAndPos = ({
         && controlPositionX <= viewBox.width
         && controlPositionY <= viewBox.height
     ) {
-        const data: GetResizingImageCoordAndPosResult = {
+        const data: GetResizingItemCoordAndPosResult = {
             width: newWidth,
             height: newHeight
         };

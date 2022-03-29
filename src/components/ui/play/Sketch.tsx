@@ -12,7 +12,7 @@ import {
     SketchImageData,
     SketchCoordinates,
     SketchMovingItemData,
-    SketchResizingImageData,
+    SketchResizingItemData,
     CardinalDirection,
     SketchEventType,
     SketchTokenData,
@@ -23,7 +23,7 @@ import {
     coordinatesToPath,
     getMouseEventSvgCoordinates,
     getMovingItemCoordinates,
-    getResizingImageCoordAndPos,
+    getResizingItemCoordAndPos,
     forwardImage,
     backwardImage
 } from '../../../services/sketch';
@@ -52,14 +52,13 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     const [images, setImages] = useState<SketchImageData[]>([]);
     // list of tokens in the sketch
     const [tokens, setTokens] = useState<SketchTokenData[]>([]);
-    // current selected image index (index is reffering to the imagesRef array below)
+    // current selected image index
     const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
     // data of item (image or token) currently being moved
     // (index property is reffering to the imagesRef array below)
     const [movingItem, setMovingItem] = useState<SketchMovingItemData | null>(null);
-    // data of image currently being resized
-    // (index property is reffering to the imagesRef array below)
-    const [resizingImage, setResizingImage] = useState<SketchResizingImageData | null>(null);
+    // data of item (image or token) currently being resized
+    const [resizingItem, setResizingItem] = useState<SketchResizingItemData | null>(null);
     // DOMPoint used to calculate transformed coordinates the the svg viewbox
     const [svgPoint, setSvgPoint] = useState<DOMPoint>();
     // tells if user is currently drawing a path
@@ -70,12 +69,6 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
 
     // current drawing path coordinates
     const coordinates = useRef<SketchCoordinates[]>([]);
-
-    // array of references to the images in the sketch
-    const imagesRef = useRef<(SVGSVGElement | null)[]>([]);
-
-    // array of references to the tokens in the sketch
-    const tokensRef = useRef<(SVGSVGElement | null)[]>([]);
 
     // ref boolean to check if an item has been moved or reisized
     // it is used so items are not uselessly updated if we
@@ -89,18 +82,6 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                 return images[index];
             case SketchItemType.token:
                 return tokens[index];
-            default:
-                return null;
-        }
-    };
-
-    // gets item element reference from index and item type
-    const getItemRef = (index: number, type: SketchItemType) => {
-        switch (type) {
-            case SketchItemType.image:
-                return imagesRef.current[index] ?? null;
-            case SketchItemType.token:
-                return tokensRef.current[index] ?? null;
             default:
                 return null;
         }
@@ -153,12 +134,10 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                 isMaster
                 && selectedImageIndex !== null
                 && !target.classList.contains('sketch-image')
+                && !target.closest('.sketch-image')
             ) {
-                const selectedImage = imagesRef.current[selectedImageIndex];
-                if (selectedImage && !selectedImage.contains(e.target as Node)) {
-                    // unselect image
-                    setSelectedImageIndex(null);
-                }
+                // unselect image
+                setSelectedImageIndex(null);
             }
         }
     };
@@ -187,14 +166,13 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                 deltaY
             } = movingItem;
             const itemData = getItemData(index, type);
-            const itemEl = getItemRef(index, type);
-            if (itemData && itemEl) {
+            if (itemData) {
                 // gets moving item new coordinates
                 const coord = getMovingItemCoordinates({
                     event: e,
                     svgContainer: svgRef.current,
                     svgPoint,
-                    item: itemEl,
+                    itemElement: movingItem.element,
                     deltaX,
                     deltaY
                 });
@@ -219,26 +197,30 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                 }
             }
         }
-        // handles mouse move for image resizing
-        if (isMaster && resizingImage && svgPoint) {
-            const { index } = resizingImage;
-            const imageData = images[index];
-            const imageEl = imagesRef.current[index];
-            if (imageData && imageEl) {
-                // gets new coordinates and position for resizing image
-                const data = getResizingImageCoordAndPos({
+        // handles mouse move for resizing item
+        if (isMaster && resizingItem && svgPoint) {
+            const { type, index } = resizingItem;
+            const itemData = getItemData(index, type);
+            if (itemData) {
+                // gets new coordinates and position for resizing item
+                const data = getResizingItemCoordAndPos({
                     event: e,
                     svgContainer: svgRef.current,
                     svgPoint,
-                    resizingImageData: resizingImage
+                    resizingItemData: resizingItem
                 });
                 if (data) {
                     itemHasMovedOfResized.current = true;
-                    // set new image size and position
-                    setImage(index, {
-                        ...imageData,
-                        ...data
-                    });
+                    // set new size and position
+                    switch (type) {
+                        case SketchItemType.image:
+                            setImage(index, {
+                                ...(itemData as SketchImageData),
+                                ...data
+                            });
+                            break;
+                        default:
+                    }
                 }
             }
         }
@@ -257,7 +239,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
             }
         }
         // handle mouse up or leave for items
-        if (isMaster && (movingItem || resizingImage)) {
+        if (isMaster && (movingItem || resizingItem)) {
             // handle mouse up or leave for moving items
             if (movingItem) {
                 if (itemHasMovedOfResized.current) {
@@ -286,31 +268,37 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                 // stops moving
                 setMovingItem(null);
             }
-            // handle mouse up or leave for resizing images
-            if (resizingImage) {
+            // handle mouse up or leave for resizing items
+            if (resizingItem) {
                 if (itemHasMovedOfResized.current) {
-                    // updates images data in play context sketchData
+                    // updates items data in play context sketchData
                     const {
+                        type,
                         initialX: x,
                         initialY: y,
                         initialWidth: width,
                         initialHeight: height
-                    } = resizingImage;
-                    updateSketchImages(
-                        images,
-                        SketchEventType.imageResize,
-                        resizingImage.index,
-                        {
-                            ...images[resizingImage.index],
-                            x,
-                            y,
-                            width,
-                            height
-                        }
-                    );
+                    } = resizingItem;
+                    switch (type) {
+                        case SketchItemType.image:
+                            updateSketchImages(
+                                images,
+                                SketchEventType.imageResize,
+                                resizingItem.index,
+                                {
+                                    ...images[resizingItem.index],
+                                    x,
+                                    y,
+                                    width,
+                                    height
+                                }
+                            );
+                            break;
+                        default:
+                    }
                 }
                 // stops resizing
-                setResizingImage(null);
+                setResizingItem(null);
             }
             itemHasMovedOfResized.current = false;
         }
@@ -325,8 +313,9 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
         if (isMainClick(e)) {
             if (isMaster && !isFreeDrawing && svgPoint) {
                 e.preventDefault();
+                const element = e.currentTarget.closest('svg');
                 const itemData = getItemData(index, type);
-                if (itemData) {
+                if (itemData && element) {
                     itemHasMovedOfResized.current = false;
                     // gets item position
                     const { x: itemX, y: itemY } = itemData;
@@ -336,6 +325,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                     // with delta to keep mouse where it was in the item when moving started
                     setMovingItem({
                         type,
+                        element,
                         index,
                         deltaX: x - itemX,
                         deltaY: y - itemY,
@@ -352,29 +342,32 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     const handleResizeMouseDown = (
         e: React.MouseEvent<SVGRectElement>,
         index: number,
+        type: SketchItemType,
         direction: CardinalDirection
     ) => {
         if (isMainClick(e)) {
             if (isMaster && !isFreeDrawing && svgPoint) {
-                const imageData = images[index];
-                const imageEl = imagesRef.current[index];
-                if (imageData && imageEl) {
+                const element = e.currentTarget.closest('svg');
+                const itemData = getItemData(index, type);
+                if (itemData && element) {
                     itemHasMovedOfResized.current = false;
-                    // gets image position
-                    const { x: initialX, y: initialY } = imageData;
-                    // gets image size
+                    // gets item position
+                    const { x: initialX, y: initialY } = itemData;
+                    // gets item size
                     const {
                         width: initialWidth,
                         height: initialHeight
-                    } = imageEl.getBBox();
+                    } = element.getBBox();
                     // gets svg-transformed mouse coordinates
                     const {
                         x: initialMouseX,
                         y: initialMouseY
                     } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
-                    // set resizing image data in state
-                    setResizingImage({
+                    // set resizing item data in state
+                    setResizingItem({
+                        type,
                         index,
+                        element,
                         direction,
                         initialX,
                         initialY,
@@ -420,12 +413,11 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     // gets image height from its bounding box and set it in image data
     // used because when adding images the height is auto and we want
     // to set a fixed value
-    const updateImageHeight = (index: number) => {
+    const updateImageHeight = (index: number, element: SVGSVGElement | null) => {
         const imageData = images[index];
-        const imageEl = imagesRef.current[index];
-        const heightAttr = imageEl?.getAttributeNS(null, 'height');
-        if (heightAttr === 'auto' && imageData && imageEl) {
-            const { height } = imageEl.getBBox();
+        const heightAttr = element?.getAttributeNS(null, 'height');
+        if (imageData && element && heightAttr === 'auto') {
+            const { height } = element.getBBox();
             updateSketchImage(index, {
                 ...imageData,
                 height
@@ -495,12 +487,12 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                                 && movingItem.type === SketchItemType.image
                                 && movingItem.index === index
                             )}
-                            resizing={resizingImage?.index === index}
-                            onRef={(el) => {
-                                imagesRef.current[index] = el;
-                            }}
-                            onLoad={() => {
-                                updateImageHeight(index);
+                            resizing={(
+                                resizingItem?.type === SketchItemType.image
+                                && resizingItem?.index === index
+                            )}
+                            onLoad={(element) => {
+                                updateImageHeight(index, element);
                             }}
                             onMouseDown={(e) => {
                                 handleItemMouseDown(e, index, SketchItemType.image);
@@ -509,7 +501,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                                 e: React.MouseEvent<SVGRectElement>,
                                 direction: CardinalDirection
                             ) => {
-                                handleResizeMouseDown(e, index, direction);
+                                handleResizeMouseDown(e, index, SketchItemType.image, direction);
                             }}
                             onForward={() => handleImageForward(index)}
                             onBackward={() => handleImageBackward(index)}
@@ -530,9 +522,6 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                             user={user}
                             x={x}
                             y={y}
-                            onRef={(el) => {
-                                tokensRef.current[index] = el;
-                            }}
                             onMouseDown={(e) => {
                                 handleItemMouseDown(e, index, SketchItemType.token);
                             }}

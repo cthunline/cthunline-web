@@ -33,7 +33,7 @@ interface SketchImageProps {
         e: React.MouseEvent<SVGRectElement>,
         direction: CardinalDirection
     ) => void;
-    onLoad?: () => void;
+    onLoad?: (element: SVGSVGElement | null) => void;
     onForward?: () => void;
     onBackward?: () => void;
     onDelete?: () => void;
@@ -113,7 +113,7 @@ const SketchImage: React.FC<SketchImageProps> = ({
                 className="sketch-image"
                 width="100%"
                 xlinkHref={url}
-                onLoad={onLoad}
+                onLoad={(e) => onLoad?.(e.currentTarget.closest('svg'))}
                 onMouseDown={onMouseDown}
             />
             {/* resize rectangles buttons */}

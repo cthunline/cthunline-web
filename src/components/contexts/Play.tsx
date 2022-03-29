@@ -12,24 +12,12 @@ import { toast } from 'react-toastify';
 
 import { useAuth } from './Auth';
 import useSession from '../hooks/useSession';
-import useSketch from '../hooks/play/useSketch';
-import useLogs from '../hooks/play/useLogs';
-import useAudio from '../hooks/play/useAudio';
-import useDice from '../hooks/play/useDice';
-import useUsers from '../hooks/play/useUsers';
-import {
-    User,
-    PlaySocket,
-    PlayLog,
-    DicesRequest,
-    SessionUser,
-    AudioData,
-    Asset,
-    SketchData,
-    SketchImageData,
-    SketchEventType,
-    SketchTokenData
-} from '../../types';
+import useSketch, { SketchHookExport, defaultSketchHookExport } from '../hooks/play/useSketch';
+import useLogs, { LogsHookExport, defaultLogsHookExport } from '../hooks/play/useLogs';
+import useAudio, { AudioHookExport, defaultAudioHookExport } from '../hooks/play/useAudio';
+import useDice, { DiceHookExport, defaultDiceHookExport } from '../hooks/play/useDice';
+import useUsers, { UsersHookExport, defaultUsersHookExport } from '../hooks/play/useUsers';
+import { User, PlaySocket } from '../../types';
 
 interface PlayProviderProps {
     children: JSX.Element | JSX.Element[];
@@ -37,75 +25,25 @@ interface PlayProviderProps {
     characterId?: string;
 }
 
-interface PlayContextData {
+interface PlayContextData extends
+    SketchHookExport,
+    AudioHookExport,
+    DiceHookExport,
+    UsersHookExport,
+    LogsHookExport {
     sessionId: string;
     characterId?: string;
     socket: PlaySocket | null;
-    users: SessionUser[];
-    logs: PlayLog[];
-    requestDice: (request: DicesRequest, isPrivate: boolean) => void;
-    characterUpdate: () => void;
-    playAudio: (asset: Asset, time: number) => void;
-    stopAudio: () => void;
-    audioData: AudioData | null;
-    sketchData: SketchData;
-    addSketchDrawPath: (path: string) => void;
-    clearDrawings: () => void;
-    undoSketch: () => void;
-    clearSketch: () => void;
-    addSketchImage: (url: string, emit?: boolean) => void;
-    updateSketchImage: (index: number, image: SketchImageData) => void;
-    updateSketchImages: (
-        images: SketchImageData[],
-        eventType: SketchEventType,
-        imageIndex: number,
-        imageData?: SketchImageData
-    ) => void;
-    deleteSketchImage: (index: number, imageData: SketchImageData) => void;
-    addSketchToken: () => void;
-    updateSketchTokens: (
-        tokens: SketchTokenData[],
-        eventType: SketchEventType,
-        tokenIndex: number,
-        tokenData?: SketchTokenData
-    ) => void;
-    clearTokens: () => void;
-    setSketchDisplay: (value: boolean) => void;
-    isFreeDrawing: boolean;
-    setIsFreeDrawing: (value: boolean) => void;
 }
 
 const defaultPlayData: PlayContextData = {
     sessionId: '',
     socket: null,
-    users: [],
-    logs: [],
-    requestDice: () => {},
-    characterUpdate: () => {},
-    playAudio: () => {},
-    stopAudio: () => {},
-    audioData: null,
-    sketchData: {
-        displayed: false,
-        paths: [],
-        images: [],
-        tokens: [],
-        events: []
-    },
-    addSketchDrawPath: () => {},
-    clearDrawings: () => {},
-    undoSketch: () => {},
-    clearSketch: () => {},
-    addSketchImage: () => {},
-    updateSketchImage: () => {},
-    updateSketchImages: () => {},
-    deleteSketchImage: () => {},
-    addSketchToken: () => {},
-    updateSketchTokens: () => {},
-    clearTokens: () => {},
-    setSketchDisplay: () => {},
-    isFreeDrawing: false,
-    setIsFreeDrawing: () => {}
+    ...defaultSketchHookExport,
+    ...defaultLogsHookExport,
+    ...defaultAudioHookExport,
+    ...defaultDiceHookExport,
+    ...defaultUsersHookExport
 };
 
 interface ConnectOptions {

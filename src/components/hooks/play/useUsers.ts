@@ -6,6 +6,16 @@ import {
     Character
 } from '../../../types';
 
+export interface UsersHookExport {
+    users: SessionUser[];
+    characterUpdate: () => void;
+}
+
+export const defaultUsersHookExport: UsersHookExport = {
+    users: [],
+    characterUpdate: () => {}
+};
+
 const useUsers = (socket: PlaySocket | null) => {
     const [users, setUsers] = useState<SessionUser[]>([]);
 

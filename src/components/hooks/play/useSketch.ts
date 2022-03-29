@@ -14,6 +14,58 @@ import {
     backwardImage
 } from '../../../services/sketch';
 
+export interface SketchHookExport {
+    sketchData: SketchData;
+    setSketchDisplay: (value: boolean) => void;
+    isFreeDrawing: boolean;
+    setIsFreeDrawing: (value: boolean) => void;
+    addSketchDrawPath: (path: string) => void;
+    clearDrawings: () => void;
+    undoSketch: () => void;
+    clearSketch: () => void;
+    addSketchImage: (url: string, emit?: boolean) => void;
+    updateSketchImage: (index: number, image: SketchImageData) => void;
+    updateSketchImages: (
+        images: SketchImageData[],
+        eventType: SketchEventType,
+        imageIndex: number,
+        imageData?: SketchImageData
+    ) => void;
+    deleteSketchImage: (index: number, imageData: SketchImageData) => void;
+    addSketchToken: () => void;
+    updateSketchTokens: (
+        tokens: SketchTokenData[],
+        eventType: SketchEventType,
+        tokenIndex: number,
+        tokenData?: SketchTokenData
+    ) => void;
+    clearTokens: () => void;
+}
+
+export const defaultSketchHookExport: SketchHookExport = {
+    sketchData: {
+        displayed: false,
+        paths: [],
+        images: [],
+        tokens: [],
+        events: []
+    },
+    setSketchDisplay: () => {},
+    isFreeDrawing: false,
+    setIsFreeDrawing: () => {},
+    addSketchDrawPath: () => {},
+    clearDrawings: () => {},
+    undoSketch: () => {},
+    clearSketch: () => {},
+    addSketchImage: () => {},
+    updateSketchImage: () => {},
+    updateSketchImages: () => {},
+    deleteSketchImage: () => {},
+    addSketchToken: () => {},
+    updateSketchTokens: () => {},
+    clearTokens: () => {}
+};
+
 type SketchColorUses = Record<SketchTokenColor, number>;
 
 const defaultSketchData: SketchData = {

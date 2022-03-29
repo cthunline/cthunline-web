@@ -2,6 +2,14 @@ import { useState } from 'react';
 
 import { PlayLog, User } from '../../../types';
 
+export interface LogsHookExport {
+    logs: PlayLog[];
+}
+
+export const defaultLogsHookExport: LogsHookExport = {
+    logs: []
+};
+
 const useLogs = () => {
     const [logs, setLogs] = useState<PlayLog[]>([]);
 

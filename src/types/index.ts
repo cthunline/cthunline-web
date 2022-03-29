@@ -153,14 +153,17 @@ export enum SketchItemType {
 export interface SketchMovingItemData {
     type: SketchItemType;
     index: number;
+    element: SVGSVGElement;
     deltaX: number;
     deltaY: number;
     initialX: number;
     initialY: number;
 }
 
-export interface SketchResizingImageData {
+export interface SketchResizingItemData {
+    type: SketchItemType;
     index: number;
+    element: SVGSVGElement;
     direction: CardinalDirection;
     initialX: number;
     initialY: number;
