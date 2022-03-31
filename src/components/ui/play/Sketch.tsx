@@ -1,33 +1,14 @@
-import React, {
-    useEffect,
-    useRef,
-    useState
-} from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Box, ClickAwayListener } from '@mui/material';
 
 import { usePlay } from '../../contexts/Play';
+import useItems from '../../hooks/sketch/useItems';
+import useDrawing from '../../hooks/sketch/useDrawing';
+import { CardinalDirection, SketchItemType } from '../../../types';
+import { viewBox } from '../../../services/sketch';
+import { isMainClick } from '../../../services/tools';
 import SketchImage from './sketch/SketchImage';
 import SketchToken from './sketch/SketchToken';
-import {
-    SketchImageData,
-    SketchCoordinates,
-    SketchMovingItemData,
-    SketchResizingItemData,
-    CardinalDirection,
-    SketchEventType,
-    SketchTokenData,
-    SketchItemType
-} from '../../../types';
-import {
-    viewBox,
-    coordinatesToPath,
-    getMouseEventSvgCoordinates,
-    getMovingItemCoordinates,
-    getResizingItemCoordAndPos,
-    forwardImage,
-    backwardImage
-} from '../../../services/sketch';
-import { isMainClick } from '../../../services/tools';
 
 import './Sketch.css';
 
@@ -36,74 +17,37 @@ interface SketchProps {
 }
 
 const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
-    const {
-        isFreeDrawing,
-        sketchData,
-        addSketchDrawPath,
-        updateSketchImage,
-        updateSketchImages,
-        deleteSketchImage,
-        updateSketchTokens
-    } = usePlay();
-
-    // list of drawing paths (strings to put directly in path element "d" attribute)
-    const [paths, setPaths] = useState<string[]>([]);
-    // list of images in the sketch
-    const [images, setImages] = useState<SketchImageData[]>([]);
-    // list of tokens in the sketch
-    const [tokens, setTokens] = useState<SketchTokenData[]>([]);
-    // current selected image index
-    const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
-    // data of item (image or token) currently being moved
-    // (index property is reffering to the imagesRef array below)
-    const [movingItem, setMovingItem] = useState<SketchMovingItemData | null>(null);
-    // data of item (image or token) currently being resized
-    const [resizingItem, setResizingItem] = useState<SketchResizingItemData | null>(null);
-    // DOMPoint used to calculate transformed coordinates the the svg viewbox
-    const [svgPoint, setSvgPoint] = useState<DOMPoint>();
-    // tells if user is currently drawing a path
-    const [isDrawing, setIsDrawing] = useState<boolean>(false);
-
     // reference to the main svg container element (#svg-container)
     const svgRef = useRef<SVGSVGElement>() as React.MutableRefObject<SVGSVGElement>;
 
-    // current drawing path coordinates
-    const coordinates = useRef<SketchCoordinates[]>([]);
-
-    // ref boolean to check if an item has been moved or reisized
-    // it is used so items are not uselessly updated if we
-    // mouseDown on an item without moving or resizing it
-    const itemHasMovedOfResized = useRef<boolean>(false);
-
-    // gets item data from index and item type
-    const getItemData = (index: number, type: SketchItemType) => {
-        switch (type) {
-            case SketchItemType.image:
-                return images[index];
-            case SketchItemType.token:
-                return tokens[index];
-            default:
-                return null;
-        }
-    };
-
-    // helper to set an image in the images state array
-    const setImage = (index: number, data: SketchImageData) => {
-        setImages((previous) => (
-            previous.map((img, idx) => (
-                idx === index ? data : img
-            ))
-        ));
-    };
-
-    // helper to set a token in the tokens state array
-    const setToken = (index: number, data: SketchTokenData) => {
-        setTokens((previous) => (
-            previous.map((tok, idx) => (
-                idx === index ? data : tok
-            ))
-        ));
-    };
+    const { isFreeDrawing, sketchData } = usePlay();
+    const {
+        paths,
+        setPaths,
+        handleDrawingContainerMouseDown,
+        handleDrawingMouseMove,
+        handleDrawingMouseUpOrLeave
+    } = useDrawing(svgRef, isMaster);
+    const {
+        images,
+        setImages,
+        tokens,
+        setTokens,
+        movingItem,
+        resizingItem,
+        selectedImageIndex,
+        setSelectedImageIndex,
+        updateImageHeight,
+        handleItemContainerMouseDown,
+        handleItemMouseDown,
+        handleMovingItemMouseMove,
+        handleResizingItemMouseMove,
+        handleItemMouseUpOrLeave,
+        handleResizeMouseDown,
+        handleImageDelete,
+        handleImageForward,
+        handleImageBackward
+    } = useItems(svgRef, isMaster);
 
     // handles mouseDown outside of the sketch
     const handleMouseDownAway = (e: MouseEvent | TouchEvent) => {
@@ -117,312 +61,26 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
 
     // handles mouseDown on the main svg container element
     const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
-        if (isMainClick(e)) {
-            const target = e.target as SVGSVGElement;
-            // handles mouse down for drawing
-            if (isMaster && isFreeDrawing && !isDrawing) {
-                e.preventDefault();
-                // initializes coordinates list for the new drawing path
-                coordinates.current = [];
-                // set fresh value for the new path in paths state
-                setPaths((previous) => (
-                    [...previous, '']
-                ));
-                // set isDrawing state
-                setIsDrawing(true);
-            } else if ( // handles outside click to deselect image
-                isMaster
-                && selectedImageIndex !== null
-                && !target.classList.contains('sketch-image')
-                && !target.closest('.sketch-image')
-            ) {
-                // unselect image
-                setSelectedImageIndex(null);
-            }
-        }
+        handleDrawingContainerMouseDown(e);
+        handleItemContainerMouseDown(e);
     };
 
     // handles mouseMove on the main svg container element
     const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
         // handles mouse move for drawing
-        if (isMaster && isFreeDrawing && isDrawing && svgPoint) {
-            // get svg-transformed mouse coordinates
-            const { x, y } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
-            // push coordinates in the current drawing path coordinates
-            coordinates.current.push({ x, y });
-            // updates current drawing path string in state
-            const pathsClone = [...paths];
-            pathsClone[pathsClone.length - 1] = (
-                coordinatesToPath(coordinates.current)
-            );
-            setPaths(pathsClone);
-        }
+        handleDrawingMouseMove(e);
         // handles mouse move for moving item
-        if (isMaster && svgPoint && movingItem) {
-            const {
-                type,
-                index,
-                deltaX,
-                deltaY
-            } = movingItem;
-            const itemData = getItemData(index, type);
-            if (itemData) {
-                // gets moving item new coordinates
-                const coord = getMovingItemCoordinates({
-                    event: e,
-                    svgContainer: svgRef.current,
-                    svgPoint,
-                    itemElement: movingItem.element,
-                    deltaX,
-                    deltaY
-                });
-                if (coord) {
-                    itemHasMovedOfResized.current = true;
-                    // assign new coordinates
-                    switch (type) {
-                        case SketchItemType.image:
-                            setImage(index, {
-                                ...(itemData as SketchImageData),
-                                ...coord
-                            });
-                            break;
-                        case SketchItemType.token:
-                            setToken(index, {
-                                ...(itemData as SketchTokenData),
-                                ...coord
-                            });
-                            break;
-                        default:
-                    }
-                }
-            }
-        }
+        handleMovingItemMouseMove(e);
         // handles mouse move for resizing item
-        if (isMaster && resizingItem && svgPoint) {
-            const { type, index } = resizingItem;
-            const itemData = getItemData(index, type);
-            if (itemData) {
-                // gets new coordinates and position for resizing item
-                const data = getResizingItemCoordAndPos({
-                    event: e,
-                    svgContainer: svgRef.current,
-                    svgPoint,
-                    resizingItemData: resizingItem
-                });
-                if (data) {
-                    itemHasMovedOfResized.current = true;
-                    // set new size and position
-                    switch (type) {
-                        case SketchItemType.image:
-                            setImage(index, {
-                                ...(itemData as SketchImageData),
-                                ...data
-                            });
-                            break;
-                        default:
-                    }
-                }
-            }
-        }
+        handleResizingItemMouseMove(e);
     };
 
     // handles mouseUp of mouseLeave on the main svg container element
     const handleMouseUpOrLeave = () => {
         // handle mouse up or leave for drawing
-        if (isMaster && isFreeDrawing && isDrawing) {
-            // stops drawing path
-            setIsDrawing(false);
-            // insert new draw path to context sketchData
-            const lastPath = paths.at(-1);
-            if (lastPath) {
-                addSketchDrawPath(lastPath);
-            }
-        }
+        handleDrawingMouseUpOrLeave();
         // handle mouse up or leave for items
-        if (isMaster && (movingItem || resizingItem)) {
-            // handle mouse up or leave for moving items
-            if (movingItem) {
-                if (itemHasMovedOfResized.current) {
-                    // updates items data in play context sketchData
-                    const { type, initialX: x, initialY: y } = movingItem;
-                    switch (type) {
-                        case SketchItemType.image:
-                            updateSketchImages(
-                                images,
-                                SketchEventType.imageMove,
-                                movingItem.index,
-                                { ...images[movingItem.index], x, y }
-                            );
-                            break;
-                        case SketchItemType.token:
-                            updateSketchTokens(
-                                tokens,
-                                SketchEventType.tokenMove,
-                                movingItem.index,
-                                { ...tokens[movingItem.index], x, y }
-                            );
-                            break;
-                        default:
-                    }
-                }
-                // stops moving
-                setMovingItem(null);
-            }
-            // handle mouse up or leave for resizing items
-            if (resizingItem) {
-                if (itemHasMovedOfResized.current) {
-                    // updates items data in play context sketchData
-                    const {
-                        type,
-                        initialX: x,
-                        initialY: y,
-                        initialWidth: width,
-                        initialHeight: height
-                    } = resizingItem;
-                    switch (type) {
-                        case SketchItemType.image:
-                            updateSketchImages(
-                                images,
-                                SketchEventType.imageResize,
-                                resizingItem.index,
-                                {
-                                    ...images[resizingItem.index],
-                                    x,
-                                    y,
-                                    width,
-                                    height
-                                }
-                            );
-                            break;
-                        default:
-                    }
-                }
-                // stops resizing
-                setResizingItem(null);
-            }
-            itemHasMovedOfResized.current = false;
-        }
-    };
-
-    // handle mouseDown on items (images or tokens)
-    const handleItemMouseDown = (
-        e: React.MouseEvent<SVGImageElement | SVGCircleElement>,
-        index: number,
-        type: SketchItemType
-    ) => {
-        if (isMainClick(e)) {
-            if (isMaster && !isFreeDrawing && svgPoint) {
-                e.preventDefault();
-                const element = e.currentTarget.closest('svg');
-                const itemData = getItemData(index, type);
-                if (itemData && element) {
-                    itemHasMovedOfResized.current = false;
-                    // gets item position
-                    const { x: itemX, y: itemY } = itemData;
-                    // get svg-transformed mouse coordinates
-                    const { x, y } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
-                    // set moving item data in state
-                    // with delta to keep mouse where it was in the item when moving started
-                    setMovingItem({
-                        type,
-                        element,
-                        index,
-                        deltaX: x - itemX,
-                        deltaY: y - itemY,
-                        initialX: itemX,
-                        initialY: itemY
-                    });
-                    setSelectedImageIndex(index);
-                }
-            }
-        }
-    };
-
-    // handle mouseDown on image's resize "buttons"
-    const handleResizeMouseDown = (
-        e: React.MouseEvent<SVGRectElement>,
-        index: number,
-        type: SketchItemType,
-        direction: CardinalDirection
-    ) => {
-        if (isMainClick(e)) {
-            if (isMaster && !isFreeDrawing && svgPoint) {
-                const element = e.currentTarget.closest('svg');
-                const itemData = getItemData(index, type);
-                if (itemData && element) {
-                    itemHasMovedOfResized.current = false;
-                    // gets item position
-                    const { x: initialX, y: initialY } = itemData;
-                    // gets item size
-                    const {
-                        width: initialWidth,
-                        height: initialHeight
-                    } = element.getBBox();
-                    // gets svg-transformed mouse coordinates
-                    const {
-                        x: initialMouseX,
-                        y: initialMouseY
-                    } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
-                    // set resizing item data in state
-                    setResizingItem({
-                        type,
-                        index,
-                        element,
-                        direction,
-                        initialX,
-                        initialY,
-                        initialWidth,
-                        initialHeight,
-                        initialMouseX,
-                        initialMouseY
-                    });
-                }
-            }
-        }
-    };
-
-    // handles deletion of an image
-    const handleImageDelete = (index: number) => {
-        const imageData = images[index];
-        deleteSketchImage(index, imageData);
-        setSelectedImageIndex(null);
-    };
-
-    // handles bringing image foward
-    const handleImageForward = (index: number) => {
-        if (images.length > 1 && index < images.length - 1) {
-            updateSketchImages(
-                forwardImage(images, index),
-                SketchEventType.imageForward,
-                index + 1
-            );
-        }
-    };
-
-    // handles sending image backward
-    const handleImageBackward = (index: number) => {
-        if (images.length > 1 && index > 0) {
-            updateSketchImages(
-                backwardImage(images, index),
-                SketchEventType.imageBackward,
-                index - 1
-            );
-        }
-    };
-
-    // gets image height from its bounding box and set it in image data
-    // used because when adding images the height is auto and we want
-    // to set a fixed value
-    const updateImageHeight = (index: number, element: SVGSVGElement | null) => {
-        const imageData = images[index];
-        const heightAttr = element?.getAttributeNS(null, 'height');
-        if (imageData && element && heightAttr === 'auto') {
-            const { height } = element.getBBox();
-            updateSketchImage(index, {
-                ...imageData,
-                height
-            });
-        }
+        handleItemMouseUpOrLeave();
     };
 
     // handles context menu on main sketch container
@@ -432,23 +90,26 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     };
 
     useEffect(() => {
-        // initializes svg DOMPoint in state when reference to svg container is set
-        setSvgPoint(svgRef.current.createSVGPoint());
-    }, [svgRef]);
-
-    useEffect(() => {
         // updates local state with context sketch data
         setPaths(sketchData.paths);
         setImages(sketchData.images);
         setTokens(sketchData.tokens);
-    }, [sketchData]);
+    }, [
+        sketchData,
+        setPaths,
+        setImages,
+        setTokens
+    ]);
 
     useEffect(() => {
         // when drawing is enabled unselect images
         if (isFreeDrawing) {
             setSelectedImageIndex(null);
         }
-    }, [isFreeDrawing]);
+    }, [
+        isFreeDrawing,
+        setSelectedImageIndex
+    ]);
 
     return (
         <Box className="sketch-container center-text">
