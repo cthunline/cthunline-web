@@ -38,6 +38,29 @@ const Portrait: React.FC<PortraitProps> = ({
         }
     };
 
+    const getInputButton = () => (
+        <label htmlFor="character-portrait-input">
+            <input
+                id="character-portrait-input"
+                className="hidden"
+                type="file"
+                accept={allowedMimeTypes.join(',')}
+                onChange={handleFileChange}
+            />
+            <IconButton component="span">
+                <MdUploadFile size={40} />
+            </IconButton>
+        </label>
+    );
+
+    const getDeleteButton = () => (
+        base64 ? (
+            <IconButton color="error" onClick={() => onChange('')}>
+                <MdOutlineDeleteOutline size={40} />
+            </IconButton>
+        ) : null
+    );
+
     return (
         <Box className="character-portrait-container">
             <Box className="character-portrait-inner">
@@ -50,23 +73,8 @@ const Portrait: React.FC<PortraitProps> = ({
                 ) : null}
                 {readonly ? null : (
                     <>
-                        <label htmlFor="character-portrait-input">
-                            <input
-                                id="character-portrait-input"
-                                className="hidden"
-                                type="file"
-                                accept={allowedMimeTypes.join(',')}
-                                onChange={handleFileChange}
-                            />
-                            <IconButton component="span">
-                                <MdUploadFile size={40} />
-                            </IconButton>
-                        </label>
-                        {base64 ? (
-                            <IconButton color="error" onClick={() => onChange('')}>
-                                <MdOutlineDeleteOutline size={40} />
-                            </IconButton>
-                        ) : null}
+                        {getInputButton()}
+                        {getDeleteButton()}
                     </>
                 )}
             </Box>

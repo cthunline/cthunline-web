@@ -111,13 +111,11 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     const isConnecting = useRef(false);
 
     const bindSocketEvents = useCallback((sock: PlaySocket) => {
-        sock.on('connect_error', (/* err */) => {
+        sock.on('connect_error', () => {
             toast.error('Socket connection error');
-            // console.error(err);
         });
         sock.on('error', ({ status }) => {
             toast.error(`Socket ${status} error`);
-            // console.error(data);
         });
         sock.on('connect', () => {
             isConnecting.current = false;

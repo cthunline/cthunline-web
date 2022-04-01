@@ -33,7 +33,7 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ children, admin }) => {
 };
 
 const Router: React.FC = () => {
-    const { isLoggedIn, isLoading } = useAuth();
+    const { isLoading } = useAuth();
 
     return (
         <BrowserRouter>
@@ -45,13 +45,9 @@ const Router: React.FC = () => {
                         <Routes>
                             <Route
                                 path="/login"
-                                element={
-                                    isLoggedIn ? (
-                                        <Navigate to="/home" />
-                                    ) : (
-                                        <Login />
-                                    )
-                                }
+                                element={(
+                                    <Login />
+                                )}
                             />
                             <Route
                                 path="/"

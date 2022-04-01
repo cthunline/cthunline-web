@@ -28,9 +28,9 @@ interface DialogContextData {
 }
 
 const defaultDialogData: DialogContextData = {
-    confirmDialog: () => {},
-    openDialog: () => {},
-    closeDialog: () => {}
+    confirmDialog: () => { /* default */ },
+    openDialog: () => { /* default */ },
+    closeDialog: () => { /* default */ }
 };
 
 const DialogContext = createContext<DialogContextData>(defaultDialogData);

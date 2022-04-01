@@ -36,7 +36,8 @@ export const getCssVar = (name: string) => (
     computedStyle.getPropertyValue(name)
 );
 
-export const isClickType = (e: React.MouseEvent | MouseEvent | TouchEvent, code: number) => {
+type MixedEvent = React.MouseEvent | MouseEvent | TouchEvent;
+export const isClickType = (e: MixedEvent, code: number) => {
     const eMouse = e as React.MouseEvent;
     return typeof eMouse.button === 'number' && eMouse.button === code;
 };

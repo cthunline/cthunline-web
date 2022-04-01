@@ -31,8 +31,8 @@ const defaultAuthData: AuthData = {
 
 const AuthContext = createContext<AuthContextData>({
     ...defaultAuthData,
-    login: async () => {},
-    logout: async () => {}
+    login: async () => { /* default */ },
+    logout: async () => { /* default */ }
 });
 
 export const AuthProvider:React.FC = ({ children }) => {

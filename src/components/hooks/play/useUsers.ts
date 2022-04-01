@@ -13,7 +13,7 @@ export interface UsersHookExport {
 
 export const defaultUsersHookExport: UsersHookExport = {
     users: [],
-    characterUpdate: () => {}
+    characterUpdate: () => { /* default */ }
 };
 
 const useUsers = (socket: PlaySocket | null) => {

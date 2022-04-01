@@ -1,4 +1,5 @@
 import React from 'react';
+import { Navigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
@@ -19,7 +20,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
-    const { login } = useAuth();
+    const { isLoggedIn, login } = useAuth();
 
     const initialValues: LoginFormData = {
         email: '',
@@ -33,6 +34,10 @@ const Login = () => {
             toast.error(err.message);
         }
     };
+
+    if (isLoggedIn) {
+        return <Navigate to="/home" />;
+    }
 
     return (
         <Paper elevation={3} className="box">

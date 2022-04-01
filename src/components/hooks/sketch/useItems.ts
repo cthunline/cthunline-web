@@ -156,89 +156,84 @@ const useItems = (
                     svgPoint,
                     resizingItemData: resizingItem
                 });
-                if (data) {
+                // set new size and position
+                if (data && type === SketchItemType.image) {
                     itemHasMovedOfResized.current = true;
-                    // set new size and position
-                    switch (type) {
-                        case SketchItemType.image:
-                            setImage(index, {
-                                ...(itemData as SketchImageData),
-                                ...data
-                            });
-                            break;
-                        default:
-                    }
+                    setImage(index, {
+                        ...(itemData as SketchImageData),
+                        ...data
+                    });
                 }
             }
         }
     };
 
-    // handle mouse up or leave for items
-    const handleItemMouseUpOrLeave = () => {
-        // handle mouse up or leave for items
-        if (isMaster && (movingItem || resizingItem)) {
-            // handle mouse up or leave for moving items
-            if (movingItem) {
-                if (itemHasMovedOfResized.current) {
-                    // updates items data in play context sketchData
-                    const { type, initialX: x, initialY: y } = movingItem;
-                    switch (type) {
-                        case SketchItemType.image:
-                            updateSketchImages(
-                                images,
-                                SketchEventType.imageMove,
-                                movingItem.index,
-                                { ...images[movingItem.index], x, y }
-                            );
-                            break;
-                        case SketchItemType.token:
-                            updateSketchTokens(
-                                tokens,
-                                SketchEventType.tokenMove,
-                                movingItem.index,
-                                { ...tokens[movingItem.index], x, y }
-                            );
-                            break;
-                        default:
-                    }
+    //  handle mouse up or leave for moving items
+    const handleMovingItemMouseUpOrLeave = () => {
+        if (isMaster && movingItem) {
+            if (itemHasMovedOfResized.current) {
+                // updates items data in play context sketchData
+                const { type, initialX: x, initialY: y } = movingItem;
+                if (type === SketchItemType.image) {
+                    updateSketchImages(
+                        images,
+                        SketchEventType.imageMove,
+                        movingItem.index,
+                        { ...images[movingItem.index], x, y }
+                    );
+                } else if (type === SketchItemType.token) {
+                    updateSketchTokens(
+                        tokens,
+                        SketchEventType.tokenMove,
+                        movingItem.index,
+                        { ...tokens[movingItem.index], x, y }
+                    );
                 }
-                // stops moving
-                setMovingItem(null);
             }
-            // handle mouse up or leave for resizing items
-            if (resizingItem) {
-                if (itemHasMovedOfResized.current) {
-                    // updates items data in play context sketchData
-                    const {
-                        type,
-                        initialX: x,
-                        initialY: y,
-                        initialWidth: width,
-                        initialHeight: height
-                    } = resizingItem;
-                    switch (type) {
-                        case SketchItemType.image:
-                            updateSketchImages(
-                                images,
-                                SketchEventType.imageResize,
-                                resizingItem.index,
-                                {
-                                    ...images[resizingItem.index],
-                                    x,
-                                    y,
-                                    width,
-                                    height
-                                }
-                            );
-                            break;
-                        default:
-                    }
-                }
-                // stops resizing
-                setResizingItem(null);
-            }
+            // stops moving
+            setMovingItem(null);
             itemHasMovedOfResized.current = false;
         }
+    };
+
+    //  handle mouse up or leave for resizing items
+    const handleResizingItemMouseUpOrLeave = () => {
+        // handle mouse up or leave for items
+        if (isMaster && resizingItem) {
+            if (itemHasMovedOfResized.current) {
+                // updates items data in play context sketchData
+                const {
+                    type,
+                    initialX: x,
+                    initialY: y,
+                    initialWidth: width,
+                    initialHeight: height
+                } = resizingItem;
+                if (type === SketchItemType.image) {
+                    updateSketchImages(
+                        images,
+                        SketchEventType.imageResize,
+                        resizingItem.index,
+                        {
+                            ...images[resizingItem.index],
+                            x,
+                            y,
+                            width,
+                            height
+                        }
+                    );
+                }
+            }
+            // stops resizing
+            setResizingItem(null);
+            itemHasMovedOfResized.current = false;
+        }
+    };
+
+    // handle mouse up or leave for items
+    const handleItemMouseUpOrLeave = () => {
+        handleMovingItemMouseUpOrLeave();
+        handleResizingItemMouseUpOrLeave();
     };
 
     // handle mouseDown on items (images or tokens)
@@ -269,7 +264,9 @@ const useItems = (
                         initialX: itemX,
                         initialY: itemY
                     });
-                    setSelectedImageIndex(index);
+                    if (type === SketchItemType.image) {
+                        setSelectedImageIndex(index);
+                    }
                 }
             }
         }

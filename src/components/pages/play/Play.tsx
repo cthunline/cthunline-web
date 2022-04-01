@@ -22,7 +22,7 @@ import {
 
 import './Play.css';
 
-const Play = () => {
+const PlayContent = () => {
     const navigate = useNavigate();
     const { confirmDialog } = useDialog();
     const {
@@ -114,7 +114,13 @@ const Play = () => {
         })
     );
 
-    return socket ? (
+    if (!socket) {
+        return (
+            <CircularProgress size={100} />
+        );
+    }
+
+    return (
         <Box className="play-container flex row">
             <PlayMenu
                 isMaster={socket.isMaster}
@@ -132,21 +138,19 @@ const Play = () => {
                 <Console logs={logs} />
             </Box>
         </Box>
-    ) : (
-        <CircularProgress size={100} />
     );
 };
 
-const PlayWrapper = () => {
+const Play = () => {
     const { sessionId, characterId } = useParams();
     return sessionId ? (
         <PlayProvider
             sessionId={sessionId}
             characterId={characterId}
         >
-            <Play />
+            <PlayContent />
         </PlayProvider>
     ) : null;
 };
 
-export default PlayWrapper;
+export default Play;

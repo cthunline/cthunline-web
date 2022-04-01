@@ -136,7 +136,7 @@ export const getResizingItemCoordAndPos = ({
     let newY = initialY;
     // calculates new item size
     if (mouseDiffX > mouseDiffY) {
-        newWidth = initialWidth + (mouseDiffX * (movingX ? -1 : 1));
+        newWidth = initialWidth + mouseDiffX * (movingX ? -1 : 1);
         newHeight = newWidth / sizeRatio;
     } else {
         newHeight = initialHeight + mouseDiffY * (movingY ? -1 : 1);

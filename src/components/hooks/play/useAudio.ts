@@ -14,8 +14,8 @@ export interface AudioHookExport {
 
 export const defaultAudioHookExport: AudioHookExport = {
     audioData: null,
-    playAudio: () => {},
-    stopAudio: () => {}
+    playAudio: () => { /* default */ },
+    stopAudio: () => { /* default */ }
 };
 
 const useAudio = (socket: PlaySocket | null) => {

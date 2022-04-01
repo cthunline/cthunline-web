@@ -61,11 +61,10 @@ const useCharacter = ({
 
     const getCharacter = useCallback(async (charId: string) => {
         try {
-            const char = await Api.call({
+            return await Api.call({
                 method: 'GET',
                 route: `/characters/${charId}`
             });
-            return char;
         } catch (err: any) {
             toast.error(err.message);
             return undefined;

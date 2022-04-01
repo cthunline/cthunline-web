@@ -50,20 +50,20 @@ export const defaultSketchHookExport: SketchHookExport = {
         tokens: [],
         events: []
     },
-    setSketchDisplay: () => {},
+    setSketchDisplay: () => { /* default */ },
     isFreeDrawing: false,
-    setIsFreeDrawing: () => {},
-    addSketchDrawPath: () => {},
-    clearDrawings: () => {},
-    undoSketch: () => {},
-    clearSketch: () => {},
-    addSketchImage: () => {},
-    updateSketchImage: () => {},
-    updateSketchImages: () => {},
-    deleteSketchImage: () => {},
-    addSketchToken: () => {},
-    updateSketchTokens: () => {},
-    clearTokens: () => {}
+    setIsFreeDrawing: () => { /* default */ },
+    addSketchDrawPath: () => { /* default */ },
+    clearDrawings: () => { /* default */ },
+    undoSketch: () => { /* default */ },
+    clearSketch: () => { /* default */ },
+    addSketchImage: () => { /* default */ },
+    updateSketchImage: () => { /* default */ },
+    updateSketchImages: () => { /* default */ },
+    deleteSketchImage: () => { /* default */ },
+    addSketchToken: () => { /* default */ },
+    updateSketchTokens: () => { /* default */ },
+    clearTokens: () => { /* default */ }
 };
 
 type SketchColorUses = Record<SketchTokenColor, number>;
@@ -279,112 +279,143 @@ const useSketch = (socket: PlaySocket | null) => {
         }));
     };
 
-    // handle undo for image add / delete / move / resize
+    const popEvents = () => {
+        const eventsClone = [...sketchData.events];
+        eventsClone.pop();
+        return eventsClone;
+    };
+
+    const undoDrawing = () => {
+        const pathsClone = [...sketchData.paths];
+        pathsClone.pop();
+        updateSketch((previous) => ({
+            ...previous,
+            paths: pathsClone,
+            events: popEvents()
+        }));
+    };
+
+    const undoImageAdd = (lastEvent: SketchEvent) => {
+        if (typeof lastEvent.imageIndex === 'number') {
+            updateSketch((previous) => ({
+                ...previous,
+                images: previous.images.filter((i, idx) => (
+                    idx !== lastEvent.imageIndex
+                )),
+                events: popEvents()
+            }));
+        }
+    };
+
+    const undoImageMoreOrResize = (lastEvent: SketchEvent) => {
+        if (typeof lastEvent.imageIndex === 'number' && lastEvent.imageData) {
+            updateSketchImage(
+                lastEvent.imageIndex,
+                lastEvent.imageData,
+                popEvents()
+            );
+        }
+    };
+
+    const undoImageDelete = (lastEvent: SketchEvent) => {
+        if (typeof lastEvent.imageIndex === 'number' && lastEvent.imageData) {
+            const index = lastEvent.imageIndex;
+            const data = lastEvent.imageData;
+            updateSketch((previous) => ({
+                ...previous,
+                images: [
+                    ...previous.images.slice(0, index),
+                    data,
+                    ...previous.images.slice(index)
+                ],
+                events: popEvents()
+            }));
+        }
+    };
+
+    const undoImageForwardOrBackward = (lastEvent: SketchEvent) => {
+        if (typeof lastEvent.imageIndex === 'number') {
+            const index = lastEvent.imageIndex;
+            updateSketch((previous) => ({
+                ...previous,
+                images: lastEvent.type === SketchEventType.imageForward ? (
+                    backwardImage(previous.images, index)
+                ) : (
+                    forwardImage(previous.images, index)
+                ),
+                events: popEvents()
+            }));
+        }
+    };
+
+    const undoTokenAdd = (lastEvent: SketchEvent) => {
+        if (typeof lastEvent.tokenIndex === 'number') {
+            updateSketch((previous) => ({
+                ...previous,
+                tokens: previous.tokens.filter((i, idx) => (
+                    idx !== lastEvent.tokenIndex
+                )),
+                events: popEvents()
+            }));
+        }
+    };
+
+    const undoTokenMove = (lastEvent: SketchEvent) => {
+        if (typeof lastEvent.tokenIndex === 'number' && lastEvent.tokenData) {
+            updateSketchToken(
+                lastEvent.tokenIndex,
+                lastEvent.tokenData,
+                popEvents()
+            );
+        }
+    };
+
+    const undoTokenDelete = (lastEvent: SketchEvent) => {
+        if (typeof lastEvent.tokenIndex === 'number' && lastEvent.tokenData) {
+            const index = lastEvent.tokenIndex;
+            const data = lastEvent.tokenData;
+            updateSketch((previous) => ({
+                ...previous,
+                tokens: [
+                    ...previous.tokens.slice(0, index),
+                    data,
+                    ...previous.tokens.slice(index)
+                ],
+                events: popEvents()
+            }));
+        }
+    };
+
+    // handle undo action on sketch
     const undoSketch = () => {
         const lastEvent = sketchData.events.at(-1);
         if (lastEvent) {
-            const pathsClone = [...sketchData.paths];
-            const eventsClone = [...sketchData.events];
-            eventsClone.pop();
             switch (lastEvent.type) {
                 case SketchEventType.draw:
-                    pathsClone.pop();
-                    updateSketch((previous) => ({
-                        ...previous,
-                        paths: pathsClone,
-                        events: eventsClone
-                    }));
+                    undoDrawing();
                     break;
                 case SketchEventType.imageAdd:
-                    if (typeof lastEvent.imageIndex === 'number') {
-                        updateSketch((previous) => ({
-                            ...previous,
-                            images: previous.images.filter((i, idx) => (
-                                idx !== lastEvent.imageIndex
-                            )),
-                            events: eventsClone
-                        }));
-                    }
+                    undoImageAdd(lastEvent);
                     break;
                 case SketchEventType.imageMove:
                 case SketchEventType.imageResize:
-                    if (typeof lastEvent.imageIndex === 'number' && lastEvent.imageData) {
-                        updateSketchImage(
-                            lastEvent.imageIndex,
-                            lastEvent.imageData,
-                            eventsClone
-                        );
-                    }
+                    undoImageMoreOrResize(lastEvent);
                     break;
                 case SketchEventType.imageDelete:
-                    if (typeof lastEvent.imageIndex === 'number' && lastEvent.imageData) {
-                        const index = lastEvent.imageIndex;
-                        const data = lastEvent.imageData;
-                        updateSketch((previous) => ({
-                            ...previous,
-                            images: [
-                                ...previous.images.slice(0, index),
-                                data,
-                                ...previous.images.slice(index)
-                            ],
-                            events: eventsClone
-                        }));
-                    }
+                    undoImageDelete(lastEvent);
                     break;
                 case SketchEventType.imageForward:
-                    if (typeof lastEvent.imageIndex === 'number') {
-                        const index = lastEvent.imageIndex;
-                        updateSketch((previous) => ({
-                            ...previous,
-                            images: backwardImage(previous.images, index),
-                            events: eventsClone
-                        }));
-                    }
-                    break;
                 case SketchEventType.imageBackward:
-                    if (typeof lastEvent.imageIndex === 'number') {
-                        const index = lastEvent.imageIndex;
-                        updateSketch((previous) => ({
-                            ...previous,
-                            images: forwardImage(previous.images, index),
-                            events: eventsClone
-                        }));
-                    }
+                    undoImageForwardOrBackward(lastEvent);
                     break;
                 case SketchEventType.tokenAdd:
-                    if (typeof lastEvent.tokenIndex === 'number') {
-                        updateSketch((previous) => ({
-                            ...previous,
-                            tokens: previous.tokens.filter((i, idx) => (
-                                idx !== lastEvent.tokenIndex
-                            )),
-                            events: eventsClone
-                        }));
-                    }
+                    undoTokenAdd(lastEvent);
                     break;
                 case SketchEventType.tokenMove:
-                    if (typeof lastEvent.tokenIndex === 'number' && lastEvent.tokenData) {
-                        updateSketchToken(
-                            lastEvent.tokenIndex,
-                            lastEvent.tokenData,
-                            eventsClone
-                        );
-                    }
+                    undoTokenMove(lastEvent);
                     break;
                 case SketchEventType.tokenDelete:
-                    if (typeof lastEvent.tokenIndex === 'number' && lastEvent.tokenData) {
-                        const index = lastEvent.tokenIndex;
-                        const data = lastEvent.tokenData;
-                        updateSketch((previous) => ({
-                            ...previous,
-                            tokens: [
-                                ...previous.tokens.slice(0, index),
-                                data,
-                                ...previous.tokens.slice(index)
-                            ],
-                            events: eventsClone
-                        }));
-                    }
+                    undoTokenDelete(lastEvent);
                     break;
                 default:
             }

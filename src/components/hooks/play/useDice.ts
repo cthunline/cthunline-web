@@ -5,7 +5,7 @@ export interface DiceHookExport {
 }
 
 export const defaultDiceHookExport: DiceHookExport = {
-    requestDice: () => {}
+    requestDice: () => { /* default */ }
 };
 
 const useDice = (socket: PlaySocket | null) => {

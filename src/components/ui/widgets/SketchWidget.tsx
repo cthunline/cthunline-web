@@ -75,7 +75,7 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
     }, {
         text: 'Spawn player tokens',
         icon: <IoPeopleCircle size={30} />,
-        handler: () => {}
+        handler: () => { /* incoming */ }
     }, {
         text: 'Remove tokens',
         icon: <IoMdCloseCircle size={30} />,

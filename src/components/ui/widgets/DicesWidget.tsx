@@ -92,82 +92,98 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
         resetSelectedDices();
     };
 
+    const getDiceList = () => (
+        <Box
+            className="dices-items"
+            display="grid"
+            gridTemplateColumns="repeat(12, 1fr)"
+            gap={2}
+        >
+            {diceTypes.map((type) => (
+                <Box
+                    key={`dice-item-${type}`}
+                    className="center-text"
+                    gridColumn={`span ${type === 'D100' ? 6 : 3}`}
+                >
+                    <Box
+                        className="clickable"
+                        component="span"
+                        onClick={() => modifySelectedDice(type, 1)}
+                    >
+                        {getDiceIcon(type, 50)}
+                    </Box>
+                </Box>
+            ))}
+        </Box>
+    );
+
+    const getSelectedDices = () => (
+        <Box
+            className="dices-selected"
+            display="grid"
+            gridTemplateColumns="repeat(12, 1fr)"
+            gap={2}
+        >
+            {selectedDiceTypes.map((type) => (
+                <Box
+                    key={`dice-selected-${type}`}
+                    className="dice-selected center-text"
+                    gridColumn="span 4"
+                >
+                    <Box
+                        className="flex center clickable"
+                        onClick={() => modifySelectedDice(type, -1)}
+                    >
+                        <Box
+                            className="dice-selected-multipler"
+                            component="span"
+                        >
+                            {`${selectedDices[type]} x`}
+                        </Box>
+                        {getDiceIcon(type, 30)}
+                    </Box>
+                </Box>
+            ))}
+        </Box>
+    );
+
+    const getRollPrivateCheckbox = () => (
+        isMaster ? (
+            <FormControlLabel
+                label="Private"
+                labelPlacement="start"
+                control={(
+                    <Checkbox
+                        checked={isPrivate}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            setIsPrivate(e.target.checked);
+                        }}
+                    />
+                )}
+            />
+        ) : null
+    );
+
+    const getRollButton = () => (
+        selectedDiceTypes.length ? (
+            <Box className="flex column center">
+                {getRollPrivateCheckbox()}
+                <Button variant="contained" onClick={onSubmit}>
+                    Roll
+                </Button>
+            </Box>
+        ) : null
+    );
+
     return (
         <Widget
             title="Dices"
             onClose={() => onClose(WidgetType.dices)}
         >
             <Box className="dices-widget-content">
-                <Box
-                    className="dices-items"
-                    display="grid"
-                    gridTemplateColumns="repeat(12, 1fr)"
-                    gap={2}
-                >
-                    {diceTypes.map((type) => (
-                        <Box
-                            key={`dice-item-${type}`}
-                            className="center-text"
-                            gridColumn={`span ${type === 'D100' ? 6 : 3}`}
-                        >
-                            <Box
-                                className="clickable"
-                                component="span"
-                                onClick={() => modifySelectedDice(type, 1)}
-                            >
-                                {getDiceIcon(type, 50)}
-                            </Box>
-                        </Box>
-                    ))}
-                </Box>
-                <Box
-                    className="dices-selected"
-                    display="grid"
-                    gridTemplateColumns="repeat(12, 1fr)"
-                    gap={2}
-                >
-                    {selectedDiceTypes.map((type) => (
-                        <Box
-                            key={`dice-selected-${type}`}
-                            className="dice-selected center-text"
-                            gridColumn="span 4"
-                        >
-                            <Box
-                                className="flex center clickable"
-                                onClick={() => modifySelectedDice(type, -1)}
-                            >
-                                <Box
-                                    className="dice-selected-multipler"
-                                    component="span"
-                                >
-                                    {`${selectedDices[type]} x`}
-                                </Box>
-                                {getDiceIcon(type, 30)}
-                            </Box>
-                        </Box>
-                    ))}
-                </Box>
-                {selectedDiceTypes.length ? (
-                    <Box className="flex column center">
-                        {isMaster ? (
-                            <FormControlLabel
-                                label="Private"
-                                labelPlacement="start"
-                                control={(
-                                    <Checkbox
-                                        checked={isPrivate}
-                                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                            setIsPrivate(e.target.checked);
-                                        }}
-                                    />
-                                )}
-                            />
-                        ) : null}
-                        <Button variant="contained" onClick={onSubmit}>
-                            Roll
-                        </Button>
-                    </Box>
-                ) : null}
+                {getDiceList()}
+                {getSelectedDices()}
+                {getRollButton()}
             </Box>
         </Widget>
     );

@@ -21,21 +21,19 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
     readonly,
     gameId,
     data,
-    onChange = () => {}
+    onChange = () => { /* default */ }
 }) => {
     const getContent = (): JSX.Element | null => {
-        switch (gameId) {
-            case 'callOfCthulhu':
-                return (
-                    <CoCSheet
-                        readonly={readonly}
-                        data={data}
-                        onChange={onChange}
-                    />
-                );
-            default:
-                return null;
+        if (gameId === 'callOfCthulhu') {
+            return (
+                <CoCSheet
+                    readonly={readonly}
+                    data={data}
+                    onChange={onChange}
+                />
+            );
         }
+        return null;
     };
 
     return (
