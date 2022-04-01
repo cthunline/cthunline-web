@@ -7,7 +7,9 @@ import {
     SketchEventType,
     SketchImageData,
     SketchTokenData,
-    SketchTokenColor
+    SketchTokenColor,
+    SessionUser,
+    SketchTokenUserData
 } from '../../../types';
 import {
     forwardImage,
@@ -39,6 +41,9 @@ export interface SketchHookExport {
         tokenIndex: number,
         tokenData?: SketchTokenData
     ) => void;
+    assignTokenUser: (index: number, user: SessionUser) => void;
+    unassignTokenUser: (index: number) => void;
+    deleteSketchToken: (index: number, tokenData: SketchTokenData) => void;
     clearTokens: () => void;
 }
 
@@ -63,6 +68,9 @@ export const defaultSketchHookExport: SketchHookExport = {
     deleteSketchImage: () => { /* default */ },
     addSketchToken: () => { /* default */ },
     updateSketchTokens: () => { /* default */ },
+    assignTokenUser: () => { /* default */ },
+    unassignTokenUser: () => { /* default */ },
+    deleteSketchToken: () => { /* default */ },
     clearTokens: () => { /* default */ }
 };
 
@@ -269,6 +277,40 @@ const useSketch = (socket: PlaySocket | null) => {
         }));
     };
 
+    const setTokenUser = (index: number, tokenUser: SketchTokenUserData | null) => {
+        updateSketch((previous) => ({
+            ...previous,
+            tokens: previous.tokens.map((tok, idx) => (
+                idx === index ? {
+                    ...tok,
+                    user: tokenUser
+                } : tok
+            ))
+        }));
+    };
+
+    const assignTokenUser = (index: number, { id, name }: SessionUser) => {
+        setTokenUser(index, { id, name });
+    };
+
+    const unassignTokenUser = (index: number) => {
+        setTokenUser(index, null);
+    };
+
+    const deleteSketchToken = (index: number, tokenData: SketchTokenData) => {
+        updateSketch((previous) => ({
+            ...previous,
+            tokens: previous.tokens.filter((t, idx) => (
+                idx !== index
+            )),
+            events: [...previous.events, {
+                type: SketchEventType.tokenDelete,
+                tokenIndex: index,
+                tokenData
+            }]
+        }));
+    };
+
     const clearTokens = () => {
         updateSketch((previous) => ({
             ...previous,
@@ -443,6 +485,9 @@ const useSketch = (socket: PlaySocket | null) => {
         deleteSketchImage,
         addSketchToken,
         updateSketchTokens,
+        assignTokenUser,
+        unassignTokenUser,
+        deleteSketchToken,
         clearTokens,
         undoSketch,
         clearSketch

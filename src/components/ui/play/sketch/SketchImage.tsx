@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { CardinalDirection } from '../../../../types';
-import SketchImageContextMenu from './SketchImageContextMenu';
+import SketchItemContextMenu, { ContextMenuData } from './SketchItemContextMenu';
 
 import './SketchImage.css';
 
@@ -11,11 +11,6 @@ const resizeRects: CardinalDirection[] = [
     CardinalDirection.se,
     CardinalDirection.sw
 ];
-
-interface ContextMenuData {
-    left: number;
-    top: number;
-}
 
 interface SketchImageProps {
     isMaster?: boolean;
@@ -61,29 +56,15 @@ const SketchImage: React.FC<SketchImageProps> = ({
 
     const onContextMenuOpen = (e: React.MouseEvent) => {
         e.preventDefault();
-        setContextMenu(contextMenu ? null : {
-            left: e.clientX,
-            top: e.clientY
-        });
+        if (isMaster) {
+            setContextMenu(contextMenu ? null : {
+                left: e.clientX,
+                top: e.clientY
+            });
+        }
     };
 
     const onContextMenuClose = () => {
-        setContextMenu(null);
-    };
-
-    const onContextMenuSelect = (action: string) => {
-        switch (action) {
-            case 'onForward':
-                onForward?.();
-                break;
-            case 'onBackward':
-                onBackward?.();
-                break;
-            case 'onDelete':
-                onDelete?.();
-                break;
-            default:
-        }
         setContextMenu(null);
     };
 
@@ -132,10 +113,12 @@ const SketchImage: React.FC<SketchImageProps> = ({
                     />
                 ))
             ) : null}
-            <SketchImageContextMenu
+            <SketchItemContextMenu
                 open={!!contextMenu}
                 position={contextMenu ?? undefined}
-                onSelect={onContextMenuSelect}
+                onForward={onForward}
+                onBackward={onBackward}
+                onDelete={onDelete}
                 onClose={onContextMenuClose}
             />
         </svg>

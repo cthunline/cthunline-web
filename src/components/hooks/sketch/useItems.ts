@@ -32,7 +32,8 @@ const useItems = (
         updateSketchImage,
         updateSketchImages,
         deleteSketchImage,
-        updateSketchTokens
+        updateSketchTokens,
+        deleteSketchToken
     } = usePlay();
 
     // list of images in the sketch
@@ -238,7 +239,7 @@ const useItems = (
 
     // handle mouseDown on items (images or tokens)
     const handleItemMouseDown = (
-        e: React.MouseEvent<SVGImageElement | SVGCircleElement>,
+        e: React.MouseEvent<SVGImageElement | SVGSVGElement>,
         index: number,
         type: SketchItemType
     ) => {
@@ -315,11 +316,17 @@ const useItems = (
         }
     };
 
-    // handles deletion of an image
-    const handleImageDelete = (index: number) => {
-        const imageData = images[index];
-        deleteSketchImage(index, imageData);
-        setSelectedImageIndex(null);
+    // handles deletion of an item
+    const handleItemDelete = (index: number, type: SketchItemType) => {
+        if (type === SketchItemType.image) {
+            const imageData = images[index];
+            deleteSketchImage(index, imageData);
+            setSelectedImageIndex(null);
+        }
+        if (type === SketchItemType.token) {
+            const tokenData = tokens[index];
+            deleteSketchToken(index, tokenData);
+        }
     };
 
     // handles bringing image foward
@@ -380,7 +387,7 @@ const useItems = (
         handleResizingItemMouseMove,
         handleItemMouseUpOrLeave,
         handleResizeMouseDown,
-        handleImageDelete,
+        handleItemDelete,
         handleImageForward,
         handleImageBackward
     };

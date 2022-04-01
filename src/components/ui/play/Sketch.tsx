@@ -4,11 +4,15 @@ import { Box, ClickAwayListener } from '@mui/material';
 import { usePlay } from '../../contexts/Play';
 import useItems from '../../hooks/sketch/useItems';
 import useDrawing from '../../hooks/sketch/useDrawing';
-import { CardinalDirection, SketchItemType } from '../../../types';
 import { viewBox } from '../../../services/sketch';
 import { isMainClick } from '../../../services/tools';
 import SketchImage from './sketch/SketchImage';
 import SketchToken from './sketch/SketchToken';
+import {
+    CardinalDirection,
+    SessionUser,
+    SketchItemType
+} from '../../../types';
 
 import './Sketch.css';
 
@@ -20,7 +24,12 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     // reference to the main svg container element (#svg-container)
     const svgRef = useRef<SVGSVGElement>() as React.MutableRefObject<SVGSVGElement>;
 
-    const { isFreeDrawing, sketchData } = usePlay();
+    const {
+        isFreeDrawing,
+        sketchData,
+        assignTokenUser,
+        unassignTokenUser
+    } = usePlay();
     const {
         paths,
         setPaths,
@@ -44,7 +53,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
         handleResizingItemMouseMove,
         handleItemMouseUpOrLeave,
         handleResizeMouseDown,
-        handleImageDelete,
+        handleItemDelete,
         handleImageForward,
         handleImageBackward
     } = useItems(svgRef, isMaster);
@@ -166,7 +175,9 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                             }}
                             onForward={() => handleImageForward(index)}
                             onBackward={() => handleImageBackward(index)}
-                            onDelete={() => handleImageDelete(index)}
+                            onDelete={() => {
+                                handleItemDelete(index, SketchItemType.image);
+                            }}
                         />
                     ))}
                     {/* tokens */}
@@ -178,6 +189,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                     }, index) => (
                         <SketchToken
                             key={`sketch-token-${index.toString()}`}
+                            isMaster={isMaster}
                             size={50}
                             color={color}
                             user={user}
@@ -185,6 +197,15 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                             y={y}
                             onMouseDown={(e) => {
                                 handleItemMouseDown(e, index, SketchItemType.token);
+                            }}
+                            onAssign={(tokenUser: SessionUser) => {
+                                assignTokenUser(index, tokenUser);
+                            }}
+                            onUnassign={() => {
+                                unassignTokenUser(index);
+                            }}
+                            onDelete={() => {
+                                handleItemDelete(index, SketchItemType.token);
                             }}
                         />
                     ))}

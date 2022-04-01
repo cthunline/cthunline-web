@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { SketchTokenColor, SketchTokenUser } from '../../../../types';
+import { SessionUser, SketchTokenColor, SketchTokenUser } from '../../../../types';
+import SketchItemContextMenu, { ContextMenuData } from './SketchItemContextMenu';
 
 import './SketchToken.css';
 
 interface SketchTokenProps {
+    isMaster?: boolean;
     size: number;
     color: SketchTokenColor;
     user: SketchTokenUser | null;
@@ -12,10 +14,14 @@ interface SketchTokenProps {
     y: number;
     className?: string;
     onRef?: (el: SVGSVGElement | null) => void;
-    onMouseDown?: (e: React.MouseEvent<SVGCircleElement>) => void;
+    onMouseDown?: (e: React.MouseEvent<SVGSVGElement>) => void;
+    onAssign?: (user: SessionUser) => void;
+    onUnassign?: () => void;
+    onDelete?: () => void;
 }
 
 const SketchToken: React.FC<SketchTokenProps> = ({
+    isMaster,
     size,
     color,
     user,
@@ -23,8 +29,27 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     y,
     className,
     onRef,
-    onMouseDown
+    onMouseDown,
+    onAssign,
+    onUnassign,
+    onDelete
 }) => {
+    const [contextMenu, setContextMenu] = useState<ContextMenuData | null>(null);
+
+    const onContextMenuOpen = (e: React.MouseEvent) => {
+        e.preventDefault();
+        if (isMaster) {
+            setContextMenu(contextMenu ? null : {
+                left: e.clientX,
+                top: e.clientY
+            });
+        }
+    };
+
+    const onContextMenuClose = () => {
+        setContextMenu(null);
+    };
+
     const tokenPadding = size / 15;
     const tokenSize = size + tokenPadding * 2;
     const circleRadius = size / 2;
@@ -46,6 +71,8 @@ const SketchToken: React.FC<SketchTokenProps> = ({
             height={tokenSize}
             x={x}
             y={y}
+            onMouseDown={onMouseDown}
+            onContextMenu={onContextMenuOpen}
         >
             <circle
                 className="sketch-token-circle"
@@ -55,7 +82,6 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                 stroke="red"
                 strokeWidth={circleStrokeSize}
                 fill={`var(--palette-token-${color})`}
-                onMouseDown={onMouseDown}
             />
             <text
                 className="sketch-token-text"
@@ -70,6 +96,14 @@ const SketchToken: React.FC<SketchTokenProps> = ({
             >
                 {userLetter}
             </text>
+            <SketchItemContextMenu
+                open={!!contextMenu}
+                position={contextMenu ?? undefined}
+                onAssign={user ? undefined : onAssign}
+                onUnassign={user ? onUnassign : undefined}
+                onDelete={onDelete}
+                onClose={onContextMenuClose}
+            />
         </svg>
     );
 };

@@ -173,9 +173,11 @@ export interface SketchResizingItemData {
     initialMouseY: number;
 }
 
+export type SketchTokenUserData = Pick<SessionUser, 'id' | 'name'>;
+
 export interface SketchTokenData {
     color: SketchTokenColor;
-    user: { id: string, name: string } | null;
+    user: SketchTokenUserData | null;
     x: number;
     y: number;
 }
