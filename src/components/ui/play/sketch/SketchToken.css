@@ -1,9 +1,9 @@
-.sketch-token .sketch-token-circle,
-.sketch-token .sketch-token-text {
+.sketch-token.movable .sketch-token-circle,
+.sketch-token.movable .sketch-token-text {
     cursor: grab;
 }
 
-.sketch-token.moving .sketch-token-circle,
-.sketch-token.moving .sketch-token-text {
+.sketch-token.movable.moving .sketch-token-circle,
+.sketch-token.movable.moving .sketch-token-text {
     cursor: grabbing;
 }

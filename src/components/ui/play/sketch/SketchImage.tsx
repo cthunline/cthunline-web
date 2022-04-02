@@ -113,14 +113,16 @@ const SketchImage: React.FC<SketchImageProps> = ({
                     />
                 ))
             ) : null}
-            <SketchItemContextMenu
-                open={!!contextMenu}
-                position={contextMenu ?? undefined}
-                onForward={onForward}
-                onBackward={onBackward}
-                onDelete={onDelete}
-                onClose={onContextMenuClose}
-            />
+            {isMaster ? (
+                <SketchItemContextMenu
+                    open={!!contextMenu}
+                    position={contextMenu ?? undefined}
+                    onForward={onForward}
+                    onBackward={onBackward}
+                    onDelete={onDelete}
+                    onClose={onContextMenuClose}
+                />
+            ) : null}
         </svg>
     );
 };

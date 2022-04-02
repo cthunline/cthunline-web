@@ -2,7 +2,7 @@
 
 :root {
     /* global colors */
-    --palette-background: #111416;
+    --palette-black: #111416;
     --palette-darkgray: #1a1d1f;
     --palette-gray: #454545;
     --palette-lightgray: #888a8b;
@@ -42,7 +42,7 @@ html * {
 }
 
 #root {
-    background: var(--palette-background);
+    background: var(--palette-black);
     height: 100%;
     width: 100%;
 }

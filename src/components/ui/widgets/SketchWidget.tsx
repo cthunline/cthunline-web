@@ -40,6 +40,7 @@ interface SketchWidgetProps {
 const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
     const { confirmDialog } = useDialog();
     const {
+        users,
         isFreeDrawing,
         setIsFreeDrawing,
         sketchData,
@@ -49,6 +50,7 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
         addSketchImage,
         clearDrawings,
         addSketchToken,
+        addSketchUserTokens,
         clearTokens
     } = usePlay();
     const { assetList } = useAsset({
@@ -75,7 +77,7 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
     }, {
         text: 'Spawn player tokens',
         icon: <IoPeopleCircle size={30} />,
-        handler: () => { /* incoming */ }
+        handler: () => addSketchUserTokens(users)
     }, {
         text: 'Remove tokens',
         icon: <IoMdCloseCircle size={30} />,

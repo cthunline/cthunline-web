@@ -15,6 +15,7 @@ import {
     forwardImage,
     backwardImage
 } from '../../../services/sketch';
+import { randomItem } from '../../../services/tools';
 
 export interface SketchHookExport {
     sketchData: SketchData;
@@ -35,11 +36,13 @@ export interface SketchHookExport {
     ) => void;
     deleteSketchImage: (index: number, imageData: SketchImageData) => void;
     addSketchToken: () => void;
+    addSketchUserTokens: (users: SessionUser[]) => void;
     updateSketchTokens: (
         tokens: SketchTokenData[],
         eventType: SketchEventType,
         tokenIndex: number,
-        tokenData?: SketchTokenData
+        tokenData?: SketchTokenData,
+        userAllowed?: boolean
     ) => void;
     assignTokenUser: (index: number, user: SessionUser) => void;
     unassignTokenUser: (index: number) => void;
@@ -67,6 +70,7 @@ export const defaultSketchHookExport: SketchHookExport = {
     updateSketchImages: () => { /* default */ },
     deleteSketchImage: () => { /* default */ },
     addSketchToken: () => { /* default */ },
+    addSketchUserTokens: () => { /* default */ },
     updateSketchTokens: () => { /* default */ },
     assignTokenUser: () => { /* default */ },
     unassignTokenUser: () => { /* default */ },
@@ -119,8 +123,8 @@ const useSketch = (socket: PlaySocket | null) => {
             ))
         );
         const pickedColor: SketchTokenColor = (
-            (Object.keys(filteredColors) as SketchTokenColor[]).shift()
-            ?? Object.values(SketchTokenColor)[0]
+            randomItem(Object.keys(filteredColors) as SketchTokenColor[])
+            ?? randomItem(Object.values(SketchTokenColor))
         );
         return pickedColor;
     };
@@ -132,9 +136,10 @@ const useSketch = (socket: PlaySocket | null) => {
 
     const updateSketch = (
         updater: (previous: SketchData) => SketchData,
-        emit: boolean = true
+        emit: boolean = true,
+        useAllowed: boolean = false
     ) => {
-        if (emit && socket?.isMaster) {
+        if (emit && (socket?.isMaster || useAllowed)) {
             socket?.emit('sketchUpdate', updater(sketchData));
         }
         setSketchData(updater as SetStateAction<SketchData>);
@@ -229,7 +234,7 @@ const useSketch = (socket: PlaySocket | null) => {
         }));
     };
 
-    const addSketchToken = (emit: boolean = true) => {
+    const addSketchToken = () => {
         updateSketch((previous) => ({
             ...previous,
             tokens: [
@@ -240,7 +245,40 @@ const useSketch = (socket: PlaySocket | null) => {
                 type: SketchEventType.tokenAdd,
                 tokenIndex: previous.tokens.length
             }]
-        }), emit);
+        }));
+    };
+
+    const addSketchUserTokens = (users: SessionUser[]) => {
+        updateSketch((previous) => {
+            let x = 0;
+            let y = 0;
+            const tokens = [...previous.tokens];
+            const events = [...previous.events];
+            users.forEach(({ id, name }) => {
+                const token = getDefaultTokenData(tokens);
+                if (!x && !y) {
+                    x = token.x;
+                    y = token.y;
+                } else {
+                    y += 75;
+                }
+                tokens.push({
+                    ...token,
+                    user: { id, name },
+                    x,
+                    y
+                });
+                events.push({
+                    type: SketchEventType.tokenAdd,
+                    tokenIndex: tokens.length - 1
+                });
+            });
+            return {
+                ...previous,
+                tokens,
+                events
+            };
+        });
     };
 
     const updateSketchToken = (
@@ -261,7 +299,8 @@ const useSketch = (socket: PlaySocket | null) => {
         tokens: SketchTokenData[],
         eventType: SketchEventType,
         tokenIndex: number,
-        tokenData?: SketchTokenData
+        tokenData?: SketchTokenData,
+        userAllowed?: boolean
     ) => {
         const event: SketchEvent = {
             type: eventType,
@@ -274,7 +313,7 @@ const useSketch = (socket: PlaySocket | null) => {
             ...previous,
             tokens,
             events: [...previous.events, event]
-        }));
+        }), true, userAllowed);
     };
 
     const setTokenUser = (index: number, tokenUser: SketchTokenUserData | null) => {
@@ -484,6 +523,7 @@ const useSketch = (socket: PlaySocket | null) => {
         updateSketchImages,
         deleteSketchImage,
         addSketchToken,
+        addSketchUserTokens,
         updateSketchTokens,
         assignTokenUser,
         unassignTokenUser,

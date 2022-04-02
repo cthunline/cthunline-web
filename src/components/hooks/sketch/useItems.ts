@@ -103,7 +103,7 @@ const useItems = (
 
     // handles mouse move for moving item
     const handleMovingItemMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
-        if (isMaster && svgPoint && movingItem) {
+        if (movingItem && (isMaster || movingItem.userAllowed) && svgPoint) {
             const {
                 type,
                 index,
@@ -171,7 +171,7 @@ const useItems = (
 
     //  handle mouse up or leave for moving items
     const handleMovingItemMouseUpOrLeave = () => {
-        if (isMaster && movingItem) {
+        if (movingItem && (isMaster || movingItem.userAllowed)) {
             if (itemHasMovedOfResized.current) {
                 // updates items data in play context sketchData
                 const { type, initialX: x, initialY: y } = movingItem;
@@ -187,7 +187,8 @@ const useItems = (
                         tokens,
                         SketchEventType.tokenMove,
                         movingItem.index,
-                        { ...tokens[movingItem.index], x, y }
+                        { ...tokens[movingItem.index], x, y },
+                        movingItem.userAllowed
                     );
                 }
             }
@@ -241,10 +242,11 @@ const useItems = (
     const handleItemMouseDown = (
         e: React.MouseEvent<SVGImageElement | SVGSVGElement>,
         index: number,
-        type: SketchItemType
+        type: SketchItemType,
+        userAllowed?: boolean
     ) => {
         if (isMainClick(e)) {
-            if (isMaster && !isFreeDrawing && svgPoint) {
+            if ((isMaster || userAllowed) && !isFreeDrawing && svgPoint) {
                 e.preventDefault();
                 const element = e.currentTarget.closest('svg');
                 const itemData = getItemData(index, type);
@@ -263,7 +265,8 @@ const useItems = (
                         deltaX: x - itemX,
                         deltaY: y - itemY,
                         initialX: itemX,
-                        initialY: itemY
+                        initialY: itemY,
+                        userAllowed
                     });
                     if (type === SketchItemType.image) {
                         setSelectedImageIndex(index);

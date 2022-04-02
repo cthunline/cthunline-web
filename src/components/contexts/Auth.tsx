@@ -13,7 +13,7 @@ import { User } from '../../types';
 interface AuthData {
     isLoading: boolean;
     isLoggedIn: boolean;
-    userId: number | null;
+    userId: string | null;
     user: User | null;
 }
 

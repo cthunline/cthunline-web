@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
+import { useAuth } from '../../../contexts/Auth';
 import { SessionUser, SketchTokenColor, SketchTokenUser } from '../../../../types';
 import SketchItemContextMenu, { ContextMenuData } from './SketchItemContextMenu';
+import { getCssVar, getTextColor } from '../../../../services/tools';
 
 import './SketchToken.css';
 
@@ -14,7 +16,7 @@ interface SketchTokenProps {
     y: number;
     className?: string;
     onRef?: (el: SVGSVGElement | null) => void;
-    onMouseDown?: (e: React.MouseEvent<SVGSVGElement>) => void;
+    onMouseDown?: (e: React.MouseEvent<SVGSVGElement>, isMovable?: boolean) => void;
     onAssign?: (user: SessionUser) => void;
     onUnassign?: () => void;
     onDelete?: () => void;
@@ -34,6 +36,8 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     onUnassign,
     onDelete
 }) => {
+    const { userId } = useAuth();
+
     const [contextMenu, setContextMenu] = useState<ContextMenuData | null>(null);
 
     const onContextMenuOpen = (e: React.MouseEvent) => {
@@ -62,16 +66,22 @@ const SketchToken: React.FC<SketchTokenProps> = ({
         user.name.charAt(0).toLocaleUpperCase()
     ) : null;
 
+    const isMovable = !!(isMaster || (user && user.id === userId));
+
+    const textColor = `var(--palette-${
+        getTextColor(getCssVar(`--palette-token-${color}`))
+    })`;
+
     return (
         <svg
             ref={onRef}
-            className={`sketch-token ${className}`}
+            className={`sketch-token ${isMovable ? 'movable' : ''} ${className}`}
             viewBox={`0 0 ${tokenSize} ${tokenSize}`}
             width={tokenSize}
             height={tokenSize}
             x={x}
             y={y}
-            onMouseDown={onMouseDown}
+            onMouseDown={(e) => onMouseDown?.(e, isMovable)}
             onContextMenu={onContextMenuOpen}
         >
             <circle
@@ -79,31 +89,35 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                 cx={circleRadius + tokenPadding}
                 cy={circleRadius + tokenPadding}
                 r={circleRadius}
-                stroke="red"
+                stroke="var(--palette-gray)"
                 strokeWidth={circleStrokeSize}
-                fill={`var(--palette-token-${color})`}
+                fill={color}
             />
-            <text
-                className="sketch-token-text"
-                x={textX}
-                y={textY}
-                textAnchor="middle"
-                alignmentBaseline="central"
-                stroke="red"
-                strokeWidth="2px"
-                fill="red"
-                fontSize={fontSize}
-            >
-                {userLetter}
-            </text>
-            <SketchItemContextMenu
-                open={!!contextMenu}
-                position={contextMenu ?? undefined}
-                onAssign={user ? undefined : onAssign}
-                onUnassign={user ? onUnassign : undefined}
-                onDelete={onDelete}
-                onClose={onContextMenuClose}
-            />
+            {user ? (
+                <text
+                    className="sketch-token-text"
+                    x={textX}
+                    y={textY}
+                    textAnchor="middle"
+                    alignmentBaseline="central"
+                    stroke={textColor}
+                    strokeWidth="2px"
+                    fill={textColor}
+                    fontSize={fontSize}
+                >
+                    {userLetter}
+                </text>
+            ) : null}
+            {isMaster ? (
+                <SketchItemContextMenu
+                    open={!!contextMenu}
+                    position={contextMenu ?? undefined}
+                    onAssign={user ? undefined : onAssign}
+                    onUnassign={user ? onUnassign : undefined}
+                    onDelete={onDelete}
+                    onClose={onContextMenuClose}
+                />
+            ) : null}
         </svg>
     );
 };

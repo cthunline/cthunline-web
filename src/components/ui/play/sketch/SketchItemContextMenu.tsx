@@ -90,13 +90,13 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
     ];
 
     const getAssignSubMenuItems = () => [
-        <MenuItem onClick={closeUserSubMenu}>
+        <MenuItem key="submenu-back" onClick={closeUserSubMenu}>
             Back
         </MenuItem>,
-        <Divider />,
+        <Divider key="submenu-divider" />,
         users.map((user) => (
             <MenuItem
-                key={`assign-submenu-user-${user.id}`}
+                key={`submenu-${user.id}`}
                 onClick={() => onSelect(
                     () => onAssign?.(user)
                 )}

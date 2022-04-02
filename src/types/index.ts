@@ -158,6 +158,7 @@ export interface SketchMovingItemData {
     deltaY: number;
     initialX: number;
     initialY: number;
+    userAllowed?: boolean;
 }
 
 export interface SketchResizingItemData {
