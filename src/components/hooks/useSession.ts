@@ -52,13 +52,13 @@ const useSession = ({
             return sessions;
         } catch (err: any) {
             toast.error(err.message);
-            return undefined;
+            throw err;
         }
     }, []);
 
     const getSession = useCallback(async (
         sessId: string
-    ): Promise<Session | null> => {
+    ): Promise<Session> => {
         try {
             return await Api.call({
                 method: 'GET',
@@ -66,24 +66,18 @@ const useSession = ({
             });
         } catch (err: any) {
             toast.error(err.message);
-            return null;
+            throw err;
         }
     }, []);
 
     const refreshSession = useCallback(async (sessId: string) => {
         const sess = await getSession(sessId);
-        if (sess) {
-            setSession(sess);
-        }
-    }, [
-        getSession
-    ]);
+        setSession(sess);
+    }, [getSession]);
 
     const refreshSessionList = useCallback(async () => {
         const sessions = await getSessions();
-        if (sessions) {
-            setSessionList(sessions);
-        }
+        setSessionList(sessions);
     }, [getSessions]);
 
     const refresh = useCallback(async () => {
@@ -110,7 +104,7 @@ const useSession = ({
         data,
         isRefresh = true,
         isToast = true
-    }: CreateOptions): Promise<Session | null> => {
+    }: CreateOptions): Promise<Session> => {
         try {
             const sess = await Api.call({
                 method: 'POST',
@@ -126,7 +120,7 @@ const useSession = ({
             return sess;
         } catch (err: any) {
             toast.error(err.message);
-            return null;
+            throw err;
         }
     }, [
         refresh

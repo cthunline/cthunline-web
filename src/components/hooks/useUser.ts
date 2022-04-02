@@ -94,7 +94,7 @@ const useUser = ({
             return user;
         } catch (err: any) {
             toast.error(err.message);
-            return null;
+            throw err;
         }
     };
 

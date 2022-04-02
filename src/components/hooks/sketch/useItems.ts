@@ -65,7 +65,7 @@ const useItems = (
         if (type === SketchItemType.token) {
             return tokens[index];
         }
-        return null;
+        throw new Error('Could not get item data');
     };
 
     // helper to set an image in the images state array
@@ -112,30 +112,28 @@ const useItems = (
                 deltaY
             } = movingItem;
             const itemData = getItemData(index, type);
-            if (itemData) {
-                // gets moving item new coordinates
-                const coord = getMovingItemCoordinates({
-                    event: e,
-                    svgContainer: svgRef.current,
-                    svgPoint,
-                    itemElement: movingItem.element,
-                    deltaX,
-                    deltaY
-                });
-                if (coord) {
-                    itemHasMovedOfResized.current = true;
-                    // assign new coordinates
-                    if (type === SketchItemType.image) {
-                        setImage(index, {
-                            ...(itemData as SketchImageData),
-                            ...coord
-                        });
-                    } else if (type === SketchItemType.token) {
-                        setToken(index, {
-                            ...(itemData as SketchTokenData),
-                            ...coord
-                        });
-                    }
+            // gets moving item new coordinates
+            const coord = getMovingItemCoordinates({
+                event: e,
+                svgContainer: svgRef.current,
+                svgPoint,
+                itemElement: movingItem.element,
+                deltaX,
+                deltaY
+            });
+            if (coord) {
+                itemHasMovedOfResized.current = true;
+                // assign new coordinates
+                if (type === SketchItemType.image) {
+                    setImage(index, {
+                        ...(itemData as SketchImageData),
+                        ...coord
+                    });
+                } else if (type === SketchItemType.token) {
+                    setToken(index, {
+                        ...(itemData as SketchTokenData),
+                        ...coord
+                    });
                 }
             }
         }
@@ -146,22 +144,20 @@ const useItems = (
         if (isMaster && resizingItem && svgPoint) {
             const { type, index } = resizingItem;
             const itemData = getItemData(index, type);
-            if (itemData) {
-                // gets new coordinates and position for resizing item
-                const data = getResizingItemCoordAndPos({
-                    event: e,
-                    svgContainer: svgRef.current,
-                    svgPoint,
-                    resizingItemData: resizingItem
+            // gets new coordinates and position for resizing item
+            const data = getResizingItemCoordAndPos({
+                event: e,
+                svgContainer: svgRef.current,
+                svgPoint,
+                resizingItemData: resizingItem
+            });
+            // set new size and position
+            if (data && type === SketchItemType.image) {
+                itemHasMovedOfResized.current = true;
+                setImage(index, {
+                    ...(itemData as SketchImageData),
+                    ...data
                 });
-                // set new size and position
-                if (data && type === SketchItemType.image) {
-                    itemHasMovedOfResized.current = true;
-                    setImage(index, {
-                        ...(itemData as SketchImageData),
-                        ...data
-                    });
-                }
             }
         }
     };
@@ -245,9 +241,9 @@ const useItems = (
         if (isMainClick(e)) {
             if ((isMaster || movableByUser) && !isFreeDrawing && svgPoint) {
                 e.preventDefault();
-                const element = e.currentTarget.closest('svg');
                 const itemData = getItemData(index, type);
-                if (itemData && element) {
+                const element = e.currentTarget.closest('svg');
+                if (element) {
                     itemHasMovedOfResized.current = false;
                     // gets item position
                     const { x: itemX, y: itemY } = itemData;
@@ -282,9 +278,9 @@ const useItems = (
     ) => {
         if (isMainClick(e)) {
             if (isMaster && !isFreeDrawing && svgPoint) {
-                const element = e.currentTarget.closest('svg');
                 const itemData = getItemData(index, type);
-                if (itemData && element) {
+                const element = e.currentTarget.closest('svg');
+                if (element) {
                     itemHasMovedOfResized.current = false;
                     // gets item position
                     const { x: initialX, y: initialY } = itemData;

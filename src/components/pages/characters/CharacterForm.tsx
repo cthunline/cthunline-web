@@ -40,23 +40,18 @@ const CharacterForm: React.FC<CharacterFormProps> = ({ create }) => {
     useEffect(() => {
         (async () => {
             if (create && gameId) {
-                const data = getDefaultData(gameId);
-                if (data) {
-                    const char = await createCharacter({
-                        data: {
-                            gameId,
-                            name: '[No Name]',
-                            data
-                        },
-                        isRefresh: false,
-                        isToast: false
-                    });
-                    if (char) {
-                        navigate(`/characters/${char.id}`, {
-                            replace: true
-                        });
-                    }
-                }
+                const char = await createCharacter({
+                    data: {
+                        gameId,
+                        name: '[No Name]',
+                        data: getDefaultData(gameId)
+                    },
+                    isRefresh: false,
+                    isToast: false
+                });
+                navigate(`/characters/${char.id}`, {
+                    replace: true
+                });
             } else if (characterId) {
                 const char = await getCharacter(characterId);
                 setCharacter(char);

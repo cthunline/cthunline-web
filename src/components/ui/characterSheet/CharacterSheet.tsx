@@ -23,7 +23,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
     data,
     onChange = () => { /* default */ }
 }) => {
-    const getContent = (): JSX.Element | null => {
+    const getContent = (): JSX.Element => {
         if (gameId === 'callOfCthulhu') {
             return (
                 <CoCSheet
@@ -33,7 +33,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                 />
             );
         }
-        return null;
+        throw new Error('Could not get character sheet content');
     };
 
     return (

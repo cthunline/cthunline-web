@@ -55,7 +55,7 @@ const useCharacter = ({
             return characters;
         } catch (err: any) {
             toast.error(err.message);
-            return undefined;
+            throw err;
         }
     }, []);
 
@@ -67,25 +67,19 @@ const useCharacter = ({
             });
         } catch (err: any) {
             toast.error(err.message);
-            return undefined;
+            throw err;
         }
     }, []);
 
     const refreshCharacter = useCallback(async (charId: string) => {
         const char = await getCharacter(charId);
-        if (char) {
-            setCharacter(char);
-        }
-    }, [
-        getCharacter
-    ]);
+        setCharacter(char);
+    }, [getCharacter]);
 
     const refreshCharacterList = useCallback(async () => {
         if (user?.id) {
             const chars = await getCharacters(user.id);
-            if (chars) {
-                setCharacterList(chars);
-            }
+            setCharacterList(chars);
         }
     }, [
         user,
@@ -116,7 +110,7 @@ const useCharacter = ({
         data,
         isRefresh = true,
         isToast = true
-    }: CreateOptions): Promise<Character | null> => {
+    }: CreateOptions): Promise<Character> => {
         try {
             const char = await Api.call({
                 method: 'POST',
@@ -132,7 +126,7 @@ const useCharacter = ({
             return char;
         } catch (err: any) {
             toast.error(err.message);
-            return null;
+            throw err;
         }
     }, [
         refresh,

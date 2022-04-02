@@ -42,18 +42,14 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
             return assets;
         } catch (err: any) {
             toast.error(err.message);
-            return undefined;
+            throw err;
         }
-    }, [
-        type
-    ]);
+    }, [type]);
 
     const refreshAssetList = useCallback(async () => {
         if (user?.id) {
             const assets = await getAssets(user.id);
-            if (assets) {
-                setAssetList(assets);
-            }
+            setAssetList(assets);
         }
     }, [
         user,
@@ -65,7 +61,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
         progress,
         isRefresh = true,
         isToast = true
-    }: UploadOptions): Promise<Asset[] | null> => {
+    }: UploadOptions): Promise<Asset[]> => {
         try {
             const formData = new FormData();
             [...files].forEach((file) => {
@@ -87,7 +83,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
             return assets;
         } catch (err: any) {
             toast.error(err.message);
-            return null;
+            throw err;
         }
     }, [
         loadList,

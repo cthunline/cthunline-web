@@ -66,16 +66,14 @@ const Profile = () => {
     }: PasswordChangeData, {
         resetForm
     }: FormikHelpers<PasswordChangeData>) => {
-        const editedUser = await editUser({
+        await editUser({
             userId: user?.id ?? '',
             data: {
                 oldPassword,
                 password
             }
         });
-        if (editedUser) {
-            resetForm();
-        }
+        resetForm();
     };
 
     return (

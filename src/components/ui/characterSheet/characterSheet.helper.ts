@@ -5,5 +5,5 @@ export const getDefaultData = (gameId: string) => {
     if (gameId === 'callOfCthulhu') {
         return cocDefaultData;
     }
-    return null;
+    throw new Error('Could not get default character data');
 };
