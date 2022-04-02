@@ -12,6 +12,8 @@ import {
 } from '../../../services/sketch';
 import { isMainClick } from '../../../services/tools';
 
+// this hook holds state and event handlers for sketch drawing
+// it is meant to be used by the sketch component and sub components
 const useDrawing = (
     svgRef: React.MutableRefObject<SVGSVGElement>,
     isMaster: boolean = false

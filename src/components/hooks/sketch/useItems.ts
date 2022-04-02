@@ -23,6 +23,8 @@ import {
 } from '../../../services/sketch';
 import { isMainClick } from '../../../services/tools';
 
+// this hook holds states and event handlers for sketch items (images and tokens)
+// it is meant to be used by the sketch component and sub components
 const useItems = (
     svgRef: React.MutableRefObject<SVGSVGElement>,
     isMaster: boolean = false
@@ -57,14 +59,13 @@ const useItems = (
 
     // gets item data from index and item type
     const getItemData = (index: number, type: SketchItemType) => {
-        switch (type) {
-            case SketchItemType.image:
-                return images[index];
-            case SketchItemType.token:
-                return tokens[index];
-            default:
-                return null;
+        if (type === SketchItemType.image) {
+            return images[index];
         }
+        if (type === SketchItemType.token) {
+            return tokens[index];
+        }
+        return null;
     };
 
     // helper to set an image in the images state array
@@ -103,7 +104,7 @@ const useItems = (
 
     // handles mouse move for moving item
     const handleMovingItemMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
-        if (movingItem && (isMaster || movingItem.userAllowed) && svgPoint) {
+        if (movingItem && (isMaster || movingItem.movableByUser) && svgPoint) {
             const {
                 type,
                 index,
@@ -124,20 +125,16 @@ const useItems = (
                 if (coord) {
                     itemHasMovedOfResized.current = true;
                     // assign new coordinates
-                    switch (type) {
-                        case SketchItemType.image:
-                            setImage(index, {
-                                ...(itemData as SketchImageData),
-                                ...coord
-                            });
-                            break;
-                        case SketchItemType.token:
-                            setToken(index, {
-                                ...(itemData as SketchTokenData),
-                                ...coord
-                            });
-                            break;
-                        default:
+                    if (type === SketchItemType.image) {
+                        setImage(index, {
+                            ...(itemData as SketchImageData),
+                            ...coord
+                        });
+                    } else if (type === SketchItemType.token) {
+                        setToken(index, {
+                            ...(itemData as SketchTokenData),
+                            ...coord
+                        });
                     }
                 }
             }
@@ -171,25 +168,25 @@ const useItems = (
 
     //  handle mouse up or leave for moving items
     const handleMovingItemMouseUpOrLeave = () => {
-        if (movingItem && (isMaster || movingItem.userAllowed)) {
+        if (movingItem && (isMaster || movingItem.movableByUser)) {
             if (itemHasMovedOfResized.current) {
                 // updates items data in play context sketchData
                 const { type, initialX: x, initialY: y } = movingItem;
                 if (type === SketchItemType.image) {
-                    updateSketchImages(
+                    updateSketchImages({
                         images,
-                        SketchEventType.imageMove,
-                        movingItem.index,
-                        { ...images[movingItem.index], x, y }
-                    );
+                        eventType: SketchEventType.imageMove,
+                        imageIndex: movingItem.index,
+                        imageData: { ...images[movingItem.index], x, y }
+                    });
                 } else if (type === SketchItemType.token) {
-                    updateSketchTokens(
+                    updateSketchTokens({
                         tokens,
-                        SketchEventType.tokenMove,
-                        movingItem.index,
-                        { ...tokens[movingItem.index], x, y },
-                        movingItem.userAllowed
-                    );
+                        eventType: SketchEventType.tokenMove,
+                        tokenIndex: movingItem.index,
+                        tokenData: { ...tokens[movingItem.index], x, y },
+                        movableByUser: movingItem.movableByUser
+                    });
                 }
             }
             // stops moving
@@ -212,18 +209,18 @@ const useItems = (
                     initialHeight: height
                 } = resizingItem;
                 if (type === SketchItemType.image) {
-                    updateSketchImages(
+                    updateSketchImages({
                         images,
-                        SketchEventType.imageResize,
-                        resizingItem.index,
-                        {
+                        eventType: SketchEventType.imageResize,
+                        imageIndex: resizingItem.index,
+                        imageData: {
                             ...images[resizingItem.index],
                             x,
                             y,
                             width,
                             height
                         }
-                    );
+                    });
                 }
             }
             // stops resizing
@@ -243,10 +240,10 @@ const useItems = (
         e: React.MouseEvent<SVGImageElement | SVGSVGElement>,
         index: number,
         type: SketchItemType,
-        userAllowed?: boolean
+        movableByUser?: boolean
     ) => {
         if (isMainClick(e)) {
-            if ((isMaster || userAllowed) && !isFreeDrawing && svgPoint) {
+            if ((isMaster || movableByUser) && !isFreeDrawing && svgPoint) {
                 e.preventDefault();
                 const element = e.currentTarget.closest('svg');
                 const itemData = getItemData(index, type);
@@ -266,7 +263,7 @@ const useItems = (
                         deltaY: y - itemY,
                         initialX: itemX,
                         initialY: itemY,
-                        userAllowed
+                        movableByUser
                     });
                     if (type === SketchItemType.image) {
                         setSelectedImageIndex(index);
@@ -325,8 +322,7 @@ const useItems = (
             const imageData = images[index];
             deleteSketchImage(index, imageData);
             setSelectedImageIndex(null);
-        }
-        if (type === SketchItemType.token) {
+        } else if (type === SketchItemType.token) {
             const tokenData = tokens[index];
             deleteSketchToken(index, tokenData);
         }
@@ -335,22 +331,22 @@ const useItems = (
     // handles bringing image foward
     const handleImageForward = (index: number) => {
         if (images.length > 1 && index < images.length - 1) {
-            updateSketchImages(
-                forwardImage(images, index),
-                SketchEventType.imageForward,
-                index + 1
-            );
+            updateSketchImages({
+                images: forwardImage(images, index),
+                eventType: SketchEventType.imageForward,
+                imageIndex: index + 1
+            });
         }
     };
 
     // handles sending image backward
     const handleImageBackward = (index: number) => {
         if (images.length > 1 && index > 0) {
-            updateSketchImages(
-                backwardImage(images, index),
-                SketchEventType.imageBackward,
-                index - 1
-            );
+            updateSketchImages({
+                images: backwardImage(images, index),
+                eventType: SketchEventType.imageBackward,
+                imageIndex: index - 1
+            });
         }
     };
 

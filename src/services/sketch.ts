@@ -3,8 +3,11 @@ import {
     SketchCoordinates,
     SketchSize,
     CardinalDirection,
-    SketchResizingItemData
+    SketchResizingItemData,
+    SketchTokenData,
+    SketchTokenColor
 } from '../types';
+import { randomItem } from './tools';
 
 // main svg container viewbox size
 export const viewBox: SketchSize = {
@@ -192,3 +195,25 @@ export const backwardImage = (images: SketchImageData[], index: number) => ([
     images[index - 1],
     ...images.slice(index + 1)
 ]);
+
+type SketchColorUses = Record<SketchTokenColor, number>;
+// pick a color for a new token based on colors already used
+export const getNewTokenColor = (currentTokens: SketchTokenData[]): SketchTokenColor => {
+    const colorUses = Object.fromEntries(
+        Object.values(SketchTokenColor).map((color) => [color, 0])
+    ) as SketchColorUses;
+    currentTokens.map(({ color }) => color).forEach((color) => {
+        colorUses[color] += 1;
+    });
+    const minUsesCount = Math.min(...Object.values(colorUses));
+    const filteredColors: Partial<SketchColorUses> = Object.fromEntries(
+        Object.entries(colorUses).filter(([, usesCount]) => (
+            usesCount === minUsesCount
+        ))
+    );
+    const pickedColor: SketchTokenColor = (
+        randomItem(Object.keys(filteredColors) as SketchTokenColor[])
+        ?? randomItem(Object.values(SketchTokenColor))
+    );
+    return pickedColor;
+};

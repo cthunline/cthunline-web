@@ -7,15 +7,29 @@ import {
     SketchEventType,
     SketchImageData,
     SketchTokenData,
-    SketchTokenColor,
     SessionUser,
     SketchTokenUserData
 } from '../../../types';
 import {
     forwardImage,
-    backwardImage
+    backwardImage,
+    getNewTokenColor
 } from '../../../services/sketch';
-import { randomItem } from '../../../services/tools';
+
+interface UpdateSketchImagesOptions {
+    images: SketchImageData[];
+    eventType: SketchEventType;
+    imageIndex: number;
+    imageData?: SketchImageData;
+}
+
+interface UpdateSketchTokensOptions {
+    tokens: SketchTokenData[];
+    eventType: SketchEventType;
+    tokenIndex: number;
+    tokenData?: SketchTokenData;
+    movableByUser?: boolean;
+}
 
 export interface SketchHookExport {
     sketchData: SketchData;
@@ -28,22 +42,11 @@ export interface SketchHookExport {
     clearSketch: () => void;
     addSketchImage: (url: string, emit?: boolean) => void;
     updateSketchImage: (index: number, image: SketchImageData) => void;
-    updateSketchImages: (
-        images: SketchImageData[],
-        eventType: SketchEventType,
-        imageIndex: number,
-        imageData?: SketchImageData
-    ) => void;
+    updateSketchImages: (options: UpdateSketchImagesOptions) => void;
     deleteSketchImage: (index: number, imageData: SketchImageData) => void;
     addSketchToken: () => void;
     addSketchUserTokens: (users: SessionUser[]) => void;
-    updateSketchTokens: (
-        tokens: SketchTokenData[],
-        eventType: SketchEventType,
-        tokenIndex: number,
-        tokenData?: SketchTokenData,
-        userAllowed?: boolean
-    ) => void;
+    updateSketchTokens: (options: UpdateSketchTokensOptions) => void;
     assignTokenUser: (index: number, user: SessionUser) => void;
     unassignTokenUser: (index: number) => void;
     deleteSketchToken: (index: number, tokenData: SketchTokenData) => void;
@@ -78,8 +81,6 @@ export const defaultSketchHookExport: SketchHookExport = {
     clearTokens: () => { /* default */ }
 };
 
-type SketchColorUses = Record<SketchTokenColor, number>;
-
 const defaultSketchData: SketchData = {
     displayed: false,
     paths: [],
@@ -100,39 +101,13 @@ const defaultTokenData: Omit<SketchTokenData, 'color'> = {
     y: 50
 };
 
+// this hooks holds sketch states and utility functions
+// it is meant to be used in play context
 const useSketch = (socket: PlaySocket | null) => {
     const [sketchData, setSketchData] = useState<SketchData>(defaultSketchData);
     const [isFreeDrawing, setIsFreeDrawing] = useState<boolean>(false);
 
-    const getDefaultImageData = (url: string): SketchImageData => ({
-        url,
-        ...defaultImageData
-    });
-
-    const getNewTokenColor = (currentTokens: SketchTokenData[]): SketchTokenColor => {
-        const colorUses = Object.fromEntries(
-            Object.values(SketchTokenColor).map((color) => [color, 0])
-        ) as SketchColorUses;
-        currentTokens.map(({ color }) => color).forEach((color) => {
-            colorUses[color] += 1;
-        });
-        const minUsesCount = Math.min(...Object.values(colorUses));
-        const filteredColors: Partial<SketchColorUses> = Object.fromEntries(
-            Object.entries(colorUses).filter(([, usesCount]) => (
-                usesCount === minUsesCount
-            ))
-        );
-        const pickedColor: SketchTokenColor = (
-            randomItem(Object.keys(filteredColors) as SketchTokenColor[])
-            ?? randomItem(Object.values(SketchTokenColor))
-        );
-        return pickedColor;
-    };
-
-    const getDefaultTokenData = (currentTokens: SketchTokenData[]): SketchTokenData => ({
-        color: getNewTokenColor(currentTokens),
-        ...defaultTokenData
-    });
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ sketch
 
     const updateSketch = (
         updater: (previous: SketchData) => SketchData,
@@ -151,6 +126,15 @@ const useSketch = (socket: PlaySocket | null) => {
             displayed
         }));
     };
+
+    const clearSketch = () => {
+        updateSketch((previous) => ({
+            ...defaultSketchData,
+            displayed: previous.displayed
+        }));
+    };
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ drawing
 
     const addSketchDrawPath = (path: string) => {
         updateSketch((previous) => ({
@@ -172,12 +156,19 @@ const useSketch = (socket: PlaySocket | null) => {
         }));
     };
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ images
+
+    const getNewImageData = (url: string): SketchImageData => ({
+        url,
+        ...defaultImageData
+    });
+
     const addSketchImage = (url: string, emit: boolean = true) => {
         updateSketch((previous) => ({
             ...previous,
             images: [
                 ...previous.images,
-                getDefaultImageData(url)
+                getNewImageData(url)
             ],
             events: [...previous.events, {
                 type: SketchEventType.imageAdd,
@@ -200,12 +191,12 @@ const useSketch = (socket: PlaySocket | null) => {
         }));
     };
 
-    const updateSketchImages = (
-        images: SketchImageData[],
-        eventType: SketchEventType,
-        imageIndex: number,
-        imageData?: SketchImageData
-    ) => {
+    const updateSketchImages = ({
+        images,
+        eventType,
+        imageIndex,
+        imageData
+    }: UpdateSketchImagesOptions) => {
         const event: SketchEvent = {
             type: eventType,
             imageIndex
@@ -234,12 +225,19 @@ const useSketch = (socket: PlaySocket | null) => {
         }));
     };
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ tokens
+
+    const getNewTokenData = (currentTokens: SketchTokenData[]): SketchTokenData => ({
+        color: getNewTokenColor(currentTokens),
+        ...defaultTokenData
+    });
+
     const addSketchToken = () => {
         updateSketch((previous) => ({
             ...previous,
             tokens: [
                 ...previous.tokens,
-                getDefaultTokenData(previous.tokens)
+                getNewTokenData(previous.tokens)
             ],
             events: [...previous.events, {
                 type: SketchEventType.tokenAdd,
@@ -255,7 +253,7 @@ const useSketch = (socket: PlaySocket | null) => {
             const tokens = [...previous.tokens];
             const events = [...previous.events];
             users.forEach(({ id, name }) => {
-                const token = getDefaultTokenData(tokens);
+                const token = getNewTokenData(tokens);
                 if (!x && !y) {
                     x = token.x;
                     y = token.y;
@@ -295,13 +293,13 @@ const useSketch = (socket: PlaySocket | null) => {
         }));
     };
 
-    const updateSketchTokens = (
-        tokens: SketchTokenData[],
-        eventType: SketchEventType,
-        tokenIndex: number,
-        tokenData?: SketchTokenData,
-        userAllowed?: boolean
-    ) => {
+    const updateSketchTokens = ({
+        tokens,
+        eventType,
+        tokenIndex,
+        tokenData,
+        movableByUser
+    }: UpdateSketchTokensOptions) => {
         const event: SketchEvent = {
             type: eventType,
             tokenIndex
@@ -313,7 +311,7 @@ const useSketch = (socket: PlaySocket | null) => {
             ...previous,
             tokens,
             events: [...previous.events, event]
-        }), true, userAllowed);
+        }), true, movableByUser);
     };
 
     const setTokenUser = (index: number, tokenUser: SketchTokenUserData | null) => {
@@ -360,11 +358,15 @@ const useSketch = (socket: PlaySocket | null) => {
         }));
     };
 
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ events
+
     const popEvents = () => {
         const eventsClone = [...sketchData.events];
         eventsClone.pop();
         return eventsClone;
     };
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ undo
 
     const undoDrawing = () => {
         const pathsClone = [...sketchData.paths];
@@ -501,13 +503,6 @@ const useSketch = (socket: PlaySocket | null) => {
                 default:
             }
         }
-    };
-
-    const clearSketch = () => {
-        updateSketch((previous) => ({
-            ...defaultSketchData,
-            displayed: previous.displayed
-        }));
     };
 
     return {
