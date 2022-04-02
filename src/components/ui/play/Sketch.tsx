@@ -198,12 +198,12 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                             onMouseDown={(e, isMovable) => {
                                 handleItemMouseDown(e, index, SketchItemType.token, isMovable);
                             }}
-                            onAssign={(tokenUser: SessionUser) => {
+                            onAssign={user ? (tokenUser: SessionUser) => {
                                 assignTokenUser(index, tokenUser);
-                            }}
-                            onUnassign={() => {
+                            } : undefined}
+                            onUnassign={user ? () => {
                                 unassignTokenUser(index);
-                            }}
+                            } : undefined}
                             onDelete={() => {
                                 handleItemDelete(index, SketchItemType.token);
                             }}

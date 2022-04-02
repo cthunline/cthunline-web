@@ -68,9 +68,8 @@ const SketchToken: React.FC<SketchTokenProps> = ({
 
     const isMovable = !!(isMaster || (user && user.id === userId));
 
-    const textColor = `var(--palette-${
-        getTextColor(getCssVar(`--palette-token-${color}`))
-    })`;
+    const hexColor = getCssVar(`--palette-token-${color}`);
+    const textColor = `var(--palette-${getTextColor(hexColor)})`;
 
     return (
         <svg
@@ -112,8 +111,8 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                 <SketchItemContextMenu
                     open={!!contextMenu}
                     position={contextMenu ?? undefined}
-                    onAssign={user ? undefined : onAssign}
-                    onUnassign={user ? onUnassign : undefined}
+                    onAssign={onAssign}
+                    onUnassign={onUnassign}
                     onDelete={onDelete}
                     onClose={onContextMenuClose}
                 />
