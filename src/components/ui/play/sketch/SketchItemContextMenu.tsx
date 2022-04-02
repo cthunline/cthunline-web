@@ -41,6 +41,8 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
 
     const [isAssignSubMenu, setIsAssignSubMenu] = useState<boolean>(false);
 
+    const playerUsers = users.filter(({ isMaster }) => !isMaster);
+
     const onSelect = (handler?: Function) => {
         handler?.();
         onClose?.();
@@ -60,41 +62,55 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
         setIsAssignSubMenu(false);
     };
 
-    const getMainMenuItems = () => [
-        onForward ? (
-            <MenuItem key="forward" onClick={() => onSelect(onForward)}>
-                Forward
-            </MenuItem>
-        ) : null,
-        onBackward ? (
-            <MenuItem key="backward" onClick={() => onSelect(onBackward)}>
-                Backward
-            </MenuItem>
-        ) : null,
-        onUnassign ? (
-            <MenuItem key="assign" onClick={() => onSelect(onUnassign)}>
-                Unassign user
-            </MenuItem>
-        ) : null,
-        onAssign && users ? (
-            <MenuItem key="assign" onClick={openUserSubMenu}>
-                Assign user
-            </MenuItem>
-        ) : null,
-        ...(onDelete ? [
-            <Divider key="divider" />,
-            <MenuItem key="delete" onClick={() => onSelect(onDelete)}>
-                Delete
-            </MenuItem>
-        ] : [])
-    ];
+    const getMainMenuItems = () => {
+        const items = [];
+        if (onForward) {
+            items.push(
+                <MenuItem key="forward" onClick={() => onSelect(onForward)}>
+                    Forward
+                </MenuItem>
+            );
+        }
+        if (onBackward) {
+            items.push(
+                <MenuItem key="backward" onClick={() => onSelect(onBackward)}>
+                    Backward
+                </MenuItem>
+            );
+        }
+        if (onUnassign) {
+            items.push(
+                <MenuItem key="assign" onClick={() => onSelect(onUnassign)}>
+                    Unassign user
+                </MenuItem>
+            );
+        }
+        if (onAssign && playerUsers.length) {
+            items.push(
+                <MenuItem key="assign" onClick={openUserSubMenu}>
+                    Assign user
+                </MenuItem>
+            );
+        }
+        if (onDelete) {
+            if (items.length) {
+                items.push(<Divider key="divider" />);
+            }
+            items.push(
+                <MenuItem key="delete" onClick={() => onSelect(onDelete)}>
+                    Delete
+                </MenuItem>
+            );
+        }
+        return items;
+    };
 
     const getAssignSubMenuItems = () => [
         <MenuItem key="submenu-back" onClick={closeUserSubMenu}>
             Back
         </MenuItem>,
         <Divider key="submenu-divider" />,
-        users.map((user) => (
+        playerUsers.map((user) => [
             <MenuItem
                 key={`submenu-${user.id}`}
                 onClick={() => onSelect(
@@ -103,7 +119,7 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
             >
                 {user.name}
             </MenuItem>
-        ))
+        ])
     ];
 
     return (
