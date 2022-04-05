@@ -14,16 +14,15 @@ import {
 import { FiPlusCircle } from 'react-icons/fi';
 
 import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
-import SkillSelector from './SkillSelector';
+import AutocompleteInput from '../../../../AutocompleteInput/AutocompleteInput';
+import {
+    SkillData,
+    skillList,
+    defaultSkillValue
+} from './skills.data';
 
 interface SkillAddProps {
     onSubmit: (data: CoCSkill) => void;
-}
-
-interface SkillAddValues {
-    name: string;
-    base: string;
-    development: boolean;
 }
 
 interface SkillAddErrors {
@@ -31,20 +30,14 @@ interface SkillAddErrors {
     base: boolean;
 }
 
-const defaultValues = {
-    name: '',
-    base: '',
-    development: true
-};
-
 const defaultErrors = {
     name: false,
     base: false
 };
 
 const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
-    const [selectorValue, setSelectorValue] = useState<SkillAddValues | null>(null);
-    const [values, setValues] = useState<SkillAddValues>(defaultValues);
+    const [selectorValue, setSelectorValue] = useState<SkillData | null>(null);
+    const [values, setValues] = useState<SkillData>(defaultSkillValue);
     const [errors, setErrors] = useState<SkillAddErrors>(defaultErrors);
 
     const controlForm = useCallback((): boolean => {
@@ -71,12 +64,12 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
         }
     }, [values]);
 
-    const onSelectorChange = useCallback((result: SkillAddValues | null) => {
+    const onSelectorChange = useCallback((result: SkillData | null) => {
         setSelectorValue(result);
         if (result) {
             setValues(result);
         } else {
-            setValues(defaultValues);
+            setValues(defaultSkillValue);
         }
     }, []);
 
@@ -87,7 +80,9 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
             gridTemplateColumns="repeat(12, 1fr)"
         >
             <Box gridColumn="span 6" display="grid" alignItems="center">
-                <SkillSelector
+                <AutocompleteInput<SkillData>
+                    options={skillList}
+                    defaultValue={defaultSkillValue}
                     label="Select or create Skill"
                     value={selectorValue}
                     size="small"
@@ -134,14 +129,15 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
                     onClick={() => {
                         if (controlForm()) {
                             onSubmit({
+                                ...defaultSkillValue,
                                 ...values,
                                 developed: false,
                                 regular: 0,
                                 half: 0,
                                 fifth: 0
-                            });
+                            } as CoCSkill);
                             setSelectorValue(null);
-                            setValues(defaultValues);
+                            setValues(defaultSkillValue);
                         }
                     }}
                 >

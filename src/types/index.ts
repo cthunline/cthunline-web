@@ -1,6 +1,7 @@
 import { Socket } from 'socket.io-client';
 
 import { CoCCharacterData } from './games/callOfCthulhu';
+import { SWD6CharacterData } from './games/starWarsD6';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ user
 
@@ -67,7 +68,7 @@ export type SessionEditBody = Partial<Omit<SessionCreateBody, 'gameId'>>;
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ character
 
-export type CharacterData = CoCCharacterData;
+export type CharacterData = CoCCharacterData | SWD6CharacterData;
 
 export interface Character<GenericCharacterData = CharacterData> {
     id: string;

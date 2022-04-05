@@ -1,8 +1,11 @@
 import React from 'react';
 import { Paper } from '@mui/material';
 
-import CoCSheet from './callOfCthulhu/CoCSheet';
 import { CharacterData } from '../../../types';
+import CoCSheet from './callOfCthulhu/CoCSheet';
+import { CoCCharacterData } from '../../../types/games/callOfCthulhu';
+import SWD6Sheet from './starWarsD6/SWD6Sheet';
+import { SWD6CharacterData } from '../../../types/games/starWarsD6';
 
 import './CharacterSheet.css';
 
@@ -28,7 +31,16 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
             return (
                 <CoCSheet
                     readonly={readonly}
-                    data={data}
+                    data={data as CoCCharacterData}
+                    onChange={onChange}
+                />
+            );
+        }
+        if (gameId === 'starWarsD6') {
+            return (
+                <SWD6Sheet
+                    readonly={readonly}
+                    data={data as SWD6CharacterData}
                     onChange={onChange}
                 />
             );

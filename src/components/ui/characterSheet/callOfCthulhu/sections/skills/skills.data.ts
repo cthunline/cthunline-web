@@ -24,6 +24,12 @@ export interface SkillData {
     development?: boolean;
 }
 
+export const defaultSkillValue: SkillData = {
+    name: '',
+    base: '',
+    development: true
+};
+
 export const skillList: SkillData[] = [
     { name: 'Accounting', base: '5%', development: true },
     { name: 'Anthropology', base: '1%', development: true },
