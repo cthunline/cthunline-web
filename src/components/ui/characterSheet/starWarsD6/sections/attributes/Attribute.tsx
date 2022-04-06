@@ -36,6 +36,7 @@ const Attribute: React.FC<AttributeProps> = ({
         alignItems="start"
         rowGap={1}
         columnGap={2}
+        gridAutoRows="min-content"
     >
         <Box
             gridColumn="span 12"

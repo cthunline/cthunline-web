@@ -6,13 +6,11 @@ import {
 export interface SkillField {
     gridColumn: number;
     key: keyof SWD6Skill;
-    readonly?: boolean;
 }
 
 export const skillFields: SkillField[] = [{
     gridColumn: 11,
-    key: 'name',
-    readonly: true
+    key: 'name'
 }, {
     gridColumn: 5,
     key: 'value'

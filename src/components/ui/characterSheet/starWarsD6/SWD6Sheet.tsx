@@ -11,9 +11,9 @@ import {
     SWD6Biography,
     SWD6Attribute,
     SWD6AttributeData,
-    SWD6Skill
-    // SWD6Statistics,
-    // SWD6WoundStatus,
+    SWD6Skill,
+    SWD6Statistics,
+    SWD6WoundStatus
     // SWD6Story,
     // SWD6Weapon
 } from '../../../../types/games/starWarsD6';
@@ -21,7 +21,9 @@ import { CharacterData } from '../../../../types';
 import Portrait from '../generic/portrait/Portrait';
 import Biography from './sections/biography/Biography';
 import Attribute from './sections/attributes/Attribute';
-// import { controlCharacterData } from './swd6Sheet.helper';
+import Statistics from './sections/statistics/Statistics';
+import WoundStatus from './sections/woundStatus/WoundStatus';
+import { controlCharacterData } from './swd6Sheet.helper';
 
 export interface SWD6SheetProps {
     readonly: boolean;
@@ -151,21 +153,21 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     //     }));
     // }, []);
 
-    // const onStatisticsChange = useCallback((statistics: SWD6Statistics) => {
-    //     setCharacterData((previous) => ({
-    //         ...previous,
-    //         statistics
-    //     }));
-    // }, []);
+    const onStatisticsChange = useCallback((statistics: SWD6Statistics) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            statistics
+        }));
+    }, []);
 
-    // const onWoundStatusChange = useCallback((woundStatus: SWD6WoundStatus) => {
-    //     setCharacterData((previous) => (
-    //         controlCharacterData({
-    //             ...previous,
-    //             woundStatus
-    //         })
-    //     ));
-    // }, []);
+    const onWoundStatusChange = useCallback((woundStatus: SWD6WoundStatus) => {
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                woundStatus
+            })
+        ));
+    }, []);
 
     // const onStoryChange = useCallback((story: SWD6Story) => {
     //     setCharacterData((previous) => ({
@@ -205,7 +207,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     // }, []);
 
     return (
-        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" columnGap={2} rowGap={4}>
             {/* biography */}
             <Box gridColumn="span 9" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
                 <Typography variant="h6" gridColumn="span 12">
@@ -220,7 +222,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 </Box>
             </Box>
             {/* portrait */}
-            <Box gridColumn="span 3" gridRow="span 2">
+            <Box gridColumn="span 3">
                 <Portrait
                     base64={characterData.portrait}
                     readonly={readonly}
@@ -244,6 +246,32 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                             onSkillCreate={onSkillCreate}
                         />
                     ))}
+                </Box>
+            </Box>
+            {/* statistics */}
+            <Box gridColumn="span 6" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2} gridAutoRows="min-content">
+                <Typography variant="h6" gridColumn="span 12">
+                    Statistics
+                </Typography>
+                <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)">
+                    <Statistics
+                        data={data.statistics}
+                        readonly={readonly}
+                        onChange={onStatisticsChange}
+                    />
+                </Box>
+            </Box>
+            {/* wound status */}
+            <Box gridColumn="span 6" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2} gridAutoRows="min-content">
+                <Typography variant="h6" gridColumn="span 12">
+                    Wound status
+                </Typography>
+                <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)">
+                    <WoundStatus
+                        data={data.woundStatus}
+                        readonly={readonly}
+                        onChange={onWoundStatusChange}
+                    />
                 </Box>
             </Box>
         </Box>

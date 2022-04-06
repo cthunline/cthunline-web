@@ -23,6 +23,9 @@ export const controlWoundStatus = (woundStatusData: SWD6WoundStatus) => {
     });
     if (highestWoundStatus) {
         woundStatus[highestWoundStatus as SWD6WoundStatusKey] = true;
+        if (highestWoundStatus === 'doublyWounded') {
+            woundStatus.wounded = true;
+        }
     }
     return woundStatus;
 };
