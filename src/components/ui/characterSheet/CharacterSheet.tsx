@@ -13,6 +13,7 @@ export interface CharacterSheetProps {
     readonly: boolean;
     gameId: string;
     data: CharacterData;
+    listening?: boolean;
     onChange?: (
         name: string,
         data: CharacterData,
@@ -24,6 +25,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
     readonly,
     gameId,
     data,
+    listening,
     onChange = () => { /* default */ }
 }) => {
     const getContent = (): JSX.Element => {
@@ -32,6 +34,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                 <CoCSheet
                     readonly={readonly}
                     data={data as CoCCharacterData}
+                    listening={listening}
                     onChange={onChange}
                 />
             );
@@ -41,6 +44,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                 <SWD6Sheet
                     readonly={readonly}
                     data={data as SWD6CharacterData}
+                    listening={listening}
                     onChange={onChange}
                 />
             );

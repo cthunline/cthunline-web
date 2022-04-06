@@ -14,7 +14,7 @@ import {
 import { FiPlusCircle } from 'react-icons/fi';
 
 import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
-import AutocompleteInput from '../../../../AutocompleteInput/AutocompleteInput';
+import AutocompleteInput from '../../../../autocompleteInput/AutocompleteInput';
 import {
     SkillData,
     skillList,

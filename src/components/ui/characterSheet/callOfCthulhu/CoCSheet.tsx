@@ -30,6 +30,7 @@ import { controlCharacterData } from './cocSheet.helper';
 export interface CoCSheetProps {
     readonly: boolean;
     data: CoCCharacterData;
+    listening?: boolean;
     onChange: (
         name: string,
         data: CharacterData,
@@ -40,13 +41,17 @@ export interface CoCSheetProps {
 const CoCSheet: React.FC<CoCSheetProps> = ({
     readonly,
     data,
+    listening,
     onChange
 }) => {
     const [characterData, setCharacterData] = useState<CoCCharacterData>(data);
 
     useEffect(() => {
-        setCharacterData(data);
+        if (listening) {
+            setCharacterData(data);
+        }
     }, [
+        listening,
         data
     ]);
 

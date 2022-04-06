@@ -28,6 +28,7 @@ import { controlCharacterData } from './swd6Sheet.helper';
 export interface SWD6SheetProps {
     readonly: boolean;
     data: SWD6CharacterData;
+    listening?: boolean;
     onChange: (
         name: string,
         data: CharacterData,
@@ -38,13 +39,17 @@ export interface SWD6SheetProps {
 const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     readonly,
     data,
+    listening,
     onChange
 }) => {
     const [characterData, setCharacterData] = useState<SWD6CharacterData>(data);
 
     useEffect(() => {
-        setCharacterData(data);
+        if (listening) {
+            setCharacterData(data);
+        }
     }, [
+        listening,
         data
     ]);
 
@@ -52,7 +57,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false;
-        } else {
+        } else if (!readonly) {
             const { name, occupation } = characterData.biography;
             const properName = name ?? '[No Name]';
             const properOccupation = occupation ? `(${occupation})` : '';
@@ -135,23 +140,23 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
         }));
     }, []);
 
-    // const onSkillDelete = useCallback((
-    //     attribute: SWD6Attribute,
-    //     skillIndex: number
-    // ) => {
-    //     setCharacterData((previous) => ({
-    //         ...previous,
-    //         attributes: {
-    //             ...previous.attributes,
-    //             [attribute]: {
-    //                 ...previous.attributes[attribute],
-    //                 skills: previous.attributes[attribute].skills.filter((skill, idx) => (
-    //                     idx !== skillIndex
-    //                 ))
-    //             }
-    //         }
-    //     }));
-    // }, []);
+    const onSkillDelete = useCallback((
+        attribute: SWD6Attribute,
+        skillIndex: number
+    ) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            attributes: {
+                ...previous.attributes,
+                [attribute]: {
+                    ...previous.attributes[attribute],
+                    skills: previous.attributes[attribute].skills.filter((skill, idx) => (
+                        idx !== skillIndex
+                    ))
+                }
+            }
+        }));
+    }, []);
 
     const onStatisticsChange = useCallback((statistics: SWD6Statistics) => {
         setCharacterData((previous) => ({
@@ -235,15 +240,16 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                     Attributes & Skills
                 </Typography>
                 <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={4}>
-                    {(Object.keys(data.attributes) as SWD6Attribute[]).map((attribute) => (
+                    {(Object.keys(characterData.attributes) as SWD6Attribute[]).map((attribute) => (
                         <Attribute
                             key={`attribute-${attribute}`}
                             attribute={attribute}
-                            data={data.attributes[attribute]}
+                            data={characterData.attributes[attribute]}
                             readonly={readonly}
                             onChange={onAttributeChange}
                             onSkillChange={onSkillChange}
                             onSkillCreate={onSkillCreate}
+                            onSkillDelete={onSkillDelete}
                         />
                     ))}
                 </Box>
@@ -255,7 +261,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 </Typography>
                 <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)">
                     <Statistics
-                        data={data.statistics}
+                        data={characterData.statistics}
                         readonly={readonly}
                         onChange={onStatisticsChange}
                     />
@@ -268,7 +274,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 </Typography>
                 <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)">
                     <WoundStatus
-                        data={data.woundStatus}
+                        data={characterData.woundStatus}
                         readonly={readonly}
                         onChange={onWoundStatusChange}
                     />

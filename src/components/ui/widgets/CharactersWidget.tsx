@@ -79,6 +79,7 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
                         readonly
                         gameId={sessionUser.character.gameId}
                         data={sessionUser.character.data}
+                        listening
                     />
                 ) : (
                     <Box className="grow flex center">

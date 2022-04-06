@@ -8,7 +8,7 @@ import React, {
 import { Box, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import AutocompleteInput from '../../../../AutocompleteInput/AutocompleteInput';
+import AutocompleteInput from '../../../../autocompleteInput/AutocompleteInput';
 import {
     SWD6Attribute,
     SWD6Skill
@@ -55,8 +55,8 @@ const Skill: React.FC<SkillProps> = ({
     }, []);
 
     return (
-        <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)">
-            <Box gridColumn="span 10" display="grid" alignItems="center">
+        <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(15, 1fr)">
+            <Box gridColumn="span 13" display="grid" alignItems="center">
                 <AutocompleteInput<SWD6Skill>
                     options={skillList[attribute].map((name) => ({ name, value: '' }))}
                     defaultValue={defaultSkillData}
@@ -78,6 +78,8 @@ const Skill: React.FC<SkillProps> = ({
                             } as SWD6Skill);
                             setSelectorValue(null);
                             setSkillData(defaultSkillData);
+                            userChanged.current = false;
+                            setError(false);
                         }
                     }}
                 >

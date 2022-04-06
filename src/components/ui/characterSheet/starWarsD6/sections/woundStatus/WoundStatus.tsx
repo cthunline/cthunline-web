@@ -23,6 +23,7 @@ const WoundStatus: React.FC<WoundStatusProps> = ({
             <Box key={`woundStatus-${index.toString()}-input`} gridColumn="span 5">
                 {keys.map((key) => (
                     <Checkbox
+                        key={`woundStatus-checkbox-${key}`}
                         checked={data[key]}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             if (!readonly) {

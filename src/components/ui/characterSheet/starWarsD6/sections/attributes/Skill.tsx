@@ -1,5 +1,10 @@
 import React, { memo } from 'react';
-import { Box, TextField } from '@mui/material';
+import {
+    Box,
+    TextField,
+    IconButton
+} from '@mui/material';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
 
 import {
     SWD6Attribute,
@@ -13,6 +18,7 @@ interface SkillProps {
     data: SWD6Skill;
     readonly: boolean;
     onChange: (attribute: SWD6Attribute, index: number, data: SWD6Skill) => void;
+    onDelete: (attribute: SWD6Attribute, index: number) => void;
 }
 
 const Skill: React.FC<SkillProps> = ({
@@ -20,28 +26,44 @@ const Skill: React.FC<SkillProps> = ({
     index,
     data,
     readonly,
-    onChange
+    onChange,
+    onDelete
 }) => (
-    <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(16, 1fr)" gap={2}>
-        {skillFields.map(({ gridColumn, key }) => (
-            <Box key={`skill-${key}`} gridColumn={`span ${gridColumn}`}>
-                <TextField
-                    fullWidth
-                    InputProps={{
-                        readOnly: readonly
-                    }}
-                    type="text"
-                    size="small"
-                    value={data[key]}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange(attribute, index, {
-                            ...data,
-                            [key]: e.target.value
-                        });
-                    }}
-                />
+    <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(15, 1fr)">
+        <Box gridColumn={`span ${readonly ? 15 : 13}`} display="grid" alignItems="center">
+            <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(16, 1fr)" gap={2}>
+                {skillFields.map(({ gridColumn, key }) => (
+                    <Box key={`skill-${key}`} gridColumn={`span ${gridColumn}`}>
+                        <TextField
+                            fullWidth
+                            InputProps={{
+                                readOnly: readonly
+                            }}
+                            type="text"
+                            size="small"
+                            value={data[key]}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                onChange(attribute, index, {
+                                    ...data,
+                                    [key]: e.target.value
+                                });
+                            }}
+                        />
+                    </Box>
+                ))}
             </Box>
-        ))}
+        </Box>
+        {readonly ? null : (
+            <Box className="center-text" gridColumn="span 2" alignItems="center">
+                <IconButton
+                    size="medium"
+                    color="error"
+                    onClick={() => onDelete(attribute, index)}
+                >
+                    <MdOutlineDeleteOutline />
+                </IconButton>
+            </Box>
+        )}
     </Box>
 );
 
