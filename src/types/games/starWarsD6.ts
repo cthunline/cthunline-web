@@ -58,15 +58,6 @@ export interface SWD6WoundStatus {
 
 export type SWD6WoundStatusKey = keyof SWD6WoundStatus;
 
-export interface SWD6Story {
-    equipment: string;
-    background: string;
-    personality: string;
-    objectives: string;
-    quote: string;
-    connections: string;
-}
-
 export interface SWD6Weapon {
     name: string;
     damage: string;
@@ -74,4 +65,13 @@ export interface SWD6Weapon {
     mediumRange: string;
     longRange: string;
     ammo: string;
+}
+
+export interface SWD6Story {
+    equipment: string;
+    background: string;
+    personality: string;
+    objectives: string;
+    quote: string;
+    connections: string;
 }

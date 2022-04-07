@@ -13,9 +13,9 @@ import {
     SWD6AttributeData,
     SWD6Skill,
     SWD6Statistics,
-    SWD6WoundStatus
-    // SWD6Story,
-    // SWD6Weapon
+    SWD6WoundStatus,
+    SWD6Weapon,
+    SWD6Story
 } from '../../../../types/games/starWarsD6';
 import { CharacterData } from '../../../../types';
 import Portrait from '../generic/portrait/Portrait';
@@ -23,6 +23,8 @@ import Biography from './sections/biography/Biography';
 import Attribute from './sections/attributes/Attribute';
 import Statistics from './sections/statistics/Statistics';
 import WoundStatus from './sections/woundStatus/WoundStatus';
+import Weapons from './sections/weapons/Weapons';
+import Story from './sections/story/Story';
 import { controlCharacterData } from './swd6Sheet.helper';
 
 export interface SWD6SheetProps {
@@ -174,42 +176,42 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
         ));
     }, []);
 
-    // const onStoryChange = useCallback((story: SWD6Story) => {
-    //     setCharacterData((previous) => ({
-    //         ...previous,
-    //         story
-    //     }));
-    // }, []);
+    const onWeaponCreate = useCallback((weaponData: SWD6Weapon) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            weapons: [
+                ...previous.weapons,
+                weaponData
+            ].sort((a, b) => (
+                a.name.localeCompare(b.name)
+            ))
+        }));
+    }, []);
 
-    // const onWeaponCreate = useCallback((weaponData: SWD6Weapon) => {
-    //     setCharacterData((previous) => ({
-    //         ...previous,
-    //         weapons: [
-    //             ...previous.weapons,
-    //             weaponData
-    //         ].sort((a, b) => (
-    //             a.name.localeCompare(b.name)
-    //         ))
-    //     }));
-    // }, []);
+    const onWeaponChange = useCallback((weaponIndex: number, weaponData: SWD6Weapon) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            weapons: previous.weapons.map((weapon, idx) => (
+                idx === weaponIndex ? weaponData : weapon
+            ))
+        }));
+    }, []);
 
-    // const onWeaponChange = useCallback((weaponIndex: number, weaponData: SWD6Weapon) => {
-    //     setCharacterData((previous) => ({
-    //         ...previous,
-    //         weapons: previous.weapons.map((weapon, idx) => (
-    //             idx === weaponIndex ? weaponData : weapon
-    //         ))
-    //     }));
-    // }, []);
+    const onWeaponDelete = useCallback((weaponIndex: number) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            weapons: previous.weapons.filter((s, idx) => (
+                idx !== weaponIndex
+            ))
+        }));
+    }, []);
 
-    // const onWeaponDelete = useCallback((weaponIndex: number) => {
-    //     setCharacterData((previous) => ({
-    //         ...previous,
-    //         weapons: previous.weapons.filter((s, idx) => (
-    //             idx !== weaponIndex
-    //         ))
-    //     }));
-    // }, []);
+    const onStoryChange = useCallback((story: SWD6Story) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            story
+        }));
+    }, []);
 
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" columnGap={2} rowGap={4}>
@@ -279,6 +281,29 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                         onChange={onWoundStatusChange}
                     />
                 </Box>
+            </Box>
+            {/* weapons */}
+            <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                <Typography variant="h6" gridColumn="span 12">
+                    Weapons
+                </Typography>
+                <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)">
+                    <Weapons
+                        weapons={characterData.weapons}
+                        readonly={readonly}
+                        onCreate={onWeaponCreate}
+                        onChange={onWeaponChange}
+                        onDelete={onWeaponDelete}
+                    />
+                </Box>
+            </Box>
+            {/* story */}
+            <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+                <Story
+                    story={characterData.story}
+                    readonly={readonly}
+                    onChange={onStoryChange}
+                />
             </Box>
         </Box>
     );
