@@ -20,7 +20,7 @@ import {
 import { CharacterData } from '../../../../types';
 import Portrait from '../generic/portrait/Portrait';
 import Biography from './sections/biography/Biography';
-import Attribute from './sections/attributes/Attribute';
+import Attributes from './sections/attributes/Attributes';
 import Statistics from './sections/statistics/Statistics';
 import WoundStatus from './sections/woundStatus/WoundStatus';
 import Weapons from './sections/weapons/Weapons';
@@ -242,18 +242,14 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                     Attributes & Skills
                 </Typography>
                 <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={4}>
-                    {(Object.keys(characterData.attributes) as SWD6Attribute[]).map((attribute) => (
-                        <Attribute
-                            key={`attribute-${attribute}`}
-                            attribute={attribute}
-                            data={characterData.attributes[attribute]}
-                            readonly={readonly}
-                            onChange={onAttributeChange}
-                            onSkillChange={onSkillChange}
-                            onSkillCreate={onSkillCreate}
-                            onSkillDelete={onSkillDelete}
-                        />
-                    ))}
+                    <Attributes
+                        attributes={characterData.attributes}
+                        readonly={readonly}
+                        onChange={onAttributeChange}
+                        onSkillCreate={onSkillCreate}
+                        onSkillChange={onSkillChange}
+                        onSkillDelete={onSkillDelete}
+                    />
                 </Box>
             </Box>
             {/* statistics */}

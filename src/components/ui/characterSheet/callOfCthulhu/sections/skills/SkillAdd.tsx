@@ -1,5 +1,4 @@
 import React, {
-    useCallback,
     useEffect,
     useRef,
     useState
@@ -40,14 +39,14 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
     const [values, setValues] = useState<SkillData>(defaultSkillValue);
     const [errors, setErrors] = useState<SkillAddErrors>(defaultErrors);
 
-    const controlForm = useCallback((): boolean => {
+    const controlForm = (): boolean => {
         const { name, base } = values;
         setErrors({
             name: !name,
             base: !base
         });
         return !!name && !!base;
-    }, [values]);
+    };
 
     const initialRender = useRef<boolean>(true);
     useEffect(() => {
@@ -64,14 +63,14 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
         }
     }, [values]);
 
-    const onSelectorChange = useCallback((result: SkillData | null) => {
+    const onSelectorChange = (result: SkillData | null) => {
         setSelectorValue(result);
         if (result) {
             setValues(result);
         } else {
             setValues(defaultSkillValue);
         }
-    }, []);
+    };
 
     return (
         <Box

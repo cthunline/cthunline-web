@@ -1,9 +1,7 @@
 import React, {
     useState,
-    useCallback,
     useEffect,
-    useRef,
-    memo
+    useRef
 } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
@@ -23,7 +21,7 @@ interface SkillProps {
     onSubmit: (attribute: SWD6Attribute, data: SWD6Skill) => void;
 }
 
-const Skill: React.FC<SkillProps> = ({
+const SkillAdd: React.FC<SkillProps> = ({
     attribute,
     onSubmit
 }) => {
@@ -31,11 +29,11 @@ const Skill: React.FC<SkillProps> = ({
     const [skillData, setSkillData] = useState<SWD6Skill>(defaultSkillData);
     const [error, setError] = useState<boolean>(false);
 
-    const controlForm = useCallback((): boolean => {
+    const controlForm = (): boolean => {
         const { name } = skillData;
         setError(!name);
         return !!name;
-    }, [skillData]);
+    };
 
     const userChanged = useRef<boolean>(false);
     useEffect(() => {
@@ -44,7 +42,7 @@ const Skill: React.FC<SkillProps> = ({
         }
     }, [skillData]);
 
-    const onSelectorChange = useCallback((result: SWD6Skill | null) => {
+    const onSelectorChange = (result: SWD6Skill | null) => {
         userChanged.current = true;
         setSelectorValue(result);
         if (result) {
@@ -52,13 +50,16 @@ const Skill: React.FC<SkillProps> = ({
         } else {
             setSkillData(defaultSkillData);
         }
-    }, []);
+    };
 
     return (
         <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(15, 1fr)">
             <Box gridColumn="span 13" display="grid" alignItems="center">
                 <AutocompleteInput<SWD6Skill>
-                    options={skillList[attribute].map((name) => ({ name, value: '' }))}
+                    options={skillList[attribute].map((name) => ({
+                        name,
+                        value: ''
+                    }))}
                     defaultValue={defaultSkillData}
                     label="Select or create Skill"
                     value={selectorValue}
@@ -90,4 +91,4 @@ const Skill: React.FC<SkillProps> = ({
     );
 };
 
-export default memo(Skill);
+export default SkillAdd;
