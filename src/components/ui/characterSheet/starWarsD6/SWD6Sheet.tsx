@@ -222,8 +222,8 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 </Typography>
                 <Box gridColumn="span 12">
                     <Biography
-                        readonly={readonly}
                         biography={characterData.biography}
+                        readonly={readonly}
                         onChange={onBiographyChange}
                     />
                 </Box>
@@ -259,7 +259,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 </Typography>
                 <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)">
                     <Statistics
-                        data={characterData.statistics}
+                        statistics={characterData.statistics}
                         readonly={readonly}
                         onChange={onStatisticsChange}
                     />
@@ -272,7 +272,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 </Typography>
                 <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)">
                     <WoundStatus
-                        data={characterData.woundStatus}
+                        woundStatus={characterData.woundStatus}
                         readonly={readonly}
                         onChange={onWoundStatusChange}
                     />

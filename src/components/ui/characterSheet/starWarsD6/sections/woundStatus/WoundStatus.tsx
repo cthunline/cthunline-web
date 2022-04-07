@@ -5,13 +5,13 @@ import { SWD6WoundStatus } from '../../../../../../types/games/starWarsD6';
 import { WoundStatusField, woundStatusFields } from './woundStatus.data';
 
 interface WoundStatusProps {
-    data: SWD6WoundStatus;
+    woundStatus: SWD6WoundStatus;
     readonly: boolean;
     onChange: (data: SWD6WoundStatus) => void;
 }
 
 const WoundStatus: React.FC<WoundStatusProps> = ({
-    data,
+    woundStatus,
     readonly,
     onChange
 }) => (
@@ -24,11 +24,11 @@ const WoundStatus: React.FC<WoundStatusProps> = ({
                 {keys.map((key) => (
                     <Checkbox
                         key={`woundStatus-checkbox-${key}`}
-                        checked={data[key]}
+                        checked={woundStatus[key]}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             if (!readonly) {
                                 onChange({
-                                    ...data,
+                                    ...woundStatus,
                                     [key]: e.target.checked
                                 });
                             }

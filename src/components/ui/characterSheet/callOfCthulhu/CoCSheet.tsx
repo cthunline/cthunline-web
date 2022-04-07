@@ -59,7 +59,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
     useEffect(() => {
         if (initialRender.current) {
             initialRender.current = false;
-        } else {
+        } else if (!readonly) {
             const { name, occupation } = characterData.biography;
             const properName = name ?? '[No Name]';
             const properOccupation = occupation ? `(${occupation})` : '';

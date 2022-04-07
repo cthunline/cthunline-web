@@ -5,17 +5,21 @@ import { SWD6Statistics } from '../../../../../../types/games/starWarsD6';
 import { StatisticsField, statisticsFields } from './statistics.data';
 
 interface StatisticsProps {
-    data: SWD6Statistics;
+    statistics: SWD6Statistics;
     readonly: boolean;
     onChange: (data: SWD6Statistics) => void;
 }
 
 const Statistics: React.FC<StatisticsProps> = ({
-    data,
+    statistics,
     readonly,
     onChange
 }) => {
-    const getInput = (key: keyof SWD6Statistics, type: 'number' | 'boolean') => {
+    const getInput = (
+        key: keyof SWD6Statistics,
+        type: 'number' | 'boolean',
+        data: SWD6Statistics
+    ) => {
         if (type === 'number') {
             return (
                 <TextField
@@ -60,7 +64,7 @@ const Statistics: React.FC<StatisticsProps> = ({
                     {label}
                 </Box>,
                 <Box key={`statistics-${key}-input`} className="center-text" gridColumn="span 3">
-                    {getInput(key, type)}
+                    {getInput(key, type, statistics)}
                 </Box>
             ]))}
         </Box>
