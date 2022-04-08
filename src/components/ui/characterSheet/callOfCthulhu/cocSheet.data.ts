@@ -1,27 +1,110 @@
-import { CoCBiography } from '../../../../types/games/callOfCthulhu';
+import { CoCBiography, CoCStory } from '../../../../types/games/callOfCthulhu';
 import { Field } from '../generic/fieldLayout/FieldLayout';
 
-// eslint-disable-next-line import/prefer-default-export
 export const biographyFields: Field<CoCBiography>[] = [{
-    field: 'name',
+    key: 'name',
     label: 'Name',
-    grid: 5
+    gridColumn: 5
 }, {
-    field: 'occupation',
+    key: 'occupation',
     label: 'Occupation',
-    grid: 5
+    gridColumn: 5
 }, {
-    field: 'age',
+    key: 'age',
     label: 'Age',
     type: 'number',
-    grid: 2
+    gridColumn: 2
 }, {
-    field: 'birthPlace',
+    key: 'birthPlace',
     label: 'Birth Place',
-    grid: 6
-},
-{
-    field: 'residence',
+    gridColumn: 6
+}, {
+    key: 'residence',
     label: 'Residence',
-    grid: 6
+    gridColumn: 6
+}];
+
+export const storyFields: Field<CoCStory>[] = [{
+    key: 'story',
+    label: 'My Story',
+    gridColumn: 12,
+    lines: 5
+}, {
+    key: 'personalDescription',
+    label: 'Personal Description',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'traits',
+    label: 'Traits',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'ideologyAndBeliefs',
+    label: 'Ideology & Beliefs',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'injuriesAndScars',
+    label: 'Injuries & Scars',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'significantPeople',
+    label: 'Significant People',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'phobiasAndManias',
+    label: 'Phobias & Manias',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'meaningfulLocations',
+    label: 'Meaningful Locations',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'arcaneTomesAndSpells',
+    label: 'Arcane Tomes & Spells',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'treasuredPossessions',
+    label: 'Treasured Possessions',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'encountersWithStrangeEntities',
+    label: 'Encounters with Strange Entities',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'gearAndPossessions',
+    label: 'Gear & Possessions',
+    gridColumn: 6,
+    lines: 9
+}, {
+    gridColumn: 6,
+    children: [{
+        key: 'spendingLevel',
+        label: 'Spending Level',
+        gridColumn: 12,
+        lines: 1
+    }, {
+        key: 'cash',
+        label: 'Cash',
+        gridColumn: 12,
+        lines: 1
+    }, {
+        key: 'assets',
+        label: 'Assets',
+        gridColumn: 12,
+        lines: 3
+    }]
+}, {
+    key: 'fellowInvestigators',
+    label: 'Fellow Investigators',
+    gridColumn: 12,
+    lines: 5
 }];

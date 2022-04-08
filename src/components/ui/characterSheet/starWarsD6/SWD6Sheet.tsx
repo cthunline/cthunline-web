@@ -24,8 +24,7 @@ import Attributes from './sections/attributes/Attributes';
 import Statistics from './sections/statistics/Statistics';
 import WoundStatus from './sections/woundStatus/WoundStatus';
 import Weapons from './sections/weapons/Weapons';
-import Story from './sections/story/Story';
-import { biographyFields } from './swd6Sheet.data';
+import { biographyFields, storyFields } from './swd6Sheet.data';
 import { controlCharacterData } from './swd6Sheet.helper';
 
 export interface SWD6SheetProps {
@@ -297,8 +296,9 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             </Box>
             {/* story */}
             <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-                <Story
-                    story={characterData.story}
+                <FieldLayout<SWD6Story>
+                    fields={storyFields}
+                    data={characterData.story}
                     readonly={readonly}
                     onChange={onStoryChange}
                 />

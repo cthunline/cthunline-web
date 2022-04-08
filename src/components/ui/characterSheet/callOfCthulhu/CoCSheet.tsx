@@ -24,8 +24,7 @@ import Status from './sections/status/Status';
 import Skills from './sections/skills/Skills';
 import Combat from './sections/combat/Combat';
 import Weapons from './sections/weapons/Weapons';
-import Story from './sections/story/Story';
-import { biographyFields } from './cocSheet.data';
+import { biographyFields, storyFields } from './cocSheet.data';
 import { controlCharacterData } from './cocSheet.helper';
 
 export interface CoCSheetProps {
@@ -285,9 +284,10 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 Story
             </Typography>
             <Box gridColumn="span 12">
-                <Story
+                <FieldLayout<CoCStory>
+                    fields={storyFields}
+                    data={characterData.story}
                     readonly={readonly}
-                    story={characterData.story}
                     onChange={onStoryChange}
                 />
             </Box>

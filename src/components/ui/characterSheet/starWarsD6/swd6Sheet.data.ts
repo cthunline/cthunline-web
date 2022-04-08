@@ -1,34 +1,65 @@
-import { SWD6Biography } from '../../../../types/games/starWarsD6';
+import { SWD6Biography, SWD6Story } from '../../../../types/games/starWarsD6';
 import { Field } from '../generic/fieldLayout/FieldLayout';
 
-// eslint-disable-next-line import/prefer-default-export
 export const biographyFields: Field<SWD6Biography>[] = [{
-    field: 'name',
+    key: 'name',
     label: 'Name',
-    grid: 5
+    gridColumn: 5
 }, {
-    field: 'occupation',
+    key: 'occupation',
     label: 'Occupation',
-    grid: 5
+    gridColumn: 5
 }, {
-    field: 'age',
+    key: 'age',
     label: 'Age',
     type: 'number',
-    grid: 2
+    gridColumn: 2
 }, {
-    field: 'species',
+    key: 'species',
     label: 'Species',
-    grid: 6
+    gridColumn: 6
 }, {
-    field: 'height',
+    key: 'height',
     label: 'Height',
-    grid: 3
+    gridColumn: 3
 }, {
-    field: 'weight',
+    key: 'weight',
     label: 'Weight',
-    grid: 3
+    gridColumn: 3
 }, {
-    field: 'description',
+    key: 'description',
     label: 'Description',
-    grid: 12
+    gridColumn: 12
+}];
+
+export const storyFields: Field<SWD6Story>[] = [{
+    key: 'equipment',
+    title: 'Equipment',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'background',
+    title: 'Background',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'personality',
+    title: 'Personality',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'objectives',
+    title: 'Objectives',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'quote',
+    title: 'A quote',
+    gridColumn: 6,
+    lines: 3
+}, {
+    key: 'connections',
+    title: 'Connection with other characters',
+    gridColumn: 6,
+    lines: 3
 }];
