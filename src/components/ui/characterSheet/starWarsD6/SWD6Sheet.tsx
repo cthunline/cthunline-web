@@ -18,14 +18,17 @@ import {
     SWD6Story
 } from '../../../../types/games/starWarsD6';
 import { CharacterData } from '../../../../types';
-import FieldLayout from '../generic/fieldLayout/FieldLayout';
+import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
 import Attributes from './sections/attributes/Attributes';
 import Statistics from './sections/statistics/Statistics';
 import WoundStatus from './sections/woundStatus/WoundStatus';
 import Weapons from './sections/weapons/Weapons';
-import { biographyFields, storyFields } from './swd6Sheet.data';
 import { controlCharacterData } from './swd6Sheet.helper';
+import fields from './fields.json';
+
+const biographyFields = fields.biography as Field<SWD6Biography>[];
+const storyFields = fields.story as Field<SWD6Story>[];
 
 export interface SWD6SheetProps {
     readonly: boolean;

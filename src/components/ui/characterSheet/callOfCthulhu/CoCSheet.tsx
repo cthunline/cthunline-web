@@ -17,15 +17,18 @@ import {
     CoCStory
 } from '../../../../types/games/callOfCthulhu';
 import { CharacterData } from '../../../../types';
-import FieldLayout from '../generic/fieldLayout/FieldLayout';
+import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
 import Characteristics from './sections/characteristics/Characteristics';
 import Status from './sections/status/Status';
 import Skills from './sections/skills/Skills';
 import Combat from './sections/combat/Combat';
 import Weapons from './sections/weapons/Weapons';
-import { biographyFields, storyFields } from './cocSheet.data';
 import { controlCharacterData } from './cocSheet.helper';
+import fields from './fields.json';
+
+const biographyFields = fields.biography as Field<CoCBiography>[];
+const storyFields = fields.story as Field<CoCStory>[];
 
 export interface CoCSheetProps {
     readonly: boolean;
