@@ -1,15 +1,8 @@
-import { CoCBiography } from '../../../../../../types/games/callOfCthulhu';
+import { CoCBiography } from '../../../../types/games/callOfCthulhu';
+import { Field } from '../generic/fieldLayout/FieldLayout';
 
-export type BioField = keyof CoCBiography;
-
-export interface BioFieldData {
-    field: BioField;
-    label: string;
-    type?: string;
-    grid: number;
-}
-
-export const fields: BioFieldData[] = [{
+// eslint-disable-next-line import/prefer-default-export
+export const biographyFields: Field<CoCBiography>[] = [{
     field: 'name',
     label: 'Name',
     grid: 5

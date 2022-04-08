@@ -1,21 +1,28 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 
-import { onlyNumbers } from '../../../../../../services/tools';
-import { SWD6Biography } from '../../../../../../types/games/starWarsD6';
-import { fields } from './biography.data';
+import { onlyNumbers } from '../../../../../services/tools';
 
-interface BiographyProps {
-    biography: SWD6Biography;
-    readonly: boolean;
-    onChange: (data: SWD6Biography) => void;
+export interface Field<DataType> {
+    field: keyof DataType;
+    label: string;
+    type?: string;
+    grid: number;
 }
 
-const Biography: React.FC<BiographyProps> = ({
+interface FieldLayoutProps<DataType> {
+    fields: Field<DataType>[];
+    data: DataType;
+    readonly: boolean;
+    onChange: (data: DataType) => void;
+}
+
+const FieldLayout = <DataType extends {}>({
+    fields,
+    data,
     readonly,
-    biography,
     onChange
-}) => (
+}: FieldLayoutProps<DataType>) => (
     <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
         {fields.map(({
             field,
@@ -23,22 +30,24 @@ const Biography: React.FC<BiographyProps> = ({
             type,
             grid
         }) => (
-            <Box key={field} gridColumn={`span ${grid}`}>
+            <Box key={field.toString()} gridColumn={`span ${grid}`}>
                 <TextField
                     fullWidth
-                    InputProps={{ readOnly: readonly }}
+                    InputProps={{
+                        readOnly: readonly
+                    }}
                     type="text"
                     size="small"
                     label={label}
-                    name={field}
-                    value={biography[field]}
+                    name={field.toString()}
+                    value={data[field]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         const { value } = e.target;
                         const parsedValue = type === 'number' ? (
                             Number(onlyNumbers(value))
                         ) : value;
                         onChange({
-                            ...biography,
+                            ...data,
                             [field]: parsedValue
                         });
                     }}
@@ -48,4 +57,4 @@ const Biography: React.FC<BiographyProps> = ({
     </Box>
 );
 
-export default memo(Biography);
+export default memo(FieldLayout) as typeof FieldLayout;

@@ -18,13 +18,14 @@ import {
     SWD6Story
 } from '../../../../types/games/starWarsD6';
 import { CharacterData } from '../../../../types';
+import FieldLayout from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
-import Biography from './sections/biography/Biography';
 import Attributes from './sections/attributes/Attributes';
 import Statistics from './sections/statistics/Statistics';
 import WoundStatus from './sections/woundStatus/WoundStatus';
 import Weapons from './sections/weapons/Weapons';
 import Story from './sections/story/Story';
+import { biographyFields } from './swd6Sheet.data';
 import { controlCharacterData } from './swd6Sheet.helper';
 
 export interface SWD6SheetProps {
@@ -221,8 +222,9 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                     Biography
                 </Typography>
                 <Box gridColumn="span 12">
-                    <Biography
-                        biography={characterData.biography}
+                    <FieldLayout<SWD6Biography>
+                        fields={biographyFields}
+                        data={characterData.biography}
                         readonly={readonly}
                         onChange={onBiographyChange}
                     />

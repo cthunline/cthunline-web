@@ -1,13 +1,8 @@
-import { SWD6Biography } from '../../../../../../types/games/starWarsD6';
+import { SWD6Biography } from '../../../../types/games/starWarsD6';
+import { Field } from '../generic/fieldLayout/FieldLayout';
 
-export interface BioFieldData {
-    field: keyof SWD6Biography;
-    label: string;
-    type?: string;
-    grid: number;
-}
-
-export const fields: BioFieldData[] = [{
+// eslint-disable-next-line import/prefer-default-export
+export const biographyFields: Field<SWD6Biography>[] = [{
     field: 'name',
     label: 'Name',
     grid: 5

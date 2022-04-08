@@ -17,14 +17,15 @@ import {
     CoCStory
 } from '../../../../types/games/callOfCthulhu';
 import { CharacterData } from '../../../../types';
+import FieldLayout from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
-import Biography from './sections/biography/Biography';
 import Characteristics from './sections/characteristics/Characteristics';
 import Status from './sections/status/Status';
 import Skills from './sections/skills/Skills';
 import Combat from './sections/combat/Combat';
 import Weapons from './sections/weapons/Weapons';
 import Story from './sections/story/Story';
+import { biographyFields } from './cocSheet.data';
 import { controlCharacterData } from './cocSheet.helper';
 
 export interface CoCSheetProps {
@@ -203,9 +204,10 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                     Biography
                 </Typography>
                 <Box gridColumn="span 12">
-                    <Biography
+                    <FieldLayout<CoCBiography>
+                        fields={biographyFields}
+                        data={characterData.biography}
                         readonly={readonly}
-                        biography={characterData.biography}
                         onChange={onBiographyChange}
                     />
                 </Box>
