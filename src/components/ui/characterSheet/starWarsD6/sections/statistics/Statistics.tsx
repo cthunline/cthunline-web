@@ -3,6 +3,7 @@ import { Box, TextField, Checkbox } from '@mui/material';
 
 import { SWD6Statistics } from '../../../../../../types/games/starWarsD6';
 import { StatisticsField, statisticsFields } from './statistics.data';
+import { onlyNumbers } from '../../../../../../services/tools';
 
 interface StatisticsProps {
     statistics: SWD6Statistics;
@@ -33,7 +34,7 @@ const Statistics: React.FC<StatisticsProps> = ({
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         onChange({
                             ...data,
-                            [key]: e.target.value
+                            [key]: Number(onlyNumbers(e.target.value))
                         });
                     }}
                 />

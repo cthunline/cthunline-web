@@ -80,10 +80,12 @@ const Attribute: React.FC<AttributeProps> = ({
                 onDelete={onSkillDelete}
             />
         ))}
-        <SkillAdd
-            attribute={attribute}
-            onSubmit={onSkillCreate}
-        />
+        {readonly ? null : (
+            <SkillAdd
+                attribute={attribute}
+                onSubmit={onSkillCreate}
+            />
+        )}
     </Box>
 );
 
