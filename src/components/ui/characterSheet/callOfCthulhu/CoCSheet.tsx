@@ -4,7 +4,7 @@ import React, {
     useRef,
     useState
 } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
 import {
     CoCCharacterData,
@@ -17,6 +17,7 @@ import {
     CoCStory
 } from '../../../../types/games/callOfCthulhu';
 import { CharacterData } from '../../../../types';
+import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
 import Characteristics from './sections/characteristics/Characteristics';
@@ -201,18 +202,14 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
             {/* biography */}
-            <Box gridColumn="span 9" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-                <Typography variant="h6" gridColumn="span 12">
-                    Biography
-                </Typography>
-                <Box gridColumn="span 12">
-                    <FieldLayout<CoCBiography>
-                        fields={biographyFields}
-                        data={characterData.biography}
-                        readonly={readonly}
-                        onChange={onBiographyChange}
-                    />
-                </Box>
+            <Box gridColumn="span 9">
+                <SectionTitle text="Biography" />
+                <FieldLayout<CoCBiography>
+                    fields={biographyFields}
+                    data={characterData.biography}
+                    readonly={readonly}
+                    onChange={onBiographyChange}
+                />
             </Box>
             {/* portrait */}
             <Box gridColumn="span 3" gridRow="span 2">
@@ -223,26 +220,20 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 />
             </Box>
             {/* characteristics */}
-            <Typography variant="h6" gridColumn="span 9">
-                Characteristics
-            </Typography>
-            <Box gridColumn="span 12">
-                <Characteristics
-                    readonly={readonly}
-                    characteristics={characterData.characteristics}
-                    points={characterData.points}
-                    luck={characterData.luck}
-                    sanity={characterData.sanity}
-                    onCharacteristicsChange={onCharacteristicsChange}
-                    onPointsChange={onPointsChange}
-                    onLuckOrSanityChange={onLuckOrSanityChange}
-                />
-            </Box>
+            <SectionTitle text="Characteristics" gridColumn="span 9" />
+            <Characteristics
+                readonly={readonly}
+                characteristics={characterData.characteristics}
+                points={characterData.points}
+                luck={characterData.luck}
+                sanity={characterData.sanity}
+                onCharacteristicsChange={onCharacteristicsChange}
+                onPointsChange={onPointsChange}
+                onLuckOrSanityChange={onLuckOrSanityChange}
+            />
             {/* status */}
-            <Typography variant="h6" gridColumn="span 12">
-                Status
-            </Typography>
             <Box gridColumn="span 12">
+                <SectionTitle text="Status" />
                 <Status
                     readonly={readonly}
                     status={characterData.status}
@@ -250,10 +241,8 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 />
             </Box>
             {/* skills */}
-            <Typography variant="h6" gridColumn="span 12">
-                Skills
-            </Typography>
             <Box gridColumn="span 12">
+                <SectionTitle text="Skills" />
                 <Skills
                     readonly={readonly}
                     skills={characterData.skills}
@@ -263,17 +252,13 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 />
             </Box>
             {/* combat */}
-            <Typography variant="h6" gridColumn="span 12">
-                Combat
-            </Typography>
             <Box gridColumn="span 12">
+                <SectionTitle text="Combat" />
                 <Combat combat={data.combat} />
             </Box>
             {/* weapons */}
-            <Typography variant="h6" gridColumn="span 12">
-                Weapons
-            </Typography>
             <Box gridColumn="span 12">
+                <SectionTitle text="Weapons" />
                 <Weapons
                     readonly={readonly}
                     weapons={characterData.weapons}
@@ -283,10 +268,8 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 />
             </Box>
             {/* story */}
-            <Typography variant="h6" gridColumn="span 12">
-                Story
-            </Typography>
             <Box gridColumn="span 12">
+                <SectionTitle text="Story" />
                 <FieldLayout<CoCStory>
                     fields={storyFields}
                     data={characterData.story}

@@ -4,7 +4,7 @@ import React, {
     useRef,
     useState
 } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 
 import {
     SWD6CharacterData,
@@ -18,6 +18,7 @@ import {
     SWD6Story
 } from '../../../../types/games/starWarsD6';
 import { CharacterData } from '../../../../types';
+import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
 import Attributes from './sections/attributes/Attributes';
@@ -219,18 +220,14 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" columnGap={2} rowGap={4}>
             {/* biography */}
-            <Box gridColumn="span 9" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-                <Typography variant="h6" gridColumn="span 12">
-                    Biography
-                </Typography>
-                <Box gridColumn="span 12">
-                    <FieldLayout<SWD6Biography>
-                        fields={biographyFields}
-                        data={characterData.biography}
-                        readonly={readonly}
-                        onChange={onBiographyChange}
-                    />
-                </Box>
+            <Box gridColumn="span 9">
+                <SectionTitle text="Biography" />
+                <FieldLayout<SWD6Biography>
+                    fields={biographyFields}
+                    data={characterData.biography}
+                    readonly={readonly}
+                    onChange={onBiographyChange}
+                />
             </Box>
             {/* portrait */}
             <Box gridColumn="span 3">
@@ -241,71 +238,53 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 />
             </Box>
             {/* attributes */}
-            <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-                <Typography variant="h6" gridColumn="span 12">
-                    Attributes & Skills
-                </Typography>
-                <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={4}>
-                    <Attributes
-                        attributes={characterData.attributes}
-                        readonly={readonly}
-                        onChange={onAttributeChange}
-                        onSkillCreate={onSkillCreate}
-                        onSkillChange={onSkillChange}
-                        onSkillDelete={onSkillDelete}
-                    />
-                </Box>
-            </Box>
-            {/* statistics */}
-            <Box gridColumn="span 6" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2} gridAutoRows="min-content">
-                <Typography variant="h6" gridColumn="span 12">
-                    Statistics
-                </Typography>
-                <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)">
-                    <Statistics
-                        statistics={characterData.statistics}
-                        readonly={readonly}
-                        onChange={onStatisticsChange}
-                    />
-                </Box>
-            </Box>
-            {/* wound status */}
-            <Box gridColumn="span 6" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2} gridAutoRows="min-content">
-                <Typography variant="h6" gridColumn="span 12">
-                    Wound status
-                </Typography>
-                <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)">
-                    <WoundStatus
-                        woundStatus={characterData.woundStatus}
-                        readonly={readonly}
-                        onChange={onWoundStatusChange}
-                    />
-                </Box>
-            </Box>
-            {/* weapons */}
-            <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-                <Typography variant="h6" gridColumn="span 12">
-                    Weapons
-                </Typography>
-                <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)">
-                    <Weapons
-                        weapons={characterData.weapons}
-                        readonly={readonly}
-                        onCreate={onWeaponCreate}
-                        onChange={onWeaponChange}
-                        onDelete={onWeaponDelete}
-                    />
-                </Box>
-            </Box>
-            {/* story */}
-            <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-                <FieldLayout<SWD6Story>
-                    fields={storyFields}
-                    data={characterData.story}
+            <Box gridColumn="span 12">
+                <SectionTitle text="Attributes & Skills" />
+                <Attributes
+                    attributes={characterData.attributes}
                     readonly={readonly}
-                    onChange={onStoryChange}
+                    onChange={onAttributeChange}
+                    onSkillCreate={onSkillCreate}
+                    onSkillChange={onSkillChange}
+                    onSkillDelete={onSkillDelete}
                 />
             </Box>
+            {/* statistics */}
+            <Box gridColumn="span 6">
+                <SectionTitle text="Statistics" />
+                <Statistics
+                    statistics={characterData.statistics}
+                    readonly={readonly}
+                    onChange={onStatisticsChange}
+                />
+            </Box>
+            {/* wound status */}
+            <Box gridColumn="span 6">
+                <SectionTitle text="Wound status" />
+                <WoundStatus
+                    woundStatus={characterData.woundStatus}
+                    readonly={readonly}
+                    onChange={onWoundStatusChange}
+                />
+            </Box>
+            {/* weapons */}
+            <Box gridColumn="span 12">
+                <SectionTitle text="Weapons" />
+                <Weapons
+                    weapons={characterData.weapons}
+                    readonly={readonly}
+                    onCreate={onWeaponCreate}
+                    onChange={onWeaponChange}
+                    onDelete={onWeaponDelete}
+                />
+            </Box>
+            {/* story */}
+            <FieldLayout<SWD6Story>
+                fields={storyFields}
+                data={characterData.story}
+                readonly={readonly}
+                onChange={onStoryChange}
+            />
         </Box>
     );
 };

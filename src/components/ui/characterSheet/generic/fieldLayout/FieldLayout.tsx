@@ -1,10 +1,7 @@
 import React, { memo } from 'react';
-import {
-    Box,
-    TextField,
-    Typography
-} from '@mui/material';
+import { Box, TextField } from '@mui/material';
 
+import SectionTitle from '../sectionTitle/SectionTitle';
 import { onlyNumbers } from '../../../../../services/tools';
 
 export interface Field<DataType> {
@@ -38,9 +35,7 @@ const FieldLayout = <DataType extends {}>({
         lines
     }: Field<DataType>) => ([
         title ? (
-            <Typography key={`field-${key}-title`} variant="h6">
-                {title}
-            </Typography>
+            <SectionTitle key={`field-${key}-title`} text={title} />
         ) : null,
         key ? (
             <TextField

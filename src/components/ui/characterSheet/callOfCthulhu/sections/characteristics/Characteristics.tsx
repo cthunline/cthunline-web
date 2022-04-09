@@ -62,7 +62,7 @@ const Characteristics: React.FC<CharacteristicsProps> = ({
     }, [onLuckOrSanityChange]);
 
     return (
-        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+        <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
             <Box gridColumn="span 8" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
                 {charFields.map(({ field, label, shortLabel }) => (
                     <Characteristic
