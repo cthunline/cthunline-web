@@ -83,14 +83,10 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
             gridColumn="span 12"
             display="grid"
             gridTemplateColumns="repeat(24, 1fr)"
+            alignItems="center"
         >
             {weaponAddKeys.map(({ key, label, gridColumn }) => (
-                <Box
-                    key={`weapon-add-${key}`}
-                    gridColumn={`span ${gridColumn}`}
-                    display="grid"
-                    alignItems="center"
-                >
+                <Box key={`weapon-add-${key}`} gridColumn={`span ${gridColumn}`}>
                     <TextField
                         fullWidth
                         type="text"
@@ -111,7 +107,7 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
                     />
                 </Box>
             ))}
-            <Box gridColumn="span 2" alignItems="center">
+            <Box gridColumn="span 2">
                 <IconButton
                     size="medium"
                     onClick={() => {

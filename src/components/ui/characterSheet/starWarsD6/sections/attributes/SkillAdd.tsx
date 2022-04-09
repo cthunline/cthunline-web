@@ -54,7 +54,7 @@ const SkillAdd: React.FC<SkillProps> = ({
 
     return (
         <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(15, 1fr)">
-            <Box gridColumn="span 13" display="grid" alignItems="center">
+            <Box gridColumn="span 13" alignItems="center">
                 <AutocompleteInput<SWD6Skill>
                     options={skillList[attribute].map((name) => ({
                         name,

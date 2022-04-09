@@ -30,28 +30,32 @@ const Skill: React.FC<SkillProps> = ({
     onDelete
 }) => (
     <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(15, 1fr)">
-        <Box gridColumn={`span ${readonly ? 15 : 13}`} display="grid" alignItems="center">
-            <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(16, 1fr)" gap={2}>
-                {skillFields.map(({ gridColumn, key }) => (
-                    <Box key={`skill-${key}`} gridColumn={`span ${gridColumn}`}>
-                        <TextField
-                            fullWidth
-                            InputProps={{
-                                readOnly: readonly
-                            }}
-                            type="text"
-                            size="small"
-                            value={data[key]}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                onChange(attribute, index, {
-                                    ...data,
-                                    [key]: e.target.value
-                                });
-                            }}
-                        />
-                    </Box>
-                ))}
-            </Box>
+        <Box
+            gridColumn={`span ${readonly ? 15 : 13}`}
+            display="grid"
+            gridTemplateColumns="repeat(16, 1fr)"
+            alignItems="center"
+            gap={2}
+        >
+            {skillFields.map(({ gridColumn, key }) => (
+                <Box key={`skill-${key}`} gridColumn={`span ${gridColumn}`}>
+                    <TextField
+                        fullWidth
+                        InputProps={{
+                            readOnly: readonly
+                        }}
+                        type="text"
+                        size="small"
+                        value={data[key]}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange(attribute, index, {
+                                ...data,
+                                [key]: e.target.value
+                            });
+                        }}
+                    />
+                </Box>
+            ))}
         </Box>
         {readonly ? null : (
             <Box className="center-text" gridColumn="span 2" alignItems="center">

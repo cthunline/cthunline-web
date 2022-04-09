@@ -58,7 +58,6 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
                 <Box
                     key={`weapon-add-${key}`}
                     gridColumn={`span ${gridColumn}`}
-                    display="grid"
                     alignItems="center"
                 >
                     <TextField

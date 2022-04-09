@@ -31,8 +31,9 @@ const Skill: React.FC<SkillProps> = ({
         gridColumn="span 12"
         display="grid"
         gridTemplateColumns="repeat(12, 1fr)"
+        alignItems="center"
     >
-        <Box gridColumn="span 1" display="grid" alignItems="center">
+        <Box gridColumn="span 1">
             {data.development ? (
                 <Checkbox
                     checked={data.developed}
@@ -50,10 +51,10 @@ const Skill: React.FC<SkillProps> = ({
                 />
             ) : null}
         </Box>
-        <Box gridColumn={`span ${readonly ? '6' : '5'}`} display="grid" alignItems="center">
+        <Box gridColumn={`span ${readonly ? '6' : '5'}`}>
             {data.name}
         </Box>
-        <Box gridColumn="span 2" display="grid" alignItems="center">
+        <Box gridColumn="span 2">
             <TextField
                 fullWidth
                 disabled
@@ -64,11 +65,7 @@ const Skill: React.FC<SkillProps> = ({
             />
         </Box>
         {skillKeys.map(({ key, label, editable }) => (
-            <Box
-                key={key.toString()}
-                gridColumn="span 1"
-                alignItems="center"
-            >
+            <Box key={key.toString()} gridColumn="span 1">
                 <TextField
                     fullWidth
                     disabled={!editable}
@@ -92,7 +89,7 @@ const Skill: React.FC<SkillProps> = ({
             </Box>
         ))}
         {readonly ? null : (
-            <Box gridColumn="span 1" alignItems="center">
+            <Box gridColumn="span 1">
                 <IconButton
                     size="medium"
                     color="error"

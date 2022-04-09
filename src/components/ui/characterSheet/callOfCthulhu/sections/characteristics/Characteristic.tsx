@@ -27,12 +27,13 @@ const Characteristic: React.FC<CharacteristicProps> = ({
     readonly,
     onChange
 }) => (
-    <Box gridColumn="span 6" display="grid" gridTemplateColumns="repeat(12, 1fr)">
-        <Box
-            gridColumn="span 3"
-            display="grid"
-            alignItems="center"
-        >
+    <Box
+        gridColumn="span 6"
+        display="grid"
+        gridTemplateColumns="repeat(12, 1fr)"
+        alignItems="center"
+    >
+        <Box gridColumn="span 3">
             {shortLabel ? (
                 <Tooltip title={label} placement="bottom">
                     <span>{shortLabel}</span>
@@ -40,11 +41,7 @@ const Characteristic: React.FC<CharacteristicProps> = ({
             ) : label}
         </Box>
         {charKeys.map(({ key, label: keyLabel, editable }) => (
-            <Box
-                key={`characteristic-${key}`}
-                gridColumn="span 3"
-                alignItems="center"
-            >
+            <Box key={`characteristic-${key}`} gridColumn="span 3">
                 <TextField
                     fullWidth
                     disabled={!editable}

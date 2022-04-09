@@ -77,8 +77,9 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
             gridColumn="span 12"
             display="grid"
             gridTemplateColumns="repeat(12, 1fr)"
+            alignItems="center"
         >
-            <Box gridColumn="span 6" display="grid" alignItems="center">
+            <Box gridColumn="span 6">
                 <AutocompleteInput<SkillData>
                     options={skillList}
                     defaultValue={defaultSkillValue}
@@ -89,7 +90,7 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
                     onChange={onSelectorChange}
                 />
             </Box>
-            <Box gridColumn="span 2" display="grid" alignItems="center">
+            <Box gridColumn="span 2">
                 <TextField
                     fullWidth
                     type="text"
@@ -105,7 +106,7 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
                     }}
                 />
             </Box>
-            <Box gridColumn="span 3" alignItems="center">
+            <Box gridColumn="span 3">
                 <FormControlLabel
                     label="Development"
                     labelPlacement="start"
@@ -122,7 +123,7 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
                     )}
                 />
             </Box>
-            <Box gridColumn="span 1" alignItems="center">
+            <Box gridColumn="span 1">
                 <IconButton
                     size="medium"
                     onClick={() => {

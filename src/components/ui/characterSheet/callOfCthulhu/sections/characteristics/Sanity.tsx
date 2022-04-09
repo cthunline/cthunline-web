@@ -17,16 +17,12 @@ const Sanity: React.FC<SanityProps> = ({
     readonly,
     onChange
 }) => (
-    <Box display="grid" gridTemplateColumns="repeat(12, 1fr)">
-        <Box gridColumn="span 3" display="grid" alignItems="center">
+    <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" alignItems="center">
+        <Box gridColumn="span 3">
             Sanity
         </Box>
         {sanityKeys.map(({ key, label: keyLabel, editable }) => (
-            <Box
-                key={key.toString()}
-                gridColumn="span 3"
-                alignItems="center"
-            >
+            <Box key={key.toString()} gridColumn="span 3">
                 <TextField
                     fullWidth
                     disabled={!editable}

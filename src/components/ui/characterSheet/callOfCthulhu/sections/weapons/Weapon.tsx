@@ -28,16 +28,13 @@ const Weapon: React.FC<WeaponProps> = ({
         gridColumn="span 12"
         display="grid"
         gridTemplateColumns="repeat(24, 1fr)"
+        alignItems="center"
     >
-        <Box gridColumn={`span ${readonly ? '10' : '8'}`} display="grid" alignItems="center">
+        <Box gridColumn={`span ${readonly ? '10' : '8'}`}>
             {data.name}
         </Box>
         {weaponKeys.map(({ key, label, gridColumn }) => (
-            <Box
-                key={`weapon-${key}`}
-                gridColumn={`span ${gridColumn}`}
-                alignItems="center"
-            >
+            <Box key={`weapon-${key}`} gridColumn={`span ${gridColumn}`}>
                 <TextField
                     fullWidth
                     InputProps={{
@@ -57,7 +54,7 @@ const Weapon: React.FC<WeaponProps> = ({
             </Box>
         ))}
         {readonly ? null : (
-            <Box gridColumn="span 2" alignItems="center">
+            <Box gridColumn="span 2">
                 <IconButton
                     size="medium"
                     color="error"
