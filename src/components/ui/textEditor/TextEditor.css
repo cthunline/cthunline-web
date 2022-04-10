@@ -1,0 +1,15 @@
+.text-editor,
+.text-editor-bar,
+.text-editor-content {
+    width: 100%;
+}
+
+.text-editor-bar {
+    margin-bottom: 15px;
+}
+
+.text-editor-content {
+    background: var(--palette-black);
+    outline: 0 solid transparent;
+    padding: 5px;
+}

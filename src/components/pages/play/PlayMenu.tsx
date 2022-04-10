@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Tooltip } from '@mui/material';
 import { GiRollingDiceCup } from 'react-icons/gi';
 import { HiMusicNote } from 'react-icons/hi';
+import { CgNotes } from 'react-icons/cg';
 import {
     MdOutlineContactPage,
     MdLogout,
@@ -27,10 +28,6 @@ interface PlayMenuItemData {
 }
 
 const playMenuItems: PlayMenuItemData[] = [{
-    icon: <GiRollingDiceCup size={40} />,
-    text: 'Dices',
-    widget: WidgetType.dices
-}, {
     icon: <MdOutlineContactPage size={40} />,
     text: 'Character',
     widget: WidgetType.character,
@@ -41,15 +38,23 @@ const playMenuItems: PlayMenuItemData[] = [{
     widget: WidgetType.characters,
     adminOnly: true
 }, {
-    icon: <HiMusicNote size={40} />,
-    text: 'Jukebox',
-    widget: WidgetType.jukebox,
-    adminOnly: true
+    icon: <GiRollingDiceCup size={40} />,
+    text: 'Dices',
+    widget: WidgetType.dices
 }, {
     icon: <MdDraw size={40} />,
     text: 'Sketch',
     widget: WidgetType.sketch,
     adminOnly: true
+}, {
+    icon: <HiMusicNote size={40} />,
+    text: 'Jukebox',
+    widget: WidgetType.jukebox,
+    adminOnly: true
+}, {
+    icon: <CgNotes size={40} />,
+    text: 'Notes',
+    widget: WidgetType.notes
 }];
 
 interface PlayMenuItemProps {

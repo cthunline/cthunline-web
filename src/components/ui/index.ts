@@ -11,6 +11,7 @@ import CharacterWidget from './widgets/CharacterWidget';
 import CharactersWidget from './widgets/CharactersWidget';
 import JukeboxWidget from './widgets/JukeboxWidget';
 import SketchWidget from './widgets/SketchWidget';
+import NotesWidget from './widgets/NotesWidget';
 
 export {
     CustomDialog,
@@ -25,5 +26,6 @@ export {
     CharacterWidget,
     CharactersWidget,
     JukeboxWidget,
-    SketchWidget
+    SketchWidget,
+    NotesWidget
 };

@@ -16,6 +16,7 @@ import {
     CharactersWidget,
     JukeboxWidget,
     SketchWidget,
+    NotesWidget,
     Audio,
     Sketch
 } from '../../ui';
@@ -104,6 +105,13 @@ const PlayContent = () => {
                 case WidgetType.sketch:
                     return (
                         <SketchWidget
+                            key={key}
+                            onClose={onWidgetClose}
+                        />
+                    );
+                case WidgetType.notes:
+                    return (
+                        <NotesWidget
                             key={key}
                             onClose={onWidgetClose}
                         />
