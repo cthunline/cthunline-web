@@ -5,6 +5,8 @@ import React, {
 } from 'react';
 import { Box, TextField } from '@mui/material';
 
+import { usePlay } from '../../contexts/Play';
+import useSession from '../../hooks/useSession';
 import Widget from '../play/Widget';
 import { WidgetType } from '../../../types';
 
@@ -12,16 +14,31 @@ import './NotesWidget.css';
 
 interface NotesWidgetProps {
     text?: string;
-    onChange?: (text: string) => void;
     onClose: (widget: WidgetType) => void;
 }
 
 const NotesWidget: React.FC<NotesWidgetProps> = ({
     text,
-    onChange,
     onClose
 }) => {
-    const [value, setValue] = useState<string>(text ?? '');
+    const { getNotes, editNotes } = useSession();
+    const { sessionId } = usePlay();
+
+    const [notes, setNotes] = useState<string>(text ?? '');
+
+    const initialGet = useRef(true);
+    useEffect(() => {
+        (async () => {
+            if (initialGet.current) {
+                initialGet.current = false;
+                const { text: notesText } = await getNotes(sessionId);
+                setNotes(notesText);
+            }
+        })();
+    }, [
+        sessionId,
+        getNotes
+    ]);
 
     const changeTime = 1000;
     const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -30,11 +47,18 @@ const NotesWidget: React.FC<NotesWidgetProps> = ({
             clearTimeout(changeTimer.current);
         }
         changeTimer.current = setTimeout(() => {
-            onChange?.(value);
+            (async () => {
+                await editNotes({
+                    sessionId,
+                    text: notes,
+                    isToast: false
+                });
+            })();
         }, changeTime);
     }, [
-        onChange,
-        value
+        sessionId,
+        editNotes,
+        notes
     ]);
 
     return (
@@ -49,10 +73,9 @@ const NotesWidget: React.FC<NotesWidgetProps> = ({
                     minRows={12}
                     maxRows={12}
                     type="text"
-                    // size="small"
-                    value={text}
+                    value={notes}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setValue(e.target.value);
+                        setNotes(e.target.value);
                     }}
                 />
             </Box>

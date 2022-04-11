@@ -66,6 +66,13 @@ export interface SessionCreateBody {
 
 export type SessionEditBody = Partial<Omit<SessionCreateBody, 'gameId'>>;
 
+export interface Note {
+    id: string;
+    sessionId: string;
+    userId: string;
+    text: string;
+}
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ character
 
 export type CharacterData = CoCCharacterData | SWD6CharacterData;

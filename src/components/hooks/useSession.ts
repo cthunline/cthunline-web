@@ -9,7 +9,8 @@ import Api from '../../services/api';
 import {
     Session,
     SessionCreateBody,
-    SessionEditBody
+    SessionEditBody,
+    Note
 } from '../../types';
 
 interface SessionHookOptions {
@@ -17,22 +18,28 @@ interface SessionHookOptions {
     sessionId?: string;
 }
 
-interface CreateOptions {
+interface CreateSessionOptions {
     data: SessionCreateBody;
     isRefresh?: boolean;
     isToast?: boolean;
 }
 
-interface EditOptions {
+interface EditSessionOptions {
     sessionId: string;
     data: SessionEditBody;
     isRefresh?: boolean;
     isToast?: boolean;
 }
 
-interface DeleteOptions {
+interface DeleteSessionOptions {
     sessionId: string;
     isRefresh?: boolean;
+    isToast?: boolean;
+}
+
+interface EditNotesOptions {
+    sessionId: string;
+    text: string;
     isToast?: boolean;
 }
 
@@ -104,7 +111,7 @@ const useSession = ({
         data,
         isRefresh = true,
         isToast = true
-    }: CreateOptions): Promise<Session> => {
+    }: CreateSessionOptions): Promise<Session> => {
         try {
             const sess = await Api.call({
                 method: 'POST',
@@ -131,7 +138,7 @@ const useSession = ({
         data,
         isRefresh = true,
         isToast = true
-    }: EditOptions) => {
+    }: EditSessionOptions) => {
         try {
             await Api.call({
                 method: 'POST',
@@ -153,7 +160,7 @@ const useSession = ({
         sessionId: sessId,
         isRefresh = true,
         isToast = true
-    }: DeleteOptions) => {
+    }: DeleteSessionOptions) => {
         try {
             await Api.call({
                 method: 'DELETE',
@@ -172,6 +179,39 @@ const useSession = ({
         refresh
     ]);
 
+    const getNotes = useCallback(async (
+        sessId: string
+    ): Promise<Note> => {
+        try {
+            return await Api.call({
+                method: 'GET',
+                route: `/sessions/${sessId}/notes`
+            });
+        } catch (err: any) {
+            toast.error(err.message);
+            throw err;
+        }
+    }, []);
+
+    const editNotes = async ({
+        sessionId: sessId,
+        text,
+        isToast = true
+    }: EditNotesOptions) => {
+        try {
+            await Api.call({
+                method: 'POST',
+                route: `/sessions/${sessId}/notes`,
+                data: { text }
+            });
+            if (isToast) {
+                toast.success('Notes edited');
+            }
+        } catch (err: any) {
+            toast.error(err.message);
+        }
+    };
+
     useEffect(() => {
         refresh();
     }, [
@@ -185,7 +225,9 @@ const useSession = ({
         getSessions,
         createSession,
         editSession,
-        deleteSession
+        deleteSession,
+        getNotes,
+        editNotes
     };
 };
 
