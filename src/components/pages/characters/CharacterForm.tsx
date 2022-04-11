@@ -66,29 +66,22 @@ const CharacterForm: React.FC<CharacterFormProps> = ({ create }) => {
         createCharacter
     ]);
 
-    const changeTime = 1000;
-    const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const initialRender = useRef(true);
     useEffect(() => {
         if (character) {
             if (initialRender.current) {
                 initialRender.current = false;
             } else {
-                if (changeTimer.current) {
-                    clearTimeout(changeTimer.current);
-                }
-                changeTimer.current = setTimeout(() => {
-                    const { name, data } = character;
-                    editCharacter({
-                        characterId: character.id,
-                        data: {
-                            name,
-                            data
-                        },
-                        isToast: false,
-                        isRefresh: false
-                    });
-                }, changeTime);
+                const { name, data } = character;
+                editCharacter({
+                    characterId: character.id,
+                    data: {
+                        name,
+                        data
+                    },
+                    isToast: false,
+                    isRefresh: false
+                });
             }
         }
     }, [

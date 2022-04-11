@@ -56,18 +56,13 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
         getCharacter
     ]);
 
-    const changeTime = 1000;
-    const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const initialRender = useRef(true);
     useEffect(() => {
         if (character) {
             if (initialRender.current) {
                 initialRender.current = false;
             } else {
-                if (changeTimer.current) {
-                    clearTimeout(changeTimer.current);
-                }
-                changeTimer.current = setTimeout(async () => {
+                (async () => {
                     const { name, data } = character;
                     await editCharacter({
                         characterId: character.id,
@@ -79,7 +74,7 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
                         isRefresh: false
                     });
                     onUpdate();
-                }, changeTime);
+                })();
             }
         }
     }, [

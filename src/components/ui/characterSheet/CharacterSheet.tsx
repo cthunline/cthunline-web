@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Paper } from '@mui/material';
 
 import { CharacterData } from '../../../types';
@@ -26,8 +26,25 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
     gameId,
     data,
     listening,
-    onChange = () => { /* default */ }
+    onChange
 }) => {
+    const changeTime = 1000;
+    const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const onChangeBuffer = (
+        name: string,
+        characterData: CharacterData,
+        instantRefresh?: boolean | undefined
+    ) => {
+        if (onChange) {
+            if (changeTimer.current) {
+                clearTimeout(changeTimer.current);
+            }
+            changeTimer.current = setTimeout(() => {
+                onChange(name, characterData, instantRefresh);
+            }, changeTime);
+        }
+    };
+
     const getContent = (): JSX.Element => {
         if (gameId === 'callOfCthulhu') {
             return (
@@ -35,7 +52,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                     readonly={readonly}
                     data={data as CoCCharacterData}
                     listening={listening}
-                    onChange={onChange}
+                    onChange={onChangeBuffer}
                 />
             );
         }
@@ -45,7 +62,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                     readonly={readonly}
                     data={data as SWD6CharacterData}
                     listening={listening}
-                    onChange={onChange}
+                    onChange={onChangeBuffer}
                 />
             );
         }
