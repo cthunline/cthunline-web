@@ -26,7 +26,7 @@ interface AuthData {
 interface AuthContextData extends AuthData {
     login: (email:string, password: string) => Promise<void>;
     logout: (callApi?: boolean) => Promise<void>;
-    handleAuthError: (err: any) => void;
+    handleApiError: (err: any) => void;
 }
 
 const defaultAuthData: AuthData = {
@@ -40,7 +40,7 @@ const AuthContext = createContext<AuthContextData>({
     ...defaultAuthData,
     login: async () => { /* default */ },
     logout: async () => { /* default */ },
-    handleAuthError: () => { /* default */ }
+    handleApiError: () => { /* default */ }
 });
 
 export const AuthProvider:React.FC<AuthProviderProps> = ({ children }) => {
@@ -90,7 +90,7 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({ children }) => {
     }, [logout]);
 
     const isAuthError = useRef<boolean>(false);
-    const handleAuthError = useCallback((err: any): void => {
+    const handleApiError = useCallback((err: any): void => {
         if (
             authData.isLoggedIn
             && !isAuthError.current
@@ -99,6 +99,8 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({ children }) => {
             isAuthError.current = true;
             toast.error('You have been disconnected');
             logout(false);
+        } else {
+            toast.error(err.message);
         }
     }, [
         authData,
@@ -135,12 +137,12 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({ children }) => {
         ...authData,
         login,
         logout,
-        handleAuthError
+        handleApiError
     }), [
         authData,
         login,
         logout,
-        handleAuthError
+        handleApiError
     ]);
 
     return (

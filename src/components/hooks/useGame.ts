@@ -5,7 +5,7 @@ import { useAuth } from '../contexts/Auth';
 import { Game } from '../../types';
 
 const useGame = () => {
-    const { handleAuthError } = useAuth();
+    const { handleApiError } = useAuth();
 
     const [gameList, setGameList] = useState<Game[]>([]);
 
@@ -22,11 +22,11 @@ const useGame = () => {
                 });
                 setGameList(games);
             } catch (err: any) {
-                handleAuthError(err);
+                handleApiError(err);
                 throw err;
             }
         })();
-    }, [handleAuthError]);
+    }, [handleApiError]);
 
     return {
         gameList,

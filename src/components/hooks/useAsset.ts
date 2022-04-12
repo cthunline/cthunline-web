@@ -28,7 +28,7 @@ interface DeleteOptions {
 }
 
 const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
-    const { user, handleAuthError } = useAuth();
+    const { user, handleApiError } = useAuth();
 
     const [assetList, setAssetList] = useState<Asset[]>([]);
 
@@ -41,12 +41,12 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
             });
             return assets;
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     }, [
         type,
-        handleAuthError
+        handleApiError
     ]);
 
     const refreshAssetList = useCallback(async () => {
@@ -85,14 +85,14 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
             }
             return assets;
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     }, [
         loadList,
         refreshAssetList,
         user,
-        handleAuthError
+        handleApiError
     ]);
 
     const deleteAsset = useCallback(async ({
@@ -112,14 +112,14 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
                 toast.success('Asset deleted');
             }
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     }, [
         user,
         loadList,
         refreshAssetList,
-        handleAuthError
+        handleApiError
     ]);
 
     useEffect(() => {

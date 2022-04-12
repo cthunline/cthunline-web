@@ -48,7 +48,7 @@ const useSession = ({
     loadList,
     sessionId
 }: SessionHookOptions = {}) => {
-    const { handleAuthError } = useAuth();
+    const { handleApiError } = useAuth();
 
     const [sessionList, setSessionList] = useState<Session[]>([]);
     const [session, setSession] = useState<Session>();
@@ -61,10 +61,10 @@ const useSession = ({
             });
             return sessions;
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
-    }, [handleAuthError]);
+    }, [handleApiError]);
 
     const getSession = useCallback(async (
         sessId: string
@@ -75,10 +75,10 @@ const useSession = ({
                 route: `/sessions/${sessId}`
             });
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
-    }, [handleAuthError]);
+    }, [handleApiError]);
 
     const refreshSession = useCallback(async (sessId: string) => {
         const sess = await getSession(sessId);
@@ -129,12 +129,12 @@ const useSession = ({
             }
             return sess;
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     }, [
         refresh,
-        handleAuthError
+        handleApiError
     ]);
 
     const editSession = async ({
@@ -156,7 +156,7 @@ const useSession = ({
                 toast.success('Session edited');
             }
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     };
@@ -178,12 +178,12 @@ const useSession = ({
                 toast.success('Session deleted');
             }
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     }, [
         refresh,
-        handleAuthError
+        handleApiError
     ]);
 
     const getNotes = useCallback(async (
@@ -195,10 +195,10 @@ const useSession = ({
                 route: `/sessions/${sessId}/notes`
             });
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
-    }, [handleAuthError]);
+    }, [handleApiError]);
 
     const editNotes = async ({
         sessionId: sessId,
@@ -215,7 +215,7 @@ const useSession = ({
                 toast.success('Notes edited');
             }
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     };

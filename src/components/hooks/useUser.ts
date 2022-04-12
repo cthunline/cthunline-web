@@ -35,7 +35,7 @@ const useUser = ({
     loadList = false,
     listDisabled = false
 }: UserHookOptions = {}) => {
-    const { handleAuthError } = useAuth();
+    const { handleApiError } = useAuth();
 
     const [userList, setUserList] = useState<User[]>([]);
 
@@ -48,12 +48,12 @@ const useUser = ({
             });
             setUserList(users);
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     }, [
         listDisabled,
-        handleAuthError
+        handleApiError
     ]);
 
     const createUser = async ({
@@ -74,7 +74,7 @@ const useUser = ({
                 toast.success('User created');
             }
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     };
@@ -99,7 +99,7 @@ const useUser = ({
             }
             return user;
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     };

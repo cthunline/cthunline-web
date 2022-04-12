@@ -41,7 +41,7 @@ const useCharacter = ({
     loadList,
     characterId
 }: CharacterHookOptions = {}) => {
-    const { user, handleAuthError } = useAuth();
+    const { user, handleApiError } = useAuth();
 
     const [characterList, setCharacterList] = useState<Character[]>([]);
     const [character, setCharacter] = useState<Character>();
@@ -54,10 +54,10 @@ const useCharacter = ({
             });
             return characters;
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
-    }, [handleAuthError]);
+    }, [handleApiError]);
 
     const getCharacter = useCallback(async (charId: string) => {
         try {
@@ -66,10 +66,10 @@ const useCharacter = ({
                 route: `/characters/${charId}`
             });
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
-    }, [handleAuthError]);
+    }, [handleApiError]);
 
     const refreshCharacter = useCallback(async (charId: string) => {
         const char = await getCharacter(charId);
@@ -125,13 +125,13 @@ const useCharacter = ({
             }
             return char;
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     }, [
         refresh,
         user,
-        handleAuthError
+        handleApiError
     ]);
 
     const editCharacter = useCallback(async ({
@@ -153,12 +153,12 @@ const useCharacter = ({
                 toast.success('Character edited');
             }
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     }, [
         refresh,
-        handleAuthError
+        handleApiError
     ]);
 
     const deleteCharacter = useCallback(async ({
@@ -178,12 +178,12 @@ const useCharacter = ({
                 toast.success('Character deleted');
             }
         } catch (err: any) {
-            handleAuthError(err);
+            handleApiError(err);
             throw err;
         }
     }, [
         refresh,
-        handleAuthError
+        handleApiError
     ]);
 
     useEffect(() => {
