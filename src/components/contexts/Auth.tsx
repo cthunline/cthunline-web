@@ -68,7 +68,7 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({ children }) => {
 
     const login = useCallback(async (email: string, password: string): Promise<void> => {
         try {
-            const { userId } = await Api.call({
+            const { id } = await Api.call({
                 method: 'POST',
                 route: '/auth',
                 data: {
@@ -76,11 +76,11 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({ children }) => {
                     password
                 }
             });
-            const user = await getUser(userId);
+            const user = await getUser(id);
             setAuthData({
                 isLoading: false,
                 isLoggedIn: true,
-                userId,
+                userId: id,
                 user
             });
         } catch (err) {
@@ -116,15 +116,15 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({ children }) => {
     useEffect(() => {
         (async () => {
             try {
-                const { userId } = await Api.call({
+                const { id } = await Api.call({
                     method: 'GET',
                     route: '/auth'
                 });
-                const user = await getUser(userId);
+                const user = await getUser(id);
                 setAuthData({
                     isLoading: false,
                     isLoggedIn: true,
-                    userId,
+                    userId: id,
                     user
                 });
             } catch (err: any) {
