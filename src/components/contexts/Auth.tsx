@@ -4,11 +4,17 @@ import React, {
     useContext,
     useEffect,
     useMemo,
-    useCallback
+    useCallback,
+    useRef
 } from 'react';
+import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
 import { User } from '../../types';
+
+interface AuthProviderProps {
+    children: JSX.Element | JSX.Element[];
+}
 
 interface AuthData {
     isLoading: boolean;
@@ -19,7 +25,8 @@ interface AuthData {
 
 interface AuthContextData extends AuthData {
     login: (email:string, password: string) => Promise<void>;
-    logout: () => Promise<void>;
+    logout: (callApi?: boolean) => Promise<void>;
+    handleAuthError: (err: any) => void;
 }
 
 const defaultAuthData: AuthData = {
@@ -32,10 +39,11 @@ const defaultAuthData: AuthData = {
 const AuthContext = createContext<AuthContextData>({
     ...defaultAuthData,
     login: async () => { /* default */ },
-    logout: async () => { /* default */ }
+    logout: async () => { /* default */ },
+    handleAuthError: () => { /* default */ }
 });
 
-export const AuthProvider:React.FC = ({ children }) => {
+export const AuthProvider:React.FC<AuthProviderProps> = ({ children }) => {
     const [authData, setAuthData] = useState<AuthData>(defaultAuthData);
 
     const getUser = async (userId: number) => (
@@ -79,9 +87,29 @@ export const AuthProvider:React.FC = ({ children }) => {
             await logout(false);
             throw err;
         }
+    }, [logout]);
+
+    const isAuthError = useRef<boolean>(false);
+    const handleAuthError = useCallback((err: any): void => {
+        if (
+            authData.isLoggedIn
+            && !isAuthError.current
+            && err.response?.status === 401
+        ) {
+            isAuthError.current = true;
+            toast.error('You have been disconnected');
+            logout(false);
+        }
     }, [
+        authData,
         logout
     ]);
+
+    useEffect(() => {
+        if (authData.isLoggedIn) {
+            isAuthError.current = false;
+        }
+    }, [authData.isLoggedIn]);
 
     useEffect(() => {
         (async () => {
@@ -101,18 +129,18 @@ export const AuthProvider:React.FC = ({ children }) => {
                 await logout(false);
             }
         })();
-    }, [
-        logout
-    ]);
+    }, [logout]);
 
     const contextValue = useMemo(() => ({
         ...authData,
         login,
-        logout
+        logout,
+        handleAuthError
     }), [
         authData,
         login,
-        logout
+        logout,
+        handleAuthError
     ]);
 
     return (

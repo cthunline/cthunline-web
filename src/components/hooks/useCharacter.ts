@@ -41,7 +41,7 @@ const useCharacter = ({
     loadList,
     characterId
 }: CharacterHookOptions = {}) => {
-    const { user } = useAuth();
+    const { user, handleAuthError } = useAuth();
 
     const [characterList, setCharacterList] = useState<Character[]>([]);
     const [character, setCharacter] = useState<Character>();
@@ -54,10 +54,10 @@ const useCharacter = ({
             });
             return characters;
         } catch (err: any) {
-            toast.error(err.message);
+            handleAuthError(err);
             throw err;
         }
-    }, []);
+    }, [handleAuthError]);
 
     const getCharacter = useCallback(async (charId: string) => {
         try {
@@ -66,10 +66,10 @@ const useCharacter = ({
                 route: `/characters/${charId}`
             });
         } catch (err: any) {
-            toast.error(err.message);
+            handleAuthError(err);
             throw err;
         }
-    }, []);
+    }, [handleAuthError]);
 
     const refreshCharacter = useCallback(async (charId: string) => {
         const char = await getCharacter(charId);
@@ -125,12 +125,13 @@ const useCharacter = ({
             }
             return char;
         } catch (err: any) {
-            toast.error(err.message);
+            handleAuthError(err);
             throw err;
         }
     }, [
         refresh,
-        user
+        user,
+        handleAuthError
     ]);
 
     const editCharacter = useCallback(async ({
@@ -152,10 +153,12 @@ const useCharacter = ({
                 toast.success('Character edited');
             }
         } catch (err: any) {
-            toast.error(err.message);
+            handleAuthError(err);
+            throw err;
         }
     }, [
-        refresh
+        refresh,
+        handleAuthError
     ]);
 
     const deleteCharacter = useCallback(async ({
@@ -175,10 +178,12 @@ const useCharacter = ({
                 toast.success('Character deleted');
             }
         } catch (err: any) {
-            toast.error(err.message);
+            handleAuthError(err);
+            throw err;
         }
     }, [
-        refresh
+        refresh,
+        handleAuthError
     ]);
 
     useEffect(() => {

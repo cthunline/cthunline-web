@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
+import { useAuth } from '../contexts/Auth';
 import { Game } from '../../types';
 
 const useGame = () => {
+    const { handleAuthError } = useAuth();
+
     const [gameList, setGameList] = useState<Game[]>([]);
 
     const getGame = (gameId: string) => (
@@ -20,10 +22,11 @@ const useGame = () => {
                 });
                 setGameList(games);
             } catch (err: any) {
-                toast.error(err.message);
+                handleAuthError(err);
+                throw err;
             }
         })();
-    }, []);
+    }, [handleAuthError]);
 
     return {
         gameList,

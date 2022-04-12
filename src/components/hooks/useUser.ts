@@ -6,6 +6,7 @@ import {
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
+import { useAuth } from '../contexts/Auth';
 import {
     User,
     UserCreateBody,
@@ -34,6 +35,8 @@ const useUser = ({
     loadList = false,
     listDisabled = false
 }: UserHookOptions = {}) => {
+    const { handleAuthError } = useAuth();
+
     const [userList, setUserList] = useState<User[]>([]);
 
     const refreshUserList = useCallback(async () => {
@@ -45,10 +48,12 @@ const useUser = ({
             });
             setUserList(users);
         } catch (err: any) {
-            toast.error(err.message);
+            handleAuthError(err);
+            throw err;
         }
     }, [
-        listDisabled
+        listDisabled,
+        handleAuthError
     ]);
 
     const createUser = async ({
@@ -69,7 +74,8 @@ const useUser = ({
                 toast.success('User created');
             }
         } catch (err: any) {
-            toast.error(err.message);
+            handleAuthError(err);
+            throw err;
         }
     };
 
@@ -93,7 +99,7 @@ const useUser = ({
             }
             return user;
         } catch (err: any) {
-            toast.error(err.message);
+            handleAuthError(err);
             throw err;
         }
     };

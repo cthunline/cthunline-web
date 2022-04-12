@@ -9,6 +9,10 @@ import React, {
 // do not import from ui index to avoid circular dependency
 import CustomDialog from '../ui/dialog/CustomDialog';
 
+interface DialogProviderProps {
+    children: JSX.Element | JSX.Element[];
+}
+
 interface DialogData {
     open: boolean;
     title: string;
@@ -35,7 +39,7 @@ const defaultDialogData: DialogContextData = {
 
 const DialogContext = createContext<DialogContextData>(defaultDialogData);
 
-export const DialogProvider:React.FC = ({ children }) => {
+export const DialogProvider:React.FC<DialogProviderProps> = ({ children }) => {
     const [dialogOptions, setDialogOptions] = useState<DialogData>({
         open: false,
         title: '',
