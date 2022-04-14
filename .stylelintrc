@@ -10,6 +10,7 @@
 		"order/properties-alphabetical-order": true
 	},
     "ignoreFiles": [
-        "node_modules/**/*"
+        "node_modules/**/*",
+        "build/**/*"
     ]
 }

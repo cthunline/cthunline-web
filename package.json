@@ -4,8 +4,7 @@
     "version": "0.0.1",
     "scripts": {
         "dev": "vite serve src --config vite.config.ts",
-        "build": "tsc && vite build src --outDir ../build",
-        "preview": "vite preview",
+        "build": "vite build src --config vite.config.ts --outDir ../build",
         "prepare": "husky install",
         "lint": "eslint . --ext .js,.ts,.tsx --max-warnings=0 && stylelint \"**/*.css\" --max-warnings=0"
     },
