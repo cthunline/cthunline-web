@@ -3,25 +3,21 @@ import {
     Paper,
     Typography,
     Button,
-    IconButton,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    CircularProgress
+    Box
 } from '@mui/material';
 import { toast } from 'react-toastify';
 import { HiMusicNote } from 'react-icons/hi';
-import {
-    MdUploadFile,
-    MdOutlineDeleteOutline,
-    MdOutlineImage
-} from 'react-icons/md';
+import { MdFolder, MdOutlineImage } from 'react-icons/md';
 
+import Explorer, {
+    ExplorerItem,
+    ExplorerItemType
+} from '../../ui/explorer/Explorer';
+import UploadButton from '../../ui/uploadButton/UploadButton';
 import { useDialog } from '../../contexts/Dialog';
 import useAsset from '../../hooks/useAsset';
+import useDirectory from '../../hooks/useDirectory';
+import DirectoryForm from './DirectoryForm';
 
 const allowedMimeTypes = [
     'image/jpeg',
@@ -33,7 +29,11 @@ const allowedMimeTypes = [
 const limitSizeInMb = 20;
 
 const Assets: React.FC = () => {
-    const { confirmDialog } = useDialog();
+    const {
+        confirmDialog,
+        openDialog,
+        closeDialog
+    } = useDialog();
     const {
         assetList,
         uploadAssets,
@@ -41,8 +41,46 @@ const Assets: React.FC = () => {
     } = useAsset({
         loadList: true
     });
+    const {
+        directoryList,
+        createDirectory,
+        deleteDirectory
+    } = useDirectory({
+        loadList: true
+    });
 
+    const [directoryIds, setDirectoryIds] = useState<string[]>([]);
     const [progress, setProgress] = useState<number | null>(null);
+
+    const onBack = () => {
+        setDirectoryIds((previous) => (
+            previous.slice(0, -1)
+        ));
+    };
+
+    const onDirectory = (id: string) => {
+        setDirectoryIds((previous) => [...previous, id]);
+    };
+
+    const onSubmitDirectory = (name: string) => {
+        const parentId = directoryIds.length ? directoryIds.at(-1) : undefined;
+        createDirectory({
+            data: {
+                name,
+                parentId
+            }
+        });
+        closeDialog();
+    };
+
+    const onCreateDirectory = () => {
+        openDialog({
+            title: 'Create a directory',
+            content: (
+                <DirectoryForm onSubmit={onSubmitDirectory} />
+            )
+        });
+    };
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files?.length) {
@@ -56,8 +94,12 @@ const Assets: React.FC = () => {
                 }
             });
             if (valid) {
+                const directoryId = directoryIds.length ? directoryIds.at(-1) : undefined;
                 await uploadAssets({
-                    files,
+                    data: {
+                        assets: files,
+                        directoryId
+                    },
                     progress: (percent: number) => {
                         setProgress(percent);
                     }
@@ -67,79 +109,75 @@ const Assets: React.FC = () => {
         }
     };
 
-    const onDelete = (assetId: string, name: string) => {
-        confirmDialog(`Delete asset ${name} ?`, () => {
-            deleteAsset({ assetId });
-        });
+    const onDelete = (type: ExplorerItemType, id: string, name: string) => {
+        if (type === ExplorerItemType.directory) {
+            confirmDialog(`Delete directory ${name} ?`, () => {
+                deleteDirectory({ directoryId: id });
+            });
+        }
+        if (type === ExplorerItemType.file) {
+            confirmDialog(`Delete asset ${name} ?`, () => {
+                deleteAsset({ assetId: id });
+            });
+        }
     };
+
+    const items: ExplorerItem[] = [
+        ...directoryList.map(({ id, name, parentId }) => ({
+            id,
+            name,
+            parentId,
+            type: ExplorerItemType.directory
+        })),
+        ...assetList.map(({
+            id,
+            name,
+            type,
+            directoryId
+        }) => ({
+            id,
+            name,
+            parentId: directoryId,
+            type: ExplorerItemType.file,
+            icon: type === 'audio' ? (
+                <HiMusicNote size={25} />
+            ) : (
+                <MdOutlineImage size={25} />
+            )
+        }))
+    ];
 
     return (
         <Paper elevation={3} className="page-list box flex column start-x center-y">
             <Typography variant="h6" gutterBottom>
                 Assets
             </Typography>
-            <TableContainer>
-                <Table stickyHeader>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Type</TableCell>
-                            <TableCell>Name</TableCell>
-                            <TableCell />
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {assetList.map(({
-                            id,
-                            type,
-                            name
-                        }) => (
-                            <TableRow key={id}>
-                                <TableCell>
-                                    {type === 'audio' ? (
-                                        <HiMusicNote size={25} />
-                                    ) : (
-                                        <MdOutlineImage size={25} />
-                                    )}
-                                </TableCell>
-                                <TableCell>
-                                    {name}
-                                </TableCell>
-                                <TableCell align="right">
-                                    <IconButton
-                                        size="medium"
-                                        color="error"
-                                        onClick={() => onDelete(id, name)}
-                                    >
-                                        <MdOutlineDeleteOutline />
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-            {progress ? (
-                <CircularProgress variant="determinate" value={progress} />
-            ) : (
-                <label className="create-button" htmlFor="assets-input">
-                    <input
-                        id="assets-input"
-                        className="hidden"
-                        type="file"
-                        multiple
-                        accept={allowedMimeTypes.join(',')}
-                        onChange={handleFileChange}
-                    />
-                    <Button
-                        variant="contained"
-                        size="medium"
-                        component="span"
-                        startIcon={<MdUploadFile />}
-                    >
-                        Upload
-                    </Button>
-                </label>
-            )}
+            <Explorer
+                className="mb-10"
+                items={items}
+                directoryId={directoryIds.at(-1)}
+                onBack={onBack}
+                onDirectory={onDirectory}
+                onDelete={onDelete}
+            />
+            <Box className="align-end">
+                <Button
+                    className="mr-10"
+                    variant="contained"
+                    size="medium"
+                    component="span"
+                    startIcon={<MdFolder />}
+                    onClick={onCreateDirectory}
+                >
+                    New directory
+                </Button>
+                <UploadButton
+                    label="Upload asset"
+                    progress={progress}
+                    allowedMimeTypes={allowedMimeTypes}
+                    onChange={handleFileChange}
+                />
+            </Box>
         </Paper>
     );
 };

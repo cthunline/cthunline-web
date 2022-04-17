@@ -75,7 +75,7 @@ const Audio = () => {
         <Box className="audio">
             <Box className="flex row center">
                 <Box
-                    className="audio-volume-icon clickable flex center"
+                    className="clickable flex center mr-10"
                     onClick={() => setIsMute(!isMute)}
                 >
                     {getIcon()}

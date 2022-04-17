@@ -2,8 +2,6 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { GiWizardFace } from 'react-icons/gi';
 
-import './Error.css';
-
 const errors = {
     notFound: {
         title: 'I have no memory of this place...',
@@ -25,7 +23,7 @@ const Error: React.FC<ErrorProps> = ({ type }) => {
     const { title, message } = errors[type];
     return (
         <div className="flex column center">
-            <GiWizardFace size={100} className="error-icon" />
+            <GiWizardFace size={100} className="mb-20" />
             <Typography variant="h4" gutterBottom>
                 {title}
             </Typography>

@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
 import { useAuth } from '../contexts/Auth';
-import { Asset } from '../../types';
+import { Asset, AssetCreateBody } from '../../types';
 
 interface AssetHookOptions {
     loadList?: boolean;
@@ -15,7 +15,7 @@ interface AssetHookOptions {
 }
 
 interface UploadOptions {
-    files: File[];
+    data: AssetCreateBody;
     progress?: (percent: number) => void;
     isRefresh?: boolean;
     isToast?: boolean;
@@ -32,12 +32,12 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
 
     const [assetList, setAssetList] = useState<Asset[]>([]);
 
-    const getAssets = useCallback(async (userId: string) => {
+    const getAssets = useCallback(async (userId: string): Promise<Asset[]> => {
         try {
-            const query = type ? `?type=${type}` : '';
+            const typeQuery = type ? `?type=${type}` : '';
             const { assets } = await Api.call({
                 method: 'GET',
-                route: `/users/${userId}/assets${query}`
+                route: `/users/${userId}/assets${typeQuery}`
             });
             return assets;
         } catch (err: any) {
@@ -60,16 +60,19 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
     ]);
 
     const uploadAssets = useCallback(async ({
-        files,
+        data,
         progress,
         isRefresh = true,
         isToast = true
     }: UploadOptions): Promise<Asset[]> => {
         try {
             const formData = new FormData();
-            [...files].forEach((file) => {
+            [...data.assets].forEach((file) => {
                 formData.append('assets', file);
             });
+            if (data.directoryId) {
+                formData.append('directoryId', data.directoryId);
+            }
             const { assets } = await Api.call({
                 method: 'POST',
                 route: `/users/${user?.id}/assets`,
@@ -99,7 +102,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
         assetId,
         isRefresh = true,
         isToast = true
-    }: DeleteOptions) => {
+    }: DeleteOptions): Promise<void> => {
         try {
             await Api.call({
                 method: 'DELETE',

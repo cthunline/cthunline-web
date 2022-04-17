@@ -135,7 +135,7 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
                         onClick={() => modifySelectedDice(type, -1)}
                     >
                         <Box
-                            className="dice-selected-multipler"
+                            className="mr-5"
                             component="span"
                         >
                             {`${selectedDices[type]} x`}

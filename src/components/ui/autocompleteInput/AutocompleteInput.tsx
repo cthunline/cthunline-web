@@ -1,5 +1,9 @@
 import React from 'react';
-import { Autocomplete, TextField, createFilterOptions } from '@mui/material';
+import {
+    Autocomplete,
+    TextField,
+    createFilterOptions
+} from '@mui/material';
 
 interface AutocompleteInputProps<DataType> {
     options: (DataType & AutocompleteInputData)[];

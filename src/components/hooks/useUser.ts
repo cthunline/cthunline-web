@@ -60,9 +60,9 @@ const useUser = ({
         data,
         isRefresh = true,
         isToast = true
-    }: CreateOptions) => {
+    }: CreateOptions): Promise<User> => {
         try {
-            await Api.call({
+            const user = await Api.call({
                 method: 'POST',
                 route: '/users',
                 data
@@ -73,6 +73,7 @@ const useUser = ({
             if (isToast) {
                 toast.success('User created');
             }
+            return user;
         } catch (err: any) {
             handleApiError(err);
             throw err;
@@ -84,7 +85,7 @@ const useUser = ({
         data,
         isRefresh = true,
         isToast = true
-    }: EditOptions): Promise<User | null> => {
+    }: EditOptions): Promise<User> => {
         try {
             const user = await Api.call({
                 method: 'POST',

@@ -46,7 +46,7 @@ const useCharacter = ({
     const [characterList, setCharacterList] = useState<Character[]>([]);
     const [character, setCharacter] = useState<Character>();
 
-    const getCharacters = useCallback(async (userId: string) => {
+    const getCharacters = useCallback(async (userId: string): Promise<Character[]> => {
         try {
             const { characters } = await Api.call({
                 method: 'GET',
@@ -59,7 +59,7 @@ const useCharacter = ({
         }
     }, [handleApiError]);
 
-    const getCharacter = useCallback(async (charId: string) => {
+    const getCharacter = useCallback(async (charId: string): Promise<Character> => {
         try {
             return await Api.call({
                 method: 'GET',
@@ -139,9 +139,9 @@ const useCharacter = ({
         data,
         isRefresh = true,
         isToast = true
-    }: EditOptions) => {
+    }: EditOptions): Promise<Character> => {
         try {
-            await Api.call({
+            const char = await Api.call({
                 method: 'POST',
                 route: `/characters/${charId}`,
                 data
@@ -152,6 +152,7 @@ const useCharacter = ({
             if (isToast) {
                 toast.success('Character edited');
             }
+            return char;
         } catch (err: any) {
             handleApiError(err);
             throw err;
@@ -165,7 +166,7 @@ const useCharacter = ({
         characterId: charId,
         isRefresh = true,
         isToast = true
-    }: DeleteOptions) => {
+    }: DeleteOptions): Promise<void> => {
         try {
             await Api.call({
                 method: 'DELETE',

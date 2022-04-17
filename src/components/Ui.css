@@ -121,3 +121,25 @@
     align-self: flex-end;
     margin: 20px 0 0;
 }
+
+/* margins (with body parent to take precedence) */
+
+body .mt-5 { margin-top: 5px; }
+body .mr-5 { margin-right: 5px; }
+body .mb-5 { margin-bottom: 5px; }
+body .ml-5 { margin-left: 5px; }
+
+body .mt-10 { margin-top: 10px; }
+body .mr-10 { margin-right: 10px; }
+body .mb-10 { margin-bottom: 10px; }
+body .ml-10 { margin-left: 10px; }
+
+body .mt-15 { margin-top: 15px; }
+body .mr-15 { margin-right: 15px; }
+body .mb-15 { margin-bottom: 15px; }
+body .ml-15 { margin-left: 15px; }
+
+body .mt-20 { margin-top: 20px; }
+body .mr-20 { margin-right: 20px; }
+body .mb-20 { margin-bottom: 20px; }
+body .ml-0 { margin-left: 20px; }

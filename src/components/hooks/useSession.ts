@@ -53,7 +53,7 @@ const useSession = ({
     const [sessionList, setSessionList] = useState<Session[]>([]);
     const [session, setSession] = useState<Session>();
 
-    const getSessions = useCallback(async () => {
+    const getSessions = useCallback(async (): Promise<Session[]> => {
         try {
             const { sessions } = await Api.call({
                 method: 'GET',
@@ -142,9 +142,9 @@ const useSession = ({
         data,
         isRefresh = true,
         isToast = true
-    }: EditSessionOptions) => {
+    }: EditSessionOptions): Promise<Session> => {
         try {
-            await Api.call({
+            const sess = await Api.call({
                 method: 'POST',
                 route: `/sessions/${sessId}`,
                 data
@@ -155,6 +155,7 @@ const useSession = ({
             if (isToast) {
                 toast.success('Session edited');
             }
+            return sess;
         } catch (err: any) {
             handleApiError(err);
             throw err;
@@ -165,7 +166,7 @@ const useSession = ({
         sessionId: sessId,
         isRefresh = true,
         isToast = true
-    }: DeleteSessionOptions) => {
+    }: DeleteSessionOptions): Promise<void> => {
         try {
             await Api.call({
                 method: 'DELETE',
@@ -204,9 +205,9 @@ const useSession = ({
         sessionId: sessId,
         text,
         isToast = true
-    }: EditNotesOptions) => {
+    }: EditNotesOptions): Promise<Note> => {
         try {
-            await Api.call({
+            const notes = await Api.call({
                 method: 'POST',
                 route: `/sessions/${sessId}/notes`,
                 data: { text }
@@ -214,6 +215,7 @@ const useSession = ({
             if (isToast) {
                 toast.success('Notes edited');
             }
+            return notes;
         } catch (err: any) {
             handleApiError(err);
             throw err;

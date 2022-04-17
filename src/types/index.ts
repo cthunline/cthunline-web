@@ -38,12 +38,34 @@ export interface SessionUser extends User {
 export interface Asset {
     id: string;
     userId: string;
+    directoryId?: string;
     type: 'audio' | 'image';
     name: string;
     path: string;
     createdAt: string;
     updatedAt: string;
 }
+
+export interface AssetCreateBody {
+    assets: File[];
+    directoryId?: string;
+}
+
+export interface Directory {
+    id: string;
+    userId: string;
+    parentId?: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export interface DirectoryCreateBody {
+    name: string;
+    parentId?: string;
+}
+
+export type DirectoryEditBody = Partial<Omit<DirectoryCreateBody, 'parentId'>>;
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ session
 
