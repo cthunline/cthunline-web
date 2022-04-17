@@ -63,6 +63,7 @@ const NotesWidget: React.FC<NotesWidgetProps> = ({
 
     return (
         <Widget
+            id="widget-notes"
             title="Notes"
             onClose={() => onClose(WidgetType.notes)}
         >

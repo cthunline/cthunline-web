@@ -129,7 +129,7 @@ const PlayContent = () => {
     }
 
     return (
-        <Box className="flex row full-width full-height">
+        <Box className="play-container flex row full-width full-height">
             <PlayMenu
                 isMaster={socket.isMaster}
                 onWidgetOpen={onWidgetOpen}

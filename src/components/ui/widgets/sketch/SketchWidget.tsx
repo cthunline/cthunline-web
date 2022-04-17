@@ -124,6 +124,7 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
 
     return (
         <Widget
+            id="widget-sketch"
             title="Sketch"
             onClose={() => onClose(WidgetType.sketch)}
         >

@@ -10,6 +10,7 @@ import './Widget.css';
 
 interface WidgetProps {
     title?: string;
+    id: string;
     className?: string;
     actions?: JSX.Element | JSX.Element[];
     children?: JSX.Element | JSX.Element[] | string;
@@ -18,6 +19,7 @@ interface WidgetProps {
 
 const Widget: React.FC<WidgetProps> = ({
     title,
+    id,
     className,
     actions,
     children,
@@ -40,13 +42,14 @@ const Widget: React.FC<WidgetProps> = ({
     return (
         <Draggable
             bounds="parent"
-            handle="#widget-bar"
+            handle={`#${id}-bar`}
             nodeRef={nodeRef}
             onStart={(e) => {
                 focusWidget(e.currentTarget as HTMLElement);
             }}
         >
             <Box
+                id={id}
                 className={`widget-container ${className ?? ''}`}
                 ref={nodeRef}
             >
@@ -55,7 +58,7 @@ const Widget: React.FC<WidgetProps> = ({
                     elevation={3}
                 >
                     <Box className="widget-inner flex column full-width full-height">
-                        <Box id="widget-bar full-width" className="widget-bar flex row center">
+                        <Box id={`${id}-bar`} className="widget-bar full-width flex row center">
                             <Box className="widget-bar-title pl-5 pr-5">
                                 {title ?? ''}
                             </Box>

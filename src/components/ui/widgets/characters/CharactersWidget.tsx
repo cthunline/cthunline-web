@@ -55,7 +55,8 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
 
     return (
         <Widget
-            title="Character"
+            id="widget-characters"
+            title="Characters"
             onClose={() => onClose(WidgetType.characters)}
         >
             <Box className="characters-widget-content flex column center">

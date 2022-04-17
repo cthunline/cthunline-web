@@ -99,6 +99,7 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
 
     return (
         <Widget
+            id="widget-character"
             title="Character"
             actions={widgetActions}
             onClose={() => onClose(WidgetType.character)}

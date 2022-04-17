@@ -177,6 +177,7 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
 
     return (
         <Widget
+            id="widget-dices"
             title="Dices"
             onClose={() => onClose(WidgetType.dices)}
         >

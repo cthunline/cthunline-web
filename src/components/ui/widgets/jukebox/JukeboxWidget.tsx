@@ -99,6 +99,7 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
 
     return (
         <Widget
+            id="widget-jukebox"
             title="Jukebox"
             onClose={() => onClose(WidgetType.jukebox)}
         >
