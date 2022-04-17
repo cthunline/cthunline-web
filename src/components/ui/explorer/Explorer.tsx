@@ -1,7 +1,7 @@
 import React from 'react';
 import {
     List,
-    ListItem,
+    ListItemButton,
     ListItemText,
     ListItemIcon,
     IconButton,
@@ -13,8 +13,6 @@ import {
     MdOutlineDeleteOutline,
     MdOutlineKeyboardBackspace
 } from 'react-icons/md';
-
-import './Explorer.css';
 
 export enum ExplorerItemType {
     directory = 'directory',
@@ -33,17 +31,21 @@ interface ExplorerProps {
     className?: string;
     items: ExplorerItem[];
     directoryId?: string;
-    onBack: () => void;
-    onDirectory: (directoryId: string) => void;
-    onDelete: (type: ExplorerItemType, id: string, name: string) => void;
+    selectedId?: string;
+    onDirectoryBack: () => void;
+    onDirectoryClick: (id: string) => void;
+    onFileClick?: (id: string) => void;
+    onDelete?: (type: ExplorerItemType, id: string, name: string) => void;
 }
 
 const Explorer = ({
     className,
     items,
     directoryId,
-    onBack,
-    onDirectory,
+    selectedId,
+    onDirectoryBack,
+    onDirectoryClick,
+    onFileClick,
     onDelete
 }: ExplorerProps) => {
     const filteredItems = items.filter(({ parentId }) => (
@@ -70,17 +72,14 @@ const Explorer = ({
     };
 
     return (
-        <List className={`explorer-list ${className ?? ''}`}>
+        <List className={`full-width ${className ?? ''}`}>
             {directoryId ? (
-                <ListItem
-                    className="explorer-list-item clickable"
-                    onClick={onBack}
-                >
+                <ListItemButton onClick={onDirectoryBack}>
                     <ListItemIcon>
                         <MdOutlineKeyboardBackspace />
                     </ListItemIcon>
                     <ListItemText primary=".." />
-                </ListItem>
+                </ListItemButton>
             ) : null}
             {[...directories, ...files].map(({
                 id,
@@ -90,12 +89,15 @@ const Explorer = ({
             }) => {
                 const isDirectory = type === ExplorerItemType.directory;
                 return (
-                    <ListItem
+                    <ListItemButton
                         key={`explorer-item-${id}`}
-                        className={`explorer-list-item ${isDirectory ? 'clickable' : ''}`}
+                        className={`${isDirectory || onFileClick ? 'clickable' : ''}`}
+                        selected={selectedId === id}
                         onClick={() => {
                             if (isDirectory) {
-                                onDirectory(id);
+                                onDirectoryClick(id);
+                            } else if (onFileClick) {
+                                onFileClick(id);
                             }
                         }}
                     >
@@ -103,17 +105,19 @@ const Explorer = ({
                             {getIcon(type, icon)}
                         </ListItemIcon>
                         <ListItemText primary={name} />
-                        <ListItemSecondaryAction>
-                            <IconButton
-                                edge="end"
-                                size="medium"
-                                color="error"
-                                onClick={() => onDelete(type, id, name)}
-                            >
-                                <MdOutlineDeleteOutline />
-                            </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
+                        {onDelete ? (
+                            <ListItemSecondaryAction>
+                                <IconButton
+                                    edge="end"
+                                    size="medium"
+                                    color="error"
+                                    onClick={() => onDelete(type, id, name)}
+                                >
+                                    <MdOutlineDeleteOutline />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        ) : null}
+                    </ListItemButton>
                 );
             })}
         </List>

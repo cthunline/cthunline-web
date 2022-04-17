@@ -6,9 +6,9 @@ import {
     Tab
 } from '@mui/material';
 
-import CharacterSheet from '../characterSheet/CharacterSheet';
-import Widget from '../play/Widget';
-import { WidgetType, SessionUser } from '../../../types';
+import CharacterSheet from '../../characterSheet/CharacterSheet';
+import Widget from '../../play/Widget';
+import { WidgetType, SessionUser } from '../../../../types';
 
 import './CharactersWidget.css';
 
@@ -61,7 +61,7 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
             <Box className="characters-widget-content flex column center">
                 {users.length && sessionUser ? (
                     <Tabs
-                        className="characters-widget-tabs"
+                        className="characters-widget-tabs full-width"
                         value={sessionUser.id}
                         onChange={onTabChange}
                     >

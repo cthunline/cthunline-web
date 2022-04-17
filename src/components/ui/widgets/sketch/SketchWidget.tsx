@@ -1,37 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Box,
-    ImageList,
-    ImageListItem,
-    ImageListItemBar,
-    IconButton,
     Switch,
     FormControlLabel,
-    Typography,
-    Tooltip
+    Typography
 } from '@mui/material';
-import { HiPlus } from 'react-icons/hi';
 import { GoPencil } from 'react-icons/go';
 import { MdOutlineDeleteOutline, MdUndo } from 'react-icons/md';
 import { BsEraserFill } from 'react-icons/bs';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
 import { IoPeopleCircle } from 'react-icons/io5';
 
-import Api from '../../../services/api';
-import Widget from '../play/Widget';
-import { WidgetType } from '../../../types';
-
-import { usePlay } from '../../contexts/Play';
-import { useDialog } from '../../contexts/Dialog';
-import useAsset from '../../hooks/useAsset';
+import Widget from '../../play/Widget';
+import Explorer, {
+    ExplorerItem,
+    ExplorerItemType
+} from '../../explorer/Explorer';
+import { Asset, WidgetType } from '../../../../types';
+import { usePlay } from '../../../contexts/Play';
+import { useDialog } from '../../../contexts/Dialog';
+import useAsset from '../../../hooks/useAsset';
+import useDirectory from '../../../hooks/useDirectory';
+import {
+    ImageAssetList,
+    ActionButton,
+    ActionButtonData
+} from './SketchWidgetElements';
 
 import './SketchWidget.css';
-
-interface ActionButton {
-    text: string;
-    icon: JSX.Element;
-    handler: () => void;
-}
 
 interface SketchWidgetProps {
     onClose: (widget: WidgetType) => void;
@@ -57,12 +53,27 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
         loadList: true,
         type: 'image'
     });
+    const { directoryList } = useDirectory({
+        loadList: true
+    });
+
+    const [directoryIds, setDirectoryIds] = useState<string[]>([]);
+
+    const onExplorerBack = () => {
+        setDirectoryIds((previous) => (
+            previous.slice(0, -1)
+        ));
+    };
+
+    const onExplorerDirectory = (id: string) => {
+        setDirectoryIds((previous) => [...previous, id]);
+    };
 
     const toogleIsFreeDrawing = () => {
         setIsFreeDrawing(!isFreeDrawing);
     };
 
-    const actionButtons: ActionButton[] = [{
+    const actionButtons: ActionButtonData[] = [{
         text: 'Drawing',
         icon: <GoPencil size={25} className={isFreeDrawing ? '' : 'opacity-half'} />,
         handler: toogleIsFreeDrawing
@@ -96,6 +107,21 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
         }
     }];
 
+    const explorerItems: ExplorerItem[] = (
+        directoryList.map(({ id, name, parentId }) => ({
+            id,
+            name,
+            parentId,
+            type: ExplorerItemType.directory
+        }))
+    );
+
+    const directoryAssets: Asset[] = (
+        assetList.filter(({ directoryId }) => (
+            directoryIds.length ? directoryId === directoryIds.at(-1) : !directoryId
+        ))
+    );
+
     return (
         <Widget
             title="Sketch"
@@ -116,66 +142,40 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
                         )}
                     />
                 </Box>
-                {sketchData.displayed ? (
-                    <Box className="flex row center">
+                {sketchData.displayed ? [
+                    <Box key="scketch-actions" className="flex row center">
                         {actionButtons.map(({
                             text,
                             icon,
                             handler
                         }, index) => (
-                            <Tooltip
-                                placement="bottom"
-                                title={text}
+                            <ActionButton
                                 key={`scketch-action-${index.toString()}`}
-                            >
-                                <IconButton
-                                    className="sketch-action-button"
-                                    size="medium"
-                                    onClick={handler}
-                                >
-                                    {icon}
-                                </IconButton>
-                            </Tooltip>
+                                text={text}
+                                icon={icon}
+                                handler={handler}
+                            />
                         ))}
-                    </Box>
-                ) : null}
-                {sketchData.displayed ? (
-                    <Box>
+                    </Box>,
+                    <Box key="scketch-assets">
                         <Typography variant="h6" gutterBottom>
                             Assets
                         </Typography>
-                        <ImageList
-                            className="sketch-widget-assets"
-                            cols={2}
-                            gap={5}
-                        >
-                            {assetList.map(({ name, path }, index) => {
-                                const src = Api.getAssetUrl(path);
-                                return (
-                                    <ImageListItem key={`asset-${index.toString()}`}>
-                                        <img
-                                            src={`${src}?w=248&fit=crop&auto=format`}
-                                            alt={name}
-                                            loading="lazy"
-                                        />
-                                        <ImageListItemBar
-                                            title={name}
-                                            actionIcon={(
-                                                <IconButton
-                                                    onClick={() => (
-                                                        addSketchImage(src, false)
-                                                    )}
-                                                >
-                                                    <HiPlus />
-                                                </IconButton>
-                                            )}
-                                        />
-                                    </ImageListItem>
-                                );
-                            })}
-                        </ImageList>
+                        <Explorer
+                            className="scroll sketch-widget-explorer full-width"
+                            items={explorerItems}
+                            directoryId={directoryIds.at(-1)}
+                            onDirectoryBack={onExplorerBack}
+                            onDirectoryClick={onExplorerDirectory}
+                        />
+                        <ImageAssetList
+                            assets={directoryAssets}
+                            onAdd={(src: string) => (
+                                addSketchImage(src, false)
+                            )}
+                        />
                     </Box>
-                ) : null}
+                ] : null}
             </Box>
         </Widget>
     );

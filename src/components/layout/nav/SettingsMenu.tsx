@@ -13,8 +13,6 @@ import { FiUsers } from 'react-icons/fi';
 
 import { useAuth } from '../../contexts/Auth';
 
-import './SettingsMenu.css';
-
 interface SettingsMenuItem {
     icon: JSX.Element;
     route: string;
@@ -60,7 +58,7 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({ anchorEl, handleClose }) =>
             onClose={handleClose}
             onClick={handleClose}
             PaperProps={{
-                className: 'settings-menu'
+                className: 'mt-10 mr-10'
             }}
         >
             {settingsMenuItems.map((item) => (

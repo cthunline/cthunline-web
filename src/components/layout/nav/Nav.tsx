@@ -53,18 +53,19 @@ const Nav: React.FC = () => {
 
     return (
         <AppBar position="static">
-            <nav className="nav">
-                <div className="nav-left">
+            <nav className="nav flex row center-x">
+                <div className="nav-left flex row center ml-10 mr-10">
                     <GiD10
                         className="clickable"
                         size={40}
                         onClick={() => navigate('/home')}
                     />
                 </div>
-                <div className="nav-middle">
+                <div className="nav-middle grow flex row start-x center-y ml-10 mr-10">
                     {navMenuItems.map(({ icon, route, text }: NavMenuItem) => (
                         <Button
                             key={`nav-menu-${route}`}
+                            className="ml-10 mr-10"
                             startIcon={icon}
                             onClick={() => navigate(route)}
                         >
@@ -72,7 +73,7 @@ const Nav: React.FC = () => {
                         </Button>
                     ))}
                 </div>
-                <div className="nav-right">
+                <div className="nav-right flex row center ml-10 mr-10">
                     <IconButton size="small" onClick={onUserMenuClick}>
                         <Avatar>
                             <MdOutlineSettings size={30} />

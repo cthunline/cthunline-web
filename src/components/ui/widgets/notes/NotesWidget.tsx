@@ -5,10 +5,10 @@ import React, {
 } from 'react';
 import { Box, TextField } from '@mui/material';
 
-import { usePlay } from '../../contexts/Play';
-import useSession from '../../hooks/useSession';
-import Widget from '../play/Widget';
-import { WidgetType } from '../../../types';
+import { usePlay } from '../../../contexts/Play';
+import useSession from '../../../hooks/useSession';
+import Widget from '../../play/Widget';
+import { WidgetType } from '../../../../types';
 
 import './NotesWidget.css';
 

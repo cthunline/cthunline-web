@@ -7,14 +7,14 @@ import React, {
 import { Box, CircularProgress } from '@mui/material';
 import { MdEdit, MdOutlineCheck } from 'react-icons/md';
 
-import CharacterSheet from '../characterSheet/CharacterSheet';
-import useCharacter from '../../hooks/useCharacter';
-import Widget from '../play/Widget';
+import CharacterSheet from '../../characterSheet/CharacterSheet';
+import useCharacter from '../../../hooks/useCharacter';
+import Widget from '../../play/Widget';
 import {
     WidgetType,
     Character,
     CharacterData
-} from '../../../types';
+} from '../../../../types';
 
 import './CharacterWidget.css';
 

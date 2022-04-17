@@ -1,7 +1,0 @@
-.explorer-list {
-    width: 100%;
-}
-
-.explorer-list-item:hover {
-    background: var(--palette-darkgray);
-}

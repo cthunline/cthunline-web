@@ -91,7 +91,7 @@ const PlayMenu: React.FC<PlayMenuProps> = ({
         (isMaster && (!playerOnly)) || (!isMaster && (!adminOnly))
     ));
     return (
-        <Box className="play-menu flex column">
+        <Box className="play-menu flex column full-height">
             {items.map(({
                 icon,
                 text,

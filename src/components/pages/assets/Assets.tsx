@@ -52,13 +52,13 @@ const Assets: React.FC = () => {
     const [directoryIds, setDirectoryIds] = useState<string[]>([]);
     const [progress, setProgress] = useState<number | null>(null);
 
-    const onBack = () => {
+    const onDirectoryBack = () => {
         setDirectoryIds((previous) => (
             previous.slice(0, -1)
         ));
     };
 
-    const onDirectory = (id: string) => {
+    const onDirectoryClick = (id: string) => {
         setDirectoryIds((previous) => [...previous, id]);
     };
 
@@ -153,11 +153,11 @@ const Assets: React.FC = () => {
                 Assets
             </Typography>
             <Explorer
-                className="mb-10"
+                className="scroll mb-10"
                 items={items}
                 directoryId={directoryIds.at(-1)}
-                onBack={onBack}
-                onDirectory={onDirectory}
+                onDirectoryBack={onDirectoryBack}
+                onDirectoryClick={onDirectoryClick}
                 onDelete={onDelete}
             />
             <Box className="align-end">

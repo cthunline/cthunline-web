@@ -51,12 +51,12 @@ const Widget: React.FC<WidgetProps> = ({
                 ref={nodeRef}
             >
                 <Paper
-                    className="widget-paper"
+                    className="widget-paper full-width full-height"
                     elevation={3}
                 >
-                    <Box className="widget-inner flex column">
-                        <Box id="widget-bar" className="widget-bar flex row center">
-                            <Box className="widget-bar-title">
+                    <Box className="widget-inner flex column full-width full-height">
+                        <Box id="widget-bar full-width" className="widget-bar flex row center">
+                            <Box className="widget-bar-title pl-5 pr-5">
                                 {title ?? ''}
                             </Box>
                             <Box className="widget-bar-actions grow flex row centerY">
@@ -69,7 +69,7 @@ const Widget: React.FC<WidgetProps> = ({
                             />
                         </Box>
                         <Box
-                            className="widget-content"
+                            className="widget-content full-width"
                             onMouseDown={(e) => {
                                 focusWidget(e.currentTarget);
                             }}

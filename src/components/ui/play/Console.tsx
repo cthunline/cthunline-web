@@ -30,12 +30,12 @@ const Console: React.FC<ConsoleProps> = ({ logs }) => {
 
     return (
         <Box className="console-container" ref={consoleRef}>
-            <Paper className="console-paper" elevation={3}>
-                <Box className="console-inner flex column scroll-always" ref={consoleRef}>
+            <Paper className="console-paper full-width full-height p-10" elevation={3}>
+                <Box className="console-inner full-width full-height flex column scroll-always" ref={consoleRef}>
                     {logs.map(({ text }, index) => (
                         <Box
                             key={`console-log-${index.toString()}`}
-                            className="console-log"
+                            className="console-log mt-5 mb-5"
                         >
                             {text}
                         </Box>

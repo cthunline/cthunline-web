@@ -1,27 +1,8 @@
 .nav {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
     height: 60px;
-}
-
-.nav-left,
-.nav-middle,
-.nav-right {
-    align-items: center;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    margin: 0 10px;
-}
-
-.nav-middle {
-    flex-grow: 1;
-    justify-content: left;
 }
 
 .nav-middle button {
     color: var(--palette-white);
     font-weight: 600;
-    margin: 0 10px;
 }

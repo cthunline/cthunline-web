@@ -129,13 +129,13 @@ const PlayContent = () => {
     }
 
     return (
-        <Box className="play-container flex row">
+        <Box className="flex row full-width full-height">
             <PlayMenu
                 isMaster={socket.isMaster}
                 onWidgetOpen={onWidgetOpen}
                 onExit={onExit}
             />
-            <Box id="play-content" className="play-content flex column">
+            <Box id="play-content" className="play-content grow flex column p-25">
                 {getWidgets(openWidgets)}
                 {sketchData.displayed ? (
                     <Sketch isMaster={socket?.isMaster} />
