@@ -8,6 +8,15 @@ import { MdClose } from 'react-icons/md';
 
 import './Widget.css';
 
+declare module 'react-draggable' {
+    export interface DraggableProps {
+        children: React.ReactNode;
+    }
+}
+
+// workaround for react 18 compatibility
+// https://github.com/react-grid-layout/react-draggable/issues/647
+// https://github.com/react-grid-layout/react-draggable/pull/648
 interface WidgetProps {
     title?: string;
     id: string;
