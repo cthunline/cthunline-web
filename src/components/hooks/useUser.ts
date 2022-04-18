@@ -10,7 +10,8 @@ import { useAuth } from '../contexts/Auth';
 import {
     User,
     UserCreateBody,
-    UserEditBody
+    UserEditBody,
+    UserRegisterBody
 } from '../../types';
 
 interface UserHookOptions {
@@ -28,6 +29,11 @@ interface EditOptions {
     userId: string;
     data: UserEditBody;
     isRefresh?: boolean;
+    isToast?: boolean;
+}
+
+interface RegisterOptions {
+    data: UserRegisterBody;
     isToast?: boolean;
 }
 
@@ -105,6 +111,39 @@ const useUser = ({
         }
     };
 
+    const registerUser = async ({
+        data,
+        isToast = true
+    }: RegisterOptions): Promise<User> => {
+        try {
+            const user = await Api.call({
+                method: 'POST',
+                route: '/register',
+                data
+            });
+            if (isToast) {
+                toast.success('Registered successfully');
+            }
+            return user;
+        } catch (err: any) {
+            handleApiError(err);
+            throw err;
+        }
+    };
+
+    const generateInvitationCode = async (): Promise<string> => {
+        try {
+            const { code } = await Api.call({
+                method: 'POST',
+                route: '/invitation'
+            });
+            return code;
+        } catch (err: any) {
+            handleApiError(err);
+            throw err;
+        }
+    };
+
     useEffect(() => {
         if (loadList) {
             refreshUserList();
@@ -117,7 +156,9 @@ const useUser = ({
     return {
         userList,
         createUser,
-        editUser
+        editUser,
+        registerUser,
+        generateInvitationCode
     };
 };
 

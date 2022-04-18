@@ -6,7 +6,7 @@ import {
     Assets,
     Profile,
     Users,
-    UserForm,
+    UserCreateForm,
     Sessions,
     SessionForm,
     Play
@@ -51,7 +51,7 @@ export const pages: RouterPage[] = [{
     admin: true
 }, {
     path: '/users/create',
-    element: <UserForm />,
+    element: <UserCreateForm />,
     showNav: true,
     admin: true
 }, {

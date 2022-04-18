@@ -100,7 +100,7 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({ children }) => {
             toast.error('You have been disconnected');
             logout(false);
         } else {
-            toast.error(err.message);
+            toast.error(err?.response?.data?.error ?? err.message);
         }
     }, [
         authData,

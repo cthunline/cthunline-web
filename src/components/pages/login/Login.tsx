@@ -1,12 +1,22 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link as RouterLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Formik, Form, Field } from 'formik';
+import {
+    Formik,
+    Form,
+    Field
+} from 'formik';
 import * as Yup from 'yup';
-import { Paper, TextField, Button } from '@mui/material';
+import {
+    Paper,
+    TextField,
+    Button,
+    Link
+} from '@mui/material';
 import { GiD10 } from 'react-icons/gi';
 import { MdLogin } from 'react-icons/md';
 
+import { useConfiguration } from '../../contexts/Configuration';
 import { useAuth } from '../../contexts/Auth';
 
 interface LoginFormData {
@@ -20,6 +30,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
+    const { configuration } = useConfiguration();
     const { isLoggedIn, login } = useAuth();
 
     const initialValues: LoginFormData = {
@@ -108,6 +119,16 @@ const Login = () => {
                         >
                             Login
                         </Button>
+                        {configuration?.registrationEnabled ? (
+                            <Link
+                                className="mt-20"
+                                underline="none"
+                                component={RouterLink}
+                                to="/register"
+                            >
+                                Register a new account
+                            </Link>
+                        ) : null}
                     </Form>
                 )}
             </Formik>

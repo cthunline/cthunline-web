@@ -3,6 +3,13 @@ import { Socket } from 'socket.io-client';
 import { CoCCharacterData } from './games/callOfCthulhu';
 import { SWD6CharacterData } from './games/starWarsD6';
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ configuration
+
+export interface Configuration {
+    registrationEnabled: boolean;
+    invitationEnabled: boolean;
+}
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ user
 
 export interface User {
@@ -19,12 +26,16 @@ export interface UserCreateBody {
     name: string;
     email: string;
     password: string;
-    isAdmin: boolean;
+    isAdmin?: boolean;
 }
 
 export interface UserEditBody extends Partial<UserCreateBody> {
     oldPassword?: string;
     isEnabled?: boolean;
+}
+
+export interface UserRegisterBody extends Omit<UserCreateBody, 'isAdmin'> {
+    invitationCode?: string;
 }
 
 export interface SessionUser extends User {

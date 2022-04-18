@@ -2,6 +2,7 @@ import React from 'react';
 import { ThemeProvider } from '@mui/material';
 import { ToastContainer } from 'react-toastify';
 
+import { ConfigurationProvider } from './contexts/Configuration';
 import { AuthProvider } from './contexts/Auth';
 import { DialogProvider } from './contexts/Dialog';
 import Router from './Router';
@@ -12,14 +13,16 @@ import './App.css';
 import './Ui.css';
 
 const App = () => (
-    <AuthProvider>
-        <ThemeProvider theme={theme}>
-            <DialogProvider>
-                <Router />
-                <ToastContainer theme="dark" />
-            </DialogProvider>
-        </ThemeProvider>
-    </AuthProvider>
+    <ConfigurationProvider>
+        <AuthProvider>
+            <ThemeProvider theme={theme}>
+                <DialogProvider>
+                    <Router />
+                    <ToastContainer theme="dark" />
+                </DialogProvider>
+            </ThemeProvider>
+        </AuthProvider>
+    </ConfigurationProvider>
 );
 
 export default App;

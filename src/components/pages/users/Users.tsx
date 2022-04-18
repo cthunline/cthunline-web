@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+    Box,
     Paper,
     Typography,
     Button,
@@ -15,13 +16,19 @@ import {
 } from '@mui/material';
 import { HiPlus } from 'react-icons/hi';
 import { MdCheck } from 'react-icons/md';
+import { FaRegHandshake } from 'react-icons/fa';
 
 import useUser from '../../hooks/useUser';
+import { useConfiguration } from '../../contexts/Configuration';
 import { useAuth } from '../../contexts/Auth';
+import { useDialog } from '../../contexts/Dialog';
+import Invitation from './Invitation';
 
 const Users: React.FC = () => {
     const navigate = useNavigate();
+    const { configuration } = useConfiguration();
     const { user } = useAuth();
+    const { openDialog } = useDialog();
     const {
         userList,
         editUser
@@ -32,6 +39,13 @@ const Users: React.FC = () => {
 
     const onCreate = () => {
         navigate('/users/create');
+    };
+
+    const onInvite = () => {
+        openDialog({
+            title: 'Invitation code',
+            content: <Invitation />
+        });
     };
 
     return (
@@ -118,15 +132,27 @@ const Users: React.FC = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button
-                className="create-button"
-                variant="contained"
-                size="medium"
-                startIcon={<HiPlus />}
-                onClick={onCreate}
-            >
-                Create
-            </Button>
+            <Box className="flex row end-x full-width mt-20">
+                {configuration.registrationEnabled && configuration.invitationEnabled ? (
+                    <Button
+                        className="mr-10"
+                        variant="contained"
+                        size="medium"
+                        startIcon={<FaRegHandshake />}
+                        onClick={onInvite}
+                    >
+                        Invite user
+                    </Button>
+                ) : null}
+                <Button
+                    variant="contained"
+                    size="medium"
+                    startIcon={<HiPlus />}
+                    onClick={onCreate}
+                >
+                    Create
+                </Button>
+            </Box>
         </Paper>
     );
 };

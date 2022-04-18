@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import {
@@ -10,12 +9,21 @@ import {
 } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
-import useUser from '../../hooks/useUser';
 import { UserCreateBody } from '../../../types';
+
+interface UserFormProps {
+    invitation?: boolean;
+    title?: string;
+    buttonText?: string;
+    onSubmit: (data: UserSubmitData) => void;
+}
 
 interface UserFormData extends UserCreateBody {
     passwordConfirm: string;
+    invitationCode?: string;
 }
+
+export type UserSubmitData = Omit<UserFormData, 'passwordConfirm'>;
 
 type UserFormField = keyof UserFormData;
 
@@ -39,41 +47,63 @@ const fieldList: UserFormFieldData[] = [{
     field: 'passwordConfirm',
     label: 'Confirm password',
     password: true
+}, {
+    field: 'invitationCode',
+    label: 'Invitation Code'
 }];
 
-const validationSchema = Yup.object().shape({
-    name: Yup.string().min(3, 'Too short').required('Required'),
-    email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().min(6, 'Too short').required('Required'),
-    passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
-});
-
-const UserForm = () => {
-    const navigate = useNavigate();
-    const { createUser } = useUser();
-
+const UserForm: React.FC<UserFormProps> = ({
+    invitation,
+    title,
+    buttonText,
+    onSubmit
+}) => {
     const initialValues: UserFormData = {
         name: '',
         email: '',
         password: '',
         passwordConfirm: '',
-        isAdmin: false
+        invitationCode: ''
     };
 
-    const onSubmit = async ({ passwordConfirm, ...data }: UserFormData) => {
-        await createUser({ data });
-        navigate('/users');
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().min(3, 'Too short').required('Required'),
+        email: Yup.string().email('Invalid email').required('Required'),
+        password: Yup.string().min(6, 'Too short').required('Required'),
+        passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
+        ...(invitation ? {
+            invitationCode: Yup.string().required('Required')
+        } : {})
+    });
+
+    const onFormSubmit = ({
+        passwordConfirm,
+        invitationCode,
+        ...data
+    }: UserFormData) => {
+        onSubmit({
+            ...data,
+            ...(invitation ? {
+                invitationCode
+            } : {})
+        });
     };
+
+    const filteredFieldList = invitation ? fieldList : (
+        fieldList.filter(({ field }) => (
+            field !== 'invitationCode'
+        ))
+    );
 
     return (
         <Paper elevation={3} className="box">
             <Typography variant="h6" gutterBottom>
-                New user
+                {title ?? 'New user'}
             </Typography>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
-                onSubmit={onSubmit}
+                onSubmit={onFormSubmit}
             >
                 {({
                     errors,
@@ -82,7 +112,11 @@ const UserForm = () => {
                     handleBlur
                 }) => (
                     <Form className="form small flex column center">
-                        {fieldList.map(({ field, label, password }) => (
+                        {filteredFieldList.map(({
+                            field,
+                            label,
+                            password
+                        }) => (
                             <Field
                                 key={field}
                                 validateOnBlur
@@ -115,7 +149,7 @@ const UserForm = () => {
                             size="large"
                             startIcon={<MdOutlineSave />}
                         >
-                            Create
+                            {buttonText ?? 'Create'}
                         </Button>
                     </Form>
                 )}
