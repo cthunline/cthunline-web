@@ -11,6 +11,7 @@ import { BsEraserFill } from 'react-icons/bs';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
 import { IoPeopleCircle } from 'react-icons/io5';
 
+import { useTranslation } from '../../../contexts/Translation';
 import Widget from '../../play/Widget';
 import Explorer, {
     ExplorerItem,
@@ -34,6 +35,7 @@ interface SketchWidgetProps {
 }
 
 const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
+    const { T } = useTranslation();
     const { confirmDialog } = useDialog();
     const {
         users,
@@ -74,36 +76,42 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
     };
 
     const actionButtons: ActionButtonData[] = [{
-        text: 'Drawing',
+        text: T('widget.sketch.drawing'),
         icon: <GoPencil size={25} className={isFreeDrawing ? '' : 'opacity-half'} />,
         handler: toogleIsFreeDrawing
     }, {
-        text: 'Erase drawings',
+        text: T('widget.sketch.eraseDrawings'),
         icon: <BsEraserFill size={25} />,
         handler: clearDrawings
     }, {
-        text: 'Add token',
+        text: T('widget.sketch.addToken'),
         icon: <IoMdAddCircle size={30} />,
         handler: addSketchToken
     }, {
-        text: 'Spawn player tokens',
+        text: T('widget.sketch.spawnPlayerTokens'),
         icon: <IoPeopleCircle size={30} />,
         handler: () => addSketchUserTokens(users)
     }, {
-        text: 'Remove tokens',
+        text: T('widget.sketch.removeTokens'),
         icon: <IoMdCloseCircle size={30} />,
         handler: () => {
-            confirmDialog('Clear the tokens ?', clearTokens);
+            confirmDialog(
+                T('widget.sketch.clearTokensConfirm'),
+                clearTokens
+            );
         }
     }, {
-        text: 'Undo',
+        text: T('action.undo'),
         icon: <MdUndo size={30} className={sketchData.events.length ? '' : 'opacity-half'} />,
         handler: undoSketch
     }, {
-        text: 'Clear',
+        text: T('action.clear'),
         icon: <MdOutlineDeleteOutline size={30} />,
         handler: () => {
-            confirmDialog('Clear the sketch ?', clearSketch);
+            confirmDialog(
+                T('widget.sketch.clearSketchConfirm'),
+                clearSketch
+            );
         }
     }];
 
@@ -125,13 +133,13 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
     return (
         <Widget
             id="widget-sketch"
-            title="Sketch"
+            title={T('entity.sketch')}
             onClose={() => onClose(WidgetType.sketch)}
         >
             <Box className="sketch-widget-content">
                 <Box className="flex column center">
                     <FormControlLabel
-                        label="Display sketch"
+                        label={T('action.display')}
                         labelPlacement="start"
                         control={(
                             <Switch
@@ -160,7 +168,7 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
                     </Box>,
                     <Box key="scketch-assets">
                         <Typography variant="h6" gutterBottom>
-                            Assets
+                            {T('entity.assets')}
                         </Typography>
                         <Explorer
                             className="scroll sketch-widget-explorer full-width"

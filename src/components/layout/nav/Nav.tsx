@@ -10,6 +10,7 @@ import { GiD10, GiRollingDices } from 'react-icons/gi';
 import { MdOutlineContactPage, MdOutlineSettings } from 'react-icons/md';
 import { FiFolder } from 'react-icons/fi';
 
+import { useTranslation } from '../../contexts/Translation';
 import SettingsMenu from './SettingsMenu';
 
 import './Nav.css';
@@ -18,26 +19,27 @@ import './Nav.css';
 interface NavMenuItem {
     icon: JSX.Element;
     route: string;
-    text: string;
+    textKey: string;
 }
 /* eslint-enable react/no-unused-prop-types */
 
 const navMenuItems: NavMenuItem[] = [{
     icon: <GiRollingDices size={20} />,
     route: '/sessions',
-    text: 'Play'
+    textKey: 'action.play'
 }, {
     icon: <MdOutlineContactPage size={20} />,
     route: '/characters',
-    text: 'Characters'
+    textKey: 'entity.characters'
 }, {
     icon: <FiFolder size={20} />,
     route: '/assets',
-    text: 'Assets'
+    textKey: 'entity.assets'
 }];
 
 const Nav: React.FC = () => {
     const navigate = useNavigate();
+    const { T } = useTranslation();
 
     const [userMenuAnchorEl, setUserMenuAnchorEl] = (
         React.useState<HTMLElement | null>(null)
@@ -62,14 +64,14 @@ const Nav: React.FC = () => {
                     />
                 </div>
                 <div className="nav-middle grow flex row start-x center-y ml-10 mr-10">
-                    {navMenuItems.map(({ icon, route, text }: NavMenuItem) => (
+                    {navMenuItems.map(({ icon, route, textKey }: NavMenuItem) => (
                         <Button
                             key={`nav-menu-${route}`}
                             className="ml-10 mr-10"
                             startIcon={icon}
                             onClick={() => navigate(route)}
                         >
-                            {text}
+                            {T(textKey)}
                         </Button>
                     ))}
                 </div>

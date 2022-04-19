@@ -1,0 +1,127 @@
+{
+    "action": {
+        "cancel": "annuler",
+        "clear": "vider",
+        "confirm": "confirmer",
+        "create": "créer",
+        "dice": "dé",
+        "dices": "dés",
+        "display": "afficher",
+        "invite": "inviter",
+        "login": "se connecter",
+        "logout": "se déconnecter",
+        "play": "jouer",
+        "roll": "jeter",
+        "register": "s'inscrire",
+        "save": "sauvegarder",
+        "undo": "annuler"
+    },
+    "common": {
+        "itsYou": "c'est vous!",
+        "name": "nom",
+        "private": "privé",
+        "privatly": "secrètement",
+        "public": "public",
+        "publicly": "publiquement"
+    },
+    "entity": {
+        "asset": "ressource",
+        "assets": "ressources",
+        "character": "personnage",
+        "characters": "personnages",
+        "game": "jeu",
+        "games": "jeux",
+        "gameMaster": "maître du jeu",
+        "gm": "MJ",
+        "jukebox": "jukebox",
+        "notes": "notes",
+        "session": "session",
+        "sessions": "sessions",
+        "sketch": "plateau",
+        "user": "utilisateur",
+        "users": "utilisateurs"
+    },
+    "page": {
+        "assets": {
+            "deleteAssetConfirm": "supprimer ressource {name} ?",
+            "deleteDirectoryConfirm": "supprimer dossier {name} ?",
+            "newDirectory": "nouveau dossier",
+            "uploadAsset": "ajouter ressource",
+            "error": {
+                "fileTooLarge": "la taille du fichier {name} est trop grande (max {limitMb}Mb)"
+            }
+        },
+        "characters": {
+            "deleteCharacterConfirm": "supprimer personnage {name} ?",
+            "selectGame": "sélectionner un jeu"
+        },
+        "error": {
+            "notFound": {
+                "title": "je n'ai aucun souvenir de cet endroit...",
+                "message": "page non trouvée"
+            },
+            "forbidden": {
+                "title": "vous ne passerez pas!",
+                "message": "page interdite"
+            }
+        },
+        "home": {
+            "welcome": "bienvenue voyageur!"
+        },
+        "play": {
+            "error": {
+                "connectionError": "erreur de connexion au socket",
+                "statusError": "Erreur de socket {status}"
+            },
+            "event": {
+                "diceResult": "a jeté {request} et le résultat est {result}",
+                "disconnected": "déconnecté",
+                "editedCharactger": "a édité le personnage {name}",
+                "joined": "a rejoint la session",
+                "left": "a quitté la session",
+                "reconnected": "reconnecté",
+                "reconnecting": "tentative de reconnexion..."
+            }
+        },
+        "profile": {
+            "title": "profil",
+            "changePassword": "changement de mot de passe",
+            "newPassword": "nouveau mot de passe",
+            "newPasswordConfirm": "confirmation du nouveau mot de passe",
+            "oldPassword": "ancien mot de passe"
+        },
+        "register": {
+            "title": "Inscription"
+        },
+        "sessions": {
+            "deleteSessionConfirm": "supprimer la session {name} ?",
+            "newSession": "nouvelle session",
+            "selectCharacter": "sélectionner un personnage",
+            "error": {
+                "noCharacterAvailable": "aucun personnage disponible pour ce jeu"
+            }
+        }
+    },
+    "status": {
+        "disabled": "désactivé",
+        "enabled": "activé"
+    },
+    "user": {
+        "admin": "admin",
+        "email": "email",
+        "invitationCode": "code d'invitation",
+        "password": "mot de passe",
+        "passwordConfirm": "confirmation du mot de passe"
+    },
+    "widget": {
+        "sketch": {
+            "addToken": "ajouter un token",
+            "clearSketchConfirm": "vider le plateau ?",
+            "clearTokensConfirm": "supprimer les tokens ?",
+            "drawing": "dessin",
+            "eraseDrawings": "supprimer les dessins",
+            "removeTokens": "supprimer les tokens",
+            "spawnPlayerTokens": "générer les tokens de joueurs"
+        }
+    }
+}

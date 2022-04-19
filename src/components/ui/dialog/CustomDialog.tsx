@@ -7,6 +7,8 @@ import {
     DialogActions
 } from '@mui/material';
 
+import { useTranslation } from '../../contexts/Translation';
+
 import './CustomDialog.css';
 
 interface CustomDialogProps {
@@ -23,38 +25,42 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
     content,
     onConfirm,
     onClose
-}) => (
-    <Dialog
-        PaperProps={{
-            className: 'custom-dialog'
-        }}
-        open={open}
-        onClose={onClose}
-    >
-        <DialogTitle>
-            {title}
-        </DialogTitle>
-        {content ? (
-            <DialogContent>
-                {content}
-            </DialogContent>
-        ) : null}
-        {onConfirm ? (
-            <DialogActions>
-                <Button onClick={onClose}>
-                    Cancel
-                </Button>
-                <Button
-                    onClick={() => {
-                        onConfirm();
-                        onClose();
-                    }}
-                >
-                    Confirm
-                </Button>
-            </DialogActions>
-        ) : null}
-    </Dialog>
-);
+}) => {
+    const { T } = useTranslation();
+
+    return (
+        <Dialog
+            PaperProps={{
+                className: 'custom-dialog'
+            }}
+            open={open}
+            onClose={onClose}
+        >
+            <DialogTitle>
+                {title}
+            </DialogTitle>
+            {content ? (
+                <DialogContent>
+                    {content}
+                </DialogContent>
+            ) : null}
+            {onConfirm ? (
+                <DialogActions>
+                    <Button onClick={onClose}>
+                        {T('action.cancel')}
+                    </Button>
+                    <Button
+                        onClick={() => {
+                            onConfirm();
+                            onClose();
+                        }}
+                    >
+                        {T('action.confirm')}
+                    </Button>
+                </DialogActions>
+            ) : null}
+        </Dialog>
+    );
+};
 
 export default CustomDialog;

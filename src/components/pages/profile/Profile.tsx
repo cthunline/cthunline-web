@@ -16,6 +16,7 @@ import { MdOutlineSave } from 'react-icons/md';
 
 import useUser from '../../hooks/useUser';
 import { useAuth } from '../../contexts/Auth';
+import { useTranslation } from '../../contexts/Translation';
 
 interface PasswordChangeData {
     oldPassword: string;
@@ -27,20 +28,20 @@ type PasswordChangeField = keyof PasswordChangeData;
 
 interface PasswordChangeFieldData {
     field: PasswordChangeField;
-    label: string;
+    textKey: string;
     preventComplete?: boolean;
 }
 
 const fieldList: PasswordChangeFieldData[] = [{
     field: 'oldPassword',
-    label: 'Old password'
+    textKey: 'oldPassword'
 }, {
     field: 'password',
-    label: 'New password',
+    textKey: 'newPassword',
     preventComplete: true
 }, {
     field: 'passwordConfirm',
-    label: 'Confirm new password',
+    textKey: 'newPasswordConfirm',
     preventComplete: true
 }];
 
@@ -52,6 +53,7 @@ const validationSchema = Yup.object().shape({
 
 const Profile = () => {
     const { user } = useAuth();
+    const { T } = useTranslation();
     const { editUser } = useUser();
 
     const initialValues: PasswordChangeData = {
@@ -79,7 +81,7 @@ const Profile = () => {
     return (
         <Paper elevation={3} className="box">
             <Typography variant="h6" gutterBottom>
-                Change password
+                {T('page.profile.changePassword')}
             </Typography>
             <Formik
                 initialValues={initialValues}
@@ -94,7 +96,7 @@ const Profile = () => {
                     values
                 }) => (
                     <Form className="form small flex column center">
-                        {fieldList.map(({ field, label, preventComplete }) => (
+                        {fieldList.map(({ field, textKey, preventComplete }) => (
                             <Field
                                 key={field}
                                 validateOnBlur
@@ -105,7 +107,7 @@ const Profile = () => {
                                     <TextField
                                         className="form-input"
                                         autoComplete={preventComplete ? 'new-password' : ''}
-                                        label={label}
+                                        label={T(`page.profile.${textKey}`)}
                                         name={field}
                                         type="password"
                                         value={values[field]}
@@ -128,7 +130,7 @@ const Profile = () => {
                             size="large"
                             startIcon={<MdOutlineSave />}
                         >
-                            Save
+                            {T('action.save')}
                         </Button>
                     </Form>
                 )}

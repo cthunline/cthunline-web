@@ -14,6 +14,7 @@ import Explorer, {
     ExplorerItemType
 } from '../../ui/explorer/Explorer';
 import UploadButton from '../../ui/uploadButton/UploadButton';
+import { useTranslation } from '../../contexts/Translation';
 import { useDialog } from '../../contexts/Dialog';
 import useAsset from '../../hooks/useAsset';
 import useDirectory from '../../hooks/useDirectory';
@@ -29,6 +30,7 @@ const allowedMimeTypes = [
 const limitSizeInMb = 20;
 
 const Assets: React.FC = () => {
+    const { T } = useTranslation();
     const {
         confirmDialog,
         openDialog,
@@ -75,7 +77,7 @@ const Assets: React.FC = () => {
 
     const onCreateDirectory = () => {
         openDialog({
-            title: 'Create a directory',
+            title: T('page.assets.newDirectory'),
             content: (
                 <DirectoryForm onSubmit={onSubmitDirectory} />
             )
@@ -89,7 +91,10 @@ const Assets: React.FC = () => {
             files.forEach((file) => {
                 const sizeInMb = file.size / (1024 * 1024);
                 if (sizeInMb > limitSizeInMb) {
-                    toast.error(`Size of file ${file.name} is too large (max ${limitSizeInMb}Mb)`);
+                    toast.error(T('page.assets.error.fileTooLarge', {
+                        name: file.name,
+                        limitMb: String(limitSizeInMb)
+                    }));
                     valid = false;
                 }
             });
@@ -111,12 +116,14 @@ const Assets: React.FC = () => {
 
     const onDelete = (type: ExplorerItemType, id: string, name: string) => {
         if (type === ExplorerItemType.directory) {
-            confirmDialog(`Delete directory ${name} ?`, () => {
+            const confirmText = T('page.assets.deleteDirectoryConfirm', { name });
+            confirmDialog(confirmText, () => {
                 deleteDirectory({ directoryId: id });
             });
         }
         if (type === ExplorerItemType.file) {
-            confirmDialog(`Delete asset ${name} ?`, () => {
+            const confirmText = T('page.assets.deleteAssetConfirm', { name });
+            confirmDialog(confirmText, () => {
                 deleteAsset({ assetId: id });
             });
         }
@@ -150,7 +157,7 @@ const Assets: React.FC = () => {
     return (
         <Paper elevation={3} className="page-list box flex column start-x center-y">
             <Typography variant="h6" gutterBottom>
-                Assets
+                {T('entity.assets')}
             </Typography>
             <Explorer
                 className="scroll mb-10"
@@ -169,10 +176,10 @@ const Assets: React.FC = () => {
                     startIcon={<MdFolder />}
                     onClick={onCreateDirectory}
                 >
-                    New directory
+                    {T('page.assets.newDirectory')}
                 </Button>
                 <UploadButton
-                    label="Upload asset"
+                    label={T('page.assets.uploadAsset')}
                     progress={progress}
                     allowedMimeTypes={allowedMimeTypes}
                     onChange={handleFileChange}

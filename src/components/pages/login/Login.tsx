@@ -18,6 +18,7 @@ import { MdLogin } from 'react-icons/md';
 
 import { useConfiguration } from '../../contexts/Configuration';
 import { useAuth } from '../../contexts/Auth';
+import { useTranslation } from '../../contexts/Translation';
 
 interface LoginFormData {
     email: string;
@@ -32,6 +33,7 @@ const validationSchema = Yup.object().shape({
 const Login = () => {
     const { configuration } = useConfiguration();
     const { isLoggedIn, login } = useAuth();
+    const { T } = useTranslation();
 
     const initialValues: LoginFormData = {
         email: '',
@@ -75,7 +77,7 @@ const Login = () => {
                             {() => (
                                 <TextField
                                     className="form-input"
-                                    label="Email"
+                                    label={T('user.email')}
                                     name="email"
                                     error={!!errors.email && !!touched.email}
                                     onChange={handleChange}
@@ -96,7 +98,7 @@ const Login = () => {
                             {() => (
                                 <TextField
                                     className="form-input"
-                                    label="Password"
+                                    label={T('user.password')}
                                     name="password"
                                     type="password"
                                     error={!!errors.password && !!touched.password}
@@ -117,7 +119,7 @@ const Login = () => {
                             size="large"
                             startIcon={<MdLogin />}
                         >
-                            Login
+                            {T('user.login')}
                         </Button>
                         {configuration?.registrationEnabled ? (
                             <Link
@@ -126,7 +128,7 @@ const Login = () => {
                                 component={RouterLink}
                                 to="/register"
                             >
-                                Register a new account
+                                {T('action.register')}
                             </Link>
                         ) : null}
                     </Form>

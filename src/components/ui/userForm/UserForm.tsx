@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
+import { useTranslation } from '../../contexts/Translation';
 import { UserCreateBody } from '../../../types';
 
 interface UserFormProps {
@@ -29,27 +30,21 @@ type UserFormField = keyof UserFormData;
 
 interface UserFormFieldData {
     field: UserFormField;
-    label: string;
     password?: boolean;
 }
 
 const fieldList: UserFormFieldData[] = [{
-    field: 'name',
-    label: 'Name'
+    field: 'name'
 }, {
-    field: 'email',
-    label: 'Email'
+    field: 'email'
 }, {
     field: 'password',
-    label: 'Password',
     password: true
 }, {
     field: 'passwordConfirm',
-    label: 'Confirm password',
     password: true
 }, {
-    field: 'invitationCode',
-    label: 'Invitation Code'
+    field: 'invitationCode'
 }];
 
 const UserForm: React.FC<UserFormProps> = ({
@@ -58,6 +53,8 @@ const UserForm: React.FC<UserFormProps> = ({
     buttonText,
     onSubmit
 }) => {
+    const { T } = useTranslation();
+
     const initialValues: UserFormData = {
         name: '',
         email: '',
@@ -114,7 +111,6 @@ const UserForm: React.FC<UserFormProps> = ({
                     <Form className="form small flex column center">
                         {filteredFieldList.map(({
                             field,
-                            label,
                             password
                         }) => (
                             <Field
@@ -127,7 +123,7 @@ const UserForm: React.FC<UserFormProps> = ({
                                     <TextField
                                         className="form-input"
                                         autoComplete="new-password"
-                                        label={label}
+                                        label={T(`user.${field}`)}
                                         name={field}
                                         type={password ? 'password' : 'text'}
                                         error={!!errors[field] && !!touched[field]}

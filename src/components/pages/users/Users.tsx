@@ -18,16 +18,18 @@ import { HiPlus } from 'react-icons/hi';
 import { MdCheck } from 'react-icons/md';
 import { FaRegHandshake } from 'react-icons/fa';
 
-import useUser from '../../hooks/useUser';
+import { useTranslation } from '../../contexts/Translation';
 import { useConfiguration } from '../../contexts/Configuration';
 import { useAuth } from '../../contexts/Auth';
 import { useDialog } from '../../contexts/Dialog';
+import useUser from '../../hooks/useUser';
 import Invitation from './Invitation';
 
 const Users: React.FC = () => {
     const navigate = useNavigate();
     const { configuration } = useConfiguration();
     const { user } = useAuth();
+    const { T } = useTranslation();
     const { openDialog } = useDialog();
     const {
         userList,
@@ -43,7 +45,7 @@ const Users: React.FC = () => {
 
     const onInvite = () => {
         openDialog({
-            title: 'Invitation code',
+            title: T('user.invitationCode'),
             content: <Invitation />
         });
     };
@@ -51,16 +53,16 @@ const Users: React.FC = () => {
     return (
         <Paper elevation={3} className="page-list box flex column start-x center-y">
             <Typography variant="h6" gutterBottom>
-                Users
+                {T('entity.users')}
             </Typography>
             <TableContainer>
                 <Table stickyHeader>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Admin</TableCell>
-                            <TableCell>Enabled</TableCell>
+                            <TableCell>{T('common.name')}</TableCell>
+                            <TableCell>{T('user.email')}</TableCell>
+                            <TableCell>{T('user.admin')}</TableCell>
+                            <TableCell>{T('status.enabled')}</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -79,7 +81,7 @@ const Users: React.FC = () => {
                                         {itsYou ? (
                                             <>
                                                 {' '}
-                                                <Chip label="It's you!" size="small" />
+                                                <Chip label={T('common.itsYou')} size="small" />
                                             </>
                                         ) : null}
                                     </TableCell>
@@ -141,7 +143,7 @@ const Users: React.FC = () => {
                         startIcon={<FaRegHandshake />}
                         onClick={onInvite}
                     >
-                        Invite user
+                        {T('action.invite')}
                     </Button>
                 ) : null}
                 <Button
@@ -150,7 +152,7 @@ const Users: React.FC = () => {
                     startIcon={<HiPlus />}
                     onClick={onCreate}
                 >
-                    Create
+                    {T('action.create')}
                 </Button>
             </Box>
         </Paper>

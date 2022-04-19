@@ -11,24 +11,25 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { MdLogout } from 'react-icons/md';
 import { FiUsers } from 'react-icons/fi';
 
+import { useTranslation } from '../../contexts/Translation';
 import { useAuth } from '../../contexts/Auth';
 
 interface SettingsMenuItem {
     icon: JSX.Element;
     route: string;
-    text: string;
+    textKey: string;
 }
 
 const settingsMenuItems: SettingsMenuItem[] = [{
     icon: <AiOutlineUser size={20} />,
     route: '/profile',
-    text: 'Profile'
+    textKey: 'page.profile.title'
 }];
 
 const settingsMenuAdminItems: SettingsMenuItem[] = [{
     icon: <FiUsers size={20} />,
     route: '/users',
-    text: 'Users'
+    textKey: 'entity.users'
 }];
 
 interface SettingsMenuProps {
@@ -39,14 +40,15 @@ interface SettingsMenuProps {
 const SettingsMenu: React.FC<SettingsMenuProps> = ({ anchorEl, handleClose }) => {
     const navigate = useNavigate();
     const { logout, user } = useAuth();
+    const { T } = useTranslation();
 
-    const menuItem = ({ icon, route, text }: SettingsMenuItem) => (
+    const menuItem = ({ icon, route, textKey }: SettingsMenuItem) => (
         <MenuItem
             key={`settings-menu-${route}`}
             onClick={() => navigate(route)}
         >
             <ListItemIcon>{icon}</ListItemIcon>
-            <ListItemText>{text}</ListItemText>
+            <ListItemText>{T(textKey)}</ListItemText>
         </MenuItem>
     );
 
@@ -76,7 +78,7 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({ anchorEl, handleClose }) =>
                     <MdLogout size={20} />
                 </ListItemIcon>
                 <ListItemText>
-                    Logout
+                    {T('action.logout')}
                 </ListItemText>
             </MenuItem>
         </Menu>

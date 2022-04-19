@@ -6,6 +6,7 @@ import {
     Tab
 } from '@mui/material';
 
+import { useTranslation } from '../../../contexts/Translation';
 import CharacterSheet from '../../characterSheet/CharacterSheet';
 import Widget from '../../play/Widget';
 import { WidgetType, SessionUser } from '../../../../types';
@@ -21,6 +22,8 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
     users,
     onClose
 }) => {
+    const { T } = useTranslation();
+
     const [sessionUser, setSessionUser] = useState<SessionUser | null>(
         users[0] ?? null
     );
@@ -56,7 +59,7 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
     return (
         <Widget
             id="widget-characters"
-            title="Characters"
+            title={T('entity.characters')}
             onClose={() => onClose(WidgetType.characters)}
         >
             <Box className="characters-widget-content flex column center">

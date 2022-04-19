@@ -11,6 +11,7 @@ import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
 
 import { useAuth } from './Auth';
+import { useTranslation } from './Translation';
 import useSession from '../hooks/useSession';
 import useSketch, { SketchHookExport, defaultSketchHookExport } from '../hooks/play/useSketch';
 import useLogs, { LogsHookExport, defaultLogsHookExport } from '../hooks/play/useLogs';
@@ -72,6 +73,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         defaultPlayData.socket
     );
 
+    const { T, t } = useTranslation();
     const { user } = useAuth();
     const { session } = useSession({ sessionId });
     const { logs, pushLog } = useLogs();
@@ -116,10 +118,10 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
 
     const bindSocketEvents = useCallback((sock: PlaySocket) => {
         sock.on('connect_error', () => {
-            toast.error('Socket connection error');
+            toast.error(T('page.play.error.connectionError'));
         });
         sock.on('error', ({ status }) => {
-            toast.error(`Socket ${status} error`);
+            toast.error(T('page.play.error.statusError', { status }));
         });
         sock.on('connect', () => {
             isConnecting.current = false;
@@ -127,25 +129,25 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         });
         sock.io.on('reconnect_attempt', () => {
             isConnecting.current = true;
-            pushLog(sock.user, sock.isMaster, 'attempting reconnection...');
+            pushLog(sock.user, sock.isMaster, t('page.play.event.reconnecting'));
         });
         sock.io.on('reconnect', () => {
             isConnecting.current = false;
-            pushLog(sock.user, sock.isMaster, 'reconnected');
+            pushLog(sock.user, sock.isMaster, t('page.play.event.reconnected'));
         });
         sock.on('disconnect', (reason) => {
             if (reason === 'io server disconnect') {
                 setSocket(null);
             } else {
-                pushLog(sock.user, sock.isMaster, 'disconnected');
+                pushLog(sock.user, sock.isMaster, t('page.play.event.disconnected'));
             }
         });
         sock.on('join', ({ user: sockUser, users: sessionUsers, isMaster }) => {
-            pushLog(sockUser, isMaster, 'joined the session');
+            pushLog(sockUser, isMaster, t('page.play.event.joined'));
             setUsers(sessionUsers);
         });
         sock.on('leave', ({ user: sockUser, users: sessionUsers, isMaster }) => {
-            pushLog(sockUser, isMaster, 'left the session');
+            pushLog(sockUser, isMaster, t('page.play.event.left'));
             setUsers(sessionUsers);
         });
         sock.on('diceResult', ({
@@ -170,7 +172,10 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             isMaster,
             character
         }) => {
-            pushLog(sockUser, isMaster, `edited character ${character.name}`);
+            const eventText = t('page.play.event.editedCharacter', {
+                name: character.name
+            });
+            pushLog(sockUser, isMaster, eventText);
             updateUserCharacter(sockUser.id, character);
         });
         sock.on('audioPlay', ({ asset, time }) => {
@@ -183,6 +188,8 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             setSketchData(sketch);
         });
     }, [
+        t,
+        T,
         pushLog,
         updateUserCharacter,
         setAudioTrack,

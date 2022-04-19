@@ -14,6 +14,7 @@ import {
     GiDiceTwentyFacesTwenty
 } from 'react-icons/gi';
 
+import { useTranslation } from '../../../contexts/Translation';
 import Widget from '../../play/Widget';
 import {
     WidgetType,
@@ -59,6 +60,8 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
     onRoll,
     onClose
 }) => {
+    const { T } = useTranslation();
+
     const [selectedDices, setSelectedDices] = useState<DicesData>(
         defaultSelectedDices
     );
@@ -150,7 +153,7 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
     const getRollPrivateCheckbox = () => (
         isMaster ? (
             <FormControlLabel
-                label="Private"
+                label={T('common.private')}
                 labelPlacement="start"
                 control={(
                     <Checkbox
@@ -169,7 +172,7 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
             <Box className="flex column center">
                 {getRollPrivateCheckbox()}
                 <Button variant="contained" onClick={onSubmit}>
-                    Roll
+                    {T('action.roll')}
                 </Button>
             </Box>
         ) : null
@@ -178,7 +181,7 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
     return (
         <Widget
             id="widget-dices"
-            title="Dices"
+            title={T('entity.dices')}
             onClose={() => onClose(WidgetType.dices)}
         >
             <Box className="dices-widget-content">

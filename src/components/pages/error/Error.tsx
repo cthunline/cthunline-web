@@ -2,25 +2,30 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { GiWizardFace } from 'react-icons/gi';
 
-const errors = {
-    notFound: {
-        title: 'I have no memory of this place...',
-        message: 'Page not found'
-    },
-    forbidden: {
-        title: 'You shall not pass!',
-        message: 'Forbidden page'
-    }
-};
+import { useTranslation } from '../../contexts/Translation';
 
-type ErrorType = keyof typeof errors;
+type ErrorType = 'notFound' | 'forbidden';
 
 interface ErrorProps {
     type: ErrorType;
 }
 
 const Error: React.FC<ErrorProps> = ({ type }) => {
+    const { T } = useTranslation();
+
+    const errors = {
+        notFound: {
+            title: T('page.error.notFound.title'),
+            message: T('page.error.notFound.message')
+        },
+        forbidden: {
+            title: T('page.error.forbidden.title'),
+            message: T('page.error.forbidden.message')
+        }
+    };
+
     const { title, message } = errors[type];
+
     return (
         <div className="flex column center">
             <GiWizardFace size={100} className="mb-20" />

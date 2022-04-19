@@ -4,10 +4,11 @@ import * as Yup from 'yup';
 import {
     Box,
     TextField,
-    Button,
-    Typography
+    Button
 } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
+
+import { useTranslation } from '../../contexts/Translation';
 
 interface DirectoryFormProps {
     onSubmit: (name: string) => void;
@@ -26,15 +27,14 @@ const initialValues: DirectoryFormData = {
 };
 
 const DirectoryForm: React.FC<DirectoryFormProps> = ({ onSubmit }) => {
+    const { T } = useTranslation();
+
     const onFormSubmit = async ({ name }: DirectoryFormData) => {
         onSubmit(name);
     };
 
     return (
         <Box>
-            <Typography variant="h6" gutterBottom>
-                New user
-            </Typography>
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -55,7 +55,7 @@ const DirectoryForm: React.FC<DirectoryFormProps> = ({ onSubmit }) => {
                             {() => (
                                 <TextField
                                     className="form-input"
-                                    label="Name"
+                                    label={T('common.name')}
                                     name="name"
                                     error={!!errors.name && !!touched.name}
                                     onChange={handleChange}
@@ -75,7 +75,7 @@ const DirectoryForm: React.FC<DirectoryFormProps> = ({ onSubmit }) => {
                             size="large"
                             startIcon={<MdOutlineSave />}
                         >
-                            Create
+                            {T('action.create')}
                         </Button>
                     </Form>
                 )}

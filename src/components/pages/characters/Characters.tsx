@@ -19,6 +19,7 @@ import { HiPlus } from 'react-icons/hi';
 import { MdEdit, MdOutlineDeleteOutline } from 'react-icons/md';
 
 import { Game } from '../../../types';
+import { useTranslation } from '../../contexts/Translation';
 import { useDialog } from '../../contexts/Dialog';
 import useCharacter from '../../hooks/useCharacter';
 import useGame from '../../hooks/useGame';
@@ -45,6 +46,7 @@ const GameSelector: React.FC<GameSelectorProps> = ({
 );
 
 const Characters: React.FC = () => {
+    const { T } = useTranslation();
     const navigate = useNavigate();
     const {
         confirmDialog,
@@ -61,7 +63,7 @@ const Characters: React.FC = () => {
 
     const onCreate = () => {
         openDialog({
-            title: 'Select a game',
+            title: T('page.characters.selectGame'),
             content: (
                 <GameSelector
                     games={gameList}
@@ -79,7 +81,8 @@ const Characters: React.FC = () => {
     };
 
     const onDelete = (characterId: string, name: string) => {
-        confirmDialog(`Delete character ${name} ?`, () => {
+        const confirmText = T('page.characters.deleteCharacterConfirm', { name });
+        confirmDialog(confirmText, () => {
             deleteCharacter({
                 characterId
             });
@@ -89,14 +92,14 @@ const Characters: React.FC = () => {
     return (
         <Paper elevation={3} className="page-list box flex column start-x center-y">
             <Typography variant="h6" gutterBottom>
-                Characters
+                {T('entity.characters')}
             </Typography>
             <TableContainer>
                 <Table stickyHeader>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Game</TableCell>
-                            <TableCell>Name</TableCell>
+                            <TableCell>{T('entity.game')}</TableCell>
+                            <TableCell>{T('common.name')}</TableCell>
                             <TableCell />
                         </TableRow>
                     </TableHead>
@@ -141,7 +144,7 @@ const Characters: React.FC = () => {
                     startIcon={<HiPlus />}
                     onClick={onCreate}
                 >
-                    Create
+                    {T('action.create')}
                 </Button>
             </Box>
         </Paper>

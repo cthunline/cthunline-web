@@ -1,0 +1,127 @@
+{
+    "action": {
+        "cancel": "cancel",
+        "clear": "clear",
+        "confirm": "confirm",
+        "create": "create",
+        "dice": "dice",
+        "dices": "dices",
+        "display": "display",
+        "invite": "invite",
+        "login": "login",
+        "logout": "logout",
+        "play": "play",
+        "roll": "roll",
+        "register": "register",
+        "save": "save",
+        "undo": "undo"
+    },
+    "common": {
+        "itsYou": "it's you!",
+        "name": "name",
+        "private": "private",
+        "privatly": "privatly",
+        "public": "public",
+        "publicly": "publicly"
+    },
+    "entity": {
+        "asset": "asset",
+        "assets": "assets",
+        "character": "character",
+        "characters": "characters",
+        "game": "game",
+        "games": "games",
+        "gameMaster": "game master",
+        "gm": "GM",
+        "jukebox": "jukebox",
+        "notes": "notes",
+        "session": "session",
+        "sessions": "sessions",
+        "sketch": "sketch",
+        "user": "user",
+        "users": "users"
+    },
+    "page": {
+        "assets": {
+            "deleteAssetConfirm": "delete asset {name} ?",
+            "deleteDirectoryConfirm": "delete directory {name} ?",
+            "newDirectory": "new directory",
+            "uploadAsset": "upload asset",
+            "error": {
+                "fileTooLarge": "size of file {name} is too large (max {limitMb}Mb)"
+            }
+        },
+        "characters": {
+            "deleteCharacterConfirm": "delete character {name} ?",
+            "selectGame": "select a game"
+        },
+        "error": {
+            "notFound": {
+                "title": "i have no memory of this place...",
+                "message": "page not found"
+            },
+            "forbidden": {
+                "title": "you shall not pass!",
+                "message": "forbidden page"
+            }
+        },
+        "home": {
+            "welcome": "welcome traveler!"
+        },
+        "play": {
+            "error": {
+                "connectionError": "socket connection error",
+                "statusError": "socket {status} error"
+            },
+            "event": {
+                "diceResult": "rolled {request} and the result is {result}",
+                "disconnected": "disconnected",
+                "editedCharactger": "edited character {name}",
+                "joined": "joined the session",
+                "left": "left the session",
+                "reconnected": "reconnected",
+                "reconnecting": "attempting reconnection..."
+            }
+        },
+        "profile": {
+            "title": "profile",
+            "changePassword": "change password",
+            "newPassword": "new password",
+            "newPasswordConfirm": "confirm new password",
+            "oldPassword": "old password"
+        },
+        "register": {
+            "title": "register new account"
+        },
+        "sessions": {
+            "deleteSessionConfirm": "delete session {name} ?",
+            "newSession": "new session",
+            "selectCharacter": "select a character",
+            "error": {
+                "noCharacterAvailable": "no character available for this game"
+            }
+        }
+    },
+    "status": {
+        "disabled": "disabled",
+        "enabled": "enabled"
+    },
+    "user": {
+        "admin": "admin",
+        "email": "email",
+        "invitationCode": "invitation code",
+        "password": "password",
+        "passwordConfirm": "confirm password"
+    },
+    "widget": {
+        "sketch": {
+            "addToken": "add token",
+            "clearSketchConfirm": "clear the sketch ?",
+            "clearTokensConfirm": "clear the tokens ?",
+            "drawing": "drawing",
+            "eraseDrawings": "erase drawings",
+            "removeTokens": "remove tokens",
+            "spawnPlayerTokens": "spawn player tokens"
+        }
+    }
+}

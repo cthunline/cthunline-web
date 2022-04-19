@@ -1,4 +1,5 @@
 import { DicesRequest, PlaySocket } from '../../../types';
+import { useTranslation } from '../../contexts/Translation';
 
 export interface DiceHookExport {
     requestDice: (request: DicesRequest, isPrivate: boolean) => void;
@@ -9,6 +10,8 @@ export const defaultDiceHookExport: DiceHookExport = {
 };
 
 const useDice = (socket: PlaySocket | null) => {
+    const { t } = useTranslation();
+
     const requestDice = (request: DicesRequest, isPrivate: boolean) => {
         socket?.emit(isPrivate ? 'dicePrivateRequest' : 'diceRequest', request);
     };
@@ -21,8 +24,12 @@ const useDice = (socket: PlaySocket | null) => {
         const requestText = Object.entries(request).map(([type, count]) => (
             `${count}${type}`
         )).join(' + ');
-        const privatly = isPrivate ? 'privatly ' : '';
-        return `${privatly}rolled ${requestText} and the result is ${result}`;
+        const privatly = isPrivate ? `${t('common.privatly')} ` : '';
+        const resultText = t('page.play.event.diceResult', {
+            request: requestText,
+            result: String(result)
+        });
+        return `${privatly}${resultText}`;
     };
 
     return {

@@ -10,6 +10,13 @@ export interface Configuration {
     invitationEnabled: boolean;
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ translation
+
+export enum Locale {
+    en = 'en',
+    fr = 'fr'
+}
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ user
 
 export interface User {

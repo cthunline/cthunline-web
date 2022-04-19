@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { useTranslation } from '../../contexts/Translation';
 import { PlayLog, User } from '../../../types';
 
 export interface LogsHookExport {
@@ -11,10 +12,12 @@ export const defaultLogsHookExport: LogsHookExport = {
 };
 
 const useLogs = () => {
+    const { T } = useTranslation();
+
     const [logs, setLogs] = useState<PlayLog[]>([]);
 
     const getLogUsername = (logUser: User, isMaster: boolean) => (
-        `[${isMaster ? 'GM ' : ''}${logUser?.name}]`
+        `[${isMaster ? `${T('entity.gm')} ` : ''}${logUser?.name}]`
     );
 
     const pushLog = (logUser: User, isMaster: boolean, text: string) => {

@@ -21,6 +21,7 @@ import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { GiRollingDices } from 'react-icons/gi';
 import { toast } from 'react-toastify';
 
+import { useTranslation } from '../../contexts/Translation';
 import { useDialog } from '../../contexts/Dialog';
 import { useAuth } from '../../contexts/Auth';
 import useGame from '../../hooks/useGame';
@@ -50,6 +51,7 @@ const CharacterSelector: React.FC<CharacterSelectorProps> = ({
 );
 
 const Sessions: React.FC = () => {
+    const { T } = useTranslation();
     const navigate = useNavigate();
     const {
         confirmDialog,
@@ -73,7 +75,7 @@ const Sessions: React.FC = () => {
             navigate(`/play/${sessionId}`);
         } else if (charList.length) {
             openDialog({
-                title: 'Select a character',
+                title: T('page.sessions.selectCharacter'),
                 content: (
                     <CharacterSelector
                         characters={charList}
@@ -85,7 +87,7 @@ const Sessions: React.FC = () => {
                 )
             });
         } else {
-            toast.error('No character available for this game');
+            toast.error(T('page.sessions.noCharacterAvailable'));
         }
     };
 
@@ -94,7 +96,8 @@ const Sessions: React.FC = () => {
     };
 
     const onDelete = (sessionId: string, name: string) => {
-        confirmDialog(`Delete session ${name} ?`, () => {
+        const confirmText = T('page.sessions.deleteSessionConfirm', { name });
+        confirmDialog(confirmText, () => {
             deleteSession({
                 sessionId
             });
@@ -104,16 +107,16 @@ const Sessions: React.FC = () => {
     return (
         <Paper elevation={3} className="page-list box flex column start-x center-y">
             <Typography variant="h6" gutterBottom>
-                Sessions
+                {T('entity.sessions')}
             </Typography>
             <TableContainer>
                 <Table stickyHeader>
                     <TableHead>
                         <TableRow>
                             <TableCell />
-                            <TableCell>Name</TableCell>
-                            <TableCell>Game</TableCell>
-                            <TableCell>Game Master</TableCell>
+                            <TableCell>{T('common.name')}</TableCell>
+                            <TableCell>{T('entity.game')}</TableCell>
+                            <TableCell>{T('entity.gameMaster')}</TableCell>
                             <TableCell />
                         </TableRow>
                     </TableHead>
@@ -147,7 +150,7 @@ const Sessions: React.FC = () => {
                                         {isMaster ? (
                                             <>
                                                 {' '}
-                                                <Chip label="It's you!" size="small" />
+                                                <Chip label={T('common.itsYou')} size="small" />
                                             </>
                                         ) : null}
                                     </TableCell>
@@ -176,7 +179,7 @@ const Sessions: React.FC = () => {
                     startIcon={<HiPlus />}
                     onClick={onCreate}
                 >
-                    Create
+                    {T('action.create')}
                 </Button>
             </Box>
         </Paper>

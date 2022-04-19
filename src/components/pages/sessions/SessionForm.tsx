@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
+import { useTranslation } from '../../contexts/Translation';
 import Selector from '../../ui/selector/Selector';
 import { SessionCreateBody } from '../../../types';
 import useGame from '../../hooks/useGame';
@@ -21,6 +22,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const SessionForm = () => {
+    const { T } = useTranslation();
     const navigate = useNavigate();
     const { gameList } = useGame();
     const { createSession } = useSession();
@@ -43,7 +45,7 @@ const SessionForm = () => {
     return (
         <Paper elevation={3} className="box">
             <Typography variant="h6" gutterBottom>
-                New session
+                {T('page.sessions.newSession')}
             </Typography>
             <Formik
                 initialValues={initialValues}
@@ -67,7 +69,7 @@ const SessionForm = () => {
                                 <TextField
                                     className="form-input"
                                     autoComplete="new-password"
-                                    label="Name"
+                                    label={T('common.name')}
                                     name="name"
                                     error={!!errors.name && !!touched.name}
                                     onChange={handleChange}
@@ -87,7 +89,7 @@ const SessionForm = () => {
                         >
                             {() => (
                                 <Selector
-                                    label="Game"
+                                    label={T('entity.game')}
                                     name="gameId"
                                     options={gameOptions}
                                     value={values.gameId}
@@ -103,7 +105,7 @@ const SessionForm = () => {
                             size="large"
                             startIcon={<MdOutlineSave />}
                         >
-                            Create
+                            {T('action.create')}
                         </Button>
                     </Form>
                 )}

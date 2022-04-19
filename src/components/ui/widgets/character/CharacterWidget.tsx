@@ -7,6 +7,7 @@ import React, {
 import { Box, CircularProgress } from '@mui/material';
 import { MdEdit, MdOutlineCheck } from 'react-icons/md';
 
+import { useTranslation } from '../../../contexts/Translation';
 import CharacterSheet from '../../characterSheet/CharacterSheet';
 import useCharacter from '../../../hooks/useCharacter';
 import Widget from '../../play/Widget';
@@ -29,6 +30,7 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
     onUpdate,
     onClose
 }) => {
+    const { T } = useTranslation();
     const { getCharacter, editCharacter } = useCharacter();
 
     const [readonly, setReadonly] = useState<boolean>(true);
@@ -100,7 +102,7 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
     return (
         <Widget
             id="widget-character"
-            title="Character"
+            title={T('entity.character')}
             actions={widgetActions}
             onClose={() => onClose(WidgetType.character)}
         >
