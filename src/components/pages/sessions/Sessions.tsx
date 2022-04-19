@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
+    Box,
     Paper,
     Typography,
     Button,
@@ -167,15 +168,17 @@ const Sessions: React.FC = () => {
                     </TableBody>
                 </Table>
             </TableContainer>
-            <Button
-                className="create-button"
-                variant="contained"
-                size="medium"
-                startIcon={<HiPlus />}
-                onClick={onCreate}
-            >
-                Create
-            </Button>
+            <Box className="flex row end-x full-width mt-20">
+                <Button
+                    className="create-button"
+                    variant="contained"
+                    size="medium"
+                    startIcon={<HiPlus />}
+                    onClick={onCreate}
+                >
+                    Create
+                </Button>
+            </Box>
         </Paper>
     );
 };
