@@ -16,9 +16,10 @@ const useLogs = () => {
 
     const [logs, setLogs] = useState<PlayLog[]>([]);
 
-    const getLogUsername = (logUser: User, isMaster: boolean) => (
-        `[${isMaster ? `${T('entity.gm')} ` : ''}${logUser?.name}]`
-    );
+    const getLogUsername = (logUser: User, isMaster: boolean) => {
+        const gmPrefix = `${T('entity.gm')} `;
+        return `[${isMaster ? gmPrefix : ''}${logUser?.name}]`;
+    };
 
     const pushLog = (logUser: User, isMaster: boolean, text: string) => {
         const fullText = `${getLogUsername(logUser, isMaster)} ${text}`;
