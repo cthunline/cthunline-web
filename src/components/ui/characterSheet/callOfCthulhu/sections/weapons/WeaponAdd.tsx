@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 
+import { useTranslation } from '../../../../../contexts/Translation';
 import { CoCWeapon } from '../../../../../../types/games/callOfCthulhu';
 import { weaponAddKeys } from './weapons.data';
 
@@ -42,6 +43,8 @@ const defaultErrors = {
 };
 
 const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
+    const { T } = useTranslation();
+
     const [values, setValues] = useState<CoCWeapon>(defaultValues);
     const [errors, setErrors] = useState<WeaponErrors>(defaultErrors);
 
@@ -85,13 +88,13 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
             gridTemplateColumns="repeat(24, 1fr)"
             alignItems="center"
         >
-            {weaponAddKeys.map(({ key, label, gridColumn }) => (
+            {weaponAddKeys.map(({ key, gridColumn }) => (
                 <Box key={`weapon-add-${key}`} gridColumn={`span ${gridColumn}`}>
                     <TextField
                         fullWidth
                         type="text"
                         size="small"
-                        label={label}
+                        label={T(`game.callOfCthulhu.weapon.${key}`)}
                         value={values[key]}
                         error={
                             Object.keys(errors).includes(key)

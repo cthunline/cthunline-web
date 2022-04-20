@@ -5,6 +5,7 @@ import {
     Tooltip
 } from '@mui/material';
 
+import { useTranslation } from '../../../../../contexts/Translation';
 import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCCharacteristic } from '../../../../../../types/games/callOfCthulhu';
 import { charKeys } from './characteristics.data';
@@ -12,8 +13,7 @@ import { controlCharacteristic } from '../../cocSheet.helper';
 
 interface CharacteristicProps {
     field: string;
-    label: string;
-    shortLabel?: string;
+    textKey?: string;
     data: CoCCharacteristic;
     readonly: boolean;
     onChange: (field: string, data: CoCCharacteristic) => void;
@@ -21,50 +21,53 @@ interface CharacteristicProps {
 
 const Characteristic: React.FC<CharacteristicProps> = ({
     field,
-    label,
-    shortLabel,
+    textKey,
     data,
     readonly,
     onChange
-}) => (
-    <Box
-        gridColumn="span 6"
-        display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        alignItems="center"
-    >
-        <Box gridColumn="span 3">
-            {shortLabel ? (
-                <Tooltip title={label} placement="bottom">
-                    <span>{shortLabel}</span>
-                </Tooltip>
-            ) : label}
-        </Box>
-        {charKeys.map(({ key, label: keyLabel, editable }) => (
-            <Box key={`characteristic-${key}`} gridColumn="span 3">
-                <TextField
-                    fullWidth
-                    disabled={!editable}
-                    InputProps={{
-                        readOnly: readonly
-                    }}
-                    type="text"
-                    size="small"
-                    label={keyLabel}
-                    value={data[key]}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange(
-                            field,
-                            controlCharacteristic({
-                                ...data,
-                                [key]: Number(onlyNumbers(e.target.value))
-                            })
-                        );
-                    }}
-                />
+}) => {
+    const { T, TU } = useTranslation();
+
+    return (
+        <Box
+            gridColumn="span 6"
+            display="grid"
+            gridTemplateColumns="repeat(12, 1fr)"
+            alignItems="center"
+        >
+            <Box gridColumn="span 3">
+                {textKey ? (
+                    <Tooltip title={T(`game.callOfCthulhu.characteristic.${field}`)} placement="bottom">
+                        <span>{TU(`game.callOfCthulhu.characteristic.${textKey}`)}</span>
+                    </Tooltip>
+                ) : T(`game.callOfCthulhu.characteristic.${field}`)}
             </Box>
-        ))}
-    </Box>
-);
+            {charKeys.map(({ key, textKey: subTextKey, editable }) => (
+                <Box key={`characteristic-${key}`} gridColumn="span 3">
+                    <TextField
+                        fullWidth
+                        disabled={!editable}
+                        InputProps={{
+                            readOnly: readonly
+                        }}
+                        type="text"
+                        size="small"
+                        label={T(`game.callOfCthulhu.common.${subTextKey}`)}
+                        value={data[key]}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange(
+                                field,
+                                controlCharacteristic({
+                                    ...data,
+                                    [key]: Number(onlyNumbers(e.target.value))
+                                })
+                            );
+                        }}
+                    />
+                </Box>
+            ))}
+        </Box>
+    );
+};
 
 export default memo(Characteristic);

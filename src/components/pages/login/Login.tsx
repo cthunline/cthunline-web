@@ -119,7 +119,7 @@ const Login = () => {
                             size="large"
                             startIcon={<MdLogin />}
                         >
-                            {T('user.login')}
+                            {T('action.login')}
                         </Button>
                         {configuration?.registrationEnabled ? (
                             <Link

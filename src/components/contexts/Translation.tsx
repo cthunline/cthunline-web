@@ -9,13 +9,7 @@ import React, {
 import { Locale } from '../../types';
 import { ucfirst } from '../../services/tools';
 
-import enTranslations from '../../lang/en.json';
-import frTranslations from '../../lang/fr.json';
-
-const translations: Record<Locale, any> = {
-    en: enTranslations,
-    fr: frTranslations
-};
+import translations from '../../lang';
 
 interface TranslationProviderProps {
     children: JSX.Element | JSX.Element[];
@@ -24,12 +18,14 @@ interface TranslationProviderProps {
 interface TranslationContextData {
     t: (key: string, data?: Record<string, string>) => string;
     T: (key: string, data?: Record<string, string>) => string;
+    TU: (key: string, data?: Record<string, string>) => string;
     changeLocale: (locale: Locale) => void;
 }
 
 const TranslationContext = createContext<TranslationContextData>({
     t: () => '',
     T: () => '',
+    TU: () => '',
     changeLocale: () => { /* default */ }
 });
 
@@ -77,6 +73,7 @@ export const TranslationProvider:React.FC<TranslationProviderProps> = ({
         return replaced;
     };
 
+    // lowercase translation text
     const t = useCallback((
         key: string,
         data?: Record<string, string>
@@ -94,6 +91,7 @@ export const TranslationProvider:React.FC<TranslationProviderProps> = ({
         getTranslation
     ]);
 
+    // translation text with first char uppercased
     const T = useCallback((
         key: string,
         data?: Record<string, string>
@@ -101,13 +99,23 @@ export const TranslationProvider:React.FC<TranslationProviderProps> = ({
         ucfirst(t(key, data))
     ), [t]);
 
+    // uppercased translation text
+    const TU = useCallback((
+        key: string,
+        data?: Record<string, string>
+    ): string => (
+        t(key, data).toLocaleUpperCase()
+    ), [t]);
+
     const contextValue = useMemo(() => ({
         t,
         T,
+        TU,
         changeLocale
     }), [
         t,
         T,
+        TU,
         changeLocale
     ]);
 

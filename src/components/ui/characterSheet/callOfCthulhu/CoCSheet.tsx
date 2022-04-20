@@ -16,6 +16,7 @@ import {
     CoCWeapon,
     CoCStory
 } from '../../../../types/games/callOfCthulhu';
+import { useTranslation } from '../../../contexts/Translation';
 import { CharacterData } from '../../../../types';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
@@ -48,6 +49,8 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
     listening,
     onChange
 }) => {
+    const { T } = useTranslation();
+
     const [characterData, setCharacterData] = useState<CoCCharacterData>(data);
 
     useEffect(() => {
@@ -203,9 +206,10 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
             {/* biography */}
             <Box gridColumn="span 9">
-                <SectionTitle text="Biography" />
+                <SectionTitle text={T('game.callOfCthulhu.common.biography')} />
                 <FieldLayout<CoCBiography>
                     fields={biographyFields}
+                    textSectionKey="biography"
                     data={characterData.biography}
                     readonly={readonly}
                     onChange={onBiographyChange}
@@ -220,7 +224,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 />
             </Box>
             {/* characteristics */}
-            <SectionTitle text="Characteristics" gridColumn="span 9" />
+            <SectionTitle text={T('game.callOfCthulhu.common.characteristics')} gridColumn="span 9" />
             <Characteristics
                 readonly={readonly}
                 characteristics={characterData.characteristics}
@@ -233,7 +237,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             />
             {/* status */}
             <Box gridColumn="span 12">
-                <SectionTitle text="Status" />
+                <SectionTitle text={T('game.callOfCthulhu.common.status')} />
                 <Status
                     readonly={readonly}
                     status={characterData.status}
@@ -242,7 +246,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             </Box>
             {/* skills */}
             <Box gridColumn="span 12">
-                <SectionTitle text="Skills" />
+                <SectionTitle text={T('game.callOfCthulhu.common.skills')} />
                 <Skills
                     readonly={readonly}
                     skills={characterData.skills}
@@ -253,12 +257,12 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             </Box>
             {/* combat */}
             <Box gridColumn="span 12">
-                <SectionTitle text="Combat" />
+                <SectionTitle text={T('game.callOfCthulhu.common.combat')} />
                 <Combat combat={data.combat} />
             </Box>
             {/* weapons */}
             <Box gridColumn="span 12">
-                <SectionTitle text="Weapons" />
+                <SectionTitle text={T('game.callOfCthulhu.common.weapons')} />
                 <Weapons
                     readonly={readonly}
                     weapons={characterData.weapons}
@@ -269,9 +273,10 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             </Box>
             {/* story */}
             <Box gridColumn="span 12">
-                <SectionTitle text="Story" />
+                <SectionTitle text={T('game.callOfCthulhu.common.story')} />
                 <FieldLayout<CoCStory>
                     fields={storyFields}
+                    textSectionKey="story"
                     data={characterData.story}
                     readonly={readonly}
                     onChange={onStoryChange}

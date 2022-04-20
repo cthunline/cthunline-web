@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 
+import { useTranslation } from '../../../../../contexts/Translation';
 import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCSanity } from '../../../../../../types/games/callOfCthulhu';
 import { sanityKeys } from './characteristics.data';
@@ -16,35 +17,39 @@ const Sanity: React.FC<SanityProps> = ({
     data,
     readonly,
     onChange
-}) => (
-    <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" alignItems="center">
-        <Box gridColumn="span 3">
-            Sanity
-        </Box>
-        {sanityKeys.map(({ key, label: keyLabel, editable }) => (
-            <Box key={key.toString()} gridColumn="span 3">
-                <TextField
-                    fullWidth
-                    disabled={!editable}
-                    InputProps={{
-                        readOnly: readonly
-                    }}
-                    type="text"
-                    size="small"
-                    label={keyLabel}
-                    value={data[key]}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange(
-                            controlSanity({
-                                ...data,
-                                [key]: Number(onlyNumbers(e.target.value))
-                            })
-                        );
-                    }}
-                />
+}) => {
+    const { T } = useTranslation();
+
+    return (
+        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" alignItems="center">
+            <Box gridColumn="span 3">
+                {T('game.callOfCthulhu.characteristic.sanity')}
             </Box>
-        ))}
-    </Box>
-);
+            {sanityKeys.map(({ key, textKey, editable }) => (
+                <Box key={key.toString()} gridColumn="span 3">
+                    <TextField
+                        fullWidth
+                        disabled={!editable}
+                        InputProps={{
+                            readOnly: readonly
+                        }}
+                        type="text"
+                        size="small"
+                        label={T(`game.callOfCthulhu.common.${textKey}`)}
+                        value={data[key]}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange(
+                                controlSanity({
+                                    ...data,
+                                    [key]: Number(onlyNumbers(e.target.value))
+                                })
+                            );
+                        }}
+                    />
+                </Box>
+            ))}
+        </Box>
+    );
+};
 
 export default memo(Sanity);

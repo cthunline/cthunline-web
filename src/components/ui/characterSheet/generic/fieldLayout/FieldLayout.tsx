@@ -1,12 +1,12 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 
+import { useTranslation } from '../../../../contexts/Translation';
 import SectionTitle from '../sectionTitle/SectionTitle';
 import { onlyNumbers } from '../../../../../services/tools';
 
 export interface Field<DataType> {
     key?: keyof DataType;
-    label?: string;
     title?: string;
     gridColumn: number;
     type?: string;
@@ -16,20 +16,23 @@ export interface Field<DataType> {
 
 interface FieldLayoutProps<DataType> {
     fields: Field<DataType>[];
+    textSectionKey: string;
     data: DataType;
     readonly: boolean;
     onChange: (data: DataType) => void;
 }
 
 const FieldLayout = <DataType extends {}>({
+    textSectionKey,
     fields,
     data,
     readonly,
     onChange
 }: FieldLayoutProps<DataType>) => {
+    const { T } = useTranslation();
+
     const getInput = ({
         key,
-        label,
         title,
         type,
         lines
@@ -49,7 +52,7 @@ const FieldLayout = <DataType extends {}>({
                 }}
                 type="text"
                 size="small"
-                label={label}
+                label={T(`game.callOfCthulhu.${textSectionKey}.${key}`)}
                 name={key.toString()}
                 value={data[key]}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

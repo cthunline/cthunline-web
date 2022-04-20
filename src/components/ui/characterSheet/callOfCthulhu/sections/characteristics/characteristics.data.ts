@@ -9,99 +9,88 @@ import {
 
 export interface FieldData<DataType> {
     field: keyof DataType;
-    label: string;
-    shortLabel: string;
+    textKey: string;
 }
 
 export interface KeyData<DataType> {
     key: keyof DataType;
-    label: string;
+    textKey: string;
     editable?: boolean;
 }
 
 export const charFields: FieldData<CoCCharacteristics>[] = [{
     field: 'strength',
-    shortLabel: 'STR',
-    label: 'Strength'
+    textKey: 'str'
 }, {
     field: 'size',
-    shortLabel: 'SIZ',
-    label: 'Size'
+    textKey: 'siz'
 }, {
     field: 'constitution',
-    shortLabel: 'CON',
-    label: 'Constitution'
+    textKey: 'con'
 }, {
     field: 'power',
-    shortLabel: 'POW',
-    label: 'Power'
+    textKey: 'pow'
 }, {
     field: 'dexterity',
-    shortLabel: 'DEX',
-    label: 'Dexterity'
+    textKey: 'dex'
 }, {
     field: 'appearance',
-    shortLabel: 'APP',
-    label: 'Appearance'
+    textKey: 'app'
 }, {
     field: 'intelligence',
-    shortLabel: 'INT',
-    label: 'Intelligence'
+    textKey: 'int'
 }, {
     field: 'education',
-    shortLabel: 'EDU',
-    label: 'Education'
+    textKey: 'edu'
 }];
 
 export const charKeys: KeyData<CoCCharacteristic>[] = [{
     key: 'regular',
-    label: 'Reg',
+    textKey: 'reg',
     editable: true
 }, {
     key: 'half',
-    label: 'Half'
+    textKey: 'half'
 }, {
     key: 'fifth',
-    label: 'Fifth'
+    textKey: 'fifth'
 }];
 
 export const pointsFields: FieldData<CoCPoints>[] = [{
     field: 'hitPoints',
-    shortLabel: 'HP',
-    label: 'Hit Points'
+    textKey: 'hp'
 }, {
     field: 'magicPoints',
-    shortLabel: 'MP',
-    label: 'Magic Points'
+    textKey: 'mp'
 }];
 
 export const pointsKeys: KeyData<CoCPoint>[] = [{
     key: 'current',
-    label: 'Current',
+    textKey: 'current',
     editable: true
 }, {
     key: 'maximum',
-    label: 'Max'
+    textKey: 'max'
 }];
 
 export const luckKeys: KeyData<CoCLuck>[] = [{
     key: 'current',
-    label: 'Current',
+    textKey: 'current',
     editable: true
 }, {
     key: 'starting',
-    label: 'Start',
+    textKey: 'starting',
     editable: true
 }];
 
 export const sanityKeys: KeyData<CoCSanity>[] = [{
     key: 'current',
-    label: 'Current',
+    textKey: 'current',
     editable: true
 }, {
     key: 'starting',
-    label: 'Start'
+    textKey: 'starting'
 }, {
     key: 'maximum',
-    label: 'Max'
+    textKey: 'max'
 }];

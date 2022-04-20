@@ -5,6 +5,8 @@ import Nav from '../nav/Nav';
 import { useAuth } from '../../contexts/Auth';
 import { pages } from '../../router.data';
 
+import './Page.css';
+
 interface PageProps {
     children: JSX.Element | JSX.Element[];
 }
@@ -33,7 +35,11 @@ const Page: React.FC<PageProps> = ({ children }) => {
     return (
         <div className="page flex column full-width full-height">
             {showNav ? <Nav /> : null}
-            <div className={`content grow flex column center full-width ${showNav ? '' : 'full-height'}`}>
+            <div
+                className={
+                    `content grow flex column center full-width p-25 ${showNav ? 'with-nav' : 'full-height'}`
+                }
+            >
                 {children}
             </div>
         </div>

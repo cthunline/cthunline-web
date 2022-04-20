@@ -64,12 +64,11 @@ const Characteristics: React.FC<CharacteristicsProps> = ({
     return (
         <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
             <Box gridColumn="span 8" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-                {charFields.map(({ field, label, shortLabel }) => (
+                {charFields.map(({ field, textKey }) => (
                     <Characteristic
                         key={field}
                         field={field}
-                        label={label}
-                        shortLabel={shortLabel}
+                        textKey={textKey}
                         data={characteristics[field]}
                         readonly={readonly}
                         onChange={onCharacteristicChange}
@@ -77,12 +76,11 @@ const Characteristics: React.FC<CharacteristicsProps> = ({
                 ))}
             </Box>
             <Box gridColumn="span 4" display="grid" gap={2}>
-                {pointsFields.map(({ field, label, shortLabel }) => (
+                {pointsFields.map(({ field, textKey }) => (
                     <Point
                         key={field}
                         field={field}
-                        label={label}
-                        shortLabel={shortLabel}
+                        textKey={textKey}
                         data={points[field]}
                         readonly={readonly}
                         onChange={onPointChange}

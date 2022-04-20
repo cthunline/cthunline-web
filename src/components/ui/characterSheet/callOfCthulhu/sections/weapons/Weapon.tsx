@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
+import { useTranslation } from '../../../../../contexts/Translation';
 import { CoCWeapon } from '../../../../../../types/games/callOfCthulhu';
 import { weaponKeys } from './weapons.data';
 
@@ -23,48 +24,52 @@ const Weapon: React.FC<WeaponProps> = ({
     readonly,
     onChange,
     onDelete
-}) => (
-    <Box
-        gridColumn="span 12"
-        display="grid"
-        gridTemplateColumns="repeat(24, 1fr)"
-        alignItems="center"
-    >
-        <Box gridColumn={`span ${readonly ? '10' : '8'}`}>
-            {data.name}
+}) => {
+    const { T } = useTranslation();
+
+    return (
+        <Box
+            gridColumn="span 12"
+            display="grid"
+            gridTemplateColumns="repeat(24, 1fr)"
+            alignItems="center"
+        >
+            <Box gridColumn={`span ${readonly ? '10' : '8'}`}>
+                {data.name}
+            </Box>
+            {weaponKeys.map(({ key, gridColumn }) => (
+                <Box key={`weapon-${key}`} gridColumn={`span ${gridColumn}`}>
+                    <TextField
+                        fullWidth
+                        InputProps={{
+                            readOnly: readonly
+                        }}
+                        type="text"
+                        size="small"
+                        label={T(`game.callOfCthulhu.weapon.${key}`)}
+                        value={data[key]}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange(index, {
+                                ...data,
+                                [key]: e.target.value
+                            });
+                        }}
+                    />
+                </Box>
+            ))}
+            {readonly ? null : (
+                <Box gridColumn="span 2">
+                    <IconButton
+                        size="medium"
+                        color="error"
+                        onClick={() => onDelete(index)}
+                    >
+                        <MdOutlineDeleteOutline />
+                    </IconButton>
+                </Box>
+            )}
         </Box>
-        {weaponKeys.map(({ key, label, gridColumn }) => (
-            <Box key={`weapon-${key}`} gridColumn={`span ${gridColumn}`}>
-                <TextField
-                    fullWidth
-                    InputProps={{
-                        readOnly: readonly
-                    }}
-                    type="text"
-                    size="small"
-                    label={label}
-                    value={data[key]}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange(index, {
-                            ...data,
-                            [key]: e.target.value
-                        });
-                    }}
-                />
-            </Box>
-        ))}
-        {readonly ? null : (
-            <Box gridColumn="span 2">
-                <IconButton
-                    size="medium"
-                    color="error"
-                    onClick={() => onDelete(index)}
-                >
-                    <MdOutlineDeleteOutline />
-                </IconButton>
-            </Box>
-        )}
-    </Box>
-);
+    );
+};
 
 export default memo(Weapon);

@@ -2,20 +2,20 @@ import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
 
 export interface KeyData {
     key: keyof CoCSkill;
-    label: string;
+    textKey: string;
     editable?: boolean;
 }
 
 export const skillKeys: KeyData[] = [{
     key: 'regular',
-    label: 'Reg',
+    textKey: 'reg',
     editable: true
 }, {
     key: 'half',
-    label: 'Half'
+    textKey: 'half'
 }, {
     key: 'fifth',
-    label: 'Fifth'
+    textKey: 'fifth'
 }];
 
 export interface SkillData {
@@ -30,45 +30,50 @@ export const defaultSkillValue: SkillData = {
     development: true
 };
 
-export const skillList: SkillData[] = [
-    { name: 'Accounting', base: '5%', development: true },
-    { name: 'Anthropology', base: '1%', development: true },
-    { name: 'Appraise', base: '5%', development: true },
-    { name: 'Archaeology', base: '1%', development: true },
-    { name: 'Charm', base: '15%', development: true },
-    { name: 'Climb', base: '20%', development: true },
-    { name: 'Credit Rating', base: '0%', development: false },
-    { name: 'Cthulhu Mythos', base: '0%', development: false },
-    { name: 'Disguise', base: '5%', development: true },
-    { name: 'Dodge', base: 'DEX/2', development: true },
-    { name: 'Drive Auto', base: '20%', development: true },
-    { name: 'Elec. Repair', base: '10%', development: true },
-    { name: 'Fast Talk', base: '5%', development: true },
-    { name: 'Fighting (Brawl)', base: '25%', development: true },
-    { name: 'Firearms (Handgun)', base: '20%', development: true },
-    { name: 'Firearms (Rifle/Shotgun)', base: '25%', development: true },
-    { name: 'First Aid', base: '30%', development: true },
-    { name: 'History', base: '5%', development: true },
-    { name: 'Intimidate', base: '15%', development: true },
-    { name: 'Jump', base: '20%', development: true },
-    { name: 'Language (Own)', base: 'EDU', development: true },
-    { name: 'Law', base: '5%', development: true },
-    { name: 'Library Use', base: '20%', development: true },
-    { name: 'Listen', base: '20%', development: true },
-    { name: 'Locksmith', base: '1%', development: true },
-    { name: 'Mech. Repair', base: '10%', development: true },
-    { name: 'Medicine', base: '1%', development: true },
-    { name: 'Natural World', base: '10%', development: true },
-    { name: 'Navigate', base: '10%', development: true },
-    { name: 'Occult', base: '5%', development: true },
-    { name: 'Persuade', base: '10%', development: true },
-    { name: 'Psychoanalysis', base: '1%', development: true },
-    { name: 'Psychology', base: '10%', development: true },
-    { name: 'Ride', base: '5%', development: true },
-    { name: 'Sleight of Hand', base: '10%', development: true },
-    { name: 'Spot Hidden', base: '25%', development: true },
-    { name: 'Stealth', base: '20%', development: true },
-    { name: 'Swim', base: '20%', development: true },
-    { name: 'Throw', base: '20%', development: true },
-    { name: 'Track', base: '10%', development: true }
+export interface SkillListItem extends Omit<SkillData, 'name'> {
+    key: string;
+}
+
+export const skillList: SkillListItem[] = [
+    { key: 'accounting', base: '5%', development: true },
+    { key: 'anthropology', base: '1%', development: true },
+    { key: 'appraise', base: '5%', development: true },
+    { key: 'archaeology', base: '1%', development: true },
+    { key: 'charm', base: '15%', development: true },
+    { key: 'climb', base: '20%', development: true },
+    { key: 'creditRating', base: '0%', development: false },
+    { key: 'cthulhuMythos', base: '0%', development: false },
+    { key: 'disguise', base: '5%', development: true },
+    { key: 'dodge', base: 'DEX/2', development: true },
+    { key: 'driveAuto', base: '20%', development: true },
+    { key: 'electricalRepair', base: '10%', development: true },
+    { key: 'fastTalk', base: '5%', development: true },
+    { key: 'fightingBrawl', base: '25%', development: true },
+    { key: 'firearmsHandgun', base: '20%', development: true },
+    { key: 'firearmsRifleShotgun', base: '25%', development: true },
+    { key: 'firstAid', base: '30%', development: true },
+    { key: 'history', base: '5%', development: true },
+    { key: 'intimidate', base: '15%', development: true },
+    { key: 'jump', base: '20%', development: true },
+    { key: 'languageOwn', base: 'EDU', development: true },
+    { key: 'law', base: '5%', development: true },
+    { key: 'libraryUse', base: '20%', development: true },
+    { key: 'listen', base: '20%', development: true },
+    { key: 'locksmith', base: '1%', development: true },
+    { key: 'mechanicalRepair', base: '10%', development: true },
+    { key: 'medicine', base: '1%', development: true },
+    { key: 'naturalWorld', base: '10%', development: true },
+    { key: 'navigate', base: '10%', development: true },
+    { key: 'occult', base: '5%', development: true },
+    { key: 'persuade', base: '10%', development: true },
+    { key: 'psychoanalysis', base: '1%', development: true },
+    { key: 'psychology', base: '10%', development: true },
+    { key: 'ride', base: '5%', development: true },
+    { key: 'sleightOfHand', base: '10%', development: true },
+    { key: 'spotHidden', base: '25%', development: true },
+    { key: 'stealth', base: '20%', development: true },
+    { key: 'survival', base: '10%', development: true },
+    { key: 'swim', base: '20%', development: true },
+    { key: 'throw', base: '20%', development: true },
+    { key: 'track', base: '10%', development: true }
 ];

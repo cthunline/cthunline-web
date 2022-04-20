@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 
+import { useTranslation } from '../../../../../contexts/Translation';
 import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
 import AutocompleteInput from '../../../../autocompleteInput/AutocompleteInput';
 import {
@@ -35,6 +36,8 @@ const defaultErrors = {
 };
 
 const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
+    const { T } = useTranslation();
+
     const [selectorValue, setSelectorValue] = useState<SkillData | null>(null);
     const [values, setValues] = useState<SkillData>(defaultSkillValue);
     const [errors, setErrors] = useState<SkillAddErrors>(defaultErrors);
@@ -72,6 +75,14 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
         }
     };
 
+    const translatedSkillList: SkillData[] = (
+        skillList.map(({ key, base, development }) => ({
+            name: T(`game.callOfCthulhu.skill.${key}`),
+            base,
+            development
+        }))
+    );
+
     return (
         <Box
             gridColumn="span 12"
@@ -81,9 +92,9 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
         >
             <Box gridColumn="span 6">
                 <AutocompleteInput<SkillData>
-                    options={skillList}
+                    options={translatedSkillList}
                     defaultValue={defaultSkillValue}
-                    label="Select or create Skill"
+                    label={T('game.callOfCthulhu.common.skill')}
                     value={selectorValue}
                     size="small"
                     error={errors.name}
@@ -95,7 +106,7 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
                     fullWidth
                     type="text"
                     size="small"
-                    label="Base"
+                    label={T('game.callOfCthulhu.common.base')}
                     value={values.base}
                     error={errors.base}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -108,7 +119,7 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
             </Box>
             <Box gridColumn="span 3">
                 <FormControlLabel
-                    label="Development"
+                    label={T('game.callOfCthulhu.common.development')}
                     labelPlacement="start"
                     control={(
                         <Switch
