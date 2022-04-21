@@ -8,7 +8,7 @@ import {
     SWD6AttributeData,
     SWD6Skill
 } from '../../../../../../types/games/starWarsD6';
-import { ucfirst } from '../../../../../../services/tools';
+import { useTranslation } from '../../../../../contexts/Translation';
 
 import './Attribute.css';
 
@@ -30,63 +30,67 @@ const Attribute: React.FC<AttributeProps> = ({
     onSkillCreate,
     onSkillChange,
     onSkillDelete
-}) => (
-    <Box
-        gridColumn="span 6"
-        display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        alignItems="start"
-        rowGap={1}
-        columnGap={2}
-        gridAutoRows="min-content"
-    >
+}) => {
+    const { T } = useTranslation();
+
+    return (
         <Box
-            gridColumn="span 12"
+            gridColumn="span 6"
             display="grid"
-            gridTemplateColumns="repeat(16, 1fr)"
-            alignItems="center"
+            gridTemplateColumns="repeat(12, 1fr)"
+            alignItems="start"
             rowGap={1}
             columnGap={2}
+            gridAutoRows="min-content"
         >
-            <Box className="attribute-name" gridColumn="span 11">
-                {ucfirst(attribute)}
+            <Box
+                gridColumn="span 12"
+                display="grid"
+                gridTemplateColumns="repeat(16, 1fr)"
+                alignItems="center"
+                rowGap={1}
+                columnGap={2}
+            >
+                <Box className="attribute-name" gridColumn="span 11">
+                    {T(`game.starWarsD6.attribute.${attribute}`)}
+                </Box>
+                <Box gridColumn="span 5">
+                    <TextField
+                        fullWidth
+                        InputProps={{
+                            readOnly: readonly
+                        }}
+                        type="text"
+                        size="small"
+                        value={data.value}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange(attribute, {
+                                ...data,
+                                value: e.target.value
+                            });
+                        }}
+                    />
+                </Box>
             </Box>
-            <Box gridColumn="span 5">
-                <TextField
-                    fullWidth
-                    InputProps={{
-                        readOnly: readonly
-                    }}
-                    type="text"
-                    size="small"
-                    value={data.value}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange(attribute, {
-                            ...data,
-                            value: e.target.value
-                        });
-                    }}
+            {data.skills.map((skill, index) => (
+                <Skill
+                    key={`skill-${attribute}-${index.toString()}`}
+                    attribute={attribute}
+                    index={index}
+                    data={skill}
+                    readonly={readonly}
+                    onChange={onSkillChange}
+                    onDelete={onSkillDelete}
                 />
-            </Box>
+            ))}
+            {readonly ? null : (
+                <SkillAdd
+                    attribute={attribute}
+                    onSubmit={onSkillCreate}
+                />
+            )}
         </Box>
-        {data.skills.map((skill, index) => (
-            <Skill
-                key={`skill-${attribute}-${index.toString()}`}
-                attribute={attribute}
-                index={index}
-                data={skill}
-                readonly={readonly}
-                onChange={onSkillChange}
-                onDelete={onSkillDelete}
-            />
-        ))}
-        {readonly ? null : (
-            <SkillAdd
-                attribute={attribute}
-                onSubmit={onSkillCreate}
-            />
-        )}
-    </Box>
-);
+    );
+};
 
 export default memo(Attribute);

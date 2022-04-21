@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { Paper } from '@mui/material';
 
-import { CharacterData } from '../../../types';
+import { CharacterData, GameId } from '../../../types';
 import CoCSheet from './callOfCthulhu/CoCSheet';
 import { CoCCharacterData } from '../../../types/games/callOfCthulhu';
 import SWD6Sheet from './starWarsD6/SWD6Sheet';
@@ -46,7 +46,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
     };
 
     const getContent = (): JSX.Element => {
-        if (gameId === 'callOfCthulhu') {
+        if (gameId === GameId.callOfCthulhu) {
             return (
                 <CoCSheet
                     readonly={readonly}
@@ -56,7 +56,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                 />
             );
         }
-        if (gameId === 'starWarsD6') {
+        if (gameId === GameId.starWarsD6) {
             return (
                 <SWD6Sheet
                     readonly={readonly}

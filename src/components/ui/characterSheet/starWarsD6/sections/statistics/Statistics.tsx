@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { Box, TextField, Checkbox } from '@mui/material';
 
+import { useTranslation } from '../../../../../contexts/Translation';
 import { SWD6Statistics } from '../../../../../../types/games/starWarsD6';
 import { StatisticsField, statisticsFields } from './statistics.data';
 import { onlyNumbers } from '../../../../../../services/tools';
@@ -16,6 +17,8 @@ const Statistics: React.FC<StatisticsProps> = ({
     readonly,
     onChange
 }) => {
+    const { T } = useTranslation();
+
     const getInput = (
         key: keyof SWD6Statistics,
         type: 'number' | 'boolean',
@@ -60,9 +63,9 @@ const Statistics: React.FC<StatisticsProps> = ({
 
     return (
         <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={1} alignItems="center">
-            {statisticsFields.map(({ key, label, type }: StatisticsField) => ([
+            {statisticsFields.map(({ key, type }: StatisticsField) => ([
                 <Box key={`statistics-${key}-label`} gridColumn="span 7">
-                    {label}
+                    {T(`game.starWarsD6.statistics.${key}`)}
                 </Box>,
                 <Box key={`statistics-${key}-input`} className="center-text" gridColumn="span 3">
                     {getInput(key, type, statistics)}

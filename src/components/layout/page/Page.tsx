@@ -37,7 +37,7 @@ const Page: React.FC<PageProps> = ({ children }) => {
             {showNav ? <Nav /> : null}
             <div
                 className={
-                    `content grow flex column center full-width p-25 ${showNav ? 'with-nav' : 'full-height'}`
+                    `content grow flex column center full-width ${showNav ? 'with-nav p-25' : 'full-height'}`
                 }
             >
                 {children}

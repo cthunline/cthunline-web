@@ -17,7 +17,7 @@ import {
     SWD6Weapon,
     SWD6Story
 } from '../../../../types/games/starWarsD6';
-import { CharacterData } from '../../../../types';
+import { CharacterData, GameId } from '../../../../types';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
@@ -223,7 +223,9 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             <Box gridColumn="span 9">
                 <SectionTitle text="Biography" />
                 <FieldLayout<SWD6Biography>
+                    gameId={GameId.starWarsD6}
                     fields={biographyFields}
+                    textSectionKey="biography"
                     data={characterData.biography}
                     readonly={readonly}
                     onChange={onBiographyChange}
@@ -280,7 +282,9 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             </Box>
             {/* story */}
             <FieldLayout<SWD6Story>
+                gameId={GameId.starWarsD6}
                 fields={storyFields}
+                textSectionKey="story"
                 data={characterData.story}
                 readonly={readonly}
                 onChange={onStoryChange}

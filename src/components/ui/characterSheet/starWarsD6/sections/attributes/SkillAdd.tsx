@@ -6,6 +6,7 @@ import React, {
 import { Box, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 
+import { useTranslation } from '../../../../../contexts/Translation';
 import AutocompleteInput from '../../../../autocompleteInput/AutocompleteInput';
 import {
     SWD6Attribute,
@@ -25,6 +26,8 @@ const SkillAdd: React.FC<SkillProps> = ({
     attribute,
     onSubmit
 }) => {
+    const { T } = useTranslation();
+
     const [selectorValue, setSelectorValue] = useState<SWD6Skill | null>(null);
     const [skillData, setSkillData] = useState<SWD6Skill>(defaultSkillData);
     const [error, setError] = useState<boolean>(false);
@@ -52,14 +55,16 @@ const SkillAdd: React.FC<SkillProps> = ({
         }
     };
 
+    const skillOptions = skillList[attribute].map((textKey) => ({
+        name: T(`game.starWarsD6.skill.${attribute}.${textKey}`),
+        value: ''
+    }));
+
     return (
         <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(15, 1fr)">
             <Box gridColumn="span 13" alignItems="center">
                 <AutocompleteInput<SWD6Skill>
-                    options={skillList[attribute].map((name) => ({
-                        name,
-                        value: ''
-                    }))}
+                    options={skillOptions}
                     defaultValue={defaultSkillData}
                     label="Select or create Skill"
                     value={selectorValue}

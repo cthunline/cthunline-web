@@ -17,7 +17,7 @@ import {
     CoCStory
 } from '../../../../types/games/callOfCthulhu';
 import { useTranslation } from '../../../contexts/Translation';
-import { CharacterData } from '../../../../types';
+import { CharacterData, GameId } from '../../../../types';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
@@ -208,6 +208,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             <Box gridColumn="span 9">
                 <SectionTitle text={T('game.callOfCthulhu.common.biography')} />
                 <FieldLayout<CoCBiography>
+                    gameId={GameId.callOfCthulhu}
                     fields={biographyFields}
                     textSectionKey="biography"
                     data={characterData.biography}
@@ -275,6 +276,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             <Box gridColumn="span 12">
                 <SectionTitle text={T('game.callOfCthulhu.common.story')} />
                 <FieldLayout<CoCStory>
+                    gameId={GameId.callOfCthulhu}
                     fields={storyFields}
                     textSectionKey="story"
                     data={characterData.story}

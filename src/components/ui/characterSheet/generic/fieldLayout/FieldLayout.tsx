@@ -1,13 +1,14 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 
+import { GameId } from '../../../../../types';
 import { useTranslation } from '../../../../contexts/Translation';
 import SectionTitle from '../sectionTitle/SectionTitle';
 import { onlyNumbers } from '../../../../../services/tools';
 
 export interface Field<DataType> {
     key?: keyof DataType;
-    title?: string;
+    title?: boolean;
     gridColumn: number;
     type?: string;
     lines?: number;
@@ -15,6 +16,7 @@ export interface Field<DataType> {
 }
 
 interface FieldLayoutProps<DataType> {
+    gameId: GameId;
     fields: Field<DataType>[];
     textSectionKey: string;
     data: DataType;
@@ -23,8 +25,9 @@ interface FieldLayoutProps<DataType> {
 }
 
 const FieldLayout = <DataType extends {}>({
-    textSectionKey,
+    gameId,
     fields,
+    textSectionKey,
     data,
     readonly,
     onChange
@@ -38,7 +41,10 @@ const FieldLayout = <DataType extends {}>({
         lines
     }: Field<DataType>) => ([
         title ? (
-            <SectionTitle key={`field-${key}-title`} text={title} />
+            <SectionTitle
+                key={`field-${key}-title`}
+                text={T(`game.${gameId}.${textSectionKey}.${key}`)}
+            />
         ) : null,
         key ? (
             <TextField
@@ -52,7 +58,7 @@ const FieldLayout = <DataType extends {}>({
                 }}
                 type="text"
                 size="small"
-                label={T(`game.callOfCthulhu.${textSectionKey}.${key}`)}
+                label={T(`game.${gameId}.${textSectionKey}.${key}`)}
                 name={key.toString()}
                 value={data[key]}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

@@ -6,6 +6,7 @@ import {
 } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
+import { useTranslation } from '../../../../../contexts/Translation';
 import { SWD6Weapon } from '../../../../../../types/games/starWarsD6';
 import { weaponFields } from './weapons.data';
 
@@ -23,49 +24,53 @@ const Weapon: React.FC<WeaponProps> = ({
     readonly,
     onChange,
     onDelete
-}) => (
-    <Box
-        gridColumn="span 12"
-        display="grid"
-        gridTemplateColumns="repeat(15, 1fr)"
-        gap={1}
-    >
-        {weaponFields.map(({ key, label, gridColumn }) => (
-            <Box
-                key={`weapon-${key}`}
-                gridColumn={`span ${gridColumn}`}
-                alignItems="center"
-            >
-                <TextField
-                    fullWidth
-                    InputProps={{
-                        readOnly: readonly
-                    }}
-                    type="text"
-                    size="small"
-                    label={label}
-                    value={data[key]}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        onChange(index, {
-                            ...data,
-                            [key]: e.target.value
-                        });
-                    }}
-                />
-            </Box>
-        ))}
-        {readonly ? null : (
-            <Box gridColumn="span 1" alignItems="center">
-                <IconButton
-                    size="medium"
-                    color="error"
-                    onClick={() => onDelete(index)}
+}) => {
+    const { T } = useTranslation();
+
+    return (
+        <Box
+            gridColumn="span 12"
+            display="grid"
+            gridTemplateColumns="repeat(15, 1fr)"
+            gap={1}
+        >
+            {weaponFields.map(({ key, gridColumn }) => (
+                <Box
+                    key={`weapon-${key}`}
+                    gridColumn={`span ${gridColumn}`}
+                    alignItems="center"
                 >
-                    <MdOutlineDeleteOutline />
-                </IconButton>
-            </Box>
-        )}
-    </Box>
-);
+                    <TextField
+                        fullWidth
+                        InputProps={{
+                            readOnly: readonly
+                        }}
+                        type="text"
+                        size="small"
+                        label={T(`game.starWarsD6.weapon.${key}`)}
+                        value={data[key]}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange(index, {
+                                ...data,
+                                [key]: e.target.value
+                            });
+                        }}
+                    />
+                </Box>
+            ))}
+            {readonly ? null : (
+                <Box gridColumn="span 1" alignItems="center">
+                    <IconButton
+                        size="medium"
+                        color="error"
+                        onClick={() => onDelete(index)}
+                    >
+                        <MdOutlineDeleteOutline />
+                    </IconButton>
+                </Box>
+            )}
+        </Box>
+    );
+};
 
 export default memo(Weapon);

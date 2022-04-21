@@ -2,19 +2,19 @@ import { SWD6WoundStatus } from '../../../../../../types/games/starWarsD6';
 
 export interface WoundStatusField {
     keys: (keyof SWD6WoundStatus)[];
-    label: string;
+    textKey: string;
 }
 
 export const woundStatusFields: WoundStatusField[] = [{
     keys: ['stunned'],
-    label: 'Stunned'
+    textKey: 'stunned'
 }, {
     keys: ['wounded', 'doublyWounded'],
-    label: 'Wounded'
+    textKey: 'wounded'
 }, {
     keys: ['incapacitated'],
-    label: 'Incapacitated'
+    textKey: 'incapacitated'
 }, {
     keys: ['mortallyWounded'],
-    label: 'Mortally wounded'
+    textKey: 'mortallyWounded'
 }];

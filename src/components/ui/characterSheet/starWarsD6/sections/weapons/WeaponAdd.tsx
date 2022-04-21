@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 
+import { useTranslation } from '../../../../../contexts/Translation';
 import { SWD6Weapon } from '../../../../../../types/games/starWarsD6';
 import { weaponFields } from './weapons.data';
 
@@ -28,6 +29,8 @@ const defaultValues = {
 };
 
 const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
+    const { T } = useTranslation();
+
     const [values, setValues] = useState<SWD6Weapon>(defaultValues);
     const [nameError, setNameError] = useState<boolean>(false);
 
@@ -54,7 +57,7 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
             gridTemplateColumns="repeat(15, 1fr)"
             gap={1}
         >
-            {weaponFields.map(({ key, label, gridColumn }) => (
+            {weaponFields.map(({ key, gridColumn }) => (
                 <Box
                     key={`weapon-add-${key}`}
                     gridColumn={`span ${gridColumn}`}
@@ -64,7 +67,7 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
                         fullWidth
                         type="text"
                         size="small"
-                        label={label}
+                        label={T(`game.starWarsD6.weapon.${key}`)}
                         value={values[key]}
                         error={key === 'name' && nameError}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

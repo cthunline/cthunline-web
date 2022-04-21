@@ -1,62 +1,55 @@
 {
     "biography": [{
         "key": "name",
-        "label": "Name",
         "gridColumn": 5
     }, {
         "key": "occupation",
-        "label": "Occupation",
         "gridColumn": 5
     }, {
         "key": "age",
-        "label": "Age",
         "type": "number",
         "gridColumn": 2
     }, {
         "key": "species",
-        "label": "Species",
         "gridColumn": 6
     }, {
         "key": "height",
-        "label": "Height",
         "gridColumn": 3
     }, {
         "key": "weight",
-        "label": "Weight",
         "gridColumn": 3
     }, {
         "key": "description",
-        "label": "Description",
         "gridColumn": 12
     }],
     "story": [{
         "key": "equipment",
-        "title": "Equipment",
+        "title": true,
         "gridColumn": 6,
         "lines": 3
     }, {
         "key": "background",
-        "title": "Background",
+        "title": true,
         "gridColumn": 6,
         "lines": 3
     }, {
         "key": "personality",
-        "title": "Personality",
+        "title": true,
         "gridColumn": 6,
         "lines": 3
     }, {
         "key": "objectives",
-        "title": "Objectives",
+        "title": true,
         "gridColumn": 6,
         "lines": 3
     }, {
         "key": "quote",
-        "title": "A quote",
+        "title": true,
         "gridColumn": 6,
         "lines": 3
     }, {
         "key": "connections",
-        "title": "Connection with other characters",
+        "title": true,
         "gridColumn": 6,
         "lines": 3
     }]
