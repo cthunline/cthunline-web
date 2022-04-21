@@ -11,7 +11,7 @@ import { BsEraserFill } from 'react-icons/bs';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
 import { IoPeopleCircle } from 'react-icons/io5';
 
-import { useTranslation } from '../../../contexts/Translation';
+import { useApp } from '../../../contexts/App';
 import Widget from '../../play/Widget';
 import Explorer, {
     ExplorerItem,
@@ -35,7 +35,7 @@ interface SketchWidgetProps {
 }
 
 const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
     const { confirmDialog } = useDialog();
     const {
         users,

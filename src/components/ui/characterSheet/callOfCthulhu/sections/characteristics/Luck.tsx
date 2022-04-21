@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCLuck } from '../../../../../../types/games/callOfCthulhu';
 import { luckKeys } from './characteristics.data';
@@ -17,7 +17,7 @@ const Luck: React.FC<LuckProps> = ({
     readonly,
     onChange
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" alignItems="center">

@@ -18,18 +18,18 @@ import { HiPlus } from 'react-icons/hi';
 import { MdCheck } from 'react-icons/md';
 import { FaRegHandshake } from 'react-icons/fa';
 
-import { useTranslation } from '../../contexts/Translation';
-import { useConfiguration } from '../../contexts/Configuration';
-import { useAuth } from '../../contexts/Auth';
+import { useApp } from '../../contexts/App';
 import { useDialog } from '../../contexts/Dialog';
 import useUser from '../../hooks/useUser';
 import Invitation from './Invitation';
 
 const Users: React.FC = () => {
     const navigate = useNavigate();
-    const { configuration } = useConfiguration();
-    const { user } = useAuth();
-    const { T } = useTranslation();
+    const {
+        T,
+        configuration,
+        user
+    } = useApp();
     const { openDialog } = useDialog();
     const {
         userList,
@@ -51,7 +51,7 @@ const Users: React.FC = () => {
     };
 
     return (
-        <Paper elevation={3} className="page-list box flex column start-x center-y">
+        <Paper elevation={3} className="page-list p-25 flex column start-x center-y">
             <Typography variant="h6" gutterBottom>
                 {T('entity.users')}
             </Typography>

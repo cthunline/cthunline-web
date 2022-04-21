@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Box, TextField, Checkbox } from '@mui/material';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { SWD6Statistics } from '../../../../../../types/games/starWarsD6';
 import { StatisticsField, statisticsFields } from './statistics.data';
 import { onlyNumbers } from '../../../../../../services/tools';
@@ -17,7 +17,7 @@ const Statistics: React.FC<StatisticsProps> = ({
     readonly,
     onChange
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const getInput = (
         key: keyof SWD6Statistics,

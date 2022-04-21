@@ -3,11 +3,11 @@ import { Socket } from 'socket.io-client';
 import { CoCCharacterData } from './games/callOfCthulhu';
 import { SWD6CharacterData } from './games/starWarsD6';
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ configuration
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ theme
 
-export interface Configuration {
-    registrationEnabled: boolean;
-    invitationEnabled: boolean;
+export enum Theme {
+    dark = 'dark',
+    light = 'light'
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ translation
@@ -17,12 +17,28 @@ export enum Locale {
     fr = 'fr'
 }
 
+export const languages: Record<Locale, string> = {
+    en: 'english',
+    fr: 'français'
+};
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ configuration
+
+export interface Configuration {
+    registrationEnabled: boolean;
+    invitationEnabled: boolean;
+    defaultTheme: Theme;
+    defaultLocale: Locale;
+}
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ user
 
 export interface User {
     id: string;
     name: string;
     email: string;
+    theme: Theme;
+    locale: Locale;
     isAdmin: boolean;
     isEnabled: boolean;
     createdAt: string;
@@ -33,6 +49,8 @@ export interface UserCreateBody {
     name: string;
     email: string;
     password: string;
+    theme?: Theme;
+    locale?: Locale;
     isAdmin?: boolean;
 }
 

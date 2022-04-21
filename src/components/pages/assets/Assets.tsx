@@ -14,7 +14,7 @@ import Explorer, {
     ExplorerItemType
 } from '../../ui/explorer/Explorer';
 import UploadButton from '../../ui/uploadButton/UploadButton';
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 import { useDialog } from '../../contexts/Dialog';
 import useAsset from '../../hooks/useAsset';
 import useDirectory from '../../hooks/useDirectory';
@@ -30,7 +30,7 @@ const allowedMimeTypes = [
 const limitSizeInMb = 20;
 
 const Assets: React.FC = () => {
-    const { T } = useTranslation();
+    const { T } = useApp();
     const {
         confirmDialog,
         openDialog,
@@ -155,7 +155,7 @@ const Assets: React.FC = () => {
     ];
 
     return (
-        <Paper elevation={3} className="page-list box flex column start-x center-y">
+        <Paper elevation={3} className="page-list p-25 flex column start-x center-y">
             <Typography variant="h6" gutterBottom>
                 {T('entity.assets')}
             </Typography>

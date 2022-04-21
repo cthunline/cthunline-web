@@ -11,8 +11,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { MdLogout } from 'react-icons/md';
 import { FiUsers } from 'react-icons/fi';
 
-import { useTranslation } from '../../contexts/Translation';
-import { useAuth } from '../../contexts/Auth';
+import { useApp } from '../../contexts/App';
 
 interface SettingsMenuItem {
     icon: JSX.Element;
@@ -39,8 +38,11 @@ interface SettingsMenuProps {
 
 const SettingsMenu: React.FC<SettingsMenuProps> = ({ anchorEl, handleClose }) => {
     const navigate = useNavigate();
-    const { logout, user } = useAuth();
-    const { T } = useTranslation();
+    const {
+        T,
+        logout,
+        user
+    } = useApp();
 
     const menuItem = ({ icon, route, textKey }: SettingsMenuItem) => (
         <MenuItem

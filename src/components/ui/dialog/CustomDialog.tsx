@@ -7,7 +7,7 @@ import {
     DialogActions
 } from '@mui/material';
 
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 
 import './CustomDialog.css';
 
@@ -26,7 +26,7 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
     onConfirm,
     onClose
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     return (
         <Dialog

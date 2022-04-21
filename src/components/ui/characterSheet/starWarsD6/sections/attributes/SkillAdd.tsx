@@ -6,7 +6,7 @@ import React, {
 import { Box, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import AutocompleteInput from '../../../../autocompleteInput/AutocompleteInput';
 import {
     SWD6Attribute,
@@ -26,7 +26,7 @@ const SkillAdd: React.FC<SkillProps> = ({
     attribute,
     onSubmit
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const [selectorValue, setSelectorValue] = useState<SWD6Skill | null>(null);
     const [skillData, setSkillData] = useState<SWD6Skill>(defaultSkillData);

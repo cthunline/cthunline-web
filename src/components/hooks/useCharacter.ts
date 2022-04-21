@@ -6,7 +6,7 @@ import {
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
-import { useAuth } from '../contexts/Auth';
+import { useApp } from '../contexts/App';
 import {
     Character,
     CharacterCreateBody,
@@ -41,7 +41,7 @@ const useCharacter = ({
     loadList,
     characterId
 }: CharacterHookOptions = {}) => {
-    const { user, handleApiError } = useAuth();
+    const { user, handleApiError } = useApp();
 
     const [characterList, setCharacterList] = useState<Character[]>([]);
     const [character, setCharacter] = useState<Character>();

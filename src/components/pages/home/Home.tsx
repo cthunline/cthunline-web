@@ -2,10 +2,10 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { GiWizardFace } from 'react-icons/gi';
 
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 
 const Home = () => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     return (
         <div className="flex column center">

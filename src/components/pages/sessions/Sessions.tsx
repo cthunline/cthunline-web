@@ -21,9 +21,8 @@ import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { GiRollingDices } from 'react-icons/gi';
 import { toast } from 'react-toastify';
 
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 import { useDialog } from '../../contexts/Dialog';
-import { useAuth } from '../../contexts/Auth';
 import useGame from '../../hooks/useGame';
 import useCharacter from '../../hooks/useCharacter';
 import useSession from '../../hooks/useSession';
@@ -51,14 +50,13 @@ const CharacterSelector: React.FC<CharacterSelectorProps> = ({
 );
 
 const Sessions: React.FC = () => {
-    const { T } = useTranslation();
+    const { T, user } = useApp();
     const navigate = useNavigate();
     const {
         confirmDialog,
         openDialog,
         closeDialog
     } = useDialog();
-    const { user } = useAuth();
     const { getGame } = useGame();
     const { characterList } = useCharacter({
         loadList: true
@@ -105,7 +103,7 @@ const Sessions: React.FC = () => {
     };
 
     return (
-        <Paper elevation={3} className="page-list box flex column start-x center-y">
+        <Paper elevation={3} className="page-list p-25 flex column start-x center-y">
             <Typography variant="h6" gutterBottom>
                 {T('entity.sessions')}
             </Typography>

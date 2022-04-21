@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
 import AutocompleteInput from '../../../../autocompleteInput/AutocompleteInput';
 import {
@@ -36,7 +36,7 @@ const defaultErrors = {
 };
 
 const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const [selectorValue, setSelectorValue] = useState<SkillData | null>(null);
     const [values, setValues] = useState<SkillData>(defaultSkillValue);

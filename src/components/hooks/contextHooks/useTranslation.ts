@@ -1,37 +1,28 @@
-import React, {
-    createContext,
+import {
     useState,
-    useContext,
-    useMemo,
     useCallback
 } from 'react';
 
-import { Locale } from '../../types';
-import { ucfirst } from '../../services/tools';
+import { Locale } from '../../../types';
+import { ucfirst } from '../../../services/tools';
 
-import translations from '../../lang';
+import translations from '../../../lang';
 
-interface TranslationProviderProps {
-    children: JSX.Element | JSX.Element[];
-}
-
-interface TranslationContextData {
+export interface TranslationHookExport {
     t: (key: string, data?: Record<string, string>) => string;
     T: (key: string, data?: Record<string, string>) => string;
     TU: (key: string, data?: Record<string, string>) => string;
     changeLocale: (locale: Locale) => void;
 }
 
-const TranslationContext = createContext<TranslationContextData>({
+export const defaultTranslationHookData: TranslationHookExport = {
     t: () => '',
     T: () => '',
     TU: () => '',
     changeLocale: () => { /* default */ }
-});
+};
 
-export const TranslationProvider:React.FC<TranslationProviderProps> = ({
-    children
-}) => {
+const useTranslation = () => {
     const [locale, setLocale] = useState<Locale>(Locale.en);
 
     const changeLocale = useCallback((loc: Locale) => {
@@ -107,29 +98,12 @@ export const TranslationProvider:React.FC<TranslationProviderProps> = ({
         t(key, data).toLocaleUpperCase()
     ), [t]);
 
-    const contextValue = useMemo(() => ({
+    return {
         t,
         T,
         TU,
         changeLocale
-    }), [
-        t,
-        T,
-        TU,
-        changeLocale
-    ]);
-
-    return (
-        <TranslationContext.Provider value={contextValue}>
-            {children}
-        </TranslationContext.Provider>
-    );
+    };
 };
 
-export function useTranslation() {
-    const context = useContext(TranslationContext);
-    if (!context) {
-        throw new Error('useTranslation must be used within an TranslationProvider');
-    }
-    return context;
-}
+export default useTranslation;

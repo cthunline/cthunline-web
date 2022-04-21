@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 import { HiMusicNote } from 'react-icons/hi';
 
-import { useTranslation } from '../../../contexts/Translation';
+import { useApp } from '../../../contexts/App';
 import Widget from '../../play/Widget';
 import { WidgetType, Asset } from '../../../../types';
 import Explorer, {
@@ -26,7 +26,7 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
     onStop,
     onClose
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
     const { assetList } = useAsset({
         loadList: true,
         type: 'audio'

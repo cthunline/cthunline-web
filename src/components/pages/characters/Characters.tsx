@@ -19,7 +19,7 @@ import { HiPlus } from 'react-icons/hi';
 import { MdEdit, MdOutlineDeleteOutline } from 'react-icons/md';
 
 import { Game } from '../../../types';
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 import { useDialog } from '../../contexts/Dialog';
 import useCharacter from '../../hooks/useCharacter';
 import useGame from '../../hooks/useGame';
@@ -46,7 +46,7 @@ const GameSelector: React.FC<GameSelectorProps> = ({
 );
 
 const Characters: React.FC = () => {
-    const { T } = useTranslation();
+    const { T } = useApp();
     const navigate = useNavigate();
     const {
         confirmDialog,
@@ -90,7 +90,7 @@ const Characters: React.FC = () => {
     };
 
     return (
-        <Paper elevation={3} className="page-list box flex column start-x center-y">
+        <Paper elevation={3} className="page-list p-25 flex column start-x center-y">
             <Typography variant="h6" gutterBottom>
                 {T('entity.characters')}
             </Typography>

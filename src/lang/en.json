@@ -18,11 +18,13 @@
     },
     "common": {
         "itsYou": "it's you!",
+        "language": "language",
         "name": "name",
         "private": "private",
         "privatly": "privatly",
         "public": "public",
-        "publicly": "publicly"
+        "publicly": "publicly",
+        "theme": "theme"
     },
     "entity": {
         "asset": "asset",

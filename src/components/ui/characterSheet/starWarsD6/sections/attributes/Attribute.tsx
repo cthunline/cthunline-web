@@ -8,7 +8,7 @@ import {
     SWD6AttributeData,
     SWD6Skill
 } from '../../../../../../types/games/starWarsD6';
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 
 import './Attribute.css';
 
@@ -31,7 +31,7 @@ const Attribute: React.FC<AttributeProps> = ({
     onSkillChange,
     onSkillDelete
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     return (
         <Box

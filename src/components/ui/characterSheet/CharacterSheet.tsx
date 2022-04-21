@@ -70,7 +70,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
     };
 
     return (
-        <Paper elevation={3} className="character-sheet box scroll">
+        <Paper elevation={3} className="character-sheet p-25 scroll">
             {getContent()}
         </Paper>
     );

@@ -1,20 +1,13 @@
-import React, {
-    createContext,
+import {
     useState,
-    useContext,
     useEffect,
-    useMemo,
     useCallback,
     useRef
 } from 'react';
 import { toast } from 'react-toastify';
 
-import Api from '../../services/api';
-import { User } from '../../types';
-
-interface AuthProviderProps {
-    children: JSX.Element | JSX.Element[];
-}
+import Api from '../../../services/api';
+import { User } from '../../../types';
 
 interface AuthData {
     isLoading: boolean;
@@ -23,11 +16,21 @@ interface AuthData {
     user: User | null;
 }
 
-interface AuthContextData extends AuthData {
+export interface AuthHookExport extends AuthData {
     login: (email:string, password: string) => Promise<void>;
     logout: (callApi?: boolean) => Promise<void>;
     handleApiError: (err: any) => void;
 }
+
+export const defaultAuthHookData: AuthHookExport = {
+    isLoading: true,
+    isLoggedIn: false,
+    userId: null,
+    user: null,
+    login: async () => { /* default */ },
+    logout: async () => { /* default */ },
+    handleApiError: () => { /* default */ }
+};
 
 const defaultAuthData: AuthData = {
     isLoading: true,
@@ -36,14 +39,7 @@ const defaultAuthData: AuthData = {
     user: null
 };
 
-const AuthContext = createContext<AuthContextData>({
-    ...defaultAuthData,
-    login: async () => { /* default */ },
-    logout: async () => { /* default */ },
-    handleApiError: () => { /* default */ }
-});
-
-export const AuthProvider:React.FC<AuthProviderProps> = ({ children }) => {
+const useAuth = () => {
     const [authData, setAuthData] = useState<AuthData>(defaultAuthData);
 
     const getUser = async (userId: number) => (
@@ -133,29 +129,12 @@ export const AuthProvider:React.FC<AuthProviderProps> = ({ children }) => {
         })();
     }, [logout]);
 
-    const contextValue = useMemo(() => ({
+    return {
         ...authData,
         login,
         logout,
         handleApiError
-    }), [
-        authData,
-        login,
-        logout,
-        handleApiError
-    ]);
-
-    return (
-        <AuthContext.Provider value={contextValue}>
-            {children}
-        </AuthContext.Provider>
-    );
+    };
 };
 
-export function useAuth() {
-    const context = useContext(AuthContext);
-    if (!context) {
-        throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
-}
+export default useAuth;

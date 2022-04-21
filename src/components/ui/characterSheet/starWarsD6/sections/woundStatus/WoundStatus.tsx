@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Box, Checkbox } from '@mui/material';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { SWD6WoundStatus } from '../../../../../../types/games/starWarsD6';
 import { WoundStatusField, woundStatusFields } from './woundStatus.data';
 
@@ -16,7 +16,7 @@ const WoundStatus: React.FC<WoundStatusProps> = ({
     readonly,
     onChange
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     return (
         <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={1} alignItems="center">

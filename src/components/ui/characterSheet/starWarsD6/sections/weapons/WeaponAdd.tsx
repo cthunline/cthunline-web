@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { SWD6Weapon } from '../../../../../../types/games/starWarsD6';
 import { weaponFields } from './weapons.data';
 
@@ -29,7 +29,7 @@ const defaultValues = {
 };
 
 const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const [values, setValues] = useState<SWD6Weapon>(defaultValues);
     const [nameError, setNameError] = useState<boolean>(false);

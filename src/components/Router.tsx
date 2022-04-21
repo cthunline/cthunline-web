@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 
-import { useAuth } from './contexts/Auth';
+import { useApp } from './contexts/App';
 import Page from './layout/page/Page';
 import { pages } from './router.data';
 import {
@@ -22,7 +22,7 @@ interface RequireAuthProps {
 }
 
 const RequireAuth: React.FC<RequireAuthProps> = ({ children, admin }) => {
-    const { isLoggedIn, user } = useAuth();
+    const { isLoggedIn, user } = useApp();
     if (isLoggedIn) {
         if (admin && !user?.isAdmin) {
             return (
@@ -37,7 +37,7 @@ const RequireAuth: React.FC<RequireAuthProps> = ({ children, admin }) => {
 };
 
 const Router: React.FC = () => {
-    const { isLoading } = useAuth();
+    const { isLoading } = useApp();
 
     if (isLoading) {
         return (

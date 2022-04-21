@@ -9,7 +9,7 @@ import {
 } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 import { UserCreateBody } from '../../../types';
 
 interface UserFormProps {
@@ -53,7 +53,7 @@ const UserForm: React.FC<UserFormProps> = ({
     buttonText,
     onSubmit
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const initialValues: UserFormData = {
         name: '',
@@ -93,7 +93,7 @@ const UserForm: React.FC<UserFormProps> = ({
     );
 
     return (
-        <Paper elevation={3} className="box">
+        <Paper elevation={3} className="p-25">
             <Typography variant="h6" gutterBottom>
                 {title ?? 'New user'}
             </Typography>

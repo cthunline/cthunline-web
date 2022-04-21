@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { CoCWeapon } from '../../../../../../types/games/callOfCthulhu';
 import { weaponKeys } from './weapons.data';
 
@@ -25,7 +25,7 @@ const Weapon: React.FC<WeaponProps> = ({
     onChange,
     onDelete
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     return (
         <Box

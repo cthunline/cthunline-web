@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useAuth } from '../../../contexts/Auth';
+import { useApp } from '../../../contexts/App';
 import { SessionUser, SketchTokenColor, SketchTokenUser } from '../../../../types';
 import SketchItemContextMenu, { ContextMenuData } from './SketchItemContextMenu';
 import { getCssVar, getTextColor } from '../../../../services/tools';
@@ -36,7 +36,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     onUnassign,
     onDelete
 }) => {
-    const { userId } = useAuth();
+    const { userId } = useApp();
 
     const [contextMenu, setContextMenu] = useState<ContextMenuData | null>(null);
 

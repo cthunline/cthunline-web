@@ -6,7 +6,7 @@ import {
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
-import { useAuth } from '../contexts/Auth';
+import { useApp } from '../contexts/App';
 import {
     Directory,
     DirectoryCreateBody,
@@ -37,7 +37,7 @@ interface DeleteOptions {
 }
 
 const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
-    const { user, handleApiError } = useAuth();
+    const { user, handleApiError } = useApp();
 
     const [directoryList, setDirectoryList] = useState<Directory[]>([]);
 

@@ -10,7 +10,7 @@ import { GiD10, GiRollingDices } from 'react-icons/gi';
 import { MdOutlineContactPage, MdOutlineSettings } from 'react-icons/md';
 import { FiFolder } from 'react-icons/fi';
 
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 import SettingsMenu from './SettingsMenu';
 
 import './Nav.css';
@@ -39,7 +39,7 @@ const navMenuItems: NavMenuItem[] = [{
 
 const Nav: React.FC = () => {
     const navigate = useNavigate();
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const [userMenuAnchorEl, setUserMenuAnchorEl] = (
         React.useState<HTMLElement | null>(null)

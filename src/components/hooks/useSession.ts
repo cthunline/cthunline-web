@@ -6,7 +6,7 @@ import {
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
-import { useAuth } from '../contexts/Auth';
+import { useApp } from '../contexts/App';
 import {
     Session,
     SessionCreateBody,
@@ -48,7 +48,7 @@ const useSession = ({
     loadList,
     sessionId
 }: SessionHookOptions = {}) => {
-    const { handleApiError } = useAuth();
+    const { handleApiError } = useApp();
 
     const [sessionList, setSessionList] = useState<Session[]>([]);
     const [session, setSession] = useState<Session>();

@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { CoCWeapon } from '../../../../../../types/games/callOfCthulhu';
 import { weaponAddKeys } from './weapons.data';
 
@@ -43,7 +43,7 @@ const defaultErrors = {
 };
 
 const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const [values, setValues] = useState<CoCWeapon>(defaultValues);
     const [errors, setErrors] = useState<WeaponErrors>(defaultErrors);

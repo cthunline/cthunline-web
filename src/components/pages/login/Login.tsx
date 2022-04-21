@@ -16,9 +16,7 @@ import {
 import { GiD10 } from 'react-icons/gi';
 import { MdLogin } from 'react-icons/md';
 
-import { useConfiguration } from '../../contexts/Configuration';
-import { useAuth } from '../../contexts/Auth';
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 
 interface LoginFormData {
     email: string;
@@ -31,9 +29,12 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
-    const { configuration } = useConfiguration();
-    const { isLoggedIn, login } = useAuth();
-    const { T } = useTranslation();
+    const {
+        configuration,
+        T,
+        isLoggedIn,
+        login
+    } = useApp();
 
     const initialValues: LoginFormData = {
         email: '',
@@ -53,7 +54,7 @@ const Login = () => {
     }
 
     return (
-        <Paper elevation={3} className="box">
+        <Paper elevation={3} className="p-25">
             <div className="center-text">
                 <GiD10 size={100} />
             </div>

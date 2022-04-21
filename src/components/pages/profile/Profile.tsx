@@ -7,6 +7,7 @@ import {
 } from 'formik';
 import * as Yup from 'yup';
 import {
+    Box,
     Paper,
     TextField,
     Button,
@@ -15,74 +16,124 @@ import {
 import { MdOutlineSave } from 'react-icons/md';
 
 import useUser from '../../hooks/useUser';
-import { useAuth } from '../../contexts/Auth';
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
+import Selector from '../../ui/selector/Selector';
+import {
+    Theme,
+    Locale,
+    languages
+} from '../../../types';
+import { ucfirst } from '../../../services/tools';
 
-interface PasswordChangeData {
+interface ProfileData {
+    theme: Theme;
+    locale: Locale;
     oldPassword: string;
     password: string;
     passwordConfirm: string;
 }
 
-type PasswordChangeField = keyof PasswordChangeData;
+type ProfileField = keyof ProfileData;
 
-interface PasswordChangeFieldData {
-    field: PasswordChangeField;
+interface ProfileFieldData {
+    field: ProfileField;
     textKey: string;
-    preventComplete?: boolean;
+    preventAutoComplete?: boolean;
 }
 
-const fieldList: PasswordChangeFieldData[] = [{
+const passwordChangeFieldList: ProfileFieldData[] = [{
     field: 'oldPassword',
     textKey: 'oldPassword'
 }, {
     field: 'password',
     textKey: 'newPassword',
-    preventComplete: true
+    preventAutoComplete: true
 }, {
     field: 'passwordConfirm',
     textKey: 'newPasswordConfirm',
-    preventComplete: true
+    preventAutoComplete: true
 }];
 
 const validationSchema = Yup.object().shape({
-    oldPassword: Yup.string().min(6, 'Too short').required('Required'),
-    password: Yup.string().min(6, 'Too short').required('Required'),
-    passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
-});
+    oldPassword: Yup.string().min(6, 'Too short').when('password', {
+        is: (val: string) => !!val,
+        then: (schema) => schema.required('Required')
+    }),
+    password: Yup.string().min(6, 'Too short').when('oldPassword', {
+        is: (val: string) => !!val,
+        then: (schema) => schema.required('Required')
+    }),
+    passwordConfirm: Yup.string().when('password', {
+        is: (val: string) => !!val,
+        then: (schema) => schema.required('Required')
+    }).oneOf([
+        Yup.ref('password'),
+        null
+    ], 'Passwords must match')
+}, [
+    ['oldPassword', 'password'],
+    ['password', 'passwordConfirm']
+]);
+
+const themeOptions = [
+    { name: ucfirst(Theme.dark), value: Theme.dark },
+    { name: ucfirst(Theme.light), value: Theme.light }
+];
+
+const languageOptions = Object.entries(languages).map(
+    ([value, name]) => ({
+        name: ucfirst(name),
+        value
+    })
+);
 
 const Profile = () => {
-    const { user } = useAuth();
-    const { T } = useTranslation();
+    const {
+        T,
+        user,
+        changeLocale
+    } = useApp();
     const { editUser } = useUser();
 
-    const initialValues: PasswordChangeData = {
+    const initialValues: ProfileData = {
+        theme: user?.theme ?? Theme.dark,
+        locale: user?.locale ?? Locale.en,
         oldPassword: '',
         password: '',
         passwordConfirm: ''
     };
 
     const onSubmit = async ({
+        theme,
+        locale,
         oldPassword,
         password
-    }: PasswordChangeData, {
+    }: ProfileData, {
         resetForm
-    }: FormikHelpers<PasswordChangeData>) => {
+    }: FormikHelpers<ProfileData>) => {
         await editUser({
             userId: user?.id ?? '',
             data: {
-                oldPassword,
-                password
+                theme,
+                locale,
+                ...(oldPassword && password ? ({
+                    oldPassword,
+                    password
+                }) : {})
             }
         });
-        resetForm();
+        resetForm({
+            values: {
+                ...initialValues,
+                theme,
+                locale
+            }
+        });
+        changeLocale(locale);
     };
 
     return (
-        <Paper elevation={3} className="box">
-            <Typography variant="h6" gutterBottom>
-                {T('page.profile.changePassword')}
-            </Typography>
+        <Paper elevation={3} className="p-25">
             <Formik
                 initialValues={initialValues}
                 validationSchema={validationSchema}
@@ -95,8 +146,59 @@ const Profile = () => {
                     handleBlur,
                     values
                 }) => (
-                    <Form className="form small flex column center">
-                        {fieldList.map(({ field, textKey, preventComplete }) => (
+                    <Form className="form medium flex column center">
+                        <Box className="flex row full-width">
+                            <Box className="half mr-10">
+                                <Typography className="full-width" variant="h6" gutterBottom>
+                                    {T('common.theme')}
+                                </Typography>
+                                <Field
+                                    validateOnBlur
+                                    validateOnChange
+                                    name="theme"
+                                >
+                                    {() => (
+                                        <Selector
+                                            className="form-input"
+                                            name="theme"
+                                            options={themeOptions}
+                                            value={values.theme}
+                                            onChange={handleChange}
+                                            error={errors.theme}
+                                        />
+                                    )}
+                                </Field>
+                            </Box>
+                            <Box className="half ml-10">
+                                <Typography className="full-width" variant="h6" gutterBottom>
+                                    {T('common.language')}
+                                </Typography>
+                                <Field
+                                    validateOnBlur
+                                    validateOnChange
+                                    name="locale"
+                                >
+                                    {() => (
+                                        <Selector
+                                            className="form-input"
+                                            name="locale"
+                                            options={languageOptions}
+                                            value={values.locale}
+                                            onChange={handleChange}
+                                            error={errors.locale}
+                                        />
+                                    )}
+                                </Field>
+                            </Box>
+                        </Box>
+                        <Typography className="full-width mt-10" variant="h6" gutterBottom>
+                            {T('page.profile.changePassword')}
+                        </Typography>
+                        {passwordChangeFieldList.map(({
+                            field,
+                            textKey,
+                            preventAutoComplete
+                        }) => (
                             <Field
                                 key={field}
                                 validateOnBlur
@@ -105,8 +207,8 @@ const Profile = () => {
                             >
                                 {() => (
                                     <TextField
-                                        className="form-input"
-                                        autoComplete={preventComplete ? 'new-password' : ''}
+                                        className="form-input full-width"
+                                        autoComplete={preventAutoComplete ? 'new-password' : ''}
                                         label={T(`page.profile.${textKey}`)}
                                         name={field}
                                         type="password"

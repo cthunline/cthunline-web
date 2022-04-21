@@ -24,12 +24,6 @@
     opacity: 0.5;
 }
 
-/* box */
-
-.box {
-    padding: 25px;
-}
-
 /* flex */
 
 .flex {
@@ -93,6 +87,10 @@
     flex-grow: 1;
 }
 
+.flex .half {
+    flex-grow: 0.5;
+}
+
 .flex .align-start {
     align-self: flex-start;
 }
@@ -105,6 +103,10 @@
 
 .form.small {
     width: 300px;
+}
+
+.form.medium {
+    width: 400px;
 }
 
 .form.flex.column .form-input {

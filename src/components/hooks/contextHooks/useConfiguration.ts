@@ -1,36 +1,31 @@
-import React, {
-    createContext,
+import {
     useState,
-    useContext,
     useEffect,
-    useMemo,
     useCallback
 } from 'react';
 import { toast } from 'react-toastify';
 
-import Api from '../../services/api';
-import { Configuration } from '../../types';
+import Api from '../../../services/api';
+import { Configuration, Locale, Theme } from '../../../types';
 
-interface ConfigurationProviderProps {
-    children: JSX.Element | JSX.Element[];
-}
-
-interface ConfigurationContextData {
+export interface ConfigurationHookExport {
     configuration: Configuration;
     refreshConfiguration: () => Promise<void>;
 }
 
 const defaultConfiguration: Configuration = {
     registrationEnabled: false,
-    invitationEnabled: false
+    invitationEnabled: false,
+    defaultTheme: Theme.dark,
+    defaultLocale: Locale.en
 };
 
-const ConfigurationContext = createContext<ConfigurationContextData>({
+export const defaultConfigurationHookData: ConfigurationHookExport = {
     configuration: defaultConfiguration,
     refreshConfiguration: async () => { /* default */ }
-});
+};
 
-export const ConfigurationProvider:React.FC<ConfigurationProviderProps> = ({ children }) => {
+const useConfiguration = () => {
     const [configuration, setConfiguration] = useState<Configuration>(defaultConfiguration);
 
     const refreshConfiguration = useCallback(async () => {
@@ -50,25 +45,10 @@ export const ConfigurationProvider:React.FC<ConfigurationProviderProps> = ({ chi
         refreshConfiguration();
     }, [refreshConfiguration]);
 
-    const contextValue = useMemo(() => ({
+    return {
         configuration,
         refreshConfiguration
-    }), [
-        configuration,
-        refreshConfiguration
-    ]);
-
-    return (
-        <ConfigurationContext.Provider value={contextValue}>
-            {children}
-        </ConfigurationContext.Provider>
-    );
+    };
 };
 
-export function useConfiguration() {
-    const context = useContext(ConfigurationContext);
-    if (!context) {
-        throw new Error('useConfiguration must be used within an ConfigurationProvider');
-    }
-    return context;
-}
+export default useConfiguration;

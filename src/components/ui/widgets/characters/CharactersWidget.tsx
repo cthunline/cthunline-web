@@ -6,7 +6,7 @@ import {
     Tab
 } from '@mui/material';
 
-import { useTranslation } from '../../../contexts/Translation';
+import { useApp } from '../../../contexts/App';
 import CharacterSheet from '../../characterSheet/CharacterSheet';
 import Widget from '../../play/Widget';
 import { WidgetType, SessionUser } from '../../../../types';
@@ -22,7 +22,7 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
     users,
     onClose
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const [sessionUser, setSessionUser] = useState<SessionUser | null>(
         users[0] ?? null

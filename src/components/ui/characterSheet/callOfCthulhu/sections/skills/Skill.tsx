@@ -7,7 +7,7 @@ import {
 } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
 import { skillKeys } from './skills.data';
@@ -28,7 +28,7 @@ const Skill: React.FC<SkillProps> = ({
     onChange,
     onDelete
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     return (
         <Box

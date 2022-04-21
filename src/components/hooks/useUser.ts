@@ -6,7 +6,7 @@ import {
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
-import { useAuth } from '../contexts/Auth';
+import { useApp } from '../contexts/App';
 import {
     User,
     UserCreateBody,
@@ -41,7 +41,7 @@ const useUser = ({
     loadList = false,
     listDisabled = false
 }: UserHookOptions = {}) => {
-    const { handleApiError } = useAuth();
+    const { handleApiError } = useApp();
 
     const [userList, setUserList] = useState<User[]>([]);
 

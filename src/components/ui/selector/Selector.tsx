@@ -14,15 +14,19 @@ interface SelectorOption {
 }
 
 interface SelectorProps {
+    className?: string;
+    size?: 'small' | 'medium';
     options: SelectorOption[];
-    label: string;
-    name?: string;
+    label?: string;
+    name: string;
     value?: string;
     error?: string;
     onChange: (e: SelectChangeEvent) => void;
 }
 
 const Selector: React.FC<SelectorProps> = ({
+    className,
+    size,
     options,
     label,
     name,
@@ -30,7 +34,7 @@ const Selector: React.FC<SelectorProps> = ({
     error,
     onChange
 }) => {
-    const selectorId = `selector-${label.toLocaleLowerCase()}`;
+    const selectorId = `selector-${name}`;
 
     return (
         <FormControl fullWidth error={!!error}>
@@ -38,6 +42,8 @@ const Selector: React.FC<SelectorProps> = ({
                 {label}
             </InputLabel>
             <Select
+                size={size}
+                className={className}
                 labelId={selectorId}
                 name={name}
                 value={value ?? ''}

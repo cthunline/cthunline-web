@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 
 import { GameId } from '../../../../../types';
-import { useTranslation } from '../../../../contexts/Translation';
+import { useApp } from '../../../../contexts/App';
 import SectionTitle from '../sectionTitle/SectionTitle';
 import { onlyNumbers } from '../../../../../services/tools';
 
@@ -32,7 +32,7 @@ const FieldLayout = <DataType extends {}>({
     readonly,
     onChange
 }: FieldLayoutProps<DataType>) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const getInput = ({
         key,

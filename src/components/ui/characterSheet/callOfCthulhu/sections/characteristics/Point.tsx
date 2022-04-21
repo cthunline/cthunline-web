@@ -5,7 +5,7 @@ import {
     Tooltip
 } from '@mui/material';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCPoint } from '../../../../../../types/games/callOfCthulhu';
 import { pointsKeys } from './characteristics.data';
@@ -26,7 +26,7 @@ const Point: React.FC<PointProps> = ({
     readonly,
     onChange
 }) => {
-    const { T, TU } = useTranslation();
+    const { T, TU } = useApp();
 
     return (
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" alignItems="center">

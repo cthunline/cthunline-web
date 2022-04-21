@@ -16,7 +16,7 @@ import {
     CoCWeapon,
     CoCStory
 } from '../../../../types/games/callOfCthulhu';
-import { useTranslation } from '../../../contexts/Translation';
+import { useApp } from '../../../contexts/App';
 import { CharacterData, GameId } from '../../../../types';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
@@ -49,7 +49,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
     listening,
     onChange
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const [characterData, setCharacterData] = useState<CoCCharacterData>(data);
 

@@ -10,8 +10,7 @@ import React, {
 import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
 
-import { useAuth } from './Auth';
-import { useTranslation } from './Translation';
+import { useApp } from './App';
 import useSession from '../hooks/useSession';
 import useSketch, { SketchHookExport, defaultSketchHookExport } from '../hooks/play/useSketch';
 import useLogs, { LogsHookExport, defaultLogsHookExport } from '../hooks/play/useLogs';
@@ -73,8 +72,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         defaultPlayData.socket
     );
 
-    const { T, t } = useTranslation();
-    const { user } = useAuth();
+    const { T, t, user } = useApp();
     const { session } = useSession({ sessionId });
     const { logs, pushLog } = useLogs();
     const {

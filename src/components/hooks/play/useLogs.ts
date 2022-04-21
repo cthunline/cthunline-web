@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 import { PlayLog, User } from '../../../types';
 
 export interface LogsHookExport {
@@ -12,7 +12,7 @@ export const defaultLogsHookExport: LogsHookExport = {
 };
 
 const useLogs = () => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const [logs, setLogs] = useState<PlayLog[]>([]);
 

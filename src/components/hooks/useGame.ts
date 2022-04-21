@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 
 import Api from '../../services/api';
-import { useAuth } from '../contexts/Auth';
+import { useApp } from '../contexts/App';
 import { Game } from '../../types';
 
 const useGame = () => {
-    const { handleApiError } = useAuth();
+    const { handleApiError } = useApp();
 
     const [gameList, setGameList] = useState<Game[]>([]);
 

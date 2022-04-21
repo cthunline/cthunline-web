@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Box, FormControlLabel, Checkbox } from '@mui/material';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { CoCStatus } from '../../../../../../types/games/callOfCthulhu';
 import { fields } from './status.data';
 
@@ -16,7 +16,7 @@ const Status: React.FC<StatusProps> = ({
     status,
     onChange
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     return (
         <Box display="grid" gridTemplateColumns="repeat(10, 1fr)" gap={2}>

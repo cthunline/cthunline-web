@@ -14,7 +14,7 @@ import {
     GiDiceTwentyFacesTwenty
 } from 'react-icons/gi';
 
-import { useTranslation } from '../../../contexts/Translation';
+import { useApp } from '../../../contexts/App';
 import Widget from '../../play/Widget';
 import {
     WidgetType,
@@ -60,7 +60,7 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
     onRoll,
     onClose
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const [selectedDices, setSelectedDices] = useState<DicesData>(
         defaultSelectedDices

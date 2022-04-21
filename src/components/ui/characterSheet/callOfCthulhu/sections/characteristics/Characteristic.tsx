@@ -5,7 +5,7 @@ import {
     Tooltip
 } from '@mui/material';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { onlyNumbers } from '../../../../../../services/tools';
 import { CoCCharacteristic } from '../../../../../../types/games/callOfCthulhu';
 import { charKeys } from './characteristics.data';
@@ -26,7 +26,7 @@ const Characteristic: React.FC<CharacteristicProps> = ({
     readonly,
     onChange
 }) => {
-    const { T, TU } = useTranslation();
+    const { T, TU } = useApp();
 
     return (
         <Box

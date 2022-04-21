@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 
-import { useTranslation } from '../../../../../contexts/Translation';
+import { useApp } from '../../../../../contexts/App';
 import { CoCCombat } from '../../../../../../types/games/callOfCthulhu';
 import { combatKeys } from './combat.data';
 
@@ -10,7 +10,7 @@ interface CombatProps {
 }
 
 const Combat: React.FC<CombatProps> = ({ combat }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     return (
         <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={4}>

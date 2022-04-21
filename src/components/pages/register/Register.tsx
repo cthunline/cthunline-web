@@ -1,18 +1,15 @@
 import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import { useTranslation } from '../../contexts/Translation';
-import { useAuth } from '../../contexts/Auth';
-import { useConfiguration } from '../../contexts/Configuration';
+import { useApp } from '../../contexts/App';
 import useUser from '../../hooks/useUser';
 import UserForm, { UserSubmitData } from '../../ui/userForm/UserForm';
 import Error from '../error/Error';
 
 const Register = () => {
-    const { T } = useTranslation();
+    const { T } = useApp();
     const navigate = useNavigate();
-    const { configuration } = useConfiguration();
-    const { isLoggedIn } = useAuth();
+    const { configuration, isLoggedIn } = useApp();
     const { registerUser } = useUser();
 
     const onSubmit = async (data: UserSubmitData) => {

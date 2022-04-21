@@ -1,5 +1,5 @@
 import { DicesRequest, PlaySocket } from '../../../types';
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 
 export interface DiceHookExport {
     requestDice: (request: DicesRequest, isPrivate: boolean) => void;
@@ -10,7 +10,7 @@ export const defaultDiceHookExport: DiceHookExport = {
 };
 
 const useDice = (socket: PlaySocket | null) => {
-    const { t } = useTranslation();
+    const { t } = useApp();
 
     const requestDice = (request: DicesRequest, isPrivate: boolean) => {
         socket?.emit(isPrivate ? 'dicePrivateRequest' : 'diceRequest', request);

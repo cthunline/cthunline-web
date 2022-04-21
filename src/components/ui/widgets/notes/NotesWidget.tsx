@@ -5,7 +5,7 @@ import React, {
 } from 'react';
 import { Box, TextField } from '@mui/material';
 
-import { useTranslation } from '../../../contexts/Translation';
+import { useApp } from '../../../contexts/App';
 import { usePlay } from '../../../contexts/Play';
 import useSession from '../../../hooks/useSession';
 import Widget from '../../play/Widget';
@@ -22,7 +22,7 @@ const NotesWidget: React.FC<NotesWidgetProps> = ({
     text,
     onClose
 }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
     const { getNotes, editNotes } = useSession();
     const { sessionId } = usePlay();
 

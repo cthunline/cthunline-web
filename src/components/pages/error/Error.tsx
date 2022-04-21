@@ -2,7 +2,7 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { GiWizardFace } from 'react-icons/gi';
 
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 
 type ErrorType = 'notFound' | 'forbidden';
 
@@ -11,7 +11,7 @@ interface ErrorProps {
 }
 
 const Error: React.FC<ErrorProps> = ({ type }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const errors = {
         notFound: {

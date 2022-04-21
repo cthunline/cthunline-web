@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 import Selector from '../../ui/selector/Selector';
 import { SessionCreateBody } from '../../../types';
 import useGame from '../../hooks/useGame';
@@ -22,7 +22,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const SessionForm = () => {
-    const { T } = useTranslation();
+    const { T } = useApp();
     const navigate = useNavigate();
     const { gameList } = useGame();
     const { createSession } = useSession();
@@ -43,7 +43,7 @@ const SessionForm = () => {
     }));
 
     return (
-        <Paper elevation={3} className="box">
+        <Paper elevation={3} className="p-25">
             <Typography variant="h6" gutterBottom>
                 {T('page.sessions.newSession')}
             </Typography>

@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
-import { useTranslation } from '../../contexts/Translation';
+import { useApp } from '../../contexts/App';
 
 interface DirectoryFormProps {
     onSubmit: (name: string) => void;
@@ -27,7 +27,7 @@ const initialValues: DirectoryFormData = {
 };
 
 const DirectoryForm: React.FC<DirectoryFormProps> = ({ onSubmit }) => {
-    const { T } = useTranslation();
+    const { T } = useApp();
 
     const onFormSubmit = async ({ name }: DirectoryFormData) => {
         onSubmit(name);
