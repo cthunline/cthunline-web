@@ -17,6 +17,7 @@ interface AuthData {
 }
 
 export interface AuthHookExport extends AuthData {
+    refreshUser: () => Promise<void>;
     login: (email:string, password: string) => Promise<void>;
     logout: (callApi?: boolean) => Promise<void>;
     handleApiError: (err: any) => void;
@@ -27,6 +28,7 @@ export const defaultAuthHookData: AuthHookExport = {
     isLoggedIn: false,
     userId: null,
     user: null,
+    refreshUser: async () => { /* default */ },
     login: async () => { /* default */ },
     logout: async () => { /* default */ },
     handleApiError: () => { /* default */ }
@@ -42,12 +44,22 @@ const defaultAuthData: AuthData = {
 const useAuth = () => {
     const [authData, setAuthData] = useState<AuthData>(defaultAuthData);
 
-    const getUser = async (userId: number) => (
+    const getUser = async (userId: string) => (
         Api.call({
             method: 'GET',
             route: `/users/${userId}`
         })
     );
+
+    const refreshUser = useCallback(async () => {
+        if (authData.userId) {
+            const user = await getUser(authData.userId);
+            setAuthData((previous) => ({
+                ...previous,
+                user
+            }));
+        }
+    }, [authData.userId]);
 
     const logout = useCallback(async (callApi: boolean = true) => {
         if (callApi) {
@@ -131,6 +143,7 @@ const useAuth = () => {
 
     return {
         ...authData,
+        refreshUser,
         login,
         logout,
         handleApiError

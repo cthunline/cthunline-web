@@ -6,7 +6,7 @@
 
 .character-portrait-inner {
     align-items: center;
-    border: 1px solid var(--palette-gray);
+    border: 1px solid var(--palette-background-tertiary);
     border-radius: 5px;
     display: flex;
     height: 100%;

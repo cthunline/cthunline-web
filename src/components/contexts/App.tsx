@@ -2,7 +2,8 @@ import React, {
     createContext,
     useContext,
     useEffect,
-    useMemo
+    useMemo,
+    useState
 } from 'react';
 
 import useAuth, {
@@ -17,18 +18,24 @@ import useTranslation, {
     TranslationHookExport,
     defaultTranslationHookData
 } from '../hooks/contextHooks/useTranslation';
+import { Theme } from '../../types';
 
 interface AppProviderProps {
     children: JSX.Element | JSX.Element[];
 }
 
-type AppContextData = (
+type AppHookExports = (
     AuthHookExport
     & ConfigurationHookExport
     & TranslationHookExport
 );
 
+interface AppContextData extends AppHookExports {
+    theme: Theme;
+}
+
 const defaultDialogData: AppContextData = {
+    theme: Theme.dark,
     ...defaultAuthHookData,
     ...defaultConfigurationHookData,
     ...defaultTranslationHookData
@@ -38,6 +45,7 @@ const AppContext = createContext<AppContextData>(defaultDialogData);
 
 export const AppProvider:React.FC<AppProviderProps> = ({ children }) => {
     const {
+        refreshUser,
         isLoading,
         isLoggedIn,
         userId,
@@ -57,6 +65,8 @@ export const AppProvider:React.FC<AppProviderProps> = ({ children }) => {
         changeLocale
     } = useTranslation();
 
+    const [theme, setTheme] = useState<Theme>(Theme.dark);
+
     useEffect(() => {
         changeLocale(user?.locale ?? configuration.defaultLocale);
     }, [
@@ -65,7 +75,16 @@ export const AppProvider:React.FC<AppProviderProps> = ({ children }) => {
         user?.locale
     ]);
 
+    useEffect(() => (
+        setTheme(user?.theme ?? configuration.defaultTheme)
+    ), [
+        configuration.defaultTheme,
+        user?.theme
+    ]);
+
     const contextValue = useMemo(() => ({
+        theme,
+        refreshUser,
         isLoading,
         isLoggedIn,
         userId,
@@ -80,6 +99,8 @@ export const AppProvider:React.FC<AppProviderProps> = ({ children }) => {
         TU,
         changeLocale
     }), [
+        theme,
+        refreshUser,
         isLoading,
         isLoggedIn,
         userId,

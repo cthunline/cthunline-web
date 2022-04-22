@@ -12,7 +12,7 @@ interface PageProps {
 }
 
 const Page: React.FC<PageProps> = ({ children }) => {
-    const { isLoggedIn } = useApp();
+    const { isLoggedIn, theme } = useApp();
     const location = useLocation();
 
     const [showNav, setShowNav] = useState<boolean>(isLoggedIn);
@@ -33,7 +33,7 @@ const Page: React.FC<PageProps> = ({ children }) => {
     ]);
 
     return (
-        <div className="page flex column full-width full-height">
+        <div className={`page flex column full-width full-height ${theme}`}>
             {showNav ? <Nav /> : null}
             <div
                 className={

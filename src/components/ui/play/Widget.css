@@ -13,7 +13,7 @@
 }
 
 .widget-bar {
-    background: var(--palette-gray);
+    background: var(--palette-background-tertiary);
     height: 30px;
 }
 

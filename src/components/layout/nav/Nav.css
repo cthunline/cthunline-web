@@ -3,6 +3,6 @@
 }
 
 .nav-middle button {
-    color: var(--palette-white);
+    color: var(--palette-font);
     font-weight: 600;
 }

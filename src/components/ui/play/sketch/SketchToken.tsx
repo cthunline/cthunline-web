@@ -68,7 +68,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
 
     const isMovable = !!(isMaster || (user && user.id === userId));
 
-    const hexColor = getCssVar(`--palette-token-${color}`);
+    const hexColor = getCssVar(`--palette-${color}`);
     const textColor = `var(--palette-${getTextColor(hexColor)})`;
 
     return (
@@ -88,7 +88,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                 cx={circleRadius + tokenPadding}
                 cy={circleRadius + tokenPadding}
                 r={circleRadius}
-                stroke="var(--palette-gray)"
+                stroke="var(--palette-background-tertiary)"
                 strokeWidth={circleStrokeSize}
                 fill={color}
             />

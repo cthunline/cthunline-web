@@ -3,7 +3,7 @@
 }
 
 .sketch-image.container.selected {
-    outline: 3px solid var(--palette-lightblue);
+    outline: 3px solid var(--palette-primary);
 }
 
 .sketch-image.container.selected .sketch-image {
@@ -15,7 +15,7 @@
 }
 
 .sketch-image-resizer {
-    fill: var(--palette-lightblue);
+    fill: var(--palette-primary);
     opacity: 0.75;
 }
 

@@ -1,5 +1,5 @@
 .svg-icon-button {
-    fill: var(--palette-white);
+    fill: var(--palette-font);
     fill-opacity: 0;
     height: 50px;
     width: 50px;
@@ -10,6 +10,6 @@
 }
 
 .sketch-image-delete-button-circle-icon {
-    fill: var(--palette-white);
+    fill: var(--palette-font);
     fill-opacity: 1;
 }

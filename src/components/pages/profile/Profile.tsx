@@ -91,7 +91,7 @@ const Profile = () => {
     const {
         T,
         user,
-        changeLocale
+        refreshUser
     } = useApp();
     const { editUser } = useUser();
 
@@ -129,7 +129,7 @@ const Profile = () => {
                 locale
             }
         });
-        changeLocale(locale);
+        refreshUser();
     };
 
     return (
