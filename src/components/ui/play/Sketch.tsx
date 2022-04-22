@@ -213,7 +213,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                     {paths.map((path, index) => (
                         <path
                             key={`sketch-path-${index.toString()}`}
-                            stroke="white"
+                            stroke="var(--palette-font)"
                             strokeWidth={5}
                             d={path}
                             fill="none"

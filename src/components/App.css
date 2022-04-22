@@ -19,6 +19,8 @@
 }
 
 :root .page {
+    --palette-black: #111416;
+    --palette-white: #fff;
     --palette-yellow: #ffba08;
     --palette-orange: #f77f00;
     --palette-brown: #774936;
