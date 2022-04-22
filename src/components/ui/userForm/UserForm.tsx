@@ -30,21 +30,27 @@ type UserFormField = keyof UserFormData;
 
 interface UserFormFieldData {
     field: UserFormField;
+    textKey: string;
     password?: boolean;
 }
 
 const fieldList: UserFormFieldData[] = [{
-    field: 'name'
+    field: 'name',
+    textKey: 'common.name'
 }, {
-    field: 'email'
+    field: 'email',
+    textKey: 'user.email'
 }, {
     field: 'password',
+    textKey: 'user.password',
     password: true
 }, {
     field: 'passwordConfirm',
+    textKey: 'user.passwordConfirm',
     password: true
 }, {
-    field: 'invitationCode'
+    field: 'invitationCode',
+    textKey: 'user.invitationCode'
 }];
 
 const UserForm: React.FC<UserFormProps> = ({
@@ -111,6 +117,7 @@ const UserForm: React.FC<UserFormProps> = ({
                     <Form className="form small flex column center">
                         {filteredFieldList.map(({
                             field,
+                            textKey,
                             password
                         }) => (
                             <Field
@@ -123,7 +130,7 @@ const UserForm: React.FC<UserFormProps> = ({
                                     <TextField
                                         className="form-input"
                                         autoComplete="new-password"
-                                        label={T(`user.${field}`)}
+                                        label={T(textKey)}
                                         name={field}
                                         type={password ? 'password' : 'text'}
                                         error={!!errors[field] && !!touched[field]}
