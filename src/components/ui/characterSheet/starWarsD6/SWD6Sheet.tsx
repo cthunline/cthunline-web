@@ -18,6 +18,7 @@ import {
     SWD6Story
 } from '../../../../types/games/starWarsD6';
 import { CharacterData, GameId } from '../../../../types';
+import { useApp } from '../../../contexts/App';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
@@ -48,6 +49,8 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     listening,
     onChange
 }) => {
+    const { T } = useApp();
+
     const [characterData, setCharacterData] = useState<SWD6CharacterData>(data);
 
     useEffect(() => {
@@ -221,7 +224,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
         <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" columnGap={2} rowGap={4}>
             {/* biography */}
             <Box gridColumn="span 9">
-                <SectionTitle text="Biography" />
+                <SectionTitle text={T('game.starWarsD6.common.biography')} />
                 <FieldLayout<SWD6Biography>
                     gameId={GameId.starWarsD6}
                     fields={biographyFields}
@@ -241,7 +244,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             </Box>
             {/* attributes */}
             <Box gridColumn="span 12">
-                <SectionTitle text="Attributes & Skills" />
+                <SectionTitle text={T('game.starWarsD6.common.attributesAndSkills')} />
                 <Attributes
                     attributes={characterData.attributes}
                     readonly={readonly}
@@ -253,7 +256,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             </Box>
             {/* statistics */}
             <Box gridColumn="span 6">
-                <SectionTitle text="Statistics" />
+                <SectionTitle text={T('game.starWarsD6.common.statistics')} />
                 <Statistics
                     statistics={characterData.statistics}
                     readonly={readonly}
@@ -262,7 +265,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             </Box>
             {/* wound status */}
             <Box gridColumn="span 6">
-                <SectionTitle text="Wound status" />
+                <SectionTitle text={T('game.starWarsD6.common.woundStatus')} />
                 <WoundStatus
                     woundStatus={characterData.woundStatus}
                     readonly={readonly}
@@ -271,7 +274,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             </Box>
             {/* weapons */}
             <Box gridColumn="span 12">
-                <SectionTitle text="Weapons" />
+                <SectionTitle text={T('game.starWarsD6.common.weapons')} />
                 <Weapons
                     weapons={characterData.weapons}
                     readonly={readonly}

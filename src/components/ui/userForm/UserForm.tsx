@@ -1,12 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import {
-    Paper,
-    TextField,
-    Button,
-    Typography
-} from '@mui/material';
+import { TextField, Button } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
 import { useApp } from '../../contexts/App';
@@ -14,7 +9,6 @@ import { UserCreateBody } from '../../../types';
 
 interface UserFormProps {
     invitation?: boolean;
-    title?: string;
     buttonText?: string;
     onSubmit: (data: UserSubmitData) => void;
 }
@@ -55,7 +49,6 @@ const fieldList: UserFormFieldData[] = [{
 
 const UserForm: React.FC<UserFormProps> = ({
     invitation,
-    title,
     buttonText,
     onSubmit
 }) => {
@@ -99,65 +92,60 @@ const UserForm: React.FC<UserFormProps> = ({
     );
 
     return (
-        <Paper elevation={3} className="p-25">
-            <Typography variant="h6" gutterBottom>
-                {title ?? 'New user'}
-            </Typography>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onFormSubmit}
-            >
-                {({
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur
-                }) => (
-                    <Form className="form small flex column center">
-                        {filteredFieldList.map(({
-                            field,
-                            textKey,
-                            password
-                        }) => (
-                            <Field
-                                key={field}
-                                validateOnBlur
-                                validateOnChange
-                                name={field}
-                            >
-                                {() => (
-                                    <TextField
-                                        className="form-input"
-                                        autoComplete="new-password"
-                                        label={T(textKey)}
-                                        name={field}
-                                        type={password ? 'password' : 'text'}
-                                        error={!!errors[field] && !!touched[field]}
-                                        onChange={handleChange}
-                                        onBlur={handleBlur}
-                                        helperText={
-                                            errors[field]
-                                            && touched[field]
-                                            && errors[field]
-                                        }
-                                    />
-                                )}
-                            </Field>
-                        ))}
-                        <Button
-                            className="form-button"
-                            type="submit"
-                            variant="contained"
-                            size="large"
-                            startIcon={<MdOutlineSave />}
+        <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onFormSubmit}
+        >
+            {({
+                errors,
+                touched,
+                handleChange,
+                handleBlur
+            }) => (
+                <Form className="form small flex column center">
+                    {filteredFieldList.map(({
+                        field,
+                        textKey,
+                        password
+                    }) => (
+                        <Field
+                            key={field}
+                            validateOnBlur
+                            validateOnChange
+                            name={field}
                         >
-                            {buttonText ?? 'Create'}
-                        </Button>
-                    </Form>
-                )}
-            </Formik>
-        </Paper>
+                            {() => (
+                                <TextField
+                                    className="form-input"
+                                    autoComplete="new-password"
+                                    label={T(textKey)}
+                                    name={field}
+                                    type={password ? 'password' : 'text'}
+                                    error={!!errors[field] && !!touched[field]}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    helperText={
+                                        errors[field]
+                                        && touched[field]
+                                        && errors[field]
+                                    }
+                                />
+                            )}
+                        </Field>
+                    ))}
+                    <Button
+                        className="form-button"
+                        type="submit"
+                        variant="contained"
+                        size="large"
+                        startIcon={<MdOutlineSave />}
+                    >
+                        {buttonText ?? 'Create'}
+                    </Button>
+                </Form>
+            )}
+        </Formik>
     );
 };
 

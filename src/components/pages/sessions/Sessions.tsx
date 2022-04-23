@@ -21,12 +21,13 @@ import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { GiRollingDices } from 'react-icons/gi';
 import { toast } from 'react-toastify';
 
+import SessionForm from './SessionForm';
 import { useApp } from '../../contexts/App';
 import { useDialog } from '../../contexts/Dialog';
 import useGame from '../../hooks/useGame';
 import useCharacter from '../../hooks/useCharacter';
 import useSession from '../../hooks/useSession';
-import { Character } from '../../../types';
+import { Character, SessionCreateBody } from '../../../types';
 
 interface CharacterSelectorProps {
     characters: Character[];
@@ -61,7 +62,11 @@ const Sessions: React.FC = () => {
     const { characterList } = useCharacter({
         loadList: true
     });
-    const { sessionList, deleteSession } = useSession({
+    const {
+        sessionList,
+        deleteSession,
+        createSession
+    } = useSession({
         loadList: true
     });
 
@@ -89,11 +94,21 @@ const Sessions: React.FC = () => {
         }
     };
 
-    const onCreate = () => {
-        navigate('/sessions/create');
+    const onSubmitSession = async (data: SessionCreateBody) => {
+        await createSession({ data });
+        closeDialog();
     };
 
-    const onDelete = (sessionId: string, name: string) => {
+    const onCreateSession = () => {
+        openDialog({
+            title: T('page.sessions.newSession'),
+            content: (
+                <SessionForm onSubmit={onSubmitSession} />
+            )
+        });
+    };
+
+    const onDeleteSession = (sessionId: string, name: string) => {
         const confirmText = T('page.sessions.deleteSessionConfirm', { name });
         confirmDialog(confirmText, () => {
             deleteSession({
@@ -157,7 +172,7 @@ const Sessions: React.FC = () => {
                                             <IconButton
                                                 size="medium"
                                                 color="error"
-                                                onClick={() => onDelete(id, name)}
+                                                onClick={() => onDeleteSession(id, name)}
                                             >
                                                 <MdOutlineDeleteOutline />
                                             </IconButton>
@@ -175,7 +190,7 @@ const Sessions: React.FC = () => {
                     variant="contained"
                     size="medium"
                     startIcon={<HiPlus />}
-                    onClick={onCreate}
+                    onClick={onCreateSession}
                 >
                     {T('action.create')}
                 </Button>

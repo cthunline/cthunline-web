@@ -17,6 +17,14 @@
             "weight": "poids",
             "description": "description"
         },
+        "common": {
+            "biography": "biographie",
+            "attributesAndSkills": "attributs & compétences",
+            "statistics": "statistiques",
+            "woundStatus": "dommages",
+            "weapon": "arme",
+            "weapons": "armes"
+        },
         "skill": {
             "dexterity": {
                 "archaicGuns": "arme archaïque",

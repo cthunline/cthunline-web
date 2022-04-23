@@ -1,40 +1,30 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import {
-    Paper,
-    TextField,
-    Button,
-    Typography
-} from '@mui/material';
+import { TextField, Button } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
 import { useApp } from '../../contexts/App';
 import Selector from '../../ui/selector/Selector';
 import { SessionCreateBody } from '../../../types';
 import useGame from '../../hooks/useGame';
-import useSession from '../../hooks/useSession';
+
+interface SessionFormProps {
+    onSubmit: (data: SessionCreateBody) => Promise<void>;
+}
 
 const validationSchema = Yup.object().shape({
     name: Yup.string().min(3, 'Too short').required('Required'),
     gameId: Yup.string().required('Required')
 });
 
-const SessionForm = () => {
+const SessionForm: React.FC<SessionFormProps> = ({ onSubmit }) => {
     const { T } = useApp();
-    const navigate = useNavigate();
     const { gameList } = useGame();
-    const { createSession } = useSession();
 
     const initialValues: SessionCreateBody = {
         gameId: '',
         name: ''
-    };
-
-    const onSubmit = async (data: SessionCreateBody) => {
-        await createSession({ data });
-        navigate('/sessions');
     };
 
     const gameOptions = gameList.map(({ id, name }) => ({
@@ -43,74 +33,69 @@ const SessionForm = () => {
     }));
 
     return (
-        <Paper elevation={3} className="p-25">
-            <Typography variant="h6" gutterBottom>
-                {T('page.sessions.newSession')}
-            </Typography>
-            <Formik
-                initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={onSubmit}
-            >
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur
-                }) => (
-                    <Form className="form small flex column center">
-                        <Field
-                            validateOnBlur
-                            validateOnChange
-                            name="name"
-                        >
-                            {() => (
-                                <TextField
-                                    className="form-input"
-                                    autoComplete="new-password"
-                                    label={T('common.name')}
-                                    name="name"
-                                    error={!!errors.name && !!touched.name}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    helperText={
-                                        errors.name
-                                        && touched.name
-                                        && errors.name
-                                    }
-                                />
-                            )}
-                        </Field>
-                        <Field
-                            validateOnBlur
-                            validateOnChange
-                            name="gameId"
-                        >
-                            {() => (
-                                <Selector
-                                    label={T('entity.game')}
-                                    name="gameId"
-                                    options={gameOptions}
-                                    value={values.gameId}
-                                    onChange={handleChange}
-                                    error={errors.gameId}
-                                />
-                            )}
-                        </Field>
-                        <Button
-                            className="form-button"
-                            type="submit"
-                            variant="contained"
-                            size="large"
-                            startIcon={<MdOutlineSave />}
-                        >
-                            {T('action.create')}
-                        </Button>
-                    </Form>
-                )}
-            </Formik>
-        </Paper>
+        <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={onSubmit}
+        >
+            {({
+                values,
+                errors,
+                touched,
+                handleChange,
+                handleBlur
+            }) => (
+                <Form className="form small flex column center">
+                    <Field
+                        validateOnBlur
+                        validateOnChange
+                        name="name"
+                    >
+                        {() => (
+                            <TextField
+                                className="form-input"
+                                autoComplete="new-password"
+                                label={T('common.name')}
+                                name="name"
+                                error={!!errors.name && !!touched.name}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                helperText={
+                                    errors.name
+                                    && touched.name
+                                    && errors.name
+                                }
+                            />
+                        )}
+                    </Field>
+                    <Field
+                        validateOnBlur
+                        validateOnChange
+                        name="gameId"
+                    >
+                        {() => (
+                            <Selector
+                                label={T('entity.game')}
+                                name="gameId"
+                                options={gameOptions}
+                                value={values.gameId}
+                                onChange={handleChange}
+                                error={errors.gameId}
+                            />
+                        )}
+                    </Field>
+                    <Button
+                        className="form-button"
+                        type="submit"
+                        variant="contained"
+                        size="large"
+                        startIcon={<MdOutlineSave />}
+                    >
+                        {T('action.create')}
+                    </Button>
+                </Form>
+            )}
+        </Formik>
     );
 };
 

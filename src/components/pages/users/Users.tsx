@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import {
     Box,
     Paper,
@@ -22,25 +21,39 @@ import { useApp } from '../../contexts/App';
 import { useDialog } from '../../contexts/Dialog';
 import useUser from '../../hooks/useUser';
 import Invitation from './Invitation';
+import UserForm, { UserSubmitData } from '../../ui/userForm/UserForm';
 
 const Users: React.FC = () => {
-    const navigate = useNavigate();
     const {
         T,
         configuration,
         user
     } = useApp();
-    const { openDialog } = useDialog();
+    const {
+        openDialog,
+        closeDialog
+    } = useDialog();
     const {
         userList,
-        editUser
+        editUser,
+        createUser
     } = useUser({
         loadList: true,
         listDisabled: true
     });
 
+    const onSubmit = async (data: UserSubmitData) => {
+        await createUser({ data });
+        closeDialog();
+    };
+
     const onCreate = () => {
-        navigate('/users/create');
+        openDialog({
+            title: T('page.users.newUser'),
+            content: (
+                <UserForm onSubmit={onSubmit} />
+            )
+        });
     };
 
     const onInvite = () => {

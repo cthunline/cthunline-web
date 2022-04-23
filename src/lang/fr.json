@@ -102,6 +102,9 @@
             "error": {
                 "noCharacterAvailable": "aucun personnage disponible pour ce jeu"
             }
+        },
+        "users": {
+            "newUser": "Nouvel utilisateur"
         }
     },
     "status": {

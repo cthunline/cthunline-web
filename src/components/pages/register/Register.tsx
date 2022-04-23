@@ -1,5 +1,6 @@
 import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { Paper, Typography } from '@mui/material';
 
 import { useApp } from '../../contexts/App';
 import useUser from '../../hooks/useUser';
@@ -26,12 +27,16 @@ const Register = () => {
     }
 
     return (
-        <UserForm
-            title={T('page.register.title')}
-            buttonText={T('action.register')}
-            invitation
-            onSubmit={onSubmit}
-        />
+        <Paper elevation={3} className="p-25">
+            <Typography variant="h6" gutterBottom>
+                {T('page.register.title')}
+            </Typography>
+            <UserForm
+                buttonText={T('action.register')}
+                invitation
+                onSubmit={onSubmit}
+            />
+        </Paper>
     );
 };
 
