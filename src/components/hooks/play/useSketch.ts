@@ -252,24 +252,26 @@ const useSketch = (socket: PlaySocket | null) => {
             let y = 0;
             const tokens = [...previous.tokens];
             const events = [...previous.events];
-            users.forEach(({ id, name }) => {
-                const token = getNewTokenData(tokens);
-                if (!x && !y) {
-                    x = token.x;
-                    y = token.y;
-                } else {
-                    y += 75;
+            users.forEach(({ id, name, isMaster }) => {
+                if (!isMaster) {
+                    const token = getNewTokenData(tokens);
+                    if (!x && !y) {
+                        x = token.x;
+                        y = token.y;
+                    } else {
+                        y += 75;
+                    }
+                    tokens.push({
+                        ...token,
+                        user: { id, name },
+                        x,
+                        y
+                    });
+                    events.push({
+                        type: SketchEventType.tokenAdd,
+                        tokenIndex: tokens.length - 1
+                    });
                 }
-                tokens.push({
-                    ...token,
-                    user: { id, name },
-                    x,
-                    y
-                });
-                events.push({
-                    type: SketchEventType.tokenAdd,
-                    tokenIndex: tokens.length - 1
-                });
             });
             return {
                 ...previous,

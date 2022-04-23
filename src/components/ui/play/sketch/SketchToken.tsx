@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Tooltip } from '@mui/material';
 
 import { useApp } from '../../../contexts/App';
 import { SessionUser, SketchTokenColor, SketchTokenUser } from '../../../../types';
@@ -72,52 +73,54 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     const textColor = `var(--palette-${getTextColor(hexColor)})`;
 
     return (
-        <svg
-            ref={onRef}
-            className={`sketch-token ${isMovable ? 'movable' : ''} ${className}`}
-            viewBox={`0 0 ${tokenSize} ${tokenSize}`}
-            width={tokenSize}
-            height={tokenSize}
-            x={x}
-            y={y}
-            onMouseDown={(e) => onMouseDown?.(e, isMovable)}
-            onContextMenu={onContextMenuOpen}
-        >
-            <circle
-                className="sketch-token-circle"
-                cx={circleRadius + tokenPadding}
-                cy={circleRadius + tokenPadding}
-                r={circleRadius}
-                stroke="var(--palette-background-tertiary)"
-                strokeWidth={circleStrokeSize}
-                fill={color}
-            />
-            {user ? (
-                <text
-                    className="sketch-token-text"
-                    x={textX}
-                    y={textY}
-                    textAnchor="middle"
-                    alignmentBaseline="central"
-                    stroke={textColor}
-                    strokeWidth="2px"
-                    fill={textColor}
-                    fontSize={fontSize}
-                >
-                    {userLetter}
-                </text>
-            ) : null}
-            {isMaster ? (
-                <SketchItemContextMenu
-                    open={!!contextMenu}
-                    position={contextMenu ?? undefined}
-                    onAssign={onAssign}
-                    onUnassign={onUnassign}
-                    onDelete={onDelete}
-                    onClose={onContextMenuClose}
+        <Tooltip title={user?.name ?? ''}>
+            <svg
+                ref={onRef}
+                className={`sketch-token ${isMovable ? 'movable' : ''} ${className}`}
+                viewBox={`0 0 ${tokenSize} ${tokenSize}`}
+                width={tokenSize}
+                height={tokenSize}
+                x={x}
+                y={y}
+                onMouseDown={(e) => onMouseDown?.(e, isMovable)}
+                onContextMenu={onContextMenuOpen}
+            >
+                <circle
+                    className="sketch-token-circle"
+                    cx={circleRadius + tokenPadding}
+                    cy={circleRadius + tokenPadding}
+                    r={circleRadius}
+                    stroke="var(--palette-background-tertiary)"
+                    strokeWidth={circleStrokeSize}
+                    fill={color}
                 />
-            ) : null}
-        </svg>
+                {user ? (
+                    <text
+                        className="sketch-token-text"
+                        x={textX}
+                        y={textY}
+                        textAnchor="middle"
+                        alignmentBaseline="central"
+                        stroke={textColor}
+                        strokeWidth="2px"
+                        fill={textColor}
+                        fontSize={fontSize}
+                    >
+                        {userLetter}
+                    </text>
+                ) : null}
+                {isMaster ? (
+                    <SketchItemContextMenu
+                        open={!!contextMenu}
+                        position={contextMenu ?? undefined}
+                        onAssign={onAssign}
+                        onUnassign={onUnassign}
+                        onDelete={onDelete}
+                        onClose={onContextMenuClose}
+                    />
+                ) : null}
+            </svg>
+        </Tooltip>
     );
 };
 
