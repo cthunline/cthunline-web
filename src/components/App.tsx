@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import './Ui.css';
 
-const App = () => {
+const AppContent = () => {
     const { theme } = useApp();
 
     const materialUiTheme = useMemo(() => (
@@ -31,10 +31,10 @@ const App = () => {
     );
 };
 
-const ContainerizedApp = () => (
+const App = () => (
     <AppProvider>
-        <App />
+        <AppContent />
     </AppProvider>
 );
 
-export default ContainerizedApp;
+export default App;
