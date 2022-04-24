@@ -131,7 +131,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                     r={circleRadius}
                     stroke="var(--palette-background-tertiary)"
                     strokeWidth={circleStrokeSize}
-                    fill={color}
+                    fill={`var(--palette-${color})`}
                 />
                 {user ? (
                     <text
