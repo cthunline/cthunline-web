@@ -308,7 +308,7 @@ export interface SketchEvent {
 export interface SketchCoordinates {
     x: number;
     y: number;
-    tooltipPlacement: TooltipPlacement;
+    tooltipPlacement?: TooltipPlacement;
 }
 
 export interface SketchSize {

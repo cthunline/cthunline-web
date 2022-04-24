@@ -12,7 +12,8 @@ import {
     CardinalDirection,
     SketchEventType,
     SketchTokenData,
-    SketchItemType
+    SketchItemType,
+    TooltipPlacement
 } from '../../../types';
 import {
     getMouseEventSvgCoordinates,
@@ -140,7 +141,9 @@ const useItems = (
                         ...(itemData as SketchTokenData),
                         x,
                         y,
-                        tooltipPlacement
+                        tooltipPlacement: (
+                            tooltipPlacement ?? TooltipPlacement.bottom
+                        )
                     });
                 }
             }
