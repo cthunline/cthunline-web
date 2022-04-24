@@ -8,7 +8,7 @@ import Router from './Router';
 
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
-import './Ui.css';
+import './utilities.css';
 
 const AppContent = () => {
     const { theme } = useApp();

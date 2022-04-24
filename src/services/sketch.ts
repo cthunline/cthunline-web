@@ -1,11 +1,12 @@
 import {
+    Color,
+    colors,
     SketchImageData,
     SketchCoordinates,
     SketchSize,
     CardinalDirection,
     SketchResizingItemData,
-    SketchTokenData,
-    SketchTokenColor
+    SketchTokenData
 } from '../types';
 import { randomItem } from './tools';
 
@@ -196,11 +197,11 @@ export const backwardImage = (images: SketchImageData[], index: number) => ([
     ...images.slice(index + 1)
 ]);
 
-type SketchColorUses = Record<SketchTokenColor, number>;
+type SketchColorUses = Record<Color, number>;
 // pick a color for a new token based on colors already used
-export const getNewTokenColor = (currentTokens: SketchTokenData[]): SketchTokenColor => {
+export const getNewTokenColor = (currentTokens: SketchTokenData[]): Color => {
     const colorUses = Object.fromEntries(
-        Object.values(SketchTokenColor).map((color) => [color, 0])
+        colors.map((color) => [color, 0])
     ) as SketchColorUses;
     currentTokens.map(({ color }) => color).forEach((color) => {
         colorUses[color] += 1;
@@ -211,9 +212,9 @@ export const getNewTokenColor = (currentTokens: SketchTokenData[]): SketchTokenC
             usesCount === minUsesCount
         ))
     );
-    const pickedColor: SketchTokenColor = (
-        randomItem(Object.keys(filteredColors) as SketchTokenColor[])
-        ?? randomItem(Object.values(SketchTokenColor))
+    const pickedColor: Color = (
+        randomItem(Object.keys(filteredColors))
+        ?? randomItem(colors as unknown as any[])
     );
     return pickedColor;
 };

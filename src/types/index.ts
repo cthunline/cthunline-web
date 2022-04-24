@@ -31,6 +31,27 @@ export interface Configuration {
     defaultLocale: Locale;
 }
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ colors
+
+export const colors = [
+    'black',
+    'white',
+    'yellow',
+    'orange',
+    'brown',
+    'red',
+    'purple',
+    'turquoise',
+    'blue',
+    'darkblue',
+    'green',
+    'darkgreen',
+    'gray',
+    'darkgray'
+] as const;
+
+export type Color = typeof colors[number];
+
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ user
 
 export interface User {
@@ -249,28 +270,13 @@ export interface SketchResizingItemData {
 export type SketchTokenUserData = Pick<SessionUser, 'id' | 'name'>;
 
 export interface SketchTokenData {
-    color: SketchTokenColor;
+    color: Color;
     user: SketchTokenUserData | null;
     x: number;
     y: number;
 }
 
 export type SketchTokenUser = Pick<User, 'id' | 'name'>;
-
-export enum SketchTokenColor {
-    yellow = 'yellow',
-    orange = 'orange',
-    red = 'red',
-    blue = 'blue',
-    darkblue = 'darkblue',
-    purple = 'purple',
-    green = 'green',
-    darkgreen = 'darkgreen',
-    brown = 'brown',
-    turquoise = 'turquoise',
-    gray = 'gray',
-    darkgray = 'darkgray'
-}
 
 export enum SketchEventType {
     draw = 'draw',

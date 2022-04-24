@@ -6,7 +6,8 @@ import {
 } from '@mui/material';
 
 import { usePlay } from '../../../contexts/Play';
-import { SessionUser } from '../../../../types';
+import ColorSelector from '../../colorSelector/ColorSelector';
+import { SessionUser, Color } from '../../../../types';
 
 interface SketchItemContextMenuProps {
     open: boolean;
@@ -18,6 +19,7 @@ interface SketchItemContextMenuProps {
     onBackward?: () => void;
     onAssign?: (user: SessionUser) => void;
     onUnassign?: () => void;
+    onColorChange?: (color: Color) => void;
     onDelete?: () => void;
     onClose?: () => void;
 }
@@ -27,6 +29,11 @@ export interface ContextMenuData {
     top: number;
 }
 
+enum SubMenuType {
+    assign = 'asssign',
+    color = 'color'
+}
+
 const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
     open,
     position,
@@ -34,33 +41,32 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
     onBackward,
     onAssign,
     onUnassign,
+    onColorChange,
     onDelete,
     onClose
 }) => {
     const { users } = usePlay();
 
-    const [isAssignSubMenu, setIsAssignSubMenu] = useState<boolean>(false);
+    const [subMenu, setSubMenu] = useState<SubMenuType | null>(null);
 
     const playerUsers = users.filter(({ isMaster }) => !isMaster);
 
     const onSelect = (handler?: Function) => {
         handler?.();
         onClose?.();
-        setIsAssignSubMenu(false);
+        setSubMenu(null);
     };
 
     const onMenuClose = () => {
         onClose?.();
-        setIsAssignSubMenu(false);
+        setSubMenu(null);
     };
 
-    const openUserSubMenu = () => {
-        setIsAssignSubMenu(true);
-    };
+    const openUserSubMenu = () => setSubMenu(SubMenuType.assign);
+    const closeUserSubMenu = () => setSubMenu(null);
 
-    const closeUserSubMenu = () => {
-        setIsAssignSubMenu(false);
-    };
+    const openColorSubMenu = () => setSubMenu(SubMenuType.color);
+    const closeColorSubMenu = () => setSubMenu(null);
 
     const getMainMenuItems = () => {
         const items = [];
@@ -78,17 +84,24 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
                 </MenuItem>
             );
         }
-        if (onUnassign) {
-            items.push(
-                <MenuItem key="assign" onClick={() => onSelect(onUnassign)}>
-                    Unassign user
-                </MenuItem>
-            );
-        }
         if (onAssign && playerUsers.length) {
             items.push(
                 <MenuItem key="assign" onClick={openUserSubMenu}>
                     Assign user
+                </MenuItem>
+            );
+        }
+        if (onUnassign) {
+            items.push(
+                <MenuItem key="unassign" onClick={() => onSelect(onUnassign)}>
+                    Unassign user
+                </MenuItem>
+            );
+        }
+        if (onColorChange) {
+            items.push(
+                <MenuItem key="colorChange" onClick={openColorSubMenu}>
+                    Change color
                 </MenuItem>
             );
         }
@@ -122,6 +135,29 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
         ])
     ];
 
+    const getColorSubMenuItems = () => [
+        <MenuItem key="submenu-back" onClick={closeColorSubMenu}>
+            Back
+        </MenuItem>,
+        <Divider key="submenu-divider" />,
+        <ColorSelector
+            key="submenu-color-selector"
+            onChange={(color: Color) => onSelect(
+                () => onColorChange?.(color)
+            )}
+        />
+    ];
+
+    const getMenuContent = () => {
+        if (subMenu === SubMenuType.assign) {
+            return getAssignSubMenuItems();
+        }
+        if (subMenu === SubMenuType.color) {
+            return getColorSubMenuItems();
+        }
+        return getMainMenuItems();
+    };
+
     return (
         <Menu
             open={open}
@@ -129,11 +165,7 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
             anchorPosition={position}
             onClose={onMenuClose}
         >
-            {isAssignSubMenu ? (
-                getAssignSubMenuItems()
-            ) : (
-                getMainMenuItems()
-            )}
+            {getMenuContent()}
         </Menu>
     );
 };

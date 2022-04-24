@@ -10,6 +10,7 @@ import SketchImage from './sketch/SketchImage';
 import SketchToken from './sketch/SketchToken';
 import {
     CardinalDirection,
+    Color,
     SessionUser,
     SketchItemType
 } from '../../../types';
@@ -28,7 +29,8 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
         isFreeDrawing,
         sketchData,
         assignTokenUser,
-        unassignTokenUser
+        unassignTokenUser,
+        changeTokenColor
     } = usePlay();
     const {
         paths,
@@ -204,6 +206,9 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                             onUnassign={user ? () => {
                                 unassignTokenUser(index);
                             } : undefined}
+                            onColorChange={(tokenColor: Color) => {
+                                changeTokenColor(index, tokenColor);
+                            }}
                             onDelete={() => {
                                 handleItemDelete(index, SketchItemType.token);
                             }}

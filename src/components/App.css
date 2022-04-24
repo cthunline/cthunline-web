@@ -18,7 +18,7 @@
     --palette-primary: #00a8e8;
 }
 
-:root .page {
+:root {
     --palette-black: #111416;
     --palette-white: #fff;
     --palette-yellow: #ffba08;

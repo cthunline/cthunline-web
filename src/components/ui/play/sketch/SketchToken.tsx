@@ -2,16 +2,20 @@ import React, { useState } from 'react';
 import { Tooltip } from '@mui/material';
 
 import { useApp } from '../../../contexts/App';
-import { SessionUser, SketchTokenColor, SketchTokenUser } from '../../../../types';
 import SketchItemContextMenu, { ContextMenuData } from './SketchItemContextMenu';
 import { getCssVar, getTextColor } from '../../../../services/tools';
+import {
+    Color,
+    SessionUser,
+    SketchTokenUser
+} from '../../../../types';
 
 import './SketchToken.css';
 
 interface SketchTokenProps {
     isMaster?: boolean;
     size: number;
-    color: SketchTokenColor;
+    color: Color;
     user: SketchTokenUser | null;
     x: number;
     y: number;
@@ -20,6 +24,7 @@ interface SketchTokenProps {
     onMouseDown?: (e: React.MouseEvent<SVGSVGElement>, isMovable?: boolean) => void;
     onAssign?: (user: SessionUser) => void;
     onUnassign?: () => void;
+    onColorChange?: (color: Color) => void;
     onDelete?: () => void;
 }
 
@@ -35,6 +40,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     onMouseDown,
     onAssign,
     onUnassign,
+    onColorChange,
     onDelete
 }) => {
     const { userId } = useApp();
@@ -115,6 +121,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                         position={contextMenu ?? undefined}
                         onAssign={onAssign}
                         onUnassign={onUnassign}
+                        onColorChange={onColorChange}
                         onDelete={onDelete}
                         onClose={onContextMenuClose}
                     />

@@ -8,7 +8,8 @@ import {
     SketchImageData,
     SketchTokenData,
     SessionUser,
-    SketchTokenUserData
+    SketchTokenUserData,
+    Color
 } from '../../../types';
 import {
     forwardImage,
@@ -49,6 +50,7 @@ export interface SketchHookExport {
     updateSketchTokens: (options: UpdateSketchTokensOptions) => void;
     assignTokenUser: (index: number, user: SessionUser) => void;
     unassignTokenUser: (index: number) => void;
+    changeTokenColor: (index: number, color: Color) => void;
     deleteSketchToken: (index: number, tokenData: SketchTokenData) => void;
     clearTokens: () => void;
 }
@@ -77,6 +79,7 @@ export const defaultSketchHookExport: SketchHookExport = {
     updateSketchTokens: () => { /* default */ },
     assignTokenUser: () => { /* default */ },
     unassignTokenUser: () => { /* default */ },
+    changeTokenColor: () => { /* default */ },
     deleteSketchToken: () => { /* default */ },
     clearTokens: () => { /* default */ }
 };
@@ -336,6 +339,18 @@ const useSketch = (socket: PlaySocket | null) => {
         setTokenUser(index, null);
     };
 
+    const changeTokenColor = (index: number, color: Color) => {
+        updateSketch((previous) => ({
+            ...previous,
+            tokens: previous.tokens.map((tok, idx) => (
+                idx === index ? {
+                    ...tok,
+                    color
+                } : tok
+            ))
+        }));
+    };
+
     const deleteSketchToken = (index: number, tokenData: SketchTokenData) => {
         updateSketch((previous) => ({
             ...previous,
@@ -522,6 +537,7 @@ const useSketch = (socket: PlaySocket | null) => {
         addSketchToken,
         addSketchUserTokens,
         updateSketchTokens,
+        changeTokenColor,
         assignTokenUser,
         unassignTokenUser,
         deleteSketchToken,
