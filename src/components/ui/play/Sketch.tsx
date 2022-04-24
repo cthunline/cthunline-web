@@ -30,6 +30,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
         sketchData,
         assignTokenUser,
         unassignTokenUser,
+        duplicateToken,
         changeTokenColor
     } = usePlay();
     const {
@@ -187,33 +188,45 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                         color,
                         user,
                         x,
-                        y
-                    }, index) => (
-                        <SketchToken
-                            key={`sketch-token-${index.toString()}`}
-                            isMaster={isMaster}
-                            size={50}
-                            color={color}
-                            user={user}
-                            x={x}
-                            y={y}
-                            onMouseDown={(e, isMovable) => {
-                                handleItemMouseDown(e, index, SketchItemType.token, isMovable);
-                            }}
-                            onAssign={!user ? (tokenUser: SessionUser) => {
-                                assignTokenUser(index, tokenUser);
-                            } : undefined}
-                            onUnassign={user ? () => {
-                                unassignTokenUser(index);
-                            } : undefined}
-                            onColorChange={(tokenColor: Color) => {
-                                changeTokenColor(index, tokenColor);
-                            }}
-                            onDelete={() => {
-                                handleItemDelete(index, SketchItemType.token);
-                            }}
-                        />
-                    ))}
+                        y,
+                        tooltipPlacement
+                    }, index) => {
+                        const isMoving = (
+                            movingItem?.type === SketchItemType.token
+                            && movingItem?.index === index
+                        );
+                        return (
+                            <SketchToken
+                                key={`sketch-token-${index.toString()}`}
+                                isMaster={isMaster}
+                                size={50}
+                                color={color}
+                                user={user}
+                                x={x}
+                                y={y}
+                                tooltipPlacement={tooltipPlacement}
+                                isMoving={isMoving}
+                                onMouseDown={(e, isMovable) => {
+                                    handleItemMouseDown(e, index, SketchItemType.token, isMovable);
+                                }}
+                                onAssign={!user ? (tokenUser: SessionUser) => {
+                                    assignTokenUser(index, tokenUser);
+                                } : undefined}
+                                onUnassign={user ? () => {
+                                    unassignTokenUser(index);
+                                } : undefined}
+                                onDuplicate={() => {
+                                    duplicateToken(index);
+                                }}
+                                onColorChange={(tokenColor: Color) => {
+                                    changeTokenColor(index, tokenColor);
+                                }}
+                                onDelete={() => {
+                                    handleItemDelete(index, SketchItemType.token);
+                                }}
+                            />
+                        );
+                    })}
                     {/* drawing paths */}
                     {paths.map((path, index) => (
                         <path

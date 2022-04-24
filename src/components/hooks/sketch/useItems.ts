@@ -123,16 +123,24 @@ const useItems = (
             });
             if (coord) {
                 itemHasMovedOfResized.current = true;
+                const {
+                    x,
+                    y,
+                    tooltipPlacement
+                } = coord;
                 // assign new coordinates
                 if (type === SketchItemType.image) {
                     setImage(index, {
                         ...(itemData as SketchImageData),
-                        ...coord
+                        x,
+                        y
                     });
                 } else if (type === SketchItemType.token) {
                     setToken(index, {
                         ...(itemData as SketchTokenData),
-                        ...coord
+                        x,
+                        y,
+                        tooltipPlacement
                     });
                 }
             }
@@ -242,8 +250,14 @@ const useItems = (
             if ((isMaster || movableByUser) && !isFreeDrawing && svgPoint) {
                 e.preventDefault();
                 const itemData = getItemData(index, type);
+                // check if we clicked in the svg element
                 const element = e.currentTarget.closest('svg');
-                if (element) {
+                // check if we click on a context menu or context menu backdrop
+                const isContextMenu = (
+                    (e.target as Element).classList.contains('context-menu')
+                    || !!(e.target as Element).closest('.context-menu')
+                );
+                if (element && !isContextMenu) {
                     itemHasMovedOfResized.current = false;
                     // gets item position
                     const { x: itemX, y: itemY } = itemData;

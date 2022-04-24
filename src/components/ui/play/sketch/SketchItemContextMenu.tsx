@@ -5,6 +5,7 @@ import {
     Divider
 } from '@mui/material';
 
+import { useApp } from '../../../contexts/App';
 import { usePlay } from '../../../contexts/Play';
 import ColorSelector from '../../colorSelector/ColorSelector';
 import { SessionUser, Color } from '../../../../types';
@@ -19,6 +20,7 @@ interface SketchItemContextMenuProps {
     onBackward?: () => void;
     onAssign?: (user: SessionUser) => void;
     onUnassign?: () => void;
+    onDuplicate?: () => void;
     onColorChange?: (color: Color) => void;
     onDelete?: () => void;
     onClose?: () => void;
@@ -41,10 +43,12 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
     onBackward,
     onAssign,
     onUnassign,
+    onDuplicate,
     onColorChange,
     onDelete,
     onClose
 }) => {
+    const { T } = useApp();
     const { users } = usePlay();
 
     const [subMenu, setSubMenu] = useState<SubMenuType | null>(null);
@@ -73,35 +77,42 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
         if (onForward) {
             items.push(
                 <MenuItem key="forward" onClick={() => onSelect(onForward)}>
-                    Forward
+                    {T('page.play.sketch.forward')}
                 </MenuItem>
             );
         }
         if (onBackward) {
             items.push(
                 <MenuItem key="backward" onClick={() => onSelect(onBackward)}>
-                    Backward
+                    {T('page.play.sketch.backward')}
                 </MenuItem>
             );
         }
         if (onAssign && playerUsers.length) {
             items.push(
                 <MenuItem key="assign" onClick={openUserSubMenu}>
-                    Assign user
+                    {T('page.play.sketch.assignUser')}
                 </MenuItem>
             );
         }
         if (onUnassign) {
             items.push(
                 <MenuItem key="unassign" onClick={() => onSelect(onUnassign)}>
-                    Unassign user
+                    {T('page.play.sketch.unassignUser')}
+                </MenuItem>
+            );
+        }
+        if (onDuplicate) {
+            items.push(
+                <MenuItem key="duplicate" onClick={() => onSelect(onDuplicate)}>
+                    {T('page.play.sketch.duplicate')}
                 </MenuItem>
             );
         }
         if (onColorChange) {
             items.push(
                 <MenuItem key="colorChange" onClick={openColorSubMenu}>
-                    Change color
+                    {T('page.play.sketch.changeColor')}
                 </MenuItem>
             );
         }
@@ -111,7 +122,7 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
             }
             items.push(
                 <MenuItem key="delete" onClick={() => onSelect(onDelete)}>
-                    Delete
+                    {T('page.play.sketch.delete')}
                 </MenuItem>
             );
         }
@@ -120,7 +131,7 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
 
     const getAssignSubMenuItems = () => [
         <MenuItem key="submenu-back" onClick={closeUserSubMenu}>
-            Back
+            {T('action.back')}
         </MenuItem>,
         <Divider key="submenu-divider" />,
         playerUsers.map((user) => [
@@ -137,7 +148,7 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
 
     const getColorSubMenuItems = () => [
         <MenuItem key="submenu-back" onClick={closeColorSubMenu}>
-            Back
+            {T('action.back')}
         </MenuItem>,
         <Divider key="submenu-divider" />,
         <ColorSelector
@@ -160,6 +171,7 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
 
     return (
         <Menu
+            className="context-menu"
             open={open}
             anchorReference="anchorPosition"
             anchorPosition={position}

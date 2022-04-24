@@ -274,6 +274,7 @@ export interface SketchTokenData {
     user: SketchTokenUserData | null;
     x: number;
     y: number;
+    tooltipPlacement: TooltipPlacement;
 }
 
 export type SketchTokenUser = Pick<User, 'id' | 'name'>;
@@ -307,6 +308,7 @@ export interface SketchEvent {
 export interface SketchCoordinates {
     x: number;
     y: number;
+    tooltipPlacement: TooltipPlacement;
 }
 
 export interface SketchSize {
@@ -319,4 +321,11 @@ export enum CardinalDirection {
     ne = 'ne',
     se = 'se',
     sw = 'sw'
+}
+
+export enum TooltipPlacement {
+    top = 'top',
+    right = 'right',
+    bottom = 'bottom',
+    left = 'left'
 }

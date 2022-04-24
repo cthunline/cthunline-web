@@ -6,7 +6,8 @@ import {
     SketchSize,
     CardinalDirection,
     SketchResizingItemData,
-    SketchTokenData
+    SketchTokenData,
+    TooltipPlacement
 } from '../types';
 import { randomItem } from './tools';
 
@@ -85,7 +86,16 @@ export const getMovingItemCoordinates = ({
         newX >= 0 && newX + width <= viewBox.width
         && newY >= 0 && newY + height <= viewBox.height
     ) {
-        return { x: newX, y: newY };
+        // calculate tooltip placement
+        const tooltipPlacement = newY > (viewBox.height / 2)
+            ? TooltipPlacement.top
+            : TooltipPlacement.bottom;
+        // return coordinates data
+        return {
+            x: newX,
+            y: newY,
+            tooltipPlacement
+        };
     }
     return null;
 };

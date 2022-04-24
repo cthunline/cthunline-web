@@ -1,5 +1,6 @@
 {
     "action": {
+        "back": "retour",
         "cancel": "annuler",
         "clear": "vider",
         "confirm": "confirmer",
@@ -83,6 +84,15 @@
                 "left": "a quitté la session",
                 "reconnected": "reconnecté",
                 "reconnecting": "tentative de reconnexion..."
+            },
+            "sketch": {
+                "assignUser": "assigner joueur",
+                "backward": "reculer",
+                "changeColor": "changer couleur",
+                "delete": "supprimer",
+                "duplicate": "dupliquer",
+                "forward": "avancer",
+                "unassignUser": "désassigner joueur"
             }
         },
         "profile": {

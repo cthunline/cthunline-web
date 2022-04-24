@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tooltip } from '@mui/material';
 
 import { useApp } from '../../../contexts/App';
@@ -7,7 +7,8 @@ import { getCssVar, getTextColor } from '../../../../services/tools';
 import {
     Color,
     SessionUser,
-    SketchTokenUser
+    SketchTokenUser,
+    TooltipPlacement
 } from '../../../../types';
 
 import './SketchToken.css';
@@ -19,11 +20,14 @@ interface SketchTokenProps {
     user: SketchTokenUser | null;
     x: number;
     y: number;
+    tooltipPlacement: TooltipPlacement;
+    isMoving: boolean;
     className?: string;
     onRef?: (el: SVGSVGElement | null) => void;
     onMouseDown?: (e: React.MouseEvent<SVGSVGElement>, isMovable?: boolean) => void;
     onAssign?: (user: SessionUser) => void;
     onUnassign?: () => void;
+    onDuplicate?: () => void;
     onColorChange?: (color: Color) => void;
     onDelete?: () => void;
 }
@@ -35,17 +39,35 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     user,
     x,
     y,
+    tooltipPlacement,
+    isMoving,
     className,
     onRef,
     onMouseDown,
     onAssign,
     onUnassign,
+    onDuplicate,
     onColorChange,
     onDelete
 }) => {
     const { userId } = useApp();
 
+    const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
     const [contextMenu, setContextMenu] = useState<ContextMenuData | null>(null);
+
+    const onTooltipClose = () => {
+        setTooltipOpen(false);
+    };
+
+    const onTooltipOpen = (e: React.SyntheticEvent) => {
+        const target = e.target as Element;
+        if (
+            !target.classList.contains('context-menu')
+            && !target.closest('.context-menu')
+        ) {
+            setTooltipOpen(true);
+        }
+    };
 
     const onContextMenuOpen = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -59,7 +81,12 @@ const SketchToken: React.FC<SketchTokenProps> = ({
 
     const onContextMenuClose = () => {
         setContextMenu(null);
+        setTooltipOpen(false);
     };
+
+    useEffect(() => {
+        onContextMenuClose();
+    }, [isMoving]);
 
     const tokenPadding = size / 15;
     const tokenSize = size + tokenPadding * 2;
@@ -79,7 +106,13 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     const textColor = `var(--palette-${getTextColor(hexColor)})`;
 
     return (
-        <Tooltip title={user?.name ?? ''}>
+        <Tooltip
+            title={user?.name ?? ''}
+            placement={tooltipPlacement}
+            open={tooltipOpen && !isMoving && !contextMenu}
+            onOpen={onTooltipOpen}
+            onClose={onTooltipClose}
+        >
             <svg
                 ref={onRef}
                 className={`sketch-token ${isMovable ? 'movable' : ''} ${className}`}
@@ -121,6 +154,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                         position={contextMenu ?? undefined}
                         onAssign={onAssign}
                         onUnassign={onUnassign}
+                        onDuplicate={onDuplicate}
                         onColorChange={onColorChange}
                         onDelete={onDelete}
                         onClose={onContextMenuClose}

@@ -9,7 +9,8 @@ import {
     SketchTokenData,
     SessionUser,
     SketchTokenUserData,
-    Color
+    Color,
+    TooltipPlacement
 } from '../../../types';
 import {
     forwardImage,
@@ -50,6 +51,7 @@ export interface SketchHookExport {
     updateSketchTokens: (options: UpdateSketchTokensOptions) => void;
     assignTokenUser: (index: number, user: SessionUser) => void;
     unassignTokenUser: (index: number) => void;
+    duplicateToken: (index: number) => void;
     changeTokenColor: (index: number, color: Color) => void;
     deleteSketchToken: (index: number, tokenData: SketchTokenData) => void;
     clearTokens: () => void;
@@ -79,6 +81,7 @@ export const defaultSketchHookExport: SketchHookExport = {
     updateSketchTokens: () => { /* default */ },
     assignTokenUser: () => { /* default */ },
     unassignTokenUser: () => { /* default */ },
+    duplicateToken: () => { /* default */ },
     changeTokenColor: () => { /* default */ },
     deleteSketchToken: () => { /* default */ },
     clearTokens: () => { /* default */ }
@@ -101,7 +104,8 @@ const defaultImageData: Omit<SketchImageData, 'url'> = {
 const defaultTokenData: Omit<SketchTokenData, 'color'> = {
     user: null,
     x: 50,
-    y: 50
+    y: 50,
+    tooltipPlacement: TooltipPlacement.bottom
 };
 
 // this hooks holds sketch states and utility functions
@@ -339,6 +343,24 @@ const useSketch = (socket: PlaySocket | null) => {
         setTokenUser(index, null);
     };
 
+    const duplicateToken = (index: number) => {
+        updateSketch((previous) => {
+            const { tokens } = previous;
+            const token = tokens[index];
+            // use tooltip placement to calculate new token position
+            const newY = token.tooltipPlacement === TooltipPlacement.bottom
+                ? token.y + 75
+                : token.y - 75;
+            return {
+                ...previous,
+                tokens: [...tokens, {
+                    ...token,
+                    y: newY
+                }]
+            };
+        });
+    };
+
     const changeTokenColor = (index: number, color: Color) => {
         updateSketch((previous) => ({
             ...previous,
@@ -537,6 +559,7 @@ const useSketch = (socket: PlaySocket | null) => {
         addSketchToken,
         addSketchUserTokens,
         updateSketchTokens,
+        duplicateToken,
         changeTokenColor,
         assignTokenUser,
         unassignTokenUser,
