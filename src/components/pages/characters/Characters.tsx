@@ -23,10 +23,11 @@ import { useApp } from '../../contexts/App';
 import { useDialog } from '../../contexts/Dialog';
 import useCharacter from '../../hooks/useCharacter';
 import useGame from '../../hooks/useGame';
+import { getDefaultData } from '../../ui/characterSheet/characterSheet.helper';
 
 interface GameSelectorProps {
     games: Game[];
-    onSelect: (id: string) => void;
+    onSelect: (gameId: string) => void;
 }
 
 const GameSelector: React.FC<GameSelectorProps> = ({
@@ -56,31 +57,45 @@ const Characters: React.FC = () => {
     const { getGame, gameList } = useGame();
     const {
         characterList,
+        createCharacter,
         deleteCharacter
     } = useCharacter({
         loadList: true
     });
 
-    const onCreate = () => {
+    const onCreate = async (gameId: string) => {
+        const char = await createCharacter({
+            data: {
+                gameId,
+                name: '',
+                data: getDefaultData(gameId)
+            },
+            isRefresh: false,
+            isToast: false
+        });
+        closeDialog();
+        navigate(`/characters/${char.id}`, {
+            replace: true
+        });
+    };
+
+    const onGameSelect = () => {
         openDialog({
             title: T('page.characters.selectGame'),
             content: (
                 <GameSelector
                     games={gameList}
-                    onSelect={(gameId) => {
-                        closeDialog();
-                        navigate(`/characters/create/${gameId}`);
-                    }}
+                    onSelect={onCreate}
                 />
             )
         });
     };
 
-    const onEdit = (characterId: string) => {
+    const onEdit = (characterId: number) => {
         navigate(`/characters/${characterId}`);
     };
 
-    const onDelete = (characterId: string, name: string) => {
+    const onDelete = (characterId: number, name: string) => {
         const confirmText = T('page.characters.deleteCharacterConfirm', { name });
         confirmDialog(confirmText, () => {
             deleteCharacter({
@@ -142,7 +157,7 @@ const Characters: React.FC = () => {
                     variant="contained"
                     size="medium"
                     startIcon={<HiPlus />}
-                    onClick={onCreate}
+                    onClick={onGameSelect}
                 >
                     {T('action.create')}
                 </Button>

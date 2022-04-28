@@ -27,10 +27,6 @@ export const pages: RouterPage[] = [{
     element: <Characters />,
     showNav: true
 }, {
-    path: '/characters/create/:gameId',
-    element: <CharacterForm create />,
-    showNav: true
-}, {
     path: '/characters/:characterId',
     element: <CharacterForm />,
     showNav: true
@@ -54,11 +50,11 @@ export const pages: RouterPage[] = [{
 }, {
     path: '/play/:sessionId/:characterId',
     element: <Play />,
-    regex: /^\/play\/[0-9a-f]{24}\/[0-9a-f]{24}$/,
+    regex: /^\/play\/\d+\/\d+$/,
     showNav: false
 }, {
     path: '/play/:sessionId',
     element: <Play />,
-    regex: /^\/play\/[0-9a-f]{24}$/,
+    regex: /^\/play\/\d+$/,
     showNav: false
 }];

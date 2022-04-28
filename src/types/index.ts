@@ -55,7 +55,7 @@ export type Color = typeof colors[number];
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ user
 
 export interface User {
-    id: string;
+    id: number;
     name: string;
     email: string;
     theme: Theme;
@@ -93,9 +93,9 @@ export interface SessionUser extends User {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ asset
 
 export interface Asset {
-    id: string;
-    userId: string;
-    directoryId?: string;
+    id: number;
+    userId: number;
+    directoryId?: number;
     type: 'audio' | 'image';
     name: string;
     path: string;
@@ -105,13 +105,13 @@ export interface Asset {
 
 export interface AssetCreateBody {
     assets: File[];
-    directoryId?: string;
+    directoryId?: number;
 }
 
 export interface Directory {
-    id: string;
-    userId: string;
-    parentId?: string;
+    id: number;
+    userId: number;
+    parentId?: number;
     name: string;
     createdAt: string;
     updatedAt: string;
@@ -119,7 +119,7 @@ export interface Directory {
 
 export interface DirectoryCreateBody {
     name: string;
-    parentId?: string;
+    parentId?: number;
 }
 
 export type DirectoryEditBody = Partial<Omit<DirectoryCreateBody, 'parentId'>>;
@@ -127,8 +127,8 @@ export type DirectoryEditBody = Partial<Omit<DirectoryCreateBody, 'parentId'>>;
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ session
 
 export interface Session {
-    id: string;
-    masterId: string;
+    id: number;
+    masterId: number;
     master?: User;
     gameId: string;
     name: string;
@@ -146,9 +146,9 @@ export interface SessionCreateBody {
 export type SessionEditBody = Partial<Omit<SessionCreateBody, 'gameId'>>;
 
 export interface Note {
-    id: string;
-    sessionId: string;
-    userId: string;
+    id: number;
+    sessionId: number;
+    userId: number;
     text: string;
 }
 
@@ -157,8 +157,8 @@ export interface Note {
 export type CharacterData = CoCCharacterData | SWD6CharacterData;
 
 export interface Character<GenericCharacterData = CharacterData> {
-    id: string;
-    userId: string;
+    id: number;
+    userId: number;
     gameId: string;
     name: string;
     data: GenericCharacterData;
@@ -188,9 +188,9 @@ export interface Game {
 
 export interface PlaySocket extends Socket {
     user: User;
-    sessionId: string;
+    sessionId: number;
     isMaster: boolean;
-    characterId?: string;
+    characterId?: number;
 }
 
 export interface PlayLog {

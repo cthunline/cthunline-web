@@ -19,7 +19,7 @@ export const defaultUsersHookExport: UsersHookExport = {
 const useUsers = (socket: PlaySocket | null) => {
     const [users, setUsers] = useState<SessionUser[]>([]);
 
-    const updateUserCharacter = (userId: string, character: Character) => {
+    const updateUserCharacter = (userId: number, character: Character) => {
         setUsers((previous) => (
             previous.map((sessionUser: SessionUser) => (
                 sessionUser.id === userId ? {

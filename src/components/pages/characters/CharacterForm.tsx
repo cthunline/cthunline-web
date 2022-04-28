@@ -4,26 +4,21 @@ import React, {
     useEffect,
     useState
 } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 
 import useCharacter from '../../hooks/useCharacter';
 import { CharacterSheet } from '../../ui';
 import { Character, CharacterData } from '../../../types';
-import { getDefaultData } from '../../ui/characterSheet/characterSheet.helper';
 
-interface CharacterFormProps {
-    create?: boolean;
-}
-
-const CharacterForm: React.FC<CharacterFormProps> = ({ create }) => {
-    const navigate = useNavigate();
-    const { characterId, gameId } = useParams();
+const CharacterForm = () => {
+    const { characterId: paramCharId } = useParams();
     const {
         getCharacter,
-        editCharacter,
-        createCharacter
+        editCharacter
     } = useCharacter();
+
+    const characterId = Number(paramCharId);
 
     const [character, setCharacter] = useState<Character>();
 
@@ -39,31 +34,14 @@ const CharacterForm: React.FC<CharacterFormProps> = ({ create }) => {
 
     useEffect(() => {
         (async () => {
-            if (create && gameId) {
-                const char = await createCharacter({
-                    data: {
-                        gameId,
-                        name: '[No Name]',
-                        data: getDefaultData(gameId)
-                    },
-                    isRefresh: false,
-                    isToast: false
-                });
-                navigate(`/characters/${char.id}`, {
-                    replace: true
-                });
-            } else if (characterId) {
+            if (characterId) {
                 const char = await getCharacter(characterId);
                 setCharacter(char);
             }
         })();
     }, [
-        create,
-        navigate,
         characterId,
-        gameId,
-        getCharacter,
-        createCharacter
+        getCharacter
     ]);
 
     const initialRender = useRef(true);

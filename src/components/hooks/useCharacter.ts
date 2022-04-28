@@ -15,7 +15,7 @@ import {
 
 interface CharacterHookOptions {
     loadList?: boolean;
-    characterId?: string;
+    characterId?: number;
 }
 
 interface CreateOptions {
@@ -25,14 +25,14 @@ interface CreateOptions {
 }
 
 interface EditOptions {
-    characterId: string;
+    characterId: number;
     data: CharacterEditBody;
     isRefresh?: boolean;
     isToast?: boolean;
 }
 
 interface DeleteOptions {
-    characterId: string;
+    characterId: number;
     isRefresh?: boolean;
     isToast?: boolean;
 }
@@ -46,7 +46,7 @@ const useCharacter = ({
     const [characterList, setCharacterList] = useState<Character[]>([]);
     const [character, setCharacter] = useState<Character>();
 
-    const getCharacters = useCallback(async (userId?: string): Promise<Character[]> => {
+    const getCharacters = useCallback(async (userId?: number): Promise<Character[]> => {
         try {
             const userParam = userId ? `?user=${userId}` : '';
             const { characters } = await Api.call({
@@ -60,7 +60,7 @@ const useCharacter = ({
         }
     }, [handleApiError]);
 
-    const getCharacter = useCallback(async (charId: string): Promise<Character> => {
+    const getCharacter = useCallback(async (charId: number): Promise<Character> => {
         try {
             return await Api.call({
                 method: 'GET',
@@ -72,7 +72,7 @@ const useCharacter = ({
         }
     }, [handleApiError]);
 
-    const refreshCharacter = useCallback(async (charId: string) => {
+    const refreshCharacter = useCallback(async (charId: number) => {
         const char = await getCharacter(charId);
         setCharacter(char);
     }, [getCharacter]);

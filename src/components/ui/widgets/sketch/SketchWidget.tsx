@@ -59,7 +59,7 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
         loadList: true
     });
 
-    const [directoryIds, setDirectoryIds] = useState<string[]>([]);
+    const [directoryIds, setDirectoryIds] = useState<number[]>([]);
 
     const onExplorerBack = () => {
         setDirectoryIds((previous) => (
@@ -67,8 +67,8 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
         ));
     };
 
-    const onExplorerDirectory = (id: string) => {
-        setDirectoryIds((previous) => [...previous, id]);
+    const onExplorerDirectory = (dirId: number) => {
+        setDirectoryIds((previous) => [...previous, dirId]);
     };
 
     const toogleIsFreeDrawing = () => {

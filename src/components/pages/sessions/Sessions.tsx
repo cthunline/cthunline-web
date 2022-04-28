@@ -31,7 +31,7 @@ import { Character, SessionCreateBody } from '../../../types';
 
 interface CharacterSelectorProps {
     characters: Character[];
-    onSelect: (id: string) => void;
+    onSelect: (charId: number) => void;
 }
 
 const CharacterSelector: React.FC<CharacterSelectorProps> = ({
@@ -70,7 +70,7 @@ const Sessions: React.FC = () => {
         loadList: true
     });
 
-    const onJoin = (gameId: string, sessionId: string, isMaster: boolean = false) => {
+    const onJoin = (gameId: string, sessionId: number, isMaster: boolean = false) => {
         const charList = characterList.filter(({ gameId: charGameId }) => (
             charGameId === gameId
         ));
@@ -108,7 +108,7 @@ const Sessions: React.FC = () => {
         });
     };
 
-    const onDeleteSession = (sessionId: string, name: string) => {
+    const onDeleteSession = (sessionId: number, name: string) => {
         const confirmText = T('page.sessions.deleteSessionConfirm', { name });
         confirmDialog(confirmText, () => {
             deleteSession({

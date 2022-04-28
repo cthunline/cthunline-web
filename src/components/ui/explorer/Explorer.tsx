@@ -20,22 +20,22 @@ export enum ExplorerItemType {
 }
 
 export interface ExplorerItem {
-    id: string;
+    id: number;
     name: string;
     type: ExplorerItemType;
-    parentId?: string;
+    parentId?: number;
     icon?: JSX.Element;
 }
 
 interface ExplorerProps {
     className?: string;
     items: ExplorerItem[];
-    directoryId?: string;
-    selectedId?: string;
+    directoryId?: number;
+    selectedId?: number;
     onDirectoryBack: () => void;
-    onDirectoryClick: (id: string) => void;
-    onFileClick?: (id: string) => void;
-    onDelete?: (type: ExplorerItemType, id: string, name: string) => void;
+    onDirectoryClick: (id: number) => void;
+    onFileClick?: (id: number) => void;
+    onDelete?: (type: ExplorerItemType, id: number, name: string) => void;
 }
 
 const Explorer = ({

@@ -20,7 +20,7 @@ import {
 import './CharacterWidget.css';
 
 interface CharacterWidgetProps {
-    characterId: string;
+    characterId: number;
     onUpdate: () => void;
     onClose: (widget: WidgetType) => void;
 }

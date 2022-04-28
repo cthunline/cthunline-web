@@ -51,7 +51,7 @@ const Assets: React.FC = () => {
         loadList: true
     });
 
-    const [directoryIds, setDirectoryIds] = useState<string[]>([]);
+    const [directoryIds, setDirectoryIds] = useState<number[]>([]);
     const [progress, setProgress] = useState<number | null>(null);
 
     const onDirectoryBack = () => {
@@ -60,7 +60,7 @@ const Assets: React.FC = () => {
         ));
     };
 
-    const onDirectoryClick = (id: string) => {
+    const onDirectoryClick = (id: number) => {
         setDirectoryIds((previous) => [...previous, id]);
     };
 
@@ -114,7 +114,7 @@ const Assets: React.FC = () => {
         }
     };
 
-    const onDelete = (type: ExplorerItemType, id: string, name: string) => {
+    const onDelete = (type: ExplorerItemType, id: number, name: string) => {
         if (type === ExplorerItemType.directory) {
             const confirmText = T('page.assets.deleteDirectoryConfirm', { name });
             confirmDialog(confirmText, () => {

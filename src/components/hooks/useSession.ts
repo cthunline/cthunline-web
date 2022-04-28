@@ -16,7 +16,7 @@ import {
 
 interface SessionHookOptions {
     loadList?: boolean;
-    sessionId?: string;
+    sessionId?: number;
 }
 
 interface CreateSessionOptions {
@@ -26,20 +26,20 @@ interface CreateSessionOptions {
 }
 
 interface EditSessionOptions {
-    sessionId: string;
+    sessionId: number;
     data: SessionEditBody;
     isRefresh?: boolean;
     isToast?: boolean;
 }
 
 interface DeleteSessionOptions {
-    sessionId: string;
+    sessionId: number;
     isRefresh?: boolean;
     isToast?: boolean;
 }
 
 interface EditNotesOptions {
-    sessionId: string;
+    sessionId: number;
     text: string;
     isToast?: boolean;
 }
@@ -67,7 +67,7 @@ const useSession = ({
     }, [handleApiError]);
 
     const getSession = useCallback(async (
-        sessId: string
+        sessId: number
     ): Promise<Session> => {
         try {
             return await Api.call({
@@ -80,7 +80,7 @@ const useSession = ({
         }
     }, [handleApiError]);
 
-    const refreshSession = useCallback(async (sessId: string) => {
+    const refreshSession = useCallback(async (sessId: number) => {
         const sess = await getSession(sessId);
         setSession(sess);
     }, [getSession]);
@@ -188,7 +188,7 @@ const useSession = ({
     ]);
 
     const getNotes = useCallback(async (
-        sessId: string
+        sessId: number
     ): Promise<Note> => {
         try {
             return await Api.call({

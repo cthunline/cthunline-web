@@ -26,7 +26,7 @@ interface CreateOptions {
 }
 
 interface EditOptions {
-    userId: string;
+    userId: number;
     data: UserEditBody;
     isRefresh?: boolean;
     isToast?: boolean;

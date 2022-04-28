@@ -22,7 +22,7 @@ interface UploadOptions {
 }
 
 interface DeleteOptions {
-    assetId: string;
+    assetId: number;
     isRefresh?: boolean;
     isToast?: boolean;
 }
@@ -66,7 +66,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
                 formData.append('assets', file);
             });
             if (data.directoryId) {
-                formData.append('directoryId', data.directoryId);
+                formData.append('directoryId', data.directoryId.toString());
             }
             const { assets } = await Api.call({
                 method: 'POST',

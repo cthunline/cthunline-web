@@ -21,8 +21,8 @@ import { User, PlaySocket } from '../../types';
 
 interface PlayProviderProps {
     children: JSX.Element | JSX.Element[];
-    sessionId: string;
-    characterId?: string;
+    sessionId: number;
+    characterId?: number;
 }
 
 interface PlayContextData extends
@@ -31,13 +31,13 @@ interface PlayContextData extends
     DiceHookExport,
     UsersHookExport,
     LogsHookExport {
-    sessionId: string;
-    characterId?: string;
+    sessionId: number;
+    characterId?: number;
     socket: PlaySocket | null;
 }
 
 const defaultPlayData: PlayContextData = {
-    sessionId: '',
+    sessionId: 0,
     socket: null,
     ...defaultSketchHookExport,
     ...defaultLogsHookExport,
@@ -47,9 +47,9 @@ const defaultPlayData: PlayContextData = {
 };
 
 interface ConnectOptions {
-    sessionId: string;
+    sessionId: number;
     isMaster: boolean;
-    characterId?: string;
+    characterId?: number;
 }
 
 const socketIoConnectOptions = {
@@ -212,9 +212,9 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             }
         }) as PlaySocket;
         sock.user = user as User;
-        sock.sessionId = sessId;
+        sock.sessionId = Number(sessId);
         sock.isMaster = isMaster;
-        sock.characterId = charId;
+        sock.characterId = Number(charId);
         bindSocketEvents(sock);
         return sock;
     }, [

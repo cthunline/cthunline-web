@@ -112,7 +112,7 @@ const Profile = () => {
         resetForm
     }: FormikHelpers<ProfileData>) => {
         await editUser({
-            userId: user?.id ?? '',
+            userId: Number(user?.id),
             data: {
                 theme,
                 locale,

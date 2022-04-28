@@ -35,14 +35,14 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
         loadList: true
     });
 
-    const [directoryIds, setDirectoryIds] = useState<string[]>([]);
+    const [directoryIds, setDirectoryIds] = useState<number[]>([]);
     const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
 
     const audioElement = useRef<HTMLAudioElement>() as (
         React.MutableRefObject<HTMLAudioElement>
     );
 
-    const onFileClick = (assetId: string) => {
+    const onFileClick = (assetId: number) => {
         const asset = assetList.find(({ id }) => (
             id === assetId
         ));
@@ -73,8 +73,8 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
         ));
     };
 
-    const onDirectoryClick = (id: string) => {
-        setDirectoryIds((previous) => [...previous, id]);
+    const onDirectoryClick = (dirId: number) => {
+        setDirectoryIds((previous) => [...previous, dirId]);
     };
 
     useEffect(() => onStop);

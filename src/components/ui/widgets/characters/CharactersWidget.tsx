@@ -28,7 +28,7 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
         users[0] ?? null
     );
 
-    const setTargetSessionUser = useCallback((userId: string) => {
+    const setTargetSessionUser = useCallback((userId: number) => {
         setSessionUser(
             users.find(({ id }) => id === userId) ?? null
         );
@@ -36,7 +36,7 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
         users
     ]);
 
-    const onTabChange = (e: React.SyntheticEvent, userId: string) => {
+    const onTabChange = (e: React.SyntheticEvent, userId: number) => {
         setTargetSessionUser(userId);
     };
 

@@ -80,7 +80,7 @@ const PlayContent = () => {
                     return (
                         <CharacterWidget
                             key={key}
-                            characterId={characterId ?? ''}
+                            characterId={Number(characterId)}
                             onUpdate={characterUpdate}
                             onClose={onWidgetClose}
                         />
@@ -153,8 +153,8 @@ const Play = () => {
     const { sessionId, characterId } = useParams();
     return sessionId ? (
         <PlayProvider
-            sessionId={sessionId}
-            characterId={characterId}
+            sessionId={Number(sessionId)}
+            characterId={Number(characterId)}
         >
             <PlayContent />
         </PlayProvider>

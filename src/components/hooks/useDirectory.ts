@@ -24,14 +24,14 @@ interface CreateOptions {
 }
 
 interface EditOptions {
-    directoryId: string;
+    directoryId: number;
     data: DirectoryEditBody;
     isRefresh?: boolean;
     isToast?: boolean;
 }
 
 interface DeleteOptions {
-    directoryId: string;
+    directoryId: number;
     isRefresh?: boolean;
     isToast?: boolean;
 }

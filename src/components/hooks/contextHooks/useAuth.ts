@@ -12,7 +12,7 @@ import { User } from '../../../types';
 interface AuthData {
     isLoading: boolean;
     isLoggedIn: boolean;
-    userId: string | null;
+    userId: number | null;
     user: User | null;
 }
 
@@ -44,7 +44,7 @@ const defaultAuthData: AuthData = {
 const useAuth = () => {
     const [authData, setAuthData] = useState<AuthData>(defaultAuthData);
 
-    const getUser = async (userId: string) => (
+    const getUser = async (userId: number) => (
         Api.call({
             method: 'GET',
             route: `/users/${userId}`
