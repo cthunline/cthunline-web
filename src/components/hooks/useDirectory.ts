@@ -41,11 +41,11 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
 
     const [directoryList, setDirectoryList] = useState<Directory[]>([]);
 
-    const getDirectories = useCallback(async (userId: string): Promise<Directory[]> => {
+    const getDirectories = useCallback(async (): Promise<Directory[]> => {
         try {
             const { directories } = await Api.call({
                 method: 'GET',
-                route: `/users/${userId}/directories`
+                route: '/directories'
             });
             return directories;
         } catch (err: any) {
@@ -56,7 +56,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
 
     const refreshDirectoryList = useCallback(async () => {
         if (user?.id) {
-            const directories = await getDirectories(user.id);
+            const directories = await getDirectories();
             setDirectoryList(directories);
         }
     }, [
@@ -72,7 +72,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
         try {
             const dir = await Api.call({
                 method: 'POST',
-                route: `/users/${user?.id}/directories`,
+                route: '/directories',
                 data
             });
             if (isRefresh && loadList) {
@@ -97,7 +97,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
         try {
             const dir = await Api.call({
                 method: 'POST',
-                route: `/users/${user?.id}/directories/${directoryId}`,
+                route: `/directories/${directoryId}`,
                 data
             });
             if (isRefresh && loadList) {
@@ -121,7 +121,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
         try {
             await Api.call({
                 method: 'DELETE',
-                route: `/users/${user?.id}/directories/${directoryId}`
+                route: `/directories/${directoryId}`
             });
             if (isRefresh && loadList) {
                 await refreshDirectoryList();
@@ -134,7 +134,6 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
             throw err;
         }
     }, [
-        user,
         loadList,
         refreshDirectoryList,
         handleApiError

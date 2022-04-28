@@ -46,11 +46,12 @@ const useCharacter = ({
     const [characterList, setCharacterList] = useState<Character[]>([]);
     const [character, setCharacter] = useState<Character>();
 
-    const getCharacters = useCallback(async (userId: string): Promise<Character[]> => {
+    const getCharacters = useCallback(async (userId?: string): Promise<Character[]> => {
         try {
+            const userParam = userId ? `?user=${userId}` : '';
             const { characters } = await Api.call({
                 method: 'GET',
-                route: `/users/${userId}/characters`
+                route: `/characters${userParam}`
             });
             return characters;
         } catch (err: any) {
@@ -114,7 +115,7 @@ const useCharacter = ({
         try {
             const char = await Api.call({
                 method: 'POST',
-                route: `/users/${user?.id}/characters`,
+                route: '/characters',
                 data
             });
             if (isRefresh) {
@@ -130,7 +131,6 @@ const useCharacter = ({
         }
     }, [
         refresh,
-        user,
         handleApiError
     ]);
 

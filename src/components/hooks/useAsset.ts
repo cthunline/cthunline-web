@@ -28,16 +28,16 @@ interface DeleteOptions {
 }
 
 const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
-    const { user, handleApiError } = useApp();
+    const { handleApiError } = useApp();
 
     const [assetList, setAssetList] = useState<Asset[]>([]);
 
-    const getAssets = useCallback(async (userId: string): Promise<Asset[]> => {
+    const getAssets = useCallback(async (): Promise<Asset[]> => {
         try {
             const typeQuery = type ? `?type=${type}` : '';
             const { assets } = await Api.call({
                 method: 'GET',
-                route: `/users/${userId}/assets${typeQuery}`
+                route: `/assets${typeQuery}`
             });
             return assets;
         } catch (err: any) {
@@ -50,14 +50,9 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
     ]);
 
     const refreshAssetList = useCallback(async () => {
-        if (user?.id) {
-            const assets = await getAssets(user.id);
-            setAssetList(assets);
-        }
-    }, [
-        user,
-        getAssets
-    ]);
+        const assets = await getAssets();
+        setAssetList(assets);
+    }, [getAssets]);
 
     const uploadAssets = useCallback(async ({
         data,
@@ -75,7 +70,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
             }
             const { assets } = await Api.call({
                 method: 'POST',
-                route: `/users/${user?.id}/assets`,
+                route: '/assets',
                 data: formData,
                 progress
             });
@@ -94,7 +89,6 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
     }, [
         loadList,
         refreshAssetList,
-        user,
         handleApiError
     ]);
 
@@ -106,7 +100,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
         try {
             await Api.call({
                 method: 'DELETE',
-                route: `/users/${user?.id}/assets/${assetId}`
+                route: `/assets/${assetId}`
             });
             if (isRefresh && loadList) {
                 await refreshAssetList();
@@ -119,7 +113,6 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
             throw err;
         }
     }, [
-        user,
         loadList,
         refreshAssetList,
         handleApiError
