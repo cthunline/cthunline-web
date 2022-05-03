@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Paper } from '@mui/material';
 
 import { CharacterData, GameId } from '../../../types';
@@ -30,7 +30,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
 }) => {
     const changeTime = 1000;
     const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const onChangeBuffer = (
+    const onChangeBuffer = useCallback((
         name: string,
         characterData: CharacterData,
         instantRefresh?: boolean | undefined
@@ -43,7 +43,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                 onChange(name, characterData, instantRefresh);
             }, changeTime);
         }
-    };
+    }, [onChange]);
 
     const getContent = (): JSX.Element => {
         if (gameId === GameId.callOfCthulhu) {

@@ -79,7 +79,7 @@
             "event": {
                 "diceResult": "rolled {request} and the result is {result}",
                 "disconnected": "disconnected",
-                "editedCharactger": "edited character {name}",
+                "editedCharacter": "edited character {name}",
                 "joined": "joined the session",
                 "left": "left the session",
                 "reconnected": "reconnected",

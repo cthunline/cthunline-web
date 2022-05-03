@@ -79,7 +79,7 @@
             "event": {
                 "diceResult": "a jeté {request} et le résultat est {result}",
                 "disconnected": "déconnecté",
-                "editedCharactger": "a édité le personnage {name}",
+                "editedCharacter": "a édité le personnage {name}",
                 "joined": "a rejoint la session",
                 "left": "a quitté la session",
                 "reconnected": "reconnecté",

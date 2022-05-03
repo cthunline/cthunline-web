@@ -90,7 +90,7 @@ const Sessions: React.FC = () => {
                 )
             });
         } else {
-            toast.error(T('page.sessions.noCharacterAvailable'));
+            toast.error(T('page.sessions.error.noCharacterAvailable'));
         }
     };
 
