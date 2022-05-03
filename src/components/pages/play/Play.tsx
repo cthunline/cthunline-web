@@ -9,6 +9,7 @@ import { useDialog } from '../../contexts/Dialog';
 import { PlayProvider, usePlay } from '../../contexts/Play';
 import PlayMenu from './PlayMenu';
 import { WidgetType } from '../../../types';
+import { focusWidget } from '../../../services/widget';
 import {
     Console,
     DicesWidget,
@@ -42,10 +43,17 @@ const PlayContent = () => {
 
     const onWidgetOpen = (widget: WidgetType) => {
         if (!openWidgets.includes(widget)) {
+            // if widget is not open then open it
             setOpenWidgets((previous) => ([
                 ...previous,
                 widget
             ]));
+        } else {
+            // otherwise if it's already open focus it
+            const widgetEl = document.querySelector(`#widget-${widget}`);
+            if (widgetEl) {
+                focusWidget(widgetEl as HTMLElement);
+            }
         }
     };
 

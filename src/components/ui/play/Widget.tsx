@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Draggable from 'react-draggable';
 import {
     Box,
     Paper
 } from '@mui/material';
 import { MdClose } from 'react-icons/md';
+
+import { focusWidget } from '../../../services/widget';
 
 import './Widget.css';
 
@@ -34,19 +36,13 @@ const Widget: React.FC<WidgetProps> = ({
     children,
     onClose
 }) => {
-    const focusWidget = (target: HTMLElement) => {
-        const reactDragClass = '.react-draggable';
-        const widgets = document.querySelectorAll(reactDragClass);
-        widgets.forEach((w, idx) => {
-            (widgets[idx] as HTMLElement).style.zIndex = '1';
-        });
-        const thisWidget = target.closest(reactDragClass) as HTMLElement;
-        if (thisWidget) {
-            thisWidget.style.zIndex = '2';
-        }
-    };
-
     const nodeRef = React.useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        if (nodeRef.current) {
+            focusWidget(nodeRef.current);
+        }
+    }, []);
 
     return (
         <Draggable

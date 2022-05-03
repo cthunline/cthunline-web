@@ -8,8 +8,8 @@ import {
 } from '@mui/material';
 import { HiPlus } from 'react-icons/hi';
 
-import Api from '../../../../services/api';
-import { Asset } from '../../../../types';
+import Api from '../../../../../services/api';
+import { Asset } from '../../../../../types';
 
 import './SketchWidget.css';
 

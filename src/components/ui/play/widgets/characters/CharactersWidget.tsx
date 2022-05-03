@@ -6,10 +6,10 @@ import {
     Tab
 } from '@mui/material';
 
-import { useApp } from '../../../contexts/App';
-import CharacterSheet from '../../characterSheet/CharacterSheet';
-import Widget from '../../play/Widget';
-import { WidgetType, SessionUser } from '../../../../types';
+import { useApp } from '../../../../contexts/App';
+import CharacterSheet from '../../../characterSheet/CharacterSheet';
+import Widget from '../../Widget';
+import { WidgetType, SessionUser } from '../../../../../types';
 
 import './CharactersWidget.css';
 
@@ -58,7 +58,7 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
 
     return (
         <Widget
-            id="widget-characters"
+            id={`widget-${WidgetType.characters}`}
             title={T('entity.characters')}
             onClose={() => onClose(WidgetType.characters)}
         >

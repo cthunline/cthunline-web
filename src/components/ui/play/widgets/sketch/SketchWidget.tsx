@@ -11,17 +11,17 @@ import { BsEraserFill } from 'react-icons/bs';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
 import { IoPeopleCircle } from 'react-icons/io5';
 
-import { useApp } from '../../../contexts/App';
-import Widget from '../../play/Widget';
+import { useApp } from '../../../../contexts/App';
+import Widget from '../../Widget';
 import Explorer, {
     ExplorerItem,
     ExplorerItemType
-} from '../../explorer/Explorer';
-import { Asset, WidgetType } from '../../../../types';
-import { usePlay } from '../../../contexts/Play';
-import { useDialog } from '../../../contexts/Dialog';
-import useAsset from '../../../hooks/useAsset';
-import useDirectory from '../../../hooks/useDirectory';
+} from '../../../explorer/Explorer';
+import { Asset, WidgetType } from '../../../../../types';
+import { usePlay } from '../../../../contexts/Play';
+import { useDialog } from '../../../../contexts/Dialog';
+import useAsset from '../../../../hooks/useAsset';
+import useDirectory from '../../../../hooks/useDirectory';
 import {
     ImageAssetList,
     ActionButton,
@@ -132,7 +132,7 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
 
     return (
         <Widget
-            id="widget-sketch"
+            id={`widget-${WidgetType.sketch}`}
             title={T('entity.sketch')}
             onClose={() => onClose(WidgetType.sketch)}
         >

@@ -5,11 +5,11 @@ import React, {
 } from 'react';
 import { Box, TextField } from '@mui/material';
 
-import { useApp } from '../../../contexts/App';
-import { usePlay } from '../../../contexts/Play';
-import useSession from '../../../hooks/useSession';
-import Widget from '../../play/Widget';
-import { WidgetType } from '../../../../types';
+import { useApp } from '../../../../contexts/App';
+import { usePlay } from '../../../../contexts/Play';
+import useSession from '../../../../hooks/useSession';
+import Widget from '../../Widget';
+import { WidgetType } from '../../../../../types';
 
 import './NotesWidget.css';
 
@@ -65,7 +65,7 @@ const NotesWidget: React.FC<NotesWidgetProps> = ({
 
     return (
         <Widget
-            id="widget-notes"
+            id={`widget-${WidgetType.notes}`}
             title={T('entity.notes')}
             onClose={() => onClose(WidgetType.notes)}
         >

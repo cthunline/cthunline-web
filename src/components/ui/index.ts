@@ -6,12 +6,12 @@ import Console from './play/Console';
 import Widget from './play/Widget';
 import Audio from './play/Audio';
 import Sketch from './play/Sketch';
-import DicesWidget from './widgets/dices/DicesWidget';
-import CharacterWidget from './widgets/character/CharacterWidget';
-import CharactersWidget from './widgets/characters/CharactersWidget';
-import JukeboxWidget from './widgets/jukebox/JukeboxWidget';
-import SketchWidget from './widgets/sketch/SketchWidget';
-import NotesWidget from './widgets/notes/NotesWidget';
+import DicesWidget from './play/widgets/dices/DicesWidget';
+import CharacterWidget from './play/widgets/character/CharacterWidget';
+import CharactersWidget from './play/widgets/characters/CharactersWidget';
+import JukeboxWidget from './play/widgets/jukebox/JukeboxWidget';
+import SketchWidget from './play/widgets/sketch/SketchWidget';
+import NotesWidget from './play/widgets/notes/NotesWidget';
 
 export {
     CustomDialog,

@@ -7,15 +7,15 @@ import React, {
 import { Box, CircularProgress } from '@mui/material';
 import { MdEdit, MdOutlineCheck } from 'react-icons/md';
 
-import { useApp } from '../../../contexts/App';
-import CharacterSheet from '../../characterSheet/CharacterSheet';
-import useCharacter from '../../../hooks/useCharacter';
-import Widget from '../../play/Widget';
+import { useApp } from '../../../../contexts/App';
+import CharacterSheet from '../../../characterSheet/CharacterSheet';
+import useCharacter from '../../../../hooks/useCharacter';
+import Widget from '../../Widget';
 import {
     WidgetType,
     Character,
     CharacterData
-} from '../../../../types';
+} from '../../../../../types';
 
 import './CharacterWidget.css';
 
@@ -101,7 +101,7 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
 
     return (
         <Widget
-            id="widget-character"
+            id={`widget-${WidgetType.character}`}
             title={T('entity.character')}
             actions={widgetActions}
             onClose={() => onClose(WidgetType.character)}

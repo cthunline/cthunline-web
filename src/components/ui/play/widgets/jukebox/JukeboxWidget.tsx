@@ -2,16 +2,16 @@ import React, { useEffect, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 import { HiMusicNote } from 'react-icons/hi';
 
-import { useApp } from '../../../contexts/App';
-import Widget from '../../play/Widget';
-import { WidgetType, Asset } from '../../../../types';
+import { useApp } from '../../../../contexts/App';
+import Widget from '../../Widget';
+import { WidgetType, Asset } from '../../../../../types';
 import Explorer, {
     ExplorerItem,
     ExplorerItemType
-} from '../../explorer/Explorer';
-import Api from '../../../../services/api';
-import useAsset from '../../../hooks/useAsset';
-import useDirectory from '../../../hooks/useDirectory';
+} from '../../../explorer/Explorer';
+import Api from '../../../../../services/api';
+import useAsset from '../../../../hooks/useAsset';
+import useDirectory from '../../../../hooks/useDirectory';
 
 import './JukeboxWidget.css';
 
@@ -101,7 +101,7 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
 
     return (
         <Widget
-            id="widget-jukebox"
+            id={`widget-${WidgetType.jukebox}`}
             title={T('entity.jukebox')}
             onClose={() => onClose(WidgetType.jukebox)}
         >

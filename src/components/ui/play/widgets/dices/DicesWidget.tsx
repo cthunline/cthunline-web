@@ -14,15 +14,15 @@ import {
     GiDiceTwentyFacesTwenty
 } from 'react-icons/gi';
 
-import { useApp } from '../../../contexts/App';
-import Widget from '../../play/Widget';
+import { useApp } from '../../../../contexts/App';
+import Widget from '../../Widget';
 import {
     WidgetType,
     DiceType,
     DicesData,
     DicesRequest,
     diceTypes
-} from '../../../../types';
+} from '../../../../../types';
 
 import './DicesWidget.css';
 
@@ -180,7 +180,7 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
 
     return (
         <Widget
-            id="widget-dices"
+            id={`widget-${WidgetType.dices}`}
             title={T('entity.dices')}
             onClose={() => onClose(WidgetType.dices)}
         >
