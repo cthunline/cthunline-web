@@ -1,6 +1,7 @@
 import React from 'react';
 import {
     List,
+    ListItem,
     ListItemButton,
     ListItemText,
     ListItemIcon,
@@ -89,23 +90,9 @@ const Explorer = ({
             }) => {
                 const isDirectory = type === ExplorerItemType.directory;
                 return (
-                    <ListItemButton
-                        key={`explorer-item-${id}`}
-                        className={`${isDirectory || onFileClick ? 'clickable' : ''}`}
-                        selected={selectedId === id}
-                        onClick={() => {
-                            if (isDirectory) {
-                                onDirectoryClick(id);
-                            } else if (onFileClick) {
-                                onFileClick(id);
-                            }
-                        }}
-                    >
-                        <ListItemIcon>
-                            {getIcon(type, icon)}
-                        </ListItemIcon>
-                        <ListItemText primary={name} />
-                        {onDelete ? (
+                    <ListItem
+                        key={`explorer-${type}-${id}`}
+                        secondaryAction={onDelete ? (
                             <ListItemSecondaryAction>
                                 <IconButton
                                     edge="end"
@@ -117,7 +104,25 @@ const Explorer = ({
                                 </IconButton>
                             </ListItemSecondaryAction>
                         ) : null}
-                    </ListItemButton>
+                        disablePadding
+                    >
+                        <ListItemButton
+                            className={`${isDirectory || onFileClick ? 'clickable' : ''}`}
+                            selected={selectedId === id}
+                            onClick={() => {
+                                if (isDirectory) {
+                                    onDirectoryClick(id);
+                                } else if (onFileClick) {
+                                    onFileClick(id);
+                                }
+                            }}
+                        >
+                            <ListItemIcon>
+                                {getIcon(type, icon)}
+                            </ListItemIcon>
+                            <ListItemText primary={name} />
+                        </ListItemButton>
+                    </ListItem>
                 );
             })}
         </List>
