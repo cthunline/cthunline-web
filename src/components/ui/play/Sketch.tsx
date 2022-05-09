@@ -47,8 +47,8 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
         setTokens,
         movingItem,
         resizingItem,
-        selectedImageIndex,
-        setSelectedImageIndex,
+        selectedImageId,
+        setSelectedImageId,
         updateImageHeight,
         handleItemContainerMouseDown,
         handleItemMouseDown,
@@ -65,8 +65,8 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     const handleMouseDownAway = (e: MouseEvent | TouchEvent) => {
         if (isMainClick(e)) {
             // unselect image
-            if (isMaster && selectedImageIndex !== null) {
-                setSelectedImageIndex(null);
+            if (isMaster && selectedImageId) {
+                setSelectedImageId(null);
             }
         }
     };
@@ -116,11 +116,11 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     useEffect(() => {
         // when drawing is enabled unselect images
         if (isFreeDrawing) {
-            setSelectedImageIndex(null);
+            setSelectedImageId(null);
         }
     }, [
         isFreeDrawing,
-        setSelectedImageIndex
+        setSelectedImageId
     ]);
 
     return (
@@ -140,64 +140,67 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                 >
                     {/* sketch images */}
                     {images.map(({
+                        id,
                         url,
                         width,
                         height,
                         x,
                         y
-                    }, index) => (
+                    }) => (
                         <SketchImage
-                            key={`sketch-image-${index.toString()}`}
+                            key={`sketch-image-${id}`}
+                            id={id}
                             isMaster={isMaster}
                             url={url}
                             width={width}
                             height={height}
                             x={x}
                             y={y}
-                            selected={selectedImageIndex === index}
+                            selected={selectedImageId === id}
                             moving={(
-                                !!movingItem
-                                && movingItem.type === SketchItemType.image
-                                && movingItem.index === index
+                                movingItem?.type === SketchItemType.image
+                                && movingItem?.id === id
                             )}
                             resizing={(
                                 resizingItem?.type === SketchItemType.image
-                                && resizingItem?.index === index
+                                && resizingItem?.id === id
                             )}
                             onLoad={(element) => {
-                                updateImageHeight(index, element);
+                                updateImageHeight(id, element);
                             }}
                             onMouseDown={(e) => {
-                                handleItemMouseDown(e, index, SketchItemType.image);
+                                handleItemMouseDown(e, id, SketchItemType.image);
                             }}
                             onResizeMouseDown={(
                                 e: React.MouseEvent<SVGRectElement>,
                                 direction: CardinalDirection
                             ) => {
-                                handleResizeMouseDown(e, index, SketchItemType.image, direction);
+                                handleResizeMouseDown(e, id, SketchItemType.image, direction);
                             }}
-                            onForward={() => handleImageForward(index)}
-                            onBackward={() => handleImageBackward(index)}
+                            onForward={() => handleImageForward(id)}
+                            onBackward={() => handleImageBackward(id)}
                             onDelete={() => {
-                                handleItemDelete(index, SketchItemType.image);
+                                handleItemDelete(id, SketchItemType.image);
                             }}
                         />
                     ))}
                     {/* tokens */}
                     {tokens.map(({
+                        id,
                         color,
                         user,
                         x,
                         y,
                         tooltipPlacement
-                    }, index) => {
+                    }) => {
                         const isMoving = (
                             movingItem?.type === SketchItemType.token
-                            && movingItem?.index === index
+                            && movingItem?.id === id
                         );
                         return (
                             <SketchToken
-                                key={`sketch-token-${index.toString()}`}
+                                key={`sketch-token-${id}`}
+                                id={id}
                                 isMaster={isMaster}
                                 size={50}
                                 color={color}
@@ -207,22 +210,22 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                                 tooltipPlacement={tooltipPlacement}
                                 isMoving={isMoving}
                                 onMouseDown={(e, isMovable) => {
-                                    handleItemMouseDown(e, index, SketchItemType.token, isMovable);
+                                    handleItemMouseDown(e, id, SketchItemType.token, isMovable);
                                 }}
                                 onAssign={!user ? (tokenUser: SessionUser) => {
-                                    assignTokenUser(index, tokenUser);
+                                    assignTokenUser(id, tokenUser);
                                 } : undefined}
                                 onUnassign={user ? () => {
-                                    unassignTokenUser(index);
+                                    unassignTokenUser(id);
                                 } : undefined}
                                 onDuplicate={() => {
-                                    duplicateToken(index);
+                                    duplicateToken(id);
                                 }}
                                 onColorChange={(tokenColor: Color) => {
-                                    changeTokenColor(index, tokenColor);
+                                    changeTokenColor(id, tokenColor);
                                 }}
                                 onDelete={() => {
-                                    handleItemDelete(index, SketchItemType.token);
+                                    handleItemDelete(id, SketchItemType.token);
                                 }}
                             />
                         );

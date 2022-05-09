@@ -13,6 +13,7 @@ const resizeRects: CardinalDirection[] = [
 ];
 
 interface SketchImageProps {
+    id: string;
     isMaster?: boolean;
     url: string;
     width: number;
@@ -35,6 +36,7 @@ interface SketchImageProps {
 }
 
 const SketchImage: React.FC<SketchImageProps> = ({
+    id,
     isMaster,
     url,
     width,
@@ -71,6 +73,7 @@ const SketchImage: React.FC<SketchImageProps> = ({
     return (
         // image container
         <svg
+            id={`sketch-image-${id}`}
             className={
                 `sketch-image container ${
                     isMaster ? 'selectable' : ''

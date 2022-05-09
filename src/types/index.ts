@@ -231,6 +231,8 @@ export interface SketchData {
 }
 
 export interface SketchImageData {
+    id: string;
+    index: number;
     url: string;
     width: number;
     height?: number;
@@ -245,7 +247,7 @@ export enum SketchItemType {
 
 export interface SketchMovingItemData {
     type: SketchItemType;
-    index: number;
+    id: string;
     element: SVGSVGElement;
     deltaX: number;
     deltaY: number;
@@ -256,7 +258,7 @@ export interface SketchMovingItemData {
 
 export interface SketchResizingItemData {
     type: SketchItemType;
-    index: number;
+    id: string;
     element: SVGSVGElement;
     direction: CardinalDirection;
     initialX: number;
@@ -270,6 +272,8 @@ export interface SketchResizingItemData {
 export type SketchTokenUserData = Pick<SessionUser, 'id' | 'name'>;
 
 export interface SketchTokenData {
+    id: string;
+    index: number;
     color: Color;
     user: SketchTokenUserData | null;
     x: number;
@@ -295,14 +299,10 @@ export enum SketchEventType {
 export interface SketchEvent {
     // type of event
     type: SketchEventType;
-    // index of image concerned by the event
-    imageIndex?: number;
     // image data to restore if event is undone
-    imageData?: SketchImageData;
-    // index of token concerned by the event
-    tokenIndex?: number;
+    image?: SketchImageData;
     // token data to restore if event is undone
-    tokenData?: SketchTokenData;
+    token?: SketchTokenData;
 }
 
 export interface SketchCoordinates {

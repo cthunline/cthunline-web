@@ -1,3 +1,33 @@
+import { customAlphabet } from 'nanoid';
+
+// generate new random id
+export const generateId = customAlphabet('1234567890abcdef', 16);
+
+// find an object in an array of objects based on the id of object
+// throws an error if object is not found
+export const findById = <ObjectType extends { id: string }>(
+    list: ObjectType[],
+    id: string
+): ObjectType => {
+    const object = list.find(({ id: objectId }) => (
+        id === objectId
+    ));
+    if (object) {
+        return object;
+    }
+    throw new Error('Could not find object by Id');
+};
+
+export const findIndexById = (list: any[], id: string): number => {
+    const index = list.findIndex(({ id: objectId }) => (
+        id === objectId
+    ));
+    if (index >= 0) {
+        return index;
+    }
+    throw new Error('Could not find object index by Id');
+};
+
 // remove anything but numbers in a string
 export const onlyNumbers = (text: string) => (
     text.replaceAll(/[^\d]*/g, '')

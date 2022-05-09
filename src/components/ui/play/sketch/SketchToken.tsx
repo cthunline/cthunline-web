@@ -14,6 +14,7 @@ import {
 import './SketchToken.css';
 
 interface SketchTokenProps {
+    id: string;
     isMaster?: boolean;
     size: number;
     color: Color;
@@ -33,6 +34,7 @@ interface SketchTokenProps {
 }
 
 const SketchToken: React.FC<SketchTokenProps> = ({
+    id,
     isMaster,
     size,
     color,
@@ -115,6 +117,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
         >
             <svg
                 ref={onRef}
+                id={`sketch-token-${id}`}
                 className={`sketch-token ${isMovable ? 'movable' : ''} ${className}`}
                 viewBox={`0 0 ${tokenSize} ${tokenSize}`}
                 width={tokenSize}

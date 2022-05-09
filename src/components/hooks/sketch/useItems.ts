@@ -13,7 +13,8 @@ import {
     SketchEventType,
     SketchTokenData,
     SketchItemType,
-    TooltipPlacement
+    TooltipPlacement,
+    SketchEvent
 } from '../../../types';
 import {
     getMouseEventSvgCoordinates,
@@ -22,7 +23,11 @@ import {
     forwardImage,
     backwardImage
 } from '../../../services/sketch';
-import { isMainClick } from '../../../services/tools';
+import {
+    findById,
+    findIndexById,
+    isMainClick
+} from '../../../services/tools';
 
 // this hook holds states and event handlers for sketch items (images and tokens)
 // it is meant to be used by the sketch component and sub components
@@ -44,7 +49,7 @@ const useItems = (
     // list of tokens in the sketch
     const [tokens, setTokens] = useState<SketchTokenData[]>([]);
     // current selected image index
-    const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+    const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
     // data of item (image or token) currently being moved
     // (index property is reffering to the imagesRef array below)
     const [movingItem, setMovingItem] = useState<SketchMovingItemData | null>(null);
@@ -58,31 +63,31 @@ const useItems = (
     // mouseDown on an item without moving or resizing it
     const itemHasMovedOfResized = useRef<boolean>(false);
 
-    // gets item data from index and item type
-    const getItemData = (index: number, type: SketchItemType) => {
+    // gets item data from id and item type
+    const getItemData = (id: string, type: SketchItemType) => {
         if (type === SketchItemType.image) {
-            return images[index];
+            return findById<SketchImageData>(images, id);
         }
         if (type === SketchItemType.token) {
-            return tokens[index];
+            return findById<SketchTokenData>(tokens, id);
         }
         throw new Error('Could not get item data');
     };
 
     // helper to set an image in the images state array
-    const setImage = (index: number, data: SketchImageData) => {
+    const setImage = (id: string, data: SketchImageData) => {
         setImages((previous) => (
-            previous.map((img, idx) => (
-                idx === index ? data : img
+            previous.map((image) => (
+                image.id === id ? data : image
             ))
         ));
     };
 
     // helper to set a token in the tokens state array
-    const setToken = (index: number, data: SketchTokenData) => {
+    const setToken = (id: string, data: SketchTokenData) => {
         setTokens((previous) => (
-            previous.map((tok, idx) => (
-                idx === index ? data : tok
+            previous.map((token) => (
+                token.id === id ? data : token
             ))
         ));
     };
@@ -94,12 +99,12 @@ const useItems = (
             isMainClick(e)
             && isMaster
             && !isFreeDrawing
-            && selectedImageIndex !== null
+            && selectedImageId
             && !target.classList.contains('sketch-image')
             && !target.closest('.sketch-image')
         ) {
             // unselect image
-            setSelectedImageIndex(null);
+            setSelectedImageId(null);
         }
     };
 
@@ -108,11 +113,11 @@ const useItems = (
         if (movingItem && (isMaster || movingItem.movableByUser) && svgPoint) {
             const {
                 type,
-                index,
+                id,
                 deltaX,
                 deltaY
             } = movingItem;
-            const itemData = getItemData(index, type);
+            const itemData = getItemData(id, type);
             // gets moving item new coordinates
             const coord = getMovingItemCoordinates({
                 event: e,
@@ -131,13 +136,13 @@ const useItems = (
                 } = coord;
                 // assign new coordinates
                 if (type === SketchItemType.image) {
-                    setImage(index, {
+                    setImage(id, {
                         ...(itemData as SketchImageData),
                         x,
                         y
                     });
                 } else if (type === SketchItemType.token) {
-                    setToken(index, {
+                    setToken(id, {
                         ...(itemData as SketchTokenData),
                         x,
                         y,
@@ -153,8 +158,8 @@ const useItems = (
     // handles mouse move for resizing item
     const handleResizingItemMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
         if (isMaster && resizingItem && svgPoint) {
-            const { type, index } = resizingItem;
-            const itemData = getItemData(index, type);
+            const { type, id } = resizingItem;
+            const itemData = getItemData(id, type);
             // gets new coordinates and position for resizing item
             const data = getResizingItemCoordAndPos({
                 event: e,
@@ -165,7 +170,7 @@ const useItems = (
             // set new size and position
             if (data && type === SketchItemType.image) {
                 itemHasMovedOfResized.current = true;
-                setImage(index, {
+                setImage(id, {
                     ...(itemData as SketchImageData),
                     ...data
                 });
@@ -180,18 +185,18 @@ const useItems = (
                 // updates items data in play context sketchData
                 const { type, initialX: x, initialY: y } = movingItem;
                 if (type === SketchItemType.image) {
+                    const image = findById<SketchImageData>(images, movingItem.id);
                     updateSketchImages({
                         images,
                         eventType: SketchEventType.imageMove,
-                        imageIndex: movingItem.index,
-                        imageData: { ...images[movingItem.index], x, y }
+                        image: { ...image, x, y }
                     });
                 } else if (type === SketchItemType.token) {
+                    const token = findById<SketchTokenData>(tokens, movingItem.id);
                     updateSketchTokens({
                         tokens,
                         eventType: SketchEventType.tokenMove,
-                        tokenIndex: movingItem.index,
-                        tokenData: { ...tokens[movingItem.index], x, y },
+                        token: { ...token, x, y },
                         movableByUser: movingItem.movableByUser
                     });
                 }
@@ -216,12 +221,12 @@ const useItems = (
                     initialHeight: height
                 } = resizingItem;
                 if (type === SketchItemType.image) {
+                    const image = findById<SketchImageData>(images, resizingItem.id);
                     updateSketchImages({
                         images,
                         eventType: SketchEventType.imageResize,
-                        imageIndex: resizingItem.index,
-                        imageData: {
-                            ...images[resizingItem.index],
+                        image: {
+                            ...image,
                             x,
                             y,
                             width,
@@ -245,14 +250,14 @@ const useItems = (
     // handle mouseDown on items (images or tokens)
     const handleItemMouseDown = (
         e: React.MouseEvent<SVGImageElement | SVGSVGElement>,
-        index: number,
+        id: string,
         type: SketchItemType,
         movableByUser?: boolean
     ) => {
         if (isMainClick(e)) {
             if ((isMaster || movableByUser) && !isFreeDrawing && svgPoint) {
                 e.preventDefault();
-                const itemData = getItemData(index, type);
+                const itemData = getItemData(id, type);
                 // check if we clicked in the svg element
                 const element = e.currentTarget.closest('svg');
                 // check if we click on a context menu or context menu backdrop
@@ -271,7 +276,7 @@ const useItems = (
                     setMovingItem({
                         type,
                         element,
-                        index,
+                        id,
                         deltaX: x - itemX,
                         deltaY: y - itemY,
                         initialX: itemX,
@@ -279,7 +284,7 @@ const useItems = (
                         movableByUser
                     });
                     if (type === SketchItemType.image) {
-                        setSelectedImageIndex(index);
+                        setSelectedImageId(id);
                     }
                 }
             }
@@ -289,13 +294,13 @@ const useItems = (
     // handle mouseDown on image's resize "buttons"
     const handleResizeMouseDown = (
         e: React.MouseEvent<SVGRectElement>,
-        index: number,
+        id: string,
         type: SketchItemType,
         direction: CardinalDirection
     ) => {
         if (isMainClick(e)) {
             if (isMaster && !isFreeDrawing && svgPoint) {
-                const itemData = getItemData(index, type);
+                const itemData = getItemData(id, type);
                 const element = e.currentTarget.closest('svg');
                 if (element) {
                     itemHasMovedOfResized.current = false;
@@ -314,7 +319,7 @@ const useItems = (
                     // set resizing item data in state
                     setResizingItem({
                         type,
-                        index,
+                        id,
                         element,
                         direction,
                         initialX,
@@ -330,35 +335,39 @@ const useItems = (
     };
 
     // handles deletion of an item
-    const handleItemDelete = (index: number, type: SketchItemType) => {
+    const handleItemDelete = (id: string, type: SketchItemType) => {
         if (type === SketchItemType.image) {
-            const imageData = images[index];
-            deleteSketchImage(index, imageData);
-            setSelectedImageIndex(null);
+            const imageData = findById<SketchImageData>(images, id);
+            deleteSketchImage(id, imageData);
+            setSelectedImageId(null);
         } else if (type === SketchItemType.token) {
-            const tokenData = tokens[index];
-            deleteSketchToken(index, tokenData);
+            const tokenData = findById<SketchTokenData>(tokens, id);
+            deleteSketchToken(id, tokenData);
         }
     };
 
     // handles bringing image foward
-    const handleImageForward = (index: number) => {
-        if (images.length > 1 && index < images.length - 1) {
+    const handleImageForward = (id: string) => {
+        const currentIndex = findIndexById(images, id);
+        if (images.length > 1 && currentIndex < images.length - 1) {
+            const updatedImages = forwardImage(images, currentIndex);
             updateSketchImages({
-                images: forwardImage(images, index),
+                images: updatedImages,
                 eventType: SketchEventType.imageForward,
-                imageIndex: index + 1
+                image: findById(updatedImages, id)
             });
         }
     };
 
     // handles sending image backward
-    const handleImageBackward = (index: number) => {
-        if (images.length > 1 && index > 0) {
+    const handleImageBackward = (id: string) => {
+        const currentIndex = findIndexById(images, id);
+        if (images.length > 1 && currentIndex > 0) {
+            const updatedImages = backwardImage(images, currentIndex);
             updateSketchImages({
-                images: backwardImage(images, index),
+                images: updatedImages,
                 eventType: SketchEventType.imageBackward,
-                imageIndex: index - 1
+                image: findById(updatedImages, id)
             });
         }
     };
@@ -366,15 +375,20 @@ const useItems = (
     // gets image height from its bounding box and set it in image data
     // used because when adding images the height is auto and we want
     // to set a fixed value
-    const updateImageHeight = (index: number, element: SVGSVGElement | null) => {
-        const imageData = images[index];
+    const updateImageHeight = (id: string, element: SVGSVGElement | null) => {
+        const image = findById<SketchImageData>(images, id);
         const heightAttr = element?.getAttributeNS(null, 'height');
-        if (imageData && element && heightAttr === 'auto') {
+        if (image && element && heightAttr === 'auto') {
             const { height } = element.getBBox();
-            updateSketchImage(index, {
-                ...imageData,
-                height
-            });
+            const updatedImage = { ...image, height };
+            updateSketchImage(updatedImage, (events: SketchEvent[]) => (
+                events.map((event) => (
+                    event.type === SketchEventType.imageAdd
+                    && event.image?.id === image.id
+                        ? { ...event, image: updatedImage }
+                        : event
+                ))
+            ));
         }
     };
 
@@ -390,8 +404,8 @@ const useItems = (
         setTokens,
         movingItem,
         resizingItem,
-        selectedImageIndex,
-        setSelectedImageIndex,
+        selectedImageId,
+        setSelectedImageId,
         updateImageHeight,
         handleItemContainerMouseDown,
         handleItemMouseDown,

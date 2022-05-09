@@ -185,7 +185,10 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             clearAudioTrack();
         });
         sock.on('sketchUpdate', ({ sketch }) => {
-            setSketchData(sketch);
+            setSketchData((previous) => ({
+                ...sketch,
+                events: previous.events
+            }));
         });
     }, [
         t,
@@ -259,7 +262,10 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
 
     useEffect(() => {
         if (session) {
-            setSketchData(session.sketch);
+            setSketchData({
+                ...session.sketch,
+                events: []
+            });
         }
     }, [
         session,
