@@ -40,7 +40,7 @@ const useItems = (
         updateSketchImage,
         updateSketchImages,
         deleteSketchImage,
-        updateSketchTokens,
+        updateMovingToken,
         deleteSketchToken
     } = usePlay();
 
@@ -193,12 +193,11 @@ const useItems = (
                     });
                 } else if (type === SketchItemType.token) {
                     const token = findById<SketchTokenData>(tokens, movingItem.id);
-                    updateSketchTokens({
-                        tokens,
-                        eventType: SketchEventType.tokenMove,
-                        token: { ...token, x, y },
-                        movableByUser: movingItem.movableByUser
-                    });
+                    updateMovingToken(
+                        token,
+                        { ...token, x, y },
+                        movingItem.movableByUser
+                    );
                 }
             }
             // stops moving

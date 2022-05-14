@@ -25,13 +25,6 @@ interface UpdateSketchImagesOptions {
     image: SketchImageData;
 }
 
-interface UpdateSketchTokensOptions {
-    tokens: SketchTokenData[];
-    eventType: SketchEventType;
-    token: SketchTokenData;
-    movableByUser?: boolean;
-}
-
 type EventUpdater = (e: SketchEvent[]) => SketchEvent[];
 
 export interface SketchHookExport {
@@ -49,7 +42,11 @@ export interface SketchHookExport {
     deleteSketchImage: (id: string, imageData: SketchImageData) => void;
     addSketchToken: () => void;
     addSketchUserTokens: (users: SessionUser[]) => void;
-    updateSketchTokens: (options: UpdateSketchTokensOptions) => void;
+    updateMovingToken: (
+        token: SketchTokenData,
+        initialToken: SketchTokenData,
+        userAllowed?: boolean
+    ) => void;
     assignTokenUser: (id: string, user: SessionUser) => void;
     unassignTokenUser: (id: string) => void;
     duplicateToken: (id: string) => void;
@@ -79,7 +76,7 @@ export const defaultSketchHookExport: SketchHookExport = {
     deleteSketchImage: () => { /* default */ },
     addSketchToken: () => { /* default */ },
     addSketchUserTokens: () => { /* default */ },
-    updateSketchTokens: () => { /* default */ },
+    updateMovingToken: () => { /* default */ },
     assignTokenUser: () => { /* default */ },
     unassignTokenUser: () => { /* default */ },
     duplicateToken: () => { /* default */ },
@@ -318,21 +315,26 @@ const useSketch = (socket: PlaySocket | null) => {
         }));
     };
 
-    const updateSketchTokens = ({
-        tokens,
-        eventType,
-        token,
-        movableByUser
-    }: UpdateSketchTokensOptions) => {
+    const updateMovingToken = (
+        token: SketchTokenData,
+        initialToken: SketchTokenData,
+        userAllowed?: boolean
+    ) => {
         const event: SketchEvent = {
-            type: eventType,
-            token
+            type: SketchEventType.tokenMove,
+            token: initialToken
         };
-        updateSketch((previous) => ({
+        const updater = (previous: SketchData) => ({
             ...previous,
-            tokens,
+            tokens: previous.tokens.map((tok) => (
+                tok.id === token.id ? token : tok
+            )),
             events: [...previous.events, event]
-        }), true, movableByUser);
+        });
+        if (socket?.isMaster || userAllowed) {
+            socket?.emit('tokenUpdate', token);
+        }
+        setSketchData(updater as SetStateAction<SketchData>);
     };
 
     const setTokenUser = (id: string, tokenUser: SketchTokenUserData | null) => {
@@ -583,7 +585,7 @@ const useSketch = (socket: PlaySocket | null) => {
         deleteSketchImage,
         addSketchToken,
         addSketchUserTokens,
-        updateSketchTokens,
+        updateMovingToken,
         duplicateToken,
         changeTokenColor,
         assignTokenUser,
