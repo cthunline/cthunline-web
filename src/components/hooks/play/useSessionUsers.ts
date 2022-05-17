@@ -6,17 +6,17 @@ import {
     Character
 } from '../../../types';
 
-export interface UsersHookExport {
+export interface SessionUsersHookExport {
     users: SessionUser[];
     characterUpdate: () => void;
 }
 
-export const defaultUsersHookExport: UsersHookExport = {
+export const defaultSessionUsersHookExport: SessionUsersHookExport = {
     users: [],
     characterUpdate: () => { /* default */ }
 };
 
-const useUsers = (socket: PlaySocket | null) => {
+const useSessionUsers = (socket: PlaySocket | null) => {
     const [users, setUsers] = useState<SessionUser[]>([]);
 
     const updateUserCharacter = (userId: number, character: Character) => {
@@ -42,4 +42,4 @@ const useUsers = (socket: PlaySocket | null) => {
     };
 };
 
-export default useUsers;
+export default useSessionUsers;

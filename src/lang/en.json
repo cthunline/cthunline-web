@@ -9,6 +9,7 @@
         "dices": "dices",
         "display": "display",
         "invite": "invite",
+        "load": "load",
         "login": "login",
         "logout": "logout",
         "play": "play",
@@ -135,7 +136,9 @@
             "clearTokensConfirm": "clear the tokens ?",
             "drawing": "drawing",
             "eraseDrawings": "erase drawings",
+            "loadSketch": "load sketch",
             "removeTokens": "remove tokens",
+            "saveSketch": "save sketch",
             "spawnPlayerTokens": "spawn player tokens"
         }
     }

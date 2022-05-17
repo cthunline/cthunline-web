@@ -329,3 +329,16 @@ export enum TooltipPlacement {
     bottom = 'bottom',
     left = 'left'
 }
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ user's sketch
+
+export interface UserSketch {
+    id: number;
+    userId: number;
+    name: string;
+    sketch: Omit<SketchData, 'events'>;
+    createdAt: string;
+    updatedAt: string;
+}
+
+export type UserSketchCreateBody = Pick<UserSketch, 'name' | 'sketch'>;

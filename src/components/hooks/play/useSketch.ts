@@ -29,6 +29,11 @@ type EventUpdater = (e: SketchEvent[]) => SketchEvent[];
 
 export interface SketchHookExport {
     sketchData: SketchData;
+    updateSketch: (
+        updater: (previous: SketchData) => SketchData,
+        emit?: boolean,
+        userAllowed?: boolean
+    ) => void;
     setSketchDisplay: (value: boolean) => void;
     isFreeDrawing: boolean;
     setIsFreeDrawing: (value: boolean) => void;
@@ -63,6 +68,7 @@ export const defaultSketchHookExport: SketchHookExport = {
         tokens: [],
         events: []
     },
+    updateSketch: () => { /* default */ },
     setSketchDisplay: () => { /* default */ },
     isFreeDrawing: false,
     setIsFreeDrawing: () => { /* default */ },
@@ -574,6 +580,7 @@ const useSketch = (socket: PlaySocket | null) => {
     return {
         sketchData,
         setSketchData,
+        updateSketch,
         setSketchDisplay,
         isFreeDrawing,
         setIsFreeDrawing,

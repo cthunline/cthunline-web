@@ -6,10 +6,11 @@ import {
     Typography
 } from '@mui/material';
 import { GoPencil } from 'react-icons/go';
-import { MdOutlineDeleteOutline, MdUndo } from 'react-icons/md';
 import { BsEraserFill } from 'react-icons/bs';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
 import { IoPeopleCircle } from 'react-icons/io5';
+import { MdDelete, MdUndo } from 'react-icons/md';
+import { GiSave, GiLoad } from 'react-icons/gi';
 
 import { useApp } from '../../../../contexts/App';
 import Widget from '../../Widget';
@@ -17,15 +18,18 @@ import Explorer, {
     ExplorerItem,
     ExplorerItemType
 } from '../../../explorer/Explorer';
-import { Asset, WidgetType } from '../../../../../types';
+import { Asset, UserSketchCreateBody, WidgetType } from '../../../../../types';
 import { usePlay } from '../../../../contexts/Play';
 import { useDialog } from '../../../../contexts/Dialog';
 import useAsset from '../../../../hooks/useAsset';
 import useDirectory from '../../../../hooks/useDirectory';
+import useUserSketch from '../../../../hooks/useUserSketch';
 import {
     ImageAssetList,
     ActionButton,
-    ActionButtonData
+    ActionButtonData,
+    UserSketchForm,
+    UserSketchSelector
 } from './SketchWidgetElements';
 
 import './SketchWidget.css';
@@ -36,12 +40,17 @@ interface SketchWidgetProps {
 
 const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
     const { T } = useApp();
-    const { confirmDialog } = useDialog();
+    const {
+        confirmDialog,
+        openDialog,
+        closeDialog
+    } = useDialog();
     const {
         users,
         isFreeDrawing,
         setIsFreeDrawing,
         sketchData,
+        updateSketch,
         setSketchDisplay,
         undoSketch,
         clearSketch,
@@ -58,6 +67,7 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
     const { directoryList } = useDirectory({
         loadList: true
     });
+    const { createUserSketch, getUserSketch } = useUserSketch();
 
     const [directoryIds, setDirectoryIds] = useState<number[]>([]);
 
@@ -75,7 +85,21 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
         setIsFreeDrawing(!isFreeDrawing);
     };
 
-    const actionButtons: ActionButtonData[] = [{
+    const onUserSketchSave = async (data: UserSketchCreateBody) => {
+        await createUserSketch({ data });
+        closeDialog();
+    };
+
+    const onUserSketchLoad = async (sketchId: number) => {
+        const { sketch } = await getUserSketch(sketchId);
+        updateSketch(() => ({
+            ...sketch,
+            events: []
+        }));
+        closeDialog();
+    };
+
+    const actionButtons: ActionButtonData[][] = [[{
         text: T('widget.sketch.drawing'),
         icon: <GoPencil size={25} className={isFreeDrawing ? '' : 'opacity-half'} />,
         handler: toogleIsFreeDrawing
@@ -92,6 +116,10 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
         icon: <IoPeopleCircle size={30} />,
         handler: () => addSketchUserTokens(users)
     }, {
+        text: T('action.undo'),
+        icon: <MdUndo size={30} className={sketchData.events.length ? '' : 'opacity-half'} />,
+        handler: undoSketch
+    }], [{
         text: T('widget.sketch.removeTokens'),
         icon: <IoMdCloseCircle size={30} />,
         handler: () => {
@@ -101,19 +129,38 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
             );
         }
     }, {
-        text: T('action.undo'),
-        icon: <MdUndo size={30} className={sketchData.events.length ? '' : 'opacity-half'} />,
-        handler: undoSketch
-    }, {
         text: T('action.clear'),
-        icon: <MdOutlineDeleteOutline size={30} />,
+        icon: <MdDelete size={30} />,
         handler: () => {
             confirmDialog(
                 T('widget.sketch.clearSketchConfirm'),
                 clearSketch
             );
         }
-    }];
+    }, {
+        text: T('widget.sketch.saveSketch'),
+        icon: <GiSave size={30} />,
+        handler: () => {
+            const { events, ...sketch } = sketchData;
+            openDialog({
+                title: T('widget.sketch.saveSketch'),
+                content: (
+                    <UserSketchForm sketch={sketch} onSubmit={onUserSketchSave} />
+                )
+            });
+        }
+    }, {
+        text: T('widget.sketch.loadSketch'),
+        icon: <GiLoad size={30} />,
+        handler: () => {
+            openDialog({
+                title: T('widget.sketch.loadSketch'),
+                content: (
+                    <UserSketchSelector onSelect={onUserSketchLoad} />
+                )
+            });
+        }
+    }]];
 
     const explorerItems: ExplorerItem[] = (
         directoryList.map(({ id, name, parentId }) => ({
@@ -152,20 +199,22 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
                     />
                 </Box>
                 {sketchData.displayed ? [
-                    <Box key="scketch-actions" className="flex row center">
-                        {actionButtons.map(({
-                            text,
-                            icon,
-                            handler
-                        }, index) => (
-                            <ActionButton
-                                key={`scketch-action-${index.toString()}`}
-                                text={text}
-                                icon={icon}
-                                handler={handler}
-                            />
-                        ))}
-                    </Box>,
+                    actionButtons.map((buttonsRow, idx) => (
+                        <Box key={`scketch-actions-${idx.toString()}`} className="flex row center">
+                            {buttonsRow.map(({
+                                text,
+                                icon,
+                                handler
+                            }, index) => (
+                                <ActionButton
+                                    key={`scketch-action-${index.toString()}`}
+                                    text={text}
+                                    icon={icon}
+                                    handler={handler}
+                                />
+                            ))}
+                        </Box>
+                    )),
                     <Box key="scketch-assets">
                         <Typography variant="h6" gutterBottom>
                             {T('entity.assets')}

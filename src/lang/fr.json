@@ -9,6 +9,7 @@
         "dices": "dés",
         "display": "afficher",
         "invite": "inviter",
+        "load": "charger",
         "login": "se connecter",
         "logout": "se déconnecter",
         "play": "jouer",
@@ -135,7 +136,9 @@
             "clearTokensConfirm": "supprimer les tokens ?",
             "drawing": "dessin",
             "eraseDrawings": "supprimer les dessins",
+            "loadSketch": "charger un plateau",
             "removeTokens": "supprimer les tokens",
+            "saveSketch": "sauvegarder le plateau",
             "spawnPlayerTokens": "générer les tokens de joueurs"
         }
     }

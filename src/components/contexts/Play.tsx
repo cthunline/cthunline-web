@@ -16,7 +16,7 @@ import useSketch, { SketchHookExport, defaultSketchHookExport } from '../hooks/p
 import useLogs, { LogsHookExport, defaultLogsHookExport } from '../hooks/play/useLogs';
 import useAudio, { AudioHookExport, defaultAudioHookExport } from '../hooks/play/useAudio';
 import useDice, { DiceHookExport, defaultDiceHookExport } from '../hooks/play/useDice';
-import useUsers, { UsersHookExport, defaultUsersHookExport } from '../hooks/play/useUsers';
+import useSessionUsers, { SessionUsersHookExport, defaultSessionUsersHookExport } from '../hooks/play/useSessionUsers';
 import { User, PlaySocket } from '../../types';
 
 interface PlayProviderProps {
@@ -29,7 +29,7 @@ interface PlayContextData extends
     SketchHookExport,
     AudioHookExport,
     DiceHookExport,
-    UsersHookExport,
+    SessionUsersHookExport,
     LogsHookExport {
     sessionId: number;
     characterId?: number;
@@ -43,7 +43,7 @@ const defaultPlayData: PlayContextData = {
     ...defaultLogsHookExport,
     ...defaultAudioHookExport,
     ...defaultDiceHookExport,
-    ...defaultUsersHookExport
+    ...defaultSessionUsersHookExport
 };
 
 interface ConnectOptions {
@@ -80,7 +80,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         setUsers,
         updateUserCharacter,
         characterUpdate
-    } = useUsers(socket);
+    } = useSessionUsers(socket);
     const { getDiceResultLog, requestDice } = useDice(socket);
     const {
         audioData,
@@ -92,6 +92,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     const {
         sketchData,
         setSketchData,
+        updateSketch,
         setSketchDisplay,
         isFreeDrawing,
         setIsFreeDrawing,
@@ -290,6 +291,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         stopAudio,
         audioData,
         sketchData,
+        updateSketch,
         addSketchDrawPath,
         clearDrawings,
         undoSketch,
@@ -322,6 +324,7 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         stopAudio,
         audioData,
         sketchData,
+        updateSketch,
         addSketchDrawPath,
         undoSketch,
         clearSketch,
