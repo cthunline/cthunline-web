@@ -1,6 +1,7 @@
 import { Socket } from 'socket.io-client';
 
 import { CoCCharacterData } from './games/callOfCthulhu';
+import { DnD5CharacterData } from './games/dnd5';
 import { SWD6CharacterData } from './games/starWarsD6';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ theme
@@ -154,7 +155,10 @@ export interface Note {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ character
 
-export type CharacterData = CoCCharacterData | SWD6CharacterData;
+export type CharacterData =
+    CoCCharacterData
+    | DnD5CharacterData
+    | SWD6CharacterData;
 
 export interface Character<GenericCharacterData = CharacterData> {
     id: number;
