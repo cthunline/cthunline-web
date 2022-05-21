@@ -1,13 +1,13 @@
 import React, { memo } from 'react';
 import { Box } from '@mui/material';
-
-import Attribute from './Attribute';
 import {
     SWD6Attributes,
     SWD6Attribute,
     SWD6AttributeData,
     SWD6Skill
-} from '../../../../../../types/games/starWarsD6';
+} from '@cthunline/games';
+
+import Attribute from './Attribute';
 
 import './Attribute.css';
 

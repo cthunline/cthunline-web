@@ -5,11 +5,11 @@ import {
     IconButton
 } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
-
 import {
     SWD6Attribute,
     SWD6Skill
-} from '../../../../../../types/games/starWarsD6';
+} from '@cthunline/games';
+
 import { skillFields } from './skills.data';
 
 interface SkillProps {

@@ -1,4 +1,4 @@
-import { CoCStatus } from '../../../../../../types/games/callOfCthulhu';
+import { CoCStatus } from '@cthunline/games';
 
 export interface FieldData {
     field: keyof CoCStatus;

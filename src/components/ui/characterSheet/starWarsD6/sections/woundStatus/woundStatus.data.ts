@@ -1,4 +1,4 @@
-import { SWD6WoundStatus } from '../../../../../../types/games/starWarsD6';
+import { SWD6WoundStatus } from '@cthunline/games';
 
 export interface WoundStatusField {
     keys: (keyof SWD6WoundStatus)[];

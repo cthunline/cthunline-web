@@ -6,10 +6,10 @@ import {
     IconButton
 } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { CoCSkill } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App';
 import { onlyNumbers } from '../../../../../../services/tools';
-import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
 import { skillKeys } from './skills.data';
 import { controlSkill } from '../../cocSheet.helper';
 

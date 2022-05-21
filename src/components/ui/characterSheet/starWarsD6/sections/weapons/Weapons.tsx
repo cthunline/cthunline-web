@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Box } from '@mui/material';
+import { SWD6Weapon } from '@cthunline/games';
 
-import { SWD6Weapon } from '../../../../../../types/games/starWarsD6';
 import Weapon from './Weapon';
 import WeaponAdd from './WeaponAdd';
 

@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
+import { CoCLuck } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App';
 import { onlyNumbers } from '../../../../../../services/tools';
-import { CoCLuck } from '../../../../../../types/games/callOfCthulhu';
 import { luckKeys } from './characteristics.data';
 
 interface LuckProps {

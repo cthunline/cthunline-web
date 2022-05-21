@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
+import { CoCSanity } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App';
 import { onlyNumbers } from '../../../../../../services/tools';
-import { CoCSanity } from '../../../../../../types/games/callOfCthulhu';
 import { sanityKeys } from './characteristics.data';
 import { controlSanity } from '../../cocSheet.helper';
 

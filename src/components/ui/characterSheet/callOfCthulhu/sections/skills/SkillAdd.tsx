@@ -11,9 +11,9 @@ import {
     IconButton
 } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
+import { CoCSkill } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App';
-import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
 import AutocompleteInput from '../../../../autocompleteInput/AutocompleteInput';
 import {
     SkillData,

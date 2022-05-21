@@ -1,11 +1,11 @@
 import {
-    CoCCharacterData,
+    CoCCharacter,
     CoCCharacteristic,
     CoCPoint,
     CoCSanity,
     CoCSkill,
     CoCCombat
-} from '../../../../types/games/callOfCthulhu';
+} from '@cthunline/games';
 
 export const controlCharacteristic = (characteristic: CoCCharacteristic): CoCCharacteristic => {
     const char = characteristic;
@@ -40,7 +40,7 @@ export const controlSkill = (skillData: CoCSkill): CoCSkill => {
     return skill;
 };
 
-const calculateMove = (characterData: CoCCharacterData): number => {
+const calculateMove = (characterData: CoCCharacter): number => {
     let move = 8;
     const { age } = characterData.biography;
     const { strength, dexterity, size } = characterData.characteristics;
@@ -63,7 +63,7 @@ const calculateMove = (characterData: CoCCharacterData): number => {
     return move;
 };
 
-const calculateDamageBonusAndBuild = (characterData: CoCCharacterData): Omit<CoCCombat, 'move'> => {
+const calculateDamageBonusAndBuild = (characterData: CoCCharacter): Omit<CoCCombat, 'move'> => {
     const { strength, size } = characterData.characteristics;
     const sum = strength.regular + size.regular;
     if (sum >= 205) {
@@ -91,7 +91,7 @@ const calculateDamageBonusAndBuild = (characterData: CoCCharacterData): Omit<CoC
     return { damageBonus: '-2', build: '-2' };
 };
 
-const calculateCombat = (characterData: CoCCharacterData): CoCCombat => {
+const calculateCombat = (characterData: CoCCharacter): CoCCombat => {
     const move = calculateMove(characterData);
     const rest = calculateDamageBonusAndBuild(characterData);
     return {
@@ -100,7 +100,7 @@ const calculateCombat = (characterData: CoCCharacterData): CoCCombat => {
     };
 };
 
-export const controlCharacterData = (characterData: CoCCharacterData): CoCCharacterData => {
+export const controlCharacterData = (characterData: CoCCharacter): CoCCharacter => {
     const charData = characterData;
     charData.points.magicPoints.maximum = (
         Math.floor(charData.characteristics.power.regular / 5)
@@ -128,7 +128,7 @@ const defaultCharacteristic = {
     fifth: 0
 };
 
-export const defaultData: CoCCharacterData = {
+export const defaultData: CoCCharacter = {
     portrait: '',
     biography: {
         name: '',

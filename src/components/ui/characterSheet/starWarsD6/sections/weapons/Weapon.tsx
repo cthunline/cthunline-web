@@ -5,9 +5,9 @@ import {
     IconButton
 } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { SWD6Weapon } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App';
-import { SWD6Weapon } from '../../../../../../types/games/starWarsD6';
 import { weaponFields } from './weapons.data';
 
 interface WeaponProps {

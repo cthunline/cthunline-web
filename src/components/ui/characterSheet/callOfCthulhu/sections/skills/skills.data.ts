@@ -1,4 +1,4 @@
-import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
+import { CoCSkill } from '@cthunline/games';
 
 export interface KeyData {
     key: keyof CoCSkill;

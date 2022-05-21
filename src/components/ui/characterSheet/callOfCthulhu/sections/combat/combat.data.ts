@@ -1,4 +1,4 @@
-import { CoCCombat } from '../../../../../../types/games/callOfCthulhu';
+import { CoCCombat } from '@cthunline/games';
 
 export interface KeyData {
     key: keyof CoCCombat;

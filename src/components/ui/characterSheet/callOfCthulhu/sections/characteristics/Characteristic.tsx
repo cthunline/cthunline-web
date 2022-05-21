@@ -4,10 +4,10 @@ import {
     TextField,
     Tooltip
 } from '@mui/material';
+import { CoCCharacteristic } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App';
 import { onlyNumbers } from '../../../../../../services/tools';
-import { CoCCharacteristic } from '../../../../../../types/games/callOfCthulhu';
 import { charKeys } from './characteristics.data';
 import { controlCharacteristic } from '../../cocSheet.helper';
 

@@ -10,9 +10,9 @@ import {
     IconButton
 } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
+import { SWD6Weapon } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App';
-import { SWD6Weapon } from '../../../../../../types/games/starWarsD6';
 import { weaponFields } from './weapons.data';
 
 interface WeaponAddProps {

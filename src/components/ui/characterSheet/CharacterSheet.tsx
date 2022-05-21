@@ -1,11 +1,13 @@
 import React, { useCallback, useRef } from 'react';
 import { Paper } from '@mui/material';
+import {
+    CoCCharacter,
+    SWD6Character
+} from '@cthunline/games';
 
 import { CharacterData, GameId } from '../../../types';
 import CoCSheet from './callOfCthulhu/CoCSheet';
-import { CoCCharacterData } from '../../../types/games/callOfCthulhu';
 import SWD6Sheet from './starWarsD6/SWD6Sheet';
-import { SWD6CharacterData } from '../../../types/games/starWarsD6';
 
 import './CharacterSheet.css';
 
@@ -50,7 +52,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
             return (
                 <CoCSheet
                     readonly={readonly}
-                    data={data as CoCCharacterData}
+                    data={data as CoCCharacter}
                     listening={listening}
                     onChange={onChangeBuffer}
                 />
@@ -60,7 +62,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
             return (
                 <SWD6Sheet
                     readonly={readonly}
-                    data={data as SWD6CharacterData}
+                    data={data as SWD6Character}
                     listening={listening}
                     onChange={onChangeBuffer}
                 />

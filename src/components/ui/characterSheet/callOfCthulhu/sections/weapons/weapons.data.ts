@@ -1,4 +1,4 @@
-import { CoCWeapon } from '../../../../../../types/games/callOfCthulhu';
+import { CoCWeapon } from '@cthunline/games';
 
 export interface KeyData {
     key: keyof CoCWeapon;

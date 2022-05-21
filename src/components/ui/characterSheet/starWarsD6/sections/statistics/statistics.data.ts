@@ -1,4 +1,4 @@
-import { SWD6Statistics } from '../../../../../../types/games/starWarsD6';
+import { SWD6Statistics } from '@cthunline/games';
 
 export interface StatisticsField {
     key: keyof SWD6Statistics;

@@ -5,18 +5,18 @@ import React, {
     useState
 } from 'react';
 import { Box } from '@mui/material';
-
 import {
-    SWD6CharacterData,
+    SWD6Character,
     SWD6Biography,
-    SWD6Attribute,
+    SWD6AttributeKey,
     SWD6AttributeData,
     SWD6Skill,
     SWD6Statistics,
     SWD6WoundStatus,
     SWD6Weapon,
     SWD6Story
-} from '../../../../types/games/starWarsD6';
+} from '@cthunline/games';
+
 import { CharacterData, GameId } from '../../../../types';
 import { useApp } from '../../../contexts/App';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
@@ -34,7 +34,7 @@ const storyFields = fields.story as Field<SWD6Story>[];
 
 export interface SWD6SheetProps {
     readonly: boolean;
-    data: SWD6CharacterData;
+    data: SWD6Character;
     listening?: boolean;
     onChange: (
         name: string,
@@ -51,7 +51,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
 }) => {
     const { T } = useApp();
 
-    const [characterData, setCharacterData] = useState<SWD6CharacterData>(data);
+    const [characterData, setCharacterData] = useState<SWD6Character>(data);
 
     useEffect(() => {
         if (listening) {
@@ -94,7 +94,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     }, []);
 
     const onAttributeChange = useCallback((
-        attribute: SWD6Attribute,
+        attribute: SWD6AttributeKey,
         attributeData: Partial<SWD6AttributeData>
     ) => {
         setCharacterData((previous) => ({
@@ -110,7 +110,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     }, []);
 
     const onSkillCreate = useCallback((
-        attribute: SWD6Attribute,
+        attribute: SWD6AttributeKey,
         skillData: SWD6Skill
     ) => {
         setCharacterData((previous) => ({
@@ -131,7 +131,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     }, []);
 
     const onSkillChange = useCallback((
-        attribute: SWD6Attribute,
+        attribute: SWD6AttributeKey,
         skillIndex: number,
         skillData: SWD6Skill
     ) => {
@@ -150,7 +150,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     }, []);
 
     const onSkillDelete = useCallback((
-        attribute: SWD6Attribute,
+        attribute: SWD6AttributeKey,
         skillIndex: number
     ) => {
         setCharacterData((previous) => ({

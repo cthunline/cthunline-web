@@ -1,8 +1,8 @@
 import React, { memo } from 'react';
 import { Box, TextField, Checkbox } from '@mui/material';
+import { SWD6Statistics } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App';
-import { SWD6Statistics } from '../../../../../../types/games/starWarsD6';
 import { StatisticsField, statisticsFields } from './statistics.data';
 import { onlyNumbers } from '../../../../../../services/tools';
 

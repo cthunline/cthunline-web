@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Box } from '@mui/material';
+import { CoCWeapon } from '@cthunline/games';
 
-import { CoCWeapon } from '../../../../../../types/games/callOfCthulhu';
 import Weapon from './Weapon';
 import WeaponAdd from './WeaponAdd';
 

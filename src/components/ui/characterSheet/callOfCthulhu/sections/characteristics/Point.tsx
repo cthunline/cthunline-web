@@ -4,10 +4,10 @@ import {
     TextField,
     Tooltip
 } from '@mui/material';
+import { CoCPoint } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App';
 import { onlyNumbers } from '../../../../../../services/tools';
-import { CoCPoint } from '../../../../../../types/games/callOfCthulhu';
 import { pointsKeys } from './characteristics.data';
 import { controlPoint } from '../../cocSheet.helper';
 

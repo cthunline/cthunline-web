@@ -4,10 +4,10 @@ import {
     TextField,
     IconButton
 } from '@mui/material';
+import { CoCWeapon } from '@cthunline/games';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
 import { useApp } from '../../../../../contexts/App';
-import { CoCWeapon } from '../../../../../../types/games/callOfCthulhu';
 import { weaponKeys } from './weapons.data';
 
 interface WeaponProps {

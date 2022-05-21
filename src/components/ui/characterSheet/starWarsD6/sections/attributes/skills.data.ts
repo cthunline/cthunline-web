@@ -1,7 +1,7 @@
 import {
     SWD6Skill,
     SWD6Attribute
-} from '../../../../../../types/games/starWarsD6';
+} from '@cthunline/games';
 
 export interface SkillField {
     gridColumn: number;

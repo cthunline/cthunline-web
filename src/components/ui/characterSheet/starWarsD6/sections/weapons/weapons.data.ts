@@ -1,4 +1,4 @@
-import { SWD6Weapon } from '../../../../../../types/games/starWarsD6';
+import { SWD6Weapon } from '@cthunline/games';
 
 export interface FieldData {
     key: keyof SWD6Weapon;

@@ -1,15 +1,15 @@
 import React, { memo, useCallback } from 'react';
 import { Box } from '@mui/material';
-
 import {
-    CoCCharacterData,
+    CoCCharacter,
     CoCCharacteristic,
     CoCCharacteristics,
     CoCPoints,
     CoCPoint,
     CoCLuck,
     CoCSanity
-} from '../../../../../../types/games/callOfCthulhu';
+} from '@cthunline/games';
+
 import Characteristic from './Characteristic';
 import Point from './Point';
 import Luck from './Luck';
@@ -24,7 +24,7 @@ interface CharacteristicsProps {
     readonly: boolean;
     onCharacteristicsChange: (data: Partial<CoCCharacteristics>) => void;
     onPointsChange: (data: Partial<CoCPoints>) => void;
-    onLuckOrSanityChange: (data: Partial<CoCCharacterData>) => void;
+    onLuckOrSanityChange: (data: Partial<CoCCharacter>) => void;
 }
 
 const Characteristics: React.FC<CharacteristicsProps> = ({

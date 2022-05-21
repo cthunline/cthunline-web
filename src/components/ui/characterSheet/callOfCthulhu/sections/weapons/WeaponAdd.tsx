@@ -10,9 +10,9 @@ import {
     IconButton
 } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
+import { CoCWeapon } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App';
-import { CoCWeapon } from '../../../../../../types/games/callOfCthulhu';
 import { weaponAddKeys } from './weapons.data';
 
 interface WeaponAddProps {

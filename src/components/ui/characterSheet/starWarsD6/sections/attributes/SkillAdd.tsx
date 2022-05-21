@@ -5,13 +5,13 @@ import React, {
 } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
-
-import { useApp } from '../../../../../contexts/App';
-import AutocompleteInput from '../../../../autocompleteInput/AutocompleteInput';
 import {
     SWD6Attribute,
     SWD6Skill
-} from '../../../../../../types/games/starWarsD6';
+} from '@cthunline/games';
+
+import { useApp } from '../../../../../contexts/App';
+import AutocompleteInput from '../../../../autocompleteInput/AutocompleteInput';
 import {
     skillList,
     defaultSkillData

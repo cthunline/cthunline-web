@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { Box } from '@mui/material';
+import { CoCSkill } from '@cthunline/games';
 
-import { CoCSkill } from '../../../../../../types/games/callOfCthulhu';
 import Skill from './Skill';
 import SkillAdd from './SkillAdd';
 

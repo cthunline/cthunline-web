@@ -1,8 +1,8 @@
 import {
-    SWD6CharacterData,
+    SWD6Character,
     SWD6WoundStatus,
     SWD6WoundStatusKey
-} from '../../../../types/games/starWarsD6';
+} from '@cthunline/games';
 
 const orderedWoundStatus: SWD6WoundStatusKey[] = [
     'stunned',
@@ -30,7 +30,7 @@ export const controlWoundStatus = (woundStatusData: SWD6WoundStatus) => {
     return woundStatus;
 };
 
-export const controlCharacterData = (characterData: SWD6CharacterData): SWD6CharacterData => {
+export const controlCharacterData = (characterData: SWD6Character): SWD6Character => {
     const charData = characterData;
     charData.woundStatus = controlWoundStatus(charData.woundStatus);
     return charData;
@@ -41,7 +41,7 @@ const defaultAttribute = {
     skills: []
 };
 
-export const defaultData: SWD6CharacterData = {
+export const defaultData: SWD6Character = {
     portrait: '',
     biography: {
         name: '',

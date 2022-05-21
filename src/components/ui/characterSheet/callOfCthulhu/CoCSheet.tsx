@@ -5,9 +5,8 @@ import React, {
     useState
 } from 'react';
 import { Box } from '@mui/material';
-
 import {
-    CoCCharacterData,
+    CoCCharacter,
     CoCBiography,
     CoCStatus,
     CoCSkill,
@@ -15,7 +14,8 @@ import {
     CoCPoints,
     CoCWeapon,
     CoCStory
-} from '../../../../types/games/callOfCthulhu';
+} from '@cthunline/games';
+
 import { useApp } from '../../../contexts/App';
 import { CharacterData, GameId } from '../../../../types';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
@@ -34,7 +34,7 @@ const storyFields = fields.story as Field<CoCStory>[];
 
 export interface CoCSheetProps {
     readonly: boolean;
-    data: CoCCharacterData;
+    data: CoCCharacter;
     listening?: boolean;
     onChange: (
         name: string,
@@ -51,7 +51,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
 }) => {
     const { T } = useApp();
 
-    const [characterData, setCharacterData] = useState<CoCCharacterData>(data);
+    const [characterData, setCharacterData] = useState<CoCCharacter>(data);
 
     useEffect(() => {
         if (listening) {
@@ -119,7 +119,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
         ));
     }, []);
 
-    const onLuckOrSanityChange = useCallback((partialData: Partial<CoCCharacterData>) => {
+    const onLuckOrSanityChange = useCallback((partialData: Partial<CoCCharacter>) => {
         setCharacterData((previous) => (
             controlCharacterData({
                 ...previous,

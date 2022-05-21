@@ -1,13 +1,13 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
-
-import Skill from './Skill';
-import SkillAdd from './SkillAdd';
 import {
     SWD6Attribute,
     SWD6AttributeData,
     SWD6Skill
-} from '../../../../../../types/games/starWarsD6';
+} from '@cthunline/games';
+
+import Skill from './Skill';
+import SkillAdd from './SkillAdd';
 import { useApp } from '../../../../../contexts/App';
 
 import './Attribute.css';
