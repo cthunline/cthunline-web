@@ -8,7 +8,7 @@
         "lint": "eslint . --ext .js,.ts,.tsx --max-warnings=0 && stylelint \"**/*.css\" --max-warnings=0"
     },
     "dependencies": {
-        "@cthunline/games": "^0.0.1",
+        "@cthunline/games": "^0.0.2",
         "@emotion/react": "^11.9.0",
         "@emotion/styled": "^11.8.1",
         "@mui/material": "^5.8.0",
@@ -34,7 +34,7 @@
         "@typescript-eslint/eslint-plugin": "^5.25.0",
         "@typescript-eslint/parser": "^5.25.0",
         "@vitejs/plugin-react": "^1.3.2",
-        "eslint": "^8.15.0",
+        "eslint": "^8.16.0",
         "eslint-config-airbnb": "^19.0.4",
         "eslint-config-airbnb-typescript": "^17.0.0",
         "eslint-plugin-import": "^2.26.0",
@@ -42,7 +42,7 @@
         "eslint-plugin-react": "^7.30.0",
         "eslint-plugin-react-hooks": "^4.5.0",
         "husky": "^8.0.1",
-        "stylelint": "^14.8.2",
+        "stylelint": "^14.8.3",
         "stylelint-config-standard": "^25.0.0",
         "stylelint-order": "^5.0.0",
         "typescript": "^4.6.4",
