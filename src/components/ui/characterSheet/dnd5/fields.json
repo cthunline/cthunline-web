@@ -1,0 +1,51 @@
+{
+    "biography": [{
+        "key": "name",
+        "gridColumn": 5
+    }, {
+        "key": "class",
+        "gridColumn": 5
+    }, {
+        "key": "level",
+        "type": "number",
+        "gridColumn": 2
+    }, {
+        "key": "background",
+        "gridColumn": 4
+    }, {
+        "key": "race",
+        "gridColumn": 4
+    }, {
+        "key": "alignment",
+        "gridColumn": 4
+    }, {
+        "key": "description",
+        "gridColumn": 12,
+        "lines": 2
+    }],
+    "story": [{
+        "key": "backstory",
+        "gridColumn": 12,
+        "lines": 3
+    }, {
+        "key": "personalityTraits",
+        "gridColumn": 6,
+        "lines": 3
+    }, {
+        "key": "ideals",
+        "gridColumn": 6,
+        "lines": 3
+    }, {
+        "key": "bonds",
+        "gridColumn": 6,
+        "lines": 3
+    }, {
+        "key": "flaws",
+        "gridColumn": 6,
+        "lines": 3
+    }, {
+        "key": "alliesAndOrganizations",
+        "gridColumn": 6,
+        "lines": 3
+    }]
+}
