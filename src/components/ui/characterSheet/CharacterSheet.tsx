@@ -2,11 +2,13 @@ import React, { useCallback, useRef } from 'react';
 import { Paper } from '@mui/material';
 import {
     CoCCharacter,
+    DnD5Character,
     SWD6Character
 } from '@cthunline/games';
 
 import { CharacterData, GameId } from '../../../types';
 import CoCSheet from './callOfCthulhu/CoCSheet';
+import DnD5Sheet from './dnd5/DnD5Sheet';
 import SWD6Sheet from './starWarsD6/SWD6Sheet';
 
 import './CharacterSheet.css';
@@ -53,6 +55,16 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                 <CoCSheet
                     readonly={readonly}
                     data={data as CoCCharacter}
+                    listening={listening}
+                    onChange={onChangeBuffer}
+                />
+            );
+        }
+        if (gameId === GameId.dnd5) {
+            return (
+                <DnD5Sheet
+                    readonly={readonly}
+                    data={data as DnD5Character}
                     listening={listening}
                     onChange={onChangeBuffer}
                 />

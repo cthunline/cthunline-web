@@ -26,26 +26,26 @@
     "story": [{
         "key": "backstory",
         "gridColumn": 12,
-        "lines": 3
+        "lines": 4
     }, {
         "key": "personalityTraits",
         "gridColumn": 6,
-        "lines": 3
+        "lines": 4
     }, {
         "key": "ideals",
         "gridColumn": 6,
-        "lines": 3
+        "lines": 4
     }, {
         "key": "bonds",
         "gridColumn": 6,
-        "lines": 3
+        "lines": 4
     }, {
         "key": "flaws",
         "gridColumn": 6,
-        "lines": 3
+        "lines": 4
     }, {
         "key": "alliesAndOrganizations",
-        "gridColumn": 6,
-        "lines": 3
+        "gridColumn": 12,
+        "lines": 4
     }]
 }

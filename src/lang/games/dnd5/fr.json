@@ -1,0 +1,25 @@
+{
+    "dnd5": {
+        "biography": {
+            "alignment": "alignement",
+            "background": "historique",
+            "class": "classe",
+            "description": "description",
+            "level": "niveau",
+            "name": "nom",
+            "race": "race"
+        },
+        "common": {
+            "biography": "biographie",
+            "story": "histoire"
+        },
+        "story": {
+            "alliesAndOrganizations": "alliés & organisations",
+            "backstory": "histoire du personnage",
+            "bonds": "liens",
+            "flaws": "défauts",
+            "ideals": "idéaux",
+            "personalityTraits": "traits de personnalité"
+        }
+    }
+}
