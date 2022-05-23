@@ -8,10 +8,10 @@ import {
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { CoCSkill } from '@cthunline/games';
 
-import { useApp } from '../../../../../contexts/App';
-import { onlyNumbers } from '../../../../../../services/tools';
+import { useApp } from '../../../../contexts/App';
+import { onlyNumbers } from '../../../../../services/tools';
 import { skillKeys } from './skills.data';
-import { controlSkill } from '../../cocSheet.helper';
+import { controlSkill } from '../cocSheet.helper';
 
 interface SkillProps {
     index: number;

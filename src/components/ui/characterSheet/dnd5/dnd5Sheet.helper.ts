@@ -1,16 +1,25 @@
 import {
     DnD5Character,
     DnD5Abilities,
-    DnD5Skills
+    DnD5Skills,
+    DnD5Ability
 } from '@cthunline/games';
+
+export const displayModifier = (modifier: number): string => (
+    `${modifier >= 0 ? '+' : ''}${modifier}`
+);
+
+export const calculateAbility = (ability: DnD5Ability): DnD5Ability => ({
+    ...ability,
+    modifier: Math.floor((ability.score - 10) / 2)
+});
 
 export const calculateAbilities = (characterData: DnD5Character): DnD5Character => {
     const abilities = { ...characterData.abilities };
     const abilityKeys = Object.keys(abilities) as (keyof DnD5Abilities)[];
     abilityKeys.forEach((abilityKey) => {
-        const { score } = abilities[abilityKey];
-        abilities[abilityKey].modifier = (
-            Math.floor((score - 10) / 2)
+        abilities[abilityKey] = calculateAbility(
+            abilities[abilityKey]
         );
     });
     return {

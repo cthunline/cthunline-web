@@ -13,8 +13,8 @@ import {
 import { FiPlusCircle } from 'react-icons/fi';
 import { CoCSkill } from '@cthunline/games';
 
-import { useApp } from '../../../../../contexts/App';
-import AutocompleteInput from '../../../../autocompleteInput/AutocompleteInput';
+import { useApp } from '../../../../contexts/App';
+import AutocompleteInput from '../../../autocompleteInput/AutocompleteInput';
 import {
     SkillData,
     skillList,

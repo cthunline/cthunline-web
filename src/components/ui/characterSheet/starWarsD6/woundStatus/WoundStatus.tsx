@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Box, Checkbox } from '@mui/material';
 import { SWD6WoundStatus } from '@cthunline/games';
 
-import { useApp } from '../../../../../contexts/App';
+import { useApp } from '../../../../contexts/App';
 import { WoundStatusField, woundStatusFields } from './woundStatus.data';
 
 interface WoundStatusProps {

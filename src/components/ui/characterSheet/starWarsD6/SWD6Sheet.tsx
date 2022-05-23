@@ -22,10 +22,10 @@ import { useApp } from '../../../contexts/App';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
-import Attributes from './sections/attributes/Attributes';
-import Statistics from './sections/statistics/Statistics';
-import WoundStatus from './sections/woundStatus/WoundStatus';
-import Weapons from './sections/weapons/Weapons';
+import Attributes from './attributes/Attributes';
+import Statistics from './statistics/Statistics';
+import WoundStatus from './woundStatus/WoundStatus';
+import Weapons from './weapons/Weapons';
 import { controlCharacterData } from './swd6Sheet.helper';
 import fields from './fields.json';
 

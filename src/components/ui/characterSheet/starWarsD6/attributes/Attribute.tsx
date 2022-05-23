@@ -8,7 +8,7 @@ import {
 
 import Skill from './Skill';
 import SkillAdd from './SkillAdd';
-import { useApp } from '../../../../../contexts/App';
+import { useApp } from '../../../../contexts/App';
 
 import './Attribute.css';
 

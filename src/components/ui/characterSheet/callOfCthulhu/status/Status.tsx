@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Box, FormControlLabel, Checkbox } from '@mui/material';
 import { CoCStatus } from '@cthunline/games';
 
-import { useApp } from '../../../../../contexts/App';
+import { useApp } from '../../../../contexts/App';
 import { fields } from './status.data';
 
 interface StatusProps {

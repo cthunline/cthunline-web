@@ -2,9 +2,9 @@ import React, { memo } from 'react';
 import { Box, TextField, Checkbox } from '@mui/material';
 import { SWD6Statistics } from '@cthunline/games';
 
-import { useApp } from '../../../../../contexts/App';
+import { useApp } from '../../../../contexts/App';
 import { StatisticsField, statisticsFields } from './statistics.data';
-import { onlyNumbers } from '../../../../../../services/tools';
+import { onlyNumbers } from '../../../../../services/tools';
 
 interface StatisticsProps {
     statistics: SWD6Statistics;

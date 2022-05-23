@@ -1,5 +1,13 @@
 {
     "dnd5": {
+        "ability": {
+            "charisma": "charisme",
+            "constitution": "constitution",
+            "dexterity": "dextérité",
+            "intelligence": "intelligence",
+            "strength": "force",
+            "wisdom": "sagesse"
+        },
         "biography": {
             "alignment": "alignement",
             "background": "historique",
@@ -10,7 +18,11 @@
             "race": "race"
         },
         "common": {
+            "abilities": "caractéristiques",
+            "ability": "caractéristique",
             "biography": "biographie",
+            "modifier": "modificateur",
+            "score": "score",
             "story": "histoire"
         },
         "story": {

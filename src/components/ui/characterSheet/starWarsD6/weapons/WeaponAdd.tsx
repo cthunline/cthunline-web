@@ -12,7 +12,7 @@ import {
 import { FiPlusCircle } from 'react-icons/fi';
 import { SWD6Weapon } from '@cthunline/games';
 
-import { useApp } from '../../../../../contexts/App';
+import { useApp } from '../../../../contexts/App';
 import { weaponFields } from './weapons.data';
 
 interface WeaponAddProps {

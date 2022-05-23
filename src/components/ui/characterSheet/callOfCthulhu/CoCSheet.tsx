@@ -21,11 +21,11 @@ import { CharacterData, GameId } from '../../../../types';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
-import Characteristics from './sections/characteristics/Characteristics';
-import Status from './sections/status/Status';
-import Skills from './sections/skills/Skills';
-import Combat from './sections/combat/Combat';
-import Weapons from './sections/weapons/Weapons';
+import Characteristics from './characteristics/Characteristics';
+import Status from './status/Status';
+import Skills from './skills/Skills';
+import Combat from './combat/Combat';
+import Weapons from './weapons/Weapons';
 import { controlCharacterData } from './cocSheet.helper';
 import fields from './fields.json';
 

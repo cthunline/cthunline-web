@@ -6,10 +6,10 @@ import {
 } from '@mui/material';
 import { CoCPoint } from '@cthunline/games';
 
-import { useApp } from '../../../../../contexts/App';
-import { onlyNumbers } from '../../../../../../services/tools';
+import { useApp } from '../../../../contexts/App';
+import { onlyNumbers } from '../../../../../services/tools';
 import { pointsKeys } from './characteristics.data';
-import { controlPoint } from '../../cocSheet.helper';
+import { controlPoint } from '../cocSheet.helper';
 
 interface PointProps {
     field: string;

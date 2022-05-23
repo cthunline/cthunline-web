@@ -6,10 +6,10 @@ import {
 } from '@mui/material';
 import { CoCCharacteristic } from '@cthunline/games';
 
-import { useApp } from '../../../../../contexts/App';
-import { onlyNumbers } from '../../../../../../services/tools';
+import { useApp } from '../../../../contexts/App';
+import { onlyNumbers } from '../../../../../services/tools';
 import { charKeys } from './characteristics.data';
-import { controlCharacteristic } from '../../cocSheet.helper';
+import { controlCharacteristic } from '../cocSheet.helper';
 
 interface CharacteristicProps {
     field: string;

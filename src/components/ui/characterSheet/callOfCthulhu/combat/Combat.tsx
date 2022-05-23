@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { CoCCombat } from '@cthunline/games';
 
-import { useApp } from '../../../../../contexts/App';
+import { useApp } from '../../../../contexts/App';
 import { combatKeys } from './combat.data';
 
 interface CombatProps {

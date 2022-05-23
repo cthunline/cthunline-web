@@ -4,17 +4,17 @@ import {
     TextField,
     IconButton
 } from '@mui/material';
-import { CoCWeapon } from '@cthunline/games';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { SWD6Weapon } from '@cthunline/games';
 
-import { useApp } from '../../../../../contexts/App';
-import { weaponKeys } from './weapons.data';
+import { useApp } from '../../../../contexts/App';
+import { weaponFields } from './weapons.data';
 
 interface WeaponProps {
     index: number;
-    data: CoCWeapon;
+    data: SWD6Weapon;
     readonly: boolean;
-    onChange: (index: number, data: CoCWeapon) => void;
+    onChange: (index: number, data: SWD6Weapon) => void;
     onDelete: (index: number) => void;
 }
 
@@ -31,14 +31,15 @@ const Weapon: React.FC<WeaponProps> = ({
         <Box
             gridColumn="span 12"
             display="grid"
-            gridTemplateColumns="repeat(24, 1fr)"
-            alignItems="center"
+            gridTemplateColumns="repeat(15, 1fr)"
+            gap={1}
         >
-            <Box gridColumn={`span ${readonly ? '10' : '8'}`}>
-                {data.name}
-            </Box>
-            {weaponKeys.map(({ key, gridColumn }) => (
-                <Box key={`weapon-${key}`} gridColumn={`span ${gridColumn}`}>
+            {weaponFields.map(({ key, gridColumn }) => (
+                <Box
+                    key={`weapon-${key}`}
+                    gridColumn={`span ${gridColumn}`}
+                    alignItems="center"
+                >
                     <TextField
                         fullWidth
                         InputProps={{
@@ -46,7 +47,7 @@ const Weapon: React.FC<WeaponProps> = ({
                         }}
                         type="text"
                         size="small"
-                        label={T(`game.callOfCthulhu.weapon.${key}`)}
+                        label={T(`game.starWarsD6.weapon.${key}`)}
                         value={data[key]}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             onChange(index, {
@@ -58,7 +59,7 @@ const Weapon: React.FC<WeaponProps> = ({
                 </Box>
             ))}
             {readonly ? null : (
-                <Box gridColumn="span 2">
+                <Box gridColumn="span 1" alignItems="center">
                     <IconButton
                         size="medium"
                         color="error"

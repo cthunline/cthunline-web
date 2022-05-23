@@ -8,7 +8,8 @@ import { Box } from '@mui/material';
 import {
     DnD5Character,
     DnD5Biography,
-    DnD5Story
+    DnD5Story,
+    DnD5Abilities
 } from '@cthunline/games';
 
 import { CharacterData, GameId } from '../../../../types';
@@ -16,7 +17,8 @@ import { useApp } from '../../../contexts/App';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
-// import { controlCharacterData } from './dnd5Sheet.helper';
+import Abilities from './abilities/Abilities';
+import { controlCharacterData } from './dnd5Sheet.helper';
 import fields from './fields.json';
 
 const biographyFields = fields.biography as Field<DnD5Biography>[];
@@ -83,6 +85,18 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
         }));
     }, []);
 
+    const onAbilitiesChange = useCallback((partialAbilities: Partial<DnD5Abilities>) => {
+        setCharacterData((previous) => (
+            controlCharacterData({
+                ...previous,
+                abilities: {
+                    ...previous.abilities,
+                    ...partialAbilities
+                }
+            })
+        ));
+    }, []);
+
     const onStoryChange = useCallback((story: DnD5Story) => {
         setCharacterData((previous) => ({
             ...previous,
@@ -110,6 +124,15 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                     base64={characterData.portrait}
                     readonly={readonly}
                     onChange={onPortraitChange}
+                />
+            </Box>
+            {/* abilities */}
+            <Box gridColumn="span 12">
+                <SectionTitle text={T('game.dnd5.common.abilities')} />
+                <Abilities
+                    abilities={characterData.abilities}
+                    readonly={readonly}
+                    onChange={onAbilitiesChange}
                 />
             </Box>
             {/* story */}

@@ -10,8 +10,8 @@ import {
     SWD6Skill
 } from '@cthunline/games';
 
-import { useApp } from '../../../../../contexts/App';
-import AutocompleteInput from '../../../../autocompleteInput/AutocompleteInput';
+import { useApp } from '../../../../contexts/App';
+import AutocompleteInput from '../../../autocompleteInput/AutocompleteInput';
 import {
     skillList,
     defaultSkillData
