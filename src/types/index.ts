@@ -181,6 +181,7 @@ export type CharacterEditBody = Partial<Omit<CharacterCreateBody, 'gameId'>>;
 
 export enum GameId {
     callOfCthulhu = 'callOfCthulhu',
+    dnd5 = 'dnd5',
     starWarsD6 = 'starWarsD6'
 }
 
