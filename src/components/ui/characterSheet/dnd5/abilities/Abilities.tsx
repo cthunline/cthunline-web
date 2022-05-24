@@ -1,8 +1,10 @@
-import React, { memo, useCallback } from 'react';
-import { Box } from '@mui/material';
-import { DnD5Abilities, DnD5Ability } from '@cthunline/games';
+import React, { memo } from 'react';
+import { Box, TextField } from '@mui/material';
+import { DnD5Abilities } from '@cthunline/games';
 
-import Ability from './Ability';
+import { useApp } from '../../../../contexts/App';
+import { onlyNumbers } from '../../../../../services/tools';
+import { displayModifier, calculateAbility } from '../dnd5Sheet.helper';
 
 interface AbilitiesProps {
     abilities: DnD5Abilities;
@@ -15,26 +17,64 @@ const Abilities: React.FC<AbilitiesProps> = ({
     readonly,
     onChange
 }) => {
-    const onAbilityChange = useCallback((
-        ability: keyof DnD5Abilities,
-        abilityData: DnD5Ability
-    ) => {
-        onChange({
-            [ability]: abilityData
-        });
-    }, [onChange]);
+    const { T } = useApp();
 
     return (
-        <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2} columnGap={6}>
-            {(Object.keys(abilities) as (keyof DnD5Abilities)[]).map((ability) => (
-                <Ability
-                    key={`ability-${ability}`}
-                    ability={ability}
-                    data={abilities[ability]}
-                    readonly={readonly}
-                    onChange={onAbilityChange}
-                />
-            ))}
+        <Box
+            gridColumn="span 12"
+            display="grid"
+            gridTemplateColumns="repeat(12, 1fr)"
+            alignItems="center"
+            gap={2}
+        >
+            {(Object.keys(abilities) as (keyof DnD5Abilities)[]).map((ability) => {
+                const data = abilities[ability];
+                return (
+                    <Box
+                        gridColumn="span 12"
+                        display="grid"
+                        gridTemplateColumns="repeat(12, 1fr)"
+                        alignItems="center"
+                        gap={2}
+                    >
+                        <Box gridColumn="span 6">
+                            {T(`game.dnd5.ability.${ability}`)}
+                        </Box>
+                        <Box gridColumn="span 3">
+                            <TextField
+                                fullWidth
+                                InputProps={{
+                                    readOnly: readonly
+                                }}
+                                type="text"
+                                size="small"
+                                label={T('game.dnd5.common.score')}
+                                value={data.score}
+                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                    onChange({
+                                        [ability]: calculateAbility({
+                                            ...data,
+                                            score: Number(onlyNumbers(e.target.value))
+                                        })
+                                    });
+                                }}
+                            />
+                        </Box>
+                        <Box gridColumn="span 3">
+                            <TextField
+                                fullWidth
+                                InputProps={{
+                                    readOnly: true
+                                }}
+                                type="text"
+                                size="small"
+                                label={T('game.dnd5.common.modifier')}
+                                value={displayModifier(data.modifier)}
+                            />
+                        </Box>
+                    </Box>
+                );
+            })}
         </Box>
     );
 };

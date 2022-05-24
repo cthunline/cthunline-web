@@ -22,8 +22,38 @@
             "ability": "caractéristique",
             "biography": "biographie",
             "modifier": "modificateur",
+            "savingThrows": "jets de sauvegarde",
+            "skill": "compétence",
+            "skills": "compétences",
             "score": "score",
+            "statistics": "statistiques",
             "story": "histoire"
+        },
+        "skill": {
+            "acrobatics": "acrobaties",
+            "animalHandling": "dressage",
+            "arcana": "arcanes",
+            "athletics": "athlétisme",
+            "deception": "tromperie",
+            "history": "histoire",
+            "insight": "perspicacité",
+            "intimidation": "intimidation",
+            "investigation": "investigation",
+            "medicine": "médecine",
+            "nature": "nature",
+            "perception": "perception",
+            "performance": "représentation",
+            "persuasion": "persuasion",
+            "religion": "religion",
+            "sleightOfHand": "escamotage",
+            "stealth": "discrétion",
+            "survival": "survie"
+        },
+        "statistics": {
+            "experiencePoints": "points d'expérience",
+            "inspiration": "inspiration",
+            "passiveWisdom": "sagesse passive (perception)",
+            "proficiencyBonus": "bonus de maîtrise"
         },
         "story": {
             "alliesAndOrganizations": "alliés & organisations",

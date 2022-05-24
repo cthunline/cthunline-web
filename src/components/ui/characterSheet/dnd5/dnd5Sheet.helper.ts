@@ -62,9 +62,9 @@ export const calculateSkills = (characterData: DnD5Character): DnD5Character => 
         const { proficient } = skills[skillKey];
         const abilityModifier = abilities[skillAbilities[skillKey]].modifier;
         skills[skillKey].modifier = (
-            proficient ? abilityModifier : (
+            proficient ? (
                 abilityModifier + proficiencyBonus
-            )
+            ) : abilityModifier
         );
     });
     return {
@@ -73,16 +73,36 @@ export const calculateSkills = (characterData: DnD5Character): DnD5Character => 
     };
 };
 
-export const calculateCombat = (characterData: DnD5Character): DnD5Character => ({
+export const calculateSavingThrows = (characterData: DnD5Character): DnD5Character => {
+    const {
+        abilities,
+        statistics: {
+            proficiencyBonus
+        }
+    } = characterData;
+    const savingThrows = { ...characterData.savingThrows };
+    const savingThrowKeys = Object.keys(savingThrows) as (keyof DnD5Abilities)[];
+    savingThrowKeys.forEach((ability) => {
+        const { proficient } = savingThrows[ability];
+        const abilityModifier = abilities[ability].modifier;
+        savingThrows[ability].modifier = (
+            proficient ? abilityModifier : (
+                abilityModifier + proficiencyBonus
+            )
+        );
+    });
+    return {
+        ...characterData,
+        savingThrows
+    };
+};
+
+export const calculateOtherStats = (characterData: DnD5Character): DnD5Character => ({
     ...characterData,
     combat: {
         ...characterData.combat,
         initiative: characterData.abilities.dexterity.modifier
-    }
-});
-
-export const calculateStatistics = (characterData: DnD5Character): DnD5Character => ({
-    ...characterData,
+    },
     statistics: {
         ...characterData.statistics,
         passiveWisdom: 10 + characterData.skills.perception.modifier
@@ -90,10 +110,10 @@ export const calculateStatistics = (characterData: DnD5Character): DnD5Character
 });
 
 export const controlCharacterData = (characterData: DnD5Character): DnD5Character => (
-    calculateAbilities(
+    calculateOtherStats(
         calculateSkills(
-            calculateCombat(
-                calculateStatistics(
+            calculateSavingThrows(
+                calculateAbilities(
                     characterData
                 )
             )

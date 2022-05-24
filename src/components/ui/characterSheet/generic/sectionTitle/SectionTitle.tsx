@@ -4,14 +4,21 @@ import { Typography } from '@mui/material';
 interface SectionTitleProps {
     text: string;
     gridColumn?: string;
+    mb?: number;
+    mt?: number;
 }
 
-const SectionTitle = ({ text, gridColumn }: SectionTitleProps) => (
+const SectionTitle = ({
+    text,
+    gridColumn,
+    mb,
+    mt
+}: SectionTitleProps) => (
     <Typography
         variant="h6"
         gridColumn={gridColumn}
-        mt={1}
-        mb={1}
+        mb={mb ?? 1}
+        mt={mt ?? 1}
     >
         {text}
     </Typography>
