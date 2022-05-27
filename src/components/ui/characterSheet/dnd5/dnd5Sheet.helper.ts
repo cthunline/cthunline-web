@@ -97,17 +97,73 @@ export const calculateSavingThrows = (characterData: DnD5Character): DnD5Charact
     };
 };
 
-export const calculateOtherStats = (characterData: DnD5Character): DnD5Character => ({
-    ...characterData,
-    combat: {
-        ...characterData.combat,
-        initiative: characterData.abilities.dexterity.modifier
-    },
-    statistics: {
-        ...characterData.statistics,
-        passiveWisdom: 10 + characterData.skills.perception.modifier
+export const forcePositive = (num: number): number => (
+    num >= 0 ? num : 0
+);
+
+export const controlDeathSave = (amount: number): number => {
+    if (amount < 0) {
+        return 0;
     }
-});
+    if (amount > 3) {
+        return 3;
+    }
+    return amount;
+};
+
+export const calculateOtherStats = (characterData: DnD5Character): DnD5Character => {
+    const {
+        abilities: {
+            dexterity: {
+                modifier: dexterityModifier
+            }
+        },
+        skills: {
+            perception: {
+                modifier: perceptionModifier
+            }
+        },
+        combat: {
+            speed,
+            deathSaves: {
+                successes: deathSaveSuccesses,
+                failures: deathSaveFailures
+            },
+            hitPoints: {
+                current: currentHP,
+                maximum: maximumHP,
+                temporary: temporaryHP
+            }
+        }
+    } = characterData;
+    return {
+        ...characterData,
+        combat: {
+            ...characterData.combat,
+            initiative: dexterityModifier,
+            speed: forcePositive(speed),
+            deathSaves: {
+                successes: controlDeathSave(deathSaveSuccesses),
+                failures: controlDeathSave(deathSaveFailures)
+            },
+            hitPoints: {
+                current: currentHP > maximumHP ? maximumHP : forcePositive(currentHP),
+                maximum: forcePositive(maximumHP),
+                temporary: forcePositive(temporaryHP)
+            }
+        },
+        statistics: {
+            ...characterData.statistics,
+            passiveWisdom: 10 + perceptionModifier
+        },
+        spellcasting: {
+            ...characterData.spellcasting,
+            levels: characterData.spellcasting.levels.sort((a, b) => (
+                a.level - b.level
+            ))
+        }
+    };
+};
 
 export const controlCharacterData = (characterData: DnD5Character): DnD5Character => (
     calculateOtherStats(

@@ -23,6 +23,15 @@
         "gridColumn": 12,
         "lines": 2
     }],
+    "features": [{
+        "key": "featuresAndTraits",
+        "gridColumn": 6,
+        "lines": 8
+    }, {
+        "key": "proficienciesAndLanguages",
+        "gridColumn": 6,
+        "lines": 8
+    }],
     "story": [{
         "key": "backstory",
         "gridColumn": 12,

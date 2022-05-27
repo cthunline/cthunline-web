@@ -18,13 +18,7 @@ const ModifierRow: React.FC<ModifierRowProps> = ({
     proficient,
     onProficientChange
 }) => (
-    <Box
-        gridColumn="span 12"
-        display="grid"
-        gridTemplateColumns="repeat(12, 1fr)"
-        alignItems="center"
-        gap={2}
-    >
+    <>
         <Box gridColumn="span 7">
             {text}
         </Box>
@@ -49,7 +43,7 @@ const ModifierRow: React.FC<ModifierRowProps> = ({
                 }}
             />
         </Box>
-    </Box>
+    </>
 );
 
 export default memo(ModifierRow);

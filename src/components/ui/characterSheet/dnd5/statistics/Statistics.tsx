@@ -29,37 +29,29 @@ const Statistics: React.FC<StatisticsProps> = ({
             {(Object.keys(statistics) as (keyof DnD5Statistics)[]).map((stat) => {
                 const value = statistics[stat];
                 const editable = !readonly && stat !== 'passiveWisdom';
-                return (
-                    <Box
-                        gridColumn="span 12"
-                        display="grid"
-                        gridTemplateColumns="repeat(12, 1fr)"
-                        alignItems="center"
-                        gap={2}
-                    >
-                        <Box gridColumn="span 9">
-                            {T(`game.dnd5.statistics.${stat}`)}
-                        </Box>
-                        <Box gridColumn="span 3">
-                            <TextField
-                                fullWidth
-                                InputProps={{
-                                    readOnly: !editable
-                                }}
-                                type="text"
-                                size="small"
-                                value={value}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    if (editable) {
-                                        onChange({
-                                            [stat]: Number(onlyNumbers(e.target.value))
-                                        });
-                                    }
-                                }}
-                            />
-                        </Box>
+                return [
+                    <Box key={`statistics-${stat}-label`} gridColumn="span 9">
+                        {T(`game.dnd5.statistics.${stat}`)}
+                    </Box>,
+                    <Box key={`statistics-${stat}-input`} gridColumn="span 3">
+                        <TextField
+                            fullWidth
+                            InputProps={{
+                                readOnly: !editable
+                            }}
+                            type="text"
+                            size="small"
+                            value={value}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                if (editable) {
+                                    onChange({
+                                        [stat]: Number(onlyNumbers(e.target.value))
+                                    });
+                                }
+                            }}
+                        />
                     </Box>
-                );
+                ];
             })}
         </Box>
     );

@@ -12,7 +12,12 @@ import {
     DnD5Abilities,
     DnD5SavingThrows,
     DnD5Skills,
-    DnD5Statistics
+    DnD5Statistics,
+    DnD5Combat,
+    DnD5Attack,
+    DnD5Equipment,
+    DnD5Features,
+    DnD5Spellcasting
 } from '@cthunline/games';
 
 import { CharacterData, GameId } from '../../../../types';
@@ -24,14 +29,38 @@ import Abilities from './abilities/Abilities';
 import SavingThrows from './savingThrows/SavingThrows';
 import Skills from './skills/Skills';
 import Statistics from './statistics/Statistics';
+import Combat from './combat/Combat';
+import Attacks from './attacks/Attacks';
+import AddAttackButton from './attacks/AddAttackButton';
+import Equipment from './equipment/Equipment';
+import Spellcasting from './spellcasting/Spellcasting';
+import { getDefaulSpellLevel } from './spellcasting/spellcasting.data';
 import { controlCharacterData } from './dnd5Sheet.helper';
 import fields from './fields.json';
 
 const biographyFields = fields.biography as Field<DnD5Biography>[];
+const featuresFields = fields.features as Field<DnD5Features>[];
 const storyFields = fields.story as Field<DnD5Story>[];
 
-type PartialDataField = 'abilities' | 'savingThrows' | 'skills' | 'statistics';
-type PartialData = Partial<DnD5Abilities | DnD5SavingThrows | DnD5Skills | DnD5Statistics>;
+type PartialDataField = 'abilities'
+| 'savingThrows'
+| 'skills'
+| 'statistics'
+| 'combat'
+| 'attacks'
+| 'equipment'
+| 'spellcasting';
+
+type PartialDataType = DnD5Abilities
+| DnD5SavingThrows
+| DnD5Skills
+| DnD5Statistics
+| DnD5Combat
+| DnD5Attack
+| DnD5Equipment
+| DnD5Spellcasting;
+
+type PartialData = Partial<PartialDataType>;
 
 export interface DnD5SheetProps {
     readonly: boolean;
@@ -106,6 +135,60 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
         ));
     }, []);
 
+    const onAttackCreate = useCallback((attack: DnD5Attack) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            attacks: [
+                ...previous.attacks,
+                attack
+            ]
+        }));
+    }, []);
+
+    const onAttackChange = useCallback((index: number, attack: DnD5Attack) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            attacks: previous.attacks.map((att, idx) => (
+                idx === index ? attack : att
+            ))
+        }));
+    }, []);
+
+    const onAttackDelete = useCallback((index: number) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            attacks: previous.attacks.filter((a, idx) => (
+                idx !== index
+            ))
+        }));
+    }, []);
+
+    const onFeaturesChange = useCallback((features: DnD5Features) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            features
+        }));
+    }, []);
+
+    const onSpellLevelCreate = useCallback(() => {
+        setCharacterData((previous) => {
+            const nextLevel = Math.max(
+                0,
+                ...previous.spellcasting.levels.map((lvl) => lvl.level)
+            ) + 1;
+            return {
+                ...previous,
+                spellcasting: {
+                    ...previous.spellcasting,
+                    levels: [
+                        ...previous.spellcasting.levels,
+                        getDefaulSpellLevel(nextLevel)
+                    ]
+                }
+            };
+        });
+    }, []);
+
     const onStoryChange = useCallback((story: DnD5Story) => {
         setCharacterData((previous) => ({
             ...previous,
@@ -174,6 +257,61 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                         onChange={(partial) => changePartialData('skills', partial)}
                     />
                 </Box>
+            </Box>
+            {/* combat */}
+            <Box gridColumn="span 12">
+                <SectionTitle text={T('game.dnd5.common.combat')} />
+                <Combat
+                    combat={characterData.combat}
+                    readonly={readonly}
+                    onChange={(partial) => changePartialData('combat', partial)}
+                />
+            </Box>
+            {/* attacks */}
+            <Box gridColumn="span 12">
+                <SectionTitle
+                    text={T('game.dnd5.common.attacks')}
+                    iconAfter={<AddAttackButton onCreate={onAttackCreate} />}
+                />
+                <Attacks
+                    attacks={characterData.attacks}
+                    readonly={readonly}
+                    onChange={onAttackChange}
+                    onDelete={onAttackDelete}
+                />
+            </Box>
+            {/* equipment */}
+            <Box gridColumn="span 12">
+                <SectionTitle text={T('game.dnd5.common.equipment')} />
+                <Equipment
+                    equipment={characterData.equipment}
+                    readonly={readonly}
+                    onChange={(partial) => changePartialData('equipment', partial)}
+                />
+            </Box>
+            {/* features */}
+            <Box gridColumn="span 12">
+                <SectionTitle text={T('game.dnd5.common.features')} />
+                <FieldLayout<DnD5Features>
+                    gameId={GameId.dnd5}
+                    fields={featuresFields}
+                    textSectionKey="features"
+                    data={characterData.features}
+                    readonly={readonly}
+                    onChange={onFeaturesChange}
+                />
+            </Box>
+            {/* spellcasting */}
+            <Box gridColumn="span 12">
+                <SectionTitle
+                    text={T('game.dnd5.common.spellcasting')}
+                    iconAfter={<AddAttackButton onCreate={onSpellLevelCreate} />}
+                />
+                <Spellcasting
+                    spellcasting={characterData.spellcasting}
+                    readonly={readonly}
+                    onChange={(partial) => changePartialData('spellcasting', partial)}
+                />
             </Box>
             {/* story */}
             <Box gridColumn="span 12">

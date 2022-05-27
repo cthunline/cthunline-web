@@ -30,6 +30,7 @@ const SavingThrows: React.FC<SavingThrowsProps> = ({
                 const data = savingThrows[ability];
                 return (
                     <ModifierRow
+                        key={`savingThrow-${ability}`}
                         readonly={readonly}
                         text={T(`game.dnd5.ability.${ability}`)}
                         proficient={data.proficient}

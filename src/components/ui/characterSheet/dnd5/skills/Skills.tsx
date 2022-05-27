@@ -30,6 +30,7 @@ const Skills: React.FC<SkillsProps> = ({
                 const data = skills[skill];
                 return (
                     <ModifierRow
+                        key={`skill-${skill}`}
                         readonly={readonly}
                         text={T(`game.dnd5.skill.${skill}`)}
                         proficient={data.proficient}

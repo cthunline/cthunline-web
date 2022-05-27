@@ -8,6 +8,12 @@
             "strength": "force",
             "wisdom": "sagesse"
         },
+        "attack": {
+            "attackBonus": "bonus d'attaque",
+            "damage": "dégâts",
+            "name": "nom",
+            "type": "type"
+        },
         "biography": {
             "alignment": "alignement",
             "background": "historique",
@@ -17,17 +23,53 @@
             "name": "nom",
             "race": "race"
         },
+        "combat": {
+            "armorClass": "classe d'armure",
+            "deathSaves": "sauvegardes mort",
+            "hitDice": "dés de vie",
+            "hitPoints": "points de vie",
+            "initiative": "initiative",
+            "speed": "vitesse"
+        },
         "common": {
             "abilities": "caractéristiques",
             "ability": "caractéristique",
+            "attack": "attaque",
+            "attacks": "attaques",
             "biography": "biographie",
+            "combat": "combat",
+            "current": "actuel",
+            "equipment": "équipement",
+            "failure": "échec",
+            "failures": "échecs",
+            "feature": "capacité",
+            "features": "capacités",
+            "maximum": "maximum",
             "modifier": "modificateur",
             "savingThrows": "jets de sauvegarde",
             "skill": "compétence",
             "skills": "compétences",
             "score": "score",
+            "spellcasting": "sorts",
             "statistics": "statistiques",
-            "story": "histoire"
+            "story": "histoire",
+            "success": "succès",
+            "successes": "succès",
+            "temporary": "temporaire"
+        },
+        "equipment": {
+            "copper": "cuivre",
+            "electrum": "électrum",
+            "gold": "or",
+            "items": "objets",
+            "money": "monnaie",
+            "platinum": "platine",
+            "silver": "argent",
+            "treasure": "trésor"
+        },
+        "features": {
+            "featuresAndTraits": "capacités et traits",
+            "proficienciesAndLanguages": "maîtrises et langues"
         },
         "skill": {
             "acrobatics": "acrobaties",
@@ -48,6 +90,16 @@
             "sleightOfHand": "escamotage",
             "stealth": "discrétion",
             "survival": "survie"
+        },
+        "spellcasting": {
+            "cantrips": "tours de magie",
+            "class": "classe de lanceur de sorts",
+            "level": "niveau",
+            "slotsExpended": "utilisés",
+            "slotsTotal": "total",
+            "spellAbility": "caractéristique",
+            "spellAttackBonus": "bonus d'attaque",
+            "spellSaveDC": "DD de sauvegarde"
         },
         "statistics": {
             "experiencePoints": "points d'expérience",

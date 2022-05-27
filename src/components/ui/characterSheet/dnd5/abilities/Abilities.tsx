@@ -29,51 +29,43 @@ const Abilities: React.FC<AbilitiesProps> = ({
         >
             {(Object.keys(abilities) as (keyof DnD5Abilities)[]).map((ability) => {
                 const data = abilities[ability];
-                return (
-                    <Box
-                        gridColumn="span 12"
-                        display="grid"
-                        gridTemplateColumns="repeat(12, 1fr)"
-                        alignItems="center"
-                        gap={2}
-                    >
-                        <Box gridColumn="span 6">
-                            {T(`game.dnd5.ability.${ability}`)}
-                        </Box>
-                        <Box gridColumn="span 3">
-                            <TextField
-                                fullWidth
-                                InputProps={{
-                                    readOnly: readonly
-                                }}
-                                type="text"
-                                size="small"
-                                label={T('game.dnd5.common.score')}
-                                value={data.score}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                    onChange({
-                                        [ability]: calculateAbility({
-                                            ...data,
-                                            score: Number(onlyNumbers(e.target.value))
-                                        })
-                                    });
-                                }}
-                            />
-                        </Box>
-                        <Box gridColumn="span 3">
-                            <TextField
-                                fullWidth
-                                InputProps={{
-                                    readOnly: true
-                                }}
-                                type="text"
-                                size="small"
-                                label={T('game.dnd5.common.modifier')}
-                                value={displayModifier(data.modifier)}
-                            />
-                        </Box>
+                return [
+                    <Box key={`ability-${ability}-label`} gridColumn="span 6">
+                        {T(`game.dnd5.ability.${ability}`)}
+                    </Box>,
+                    <Box key={`ability-${ability}-score`} gridColumn="span 3">
+                        <TextField
+                            fullWidth
+                            InputProps={{
+                                readOnly: readonly
+                            }}
+                            type="text"
+                            size="small"
+                            label={T('game.dnd5.common.score')}
+                            value={data.score}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                onChange({
+                                    [ability]: calculateAbility({
+                                        ...data,
+                                        score: Number(onlyNumbers(e.target.value))
+                                    })
+                                });
+                            }}
+                        />
+                    </Box>,
+                    <Box key={`ability-${ability}-modifier`} gridColumn="span 3">
+                        <TextField
+                            fullWidth
+                            InputProps={{
+                                readOnly: true
+                            }}
+                            type="text"
+                            size="small"
+                            label={T('game.dnd5.common.modifier')}
+                            value={displayModifier(data.modifier)}
+                        />
                     </Box>
-                );
+                ];
             })}
         </Box>
     );
