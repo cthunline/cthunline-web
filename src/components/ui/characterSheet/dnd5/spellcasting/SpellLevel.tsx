@@ -34,7 +34,7 @@ const SpellLevel: React.FC<SpellLevelProps> = ({
             alignItems="center"
             gap={2}
         >
-            <Box key={`spellcasting-level-${spellLevel.level}-level`} gridColumn={`span ${readonly ? '8' : '7'}`}>
+            <Box key={`spellcasting-level-${spellLevel.level}-level`} gridColumn="span 7">
                 {`${T('game.dnd5.spellcasting.level')} ${spellLevel.level}`}
                 <Box component="span" className="ml-5">
                     <IconButton
@@ -76,25 +76,23 @@ const SpellLevel: React.FC<SpellLevelProps> = ({
                     </Box>
                 );
             })}
-            {readonly ? null : (
-                <Box
-                    key={`spellcasting-level-${spellLevel.level}-delete`}
-                    gridColumn="span 1"
-                    alignItems="center"
-                >
-                    {isDelete ? (
-                        <IconButton
-                            size="medium"
-                            color="error"
-                            onClick={() => {
-                                onDelete();
-                            }}
-                        >
-                            <MdOutlineDeleteOutline />
-                        </IconButton>
-                    ) : null}
-                </Box>
-            )}
+            <Box
+                key={`spellcasting-level-${spellLevel.level}-delete`}
+                gridColumn="span 1"
+                alignItems="center"
+            >
+                {isDelete ? (
+                    <IconButton
+                        size="medium"
+                        color="error"
+                        onClick={() => {
+                            onDelete();
+                        }}
+                    >
+                        <MdOutlineDeleteOutline />
+                    </IconButton>
+                ) : null}
+            </Box>
             <SpellList
                 spells={spellLevel.spells}
                 readonly={readonly}
