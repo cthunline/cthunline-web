@@ -42,6 +42,7 @@ import Attacks from './attacks/Attacks';
 import AddAttackButton from './attacks/AddAttackButton';
 import Equipment from './equipment/Equipment';
 import Spellcasting from './spellcasting/Spellcasting';
+import { ReactComponent as DnD5Logo } from '../../../../assets/games/dnd5.svg';
 import { getDefaulSpellLevel } from './spellcasting/spellcasting.data';
 import { controlCharacterData } from './dnd5Sheet.helper';
 import fields from './fields.json';
@@ -229,6 +230,7 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
 
     return (
         <SheetTabs
+            logoSvgComponent={DnD5Logo}
             tabs={sheetTabs}
             selectedIndex={tabIndex}
             onChange={(idx) => setTabIndex(idx)}

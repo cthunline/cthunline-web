@@ -1,0 +1,13 @@
+.sheet-logo {
+    height: 35px;
+    margin: 10px 0;
+    padding: 0 25px;
+    text-align: center;
+    width: 100%;
+}
+
+.sheet-logo-svg {
+    fill: var(--palette-font);
+    max-height: 100%;
+    max-width: 100%;
+}

@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box, Tabs, Tab } from '@mui/material';
 
+import './SheetTabs.css';
+
 export interface SheetTab {
     key: string;
     icon: JSX.Element;
@@ -11,14 +13,15 @@ export interface SheetTabsProps {
     children: React.ReactNode;
     tabs: SheetTab[];
     selectedIndex: number;
+    logoSvgComponent?: React.FC<React.SVGProps<SVGSVGElement>>;
     onChange: (index: number) => void;
-
 }
 
 const SheetTabs: React.FC<SheetTabsProps> = ({
     children,
     tabs,
     selectedIndex,
+    logoSvgComponent: SVGLogo,
     onChange
 }) => {
     const handleChange = (e: React.SyntheticEvent, value: number) => {
@@ -27,6 +30,11 @@ const SheetTabs: React.FC<SheetTabsProps> = ({
 
     return (
         <Box className="flex column max-full-height">
+            {SVGLogo ? (
+                <Box className="sheet-logo">
+                    <SVGLogo className="sheet-logo-svg" />
+                </Box>
+            ) : null}
             {/* tabs */}
             <Tabs
                 value={selectedIndex}

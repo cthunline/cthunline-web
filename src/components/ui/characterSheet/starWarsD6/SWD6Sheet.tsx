@@ -32,6 +32,7 @@ import Attributes from './attributes/Attributes';
 import Statistics from './statistics/Statistics';
 import WoundStatus from './woundStatus/WoundStatus';
 import Weapons from './weapons/Weapons';
+import { ReactComponent as SWD6Logo } from '../../../../assets/games/starWarsD6.svg';
 import { controlCharacterData } from './swd6Sheet.helper';
 import fields from './fields.json';
 
@@ -243,6 +244,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
 
     return (
         <SheetTabs
+            logoSvgComponent={SWD6Logo}
             tabs={sheetTabs}
             selectedIndex={tabIndex}
             onChange={(idx) => setTabIndex(idx)}

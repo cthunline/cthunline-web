@@ -32,6 +32,7 @@ import Status from './status/Status';
 import Skills from './skills/Skills';
 import Combat from './combat/Combat';
 import Weapons from './weapons/Weapons';
+import { ReactComponent as CoCLogo } from '../../../../assets/games/callOfCthulhu.svg';
 import { controlCharacterData } from './cocSheet.helper';
 import fields from './fields.json';
 
@@ -225,6 +226,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
 
     return (
         <SheetTabs
+            logoSvgComponent={CoCLogo}
             tabs={sheetTabs}
             selectedIndex={tabIndex}
             onChange={(idx) => setTabIndex(idx)}

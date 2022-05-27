@@ -1,5 +1,6 @@
 import { loadEnv, defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
 
 const env = loadEnv(
   'mock',
@@ -8,7 +9,8 @@ const env = loadEnv(
 
 export default defineConfig({
     plugins: [
-        react()
+        react(),
+        svgr()
     ],
     server: {
         port: 3030,
