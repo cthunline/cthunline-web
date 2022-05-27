@@ -131,39 +131,47 @@
     width: 100%;
 }
 
+.max-full-width {
+    max-width: 100%;
+}
+
 .full-height {
     height: 100%;
+}
+
+.max-full-height {
+    max-height: 100%;
 }
 
 /* margins (with body parent to take precedence) */
 
 body .m-0 { margin: 0; }
-
 body .m-5 { margin: 5px; }
+body .m-10 { margin: 10px; }
+body .m-15 { margin: 15px; }
+body .m-20 { margin: 20px; }
+body .m-25 { margin: 25px; }
+
 body .mt-5 { margin-top: 5px; }
 body .mr-5 { margin-right: 5px; }
 body .mb-5 { margin-bottom: 5px; }
 body .ml-5 { margin-left: 5px; }
 
-body .m-10 { margin: 10px; }
 body .mt-10 { margin-top: 10px; }
 body .mr-10 { margin-right: 10px; }
 body .mb-10 { margin-bottom: 10px; }
 body .ml-10 { margin-left: 10px; }
 
-body .m-15 { margin: 15px; }
 body .mt-15 { margin-top: 15px; }
 body .mr-15 { margin-right: 15px; }
 body .mb-15 { margin-bottom: 15px; }
 body .ml-15 { margin-left: 15px; }
 
-body .m-20 { margin: 20px; }
 body .mt-20 { margin-top: 20px; }
 body .mr-20 { margin-right: 20px; }
 body .mb-20 { margin-bottom: 20px; }
 body .ml-20 { margin-left: 20px; }
 
-body .m-25 { margin: 25px; }
 body .mt-25 { margin-top: 25px; }
 body .mr-25 { margin-right: 25px; }
 body .mb-25 { margin-bottom: 25px; }
@@ -172,32 +180,32 @@ body .ml-25 { margin-left: 25px; }
 /* paddings (with body parent to take precedence) */
 
 body .p-0 { padding: 0; }
-
 body .p-5 { padding: 5px; }
+body .p-10 { padding: 10px; }
+body .p-15 { padding: 15px; }
+body .p-20 { padding: 20px; }
+body .p-25 { padding: 25px; }
+
 body .pt-5 { padding-top: 5px; }
 body .pr-5 { padding-right: 5px; }
 body .pb-5 { padding-bottom: 5px; }
 body .pl-5 { padding-left: 5px; }
 
-body .p-10 { padding: 10px; }
 body .pt-10 { padding-top: 10px; }
 body .pr-10 { padding-right: 10px; }
 body .pb-10 { padding-bottom: 10px; }
 body .pl-10 { padding-left: 10px; }
 
-body .p-15 { padding: 15px; }
 body .pt-15 { padding-top: 15px; }
 body .pr-15 { padding-right: 15px; }
 body .pb-15 { padding-bottom: 15px; }
 body .pl-15 { padding-left: 15px; }
 
-body .p-20 { padding: 20px; }
 body .pt-20 { padding-top: 20px; }
 body .pr-20 { padding-right: 20px; }
 body .pb-20 { padding-bottom: 20px; }
 body .pl-20 { padding-left: 20px; }
 
-body .p-25 { padding: 25px; }
 body .pt-25 { padding-top: 25px; }
 body .pr-25 { padding-right: 25px; }
 body .pb-25 { padding-bottom: 25px; }

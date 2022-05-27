@@ -6,6 +6,11 @@ import React, {
 } from 'react';
 import { Box } from '@mui/material';
 import {
+    GiCharacter,
+    GiPerspectiveDiceSixFacesSix,
+    GiLightSabers
+} from 'react-icons/gi';
+import {
     SWD6Character,
     SWD6Biography,
     SWD6AttributeKey,
@@ -19,6 +24,7 @@ import {
 
 import { CharacterData, GameId } from '../../../../types';
 import { useApp } from '../../../contexts/App';
+import SheetTabs, { SheetTab } from '../generic/sheetTabs/SheetTabs';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
@@ -52,6 +58,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     const { T } = useApp();
 
     const [characterData, setCharacterData] = useState<SWD6Character>(data);
+    const [tabIndex, setTabIndex] = useState<number>(0);
 
     useEffect(() => {
         if (listening) {
@@ -220,78 +227,120 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
         }));
     }, []);
 
+    const sheetTabs: SheetTab[] = [{
+        key: 'biography',
+        icon: <GiCharacter size={20} />,
+        label: T('game.starWarsD6.common.biography')
+    }, {
+        key: 'attributesAndSkills',
+        icon: <GiPerspectiveDiceSixFacesSix size={20} />,
+        label: T('game.starWarsD6.common.attributesAndSkills')
+    }, {
+        key: 'weapons',
+        icon: <GiLightSabers size={20} />,
+        label: T('game.starWarsD6.common.weapons')
+    }];
+
     return (
-        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" columnGap={2} rowGap={4}>
-            {/* biography */}
-            <Box gridColumn="span 9">
-                <SectionTitle text={T('game.starWarsD6.common.biography')} />
-                <FieldLayout<SWD6Biography>
-                    gameId={GameId.starWarsD6}
-                    fields={biographyFields}
-                    textSectionKey="biography"
-                    data={characterData.biography}
-                    readonly={readonly}
-                    onChange={onBiographyChange}
+        <Box className="flex column max-full-height">
+            {/* tabs */}
+            <Box className="pt-25 pr-25 pl-25" gridColumn="span 12">
+                <SheetTabs
+                    tabs={sheetTabs}
+                    selectedIndex={tabIndex}
+                    onChange={(idx) => {
+                        setTabIndex(idx);
+                    }}
                 />
             </Box>
-            {/* portrait */}
-            <Box gridColumn="span 3">
-                <Portrait
-                    base64={characterData.portrait}
-                    readonly={readonly}
-                    onChange={onPortraitChange}
-                />
+            {/* content */}
+            <Box
+                className="grow full-width scroll p-25 pt-15"
+                display="grid"
+                gridTemplateColumns="repeat(12, 1fr)"
+                columnGap={2}
+                rowGap={4}
+            >
+                {/* bio & background */}
+                {sheetTabs[tabIndex].key === 'biography' ? [
+                    // biography
+                    <Box gridColumn="span 9">
+                        <SectionTitle text={T('game.starWarsD6.common.biography')} />
+                        <FieldLayout<SWD6Biography>
+                            gameId={GameId.starWarsD6}
+                            fields={biographyFields}
+                            textSectionKey="biography"
+                            data={characterData.biography}
+                            readonly={readonly}
+                            onChange={onBiographyChange}
+                        />
+                    </Box>,
+                    // portrait
+                    <Box gridColumn="span 3">
+                        <Portrait
+                            base64={characterData.portrait}
+                            readonly={readonly}
+                            onChange={onPortraitChange}
+                        />
+                    </Box>,
+                    // story
+                    <FieldLayout<SWD6Story>
+                        gameId={GameId.starWarsD6}
+                        fields={storyFields}
+                        textSectionKey="story"
+                        data={characterData.story}
+                        readonly={readonly}
+                        onChange={onStoryChange}
+                    />
+                ] : null}
+                {/* attributes & skills */}
+                {sheetTabs[tabIndex].key === 'attributesAndSkills' ? [
+                    // attributes and skills
+                    <Box gridColumn="span 12">
+                        <SectionTitle text={T('game.starWarsD6.common.attributesAndSkills')} />
+                        <Attributes
+                            attributes={characterData.attributes}
+                            readonly={readonly}
+                            onChange={onAttributeChange}
+                            onSkillCreate={onSkillCreate}
+                            onSkillChange={onSkillChange}
+                            onSkillDelete={onSkillDelete}
+                        />
+                    </Box>,
+                    // statistics
+                    <Box gridColumn="span 6">
+                        <SectionTitle text={T('game.starWarsD6.common.statistics')} />
+                        <Statistics
+                            statistics={characterData.statistics}
+                            readonly={readonly}
+                            onChange={onStatisticsChange}
+                        />
+                    </Box>,
+                    // wound status
+                    <Box gridColumn="span 6">
+                        <SectionTitle text={T('game.starWarsD6.common.woundStatus')} />
+                        <WoundStatus
+                            woundStatus={characterData.woundStatus}
+                            readonly={readonly}
+                            onChange={onWoundStatusChange}
+                        />
+                    </Box>
+                ] : null}
+                {/* weapons */}
+                {sheetTabs[tabIndex].key === 'weapons' ? (
+                    // weapons
+                    <Box gridColumn="span 12">
+                        <SectionTitle text={T('game.starWarsD6.common.weapons')} />
+                        <Weapons
+                            weapons={characterData.weapons}
+                            readonly={readonly}
+                            onCreate={onWeaponCreate}
+                            onChange={onWeaponChange}
+                            onDelete={onWeaponDelete}
+                        />
+                    </Box>
+                ) : null}
             </Box>
-            {/* attributes */}
-            <Box gridColumn="span 12">
-                <SectionTitle text={T('game.starWarsD6.common.attributesAndSkills')} />
-                <Attributes
-                    attributes={characterData.attributes}
-                    readonly={readonly}
-                    onChange={onAttributeChange}
-                    onSkillCreate={onSkillCreate}
-                    onSkillChange={onSkillChange}
-                    onSkillDelete={onSkillDelete}
-                />
-            </Box>
-            {/* statistics */}
-            <Box gridColumn="span 6">
-                <SectionTitle text={T('game.starWarsD6.common.statistics')} />
-                <Statistics
-                    statistics={characterData.statistics}
-                    readonly={readonly}
-                    onChange={onStatisticsChange}
-                />
-            </Box>
-            {/* wound status */}
-            <Box gridColumn="span 6">
-                <SectionTitle text={T('game.starWarsD6.common.woundStatus')} />
-                <WoundStatus
-                    woundStatus={characterData.woundStatus}
-                    readonly={readonly}
-                    onChange={onWoundStatusChange}
-                />
-            </Box>
-            {/* weapons */}
-            <Box gridColumn="span 12">
-                <SectionTitle text={T('game.starWarsD6.common.weapons')} />
-                <Weapons
-                    weapons={characterData.weapons}
-                    readonly={readonly}
-                    onCreate={onWeaponCreate}
-                    onChange={onWeaponChange}
-                    onDelete={onWeaponDelete}
-                />
-            </Box>
-            {/* story */}
-            <FieldLayout<SWD6Story>
-                gameId={GameId.starWarsD6}
-                fields={storyFields}
-                textSectionKey="story"
-                data={characterData.story}
-                readonly={readonly}
-                onChange={onStoryChange}
-            />
         </Box>
     );
 };

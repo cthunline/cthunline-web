@@ -6,6 +6,11 @@ import React, {
 } from 'react';
 import { Box } from '@mui/material';
 import {
+    GiCharacter,
+    GiD10,
+    GiPistolGun
+} from 'react-icons/gi';
+import {
     CoCCharacter,
     CoCBiography,
     CoCStatus,
@@ -18,6 +23,7 @@ import {
 
 import { useApp } from '../../../contexts/App';
 import { CharacterData, GameId } from '../../../../types';
+import SheetTabs, { SheetTab } from '../generic/sheetTabs/SheetTabs';
 import SectionTitle from '../generic/sectionTitle/SectionTitle';
 import FieldLayout, { Field } from '../generic/fieldLayout/FieldLayout';
 import Portrait from '../generic/portrait/Portrait';
@@ -52,6 +58,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
     const { T } = useApp();
 
     const [characterData, setCharacterData] = useState<CoCCharacter>(data);
+    const [tabIndex, setTabIndex] = useState<number>(0);
 
     useEffect(() => {
         if (listening) {
@@ -202,87 +209,127 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
         }));
     }, []);
 
+    const sheetTabs: SheetTab[] = [{
+        key: 'biographyAndStory',
+        icon: <GiCharacter size={20} />,
+        label: T('game.callOfCthulhu.common.biography')
+    }, {
+        key: 'characteristicsAndSkills',
+        icon: <GiD10 size={20} />,
+        label: T('game.callOfCthulhu.common.characteristics')
+    }, {
+        key: 'combat',
+        icon: <GiPistolGun size={20} />,
+        label: T('game.callOfCthulhu.common.combat')
+    }];
+
     return (
-        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-            {/* biography */}
-            <Box gridColumn="span 9">
-                <SectionTitle text={T('game.callOfCthulhu.common.biography')} />
-                <FieldLayout<CoCBiography>
-                    gameId={GameId.callOfCthulhu}
-                    fields={biographyFields}
-                    textSectionKey="biography"
-                    data={characterData.biography}
-                    readonly={readonly}
-                    onChange={onBiographyChange}
+        <Box className="flex column max-full-height">
+            {/* tabs */}
+            <Box className="pt-25 pr-25 pl-25" gridColumn="span 12">
+                <SheetTabs
+                    tabs={sheetTabs}
+                    selectedIndex={tabIndex}
+                    onChange={(idx) => {
+                        setTabIndex(idx);
+                    }}
                 />
             </Box>
-            {/* portrait */}
-            <Box gridColumn="span 3" gridRow="span 2">
-                <Portrait
-                    base64={characterData.portrait}
-                    readonly={readonly}
-                    onChange={onPortraitChange}
-                />
-            </Box>
-            {/* characteristics */}
-            <SectionTitle text={T('game.callOfCthulhu.common.characteristics')} gridColumn="span 9" />
-            <Characteristics
-                readonly={readonly}
-                characteristics={characterData.characteristics}
-                points={characterData.points}
-                luck={characterData.luck}
-                sanity={characterData.sanity}
-                onCharacteristicsChange={onCharacteristicsChange}
-                onPointsChange={onPointsChange}
-                onLuckOrSanityChange={onLuckOrSanityChange}
-            />
-            {/* status */}
-            <Box gridColumn="span 12">
-                <SectionTitle text={T('game.callOfCthulhu.common.status')} />
-                <Status
-                    readonly={readonly}
-                    status={characterData.status}
-                    onChange={onStatusChange}
-                />
-            </Box>
-            {/* skills */}
-            <Box gridColumn="span 12">
-                <SectionTitle text={T('game.callOfCthulhu.common.skills')} />
-                <Skills
-                    readonly={readonly}
-                    skills={characterData.skills}
-                    onChange={onSkillChange}
-                    onDelete={onSkillDelete}
-                    onCreate={onSkillCreate}
-                />
-            </Box>
-            {/* combat */}
-            <Box gridColumn="span 12">
-                <SectionTitle text={T('game.callOfCthulhu.common.combat')} />
-                <Combat combat={data.combat} />
-            </Box>
-            {/* weapons */}
-            <Box gridColumn="span 12">
-                <SectionTitle text={T('game.callOfCthulhu.common.weapons')} />
-                <Weapons
-                    readonly={readonly}
-                    weapons={characterData.weapons}
-                    onChange={onWeaponChange}
-                    onDelete={onWeaponDelete}
-                    onCreate={onWeaponCreate}
-                />
-            </Box>
-            {/* story */}
-            <Box gridColumn="span 12">
-                <SectionTitle text={T('game.callOfCthulhu.common.story')} />
-                <FieldLayout<CoCStory>
-                    gameId={GameId.callOfCthulhu}
-                    fields={storyFields}
-                    textSectionKey="story"
-                    data={characterData.story}
-                    readonly={readonly}
-                    onChange={onStoryChange}
-                />
+            {/* content */}
+            <Box
+                className="grow full-width scroll p-25 pt-15"
+                display="grid"
+                gridTemplateColumns="repeat(12, 1fr)"
+                columnGap={2}
+                rowGap={4}
+            >
+                {/* bio & story */}
+                {sheetTabs[tabIndex].key === 'biographyAndStory' ? [
+                    // biography
+                    <Box gridColumn="span 9">
+                        <SectionTitle text={T('game.callOfCthulhu.common.biography')} />
+                        <FieldLayout<CoCBiography>
+                            gameId={GameId.callOfCthulhu}
+                            fields={biographyFields}
+                            textSectionKey="biography"
+                            data={characterData.biography}
+                            readonly={readonly}
+                            onChange={onBiographyChange}
+                        />
+                    </Box>,
+                    // portrait
+                    <Box gridColumn="span 3" gridRow="span 2">
+                        <Portrait
+                            base64={characterData.portrait}
+                            readonly={readonly}
+                            onChange={onPortraitChange}
+                        />
+                    </Box>,
+                    // story
+                    <SectionTitle text={T('game.callOfCthulhu.common.story')} gridColumn="span 9" />,
+                    <FieldLayout<CoCStory>
+                        gameId={GameId.callOfCthulhu}
+                        fields={storyFields}
+                        textSectionKey="story"
+                        data={characterData.story}
+                        readonly={readonly}
+                        onChange={onStoryChange}
+                    />
+                ] : null}
+                {/* characteristics & skills */}
+                {sheetTabs[tabIndex].key === 'characteristicsAndSkills' ? [
+                    // characteristics
+                    <SectionTitle text={T('game.callOfCthulhu.common.characteristics')} gridColumn="span 9" />,
+                    <Characteristics
+                        readonly={readonly}
+                        characteristics={characterData.characteristics}
+                        points={characterData.points}
+                        luck={characterData.luck}
+                        sanity={characterData.sanity}
+                        onCharacteristicsChange={onCharacteristicsChange}
+                        onPointsChange={onPointsChange}
+                        onLuckOrSanityChange={onLuckOrSanityChange}
+                    />,
+                    // skills
+                    <Box gridColumn="span 12">
+                        <SectionTitle text={T('game.callOfCthulhu.common.skills')} />
+                        <Skills
+                            readonly={readonly}
+                            skills={characterData.skills}
+                            onChange={onSkillChange}
+                            onDelete={onSkillDelete}
+                            onCreate={onSkillCreate}
+                        />
+                    </Box>
+                ] : null}
+                {/* combat & status */}
+                {sheetTabs[tabIndex].key === 'combat' ? [
+                    // status
+                    <Box gridColumn="span 12">
+                        <SectionTitle text={T('game.callOfCthulhu.common.status')} />
+                        <Status
+                            readonly={readonly}
+                            status={characterData.status}
+                            onChange={onStatusChange}
+                        />
+                    </Box>,
+                    // combat
+                    <Box gridColumn="span 12">
+                        <SectionTitle text={T('game.callOfCthulhu.common.combat')} />
+                        <Combat combat={data.combat} />
+                    </Box>,
+                    // weapons
+                    <Box gridColumn="span 12">
+                        <SectionTitle text={T('game.callOfCthulhu.common.weapons')} />
+                        <Weapons
+                            readonly={readonly}
+                            weapons={characterData.weapons}
+                            onChange={onWeaponChange}
+                            onDelete={onWeaponDelete}
+                            onCreate={onWeaponCreate}
+                        />
+                    </Box>
+                ] : null}
             </Box>
         </Box>
     );

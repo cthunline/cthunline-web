@@ -17,6 +17,15 @@ const AppContent = () => {
         createTheme({
             palette: {
                 mode: theme
+            },
+            components: {
+                MuiTab: {
+                    styleOverrides: {
+                        root: {
+                            minHeight: 48
+                        }
+                    }
+                }
             }
         })
     ), [theme]);
