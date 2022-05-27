@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab } from '@mui/material';
+import { Box, Tabs, Tab } from '@mui/material';
 
 export interface SheetTab {
     key: string;
@@ -8,6 +8,7 @@ export interface SheetTab {
 }
 
 export interface SheetTabsProps {
+    children: React.ReactNode;
     tabs: SheetTab[];
     selectedIndex: number;
     onChange: (index: number) => void;
@@ -15,6 +16,7 @@ export interface SheetTabsProps {
 }
 
 const SheetTabs: React.FC<SheetTabsProps> = ({
+    children,
     tabs,
     selectedIndex,
     onChange
@@ -24,19 +26,33 @@ const SheetTabs: React.FC<SheetTabsProps> = ({
     };
 
     return (
-        <Tabs
-            value={selectedIndex}
-            onChange={handleChange}
-        >
-            {tabs.map((tab) => (
-                <Tab
-                    key={`sheet-tab-${tab.key}`}
-                    icon={tab.icon}
-                    label={tab.label}
-                    iconPosition="start"
-                />
-            ))}
-        </Tabs>
+        <Box className="flex column max-full-height">
+            {/* tabs */}
+            <Tabs
+                value={selectedIndex}
+                onChange={handleChange}
+                centered
+            >
+                {tabs.map((tab) => (
+                    <Tab
+                        key={`sheet-tab-${tab.key}`}
+                        icon={tab.icon}
+                        label={tab.label}
+                        iconPosition="start"
+                    />
+                ))}
+            </Tabs>
+            {/* content */}
+            <Box
+                className="grow full-width scroll p-25 pt-15"
+                display="grid"
+                gridTemplateColumns="repeat(12, 1fr)"
+                columnGap={2}
+                rowGap={4}
+            >
+                {children}
+            </Box>
+        </Box>
     );
 };
 

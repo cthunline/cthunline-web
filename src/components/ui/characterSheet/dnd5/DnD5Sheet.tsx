@@ -228,169 +228,154 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
     }];
 
     return (
-        <Box className="flex column max-full-height">
-            {/* tabs */}
-            <Box className="pt-25 pr-25 pl-25" gridColumn="span 12">
-                <SheetTabs
-                    tabs={sheetTabs}
-                    selectedIndex={tabIndex}
-                    onChange={(idx) => {
-                        setTabIndex(idx);
-                    }}
-                />
-            </Box>
-            {/* content */}
-            <Box
-                className="grow full-width scroll p-25 pt-15"
-                display="grid"
-                gridTemplateColumns="repeat(12, 1fr)"
-                columnGap={2}
-                rowGap={4}
-            >
-                {/* bio & story */}
-                {sheetTabs[tabIndex].key === 'biographyAndStory' ? [
-                    // biography
-                    <Box gridColumn="span 9">
-                        <SectionTitle text={T('game.dnd5.common.biography')} />
-                        <FieldLayout<DnD5Biography>
-                            gameId={GameId.dnd5}
-                            fields={biographyFields}
-                            textSectionKey="biography"
-                            data={characterData.biography}
+        <SheetTabs
+            tabs={sheetTabs}
+            selectedIndex={tabIndex}
+            onChange={(idx) => setTabIndex(idx)}
+        >
+            {/* bio & story */}
+            {sheetTabs[tabIndex].key === 'biographyAndStory' ? [
+                // biography
+                <Box gridColumn="span 9">
+                    <SectionTitle text={T('game.dnd5.common.biography')} />
+                    <FieldLayout<DnD5Biography>
+                        gameId={GameId.dnd5}
+                        fields={biographyFields}
+                        textSectionKey="biography"
+                        data={characterData.biography}
+                        readonly={readonly}
+                        onChange={onBiographyChange}
+                    />
+                </Box>,
+                // portrait
+                <Box gridColumn="span 3">
+                    <Portrait
+                        base64={characterData.portrait}
+                        readonly={readonly}
+                        onChange={onPortraitChange}
+                    />
+                </Box>,
+                // story
+                <Box gridColumn="span 12">
+                    <SectionTitle text={T('game.dnd5.common.story')} />
+                    <FieldLayout<DnD5Story>
+                        gameId={GameId.dnd5}
+                        fields={storyFields}
+                        textSectionKey="story"
+                        data={characterData.story}
+                        readonly={readonly}
+                        onChange={onStoryChange}
+                    />
+                </Box>
+            ] : null}
+            {/* abilities & skills */}
+            {sheetTabs[tabIndex].key === 'abilitiesAndSkills' ? (
+                <Box
+                    gridColumn="span 12"
+                    display="grid"
+                    gridTemplateColumns="repeat(12, 1fr)"
+                    columnGap={6}
+                    rowGap={4}
+                >
+                    <Box gridColumn="span 6">
+                        {/* abilities */}
+                        <SectionTitle text={T('game.dnd5.common.abilities')} />
+                        <Abilities
+                            abilities={characterData.abilities}
                             readonly={readonly}
-                            onChange={onBiographyChange}
+                            onChange={(partial) => changePartialData('abilities', partial)}
                         />
-                    </Box>,
-                    // portrait
-                    <Box gridColumn="span 3">
-                        <Portrait
-                            base64={characterData.portrait}
+                        {/* saving throws */}
+                        <SectionTitle text={T('game.dnd5.common.savingThrows')} mt={5} />
+                        <SavingThrows
+                            savingThrows={characterData.savingThrows}
                             readonly={readonly}
-                            onChange={onPortraitChange}
+                            onChange={(partial) => changePartialData('savingThrows', partial)}
                         />
-                    </Box>,
-                    // story
-                    <Box gridColumn="span 12">
-                        <SectionTitle text={T('game.dnd5.common.story')} />
-                        <FieldLayout<DnD5Story>
-                            gameId={GameId.dnd5}
-                            fields={storyFields}
-                            textSectionKey="story"
-                            data={characterData.story}
+                        {/* statistics */}
+                        <SectionTitle text={T('game.dnd5.common.statistics')} mt={6} />
+                        <Statistics
+                            statistics={characterData.statistics}
                             readonly={readonly}
-                            onChange={onStoryChange}
+                            onChange={(partial) => changePartialData('statistics', partial)}
                         />
                     </Box>
-                ] : null}
-                {/* abilities & skills */}
-                {sheetTabs[tabIndex].key === 'abilitiesAndSkills' ? (
-                    <Box
-                        gridColumn="span 12"
-                        display="grid"
-                        gridTemplateColumns="repeat(12, 1fr)"
-                        columnGap={6}
-                        rowGap={4}
-                    >
-                        <Box gridColumn="span 6">
-                            {/* abilities */}
-                            <SectionTitle text={T('game.dnd5.common.abilities')} />
-                            <Abilities
-                                abilities={characterData.abilities}
-                                readonly={readonly}
-                                onChange={(partial) => changePartialData('abilities', partial)}
-                            />
-                            {/* saving throws */}
-                            <SectionTitle text={T('game.dnd5.common.savingThrows')} mt={5} />
-                            <SavingThrows
-                                savingThrows={characterData.savingThrows}
-                                readonly={readonly}
-                                onChange={(partial) => changePartialData('savingThrows', partial)}
-                            />
-                            {/* statistics */}
-                            <SectionTitle text={T('game.dnd5.common.statistics')} mt={6} />
-                            <Statistics
-                                statistics={characterData.statistics}
-                                readonly={readonly}
-                                onChange={(partial) => changePartialData('statistics', partial)}
-                            />
-                        </Box>
-                        <Box gridColumn="span 6">
-                            {/* skills */}
-                            <SectionTitle text={T('game.dnd5.common.skills')} />
-                            <Skills
-                                skills={characterData.skills}
-                                readonly={readonly}
-                                onChange={(partial) => changePartialData('skills', partial)}
-                            />
-                        </Box>
-                    </Box>
-                ) : null}
-                {/* combat & attacks */}
-                {sheetTabs[tabIndex].key === 'combat' ? [
-                    // combat
-                    <Box gridColumn="span 12">
-                        <SectionTitle text={T('game.dnd5.common.combat')} />
-                        <Combat
-                            combat={characterData.combat}
+                    <Box gridColumn="span 6">
+                        {/* skills */}
+                        <SectionTitle text={T('game.dnd5.common.skills')} />
+                        <Skills
+                            skills={characterData.skills}
                             readonly={readonly}
-                            onChange={(partial) => changePartialData('combat', partial)}
-                        />
-                    </Box>,
-                    // attacks
-                    <Box gridColumn="span 12">
-                        <SectionTitle
-                            text={T('game.dnd5.common.attacks')}
-                            iconAfter={<AddAttackButton onCreate={onAttackCreate} />}
-                        />
-                        <Attacks
-                            attacks={characterData.attacks}
-                            readonly={readonly}
-                            onChange={onAttackChange}
-                            onDelete={onAttackDelete}
+                            onChange={(partial) => changePartialData('skills', partial)}
                         />
                     </Box>
-                ] : null}
-                {/* features & equipment */}
-                {sheetTabs[tabIndex].key === 'featuresAndEquipment' ? [
-                    // features
-                    <Box gridColumn="span 12">
-                        <SectionTitle text={T('game.dnd5.common.features')} />
-                        <FieldLayout<DnD5Features>
-                            gameId={GameId.dnd5}
-                            fields={featuresFields}
-                            textSectionKey="features"
-                            data={characterData.features}
-                            readonly={readonly}
-                            onChange={onFeaturesChange}
-                        />
-                    </Box>,
-                    // equipment
-                    <Box gridColumn="span 12">
-                        <SectionTitle text={T('game.dnd5.common.equipment')} />
-                        <Equipment
-                            equipment={characterData.equipment}
-                            readonly={readonly}
-                            onChange={(partial) => changePartialData('equipment', partial)}
-                        />
-                    </Box>
-                ] : null}
-                {/* spells */}
-                {sheetTabs[tabIndex].key === 'spells' ? (
-                    // spellcasting
-                    <Box gridColumn="span 12">
-                        <SectionTitle
-                            text={T('game.dnd5.common.spellcasting')}
-                            iconAfter={<AddAttackButton onCreate={onSpellLevelCreate} />}
-                        />
-                        <Spellcasting
-                            spellcasting={characterData.spellcasting}
-                            readonly={readonly}
-                            onChange={(partial) => changePartialData('spellcasting', partial)}
-                        />
-                    </Box>
-                ) : null}
-            </Box>
-        </Box>
+                </Box>
+            ) : null}
+            {/* combat & attacks */}
+            {sheetTabs[tabIndex].key === 'combat' ? [
+                // combat
+                <Box gridColumn="span 12">
+                    <SectionTitle text={T('game.dnd5.common.combat')} />
+                    <Combat
+                        combat={characterData.combat}
+                        readonly={readonly}
+                        onChange={(partial) => changePartialData('combat', partial)}
+                    />
+                </Box>,
+                // attacks
+                <Box gridColumn="span 12">
+                    <SectionTitle
+                        text={T('game.dnd5.common.attacks')}
+                        iconAfter={<AddAttackButton onCreate={onAttackCreate} />}
+                    />
+                    <Attacks
+                        attacks={characterData.attacks}
+                        readonly={readonly}
+                        onChange={onAttackChange}
+                        onDelete={onAttackDelete}
+                    />
+                </Box>
+            ] : null}
+            {/* features & equipment */}
+            {sheetTabs[tabIndex].key === 'featuresAndEquipment' ? [
+                // features
+                <Box gridColumn="span 12">
+                    <SectionTitle text={T('game.dnd5.common.features')} />
+                    <FieldLayout<DnD5Features>
+                        gameId={GameId.dnd5}
+                        fields={featuresFields}
+                        textSectionKey="features"
+                        data={characterData.features}
+                        readonly={readonly}
+                        onChange={onFeaturesChange}
+                    />
+                </Box>,
+                // equipment
+                <Box gridColumn="span 12">
+                    <SectionTitle text={T('game.dnd5.common.equipment')} />
+                    <Equipment
+                        equipment={characterData.equipment}
+                        readonly={readonly}
+                        onChange={(partial) => changePartialData('equipment', partial)}
+                    />
+                </Box>
+            ] : null}
+            {/* spells */}
+            {sheetTabs[tabIndex].key === 'spells' ? (
+                // spellcasting
+                <Box gridColumn="span 12">
+                    <SectionTitle
+                        text={T('game.dnd5.common.spellcasting')}
+                        iconAfter={<AddAttackButton onCreate={onSpellLevelCreate} />}
+                    />
+                    <Spellcasting
+                        spellcasting={characterData.spellcasting}
+                        readonly={readonly}
+                        onChange={(partial) => changePartialData('spellcasting', partial)}
+                    />
+                </Box>
+            ) : null}
+        </SheetTabs>
     );
 };
 

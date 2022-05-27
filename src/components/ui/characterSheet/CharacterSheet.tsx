@@ -18,6 +18,7 @@ export interface CharacterSheetProps {
     gameId: string;
     data: CharacterData;
     listening?: boolean;
+    rawContent?: boolean;
     onChange?: (
         name: string,
         data: CharacterData,
@@ -30,6 +31,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
     gameId,
     data,
     listening,
+    rawContent,
     onChange
 }) => {
     const changeTime = 1000;
@@ -82,6 +84,10 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
         }
         throw new Error('Could not get character sheet content');
     };
+
+    if (rawContent) {
+        return getContent();
+    }
 
     return (
         <Paper elevation={3} className="character-sheet">

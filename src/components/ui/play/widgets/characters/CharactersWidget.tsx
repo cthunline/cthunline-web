@@ -62,10 +62,11 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
             title={T('entity.characters')}
             onClose={() => onClose(WidgetType.characters)}
         >
-            <Box className="characters-widget-content flex column center">
+            <Box className="characters-widget flex row start">
                 {users.length && sessionUser ? (
                     <Tabs
-                        className="characters-widget-tabs full-width"
+                        className="characters-widget-tabs"
+                        orientation="vertical"
                         value={sessionUser.id}
                         onChange={onTabChange}
                     >
@@ -79,14 +80,17 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
                     </Tabs>
                 ) : null}
                 {sessionUser ? (
-                    <CharacterSheet
-                        readonly
-                        gameId={sessionUser.character.gameId}
-                        data={sessionUser.character.data}
-                        listening
-                    />
+                    <Box className="characters-widget-content flex grow start center full-height">
+                        <CharacterSheet
+                            readonly
+                            gameId={sessionUser.character.gameId}
+                            data={sessionUser.character.data}
+                            listening
+                            rawContent
+                        />
+                    </Box>
                 ) : (
-                    <Box className="grow flex center">
+                    <Box className="flex grow center full-height">
                         <CircularProgress size={100} />
                     </Box>
                 )}

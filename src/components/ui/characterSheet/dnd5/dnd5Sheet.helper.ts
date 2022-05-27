@@ -2,8 +2,7 @@ import {
     DnD5Character,
     DnD5Abilities,
     DnD5Skills,
-    DnD5Ability,
-    DnD5SpellLevel
+    DnD5Ability
 } from '@cthunline/games';
 
 export const displayModifier = (modifier: number): string => (
@@ -112,12 +111,6 @@ export const controlDeathSave = (amount: number): number => {
     return amount;
 };
 
-export const sortSpellLevels = (levels: DnD5SpellLevel[]) => (
-    levels.sort((a, b) => (
-        a.level - b.level
-    ))
-);
-
 export const calculateOtherStats = (characterData: DnD5Character): DnD5Character => {
     const {
         abilities: {
@@ -165,7 +158,9 @@ export const calculateOtherStats = (characterData: DnD5Character): DnD5Character
         },
         spellcasting: {
             ...characterData.spellcasting,
-            levels: sortSpellLevels(characterData.spellcasting.levels)
+            levels: characterData.spellcasting.levels.sort((a, b) => (
+                a.level - b.level
+            ))
         }
     };
 };

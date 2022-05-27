@@ -152,6 +152,11 @@ body .m-15 { margin: 15px; }
 body .m-20 { margin: 20px; }
 body .m-25 { margin: 25px; }
 
+body .mt-0 { margin-top: 0; }
+body .mr-0 { margin-right: 0; }
+body .mb-0 { margin-bottom: 0; }
+body .ml-0 { margin-left: 0; }
+
 body .mt-5 { margin-top: 5px; }
 body .mr-5 { margin-right: 5px; }
 body .mb-5 { margin-bottom: 5px; }
@@ -185,6 +190,11 @@ body .p-10 { padding: 10px; }
 body .p-15 { padding: 15px; }
 body .p-20 { padding: 20px; }
 body .p-25 { padding: 25px; }
+
+body .pt-0 { padding-top: 0; }
+body .pr-0 { padding-right: 0; }
+body .pb-0 { padding-bottom: 0; }
+body .pl-0 { padding-left: 0; }
 
 body .pt-5 { padding-top: 5px; }
 body .pr-5 { padding-right: 5px; }
