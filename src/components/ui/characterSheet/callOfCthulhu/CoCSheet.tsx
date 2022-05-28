@@ -8,7 +8,11 @@ import { Box } from '@mui/material';
 import {
     GiCharacter,
     GiD10,
-    GiPistolGun
+    GiPistolGun,
+    GiOpenBook,
+    GiBodyBalance,
+    GiHeartBeats,
+    GiStrong
 } from 'react-icons/gi';
 import {
     CoCCharacter,
@@ -235,7 +239,10 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             {sheetTabs[tabIndex].key === 'biographyAndStory' ? [
                 // biography
                 <Box gridColumn="span 9">
-                    <SectionTitle text={T('game.callOfCthulhu.common.biography')} />
+                    <SectionTitle
+                        iconBefore={<GiCharacter size={20} />}
+                        text={T('game.callOfCthulhu.common.biography')}
+                    />
                     <FieldLayout<CoCBiography>
                         gameId={GameId.callOfCthulhu}
                         fields={biographyFields}
@@ -254,7 +261,11 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                     />
                 </Box>,
                 // story
-                <SectionTitle text={T('game.callOfCthulhu.common.story')} gridColumn="span 9" />,
+                <SectionTitle
+                    iconBefore={<GiOpenBook size={20} />}
+                    text={T('game.callOfCthulhu.common.story')}
+                    gridColumn="span 9"
+                />,
                 <FieldLayout<CoCStory>
                     gameId={GameId.callOfCthulhu}
                     fields={storyFields}
@@ -267,7 +278,11 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             {/* characteristics & skills */}
             {sheetTabs[tabIndex].key === 'characteristicsAndSkills' ? [
                 // characteristics
-                <SectionTitle text={T('game.callOfCthulhu.common.characteristics')} gridColumn="span 9" />,
+                <SectionTitle
+                    iconBefore={<GiD10 size={20} />}
+                    text={T('game.callOfCthulhu.common.characteristics')}
+                    gridColumn="span 9"
+                />,
                 <Characteristics
                     readonly={readonly}
                     characteristics={characterData.characteristics}
@@ -280,7 +295,10 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 />,
                 // skills
                 <Box gridColumn="span 12">
-                    <SectionTitle text={T('game.callOfCthulhu.common.skills')} />
+                    <SectionTitle
+                        iconBefore={<GiBodyBalance size={20} />}
+                        text={T('game.callOfCthulhu.common.skills')}
+                    />
                     <Skills
                         readonly={readonly}
                         skills={characterData.skills}
@@ -294,7 +312,10 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             {sheetTabs[tabIndex].key === 'combat' ? [
                 // status
                 <Box gridColumn="span 12">
-                    <SectionTitle text={T('game.callOfCthulhu.common.status')} />
+                    <SectionTitle
+                        iconBefore={<GiHeartBeats size={20} />}
+                        text={T('game.callOfCthulhu.common.status')}
+                    />
                     <Status
                         readonly={readonly}
                         status={characterData.status}
@@ -303,12 +324,18 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 </Box>,
                 // combat
                 <Box gridColumn="span 12">
-                    <SectionTitle text={T('game.callOfCthulhu.common.combat')} />
+                    <SectionTitle
+                        iconBefore={<GiStrong size={20} />}
+                        text={T('game.callOfCthulhu.common.combat')}
+                    />
                     <Combat combat={data.combat} />
                 </Box>,
                 // weapons
                 <Box gridColumn="span 12">
-                    <SectionTitle text={T('game.callOfCthulhu.common.weapons')} />
+                    <SectionTitle
+                        iconBefore={<GiPistolGun size={20} />}
+                        text={T('game.callOfCthulhu.common.weapons')}
+                    />
                     <Weapons
                         readonly={readonly}
                         weapons={characterData.weapons}

@@ -28,7 +28,9 @@ const Combat: React.FC<CombatProps> = ({ combat }) => {
                     <Box gridColumn="span 4">
                         <TextField
                             fullWidth
-                            disabled
+                            InputProps={{
+                                readOnly: true
+                            }}
                             type="text"
                             size="small"
                             value={combat[key]}

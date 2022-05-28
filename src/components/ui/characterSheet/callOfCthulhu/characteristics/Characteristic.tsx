@@ -46,9 +46,8 @@ const Characteristic: React.FC<CharacteristicProps> = ({
                 <Box key={`characteristic-${key}`} gridColumn="span 3">
                     <TextField
                         fullWidth
-                        disabled={!editable}
                         InputProps={{
-                            readOnly: readonly
+                            readOnly: readonly || !editable
                         }}
                         type="text"
                         size="small"

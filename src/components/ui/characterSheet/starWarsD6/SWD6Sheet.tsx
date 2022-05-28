@@ -8,7 +8,10 @@ import { Box } from '@mui/material';
 import {
     GiCharacter,
     GiPerspectiveDiceSixFacesSix,
-    GiLightSabers
+    GiLightSabers,
+    GiRollingDices,
+    GiHeartBeats,
+    GiChart
 } from 'react-icons/gi';
 import {
     SWD6Character,
@@ -253,7 +256,10 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             {sheetTabs[tabIndex].key === 'biography' ? [
                 // biography
                 <Box gridColumn="span 9">
-                    <SectionTitle text={T('game.starWarsD6.common.biography')} />
+                    <SectionTitle
+                        iconBefore={<GiCharacter size={20} />}
+                        text={T('game.starWarsD6.common.biography')}
+                    />
                     <FieldLayout<SWD6Biography>
                         gameId={GameId.starWarsD6}
                         fields={biographyFields}
@@ -285,7 +291,10 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             {sheetTabs[tabIndex].key === 'attributesAndSkills' ? [
                 // attributes and skills
                 <Box gridColumn="span 12">
-                    <SectionTitle text={T('game.starWarsD6.common.attributesAndSkills')} />
+                    <SectionTitle
+                        iconBefore={<GiRollingDices size={20} />}
+                        text={T('game.starWarsD6.common.attributesAndSkills')}
+                    />
                     <Attributes
                         attributes={characterData.attributes}
                         readonly={readonly}
@@ -297,7 +306,10 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 </Box>,
                 // statistics
                 <Box gridColumn="span 6">
-                    <SectionTitle text={T('game.starWarsD6.common.statistics')} />
+                    <SectionTitle
+                        iconBefore={<GiChart size={20} />}
+                        text={T('game.starWarsD6.common.statistics')}
+                    />
                     <Statistics
                         statistics={characterData.statistics}
                         readonly={readonly}
@@ -306,7 +318,10 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 </Box>,
                 // wound status
                 <Box gridColumn="span 6">
-                    <SectionTitle text={T('game.starWarsD6.common.woundStatus')} />
+                    <SectionTitle
+                        iconBefore={<GiHeartBeats size={20} />}
+                        text={T('game.starWarsD6.common.woundStatus')}
+                    />
                     <WoundStatus
                         woundStatus={characterData.woundStatus}
                         readonly={readonly}
@@ -318,7 +333,10 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             {sheetTabs[tabIndex].key === 'weapons' ? (
                 // weapons
                 <Box gridColumn="span 12">
-                    <SectionTitle text={T('game.starWarsD6.common.weapons')} />
+                    <SectionTitle
+                        iconBefore={<GiLightSabers size={20} />}
+                        text={T('game.starWarsD6.common.weapons')}
+                    />
                     <Weapons
                         weapons={characterData.weapons}
                         readonly={readonly}

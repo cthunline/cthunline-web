@@ -10,7 +10,13 @@ import {
     GiDiceTwentyFacesTwenty,
     GiCrossedSwords,
     GiSkills,
-    GiSpellBook
+    GiSpellBook,
+    GiOpenBook,
+    GiBodyBalance,
+    GiDiceShield,
+    GiChart,
+    GiSwordman,
+    GiHandBag
 } from 'react-icons/gi';
 import {
     DnD5Character,
@@ -239,7 +245,10 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
             {sheetTabs[tabIndex].key === 'biographyAndStory' ? [
                 // biography
                 <Box gridColumn="span 9">
-                    <SectionTitle text={T('game.dnd5.common.biography')} />
+                    <SectionTitle
+                        iconBefore={<GiCharacter size={20} />}
+                        text={T('game.dnd5.common.biography')}
+                    />
                     <FieldLayout<DnD5Biography>
                         gameId={GameId.dnd5}
                         fields={biographyFields}
@@ -259,7 +268,10 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                 </Box>,
                 // story
                 <Box gridColumn="span 12">
-                    <SectionTitle text={T('game.dnd5.common.story')} />
+                    <SectionTitle
+                        iconBefore={<GiOpenBook size={20} />}
+                        text={T('game.dnd5.common.story')}
+                    />
                     <FieldLayout<DnD5Story>
                         gameId={GameId.dnd5}
                         fields={storyFields}
@@ -281,21 +293,32 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                 >
                     <Box gridColumn="span 6">
                         {/* abilities */}
-                        <SectionTitle text={T('game.dnd5.common.abilities')} />
+                        <SectionTitle
+                            iconBefore={<GiDiceTwentyFacesTwenty size={20} />}
+                            text={T('game.dnd5.common.abilities')}
+                        />
                         <Abilities
                             abilities={characterData.abilities}
                             readonly={readonly}
                             onChange={(partial) => changePartialData('abilities', partial)}
                         />
                         {/* saving throws */}
-                        <SectionTitle text={T('game.dnd5.common.savingThrows')} mt={5} />
+                        <SectionTitle
+                            iconBefore={<GiDiceShield size={20} />}
+                            text={T('game.dnd5.common.savingThrows')}
+                            mt={5}
+                        />
                         <SavingThrows
                             savingThrows={characterData.savingThrows}
                             readonly={readonly}
                             onChange={(partial) => changePartialData('savingThrows', partial)}
                         />
                         {/* statistics */}
-                        <SectionTitle text={T('game.dnd5.common.statistics')} mt={6} />
+                        <SectionTitle
+                            iconBefore={<GiChart size={20} />}
+                            text={T('game.dnd5.common.statistics')}
+                            mt={6}
+                        />
                         <Statistics
                             statistics={characterData.statistics}
                             readonly={readonly}
@@ -304,7 +327,10 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                     </Box>
                     <Box gridColumn="span 6">
                         {/* skills */}
-                        <SectionTitle text={T('game.dnd5.common.skills')} />
+                        <SectionTitle
+                            iconBefore={<GiBodyBalance size={20} />}
+                            text={T('game.dnd5.common.skills')}
+                        />
                         <Skills
                             skills={characterData.skills}
                             readonly={readonly}
@@ -317,7 +343,10 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
             {sheetTabs[tabIndex].key === 'combat' ? [
                 // combat
                 <Box gridColumn="span 12">
-                    <SectionTitle text={T('game.dnd5.common.combat')} />
+                    <SectionTitle
+                        iconBefore={<GiCrossedSwords size={20} />}
+                        text={T('game.dnd5.common.combat')}
+                    />
                     <Combat
                         combat={characterData.combat}
                         readonly={readonly}
@@ -327,8 +356,9 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                 // attacks
                 <Box gridColumn="span 12">
                     <SectionTitle
-                        text={T('game.dnd5.common.attacks')}
+                        iconBefore={<GiSwordman size={20} />}
                         iconAfter={<AddAttackButton onCreate={onAttackCreate} />}
+                        text={T('game.dnd5.common.attacks')}
                     />
                     <Attacks
                         attacks={characterData.attacks}
@@ -342,7 +372,10 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
             {sheetTabs[tabIndex].key === 'featuresAndEquipment' ? [
                 // features
                 <Box gridColumn="span 12">
-                    <SectionTitle text={T('game.dnd5.common.features')} />
+                    <SectionTitle
+                        iconBefore={<GiSkills size={20} />}
+                        text={T('game.dnd5.common.features')}
+                    />
                     <FieldLayout<DnD5Features>
                         gameId={GameId.dnd5}
                         fields={featuresFields}
@@ -354,7 +387,10 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                 </Box>,
                 // equipment
                 <Box gridColumn="span 12">
-                    <SectionTitle text={T('game.dnd5.common.equipment')} />
+                    <SectionTitle
+                        iconBefore={<GiHandBag size={20} />}
+                        text={T('game.dnd5.common.equipment')}
+                    />
                     <Equipment
                         equipment={characterData.equipment}
                         readonly={readonly}
@@ -367,8 +403,9 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                 // spellcasting
                 <Box gridColumn="span 12">
                     <SectionTitle
-                        text={T('game.dnd5.common.spellcasting')}
+                        iconBefore={<GiSpellBook size={20} />}
                         iconAfter={<AddAttackButton onCreate={onSpellLevelCreate} />}
+                        text={T('game.dnd5.common.spellcasting')}
                     />
                     <Spellcasting
                         spellcasting={characterData.spellcasting}

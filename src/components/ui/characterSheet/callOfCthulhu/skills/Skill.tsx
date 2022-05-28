@@ -61,7 +61,9 @@ const Skill: React.FC<SkillProps> = ({
             <Box gridColumn="span 2">
                 <TextField
                     fullWidth
-                    disabled
+                    InputProps={{
+                        readOnly: true
+                    }}
                     type="text"
                     size="small"
                     label={T('game.callOfCthulhu.common.base')}
@@ -72,9 +74,8 @@ const Skill: React.FC<SkillProps> = ({
                 <Box key={key.toString()} gridColumn="span 1">
                     <TextField
                         fullWidth
-                        disabled={!editable}
                         InputProps={{
-                            readOnly: readonly
+                            readOnly: readonly || !editable
                         }}
                         type="text"
                         size="small"

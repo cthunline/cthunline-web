@@ -55,3 +55,15 @@ html * {
     height: 100%;
     width: 100%;
 }
+
+/* stylelint-disable selector-class-pattern */
+
+/* material ui rules & overrides */
+
+#root .MuiTextField-root input[readonly] + fieldset,
+#root .MuiTextField-root:focus input[readonly] + fieldset,
+#root .MuiTextField-root:hover input[readonly] + fieldset {
+    border: 1px solid rgb(255 255 255 / 5%);
+}
+
+/* stylelint-enable selector-class-pattern */

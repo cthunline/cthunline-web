@@ -41,9 +41,8 @@ const Point: React.FC<PointProps> = ({
                 <Box key={key.toString()} gridColumn="span 3">
                     <TextField
                         fullWidth
-                        disabled={!editable}
                         InputProps={{
-                            readOnly: readonly
+                            readOnly: readonly || !editable
                         }}
                         type="text"
                         size="small"
