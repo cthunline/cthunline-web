@@ -12,7 +12,7 @@ export const spellcastingFields: SpellcastingField[] = [{
     gridColumn: 6
 }, {
     key: 'spellAbility',
-    type: 'string',
+    type: 'number',
     gridColumn: 2
 }, {
     key: 'spellSaveDC',
