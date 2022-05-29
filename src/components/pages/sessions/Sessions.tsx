@@ -37,18 +37,22 @@ interface CharacterSelectorProps {
 const CharacterSelector: React.FC<CharacterSelectorProps> = ({
     characters,
     onSelect
-}) => (
-    <List>
-        {characters.map(({ id, name }) => (
-            <ListItemButton
-                key={id}
-                onClick={() => onSelect(id)}
-            >
-                {name}
-            </ListItemButton>
-        ))}
-    </List>
-);
+}) => {
+    const { T } = useApp();
+
+    return (
+        <List>
+            {characters.map(({ id, name }) => (
+                <ListItemButton
+                    key={id}
+                    onClick={() => onSelect(id)}
+                >
+                    {name.trim() || `[${T('common.unknown')}]`}
+                </ListItemButton>
+            ))}
+        </List>
+    );
+};
 
 const Sessions: React.FC = () => {
     const { T, user } = useApp();

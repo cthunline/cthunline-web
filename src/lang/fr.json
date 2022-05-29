@@ -26,7 +26,8 @@
         "privatly": "secrètement",
         "public": "public",
         "publicly": "publiquement",
-        "theme": "thème"
+        "theme": "thème",
+        "unknown": "inconnu"
     },
     "entity": {
         "asset": "ressource",

@@ -129,7 +129,7 @@ const Characters: React.FC = () => {
                                     {getGame(gameId)?.name}
                                 </TableCell>
                                 <TableCell>
-                                    {name}
+                                    {name.trim() || `[${T('common.unknown')}]`}
                                 </TableCell>
                                 <TableCell align="right">
                                     <IconButton
