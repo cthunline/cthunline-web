@@ -36,22 +36,24 @@ const SpellLevel: React.FC<SpellLevelProps> = ({
         >
             <Box key={`spellcasting-level-${spellLevel.level}-level`} gridColumn="span 7">
                 {`${T('game.dnd5.spellcasting.level')} ${spellLevel.level}`}
-                <Box component="span" className="ml-5">
-                    <IconButton
-                        size="small"
-                        onClick={() => {
-                            onChange({
-                                ...spellLevel,
-                                spells: [
-                                    ...spellLevel.spells,
-                                    { ...defaultSpell }
-                                ]
-                            });
-                        }}
-                    >
-                        <FiPlusCircle />
-                    </IconButton>
-                </Box>
+                {readonly ? null : (
+                    <Box component="span" className="ml-5">
+                        <IconButton
+                            size="small"
+                            onClick={() => {
+                                onChange({
+                                    ...spellLevel,
+                                    spells: [
+                                        ...spellLevel.spells,
+                                        { ...defaultSpell }
+                                    ]
+                                });
+                            }}
+                        >
+                            <FiPlusCircle />
+                        </IconButton>
+                    </Box>
+                )}
             </Box>
             {spellLevelFields.map((key) => {
                 const value = spellLevel[key];
@@ -81,7 +83,7 @@ const SpellLevel: React.FC<SpellLevelProps> = ({
                 gridColumn="span 1"
                 alignItems="center"
             >
-                {isDelete ? (
+                {!readonly && isDelete ? (
                     <IconButton
                         size="medium"
                         color="error"

@@ -59,10 +59,12 @@ html * {
 /* stylelint-disable selector-class-pattern */
 
 /* material ui rules & overrides */
-
 #root .MuiTextField-root input[readonly] + fieldset,
 #root .MuiTextField-root:focus input[readonly] + fieldset,
-#root .MuiTextField-root:hover input[readonly] + fieldset {
+#root .MuiTextField-root:hover input[readonly] + fieldset,
+#root .MuiTextField-root textarea[readonly] + textarea[readonly] + fieldset,
+#root .MuiTextField-root:focus textarea[readonly] + textarea[readonly] + fieldset,
+#root .MuiTextField-root:hover textarea[readonly] + textarea[readonly] + fieldset {
     border: 1px solid rgb(255 255 255 / 5%);
 }
 

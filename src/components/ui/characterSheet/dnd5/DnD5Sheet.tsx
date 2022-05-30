@@ -357,7 +357,9 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                 <Box gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiSwordman size={20} />}
-                        iconAfter={<AddAttackButton onCreate={onAttackCreate} />}
+                        iconAfter={readonly ? undefined : (
+                            <AddAttackButton onCreate={onAttackCreate} />
+                        )}
                         text={T('game.dnd5.common.attacks')}
                     />
                     <Attacks
@@ -404,7 +406,9 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                 <Box gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiSpellBook size={20} />}
-                        iconAfter={<AddAttackButton onCreate={onSpellLevelCreate} />}
+                        iconAfter={readonly ? undefined : (
+                            <AddAttackButton onCreate={onSpellLevelCreate} />
+                        )}
                         text={T('game.dnd5.common.spellcasting')}
                     />
                     <Spellcasting

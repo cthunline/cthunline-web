@@ -8,6 +8,7 @@
         "dice": "dice",
         "dices": "dices",
         "display": "display",
+        "exit": "exit",
         "invite": "invite",
         "load": "load",
         "login": "login",
@@ -34,6 +35,8 @@
         "assets": "assets",
         "character": "character",
         "characters": "characters",
+        "dice": "dice",
+        "dices": "dices",
         "game": "game",
         "games": "games",
         "gameMaster": "game master",
@@ -87,6 +90,7 @@
                 "reconnected": "reconnected",
                 "reconnecting": "attempting reconnection..."
             },
+            "exitConfirm": "exit session ?",
             "sketch": {
                 "assignUser": "assign user",
                 "backward": "backward",

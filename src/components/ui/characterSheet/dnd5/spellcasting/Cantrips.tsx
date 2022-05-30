@@ -26,16 +26,18 @@ const Cantrips: React.FC<CantripsProps> = ({
         <>
             <Box gridColumn="span 3">
                 {T('game.dnd5.spellcasting.cantrips')}
-                <Box component="span" className="ml-5">
-                    <IconButton
-                        size="small"
-                        onClick={() => {
-                            onChange([...cantrips, '']);
-                        }}
-                    >
-                        <FiPlusCircle />
-                    </IconButton>
-                </Box>
+                {readonly ? null : (
+                    <Box component="span" className="ml-5">
+                        <IconButton
+                            size="small"
+                            onClick={() => {
+                                onChange([...cantrips, '']);
+                            }}
+                        >
+                            <FiPlusCircle />
+                        </IconButton>
+                    </Box>
+                )}
             </Box>
             {cantrips.map((cantrip, index) => [
                 <Box key={`cantrip-${index.toString}-name`} gridColumn={`span ${readonly ? '11' : '10'}`}>

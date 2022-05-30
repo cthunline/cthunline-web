@@ -5,6 +5,7 @@ import {
     CircularProgress
 } from '@mui/material';
 
+import { useApp } from '../../contexts/App';
 import { useDialog } from '../../contexts/Dialog';
 import { PlayProvider, usePlay } from '../../contexts/Play';
 import PlayMenu from './PlayMenu';
@@ -25,6 +26,7 @@ import {
 import './Play.css';
 
 const PlayContent = () => {
+    const { T } = useApp();
     const navigate = useNavigate();
     const { confirmDialog } = useDialog();
     const {
@@ -66,7 +68,7 @@ const PlayContent = () => {
     };
 
     const onExit = () => {
-        confirmDialog('Exit session ?', () => {
+        confirmDialog(T('page.play.exitConfirm'), () => {
             navigate('/sessions');
         });
     };

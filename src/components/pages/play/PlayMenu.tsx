@@ -9,6 +9,7 @@ import {
     MdDraw
 } from 'react-icons/md';
 
+import { useApp } from '../../contexts/App';
 import { WidgetType } from '../../../types';
 
 import './PlayMenu.css';
@@ -21,7 +22,7 @@ interface PlayMenuProps {
 
 interface PlayMenuItemData {
     icon: JSX.Element;
-    text: string;
+    textKey: string;
     widget: WidgetType;
     playerOnly?: boolean;
     adminOnly?: boolean;
@@ -29,58 +30,61 @@ interface PlayMenuItemData {
 
 const playMenuItems: PlayMenuItemData[] = [{
     icon: <MdOutlineContactPage size={40} />,
-    text: 'Character',
+    textKey: 'entity.character',
     widget: WidgetType.character,
     playerOnly: true
 }, {
     icon: <MdOutlineContactPage size={40} />,
-    text: 'Characters',
+    textKey: 'entity.characters',
     widget: WidgetType.characters,
     adminOnly: true
 }, {
     icon: <GiRollingDiceCup size={40} />,
-    text: 'Dices',
+    textKey: 'entity.dices',
     widget: WidgetType.dices
 }, {
     icon: <MdDraw size={40} />,
-    text: 'Sketch',
+    textKey: 'entity.sketch',
     widget: WidgetType.sketch,
     adminOnly: true
 }, {
     icon: <HiMusicNote size={40} />,
-    text: 'Jukebox',
+    textKey: 'entity.jukebox',
     widget: WidgetType.jukebox,
     adminOnly: true
 }, {
     icon: <CgNotes size={40} />,
-    text: 'Notes',
+    textKey: 'entity.notes',
     widget: WidgetType.notes
 }];
 
 interface PlayMenuItemProps {
     icon: JSX.Element;
-    text: string;
+    textKey: string;
     onClick: () => void;
 }
 
 const PlayMenuItem: React.FC<PlayMenuItemProps> = ({
     icon,
-    text,
+    textKey,
     onClick
-}) => (
-    <Box className="play-menu-item flex center">
-        <Tooltip
-            placement="right"
-            title={(
-                <div className="play-menu-tooltip">{text}</div>
-            )}
-        >
-            <Box className="clickable" onClick={onClick}>
-                {icon}
-            </Box>
-        </Tooltip>
-    </Box>
-);
+}) => {
+    const { T } = useApp();
+    return (
+        <Box className="play-menu-item flex center">
+            <Tooltip
+                placement="right"
+                title={(
+                    <div className="play-menu-tooltip">{T(textKey)}</div>
+                )}
+            >
+                <Box className="clickable" onClick={onClick}>
+                    {icon}
+                </Box>
+            </Tooltip>
+        </Box>
+    );
+};
 
 const PlayMenu: React.FC<PlayMenuProps> = ({
     isMaster,
@@ -94,19 +98,19 @@ const PlayMenu: React.FC<PlayMenuProps> = ({
         <Box className="play-menu flex column full-height">
             {items.map(({
                 icon,
-                text,
+                textKey,
                 widget
             }) => (
                 <PlayMenuItem
                     key={`play-menu-${widget}`}
                     icon={icon}
-                    text={text}
+                    textKey={textKey}
                     onClick={() => onWidgetOpen(widget)}
                 />
             ))}
             <PlayMenuItem
                 icon={<MdLogout size={40} />}
-                text="Exit"
+                textKey="action.exit"
                 onClick={() => onExit()}
             />
         </Box>

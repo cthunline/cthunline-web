@@ -39,6 +39,10 @@
         },
         "common": {
             "base": "base",
+            "biography": "biographie",
+            "characteristic": "caractéristique",
+            "characteristics": "caractéristiques",
+            "combat": "combat",
             "current": "actuel",
             "development": "développement",
             "fifth": "1/5",
@@ -48,7 +52,12 @@
             "reg": "%",
             "regular": "%",
             "skill": "compétence",
-            "starting": "initial"
+            "skills": "compétences",
+            "starting": "initial",
+            "status": "statut",
+            "story": "histoire",
+            "weapon": "arme",
+            "weapons": "armes"
         },
         "skill": {
             "accounting": "comptabilité",

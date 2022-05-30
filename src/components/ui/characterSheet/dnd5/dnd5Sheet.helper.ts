@@ -86,9 +86,9 @@ export const calculateSavingThrows = (characterData: DnD5Character): DnD5Charact
         const { proficient } = savingThrows[ability];
         const abilityModifier = abilities[ability].modifier;
         savingThrows[ability].modifier = (
-            proficient ? abilityModifier : (
+            proficient ? (
                 abilityModifier + proficiencyBonus
-            )
+            ) : abilityModifier
         );
     });
     return {

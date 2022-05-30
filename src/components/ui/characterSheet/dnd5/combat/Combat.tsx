@@ -120,6 +120,7 @@ const Combat: React.FC<CombatProps> = ({
                 </Box>,
                 <Box key={`combat-deathSaves=${key}-slider`} gridColumn="span 2">
                     <Slider
+                        disabled={readonly}
                         defaultValue={combat.deathSaves[key]}
                         valueLabelDisplay="auto"
                         marks

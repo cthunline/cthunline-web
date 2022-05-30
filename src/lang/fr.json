@@ -8,6 +8,7 @@
         "dice": "dé",
         "dices": "dés",
         "display": "afficher",
+        "exit": "quitter",
         "invite": "inviter",
         "load": "charger",
         "login": "se connecter",
@@ -34,6 +35,8 @@
         "assets": "ressources",
         "character": "personnage",
         "characters": "personnages",
+        "dice": "dé",
+        "dices": "dés",
         "game": "jeu",
         "games": "jeux",
         "gameMaster": "maître du jeu",
@@ -87,6 +90,7 @@
                 "reconnected": "reconnecté",
                 "reconnecting": "tentative de reconnexion..."
             },
+            "exitConfirm": "quitter la session ?",
             "sketch": {
                 "assignUser": "assigner joueur",
                 "backward": "reculer",
