@@ -125,11 +125,14 @@ const useSketch = (socket: PlaySocket | null) => {
         emit: boolean = true,
         userAllowed: boolean = false
     ) => {
-        if (emit && (socket?.isMaster || userAllowed)) {
-            const { events, ...sketchUpdateData } = updater(sketchData);
-            socket?.emit('sketchUpdate', sketchUpdateData);
-        }
-        setSketchData(updater as SetStateAction<SketchData>);
+        setSketchData((prev: SketchData) => {
+            const nextSketchData = updater(prev);
+            if (emit && (socket?.isMaster || userAllowed)) {
+                const { events, ...sketchUpdateData } = nextSketchData;
+                socket?.emit('sketchUpdate', sketchUpdateData);
+            }
+            return nextSketchData;
+        });
     };
 
     const setSketchDisplay = (displayed: boolean) => {
