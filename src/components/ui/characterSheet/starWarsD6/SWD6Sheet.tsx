@@ -255,7 +255,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             {/* bio & background */}
             {sheetTabs[tabIndex].key === 'biography' ? [
                 // biography
-                <Box gridColumn="span 9">
+                <Box key="swd6-biography" gridColumn="span 9">
                     <SectionTitle
                         iconBefore={<GiCharacter size={20} />}
                         text={T('game.starWarsD6.common.biography')}
@@ -270,7 +270,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                     />
                 </Box>,
                 // portrait
-                <Box gridColumn="span 3">
+                <Box key="swd6-portrait" gridColumn="span 3">
                     <Portrait
                         base64={characterData.portrait}
                         readonly={readonly}
@@ -279,6 +279,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 </Box>,
                 // story
                 <FieldLayout<SWD6Story>
+                    key="swd6-story"
                     gameId={GameId.starWarsD6}
                     fields={storyFields}
                     textSectionKey="story"
@@ -290,7 +291,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             {/* attributes & skills */}
             {sheetTabs[tabIndex].key === 'attributesAndSkills' ? [
                 // attributes and skills
-                <Box gridColumn="span 12">
+                <Box key="swd6-attributesAndSkills" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiRollingDices size={20} />}
                         text={T('game.starWarsD6.common.attributesAndSkills')}
@@ -305,7 +306,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                     />
                 </Box>,
                 // statistics
-                <Box gridColumn="span 6">
+                <Box key="swd6-statistics" gridColumn="span 6">
                     <SectionTitle
                         iconBefore={<GiChart size={20} />}
                         text={T('game.starWarsD6.common.statistics')}
@@ -317,7 +318,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                     />
                 </Box>,
                 // wound status
-                <Box gridColumn="span 6">
+                <Box key="swd6-status" gridColumn="span 6">
                     <SectionTitle
                         iconBefore={<GiHeartBeats size={20} />}
                         text={T('game.starWarsD6.common.woundStatus')}
@@ -332,7 +333,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             {/* weapons */}
             {sheetTabs[tabIndex].key === 'weapons' ? (
                 // weapons
-                <Box gridColumn="span 12">
+                <Box key="swd6-weapons" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiLightSabers size={20} />}
                         text={T('game.starWarsD6.common.weapons')}

@@ -136,6 +136,9 @@ export const calculateOtherStats = (characterData: DnD5Character): DnD5Character
             }
         }
     } = characterData;
+    characterData.spellcasting.levels.sort((a, b) => (
+        a.level - b.level
+    ));
     return {
         ...characterData,
         combat: {
@@ -155,12 +158,6 @@ export const calculateOtherStats = (characterData: DnD5Character): DnD5Character
         statistics: {
             ...characterData.statistics,
             passiveWisdom: 10 + perceptionModifier
-        },
-        spellcasting: {
-            ...characterData.spellcasting,
-            levels: characterData.spellcasting.levels.sort((a, b) => (
-                a.level - b.level
-            ))
         }
     };
 };

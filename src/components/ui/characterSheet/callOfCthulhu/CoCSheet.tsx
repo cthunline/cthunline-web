@@ -238,7 +238,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             {/* bio & story */}
             {sheetTabs[tabIndex].key === 'biographyAndStory' ? [
                 // biography
-                <Box gridColumn="span 9">
+                <Box key="coc-biography" gridColumn="span 9">
                     <SectionTitle
                         iconBefore={<GiCharacter size={20} />}
                         text={T('game.callOfCthulhu.common.biography')}
@@ -253,7 +253,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                     />
                 </Box>,
                 // portrait
-                <Box gridColumn="span 3" gridRow="span 2">
+                <Box key="coc-portrait" gridColumn="span 3" gridRow="span 2">
                     <Portrait
                         base64={characterData.portrait}
                         readonly={readonly}
@@ -262,11 +262,13 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 </Box>,
                 // story
                 <SectionTitle
+                    key="coc-story-title"
                     iconBefore={<GiOpenBook size={20} />}
                     text={T('game.callOfCthulhu.common.story')}
                     gridColumn="span 9"
                 />,
                 <FieldLayout<CoCStory>
+                    key="coc-story-layout"
                     gameId={GameId.callOfCthulhu}
                     fields={storyFields}
                     textSectionKey="story"
@@ -279,11 +281,13 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             {sheetTabs[tabIndex].key === 'characteristicsAndSkills' ? [
                 // characteristics
                 <SectionTitle
+                    key="coc-characteristics-title"
                     iconBefore={<GiD10 size={20} />}
                     text={T('game.callOfCthulhu.common.characteristics')}
                     gridColumn="span 9"
                 />,
                 <Characteristics
+                    key="coc-characteristics-layout"
                     readonly={readonly}
                     characteristics={characterData.characteristics}
                     points={characterData.points}
@@ -294,7 +298,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                     onLuckOrSanityChange={onLuckOrSanityChange}
                 />,
                 // skills
-                <Box gridColumn="span 12">
+                <Box key="coc-skills" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiBodyBalance size={20} />}
                         text={T('game.callOfCthulhu.common.skills')}
@@ -311,7 +315,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
             {/* combat & status */}
             {sheetTabs[tabIndex].key === 'combat' ? [
                 // status
-                <Box gridColumn="span 12">
+                <Box key="coc-status" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiHeartBeats size={20} />}
                         text={T('game.callOfCthulhu.common.status')}
@@ -323,7 +327,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                     />
                 </Box>,
                 // combat
-                <Box gridColumn="span 12">
+                <Box key="coc-combat" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiStrong size={20} />}
                         text={T('game.callOfCthulhu.common.combat')}
@@ -331,7 +335,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                     <Combat combat={data.combat} />
                 </Box>,
                 // weapons
-                <Box gridColumn="span 12">
+                <Box key="coc-weapons" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiPistolGun size={20} />}
                         text={T('game.callOfCthulhu.common.weapons')}

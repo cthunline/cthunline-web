@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import {
     PlaySocket,
@@ -30,9 +30,9 @@ const useSessionUsers = (socket: PlaySocket | null) => {
         ));
     };
 
-    const characterUpdate = () => {
+    const characterUpdate = useCallback(() => {
         socket?.emit('characterUpdate');
-    };
+    }, [socket]);
 
     return {
         users,

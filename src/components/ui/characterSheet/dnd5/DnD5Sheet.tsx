@@ -4,7 +4,7 @@ import React, {
     useRef,
     useState
 } from 'react';
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import {
     GiCharacter,
     GiDiceTwentyFacesTwenty,
@@ -18,6 +18,7 @@ import {
     GiSwordman,
     GiHandBag
 } from 'react-icons/gi';
+import { FiPlusCircle } from 'react-icons/fi';
 import {
     DnD5Character,
     DnD5Biography,
@@ -45,11 +46,11 @@ import Skills from './skills/Skills';
 import Statistics from './statistics/Statistics';
 import Combat from './combat/Combat';
 import Attacks from './attacks/Attacks';
-import AddAttackButton from './attacks/AddAttackButton';
 import Equipment from './equipment/Equipment';
 import Spellcasting from './spellcasting/Spellcasting';
 import { ReactComponent as DnD5Logo } from '../../../../assets/games/dnd5.svg';
 import { getDefaulSpellLevel } from './spellcasting/spellcasting.data';
+import { defaultAttack } from './attacks/attacks.data';
 import { controlCharacterData } from './dnd5Sheet.helper';
 import fields from './fields.json';
 
@@ -151,12 +152,12 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
         ));
     }, []);
 
-    const onAttackCreate = useCallback((attack: DnD5Attack) => {
+    const onAttackCreate = useCallback(() => {
         setCharacterData((previous) => ({
             ...previous,
             attacks: [
                 ...previous.attacks,
-                attack
+                defaultAttack
             ]
         }));
     }, []);
@@ -234,6 +235,14 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
         label: T('game.dnd5.common.spellcasting')
     }];
 
+    const getAddButton = (handler: () => void) => (
+        readonly ? undefined : (
+            <IconButton size="medium" onClick={handler}>
+                <FiPlusCircle />
+            </IconButton>
+        )
+    );
+
     return (
         <SheetTabs
             logoSvgComponent={DnD5Logo}
@@ -244,7 +253,7 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
             {/* bio & story */}
             {sheetTabs[tabIndex].key === 'biographyAndStory' ? [
                 // biography
-                <Box gridColumn="span 9">
+                <Box key="dnd5-biography" gridColumn="span 9">
                     <SectionTitle
                         iconBefore={<GiCharacter size={20} />}
                         text={T('game.dnd5.common.biography')}
@@ -259,7 +268,7 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                     />
                 </Box>,
                 // portrait
-                <Box gridColumn="span 3">
+                <Box key="dnd5-portrait" gridColumn="span 3">
                     <Portrait
                         base64={characterData.portrait}
                         readonly={readonly}
@@ -267,7 +276,7 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                     />
                 </Box>,
                 // story
-                <Box gridColumn="span 12">
+                <Box key="dnd5-story" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiOpenBook size={20} />}
                         text={T('game.dnd5.common.story')}
@@ -285,6 +294,7 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
             {/* abilities & skills */}
             {sheetTabs[tabIndex].key === 'abilitiesAndSkills' ? (
                 <Box
+                    key="dnd5-abilitiesAndSkills"
                     gridColumn="span 12"
                     display="grid"
                     gridTemplateColumns="repeat(12, 1fr)"
@@ -342,7 +352,7 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
             {/* combat & attacks */}
             {sheetTabs[tabIndex].key === 'combat' ? [
                 // combat
-                <Box gridColumn="span 12">
+                <Box key="dnd5-combat" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiCrossedSwords size={20} />}
                         text={T('game.dnd5.common.combat')}
@@ -354,12 +364,10 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                     />
                 </Box>,
                 // attacks
-                <Box gridColumn="span 12">
+                <Box key="dnd5-attacks" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiSwordman size={20} />}
-                        iconAfter={readonly ? undefined : (
-                            <AddAttackButton onCreate={onAttackCreate} />
-                        )}
+                        iconAfter={getAddButton(onAttackCreate)}
                         text={T('game.dnd5.common.attacks')}
                     />
                     <Attacks
@@ -373,7 +381,7 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
             {/* features & equipment */}
             {sheetTabs[tabIndex].key === 'featuresAndEquipment' ? [
                 // features
-                <Box gridColumn="span 12">
+                <Box key="dnd5-features" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiSkills size={20} />}
                         text={T('game.dnd5.common.features')}
@@ -388,7 +396,7 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                     />
                 </Box>,
                 // equipment
-                <Box gridColumn="span 12">
+                <Box key="dnd5-equipment" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiHandBag size={20} />}
                         text={T('game.dnd5.common.equipment')}
@@ -403,12 +411,10 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
             {/* spells */}
             {sheetTabs[tabIndex].key === 'spells' ? (
                 // spellcasting
-                <Box gridColumn="span 12">
+                <Box key="dnd5-spellcasting" gridColumn="span 12">
                     <SectionTitle
                         iconBefore={<GiSpellBook size={20} />}
-                        iconAfter={readonly ? undefined : (
-                            <AddAttackButton onCreate={onSpellLevelCreate} />
-                        )}
+                        iconAfter={getAddButton(onSpellLevelCreate)}
                         text={T('game.dnd5.common.spellcasting')}
                     />
                     <Spellcasting
