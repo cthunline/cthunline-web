@@ -19,7 +19,7 @@
     opacity: 0.75;
 }
 
-.sketch-image.container:not(.resizing):not(:hover) .sketch-image-resizer {
+.sketch-image.container:not(.resizing, :hover) .sketch-image-resizer {
     display: none;
 }
 
@@ -43,14 +43,4 @@
 .sketch-image.container.selected .sketch-image-resizer.ne,
 .sketch-image.container.selected .sketch-image-resizer.sw {
     cursor: nesw-resize;
-}
-
-.sketch-image-menu-button {
-    cursor: pointer;
-    transform: translate(calc(100% - 70px), 30px);
-}
-
-.sketch-image.container:not(.resizing):not(.selected) .sketch-image-menu-button:not(.open),
-.sketch-image.container:not(.resizing):not(:hover) .sketch-image-menu-button:not(.open) {
-    display: none;
 }
