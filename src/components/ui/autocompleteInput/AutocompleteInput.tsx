@@ -53,7 +53,7 @@ const AutocompleteInput = <DataType extends AutocompleteInputData>({
                     variant={variant}
                 />
             )}
-            onChange={(e, val) => {
+            onChange={(_e, val) => {
                 if (val && typeof val === 'object') {
                     if (val.inputValue) {
                         onChange({

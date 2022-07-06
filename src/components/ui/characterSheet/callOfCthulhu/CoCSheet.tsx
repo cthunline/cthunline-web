@@ -159,7 +159,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
     const onSkillDelete = useCallback((index: number) => {
         setCharacterData((previous) => ({
             ...previous,
-            skills: previous.skills.filter((s, idx) => (
+            skills: previous.skills.filter((_s, idx) => (
                 idx !== index
             ))
         }));
@@ -189,7 +189,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
     const onWeaponDelete = useCallback((index: number) => {
         setCharacterData((previous) => ({
             ...previous,
-            weapons: previous.weapons.filter((s, idx) => (
+            weapons: previous.weapons.filter((_s, idx) => (
                 idx !== index
             ))
         }));

@@ -65,7 +65,7 @@ const SpellList: React.FC<SpellListProps> = ({
                         size="medium"
                         color="error"
                         onClick={() => {
-                            onChange(spells.filter((s, idx) => (
+                            onChange(spells.filter((_s, idx) => (
                                 index !== idx
                             )));
                         }}

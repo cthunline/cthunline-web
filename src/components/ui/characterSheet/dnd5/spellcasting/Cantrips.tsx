@@ -66,7 +66,7 @@ const Cantrips: React.FC<CantripsProps> = ({
                             size="medium"
                             color="error"
                             onClick={() => {
-                                onChange(cantrips.filter((c, idx) => (
+                                onChange(cantrips.filter((_c, idx) => (
                                     index !== idx
                                 )));
                             }}

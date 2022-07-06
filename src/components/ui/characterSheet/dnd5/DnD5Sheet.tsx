@@ -174,7 +174,7 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
     const onAttackDelete = useCallback((index: number) => {
         setCharacterData((previous) => ({
             ...previous,
-            attacks: previous.attacks.filter((a, idx) => (
+            attacks: previous.attacks.filter((_a, idx) => (
                 idx !== index
             ))
         }));

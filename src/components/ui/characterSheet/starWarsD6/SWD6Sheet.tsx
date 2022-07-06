@@ -170,7 +170,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 ...previous.attributes,
                 [attribute]: {
                     ...previous.attributes[attribute],
-                    skills: previous.attributes[attribute].skills.filter((skill, idx) => (
+                    skills: previous.attributes[attribute].skills.filter((_skill, idx) => (
                         idx !== skillIndex
                     ))
                 }
@@ -218,7 +218,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     const onWeaponDelete = useCallback((weaponIndex: number) => {
         setCharacterData((previous) => ({
             ...previous,
-            weapons: previous.weapons.filter((s, idx) => (
+            weapons: previous.weapons.filter((_s, idx) => (
                 idx !== weaponIndex
             ))
         }));

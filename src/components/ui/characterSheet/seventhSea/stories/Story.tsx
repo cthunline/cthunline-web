@@ -102,7 +102,7 @@ const Story: React.FC<StoryProps> = ({
                             onClick={() => {
                                 onChange({
                                     ...story,
-                                    steps: story.steps.filter((st, i) => i !== idx)
+                                    steps: story.steps.filter((_st, i) => i !== idx)
                                 });
                             }}
                         >

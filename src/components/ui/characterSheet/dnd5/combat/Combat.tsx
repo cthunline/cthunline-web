@@ -127,7 +127,7 @@ const Combat: React.FC<CombatProps> = ({
                         step={1}
                         min={0}
                         max={3}
-                        onChange={(e: Event, value: number | number[]) => {
+                        onChange={(_e: Event, value: number | number[]) => {
                             onChange({
                                 deathSaves: {
                                     ...combat.deathSaves,

@@ -73,7 +73,6 @@ const UserForm: React.FC<UserFormProps> = ({
     });
 
     const onFormSubmit = ({
-        passwordConfirm,
         invitationCode,
         ...data
     }: UserFormData) => {

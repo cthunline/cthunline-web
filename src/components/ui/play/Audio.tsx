@@ -23,7 +23,7 @@ const Audio = () => {
         React.MutableRefObject<HTMLAudioElement>
     );
 
-    const onVolumeChange = (e: Event, value: number | number[]) => {
+    const onVolumeChange = (_e: Event, value: number | number[]) => {
         setVolumePercent(value as number);
         if (isMute) {
             setIsMute(false);

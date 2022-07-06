@@ -20,7 +20,7 @@ export const focusWidget = (target: HTMLElement) => {
     });
     // set correct ordered z-index on other widgets
     let zIndex = 1;
-    allOtherWidgets.forEach((w, idx) => {
+    allOtherWidgets.forEach((_w, idx) => {
         const widgetEl = allOtherWidgets[idx] as HTMLElement;
         widgetEl.setAttribute('data-zindex', zIndex.toString());
         widgetEl.style.zIndex = zIndex.toString();

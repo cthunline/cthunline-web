@@ -36,7 +36,7 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
         users
     ]);
 
-    const onTabChange = (e: React.SyntheticEvent, userId: number) => {
+    const onTabChange = (_e: React.SyntheticEvent, userId: number) => {
         setTargetSessionUser(userId);
     };
 

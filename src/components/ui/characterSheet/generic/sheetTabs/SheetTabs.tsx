@@ -24,7 +24,7 @@ const SheetTabs: React.FC<SheetTabsProps> = ({
     logoSvgComponent: SVGLogo,
     onChange
 }) => {
-    const handleChange = (e: React.SyntheticEvent, value: number) => {
+    const handleChange = (_e: React.SyntheticEvent, value: number) => {
         onChange(value);
     };
 

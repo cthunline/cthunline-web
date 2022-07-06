@@ -143,7 +143,7 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
     const onBackgroundDelete = useCallback((index: number) => {
         setCharacterData((previous) => ({
             ...previous,
-            backgrounds: previous.backgrounds.filter((b, idx) => (
+            backgrounds: previous.backgrounds.filter((_b, idx) => (
                 idx !== index
             ))
         }));
@@ -171,7 +171,7 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
     const onStoryDelete = useCallback((index: number) => {
         setCharacterData((previous) => ({
             ...previous,
-            stories: previous.stories.filter((s, idx) => (
+            stories: previous.stories.filter((_s, idx) => (
                 idx !== index
             ))
         }));
@@ -220,7 +220,7 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
     const onAdvantageDelete = useCallback((index: number) => {
         setCharacterData((previous) => ({
             ...previous,
-            advantages: previous.advantages.filter((a, idx) => (
+            advantages: previous.advantages.filter((_a, idx) => (
                 idx !== index
             ))
         }));
