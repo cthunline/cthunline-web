@@ -2,6 +2,7 @@ import { Socket } from 'socket.io-client';
 import {
     CoCCharacter,
     DnD5Character,
+    SeventhSeaCharacter,
     SWD6Character
 } from '@cthunline/games';
 
@@ -159,6 +160,7 @@ export interface Note {
 export type CharacterData =
     CoCCharacter
     | DnD5Character
+    | SeventhSeaCharacter
     | SWD6Character;
 
 export interface Character<GenericCharacterData = CharacterData> {
@@ -182,6 +184,7 @@ export type CharacterEditBody = Partial<Omit<CharacterCreateBody, 'gameId'>>;
 export enum GameId {
     callOfCthulhu = 'callOfCthulhu',
     dnd5 = 'dnd5',
+    seventhSea = 'seventhSea',
     starWarsD6 = 'starWarsD6'
 }
 

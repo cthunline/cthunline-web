@@ -39,16 +39,16 @@ const FieldLayout = <DataType extends {}>({
         title,
         type,
         lines
-    }: Field<DataType>) => ([
+    }: Field<DataType>, index: number) => ([
         title ? (
             <SectionTitle
-                key={`field-${key}-title`}
-                text={T(`game.${gameId}.${textSectionKey}.${key}`)}
+                key={`field-${String(key ?? index)}-title`}
+                text={T(`game.${gameId}.${textSectionKey}.${String(key)}`)}
             />
         ) : null,
         key ? (
             <TextField
-                key={`field-${key}-input`}
+                key={`field-${String(key ?? index)}-input`}
                 fullWidth
                 multiline={!!lines}
                 minRows={lines}
@@ -58,7 +58,7 @@ const FieldLayout = <DataType extends {}>({
                 }}
                 type="text"
                 size="small"
-                label={T(`game.${gameId}.${textSectionKey}.${key}`)}
+                label={T(`game.${gameId}.${textSectionKey}.${String(key ?? index)}`)}
                 name={key.toString()}
                 value={data[key]}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,32 +82,32 @@ const FieldLayout = <DataType extends {}>({
             gridTemplateColumns="repeat(12, 1fr)"
             gap={2}
         >
-            {fields.map((field) => (
+            {fields.map((field, index) => (
                 field.children ? (
                     <Box
-                        key={`field-${field.key}`}
+                        key={`field-${String(field.key ?? index)}`}
                         gridColumn={`span ${field.gridColumn}`}
                         display="grid"
                         gridTemplateColumns="repeat(12, 1fr)"
                         gap={2}
                     >
-                        {field.children.map((childField) => (
+                        {field.children.map((childField, idx) => (
                             <Box
-                                key={`field-${childField.key}`}
+                                key={`field-${String(childField.key ?? idx)}`}
                                 gridColumn={`span ${childField.gridColumn}`}
                                 gap={2}
                             >
-                                {getInput(childField)}
+                                {getInput(childField, idx)}
                             </Box>
                         ))}
                     </Box>
                 ) : (
                     <Box
-                        key={`field-${field.key}`}
+                        key={`field-${String(field.key ?? index)}`}
                         gridColumn={`span ${field.gridColumn}`}
                         gap={2}
                     >
-                        {getInput(field)}
+                        {getInput(field, index)}
                     </Box>
                 )
             ))}

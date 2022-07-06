@@ -1,0 +1,11 @@
+div .characteristic-radio {
+    padding: 2px;
+}
+
+div .characteristic-clear {
+    padding: 2px;
+}
+
+.characteristic:not(:hover) .characteristic-clear {
+    display: none;
+}

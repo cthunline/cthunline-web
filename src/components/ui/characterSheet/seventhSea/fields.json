@@ -1,0 +1,74 @@
+{
+    "biography": [{
+        "key": "name",
+        "gridColumn": 6
+    }, {
+        "key": "concept",
+        "gridColumn": 6
+    }, {
+        "key": "nation",
+        "gridColumn": 6
+    }, {
+        "key": "religion",
+        "gridColumn": 6
+    }, {
+        "key": "reputations",
+        "gridColumn": 9
+    }, {
+        "key": "wealth",
+        "type": "number",
+        "gridColumn": 3
+    }],
+    "arcana": [{
+        "key": "name",
+        "gridColumn": 6
+    }, {
+        "gridColumn": 6
+    }, {
+        "key": "virtue",
+        "gridColumn": 6,
+        "lines": 3
+    }, {
+        "key": "hubris",
+        "gridColumn": 6,
+        "lines": 3
+    }],
+    "background": [{
+        "key": "name",
+        "gridColumn": 6
+    }, {
+        "gridColumn": 6
+    }, {
+        "key": "description",
+        "gridColumn": 6,
+        "lines": 3
+    }, {
+        "key": "quirk",
+        "gridColumn": 6,
+        "lines": 3
+    }],
+    "story": [{
+        "key": "name",
+        "gridColumn": 6
+    }, {
+        "gridColumn": 6
+    }, {
+        "key": "goal",
+        "gridColumn": 6,
+        "lines": 3
+    }, {
+        "key": "reward",
+        "gridColumn": 6,
+        "lines": 3
+    }],
+    "advantage": [{
+        "key": "name",
+        "gridColumn": 6
+    }, {
+        "gridColumn": 6
+    }, {
+        "key": "description",
+        "gridColumn": 12,
+        "lines": 2
+    }]
+}

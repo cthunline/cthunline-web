@@ -3,12 +3,14 @@ import { Paper } from '@mui/material';
 import {
     CoCCharacter,
     DnD5Character,
+    SeventhSeaCharacter,
     SWD6Character
 } from '@cthunline/games';
 
 import { CharacterData, GameId } from '../../../types';
 import CoCSheet from './callOfCthulhu/CoCSheet';
 import DnD5Sheet from './dnd5/DnD5Sheet';
+import SeventhSeaSheet from './seventhSea/SeventhSeaSheet';
 import SWD6Sheet from './starWarsD6/SWD6Sheet';
 
 import './CharacterSheet.css';
@@ -67,6 +69,16 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                 <DnD5Sheet
                     readonly={readonly}
                     data={data as DnD5Character}
+                    listening={listening}
+                    onChange={onChangeBuffer}
+                />
+            );
+        }
+        if (gameId === GameId.seventhSea) {
+            return (
+                <SeventhSeaSheet
+                    readonly={readonly}
+                    data={data as SeventhSeaCharacter}
                     listening={listening}
                     onChange={onChangeBuffer}
                 />

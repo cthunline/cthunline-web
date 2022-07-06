@@ -1,0 +1,78 @@
+{
+    "seventhSea": {
+        "advantage": {
+            "name": "name",
+            "description": "description"
+        },
+        "arcana": {
+            "name": "name",
+            "hubris": "hubris",
+            "virtue": "virtue"
+        },
+        "background": {
+            "name": "name",
+            "description": "description",
+            "quirk": "quirk"
+        },
+        "biography": {
+            "concept": "concept",
+            "name": "name",
+            "nation": "nation",
+            "religion": "religion",
+            "reputations": "reputations",
+            "wealth": "wealth"
+        },
+        "common": {
+            "advantage": "advantage",
+            "advantages": "advantages",
+            "arcana": "arcana",
+            "background": "background",
+            "backgrounds": "backgrounds",
+            "biography": "biography",
+            "characteristics": "characs.",
+            "deathSpiral": "death spiral",
+            "description": "description",
+            "items": "items",
+            "misc": "misc.",
+            "name": "name",
+            "notes": "notes",
+            "skill": "skill",
+            "skills": "skills",
+            "story": "story",
+            "stories": "stories",
+            "trait": "trait",
+            "traits": "traits"
+        },
+        "skill": {
+            "aim": "aim",
+            "athletics": "athletics",
+            "brawl": "brawl",
+            "convince": "convince",
+            "empathy": "empathy",
+            "hide": "hide",
+            "intimidate": "intimidate",
+            "notice": "notice",
+            "perform": "perform",
+            "ride": "ride",
+            "sailing": "sailing",
+            "scholarship": "scholarship",
+            "tempt": "tempt",
+            "theft": "theft",
+            "warfare": "warfare",
+            "weaponry": "weaponry"
+        },
+        "story": {
+            "name": "name",
+            "goal": "goal",
+            "reward": "reward",
+            "steps": "steps"
+        },
+        "trait": {
+            "brawn": "brawn",
+            "finesse": "finesse",
+            "panache": "panache",
+            "resolve": "resolve",
+            "wits": "wits"
+        }
+    }
+}
