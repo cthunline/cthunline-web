@@ -67,7 +67,7 @@ const Statistics: React.FC<StatisticsProps> = ({
                 <Box key={`statistics-${key}-label`} gridColumn="span 7">
                     {T(`game.starWarsD6.statistics.${key}`)}
                 </Box>,
-                <Box key={`statistics-${key}-input`} className="center-text" gridColumn="span 3">
+                <Box key={`statistics-${key}-input`} className="text-center" gridColumn="span 3">
                     {getInput(key, type, statistics)}
                 </Box>
             ]))}

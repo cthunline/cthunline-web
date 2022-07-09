@@ -8,7 +8,7 @@
         "lint": "eslint . --ext .js,.ts,.tsx --max-warnings=0 && stylelint \"**/*.css\" --max-warnings=0"
     },
     "dependencies": {
-        "@cthunline/games": "^0.0.18",
+        "@cthunline/games": "^0.0.19",
         "@emotion/react": "^11.9.3",
         "@emotion/styled": "^11.9.3",
         "@mui/material": "^5.8.7",
@@ -46,7 +46,7 @@
         "stylelint-config-standard": "^26.0.0",
         "stylelint-order": "^5.0.0",
         "typescript": "^4.7.4",
-        "vite": "^2.9.13",
+        "vite": "^2.9.14",
         "vite-plugin-svgr": "^2.2.0"
     }
 }

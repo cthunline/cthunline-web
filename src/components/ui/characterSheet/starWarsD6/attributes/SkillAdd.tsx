@@ -73,7 +73,7 @@ const SkillAdd: React.FC<SkillProps> = ({
                     onChange={onSelectorChange}
                 />
             </Box>
-            <Box className="center-text" gridColumn="span 2" alignItems="center">
+            <Box className="text-center" gridColumn="span 2" alignItems="center">
                 <IconButton
                     size="medium"
                     onClick={() => {

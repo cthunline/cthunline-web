@@ -124,7 +124,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     ]);
 
     return (
-        <Box className="sketch-container full-width full-height center-text">
+        <Box className="sketch-container full-width full-height text-center">
             <ClickAwayListener mouseEvent="onMouseDown" onClickAway={handleMouseDownAway}>
                 {/* main svg container */}
                 <svg

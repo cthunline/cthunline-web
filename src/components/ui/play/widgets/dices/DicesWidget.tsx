@@ -105,7 +105,7 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
             {diceTypes.map((type) => (
                 <Box
                     key={`dice-item-${type}`}
-                    className="center-text"
+                    className="text-center"
                     gridColumn={`span ${type === 'D100' ? 6 : 3}`}
                 >
                     <Box
@@ -130,7 +130,7 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
             {selectedDiceTypes.map((type) => (
                 <Box
                     key={`dice-selected-${type}`}
-                    className="dice-selected center-text"
+                    className="dice-selected text-center"
                     gridColumn="span 4"
                 >
                     <Box

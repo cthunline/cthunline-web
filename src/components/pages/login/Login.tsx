@@ -55,7 +55,7 @@ const Login = () => {
 
     return (
         <Paper elevation={3} className="p-25">
-            <div className="center-text">
+            <div className="text-center">
                 <GiD10 size={100} />
             </div>
             <Formik

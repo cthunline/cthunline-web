@@ -145,6 +145,9 @@
             "removeTokens": "supprimer les tokens",
             "saveSketch": "sauvegarder le plateau",
             "spawnPlayerTokens": "générer les tokens de joueurs"
+        },
+        "jukebox": {
+            "autoplay": "lecture auto."
         }
     }
 }
