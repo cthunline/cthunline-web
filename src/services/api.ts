@@ -13,17 +13,12 @@ interface ApiCallOptions {
 
 const Api = {
 
-    baseUrl: String(import.meta.env.VITE_API_URL),
-
     async call({
         method,
         route,
         data,
         progress
     }: ApiCallOptions) {
-        if (!Api.baseUrl) {
-            throw new Error('Unavailable base URL');
-        }
         const url = pathJoin('/api', route);
         const headers: AxiosRequestHeaders = data instanceof FormData ? {} : {
             Accept: 'application/json',
