@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 
 const env = loadEnv(
-  'mock',
+  'dev',
   process.cwd()
 );
 
