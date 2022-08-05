@@ -13,7 +13,7 @@ import './Characteristics.css';
 interface CharacteristicsProps<DataType> {
     data: DataType;
     textKey: string;
-    columns: 1 | 2 | 3;
+    sortByText?: boolean;
     readonly: boolean;
     onChange: (data: DataType) => void;
 }
@@ -21,11 +21,37 @@ interface CharacteristicsProps<DataType> {
 const Characteristics = <DataType extends Record<string, any>>({
     data,
     textKey,
-    columns,
+    sortByText,
     readonly,
     onChange
 }: CharacteristicsProps<DataType>) => {
     const { T } = useApp();
+
+    const translations = Object.fromEntries(
+        Object.keys(data).map((key: string) => [
+            key,
+            T(`${textKey}.${key}`)
+        ])
+    );
+
+    const dataKeys = Object.keys(data);
+
+    if (sortByText) {
+        dataKeys.sort((a, b) => (
+            translations[a].localeCompare(translations[b])
+        ));
+    }
+
+    const columnedKeys: string[] = [];
+    const midIndex = Math.ceil((dataKeys.length / 2) - 1);
+    const firstColumnKeys = dataKeys.slice(0, midIndex + 1);
+    const secondColumnKeys = dataKeys.slice(midIndex + 1);
+    firstColumnKeys.forEach((key: string, idx: number) => {
+        columnedKeys.push(key);
+        if (secondColumnKeys[idx]) {
+            columnedKeys.push(secondColumnKeys[idx]);
+        }
+    });
 
     return (
         <Box
@@ -36,13 +62,13 @@ const Characteristics = <DataType extends Record<string, any>>({
             gap={2}
             columnGap={6}
         >
-            {Object.keys(data).map((key: string) => {
+            {columnedKeys.map((key: string) => {
                 const score = Number(data[key]);
                 return (
                     <Box
                         key={`characteristic-${key}`}
                         className="characteristic"
-                        gridColumn={`span ${12 / columns}`}
+                        gridColumn="span 6"
                         display="grid"
                         gridTemplateColumns="repeat(12, 1fr)"
                         alignItems="center"
@@ -51,7 +77,7 @@ const Characteristics = <DataType extends Record<string, any>>({
                             key={`characteristic-label-${key}`}
                             gridColumn="span 5"
                         >
-                            {T(`${textKey}.${key}`)}
+                            {translations[key]}
                         </Box>
                         <Box
                             key={`characteristic-score-${key}`}

@@ -360,7 +360,6 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
                     <Characteristics<SeventhSeaTraits>
                         data={characterData.traits}
                         textKey="game.seventhSea.trait"
-                        columns={2}
                         readonly={readonly}
                         onChange={onTraitsChange}
                     />
@@ -374,7 +373,7 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
                     <Characteristics<SeventhSeaSkills>
                         data={characterData.skills}
                         textKey="game.seventhSea.skill"
-                        columns={2}
+                        sortByText
                         readonly={readonly}
                         onChange={onSkillsChange}
                     />
