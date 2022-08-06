@@ -8,7 +8,7 @@
         "lint": "eslint . --ext .js,.ts,.tsx --max-warnings=0 && stylelint \"**/*.css\" --max-warnings=0"
     },
     "dependencies": {
-        "@cthunline/games": "^0.0.19",
+        "@cthunline/games": "^0.0.20",
         "@emotion/react": "^11.9.3",
         "@emotion/styled": "^11.9.3",
         "@mui/material": "^5.8.7",

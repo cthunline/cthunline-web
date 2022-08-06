@@ -16,7 +16,8 @@ import {
     GiArrowScope,
     GiNotebook,
     GiSaberAndPistol,
-    GiHandBag
+    GiHandBag,
+    GiSeaStar
 } from 'react-icons/gi';
 import { FiPlusCircle } from 'react-icons/fi';
 import {
@@ -240,6 +241,13 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
         }));
     }, []);
 
+    const onHeroPointsChange = useCallback((heroPoints: number) => {
+        setCharacterData((previous) => ({
+            ...previous,
+            heroPoints
+        }));
+    }, []);
+
     const sheetTabs: SheetTab[] = [{
         key: 'biography',
         icon: <GiCharacter size={20} />,
@@ -300,6 +308,17 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
                         base64={characterData.portrait}
                         readonly={readonly}
                         onChange={onPortraitChange}
+                    />
+                </Box>,
+                // hero points
+                <Box key="SeventhSea-heroPoints" gridColumn="span 12">
+                    <SectionTitle
+                        iconBefore={<GiSeaStar size={20} />}
+                        text={T('game.seventhSea.common.heroPoints')}
+                        input={{
+                            value: characterData.heroPoints,
+                            onChange: onHeroPointsChange
+                        }}
                     />
                 </Box>,
                 // arcana

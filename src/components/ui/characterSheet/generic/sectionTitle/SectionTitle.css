@@ -1,3 +1,8 @@
 .section-title .section-title-icon svg {
     vertical-align: middle;
 }
+
+div.section-title-input {
+    vertical-align: middle;
+    width: 75px;
+}
