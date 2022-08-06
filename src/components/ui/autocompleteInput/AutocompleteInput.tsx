@@ -2,10 +2,12 @@ import React from 'react';
 import {
     Autocomplete,
     TextField,
-    createFilterOptions
+    createFilterOptions,
+    InputProps as InputPropsType
 } from '@mui/material';
 
 interface AutocompleteInputProps<DataType> {
+    InputProps?: InputPropsType;
     options: (DataType & AutocompleteInputData)[];
     defaultValue: DataType;
     label: string;
@@ -22,6 +24,7 @@ interface AutocompleteInputData {
 }
 
 const AutocompleteInput = <DataType extends AutocompleteInputData>({
+    InputProps,
     options,
     defaultValue,
     label,
@@ -51,6 +54,7 @@ const AutocompleteInput = <DataType extends AutocompleteInputData>({
                     error={error}
                     label={label}
                     variant={variant}
+                    InputProps={InputProps}
                 />
             )}
             onChange={(_e, val) => {

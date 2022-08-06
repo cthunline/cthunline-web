@@ -54,7 +54,10 @@ const FieldLayout = <DataType extends {}>({
                 minRows={lines}
                 maxRows={lines}
                 InputProps={{
-                    readOnly: readonly
+                    readOnly: readonly,
+                    classes: {
+                        input: 'input-smaller-text'
+                    }
                 }}
                 type="text"
                 size="small"

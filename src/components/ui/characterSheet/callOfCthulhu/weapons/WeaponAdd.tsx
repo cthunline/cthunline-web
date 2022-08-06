@@ -92,6 +92,11 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
                 <Box key={`weapon-add-${key}`} gridColumn={`span ${gridColumn}`}>
                     <TextField
                         fullWidth
+                        InputProps={{
+                            classes: {
+                                input: 'input-smaller-text'
+                            }
+                        }}
                         type="text"
                         size="small"
                         label={T(`game.callOfCthulhu.weapon.${key}`)}

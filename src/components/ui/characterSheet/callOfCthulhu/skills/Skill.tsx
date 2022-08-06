@@ -62,7 +62,10 @@ const Skill: React.FC<SkillProps> = ({
                 <TextField
                     fullWidth
                     InputProps={{
-                        readOnly: true
+                        readOnly: true,
+                        classes: {
+                            input: 'input-smaller-text'
+                        }
                     }}
                     type="text"
                     size="small"
@@ -75,7 +78,10 @@ const Skill: React.FC<SkillProps> = ({
                     <TextField
                         fullWidth
                         InputProps={{
-                            readOnly: readonly || !editable
+                            readOnly: readonly || !editable,
+                            classes: {
+                                input: 'input-smaller-text'
+                            }
                         }}
                         type="text"
                         size="small"

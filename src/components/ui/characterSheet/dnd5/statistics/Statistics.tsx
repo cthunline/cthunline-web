@@ -37,7 +37,10 @@ const Statistics: React.FC<StatisticsProps> = ({
                         <TextField
                             fullWidth
                             InputProps={{
-                                readOnly: !editable
+                                readOnly: !editable,
+                                classes: {
+                                    input: 'input-smaller-text'
+                                }
                             }}
                             type="text"
                             size="small"

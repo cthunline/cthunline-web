@@ -29,7 +29,10 @@ const Combat: React.FC<CombatProps> = ({ combat }) => {
                         <TextField
                             fullWidth
                             InputProps={{
-                                readOnly: true
+                                readOnly: true,
+                                classes: {
+                                    input: 'input-smaller-text'
+                                }
                             }}
                             type="text"
                             size="small"

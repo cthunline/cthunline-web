@@ -65,6 +65,11 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
                 >
                     <TextField
                         fullWidth
+                        InputProps={{
+                            classes: {
+                                input: 'input-smaller-text'
+                            }
+                        }}
                         type="text"
                         size="small"
                         label={T(`game.starWarsD6.weapon.${key}`)}

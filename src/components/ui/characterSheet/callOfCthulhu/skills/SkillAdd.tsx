@@ -92,6 +92,11 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
         >
             <Box gridColumn="span 6">
                 <AutocompleteInput<SkillData>
+                    InputProps={{
+                        classes: {
+                            input: 'input-smaller-text'
+                        }
+                    }}
                     options={translatedSkillList}
                     defaultValue={defaultSkillValue}
                     label={T('game.callOfCthulhu.common.skill')}
@@ -104,6 +109,11 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
             <Box gridColumn="span 2">
                 <TextField
                     fullWidth
+                    InputProps={{
+                        classes: {
+                            input: 'input-smaller-text'
+                        }
+                    }}
                     type="text"
                     size="small"
                     label={T('game.callOfCthulhu.common.base')}

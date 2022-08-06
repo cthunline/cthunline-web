@@ -29,7 +29,10 @@ const Luck: React.FC<LuckProps> = ({
                     <TextField
                         fullWidth
                         InputProps={{
-                            readOnly: readonly || !editable
+                            readOnly: readonly || !editable,
+                            classes: {
+                                input: 'input-smaller-text'
+                            }
                         }}
                         type="text"
                         size="small"

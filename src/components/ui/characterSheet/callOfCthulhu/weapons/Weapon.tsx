@@ -42,7 +42,10 @@ const Weapon: React.FC<WeaponProps> = ({
                     <TextField
                         fullWidth
                         InputProps={{
-                            readOnly: readonly
+                            readOnly: readonly,
+                            classes: {
+                                input: 'input-smaller-text'
+                            }
                         }}
                         type="text"
                         size="small"

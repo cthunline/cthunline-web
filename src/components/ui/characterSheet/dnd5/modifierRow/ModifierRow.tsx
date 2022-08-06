@@ -26,7 +26,10 @@ const ModifierRow: React.FC<ModifierRowProps> = ({
             <TextField
                 fullWidth
                 InputProps={{
-                    readOnly: true
+                    readOnly: true,
+                    classes: {
+                        input: 'input-smaller-text'
+                    }
                 }}
                 type="text"
                 size="small"

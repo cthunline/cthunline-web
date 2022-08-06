@@ -35,7 +35,10 @@ const Equipment: React.FC<EquipmentProps> = ({
                             <TextField
                                 fullWidth
                                 InputProps={{
-                                    readOnly: readonly
+                                    readOnly: readonly,
+                                    classes: {
+                                        input: 'input-smaller-text'
+                                    }
                                 }}
                                 type="text"
                                 size="small"
@@ -61,7 +64,10 @@ const Equipment: React.FC<EquipmentProps> = ({
                             minRows={5}
                             maxRows={5}
                             InputProps={{
-                                readOnly: readonly
+                                readOnly: readonly,
+                                classes: {
+                                    input: 'input-smaller-text'
+                                }
                             }}
                             type="text"
                             size="small"

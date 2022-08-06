@@ -23,7 +23,7 @@ const Stories: React.FC<StoriesProps> = ({
         display="grid"
         gridTemplateColumns={`repeat(${readonly ? '11' : '12'}, 1fr)`}
         gap={2}
-        rowGap={4}
+        rowGap={6}
     >
         {stories.map((story, index) => [
             <Story

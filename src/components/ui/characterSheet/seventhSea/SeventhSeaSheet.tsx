@@ -419,10 +419,13 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
                     <TextField
                         fullWidth
                         multiline
-                        minRows={6}
-                        maxRows={6}
+                        minRows={8}
+                        maxRows={8}
                         InputProps={{
-                            readOnly: readonly
+                            readOnly: readonly,
+                            classes: {
+                                input: 'input-smaller-text'
+                            }
                         }}
                         type="text"
                         size="small"
@@ -441,10 +444,13 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
                     <TextField
                         fullWidth
                         multiline
-                        minRows={6}
-                        maxRows={6}
+                        minRows={8}
+                        maxRows={8}
                         InputProps={{
-                            readOnly: readonly
+                            readOnly: readonly,
+                            classes: {
+                                input: 'input-smaller-text'
+                            }
                         }}
                         type="text"
                         size="small"

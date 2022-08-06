@@ -27,11 +27,11 @@
     }, {
         "key": "virtue",
         "gridColumn": 6,
-        "lines": 3
+        "lines": 4
     }, {
         "key": "hubris",
         "gridColumn": 6,
-        "lines": 3
+        "lines": 4
     }],
     "background": [{
         "key": "name",
@@ -41,11 +41,11 @@
     }, {
         "key": "description",
         "gridColumn": 6,
-        "lines": 3
+        "lines": 4
     }, {
         "key": "quirk",
         "gridColumn": 6,
-        "lines": 3
+        "lines": 4
     }],
     "story": [{
         "key": "name",
@@ -69,6 +69,6 @@
     }, {
         "key": "description",
         "gridColumn": 12,
-        "lines": 2
+        "lines": 3
     }]
 }

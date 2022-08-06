@@ -71,10 +71,13 @@ const Story: React.FC<StoryProps> = ({
                     <TextField
                         fullWidth
                         multiline
-                        minRows={2}
-                        maxRows={2}
+                        minRows={3}
+                        maxRows={3}
                         InputProps={{
-                            readOnly: readonly
+                            readOnly: readonly,
+                            classes: {
+                                input: 'input-smaller-text'
+                            }
                         }}
                         type="text"
                         size="small"
