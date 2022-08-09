@@ -5,6 +5,7 @@
         "clear": "clear",
         "confirm": "confirm",
         "create": "create",
+        "delete": "delete",
         "dice": "dice",
         "dices": "dices",
         "display": "display",
@@ -13,10 +14,14 @@
         "load": "load",
         "login": "login",
         "logout": "logout",
+        "moveDown": "move down",
+        "moveUp": "move up",
         "play": "play",
         "roll": "roll",
         "register": "register",
         "save": "save",
+        "share": "share",
+        "stopSharing": "stop sharing",
         "undo": "undo"
     },
     "common": {
@@ -27,6 +32,7 @@
         "privatly": "privatly",
         "public": "public",
         "publicly": "publicly",
+        "shared": "shared",
         "theme": "theme",
         "unknown": "unknown"
     },
@@ -99,6 +105,12 @@
                 "duplicate": "duplicate",
                 "forward": "forward",
                 "unassignUser": "unassign user"
+            },
+            "note": {
+                "deleteConfirm": "delete this note ?",
+                "yourNotes": "your notes",
+                "sharedNotes": "shared notes",
+                "sharedUserNotes": "{name}'s notes"
             }
         },
         "profile": {

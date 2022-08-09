@@ -5,6 +5,7 @@
         "clear": "vider",
         "confirm": "confirmer",
         "create": "créer",
+        "delete": "supprimer",
         "dice": "dé",
         "dices": "dés",
         "display": "afficher",
@@ -13,10 +14,14 @@
         "load": "charger",
         "login": "se connecter",
         "logout": "se déconnecter",
+        "moveDown": "descendre",
+        "moveUp": "monter",
         "play": "jouer",
         "roll": "jeter",
         "register": "s'inscrire",
         "save": "sauvegarder",
+        "share": "partager",
+        "stopSharing": "ne plus partager",
         "undo": "annuler"
     },
     "common": {
@@ -27,6 +32,7 @@
         "privatly": "secrètement",
         "public": "public",
         "publicly": "publiquement",
+        "shared": "partagé",
         "theme": "thème",
         "unknown": "inconnu"
     },
@@ -99,6 +105,12 @@
                 "duplicate": "dupliquer",
                 "forward": "avancer",
                 "unassignUser": "désassigner joueur"
+            },
+            "note": {
+                "deleteConfirm": "supprimer cette note ?",
+                "yourNotes": "vos notes",
+                "sharedNotes": "notes partagées",
+                "sharedUserNotes": "notes de {name}"
             }
         },
         "profile": {

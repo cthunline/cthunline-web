@@ -10,8 +10,7 @@ import { useApp } from '../contexts/App';
 import {
     Session,
     SessionCreateBody,
-    SessionEditBody,
-    Note
+    SessionEditBody
 } from '../../types';
 
 interface SessionHookOptions {
@@ -35,12 +34,6 @@ interface EditSessionOptions {
 interface DeleteSessionOptions {
     sessionId: number;
     isRefresh?: boolean;
-    isToast?: boolean;
-}
-
-interface EditNotesOptions {
-    sessionId: number;
-    text: string;
     isToast?: boolean;
 }
 
@@ -187,41 +180,6 @@ const useSession = ({
         handleApiError
     ]);
 
-    const getNotes = useCallback(async (
-        sessId: number
-    ): Promise<Note> => {
-        try {
-            return await Api.call({
-                method: 'GET',
-                route: `/sessions/${sessId}/notes`
-            });
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    }, [handleApiError]);
-
-    const editNotes = async ({
-        sessionId: sessId,
-        text,
-        isToast = true
-    }: EditNotesOptions): Promise<Note> => {
-        try {
-            const notes = await Api.call({
-                method: 'POST',
-                route: `/sessions/${sessId}/notes`,
-                data: { text }
-            });
-            if (isToast) {
-                toast.success('Notes edited');
-            }
-            return notes;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    };
-
     useEffect(() => {
         refresh();
     }, [
@@ -235,9 +193,7 @@ const useSession = ({
         getSessions,
         createSession,
         editSession,
-        deleteSession,
-        getNotes,
-        editNotes
+        deleteSession
     };
 };
 

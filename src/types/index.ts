@@ -148,12 +148,26 @@ export interface SessionCreateBody {
 
 export type SessionEditBody = Partial<Omit<SessionCreateBody, 'gameId'>>;
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ note
+
 export interface Note {
     id: number;
+    title: string;
+    text: string;
+    position: number;
+    isShared: boolean;
     sessionId: number;
     userId: number;
-    text: string;
+    user?: User;
 }
+
+export interface NoteCreateBody {
+    title: string;
+    text?: string;
+    isShared?: boolean;
+}
+
+export type NoteEditBody = Partial<NoteCreateBody>;
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ character
 

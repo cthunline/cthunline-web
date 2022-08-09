@@ -1,3 +1,23 @@
 .notes-widget-content {
     width: 400px;
 }
+
+.notes-list-container {
+    height: 360px;
+}
+
+.notes-list {
+    height: 360px;
+}
+
+li.notes-header {
+    background-color: var(--palette-background-secondary);
+}
+
+.notes-title {
+    padding-right: 16px;
+}
+
+div.notes-action {
+    right: 0;
+}
