@@ -1,5 +1,5 @@
 {
-    "name": "cthunline-client",
+    "name": "cthunline-web",
     "version": "0.0.1",
     "scripts": {
         "dev": "vite serve src --config vite.config.ts",
