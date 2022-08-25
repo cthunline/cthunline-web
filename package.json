@@ -1,6 +1,6 @@
 {
     "name": "cthunline-web",
-    "version": "0.0.1",
+    "version": "1.0.0",
     "scripts": {
         "dev": "vite serve src --config vite.config.ts",
         "build": "vite build src --config vite.config.ts --outDir ../build",
