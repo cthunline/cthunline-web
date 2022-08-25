@@ -18,8 +18,6 @@ steps:
   pull: if-not-exists
   commands:
   - npm i
-  depends_on:
-  - clone
 # linters
 - name: lint
   image: node:16-alpine
@@ -50,13 +48,16 @@ kind: pipeline
 type: docker
 name: cthunline-api-cd
 
+# when to execute pipeline
 trigger:
   event:
   - tag
 
+# disable default cloning
 clone:
   disable: true
 
+# building and publishing docker image
 steps:
 - name: clone
   image: alpine/git
