@@ -182,16 +182,19 @@ export interface Character<GenericCharacterData = CharacterData> {
     userId: number;
     gameId: string;
     name: string;
+    portrait: string | null;
     data: GenericCharacterData;
     createdAt: string;
     updatedAt: string;
 }
 
-export type CharacterCreateBody = Omit<Character, (
-    'id' | 'userId' | 'createdAt' | 'updatedAt'
-)>;
+export type CharacterCreateBody = Pick<Character, 'gameId' | 'name' | 'data'>;
 
 export type CharacterEditBody = Partial<Omit<CharacterCreateBody, 'gameId'>>;
+
+export interface PortraitUploadBody {
+    portrait: File;
+}
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ game
 

@@ -10,7 +10,8 @@ import { useApp } from '../contexts/App';
 import {
     Character,
     CharacterCreateBody,
-    CharacterEditBody
+    CharacterEditBody,
+    PortraitUploadBody
 } from '../../types';
 
 interface CharacterHookOptions {
@@ -33,6 +34,14 @@ interface EditOptions {
 
 interface DeleteOptions {
     characterId: number;
+    isRefresh?: boolean;
+    isToast?: boolean;
+}
+
+interface PortraitUploadOptions {
+    characterId: number;
+    data: PortraitUploadBody;
+    progress?: (percent: number) => void;
     isRefresh?: boolean;
     isToast?: boolean;
 }
@@ -187,6 +196,64 @@ const useCharacter = ({
         handleApiError
     ]);
 
+    const uploadPortrait = useCallback(async ({
+        characterId: charId,
+        data,
+        progress,
+        isRefresh = true,
+        isToast = true
+    }: PortraitUploadOptions): Promise<Character> => {
+        try {
+            const formData = new FormData();
+            formData.append('portrait', data.portrait);
+            const char = await Api.call({
+                method: 'POST',
+                route: `/characters/${charId}/portrait`,
+                data: formData,
+                progress
+            });
+            if (isRefresh) {
+                await refresh();
+            }
+            if (isToast) {
+                toast.success('Portrait uploaded');
+            }
+            return char;
+        } catch (err: any) {
+            handleApiError(err);
+            throw err;
+        }
+    }, [
+        refresh,
+        handleApiError
+    ]);
+
+    const deletePortrait = useCallback(async ({
+        characterId: charId,
+        isRefresh = true,
+        isToast = true
+    }: DeleteOptions): Promise<Character> => {
+        try {
+            const char = await Api.call({
+                method: 'DELETE',
+                route: `/characters/${charId}/portrait`
+            });
+            if (isRefresh) {
+                await refresh();
+            }
+            if (isToast) {
+                toast.success('Portrait deleted');
+            }
+            return char;
+        } catch (err: any) {
+            handleApiError(err);
+            throw err;
+        }
+    }, [
+        refresh,
+        handleApiError
+    ]);
+
     useEffect(() => {
         refresh();
     }, [
@@ -200,7 +267,9 @@ const useCharacter = ({
         getCharacters,
         createCharacter,
         editCharacter,
-        deleteCharacter
+        deleteCharacter,
+        uploadPortrait,
+        deletePortrait
     };
 };
 

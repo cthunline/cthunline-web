@@ -16,7 +16,7 @@ import {
 import {
     SWD6Character,
     SWD6Biography,
-    SWD6AttributeKey,
+    SWD6Attribute,
     SWD6AttributeData,
     SWD6Skill,
     SWD6Statistics,
@@ -51,13 +51,17 @@ export interface SWD6SheetProps {
         data: CharacterData,
         instantRefresh?: boolean
     ) => void;
+    portrait: string | null;
+    onPortraitChange?: (file: File | null) => void;
 }
 
 const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     readonly,
     data,
     listening,
-    onChange
+    onChange,
+    portrait,
+    onPortraitChange
 }) => {
     const { T } = useApp();
 
@@ -97,15 +101,8 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
         }));
     }, []);
 
-    const onPortraitChange = useCallback((portrait: string) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            portrait
-        }));
-    }, []);
-
     const onAttributeChange = useCallback((
-        attribute: SWD6AttributeKey,
+        attribute: SWD6Attribute,
         attributeData: Partial<SWD6AttributeData>
     ) => {
         setCharacterData((previous) => ({
@@ -121,7 +118,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     }, []);
 
     const onSkillCreate = useCallback((
-        attribute: SWD6AttributeKey,
+        attribute: SWD6Attribute,
         skillData: SWD6Skill
     ) => {
         setCharacterData((previous) => ({
@@ -142,7 +139,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     }, []);
 
     const onSkillChange = useCallback((
-        attribute: SWD6AttributeKey,
+        attribute: SWD6Attribute,
         skillIndex: number,
         skillData: SWD6Skill
     ) => {
@@ -161,7 +158,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     }, []);
 
     const onSkillDelete = useCallback((
-        attribute: SWD6AttributeKey,
+        attribute: SWD6Attribute,
         skillIndex: number
     ) => {
         setCharacterData((previous) => ({
@@ -272,7 +269,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
                 // portrait
                 <Box key="swd6-portrait" gridColumn="span 3">
                     <Portrait
-                        base64={characterData.portrait}
+                        value={portrait}
                         readonly={readonly}
                         onChange={onPortraitChange}
                     />

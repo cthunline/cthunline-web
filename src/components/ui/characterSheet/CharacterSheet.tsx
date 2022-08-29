@@ -26,6 +26,8 @@ export interface CharacterSheetProps {
         data: CharacterData,
         instantRefresh?: boolean
     ) => void;
+    portrait: string | null;
+    onPortraitChange?: (file: File | null) => void;
 }
 
 const CharacterSheet: React.FC<CharacterSheetProps> = ({
@@ -34,7 +36,9 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
     data,
     listening,
     rawContent,
-    onChange
+    onChange,
+    portrait,
+    onPortraitChange
 }) => {
     const changeTime = 1000;
     const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -61,6 +65,8 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                     data={data as CoCCharacter}
                     listening={listening}
                     onChange={onChangeBuffer}
+                    portrait={portrait}
+                    onPortraitChange={onPortraitChange}
                 />
             );
         }
@@ -71,6 +77,8 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                     data={data as DnD5Character}
                     listening={listening}
                     onChange={onChangeBuffer}
+                    portrait={portrait}
+                    onPortraitChange={onPortraitChange}
                 />
             );
         }
@@ -81,6 +89,8 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                     data={data as SeventhSeaCharacter}
                     listening={listening}
                     onChange={onChangeBuffer}
+                    portrait={portrait}
+                    onPortraitChange={onPortraitChange}
                 />
             );
         }
@@ -91,6 +101,8 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
                     data={data as SWD6Character}
                     listening={listening}
                     onChange={onChangeBuffer}
+                    portrait={portrait}
+                    onPortraitChange={onPortraitChange}
                 />
             );
         }

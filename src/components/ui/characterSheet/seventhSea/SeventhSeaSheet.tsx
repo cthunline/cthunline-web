@@ -62,13 +62,17 @@ export interface SeventhSeaSheetProps {
         data: CharacterData,
         instantRefresh?: boolean
     ) => void;
+    portrait: string | null;
+    onPortraitChange?: (file: File | null) => void;
 }
 
 const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
     readonly,
     data,
     listening,
-    onChange
+    onChange,
+    portrait,
+    onPortraitChange
 }) => {
     const { T } = useApp();
 
@@ -112,13 +116,6 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
         setCharacterData((previous) => ({
             ...previous,
             arcana
-        }));
-    }, []);
-
-    const onPortraitChange = useCallback((portrait: string) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            portrait
         }));
     }, []);
 
@@ -305,7 +302,7 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
                 // portrait
                 <Box key="SeventhSea-portrait" gridColumn="span 3">
                     <Portrait
-                        base64={characterData.portrait}
+                        value={portrait}
                         readonly={readonly}
                         onChange={onPortraitChange}
                     />

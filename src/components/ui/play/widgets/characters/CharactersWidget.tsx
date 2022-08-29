@@ -85,6 +85,7 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
                             readonly
                             gameId={sessionUser.character.gameId}
                             data={sessionUser.character.data}
+                            portrait={sessionUser.character.portrait}
                             listening
                             rawContent
                         />

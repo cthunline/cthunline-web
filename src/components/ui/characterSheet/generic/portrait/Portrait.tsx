@@ -1,16 +1,15 @@
 import React, { memo } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { MdUploadFile, MdOutlineDeleteOutline } from 'react-icons/md';
-import { toast } from 'react-toastify';
 
-import { getInputFileBase64 } from '../../../../../services/tools';
+import Api from '../../../../../services/api';
 
 import './Portrait.css';
 
 interface PortraitProps {
-    base64: string;
+    value: string | null;
     readonly: boolean;
-    onChange: (base64: string) => void;
+    onChange?: (file: File | null) => void;
 }
 
 const allowedMimeTypes = [
@@ -18,23 +17,15 @@ const allowedMimeTypes = [
     'image/png'
 ];
 
-const limitSizeInKb = 250;
-
 const Portrait: React.FC<PortraitProps> = ({
-    base64,
+    value,
     readonly,
     onChange
 }) => {
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            const base64String = await getInputFileBase64(file);
-            const sizeInKb = file.size / 1000;
-            if (sizeInKb > limitSizeInKb) {
-                toast.error(`File size is too large (max ${limitSizeInKb}Kb)`);
-            } else {
-                onChange(base64String);
-            }
+            onChange?.(file);
         }
     };
 
@@ -54,8 +45,8 @@ const Portrait: React.FC<PortraitProps> = ({
     );
 
     const getDeleteButton = () => (
-        base64 ? (
-            <IconButton color="error" onClick={() => onChange('')}>
+        value ? (
+            <IconButton color="error" onClick={() => onChange?.(null)}>
                 <MdOutlineDeleteOutline size={40} />
             </IconButton>
         ) : null
@@ -64,10 +55,10 @@ const Portrait: React.FC<PortraitProps> = ({
     return (
         <Box className="character-portrait-container">
             <Box className="character-portrait-inner">
-                {base64 ? (
+                {value ? (
                     <img
                         className="character-portrait-image"
-                        src={base64}
+                        src={Api.getAssetUrl(value)}
                         alt="Character Portrait"
                     />
                 ) : null}

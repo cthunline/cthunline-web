@@ -31,7 +31,12 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
     onClose
 }) => {
     const { T } = useApp();
-    const { getCharacter, editCharacter } = useCharacter();
+    const {
+        getCharacter,
+        editCharacter,
+        uploadPortrait,
+        deletePortrait
+    } = useCharacter();
 
     const [readonly, setReadonly] = useState<boolean>(true);
     const [character, setCharacter] = useState<Character>();
@@ -45,6 +50,36 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
             } : previous
         ));
     }, []);
+
+    const onPortraitChange = useCallback(async (file: File | null) => {
+        const options = {
+            characterId,
+            isToast: false,
+            isRefresh: false
+        };
+        let updatedPortrait: string | null = null;
+        if (file) {
+            const { portrait } = await uploadPortrait({
+                ...options,
+                data: {
+                    portrait: file
+                }
+            });
+            updatedPortrait = portrait;
+        } else {
+            await deletePortrait(options);
+        }
+        setCharacter((previous) => (
+            previous ? {
+                ...previous,
+                portrait: updatedPortrait
+            } : previous
+        ));
+    }, [
+        characterId,
+        uploadPortrait,
+        deletePortrait
+    ]);
 
     useEffect(() => {
         (async () => {
@@ -113,6 +148,8 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
                         gameId={character.gameId}
                         data={character.data}
                         onChange={onChange}
+                        portrait={character.portrait}
+                        onPortraitChange={onPortraitChange}
                     />
                 ) : (
                     <CircularProgress size={100} />

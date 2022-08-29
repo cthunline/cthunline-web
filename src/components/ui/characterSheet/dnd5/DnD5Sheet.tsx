@@ -87,13 +87,17 @@ export interface DnD5SheetProps {
         data: CharacterData,
         instantRefresh?: boolean
     ) => void;
+    portrait: string | null;
+    onPortraitChange?: (file: File | null) => void;
 }
 
 const DnD5Sheet: React.FC<DnD5SheetProps> = ({
     readonly,
     data,
     listening,
-    onChange
+    onChange,
+    portrait,
+    onPortraitChange
 }) => {
     const { T } = useApp();
 
@@ -130,13 +134,6 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
         setCharacterData((previous) => ({
             ...previous,
             biography
-        }));
-    }, []);
-
-    const onPortraitChange = useCallback((portrait: string) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            portrait
         }));
     }, []);
 
@@ -270,7 +267,7 @@ const DnD5Sheet: React.FC<DnD5SheetProps> = ({
                 // portrait
                 <Box key="dnd5-portrait" gridColumn="span 3">
                     <Portrait
-                        base64={characterData.portrait}
+                        value={portrait}
                         readonly={readonly}
                         onChange={onPortraitChange}
                     />

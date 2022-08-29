@@ -15,7 +15,9 @@ const CharacterForm = () => {
     const { characterId: paramCharId } = useParams();
     const {
         getCharacter,
-        editCharacter
+        editCharacter,
+        uploadPortrait,
+        deletePortrait
     } = useCharacter();
 
     const characterId = Number(paramCharId);
@@ -31,6 +33,36 @@ const CharacterForm = () => {
             } : previous
         ));
     }, []);
+
+    const onPortraitChange = useCallback(async (file: File | null) => {
+        const options = {
+            characterId,
+            isToast: false,
+            isRefresh: false
+        };
+        let updatedPortrait: string | null = null;
+        if (file) {
+            const { portrait } = await uploadPortrait({
+                ...options,
+                data: {
+                    portrait: file
+                }
+            });
+            updatedPortrait = portrait;
+        } else {
+            await deletePortrait(options);
+        }
+        setCharacter((previous) => (
+            previous ? {
+                ...previous,
+                portrait: updatedPortrait
+            } : previous
+        ));
+    }, [
+        characterId,
+        uploadPortrait,
+        deletePortrait
+    ]);
 
     useEffect(() => {
         (async () => {
@@ -73,6 +105,8 @@ const CharacterForm = () => {
             gameId={character.gameId}
             data={character.data}
             onChange={onChange}
+            portrait={character.portrait}
+            onPortraitChange={onPortraitChange}
         />
     ) : (
         <CircularProgress size={100} />

@@ -52,13 +52,17 @@ export interface CoCSheetProps {
         data: CharacterData,
         instantRefresh?: boolean
     ) => void;
+    portrait: string | null;
+    onPortraitChange?: (file: File | null) => void;
 }
 
 const CoCSheet: React.FC<CoCSheetProps> = ({
     readonly,
     data,
     listening,
-    onChange
+    onChange,
+    portrait,
+    onPortraitChange
 }) => {
     const { T } = useApp();
 
@@ -98,13 +102,6 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 biography
             })
         ));
-    }, []);
-
-    const onPortraitChange = useCallback((portrait: string) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            portrait
-        }));
     }, []);
 
     const onCharacteristicsChange = useCallback((partialChars: Partial<CoCCharacteristics>) => {
@@ -255,7 +252,7 @@ const CoCSheet: React.FC<CoCSheetProps> = ({
                 // portrait
                 <Box key="coc-portrait" gridColumn="span 3" gridRow="span 2">
                     <Portrait
-                        base64={characterData.portrait}
+                        value={portrait}
                         readonly={readonly}
                         onChange={onPortraitChange}
                     />
