@@ -166,11 +166,11 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
                             ref={audioElement}
                             className="jukebox-player full-width mt-10"
                             src={Api.getAssetUrl(selectedAsset.path)}
-                            controls
+                            controls // eslint-disable-line react/no-unknown-property
                             autoPlay={false}
-                            onPlay={onAudioPlay}
-                            onPause={onAudioPause}
-                            onEnded={onAudioEnded}
+                            onPlay={onAudioPlay} // eslint-disable-line react/no-unknown-property
+                            onPause={onAudioPause} // eslint-disable-line react/no-unknown-property
+                            onEnded={onAudioEnded} // eslint-disable-line react/no-unknown-property
                         />
                     ) : null}
                 </Box>

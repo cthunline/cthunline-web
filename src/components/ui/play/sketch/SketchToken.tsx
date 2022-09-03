@@ -134,7 +134,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                     r={circleRadius}
                     stroke="var(--palette-background-tertiary)"
                     strokeWidth={circleStrokeSize}
-                    fill={`var(--palette-${color})`}
+                    fill={`var(--palette-${color})`} // eslint-disable-line react/no-unknown-property
                 />
                 {user ? (
                     <text
@@ -145,7 +145,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                         alignmentBaseline="central"
                         stroke={textColor}
                         strokeWidth="2px"
-                        fill={textColor}
+                        fill={textColor} // eslint-disable-line react/no-unknown-property
                         fontSize={fontSize}
                     >
                         {userLetter}

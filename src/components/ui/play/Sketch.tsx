@@ -237,7 +237,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                             stroke="var(--palette-font)"
                             strokeWidth={5}
                             d={path}
-                            fill="none"
+                            fill="none" // eslint-disable-line react/no-unknown-property
                         />
                     ))}
                 </svg>
