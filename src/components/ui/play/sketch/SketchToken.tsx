@@ -7,7 +7,7 @@ import { getCssVar, getTextColor } from '../../../../services/tools';
 import {
     Color,
     SessionUser,
-    SketchTokenUser,
+    SketchTokenAttachedData,
     TooltipPlacement
 } from '../../../../types';
 
@@ -18,7 +18,7 @@ interface SketchTokenProps {
     isMaster?: boolean;
     size: number;
     color: Color;
-    user: SketchTokenUser | null;
+    attachedData: SketchTokenAttachedData | null;
     x: number;
     y: number;
     tooltipPlacement: TooltipPlacement;
@@ -26,8 +26,8 @@ interface SketchTokenProps {
     className?: string;
     onRef?: (el: SVGSVGElement | null) => void;
     onMouseDown?: (e: React.MouseEvent<SVGSVGElement>, isMovable?: boolean) => void;
-    onAssign?: (user: SessionUser) => void;
-    onUnassign?: () => void;
+    onAttach?: (user: SessionUser) => void;
+    onUnattach?: () => void;
     onDuplicate?: () => void;
     onColorChange?: (color: Color) => void;
     onDelete?: () => void;
@@ -38,7 +38,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     isMaster,
     size,
     color,
-    user,
+    attachedData,
     x,
     y,
     tooltipPlacement,
@@ -46,8 +46,8 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     className,
     onRef,
     onMouseDown,
-    onAssign,
-    onUnassign,
+    onAttach,
+    onUnattach,
     onDuplicate,
     onColorChange,
     onDelete
@@ -98,18 +98,16 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     const textX = '50%';
     const textY = fontSize + tokenPadding;
 
-    const userLetter = user ? (
-        user.name.charAt(0).toLocaleUpperCase()
-    ) : null;
-
-    const isMovable = !!(isMaster || (user && user.id === userId));
+    const isMovable = !!(isMaster || (attachedData && attachedData.userId === userId));
 
     const hexColor = getCssVar(`--palette-${color}`);
     const textColor = `var(--palette-${getTextColor(hexColor)})`;
 
     return (
         <Tooltip
-            title={user?.name ?? ''}
+            title={attachedData ? (
+                `${attachedData.characterName} (${attachedData.userName})`
+            ) : ''}
             placement={tooltipPlacement}
             open={tooltipOpen && !isMoving && !contextMenu}
             onOpen={onTooltipOpen}
@@ -136,7 +134,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                     strokeWidth={circleStrokeSize}
                     fill={`var(--palette-${color})`} // eslint-disable-line react/no-unknown-property
                 />
-                {user ? (
+                {attachedData ? (
                     <text
                         className="sketch-token-text"
                         x={textX}
@@ -148,15 +146,15 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                         fill={textColor} // eslint-disable-line react/no-unknown-property
                         fontSize={fontSize}
                     >
-                        {userLetter}
+                        {attachedData.characterName.charAt(0).toLocaleUpperCase()}
                     </text>
                 ) : null}
                 {isMaster ? (
                     <SketchItemContextMenu
                         open={!!contextMenu}
                         position={contextMenu ?? undefined}
-                        onAssign={onAssign}
-                        onUnassign={onUnassign}
+                        onAttach={onAttach}
+                        onUnattach={onUnattach}
                         onDuplicate={onDuplicate}
                         onColorChange={onColorChange}
                         onDelete={onDelete}

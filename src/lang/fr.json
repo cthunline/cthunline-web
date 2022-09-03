@@ -98,13 +98,13 @@
             },
             "exitConfirm": "quitter la session ?",
             "sketch": {
-                "assignUser": "assigner joueur",
+                "attachCharacter": "attacher personnage",
                 "backward": "reculer",
                 "changeColor": "changer couleur",
                 "delete": "supprimer",
                 "duplicate": "dupliquer",
                 "forward": "avancer",
-                "unassignUser": "désassigner joueur"
+                "unattachCharacter": "désattacher personnage"
             },
             "note": {
                 "deleteConfirm": "supprimer cette note ?",

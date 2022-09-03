@@ -8,7 +8,7 @@ import {
     SketchImageData,
     SketchTokenData,
     SessionUser,
-    SketchTokenUserData,
+    SketchTokenAttachedData,
     Color,
     TooltipPlacement
 } from '../../../types';
@@ -52,8 +52,8 @@ export interface SketchHookExport {
         initialToken: SketchTokenData,
         userAllowed?: boolean
     ) => void;
-    assignTokenUser: (id: string, user: SessionUser) => void;
-    unassignTokenUser: (id: string) => void;
+    attachTokenData: (id: string, user: SessionUser) => void;
+    unattachTokenData: (id: string) => void;
     duplicateToken: (id: string) => void;
     changeTokenColor: (id: string, color: Color) => void;
     deleteSketchToken: (id: string, tokenData: SketchTokenData) => void;
@@ -83,8 +83,8 @@ export const defaultSketchHookExport: SketchHookExport = {
     addSketchToken: () => { /* default */ },
     addSketchUserTokens: () => { /* default */ },
     updateMovingToken: () => { /* default */ },
-    assignTokenUser: () => { /* default */ },
-    unassignTokenUser: () => { /* default */ },
+    attachTokenData: () => { /* default */ },
+    unattachTokenData: () => { /* default */ },
     duplicateToken: () => { /* default */ },
     changeTokenColor: () => { /* default */ },
     deleteSketchToken: () => { /* default */ },
@@ -106,7 +106,7 @@ const defaultImageData: Omit<SketchImageData, 'id' | 'index' | 'url'> = {
 };
 
 const defaultTokenData: Omit<SketchTokenData, 'id' | 'index' | 'color'> = {
-    user: null,
+    attachedData: null,
     x: 50,
     y: 50,
     tooltipPlacement: TooltipPlacement.bottom
@@ -282,7 +282,12 @@ const useSketch = (socket: PlaySocket | null) => {
             let y = 0;
             const tokens = [...previous.tokens];
             const events = [...previous.events];
-            users.forEach(({ id, name, isMaster }) => {
+            users.forEach(({
+                id,
+                name,
+                isMaster,
+                character
+            }) => {
                 if (!isMaster) {
                     const token = getNewTokenData(tokens);
                     if (!x && !y) {
@@ -293,7 +298,12 @@ const useSketch = (socket: PlaySocket | null) => {
                     }
                     tokens.push({
                         ...token,
-                        user: { id, name },
+                        attachedData: {
+                            userId: id,
+                            userName: name,
+                            characterId: character.id,
+                            characterName: character.name
+                        },
                         x,
                         y
                     });
@@ -346,24 +356,32 @@ const useSketch = (socket: PlaySocket | null) => {
         setSketchData(updater as SetStateAction<SketchData>);
     };
 
-    const setTokenUser = (id: string, tokenUser: SketchTokenUserData | null) => {
+    const setTokenAttachedData = (id: string, attachedData: SketchTokenAttachedData | null) => {
         updateSketch((previous) => ({
             ...previous,
             tokens: previous.tokens.map((token) => (
                 token.id === id ? {
                     ...token,
-                    user: tokenUser
+                    attachedData
                 } : token
             ))
         }));
     };
 
-    const assignTokenUser = (id: string, { id: userId, name }: SessionUser) => {
-        setTokenUser(id, { id: userId, name });
+    const attachTokenData = (
+        id: string,
+        sessionUser: SessionUser
+    ) => {
+        setTokenAttachedData(id, {
+            userId: sessionUser.id,
+            userName: sessionUser.name,
+            characterId: sessionUser.character.id,
+            characterName: sessionUser.character.name
+        });
     };
 
-    const unassignTokenUser = (id: string) => {
-        setTokenUser(id, null);
+    const unattachTokenData = (id: string) => {
+        setTokenAttachedData(id, null);
     };
 
     const duplicateToken = (id: string) => {
@@ -598,8 +616,8 @@ const useSketch = (socket: PlaySocket | null) => {
         updateMovingToken,
         duplicateToken,
         changeTokenColor,
-        assignTokenUser,
-        unassignTokenUser,
+        attachTokenData,
+        unattachTokenData,
         deleteSketchToken,
         clearTokens,
         undoSketch,

@@ -91,13 +91,22 @@ export const getCssVar = (name: string) => (
     computedStyle.getPropertyValue(name)
 );
 
+// force hex color on 6 characters
+export const forceFullHexColor = (hexColor: string) => (
+    hexColor.replaceAll(
+        /^#([\da-fA-F])([\da-fA-F])([\da-fA-F])$/g,
+        '#$1$1$2$2$3$3'
+    )
+);
+
 // get text color (white or black) depending on background color
 export const getTextColor = (hexColor: string): 'white' | 'black' => {
     const threshold = 130;
     const cutHex = (h: string) => h.replace(/^#/, '');
-    const hRed = parseInt(cutHex(hexColor).substring(0, 2), 16);
-    const hGreen = parseInt(cutHex(hexColor).substring(2, 4), 16);
-    const hBlue = parseInt(cutHex(hexColor).substring(4, 6), 16);
+    const fullHexColor = forceFullHexColor(hexColor);
+    const hRed = parseInt(cutHex(fullHexColor).substring(0, 2), 16);
+    const hGreen = parseInt(cutHex(fullHexColor).substring(2, 4), 16);
+    const hBlue = parseInt(cutHex(fullHexColor).substring(4, 6), 16);
     const brightness = ((hRed * 299) + (hGreen * 587) + (hBlue * 114)) / 1000;
     return brightness > threshold ? 'black' : 'white';
 };

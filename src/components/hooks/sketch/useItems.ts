@@ -134,7 +134,7 @@ const useItems = (
                     y,
                     tooltipPlacement
                 } = coord;
-                // assign new coordinates
+                // attach new coordinates
                 if (type === SketchItemType.image) {
                     setImage(id, {
                         ...(itemData as SketchImageData),

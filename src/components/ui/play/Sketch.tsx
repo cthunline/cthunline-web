@@ -28,8 +28,8 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     const {
         isFreeDrawing,
         sketchData,
-        assignTokenUser,
-        unassignTokenUser,
+        attachTokenData,
+        unattachTokenData,
         duplicateToken,
         changeTokenColor
     } = usePlay();
@@ -188,7 +188,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                     {tokens.map(({
                         id,
                         color,
-                        user,
+                        attachedData,
                         x,
                         y,
                         tooltipPlacement
@@ -204,7 +204,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                                 isMaster={isMaster}
                                 size={50}
                                 color={color}
-                                user={user}
+                                attachedData={attachedData}
                                 x={x}
                                 y={y}
                                 tooltipPlacement={tooltipPlacement}
@@ -212,11 +212,11 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                                 onMouseDown={(e, isMovable) => {
                                     handleItemMouseDown(e, id, SketchItemType.token, isMovable);
                                 }}
-                                onAssign={!user ? (tokenUser: SessionUser) => {
-                                    assignTokenUser(id, tokenUser);
+                                onAttach={!attachedData ? (sessionUser: SessionUser) => {
+                                    attachTokenData(id, sessionUser);
                                 } : undefined}
-                                onUnassign={user ? () => {
-                                    unassignTokenUser(id);
+                                onUnattach={attachedData ? () => {
+                                    unattachTokenData(id);
                                 } : undefined}
                                 onDuplicate={() => {
                                     duplicateToken(id);

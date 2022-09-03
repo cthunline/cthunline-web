@@ -18,8 +18,8 @@ interface SketchItemContextMenuProps {
     };
     onForward?: () => void;
     onBackward?: () => void;
-    onAssign?: (user: SessionUser) => void;
-    onUnassign?: () => void;
+    onAttach?: (user: SessionUser) => void;
+    onUnattach?: () => void;
     onDuplicate?: () => void;
     onColorChange?: (color: Color) => void;
     onDelete?: () => void;
@@ -32,7 +32,7 @@ export interface ContextMenuData {
 }
 
 enum SubMenuType {
-    assign = 'asssign',
+    attach = 'asssign',
     color = 'color'
 }
 
@@ -41,8 +41,8 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
     position,
     onForward,
     onBackward,
-    onAssign,
-    onUnassign,
+    onAttach,
+    onUnattach,
     onDuplicate,
     onColorChange,
     onDelete,
@@ -66,7 +66,7 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
         setSubMenu(null);
     };
 
-    const openUserSubMenu = () => setSubMenu(SubMenuType.assign);
+    const openUserSubMenu = () => setSubMenu(SubMenuType.attach);
     const closeUserSubMenu = () => setSubMenu(null);
 
     const openColorSubMenu = () => setSubMenu(SubMenuType.color);
@@ -88,17 +88,17 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
                 </MenuItem>
             );
         }
-        if (onAssign && playerUsers.length) {
+        if (onAttach && playerUsers.length) {
             items.push(
-                <MenuItem key="assign" onClick={openUserSubMenu}>
-                    {T('page.play.sketch.assignUser')}
+                <MenuItem key="attach" onClick={openUserSubMenu}>
+                    {T('page.play.sketch.attachCharacter')}
                 </MenuItem>
             );
         }
-        if (onUnassign) {
+        if (onUnattach) {
             items.push(
-                <MenuItem key="unassign" onClick={() => onSelect(onUnassign)}>
-                    {T('page.play.sketch.unassignUser')}
+                <MenuItem key="unattach" onClick={() => onSelect(onUnattach)}>
+                    {T('page.play.sketch.unattachCharacter')}
                 </MenuItem>
             );
         }
@@ -129,7 +129,7 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
         return items;
     };
 
-    const getAssignSubMenuItems = () => [
+    const getAttachSubMenuItems = () => [
         <MenuItem key="submenu-back" onClick={closeUserSubMenu}>
             {T('action.back')}
         </MenuItem>,
@@ -138,10 +138,10 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
             <MenuItem
                 key={`submenu-${user.id}`}
                 onClick={() => onSelect(
-                    () => onAssign?.(user)
+                    () => onAttach?.(user)
                 )}
             >
-                {user.name}
+                {`${user.character.name} (${user.name})`}
             </MenuItem>
         ])
     ];
@@ -160,8 +160,8 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
     ];
 
     const getMenuContent = () => {
-        if (subMenu === SubMenuType.assign) {
-            return getAssignSubMenuItems();
+        if (subMenu === SubMenuType.attach) {
+            return getAttachSubMenuItems();
         }
         if (subMenu === SubMenuType.color) {
             return getColorSubMenuItems();

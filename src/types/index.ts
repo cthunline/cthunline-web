@@ -295,19 +295,22 @@ export interface SketchResizingItemData {
     initialMouseY: number;
 }
 
-export type SketchTokenUserData = Pick<SessionUser, 'id' | 'name'>;
+export interface SketchTokenAttachedData {
+    userId: number;
+    userName: string;
+    characterId: number;
+    characterName: string;
+}
 
 export interface SketchTokenData {
     id: string;
     index: number;
     color: Color;
-    user: SketchTokenUserData | null;
+    attachedData: SketchTokenAttachedData | null;
     x: number;
     y: number;
     tooltipPlacement: TooltipPlacement;
 }
-
-export type SketchTokenUser = Pick<User, 'id' | 'name'>;
 
 export enum SketchEventType {
     draw = 'draw',
