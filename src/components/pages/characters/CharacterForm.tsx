@@ -34,6 +34,7 @@ const CharacterForm = () => {
         ));
     }, []);
 
+    const skipEdit = useRef(false);
     const onPortraitChange = useCallback(async (file: File | null) => {
         const options = {
             characterId,
@@ -52,6 +53,7 @@ const CharacterForm = () => {
         } else {
             await deletePortrait(options);
         }
+        skipEdit.current = true;
         setCharacter((previous) => (
             previous ? {
                 ...previous,
@@ -81,6 +83,8 @@ const CharacterForm = () => {
         if (character) {
             if (initialRender.current) {
                 initialRender.current = false;
+            } else if (skipEdit.current) {
+                skipEdit.current = false;
             } else {
                 const { name, data } = character;
                 editCharacter({

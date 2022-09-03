@@ -51,6 +51,7 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
         ));
     }, []);
 
+    const skipEdit = useRef(false);
     const onPortraitChange = useCallback(async (file: File | null) => {
         const options = {
             characterId,
@@ -69,6 +70,7 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
         } else {
             await deletePortrait(options);
         }
+        skipEdit.current = true;
         setCharacter((previous) => (
             previous ? {
                 ...previous,
@@ -98,6 +100,8 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
         if (character) {
             if (initialRender.current) {
                 initialRender.current = false;
+            } if (skipEdit.current) {
+                skipEdit.current = false;
             } else {
                 (async () => {
                     const { name, data } = character;
