@@ -67,7 +67,7 @@ const Widget: React.FC<WidgetProps> = ({
                             <Box className="widget-bar-title pl-5 pr-5">
                                 {title ?? ''}
                             </Box>
-                            <Box className="widget-bar-actions grow flex row centerY">
+                            <Box className="widget-bar-actions grow flex row center-y">
                                 {actions}
                             </Box>
                             <MdClose

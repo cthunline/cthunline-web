@@ -1,12 +1,20 @@
 .console-container {
     bottom: 20px;
-    height: 150px;
     position: absolute;
     right: 20px;
-    width: 350px;
+    width: 450px;
     z-index: 0;
 }
 
+.console-container:not(.minimized) {
+    height: 200px;
+}
+
+.console-bar {
+    background: var(--palette-background-tertiary);
+    height: 30px;
+}
+
 .console-log {
-    font-size: 0.8rem;
+    font-size: 0.825rem;
 }

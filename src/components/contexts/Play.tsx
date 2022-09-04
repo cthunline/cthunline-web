@@ -130,45 +130,83 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
         });
         sock.io.on('reconnect_attempt', () => {
             isConnecting.current = true;
-            pushLog(sock.user, sock.isMaster, t('page.play.event.reconnecting'));
+            pushLog({
+                dateTime: true,
+                user: sock.user,
+                isMaster: sock.isMaster,
+                text: t('page.play.event.reconnecting')
+            });
         });
         sock.io.on('reconnect', () => {
             isConnecting.current = false;
-            pushLog(sock.user, sock.isMaster, t('page.play.event.reconnected'));
+            pushLog({
+                dateTime: true,
+                user: sock.user,
+                isMaster: sock.isMaster,
+                text: t('page.play.event.reconnected')
+            });
         });
         sock.on('disconnect', (reason) => {
             if (reason === 'io server disconnect') {
                 setSocket(null);
             } else {
-                pushLog(sock.user, sock.isMaster, t('page.play.event.disconnected'));
+                pushLog({
+                    dateTime: true,
+                    user: sock.user,
+                    isMaster: sock.isMaster,
+                    text: t('page.play.event.disconnected')
+                });
             }
         });
-        sock.on('join', ({ user: sockUser, users: sessionUsers, isMaster }) => {
-            pushLog(sockUser, isMaster, t('page.play.event.joined'));
+        sock.on('join', ({
+            dateTime,
+            user: sockUser,
+            users: sessionUsers,
+            isMaster
+        }) => {
+            pushLog({
+                dateTime,
+                user: sockUser,
+                isMaster,
+                text: t('page.play.event.joined')
+            });
             setUsers(sessionUsers);
         });
-        sock.on('leave', ({ user: sockUser, users: sessionUsers, isMaster }) => {
-            pushLog(sockUser, isMaster, t('page.play.event.left'));
+        sock.on('leave', ({
+            dateTime,
+            user: sockUser,
+            users: sessionUsers,
+            isMaster
+        }) => {
+            pushLog({
+                dateTime,
+                user: sockUser,
+                isMaster,
+                text: t('page.play.event.left')
+            });
             setUsers(sessionUsers);
         });
         sock.on('diceResult', ({
+            dateTime,
             user: sockUser,
             isMaster,
             isPrivate,
             request,
             result
         }) => {
-            pushLog(
-                sockUser,
+            pushLog({
+                dateTime,
+                user: sockUser,
                 isMaster,
-                getDiceResultLog(
+                text: getDiceResultLog(
                     request,
                     result,
                     isPrivate
                 )
-            );
+            });
         });
         sock.on('characterUpdate', ({
+            dateTime,
             user: sockUser,
             isMaster,
             character
@@ -176,7 +214,12 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
             const eventText = t('page.play.event.editedCharacter', {
                 name: character.name
             });
-            pushLog(sockUser, isMaster, eventText);
+            pushLog({
+                dateTime,
+                user: sockUser,
+                isMaster,
+                text: eventText
+            });
             updateUserCharacter(sockUser.id, character);
         });
         sock.on('audioPlay', ({ asset, time }) => {

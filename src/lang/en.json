@@ -41,6 +41,7 @@
         "assets": "assets",
         "character": "character",
         "characters": "characters",
+        "console": "console",
         "dice": "dice",
         "dices": "dices",
         "game": "game",
@@ -54,6 +55,11 @@
         "sketch": "sketch",
         "user": "user",
         "users": "users"
+    },
+    "format": {
+        "date": "YYYY-MM-DD",
+        "dateTime": "YYYY-MM-DD HH:mm:ss",
+        "time": "HH:mm:ss"
     },
     "page": {
         "assets": {

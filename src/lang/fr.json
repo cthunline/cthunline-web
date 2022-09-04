@@ -41,6 +41,7 @@
         "assets": "ressources",
         "character": "personnage",
         "characters": "personnages",
+        "console": "console",
         "dice": "dé",
         "dices": "dés",
         "game": "jeu",
@@ -54,6 +55,11 @@
         "sketch": "plateau",
         "user": "utilisateur",
         "users": "utilisateurs"
+    },
+    "format": {
+        "date": "DD/MM/YYYY",
+        "dateTime": "DD/MM/YYYY HH:mm:ss",
+        "time": "HH:mm:ss"
     },
     "page": {
         "assets": {

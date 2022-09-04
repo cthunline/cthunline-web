@@ -1,10 +1,18 @@
 import { useState } from 'react';
+import DayJs from 'dayjs';
 
 import { useApp } from '../../contexts/App';
 import { PlayLog, User } from '../../../types';
 
 export interface LogsHookExport {
     logs: PlayLog[];
+}
+
+interface PushLogOptions {
+    dateTime?: boolean | Date | string;
+    user: User;
+    isMaster: boolean;
+    text: string;
 }
 
 export const defaultLogsHookExport: LogsHookExport = {
@@ -21,12 +29,30 @@ const useLogs = () => {
         return `[${isMaster ? gmPrefix : ''}${logUser?.name}]`;
     };
 
-    const pushLog = (logUser: User, isMaster: boolean, text: string) => {
-        const fullText = `${getLogUsername(logUser, isMaster)} ${text}`;
+    const getLogTime = (dateTime: DayJs.Dayjs | Date | string) => {
+        const time = DayJs(dateTime).format(T('format.time'));
+        return `[${time}]`;
+    };
+
+    const pushLog = ({
+        dateTime,
+        user,
+        isMaster,
+        text
+    }: PushLogOptions) => {
+        const parts = [];
+        if (dateTime === true) {
+            parts.push(getLogTime(DayJs()));
+        } else if (dateTime) {
+            parts.push(getLogTime(dateTime));
+        }
+        parts.push(getLogUsername(user, isMaster));
+        parts.push(text);
+        const logText = parts.join(' ');
         setLogs((previous) => (
             [...previous, {
                 date: new Date(),
-                text: fullText
+                text: logText
             }].slice(-100)
         ));
     };
