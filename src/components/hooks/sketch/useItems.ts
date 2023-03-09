@@ -1,8 +1,4 @@
-import {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import { usePlay } from '../../contexts/Play';
 import {
@@ -23,11 +19,7 @@ import {
     forwardImage,
     backwardImage
 } from '../../../services/sketch';
-import {
-    findById,
-    findIndexById,
-    isMainClick
-} from '../../../services/tools';
+import { findById, findIndexById, isMainClick } from '../../../services/tools';
 
 // this hook holds states and event handlers for sketch items (images and tokens)
 // it is meant to be used by the sketch component and sub components
@@ -52,9 +44,12 @@ const useItems = (
     const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
     // data of item (image or token) currently being moved
     // (index property is reffering to the imagesRef array below)
-    const [movingItem, setMovingItem] = useState<SketchMovingItemData | null>(null);
+    const [movingItem, setMovingItem] = useState<SketchMovingItemData | null>(
+        null
+    );
     // data of item (image or token) currently being resized
-    const [resizingItem, setResizingItem] = useState<SketchResizingItemData | null>(null);
+    const [resizingItem, setResizingItem] =
+        useState<SketchResizingItemData | null>(null);
     // DOMPoint used to calculate transformed coordinates the the svg viewbox
     const [svgPoint, setSvgPoint] = useState<DOMPoint>();
 
@@ -76,32 +71,30 @@ const useItems = (
 
     // helper to set an image in the images state array
     const setImage = (id: string, data: SketchImageData) => {
-        setImages((previous) => (
-            previous.map((image) => (
-                image.id === id ? data : image
-            ))
-        ));
+        setImages((previous) =>
+            previous.map((image) => (image.id === id ? data : image))
+        );
     };
 
     // helper to set a token in the tokens state array
     const setToken = (id: string, data: SketchTokenData) => {
-        setTokens((previous) => (
-            previous.map((token) => (
-                token.id === id ? data : token
-            ))
-        ));
+        setTokens((previous) =>
+            previous.map((token) => (token.id === id ? data : token))
+        );
     };
 
     // handles outside click to deselect image
-    const handleItemContainerMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
+    const handleItemContainerMouseDown = (
+        e: React.MouseEvent<SVGSVGElement>
+    ) => {
         const target = e.target as SVGSVGElement;
         if (
-            isMainClick(e)
-            && isMaster
-            && !isFreeDrawing
-            && selectedImageId
-            && !target.classList.contains('sketch-image')
-            && !target.closest('.sketch-image')
+            isMainClick(e) &&
+            isMaster &&
+            !isFreeDrawing &&
+            selectedImageId &&
+            !target.classList.contains('sketch-image') &&
+            !target.closest('.sketch-image')
         ) {
             // unselect image
             setSelectedImageId(null);
@@ -111,12 +104,7 @@ const useItems = (
     // handles mouse move for moving item
     const handleMovingItemMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
         if (movingItem && (isMaster || movingItem.movableByUser) && svgPoint) {
-            const {
-                type,
-                id,
-                deltaX,
-                deltaY
-            } = movingItem;
+            const { type, id, deltaX, deltaY } = movingItem;
             const itemData = getItemData(id, type);
             // gets moving item new coordinates
             const coord = getMovingItemCoordinates({
@@ -129,11 +117,7 @@ const useItems = (
             });
             if (coord) {
                 itemHasMovedOfResized.current = true;
-                const {
-                    x,
-                    y,
-                    tooltipPlacement
-                } = coord;
+                const { x, y, tooltipPlacement } = coord;
                 // attach new coordinates
                 if (type === SketchItemType.image) {
                     setImage(id, {
@@ -146,9 +130,8 @@ const useItems = (
                         ...(itemData as SketchTokenData),
                         x,
                         y,
-                        tooltipPlacement: (
+                        tooltipPlacement:
                             tooltipPlacement ?? TooltipPlacement.bottom
-                        )
                     });
                 }
             }
@@ -156,7 +139,9 @@ const useItems = (
     };
 
     // handles mouse move for resizing item
-    const handleResizingItemMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
+    const handleResizingItemMouseMove = (
+        e: React.MouseEvent<SVGSVGElement>
+    ) => {
         if (isMaster && resizingItem && svgPoint) {
             const { type, id } = resizingItem;
             const itemData = getItemData(id, type);
@@ -185,14 +170,20 @@ const useItems = (
                 // updates items data in play context sketchData
                 const { type, initialX: x, initialY: y } = movingItem;
                 if (type === SketchItemType.image) {
-                    const image = findById<SketchImageData>(images, movingItem.id);
+                    const image = findById<SketchImageData>(
+                        images,
+                        movingItem.id
+                    );
                     updateSketchImages({
                         images,
                         eventType: SketchEventType.imageMove,
                         image: { ...image, x, y }
                     });
                 } else if (type === SketchItemType.token) {
-                    const token = findById<SketchTokenData>(tokens, movingItem.id);
+                    const token = findById<SketchTokenData>(
+                        tokens,
+                        movingItem.id
+                    );
                     updateMovingToken(
                         token,
                         { ...token, x, y },
@@ -220,7 +211,10 @@ const useItems = (
                     initialHeight: height
                 } = resizingItem;
                 if (type === SketchItemType.image) {
-                    const image = findById<SketchImageData>(images, resizingItem.id);
+                    const image = findById<SketchImageData>(
+                        images,
+                        resizingItem.id
+                    );
                     updateSketchImages({
                         images,
                         eventType: SketchEventType.imageResize,
@@ -260,16 +254,19 @@ const useItems = (
                 // check if we clicked in the svg element
                 const element = e.currentTarget.closest('svg');
                 // check if we click on a context menu or context menu backdrop
-                const isContextMenu = (
-                    (e.target as Element).classList.contains('context-menu')
-                    || !!(e.target as Element).closest('.context-menu')
-                );
+                const isContextMenu =
+                    (e.target as Element).classList.contains('context-menu') ||
+                    !!(e.target as Element).closest('.context-menu');
                 if (element && !isContextMenu) {
                     itemHasMovedOfResized.current = false;
                     // gets item position
                     const { x: itemX, y: itemY } = itemData;
                     // get svg-transformed mouse coordinates
-                    const { x, y } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
+                    const { x, y } = getMouseEventSvgCoordinates(
+                        e,
+                        svgRef.current,
+                        svgPoint
+                    );
                     // set moving item data in state
                     // with delta to keep mouse where it was in the item when moving started
                     setMovingItem({
@@ -306,15 +303,15 @@ const useItems = (
                     // gets item position
                     const { x: initialX, y: initialY } = itemData;
                     // gets item size
-                    const {
-                        width: initialWidth,
-                        height: initialHeight
-                    } = element.getBBox();
+                    const { width: initialWidth, height: initialHeight } =
+                        element.getBBox();
                     // gets svg-transformed mouse coordinates
-                    const {
-                        x: initialMouseX,
-                        y: initialMouseY
-                    } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
+                    const { x: initialMouseX, y: initialMouseY } =
+                        getMouseEventSvgCoordinates(
+                            e,
+                            svgRef.current,
+                            svgPoint
+                        );
                     // set resizing item data in state
                     setResizingItem({
                         type,
@@ -380,14 +377,14 @@ const useItems = (
         if (image && element && heightAttr === 'auto') {
             const { height } = element.getBBox();
             const updatedImage = { ...image, height };
-            updateSketchImage(updatedImage, (events: SketchEvent[]) => (
-                events.map((event) => (
-                    event.type === SketchEventType.imageAdd
-                    && event.image?.id === image.id
+            updateSketchImage(updatedImage, (events: SketchEvent[]) =>
+                events.map((event) =>
+                    event.type === SketchEventType.imageAdd &&
+                    event.image?.id === image.id
                         ? { ...event, image: updatedImage }
                         : event
-                ))
-            ));
+                )
+            );
         }
     };
 

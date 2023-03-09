@@ -5,22 +5,29 @@ export interface FieldData {
     gridColumn: number;
 }
 
-export const weaponFields: FieldData[] = [{
-    key: 'name',
-    gridColumn: 4
-}, {
-    key: 'damage',
-    gridColumn: 2
-}, {
-    key: 'shortRange',
-    gridColumn: 2
-}, {
-    key: 'mediumRange',
-    gridColumn: 2
-}, {
-    key: 'longRange',
-    gridColumn: 2
-}, {
-    key: 'ammo',
-    gridColumn: 2
-}];
+export const weaponFields: FieldData[] = [
+    {
+        key: 'name',
+        gridColumn: 4
+    },
+    {
+        key: 'damage',
+        gridColumn: 2
+    },
+    {
+        key: 'shortRange',
+        gridColumn: 2
+    },
+    {
+        key: 'mediumRange',
+        gridColumn: 2
+    },
+    {
+        key: 'longRange',
+        gridColumn: 2
+    },
+    {
+        key: 'ammo',
+        gridColumn: 2
+    }
+];

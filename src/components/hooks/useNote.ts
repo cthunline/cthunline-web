@@ -1,17 +1,9 @@
-import {
-    useState,
-    useEffect,
-    useCallback
-} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
 import { useApp } from '../contexts/App';
-import {
-    Note,
-    NoteCreateBody,
-    NoteEditBody
-} from '../../types';
+import { Note, NoteCreateBody, NoteEditBody } from '../../types';
 
 interface NoteHookOptions {
     sessionId: number;
@@ -49,10 +41,7 @@ interface NoteList {
     sharedNotes: Note[];
 }
 
-const useNote = ({
-    sessionId,
-    loadList
-}: NoteHookOptions) => {
+const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
     const { handleApiError } = useApp();
 
     const [noteList, setNoteList] = useState<NoteList>({
@@ -71,22 +60,22 @@ const useNote = ({
             handleApiError(err);
             throw err;
         }
-    }, [
-        sessionId,
-        handleApiError
-    ]);
+    }, [sessionId, handleApiError]);
 
-    const getNote = useCallback(async (noteId: number): Promise<Note> => {
-        try {
-            return await Api.call({
-                method: 'GET',
-                route: `/notes/${noteId}`
-            });
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    }, [handleApiError]);
+    const getNote = useCallback(
+        async (noteId: number): Promise<Note> => {
+            try {
+                return await Api.call({
+                    method: 'GET',
+                    route: `/notes/${noteId}`
+                });
+            } catch (err: any) {
+                handleApiError(err);
+                throw err;
+            }
+        },
+        [handleApiError]
+    );
 
     const refreshNoteList = useCallback(async () => {
         const { notes, sharedNotes } = await getNotes();
@@ -96,43 +85,37 @@ const useNote = ({
     const refresh = useCallback(async () => {
         const tasks = [];
         if (loadList) {
-            tasks.push(
-                refreshNoteList()
-            );
+            tasks.push(refreshNoteList());
         }
         await Promise.all(tasks);
-    }, [
-        loadList,
-        refreshNoteList
-    ]);
+    }, [loadList, refreshNoteList]);
 
-    const createNote = useCallback(async ({
-        data,
-        isRefresh = true,
-        isToast = true
-    }: CreateNoteOptions): Promise<Note> => {
-        try {
-            const note = await Api.call({
-                method: 'POST',
-                route: `/sessions/${sessionId}/notes`,
-                data
-            });
-            if (isRefresh) {
-                await refresh();
+    const createNote = useCallback(
+        async ({
+            data,
+            isRefresh = true,
+            isToast = true
+        }: CreateNoteOptions): Promise<Note> => {
+            try {
+                const note = await Api.call({
+                    method: 'POST',
+                    route: `/sessions/${sessionId}/notes`,
+                    data
+                });
+                if (isRefresh) {
+                    await refresh();
+                }
+                if (isToast) {
+                    toast.success('Note created');
+                }
+                return note;
+            } catch (err: any) {
+                handleApiError(err);
+                throw err;
             }
-            if (isToast) {
-                toast.success('Note created');
-            }
-            return note;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    }, [
-        sessionId,
-        refresh,
-        handleApiError
-    ]);
+        },
+        [sessionId, refresh, handleApiError]
+    );
 
     const editNote = async ({
         noteId,
@@ -183,36 +166,34 @@ const useNote = ({
         }
     };
 
-    const deleteNote = useCallback(async ({
-        noteId,
-        isRefresh = true,
-        isToast = true
-    }: DeleteNoteOptions): Promise<void> => {
-        try {
-            await Api.call({
-                method: 'DELETE',
-                route: `/notes/${noteId}`
-            });
-            if (isRefresh) {
-                await refresh();
+    const deleteNote = useCallback(
+        async ({
+            noteId,
+            isRefresh = true,
+            isToast = true
+        }: DeleteNoteOptions): Promise<void> => {
+            try {
+                await Api.call({
+                    method: 'DELETE',
+                    route: `/notes/${noteId}`
+                });
+                if (isRefresh) {
+                    await refresh();
+                }
+                if (isToast) {
+                    toast.success('Note deleted');
+                }
+            } catch (err: any) {
+                handleApiError(err);
+                throw err;
             }
-            if (isToast) {
-                toast.success('Note deleted');
-            }
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    }, [
-        refresh,
-        handleApiError
-    ]);
+        },
+        [refresh, handleApiError]
+    );
 
     useEffect(() => {
         refresh();
-    }, [
-        refresh
-    ]);
+    }, [refresh]);
 
     return {
         noteList,

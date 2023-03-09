@@ -36,19 +36,11 @@ const CustomDialog: React.FC<CustomDialogProps> = ({
             open={open}
             onClose={onClose}
         >
-            <DialogTitle>
-                {title}
-            </DialogTitle>
-            {content ? (
-                <DialogContent>
-                    {content}
-                </DialogContent>
-            ) : null}
+            <DialogTitle>{title}</DialogTitle>
+            {content ? <DialogContent>{content}</DialogContent> : null}
             {onConfirm ? (
                 <DialogActions>
-                    <Button onClick={onClose}>
-                        {T('action.cancel')}
-                    </Button>
+                    <Button onClick={onClose}>{T('action.cancel')}</Button>
                     <Button
                         onClick={() => {
                             onConfirm();

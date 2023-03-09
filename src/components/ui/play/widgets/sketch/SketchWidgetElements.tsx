@@ -20,11 +20,7 @@ import { MdOutlineSave, MdOutlineDeleteOutline } from 'react-icons/md';
 import { useApp } from '../../../../contexts/App';
 import useUserSketch from '../../../../hooks/useUserSketch';
 import Api from '../../../../../services/api';
-import {
-    Asset,
-    SketchData,
-    UserSketchCreateBody
-} from '../../../../../types';
+import { Asset, SketchData, UserSketchCreateBody } from '../../../../../types';
 
 import './SketchWidget.css';
 
@@ -39,10 +35,7 @@ export const ActionButton: React.FC<ActionButtonData> = ({
     handler,
     icon
 }) => (
-    <Tooltip
-        placement="bottom"
-        title={text}
-    >
+    <Tooltip placement="bottom" title={text}>
         <IconButton
             className="sketch-action-button ml-15 mr-15"
             size="medium"
@@ -58,13 +51,9 @@ interface ImageListProps {
     onAdd: (src: string) => void;
 }
 
-export const ImageAssetList: React.FC<ImageListProps> = ({ assets, onAdd }) => (
+export const ImageAssetList: React.FC<ImageListProps> = ({ assets, onAdd }) =>
     assets.length ? (
-        <ImageList
-            className="sketch-widget-assets full-width"
-            cols={3}
-            gap={5}
-        >
+        <ImageList className="sketch-widget-assets full-width" cols={3} gap={5}>
             {assets.map(({ name, path }, index) => {
                 const src = Api.getAssetUrl(path);
                 return (
@@ -76,18 +65,17 @@ export const ImageAssetList: React.FC<ImageListProps> = ({ assets, onAdd }) => (
                         />
                         <ImageListItemBar
                             title={name}
-                            actionIcon={(
+                            actionIcon={
                                 <IconButton onClick={() => onAdd(src)}>
                                     <HiPlus />
                                 </IconButton>
-                            )}
+                            }
                         />
                     </ImageListItem>
                 );
             })}
         </ImageList>
-    ) : null
-);
+    ) : null;
 
 interface UserSketchFormProps {
     sketch: Omit<SketchData, 'events'>;
@@ -115,18 +103,9 @@ export const UserSketchForm: React.FC<UserSketchFormProps> = ({
             validationSchema={userSketchValidationSchema}
             onSubmit={onSubmit}
         >
-            {({
-                errors,
-                touched,
-                handleChange,
-                handleBlur
-            }) => (
+            {({ errors, touched, handleChange, handleBlur }) => (
                 <Form className="form small flex column center">
-                    <Field
-                        validateOnBlur
-                        validateOnChange
-                        name="name"
-                    >
+                    <Field validateOnBlur validateOnChange name="name">
                         {() => (
                             <TextField
                                 className="form-input"
@@ -137,9 +116,7 @@ export const UserSketchForm: React.FC<UserSketchFormProps> = ({
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 helperText={
-                                    errors.name
-                                    && touched.name
-                                    && errors.name
+                                    errors.name && touched.name && errors.name
                                 }
                             />
                         )}
@@ -163,7 +140,9 @@ interface UserSketchSelectorProps {
     onSelect: (sketchId: number) => void;
 }
 
-export const UserSketchSelector: React.FC<UserSketchSelectorProps> = ({ onSelect }) => {
+export const UserSketchSelector: React.FC<UserSketchSelectorProps> = ({
+    onSelect
+}) => {
     const { userSketchs, deleteUserSketch } = useUserSketch(true);
 
     const onDelete = async (sketchId: number) => {
@@ -175,7 +154,7 @@ export const UserSketchSelector: React.FC<UserSketchSelectorProps> = ({ onSelect
             {userSketchs.map(({ id, name }) => (
                 <ListItem
                     key={`user-sketch-${id}`}
-                    secondaryAction={(
+                    secondaryAction={
                         <ListItemSecondaryAction>
                             <IconButton
                                 edge="end"
@@ -186,7 +165,7 @@ export const UserSketchSelector: React.FC<UserSketchSelectorProps> = ({ onSelect
                                 <MdOutlineDeleteOutline />
                             </IconButton>
                         </ListItemSecondaryAction>
-                    )}
+                    }
                     disablePadding
                 >
                     <ListItemButton onClick={() => onSelect(id)}>

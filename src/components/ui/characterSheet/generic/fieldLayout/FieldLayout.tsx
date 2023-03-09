@@ -34,12 +34,10 @@ const FieldLayout = <DataType extends {}>({
 }: FieldLayoutProps<DataType>) => {
     const { T } = useApp();
 
-    const getInput = ({
-        key,
-        title,
-        type,
-        lines
-    }: Field<DataType>, index: number) => ([
+    const getInput = (
+        { key, title, type, lines }: Field<DataType>,
+        index: number
+    ) => [
         title ? (
             <SectionTitle
                 key={`field-${String(key ?? index)}-title`}
@@ -61,14 +59,15 @@ const FieldLayout = <DataType extends {}>({
                 }}
                 type="text"
                 size="small"
-                label={T(`game.${gameId}.${textSectionKey}.${String(key ?? index)}`)}
+                label={T(
+                    `game.${gameId}.${textSectionKey}.${String(key ?? index)}`
+                )}
                 name={key.toString()}
                 value={data[key]}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     const { value } = e.target;
-                    const parsedValue = type === 'number' ? (
-                        Number(onlyNumbers(value))
-                    ) : value;
+                    const parsedValue =
+                        type === 'number' ? Number(onlyNumbers(value)) : value;
                     onChange({
                         ...data,
                         [key]: parsedValue
@@ -76,7 +75,7 @@ const FieldLayout = <DataType extends {}>({
                 }}
             />
         ) : null
-    ]);
+    ];
 
     return (
         <Box
@@ -85,7 +84,7 @@ const FieldLayout = <DataType extends {}>({
             gridTemplateColumns="repeat(12, 1fr)"
             gap={2}
         >
-            {fields.map((field, index) => (
+            {fields.map((field, index) =>
                 field.children ? (
                     <Box
                         key={`field-${String(field.key ?? index)}`}
@@ -113,7 +112,7 @@ const FieldLayout = <DataType extends {}>({
                         {getInput(field, index)}
                     </Box>
                 )
-            ))}
+            )}
         </Box>
     );
 };

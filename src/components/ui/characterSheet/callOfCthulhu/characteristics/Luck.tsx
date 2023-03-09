@@ -12,15 +12,15 @@ interface LuckProps {
     onChange: (data: CoCLuck) => void;
 }
 
-const Luck: React.FC<LuckProps> = ({
-    data,
-    readonly,
-    onChange
-}) => {
+const Luck: React.FC<LuckProps> = ({ data, readonly, onChange }) => {
     const { T } = useApp();
 
     return (
-        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" alignItems="center">
+        <Box
+            display="grid"
+            gridTemplateColumns="repeat(12, 1fr)"
+            alignItems="center"
+        >
             <Box gridColumn="span 3" alignItems="center">
                 {T('game.callOfCthulhu.characteristic.luck')}
             </Box>

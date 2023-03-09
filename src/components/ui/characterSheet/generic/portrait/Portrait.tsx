@@ -12,16 +12,9 @@ interface PortraitProps {
     onChange?: (file: File | null) => void;
 }
 
-const allowedMimeTypes = [
-    'image/jpeg',
-    'image/png'
-];
+const allowedMimeTypes = ['image/jpeg', 'image/png'];
 
-const Portrait: React.FC<PortraitProps> = ({
-    value,
-    readonly,
-    onChange
-}) => {
+const Portrait: React.FC<PortraitProps> = ({ value, readonly, onChange }) => {
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -44,13 +37,12 @@ const Portrait: React.FC<PortraitProps> = ({
         </label>
     );
 
-    const getDeleteButton = () => (
+    const getDeleteButton = () =>
         value ? (
             <IconButton color="error" onClick={() => onChange?.(null)}>
                 <MdOutlineDeleteOutline size={40} />
             </IconButton>
-        ) : null
-    );
+        ) : null;
 
     return (
         <Box className="character-portrait-container">

@@ -44,11 +44,15 @@ const Equipment: React.FC<EquipmentProps> = ({
                                 size="small"
                                 label={T(`game.dnd5.equipment.${money}`)}
                                 value={value}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
                                     onChange({
                                         money: {
                                             ...equipment.money,
-                                            [money]: Number(onlyNumbers(e.target.value))
+                                            [money]: Number(
+                                                onlyNumbers(e.target.value)
+                                            )
                                         }
                                     });
                                 }}
@@ -56,7 +60,7 @@ const Equipment: React.FC<EquipmentProps> = ({
                         </Box>
                     );
                 }),
-                ...(equipmentFields.map((key) => (
+                ...equipmentFields.map((key) => (
                     <Box key={`equipment-${key}`} gridColumn="span 5">
                         <TextField
                             fullWidth
@@ -73,14 +77,16 @@ const Equipment: React.FC<EquipmentProps> = ({
                             size="small"
                             label={T(`game.dnd5.equipment.${key}`)}
                             value={equipment[key]}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
                                 onChange({
                                     [key]: e.target.value
                                 });
                             }}
                         />
                     </Box>
-                )))
+                ))
             ]}
         </Box>
     );

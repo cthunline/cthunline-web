@@ -6,17 +6,21 @@ export interface KeyData {
     editable?: boolean;
 }
 
-export const skillKeys: KeyData[] = [{
-    key: 'regular',
-    textKey: 'reg',
-    editable: true
-}, {
-    key: 'half',
-    textKey: 'half'
-}, {
-    key: 'fifth',
-    textKey: 'fifth'
-}];
+export const skillKeys: KeyData[] = [
+    {
+        key: 'regular',
+        textKey: 'reg',
+        editable: true
+    },
+    {
+        key: 'half',
+        textKey: 'half'
+    },
+    {
+        key: 'fifth',
+        textKey: 'fifth'
+    }
+];
 
 export interface SkillData {
     name: string;

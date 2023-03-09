@@ -3,7 +3,11 @@
     cursor: grab;
 }
 
-.svg-container:not(.free-drawing) .sketch-token.movable.moving .sketch-token-circle,
-.svg-container:not(.free-drawing) .sketch-token.movable.moving .sketch-token-text {
+.svg-container:not(.free-drawing)
+.sketch-token.movable.moving
+.sketch-token-circle,
+.svg-container:not(.free-drawing)
+.sketch-token.movable.moving
+.sketch-token-text {
     cursor: grabbing;
 }

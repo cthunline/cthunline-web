@@ -19,9 +19,8 @@ const Audio = () => {
     const [volumePercent, setVolumePercent] = useState<number>(100);
     const [isMute, setIsMute] = useState<boolean>(false);
 
-    const audioElement = useRef<HTMLAudioElement>() as (
-        React.MutableRefObject<HTMLAudioElement>
-    );
+    const audioElement =
+        useRef<HTMLAudioElement>() as React.MutableRefObject<HTMLAudioElement>;
 
     const onVolumeChange = (_e: Event, value: number | number[]) => {
         setVolumePercent(value as number);
@@ -42,18 +41,11 @@ const Audio = () => {
         } else {
             audioElement.current.pause();
         }
-    }, [
-        audioData
-    ]);
+    }, [audioData]);
 
     useEffect(() => {
-        audioElement.current.volume = isMute ? 0 : (
-            volumePercent / 100
-        );
-    }, [
-        volumePercent,
-        isMute
-    ]);
+        audioElement.current.volume = isMute ? 0 : volumePercent / 100;
+    }, [volumePercent, isMute]);
 
     const getIcon = () => {
         if (isMute) {
@@ -88,11 +80,7 @@ const Audio = () => {
                 />
             </Box>
             {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-            <audio
-                ref={audioElement}
-                className="hidden"
-                autoPlay={false}
-            />
+            <audio ref={audioElement} className="hidden" autoPlay={false} />
         </Box>
     );
 };

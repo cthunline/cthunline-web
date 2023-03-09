@@ -25,18 +25,23 @@ export const defaultAdvantage: SeventhSeaAdvantage = {
     description: ''
 };
 
-export const traitSkillLimiter = <DataType>(data: DataType): DataType => (
+export const traitSkillLimiter = <DataType>(data: DataType): DataType =>
     Object.fromEntries(
         Object.entries(data).map(([key, value]) => {
             let val = value;
-            if (val < 1) { val = 1; }
-            if (val > 5) { val = 5; }
+            if (val < 1) {
+                val = 1;
+            }
+            if (val > 5) {
+                val = 5;
+            }
             return [key, val];
         })
-    ) as DataType
-);
+    ) as DataType;
 
-export const controlCharacterData = (characterData: SeventhSeaCharacter): SeventhSeaCharacter => ({
+export const controlCharacterData = (
+    characterData: SeventhSeaCharacter
+): SeventhSeaCharacter => ({
     ...characterData,
     traits: traitSkillLimiter<SeventhSeaTraits>(characterData.traits),
     skills: traitSkillLimiter<SeventhSeaSkills>(characterData.skills)

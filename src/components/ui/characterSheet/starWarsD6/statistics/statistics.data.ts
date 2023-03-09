@@ -5,19 +5,25 @@ export interface StatisticsField {
     type: 'number' | 'boolean';
 }
 
-export const statisticsFields: StatisticsField[] = [{
-    key: 'move',
-    type: 'number'
-}, {
-    key: 'forceSensitive',
-    type: 'boolean'
-}, {
-    key: 'forcePoints',
-    type: 'number'
-}, {
-    key: 'darkSidePoints',
-    type: 'number'
-}, {
-    key: 'characterPoints',
-    type: 'number'
-}];
+export const statisticsFields: StatisticsField[] = [
+    {
+        key: 'move',
+        type: 'number'
+    },
+    {
+        key: 'forceSensitive',
+        type: 'boolean'
+    },
+    {
+        key: 'forcePoints',
+        type: 'number'
+    },
+    {
+        key: 'darkSidePoints',
+        type: 'number'
+    },
+    {
+        key: 'characterPoints',
+        type: 'number'
+    }
+];

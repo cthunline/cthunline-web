@@ -1,9 +1,4 @@
-import React, {
-    useCallback,
-    useEffect,
-    useRef,
-    useState
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 import {
     GiCharacter,
@@ -72,10 +67,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
         if (listening) {
             setCharacterData(data);
         }
-    }, [
-        listening,
-        data
-    ]);
+    }, [listening, data]);
 
     const initialRender = useRef(true);
     useEffect(() => {
@@ -88,11 +80,7 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             const characterName = `${properName} ${properOccupation}`;
             onChange(characterName, characterData);
         }
-    }, [
-        readonly,
-        onChange,
-        characterData
-    ]);
+    }, [readonly, onChange, characterData]);
 
     const onBiographyChange = useCallback((biography: SWD6Biography) => {
         setCharacterData((previous) => ({
@@ -101,79 +89,84 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
         }));
     }, []);
 
-    const onAttributeChange = useCallback((
-        attribute: SWD6Attribute,
-        attributeData: Partial<SWD6AttributeData>
-    ) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            attributes: {
-                ...previous.attributes,
-                [attribute]: {
-                    ...previous.attributes[attribute],
-                    ...attributeData
+    const onAttributeChange = useCallback(
+        (
+            attribute: SWD6Attribute,
+            attributeData: Partial<SWD6AttributeData>
+        ) => {
+            setCharacterData((previous) => ({
+                ...previous,
+                attributes: {
+                    ...previous.attributes,
+                    [attribute]: {
+                        ...previous.attributes[attribute],
+                        ...attributeData
+                    }
                 }
-            }
-        }));
-    }, []);
+            }));
+        },
+        []
+    );
 
-    const onSkillCreate = useCallback((
-        attribute: SWD6Attribute,
-        skillData: SWD6Skill
-    ) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            attributes: {
-                ...previous.attributes,
-                [attribute]: {
-                    ...previous.attributes[attribute],
-                    skills: [
-                        ...previous.attributes[attribute].skills,
-                        skillData
-                    ].sort((a, b) => (
-                        a.name.localeCompare(b.name)
-                    ))
+    const onSkillCreate = useCallback(
+        (attribute: SWD6Attribute, skillData: SWD6Skill) => {
+            setCharacterData((previous) => ({
+                ...previous,
+                attributes: {
+                    ...previous.attributes,
+                    [attribute]: {
+                        ...previous.attributes[attribute],
+                        skills: [
+                            ...previous.attributes[attribute].skills,
+                            skillData
+                        ].sort((a, b) => a.name.localeCompare(b.name))
+                    }
                 }
-            }
-        }));
-    }, []);
+            }));
+        },
+        []
+    );
 
-    const onSkillChange = useCallback((
-        attribute: SWD6Attribute,
-        skillIndex: number,
-        skillData: SWD6Skill
-    ) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            attributes: {
-                ...previous.attributes,
-                [attribute]: {
-                    ...previous.attributes[attribute],
-                    skills: previous.attributes[attribute].skills.map((skill, idx) => (
-                        idx === skillIndex ? skillData : skill
-                    ))
+    const onSkillChange = useCallback(
+        (
+            attribute: SWD6Attribute,
+            skillIndex: number,
+            skillData: SWD6Skill
+        ) => {
+            setCharacterData((previous) => ({
+                ...previous,
+                attributes: {
+                    ...previous.attributes,
+                    [attribute]: {
+                        ...previous.attributes[attribute],
+                        skills: previous.attributes[attribute].skills.map(
+                            (skill, idx) =>
+                                idx === skillIndex ? skillData : skill
+                        )
+                    }
                 }
-            }
-        }));
-    }, []);
+            }));
+        },
+        []
+    );
 
-    const onSkillDelete = useCallback((
-        attribute: SWD6Attribute,
-        skillIndex: number
-    ) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            attributes: {
-                ...previous.attributes,
-                [attribute]: {
-                    ...previous.attributes[attribute],
-                    skills: previous.attributes[attribute].skills.filter((_skill, idx) => (
-                        idx !== skillIndex
-                    ))
+    const onSkillDelete = useCallback(
+        (attribute: SWD6Attribute, skillIndex: number) => {
+            setCharacterData((previous) => ({
+                ...previous,
+                attributes: {
+                    ...previous.attributes,
+                    [attribute]: {
+                        ...previous.attributes[attribute],
+                        skills: previous.attributes[attribute].skills.filter(
+                            (_skill, idx) => idx !== skillIndex
+                        )
+                    }
                 }
-            }
-        }));
-    }, []);
+            }));
+        },
+        []
+    );
 
     const onStatisticsChange = useCallback((statistics: SWD6Statistics) => {
         setCharacterData((previous) => ({
@@ -183,41 +176,39 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
     }, []);
 
     const onWoundStatusChange = useCallback((woundStatus: SWD6WoundStatus) => {
-        setCharacterData((previous) => (
+        setCharacterData((previous) =>
             controlCharacterData({
                 ...previous,
                 woundStatus
             })
-        ));
+        );
     }, []);
 
     const onWeaponCreate = useCallback((weaponData: SWD6Weapon) => {
         setCharacterData((previous) => ({
             ...previous,
-            weapons: [
-                ...previous.weapons,
-                weaponData
-            ].sort((a, b) => (
+            weapons: [...previous.weapons, weaponData].sort((a, b) =>
                 a.name.localeCompare(b.name)
-            ))
+            )
         }));
     }, []);
 
-    const onWeaponChange = useCallback((weaponIndex: number, weaponData: SWD6Weapon) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            weapons: previous.weapons.map((weapon, idx) => (
-                idx === weaponIndex ? weaponData : weapon
-            ))
-        }));
-    }, []);
+    const onWeaponChange = useCallback(
+        (weaponIndex: number, weaponData: SWD6Weapon) => {
+            setCharacterData((previous) => ({
+                ...previous,
+                weapons: previous.weapons.map((weapon, idx) =>
+                    idx === weaponIndex ? weaponData : weapon
+                )
+            }));
+        },
+        []
+    );
 
     const onWeaponDelete = useCallback((weaponIndex: number) => {
         setCharacterData((previous) => ({
             ...previous,
-            weapons: previous.weapons.filter((_s, idx) => (
-                idx !== weaponIndex
-            ))
+            weapons: previous.weapons.filter((_s, idx) => idx !== weaponIndex)
         }));
     }, []);
 
@@ -228,19 +219,23 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
         }));
     }, []);
 
-    const sheetTabs: SheetTab[] = [{
-        key: 'biography',
-        icon: <GiCharacter size={20} />,
-        label: T('game.starWarsD6.common.biography')
-    }, {
-        key: 'attributesAndSkills',
-        icon: <GiPerspectiveDiceSixFacesSix size={20} />,
-        label: T('game.starWarsD6.common.attributesAndSkills')
-    }, {
-        key: 'weapons',
-        icon: <GiLightSabers size={20} />,
-        label: T('game.starWarsD6.common.weapons')
-    }];
+    const sheetTabs: SheetTab[] = [
+        {
+            key: 'biography',
+            icon: <GiCharacter size={20} />,
+            label: T('game.starWarsD6.common.biography')
+        },
+        {
+            key: 'attributesAndSkills',
+            icon: <GiPerspectiveDiceSixFacesSix size={20} />,
+            label: T('game.starWarsD6.common.attributesAndSkills')
+        },
+        {
+            key: 'weapons',
+            icon: <GiLightSabers size={20} />,
+            label: T('game.starWarsD6.common.weapons')
+        }
+    ];
 
     return (
         <SheetTabs
@@ -250,83 +245,89 @@ const SWD6Sheet: React.FC<SWD6SheetProps> = ({
             onChange={(idx) => setTabIndex(idx)}
         >
             {/* bio & background */}
-            {sheetTabs[tabIndex].key === 'biography' ? [
-                // biography
-                <Box key="swd6-biography" gridColumn="span 9">
-                    <SectionTitle
-                        iconBefore={<GiCharacter size={20} />}
-                        text={T('game.starWarsD6.common.biography')}
-                    />
-                    <FieldLayout<SWD6Biography>
-                        gameId={GameId.starWarsD6}
-                        fields={biographyFields}
-                        textSectionKey="biography"
-                        data={characterData.biography}
-                        readonly={readonly}
-                        onChange={onBiographyChange}
-                    />
-                </Box>,
-                // portrait
-                <Box key="swd6-portrait" gridColumn="span 3">
-                    <Portrait
-                        value={portrait}
-                        readonly={readonly}
-                        onChange={onPortraitChange}
-                    />
-                </Box>,
-                // story
-                <FieldLayout<SWD6Story>
-                    key="swd6-story"
-                    gameId={GameId.starWarsD6}
-                    fields={storyFields}
-                    textSectionKey="story"
-                    data={characterData.story}
-                    readonly={readonly}
-                    onChange={onStoryChange}
-                />
-            ] : null}
+            {sheetTabs[tabIndex].key === 'biography'
+                ? [
+                      // biography
+                      <Box key="swd6-biography" gridColumn="span 9">
+                          <SectionTitle
+                              iconBefore={<GiCharacter size={20} />}
+                              text={T('game.starWarsD6.common.biography')}
+                          />
+                          <FieldLayout<SWD6Biography>
+                              gameId={GameId.starWarsD6}
+                              fields={biographyFields}
+                              textSectionKey="biography"
+                              data={characterData.biography}
+                              readonly={readonly}
+                              onChange={onBiographyChange}
+                          />
+                      </Box>,
+                      // portrait
+                      <Box key="swd6-portrait" gridColumn="span 3">
+                          <Portrait
+                              value={portrait}
+                              readonly={readonly}
+                              onChange={onPortraitChange}
+                          />
+                      </Box>,
+                      // story
+                      <FieldLayout<SWD6Story>
+                          key="swd6-story"
+                          gameId={GameId.starWarsD6}
+                          fields={storyFields}
+                          textSectionKey="story"
+                          data={characterData.story}
+                          readonly={readonly}
+                          onChange={onStoryChange}
+                      />
+                  ]
+                : null}
             {/* attributes & skills */}
-            {sheetTabs[tabIndex].key === 'attributesAndSkills' ? [
-                // attributes and skills
-                <Box key="swd6-attributesAndSkills" gridColumn="span 12">
-                    <SectionTitle
-                        iconBefore={<GiRollingDices size={20} />}
-                        text={T('game.starWarsD6.common.attributesAndSkills')}
-                    />
-                    <Attributes
-                        attributes={characterData.attributes}
-                        readonly={readonly}
-                        onChange={onAttributeChange}
-                        onSkillCreate={onSkillCreate}
-                        onSkillChange={onSkillChange}
-                        onSkillDelete={onSkillDelete}
-                    />
-                </Box>,
-                // statistics
-                <Box key="swd6-statistics" gridColumn="span 6">
-                    <SectionTitle
-                        iconBefore={<GiChart size={20} />}
-                        text={T('game.starWarsD6.common.statistics')}
-                    />
-                    <Statistics
-                        statistics={characterData.statistics}
-                        readonly={readonly}
-                        onChange={onStatisticsChange}
-                    />
-                </Box>,
-                // wound status
-                <Box key="swd6-status" gridColumn="span 6">
-                    <SectionTitle
-                        iconBefore={<GiHeartBeats size={20} />}
-                        text={T('game.starWarsD6.common.woundStatus')}
-                    />
-                    <WoundStatus
-                        woundStatus={characterData.woundStatus}
-                        readonly={readonly}
-                        onChange={onWoundStatusChange}
-                    />
-                </Box>
-            ] : null}
+            {sheetTabs[tabIndex].key === 'attributesAndSkills'
+                ? [
+                      // attributes and skills
+                      <Box key="swd6-attributesAndSkills" gridColumn="span 12">
+                          <SectionTitle
+                              iconBefore={<GiRollingDices size={20} />}
+                              text={T(
+                                  'game.starWarsD6.common.attributesAndSkills'
+                              )}
+                          />
+                          <Attributes
+                              attributes={characterData.attributes}
+                              readonly={readonly}
+                              onChange={onAttributeChange}
+                              onSkillCreate={onSkillCreate}
+                              onSkillChange={onSkillChange}
+                              onSkillDelete={onSkillDelete}
+                          />
+                      </Box>,
+                      // statistics
+                      <Box key="swd6-statistics" gridColumn="span 6">
+                          <SectionTitle
+                              iconBefore={<GiChart size={20} />}
+                              text={T('game.starWarsD6.common.statistics')}
+                          />
+                          <Statistics
+                              statistics={characterData.statistics}
+                              readonly={readonly}
+                              onChange={onStatisticsChange}
+                          />
+                      </Box>,
+                      // wound status
+                      <Box key="swd6-status" gridColumn="span 6">
+                          <SectionTitle
+                              iconBefore={<GiHeartBeats size={20} />}
+                              text={T('game.starWarsD6.common.woundStatus')}
+                          />
+                          <WoundStatus
+                              woundStatus={characterData.woundStatus}
+                              readonly={readonly}
+                              onChange={onWoundStatusChange}
+                          />
+                      </Box>
+                  ]
+                : null}
             {/* weapons */}
             {sheetTabs[tabIndex].key === 'weapons' ? (
                 // weapons

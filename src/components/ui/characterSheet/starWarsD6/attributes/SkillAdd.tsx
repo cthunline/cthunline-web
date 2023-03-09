@@ -1,31 +1,18 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
-import {
-    SWD6Attribute,
-    SWD6Skill
-} from '@cthunline/games';
+import { SWD6Attribute, SWD6Skill } from '@cthunline/games';
 
 import { useApp } from '../../../../contexts/App';
 import AutocompleteInput from '../../../autocompleteInput/AutocompleteInput';
-import {
-    skillList,
-    defaultSkillData
-} from './skills.data';
+import { skillList, defaultSkillData } from './skills.data';
 
 interface SkillProps {
     attribute: SWD6Attribute;
     onSubmit: (attribute: SWD6Attribute, data: SWD6Skill) => void;
 }
 
-const SkillAdd: React.FC<SkillProps> = ({
-    attribute,
-    onSubmit
-}) => {
+const SkillAdd: React.FC<SkillProps> = ({ attribute, onSubmit }) => {
     const { T } = useApp();
 
     const [selectorValue, setSelectorValue] = useState<SWD6Skill | null>(null);
@@ -61,7 +48,11 @@ const SkillAdd: React.FC<SkillProps> = ({
     }));
 
     return (
-        <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(15, 1fr)">
+        <Box
+            gridColumn="span 12"
+            display="grid"
+            gridTemplateColumns="repeat(15, 1fr)"
+        >
             <Box gridColumn="span 13" alignItems="center">
                 <AutocompleteInput<SWD6Skill>
                     options={skillOptions}
@@ -73,7 +64,11 @@ const SkillAdd: React.FC<SkillProps> = ({
                     onChange={onSelectorChange}
                 />
             </Box>
-            <Box className="text-center" gridColumn="span 2" alignItems="center">
+            <Box
+                className="text-center"
+                gridColumn="span 2"
+                alignItems="center"
+            >
                 <IconButton
                     size="medium"
                     onClick={() => {

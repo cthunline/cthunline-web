@@ -19,9 +19,7 @@ const ModifierRow: React.FC<ModifierRowProps> = ({
     onProficientChange
 }) => (
     <>
-        <Box gridColumn="span 7">
-            {text}
-        </Box>
+        <Box gridColumn="span 7">{text}</Box>
         <Box gridColumn="span 3">
             <TextField
                 fullWidth

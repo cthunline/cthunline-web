@@ -30,12 +30,7 @@ export interface NoteListMenuProps {
 }
 
 const NoteListMenu: React.FC<NoteListMenuProps> = ({
-    contextData: {
-        anchorEl,
-        note,
-        canMoveUp,
-        canMoveDown
-    },
+    contextData: { anchorEl, note, canMoveUp, canMoveDown },
     handleClose,
     onShare,
     onMove,
@@ -62,11 +57,9 @@ const NoteListMenu: React.FC<NoteListMenuProps> = ({
                     <MdOutlineShare size={20} />
                 </ListItemIcon>
                 <ListItemText>
-                    {note?.isShared ? (
-                        T('action.stopSharing')
-                    ) : (
-                        T('action.share')
-                    )}
+                    {note?.isShared
+                        ? T('action.stopSharing')
+                        : T('action.share')}
                 </ListItemText>
             </MenuItem>
             <Divider />
@@ -81,9 +74,7 @@ const NoteListMenu: React.FC<NoteListMenuProps> = ({
                     <ListItemIcon>
                         <MdOutlineArrowUpward size={20} />
                     </ListItemIcon>
-                    <ListItemText>
-                        {T('action.moveUp')}
-                    </ListItemText>
+                    <ListItemText>{T('action.moveUp')}</ListItemText>
                 </MenuItem>
             ) : null}
             {canMoveDown ? (
@@ -97,9 +88,7 @@ const NoteListMenu: React.FC<NoteListMenuProps> = ({
                     <ListItemIcon>
                         <MdOutlineArrowDownward size={20} />
                     </ListItemIcon>
-                    <ListItemText>
-                        {T('action.moveDown')}
-                    </ListItemText>
+                    <ListItemText>{T('action.moveDown')}</ListItemText>
                 </MenuItem>
             ) : null}
             <Divider />
@@ -113,9 +102,7 @@ const NoteListMenu: React.FC<NoteListMenuProps> = ({
                 <ListItemIcon>
                     <MdOutlineDelete size={20} />
                 </ListItemIcon>
-                <ListItemText>
-                    {T('action.delete')}
-                </ListItemText>
+                <ListItemText>{T('action.delete')}</ListItemText>
             </MenuItem>
         </Menu>
     );

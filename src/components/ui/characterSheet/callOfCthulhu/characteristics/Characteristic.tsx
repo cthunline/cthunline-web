@@ -1,9 +1,5 @@
 import React, { memo } from 'react';
-import {
-    Box,
-    TextField,
-    Tooltip
-} from '@mui/material';
+import { Box, TextField, Tooltip } from '@mui/material';
 import { CoCCharacteristic } from '@cthunline/games';
 
 import { useApp } from '../../../../contexts/App';
@@ -37,10 +33,17 @@ const Characteristic: React.FC<CharacteristicProps> = ({
         >
             <Box gridColumn="span 3">
                 {textKey ? (
-                    <Tooltip title={T(`game.callOfCthulhu.characteristic.${field}`)} placement="bottom">
-                        <span>{TU(`game.callOfCthulhu.characteristic.${textKey}`)}</span>
+                    <Tooltip
+                        title={T(`game.callOfCthulhu.characteristic.${field}`)}
+                        placement="bottom"
+                    >
+                        <span>
+                            {TU(`game.callOfCthulhu.characteristic.${textKey}`)}
+                        </span>
                     </Tooltip>
-                ) : T(`game.callOfCthulhu.characteristic.${field}`)}
+                ) : (
+                    T(`game.callOfCthulhu.characteristic.${field}`)
+                )}
             </Box>
             {charKeys.map(({ key, textKey: subTextKey, editable }) => (
                 <Box key={`characteristic-${key}`} gridColumn="span 3">

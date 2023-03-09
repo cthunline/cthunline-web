@@ -53,7 +53,7 @@ export const colors = [
     'darkgray'
 ] as const;
 
-export type Color = typeof colors[number];
+export type Color = (typeof colors)[number];
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ user
 
@@ -172,7 +172,7 @@ export type NoteEditBody = Partial<NoteCreateBody>;
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ character
 
 export type CharacterData =
-    CoCCharacter
+    | CoCCharacter
     | DnD5Character
     | SeventhSeaCharacter
     | SWD6Character;
@@ -239,7 +239,15 @@ export type DicesData = Record<DiceType, number>;
 
 export type DicesRequest = Partial<DicesData>;
 
-export const diceTypes: DiceType[] = ['D4', 'D6', 'D8', 'D10', 'D12', 'D20', 'D100'];
+export const diceTypes: DiceType[] = [
+    'D4',
+    'D6',
+    'D8',
+    'D10',
+    'D12',
+    'D20',
+    'D100'
+];
 
 export interface AudioData extends Asset {
     time: number;

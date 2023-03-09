@@ -7,9 +7,7 @@ const AutoScroll = () => {
         scrollElement.current?.scrollIntoView();
     });
 
-    return (
-        <div ref={scrollElement} />
-    );
+    return <div ref={scrollElement} />;
 };
 
 export default AutoScroll;

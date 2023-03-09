@@ -1,9 +1,4 @@
-import {
-    useState,
-    useEffect,
-    useCallback,
-    useRef
-} from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { toast } from 'react-toastify';
 
 import Api from '../../../services/api';
@@ -18,7 +13,7 @@ interface AuthData {
 
 export interface AuthHookExport extends AuthData {
     refreshUser: () => Promise<void>;
-    login: (email:string, password: string) => Promise<void>;
+    login: (email: string, password: string) => Promise<void>;
     logout: (callApi?: boolean) => Promise<void>;
     handleApiError: (err: any) => void;
 }
@@ -28,10 +23,18 @@ export const defaultAuthHookData: AuthHookExport = {
     isLoggedIn: false,
     userId: null,
     user: null,
-    refreshUser: async () => { /* default */ },
-    login: async () => { /* default */ },
-    logout: async () => { /* default */ },
-    handleApiError: () => { /* default */ }
+    refreshUser: async () => {
+        /* default */
+    },
+    login: async () => {
+        /* default */
+    },
+    logout: async () => {
+        /* default */
+    },
+    handleApiError: () => {
+        /* default */
+    }
 };
 
 const defaultAuthData: AuthData = {
@@ -44,12 +47,11 @@ const defaultAuthData: AuthData = {
 const useAuth = () => {
     const [authData, setAuthData] = useState<AuthData>(defaultAuthData);
 
-    const getUser = async (userId: number) => (
+    const getUser = async (userId: number) =>
         Api.call({
             method: 'GET',
             route: `/users/${userId}`
-        })
-    );
+        });
 
     const refreshUser = useCallback(async () => {
         if (authData.userId) {
@@ -74,46 +76,49 @@ const useAuth = () => {
         });
     }, []);
 
-    const login = useCallback(async (email: string, password: string): Promise<void> => {
-        try {
-            const { id } = await Api.call({
-                method: 'POST',
-                route: '/auth',
-                data: {
-                    email,
-                    password
-                }
-            });
-            const user = await getUser(id);
-            setAuthData({
-                isLoading: false,
-                isLoggedIn: true,
-                userId: id,
-                user
-            });
-        } catch (err) {
-            await logout(false);
-            throw err;
-        }
-    }, [logout]);
+    const login = useCallback(
+        async (email: string, password: string): Promise<void> => {
+            try {
+                const { id } = await Api.call({
+                    method: 'POST',
+                    route: '/auth',
+                    data: {
+                        email,
+                        password
+                    }
+                });
+                const user = await getUser(id);
+                setAuthData({
+                    isLoading: false,
+                    isLoggedIn: true,
+                    userId: id,
+                    user
+                });
+            } catch (err) {
+                await logout(false);
+                throw err;
+            }
+        },
+        [logout]
+    );
 
     const isAuthError = useRef<boolean>(false);
-    const handleApiError = useCallback((err: any): void => {
-        if (
-            authData.isLoggedIn
-            && !isAuthError.current
-            && err.response?.status === 401
-        ) {
-            isAuthError.current = true;
-            toast.error('You have been disconnected');
-            logout(false);
-        } else {
-            toast.error(err?.response?.data?.error ?? err.message);
-        }
-    }, [
-        authData,
-        logout
-    ]);
+    const handleApiError = useCallback(
+        (err: any): void => {
+            if (
+                authData.isLoggedIn &&
+                !isAuthError.current &&
+                err.response?.status === 401
+            ) {
+                isAuthError.current = true;
+                toast.error('You have been disconnected');
+                logout(false);
+            } else {
+                toast.error(err?.response?.data?.error ?? err.message);
+            }
+        },
+        [authData, logout]
+    );
 
     useEffect(() => {
         if (authData.isLoggedIn) {

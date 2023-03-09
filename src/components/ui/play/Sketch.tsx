@@ -23,7 +23,8 @@ interface SketchProps {
 
 const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
     // reference to the main svg container element (#svg-container)
-    const svgRef = useRef<SVGSVGElement>() as React.MutableRefObject<SVGSVGElement>;
+    const svgRef =
+        useRef<SVGSVGElement>() as React.MutableRefObject<SVGSVGElement>;
 
     const {
         isFreeDrawing,
@@ -106,31 +107,28 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
         setPaths(sketchData.paths);
         setImages(sketchData.images);
         setTokens(sketchData.tokens);
-    }, [
-        sketchData,
-        setPaths,
-        setImages,
-        setTokens
-    ]);
+    }, [sketchData, setPaths, setImages, setTokens]);
 
     useEffect(() => {
         // when drawing is enabled unselect images
         if (isFreeDrawing) {
             setSelectedImageId(null);
         }
-    }, [
-        isFreeDrawing,
-        setSelectedImageId
-    ]);
+    }, [isFreeDrawing, setSelectedImageId]);
 
     return (
         <Box className="sketch-container full-width full-height text-center">
-            <ClickAwayListener mouseEvent="onMouseDown" onClickAway={handleMouseDownAway}>
+            <ClickAwayListener
+                mouseEvent="onMouseDown"
+                onClickAway={handleMouseDownAway}
+            >
                 {/* main svg container */}
                 <svg
                     ref={svgRef}
                     id="svg-container"
-                    className={`svg-container ${isFreeDrawing ? 'free-drawing' : ''}`}
+                    className={`svg-container ${
+                        isFreeDrawing ? 'free-drawing' : ''
+                    }`}
                     viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
                     onMouseDown={handleMouseDown}
                     onMouseMove={handleMouseMove}
@@ -139,14 +137,7 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                     onContextMenu={handleContextMenu}
                 >
                     {/* sketch images */}
-                    {images.map(({
-                        id,
-                        url,
-                        width,
-                        height,
-                        x,
-                        y
-                    }) => (
+                    {images.map(({ id, url, width, height, x, y }) => (
                         <SketchImage
                             key={`sketch-image-${id}`}
                             id={id}
@@ -157,25 +148,34 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                             x={x}
                             y={y}
                             selected={selectedImageId === id}
-                            moving={(
-                                movingItem?.type === SketchItemType.image
-                                && movingItem?.id === id
-                            )}
-                            resizing={(
-                                resizingItem?.type === SketchItemType.image
-                                && resizingItem?.id === id
-                            )}
+                            moving={
+                                movingItem?.type === SketchItemType.image &&
+                                movingItem?.id === id
+                            }
+                            resizing={
+                                resizingItem?.type === SketchItemType.image &&
+                                resizingItem?.id === id
+                            }
                             onLoad={(element) => {
                                 updateImageHeight(id, element);
                             }}
                             onMouseDown={(e) => {
-                                handleItemMouseDown(e, id, SketchItemType.image);
+                                handleItemMouseDown(
+                                    e,
+                                    id,
+                                    SketchItemType.image
+                                );
                             }}
                             onResizeMouseDown={(
                                 e: React.MouseEvent<SVGRectElement>,
                                 direction: CardinalDirection
                             ) => {
-                                handleResizeMouseDown(e, id, SketchItemType.image, direction);
+                                handleResizeMouseDown(
+                                    e,
+                                    id,
+                                    SketchItemType.image,
+                                    direction
+                                );
                             }}
                             onForward={() => handleImageForward(id)}
                             onBackward={() => handleImageBackward(id)}
@@ -185,51 +185,71 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                         />
                     ))}
                     {/* tokens */}
-                    {tokens.map(({
-                        id,
-                        color,
-                        attachedData,
-                        x,
-                        y,
-                        tooltipPlacement
-                    }) => {
-                        const isMoving = (
-                            movingItem?.type === SketchItemType.token
-                            && movingItem?.id === id
-                        );
-                        return (
-                            <SketchToken
-                                key={`sketch-token-${id}`}
-                                id={id}
-                                isMaster={isMaster}
-                                size={50}
-                                color={color}
-                                attachedData={attachedData}
-                                x={x}
-                                y={y}
-                                tooltipPlacement={tooltipPlacement}
-                                isMoving={isMoving}
-                                onMouseDown={(e, isMovable) => {
-                                    handleItemMouseDown(e, id, SketchItemType.token, isMovable);
-                                }}
-                                onAttach={!attachedData ? (sessionUser: SessionUser) => {
-                                    attachTokenData(id, sessionUser);
-                                } : undefined}
-                                onUnattach={attachedData ? () => {
-                                    unattachTokenData(id);
-                                } : undefined}
-                                onDuplicate={() => {
-                                    duplicateToken(id);
-                                }}
-                                onColorChange={(tokenColor: Color) => {
-                                    changeTokenColor(id, tokenColor);
-                                }}
-                                onDelete={() => {
-                                    handleItemDelete(id, SketchItemType.token);
-                                }}
-                            />
-                        );
-                    })}
+                    {tokens.map(
+                        ({
+                            id,
+                            color,
+                            attachedData,
+                            x,
+                            y,
+                            tooltipPlacement
+                        }) => {
+                            const isMoving =
+                                movingItem?.type === SketchItemType.token &&
+                                movingItem?.id === id;
+                            return (
+                                <SketchToken
+                                    key={`sketch-token-${id}`}
+                                    id={id}
+                                    isMaster={isMaster}
+                                    size={50}
+                                    color={color}
+                                    attachedData={attachedData}
+                                    x={x}
+                                    y={y}
+                                    tooltipPlacement={tooltipPlacement}
+                                    isMoving={isMoving}
+                                    onMouseDown={(e, isMovable) => {
+                                        handleItemMouseDown(
+                                            e,
+                                            id,
+                                            SketchItemType.token,
+                                            isMovable
+                                        );
+                                    }}
+                                    onAttach={
+                                        !attachedData
+                                            ? (sessionUser: SessionUser) => {
+                                                  attachTokenData(
+                                                      id,
+                                                      sessionUser
+                                                  );
+                                              }
+                                            : undefined
+                                    }
+                                    onUnattach={
+                                        attachedData
+                                            ? () => {
+                                                  unattachTokenData(id);
+                                              }
+                                            : undefined
+                                    }
+                                    onDuplicate={() => {
+                                        duplicateToken(id);
+                                    }}
+                                    onColorChange={(tokenColor: Color) => {
+                                        changeTokenColor(id, tokenColor);
+                                    }}
+                                    onDelete={() => {
+                                        handleItemDelete(
+                                            id,
+                                            SketchItemType.token
+                                        );
+                                    }}
+                                />
+                            );
+                        }
+                    )}
                     {/* drawing paths */}
                     {paths.map((path, index) => (
                         <path

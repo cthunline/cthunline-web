@@ -26,26 +26,28 @@ const SavingThrows: React.FC<SavingThrowsProps> = ({
             alignItems="center"
             gap={2}
         >
-            {(Object.keys(savingThrows) as (keyof DnD5Abilities)[]).map((ability) => {
-                const data = savingThrows[ability];
-                return (
-                    <ModifierRow
-                        key={`savingThrow-${ability}`}
-                        readonly={readonly}
-                        text={T(`game.dnd5.ability.${ability}`)}
-                        proficient={data.proficient}
-                        modifier={data.modifier}
-                        onProficientChange={(checked) => {
-                            onChange({
-                                [ability]: {
-                                    ...data,
-                                    proficient: checked
-                                }
-                            });
-                        }}
-                    />
-                );
-            })}
+            {(Object.keys(savingThrows) as (keyof DnD5Abilities)[]).map(
+                (ability) => {
+                    const data = savingThrows[ability];
+                    return (
+                        <ModifierRow
+                            key={`savingThrow-${ability}`}
+                            readonly={readonly}
+                            text={T(`game.dnd5.ability.${ability}`)}
+                            proficient={data.proficient}
+                            modifier={data.modifier}
+                            onProficientChange={(checked) => {
+                                onChange({
+                                    [ability]: {
+                                        ...data,
+                                        proficient: checked
+                                    }
+                                });
+                            }}
+                        />
+                    );
+                }
+            )}
         </Box>
     );
 };

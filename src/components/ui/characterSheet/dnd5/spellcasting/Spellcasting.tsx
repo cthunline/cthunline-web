@@ -21,7 +21,10 @@ const Spellcasting: React.FC<SpellcastingProps> = ({
 }) => {
     const { T } = useApp();
 
-    const maxLevel = Math.max(0, ...spellcasting.levels.map((lvl) => lvl.level));
+    const maxLevel = Math.max(
+        0,
+        ...spellcasting.levels.map((lvl) => lvl.level)
+    );
 
     return (
         <Box
@@ -34,7 +37,10 @@ const Spellcasting: React.FC<SpellcastingProps> = ({
             {spellcastingFields.map(({ key, type, gridColumn }) => {
                 const value = spellcasting[key];
                 return [
-                    <Box key={`spellcasting-${key}`} gridColumn={`span ${gridColumn}`}>
+                    <Box
+                        key={`spellcasting-${key}`}
+                        gridColumn={`span ${gridColumn}`}
+                    >
                         <TextField
                             fullWidth
                             InputProps={{
@@ -47,12 +53,17 @@ const Spellcasting: React.FC<SpellcastingProps> = ({
                             size="small"
                             label={T(`game.dnd5.spellcasting.${key}`)}
                             value={value}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
                                 onChange({
                                     ...spellcasting,
-                                    [key]: type === 'number' ? (
-                                        Number(onlyNumbers(e.target.value))
-                                    ) : e.target.value
+                                    [key]:
+                                        type === 'number'
+                                            ? Number(
+                                                  onlyNumbers(e.target.value)
+                                              )
+                                            : e.target.value
                                 });
                             }}
                         />
@@ -77,9 +88,9 @@ const Spellcasting: React.FC<SpellcastingProps> = ({
                     onChange={(data) => {
                         onChange({
                             ...spellcasting,
-                            levels: spellcasting.levels.map((lvl) => (
+                            levels: spellcasting.levels.map((lvl) =>
                                 lvl.level === data.level ? data : lvl
-                            ))
+                            )
                         });
                     }}
                     isDelete={spellLevel.level === maxLevel}
@@ -87,9 +98,9 @@ const Spellcasting: React.FC<SpellcastingProps> = ({
                         const levelToDelete = spellLevel.level;
                         onChange({
                             ...spellcasting,
-                            levels: spellcasting.levels.filter(({ level }) => (
-                                level !== levelToDelete
-                            ))
+                            levels: spellcasting.levels.filter(
+                                ({ level }) => level !== levelToDelete
+                            )
                         });
                     }}
                 />

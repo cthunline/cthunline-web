@@ -1,17 +1,9 @@
-import {
-    useState,
-    useEffect,
-    useCallback
-} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
 import { useApp } from '../contexts/App';
-import {
-    Directory,
-    DirectoryCreateBody,
-    DirectoryEditBody
-} from '../../types';
+import { Directory, DirectoryCreateBody, DirectoryEditBody } from '../../types';
 
 interface DirectoryHookOptions {
     loadList?: boolean;
@@ -59,10 +51,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
             const directories = await getDirectories();
             setDirectoryList(directories);
         }
-    }, [
-        user,
-        getDirectories
-    ]);
+    }, [user, getDirectories]);
 
     const createDirectory = async ({
         data,
@@ -113,40 +102,36 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
         }
     };
 
-    const deleteDirectory = useCallback(async ({
-        directoryId,
-        isRefresh = true,
-        isToast = true
-    }: DeleteOptions): Promise<void> => {
-        try {
-            await Api.call({
-                method: 'DELETE',
-                route: `/directories/${directoryId}`
-            });
-            if (isRefresh && loadList) {
-                await refreshDirectoryList();
+    const deleteDirectory = useCallback(
+        async ({
+            directoryId,
+            isRefresh = true,
+            isToast = true
+        }: DeleteOptions): Promise<void> => {
+            try {
+                await Api.call({
+                    method: 'DELETE',
+                    route: `/directories/${directoryId}`
+                });
+                if (isRefresh && loadList) {
+                    await refreshDirectoryList();
+                }
+                if (isToast) {
+                    toast.success('Directory deleted');
+                }
+            } catch (err: any) {
+                handleApiError(err);
+                throw err;
             }
-            if (isToast) {
-                toast.success('Directory deleted');
-            }
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    }, [
-        loadList,
-        refreshDirectoryList,
-        handleApiError
-    ]);
+        },
+        [loadList, refreshDirectoryList, handleApiError]
+    );
 
     useEffect(() => {
         if (loadList) {
             refreshDirectoryList();
         }
-    }, [
-        loadList,
-        refreshDirectoryList
-    ]);
+    }, [loadList, refreshDirectoryList]);
 
     return {
         directoryList,

@@ -11,11 +11,7 @@ interface StatusProps {
     onChange: (data: CoCStatus) => void;
 }
 
-const Status: React.FC<StatusProps> = ({
-    readonly,
-    status,
-    onChange
-}) => {
+const Status: React.FC<StatusProps> = ({ readonly, status, onChange }) => {
     const { T } = useApp();
 
     return (
@@ -25,10 +21,12 @@ const Status: React.FC<StatusProps> = ({
                     <FormControlLabel
                         label={T(`game.callOfCthulhu.status.${key}`)}
                         labelPlacement="start"
-                        control={(
+                        control={
                             <Checkbox
                                 checked={status[key]}
-                                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
                                     if (!readonly) {
                                         onChange({
                                             ...status,
@@ -37,7 +35,7 @@ const Status: React.FC<StatusProps> = ({
                                     }
                                 }}
                             />
-                        )}
+                        }
                     />
                 </Box>
             ))}

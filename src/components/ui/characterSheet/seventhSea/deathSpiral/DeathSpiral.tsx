@@ -23,15 +23,15 @@ const DeathSpiral: React.FC<DeathSpiralProps> = ({
             justifyContent="center"
         >
             <Radio
-                className={`death-spiral-radio ${radioCount === 5 ? 'large' : ''}`}
+                className={`death-spiral-radio ${
+                    radioCount === 5 ? 'large' : ''
+                }`}
                 checked={value >= radioValue}
                 value={radioValue}
                 name="radio-buttons"
                 onClick={(e) => {
                     if (!readonly) {
-                        onChange(
-                            Number((e.target as HTMLInputElement).value)
-                        );
+                        onChange(Number((e.target as HTMLInputElement).value));
                     }
                 }}
             />
@@ -79,20 +79,26 @@ const DeathSpiral: React.FC<DeathSpiralProps> = ({
             gridTemplateColumns="repeat(26, 1fr)"
             alignItems="center"
         >
-            {['radio', 'label'].map((rowType) => [
-                ...[1, 2, 3, 4].map((sectionCount) => (
-                    [1, 2, 3, 4, 5].map((radioCount) => {
-                        const radioValue = ((sectionCount - 1) * 5) + radioCount;
-                        if (rowType === 'radio') {
-                            return getRadioButton(radioCount, radioValue);
-                        }
-                        return getLabel(sectionCount, radioCount);
-                    })
-                )).flat(),
-                rowType === 'radio' ? (
-                    getClearButton()
-                ) : null
-            ]).flat()}
+            {['radio', 'label']
+                .map((rowType) => [
+                    ...[1, 2, 3, 4]
+                        .map((sectionCount) =>
+                            [1, 2, 3, 4, 5].map((radioCount) => {
+                                const radioValue =
+                                    (sectionCount - 1) * 5 + radioCount;
+                                if (rowType === 'radio') {
+                                    return getRadioButton(
+                                        radioCount,
+                                        radioValue
+                                    );
+                                }
+                                return getLabel(sectionCount, radioCount);
+                            })
+                        )
+                        .flat(),
+                    rowType === 'radio' ? getClearButton() : null
+                ])
+                .flat()}
         </Box>
     );
 };

@@ -28,37 +28,39 @@ const Backgrounds: React.FC<BackgroundsProps> = ({
         gridTemplateColumns={`repeat(${readonly ? '11' : '12'}, 1fr)`}
         gap={2}
     >
-        {backgrounds.map((background, index) => [
-            <Box
-                key={`background-${index.toString()}-layout`}
-                gridColumn="span 11"
-                alignItems="center"
-            >
-                <FieldLayout<SeventhSeaBackground>
-                    gameId={GameId.seventhSea}
-                    fields={backgroundFields}
-                    textSectionKey="background"
-                    data={background}
-                    readonly={readonly}
-                    onChange={(data) => onChange(index, data)}
-                />
-            </Box>,
-            readonly ? null : (
+        {backgrounds
+            .map((background, index) => [
                 <Box
-                    key={`background-${index.toString()}-delete`}
-                    gridColumn="span 1"
+                    key={`background-${index.toString()}-layout`}
+                    gridColumn="span 11"
                     alignItems="center"
                 >
-                    <IconButton
-                        size="medium"
-                        color="error"
-                        onClick={() => onDelete(index)}
+                    <FieldLayout<SeventhSeaBackground>
+                        gameId={GameId.seventhSea}
+                        fields={backgroundFields}
+                        textSectionKey="background"
+                        data={background}
+                        readonly={readonly}
+                        onChange={(data) => onChange(index, data)}
+                    />
+                </Box>,
+                readonly ? null : (
+                    <Box
+                        key={`background-${index.toString()}-delete`}
+                        gridColumn="span 1"
+                        alignItems="center"
                     >
-                        <MdOutlineDeleteOutline />
-                    </IconButton>
-                </Box>
-            )
-        ]).flat()}
+                        <IconButton
+                            size="medium"
+                            color="error"
+                            onClick={() => onDelete(index)}
+                        >
+                            <MdOutlineDeleteOutline />
+                        </IconButton>
+                    </Box>
+                )
+            ])
+            .flat()}
     </Box>
 );
 

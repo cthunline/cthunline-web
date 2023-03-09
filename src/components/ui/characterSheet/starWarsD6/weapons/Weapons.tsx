@@ -36,9 +36,7 @@ const Weapons: React.FC<WeaponsProps> = ({
                 onDelete={onDelete}
             />
         ))}
-        {!readonly ? (
-            <WeaponAdd onSubmit={onCreate} />
-        ) : null}
+        {!readonly ? <WeaponAdd onSubmit={onCreate} /> : null}
     </Box>
 );
 

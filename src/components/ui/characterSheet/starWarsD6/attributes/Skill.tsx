@@ -1,14 +1,7 @@
 import React, { memo } from 'react';
-import {
-    Box,
-    TextField,
-    IconButton
-} from '@mui/material';
+import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
-import {
-    SWD6Attribute,
-    SWD6Skill
-} from '@cthunline/games';
+import { SWD6Attribute, SWD6Skill } from '@cthunline/games';
 
 import { skillFields } from './skills.data';
 
@@ -17,7 +10,11 @@ interface SkillProps {
     index: number;
     data: SWD6Skill;
     readonly: boolean;
-    onChange: (attribute: SWD6Attribute, index: number, data: SWD6Skill) => void;
+    onChange: (
+        attribute: SWD6Attribute,
+        index: number,
+        data: SWD6Skill
+    ) => void;
     onDelete: (attribute: SWD6Attribute, index: number) => void;
 }
 
@@ -29,7 +26,11 @@ const Skill: React.FC<SkillProps> = ({
     onChange,
     onDelete
 }) => (
-    <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(15, 1fr)">
+    <Box
+        gridColumn="span 12"
+        display="grid"
+        gridTemplateColumns="repeat(15, 1fr)"
+    >
         <Box
             gridColumn={`span ${readonly ? 15 : 13}`}
             display="grid"
@@ -61,7 +62,11 @@ const Skill: React.FC<SkillProps> = ({
             ))}
         </Box>
         {readonly ? null : (
-            <Box className="text-center" gridColumn="span 2" alignItems="center">
+            <Box
+                className="text-center"
+                gridColumn="span 2"
+                alignItems="center"
+            >
                 <IconButton
                     size="medium"
                     color="error"

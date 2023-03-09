@@ -1,9 +1,5 @@
 import React, { memo } from 'react';
-import {
-    Box,
-    TextField,
-    IconButton
-} from '@mui/material';
+import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { SWD6Weapon } from '@cthunline/games';
 

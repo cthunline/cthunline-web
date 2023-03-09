@@ -1,13 +1,5 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
-import {
-    Box,
-    TextField,
-    CircularProgress
-} from '@mui/material';
+import React, { useState, useEffect, useRef } from 'react';
+import { Box, TextField, CircularProgress } from '@mui/material';
 import { toast } from 'react-toastify';
 import { MdContentCopy } from 'react-icons/md';
 

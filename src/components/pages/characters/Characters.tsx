@@ -30,16 +30,10 @@ interface GameSelectorProps {
     onSelect: (gameId: string) => void;
 }
 
-const GameSelector: React.FC<GameSelectorProps> = ({
-    games,
-    onSelect
-}) => (
+const GameSelector: React.FC<GameSelectorProps> = ({ games, onSelect }) => (
     <List>
         {games.map(({ id, name }) => (
-            <ListItemButton
-                key={id}
-                onClick={() => onSelect(id)}
-            >
+            <ListItemButton key={id} onClick={() => onSelect(id)}>
                 {name}
             </ListItemButton>
         ))}
@@ -49,17 +43,9 @@ const GameSelector: React.FC<GameSelectorProps> = ({
 const Characters: React.FC = () => {
     const { T } = useApp();
     const navigate = useNavigate();
-    const {
-        confirmDialog,
-        openDialog,
-        closeDialog
-    } = useDialog();
+    const { confirmDialog, openDialog, closeDialog } = useDialog();
     const { getGame, gameList } = useGame();
-    const {
-        characterList,
-        createCharacter,
-        deleteCharacter
-    } = useCharacter({
+    const { characterList, createCharacter, deleteCharacter } = useCharacter({
         loadList: true
     });
 
@@ -82,12 +68,7 @@ const Characters: React.FC = () => {
     const onGameSelect = () => {
         openDialog({
             title: T('page.characters.selectGame'),
-            content: (
-                <GameSelector
-                    games={gameList}
-                    onSelect={onCreate}
-                />
-            )
+            content: <GameSelector games={gameList} onSelect={onCreate} />
         });
     };
 
@@ -96,7 +77,9 @@ const Characters: React.FC = () => {
     };
 
     const onDelete = (characterId: number, name: string) => {
-        const confirmText = T('page.characters.deleteCharacterConfirm', { name });
+        const confirmText = T('page.characters.deleteCharacterConfirm', {
+            name
+        });
         confirmDialog(confirmText, () => {
             deleteCharacter({
                 characterId
@@ -105,7 +88,10 @@ const Characters: React.FC = () => {
     };
 
     return (
-        <Paper elevation={3} className="page-list p-25 flex column start-x center-y">
+        <Paper
+            elevation={3}
+            className="page-list p-25 flex column start-x center-y"
+        >
             <Typography variant="h6" gutterBottom>
                 {T('entity.characters')}
             </Typography>
@@ -119,15 +105,9 @@ const Characters: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {characterList.map(({
-                            id,
-                            name,
-                            gameId
-                        }) => (
+                        {characterList.map(({ id, name, gameId }) => (
                             <TableRow key={id}>
-                                <TableCell>
-                                    {getGame(gameId)?.name}
-                                </TableCell>
+                                <TableCell>{getGame(gameId)?.name}</TableCell>
                                 <TableCell>
                                     {name.trim() || `[${T('common.unknown')}]`}
                                 </TableCell>
@@ -137,8 +117,7 @@ const Characters: React.FC = () => {
                                         onClick={() => onEdit(id)}
                                     >
                                         <MdEdit />
-                                    </IconButton>
-                                    {' '}
+                                    </IconButton>{' '}
                                     <IconButton
                                         size="medium"
                                         color="error"

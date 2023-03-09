@@ -19,30 +19,33 @@ interface SettingsMenuItem {
     textKey: string;
 }
 
-const settingsMenuItems: SettingsMenuItem[] = [{
-    icon: <AiOutlineUser size={20} />,
-    route: '/profile',
-    textKey: 'page.profile.title'
-}];
+const settingsMenuItems: SettingsMenuItem[] = [
+    {
+        icon: <AiOutlineUser size={20} />,
+        route: '/profile',
+        textKey: 'page.profile.title'
+    }
+];
 
-const settingsMenuAdminItems: SettingsMenuItem[] = [{
-    icon: <FiUsers size={20} />,
-    route: '/users',
-    textKey: 'entity.users'
-}];
+const settingsMenuAdminItems: SettingsMenuItem[] = [
+    {
+        icon: <FiUsers size={20} />,
+        route: '/users',
+        textKey: 'entity.users'
+    }
+];
 
 interface SettingsMenuProps {
     anchorEl: HTMLElement | null;
     handleClose: () => void;
 }
 
-const SettingsMenu: React.FC<SettingsMenuProps> = ({ anchorEl, handleClose }) => {
+const SettingsMenu: React.FC<SettingsMenuProps> = ({
+    anchorEl,
+    handleClose
+}) => {
     const navigate = useNavigate();
-    const {
-        T,
-        logout,
-        user
-    } = useApp();
+    const { T, logout, user } = useApp();
 
     const menuItem = ({ icon, route, textKey }: SettingsMenuItem) => (
         <MenuItem
@@ -65,23 +68,19 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({ anchorEl, handleClose }) =>
                 className: 'mt-10 mr-10'
             }}
         >
-            {settingsMenuItems.map((item) => (
-                menuItem(item)
-            ))}
-            {user?.isAdmin ? [
-                <Divider key="admin-divider" />,
-                ...settingsMenuAdminItems.map((item) => (
-                    menuItem(item)
-                ))
-            ] : null}
+            {settingsMenuItems.map((item) => menuItem(item))}
+            {user?.isAdmin
+                ? [
+                      <Divider key="admin-divider" />,
+                      ...settingsMenuAdminItems.map((item) => menuItem(item))
+                  ]
+                : null}
             <Divider />
             <MenuItem onClick={() => logout()}>
                 <ListItemIcon>
                     <MdLogout size={20} />
                 </ListItemIcon>
-                <ListItemText>
-                    {T('action.logout')}
-                </ListItemText>
+                <ListItemText>{T('action.logout')}</ListItemText>
             </MenuItem>
         </Menu>
     );

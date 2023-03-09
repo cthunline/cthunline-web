@@ -1,5 +1,7 @@
+**/*.css
 vite.config.ts
 build
 node_modules
 .husky
 .drone.yml
+README.md

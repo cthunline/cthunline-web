@@ -1,20 +1,20 @@
-import {
-    SWD6Skill,
-    SWD6Attribute
-} from '@cthunline/games';
+import { SWD6Skill, SWD6Attribute } from '@cthunline/games';
 
 export interface SkillField {
     gridColumn: number;
     key: keyof SWD6Skill;
 }
 
-export const skillFields: SkillField[] = [{
-    gridColumn: 11,
-    key: 'name'
-}, {
-    gridColumn: 5,
-    key: 'value'
-}];
+export const skillFields: SkillField[] = [
+    {
+        gridColumn: 11,
+        key: 'name'
+    },
+    {
+        gridColumn: 5,
+        key: 'value'
+    }
+];
 
 type SkillList = Record<SWD6Attribute, string[]>;
 
@@ -94,13 +94,7 @@ export const skillList: SkillList = {
         'search',
         'sneak'
     ],
-    strength: [
-        'brawling',
-        'climbingJumping',
-        'lifting',
-        'stamina',
-        'swimming'
-    ],
+    strength: ['brawling', 'climbingJumping', 'lifting', 'stamina', 'swimming'],
     technical: [
         'armorRepair',
         'blasterRepair',

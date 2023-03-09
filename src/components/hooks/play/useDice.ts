@@ -6,7 +6,9 @@ export interface DiceHookExport {
 }
 
 export const defaultDiceHookExport: DiceHookExport = {
-    requestDice: () => { /* default */ }
+    requestDice: () => {
+        /* default */
+    }
 };
 
 const useDice = (socket: PlaySocket | null) => {
@@ -21,9 +23,9 @@ const useDice = (socket: PlaySocket | null) => {
         result: number,
         isPrivate: boolean = false
     ) => {
-        const requestText = Object.entries(request).map(([type, count]) => (
-            `${count}${type}`
-        )).join(' + ');
+        const requestText = Object.entries(request)
+            .map(([type, count]) => `${count}${type}`)
+            .join(' + ');
         const privatly = isPrivate ? `${t('common.privatly')} ` : '';
         const resultText = t('page.play.event.diceResult', {
             request: requestText,

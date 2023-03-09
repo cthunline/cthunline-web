@@ -39,9 +39,8 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
     const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
     const [autoplay, setAutoplay] = useState<boolean>(true);
 
-    const audioElement = useRef<HTMLAudioElement>() as (
-        React.MutableRefObject<HTMLAudioElement>
-    );
+    const audioElement =
+        useRef<HTMLAudioElement>() as React.MutableRefObject<HTMLAudioElement>;
 
     const explorerItems: ExplorerItem[] = [
         ...directoryList.map(({ id, name, parentId }) => ({
@@ -50,11 +49,7 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
             parentId,
             type: ExplorerItemType.directory
         })),
-        ...assetList.map(({
-            id,
-            name,
-            directoryId
-        }) => ({
+        ...assetList.map(({ id, name, directoryId }) => ({
             id,
             name,
             parentId: directoryId,
@@ -66,16 +61,16 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
     const autoplayNext = () => {
         if (selectedAsset) {
             const currentDirectoryId = directoryIds.at(-1);
-            const currentItems = explorerItems.filter(({ parentId }) => (
+            const currentItems = explorerItems.filter(({ parentId }) =>
                 currentDirectoryId ? parentId === currentDirectoryId : !parentId
-            ));
-            const currentItemIndex = currentItems.findIndex(({ id }) => (
-                selectedAsset.id === id
-            ));
+            );
+            const currentItemIndex = currentItems.findIndex(
+                ({ id }) => selectedAsset.id === id
+            );
             if (currentItemIndex >= 0 && currentItems[currentItemIndex + 1]) {
-                const asset = assetList.find(({ id }) => (
-                    id === currentItems[currentItemIndex + 1].id
-                ));
+                const asset = assetList.find(
+                    ({ id }) => id === currentItems[currentItemIndex + 1].id
+                );
                 if (asset) {
                     if (selectedAsset?.id !== asset.id) {
                         onStop();
@@ -87,9 +82,7 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
     };
 
     const onFileClick = (assetId: number) => {
-        const asset = assetList.find(({ id }) => (
-            id === assetId
-        ));
+        const asset = assetList.find(({ id }) => id === assetId);
         if (asset) {
             if (selectedAsset?.id !== asset.id) {
                 onStop();
@@ -100,10 +93,7 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
 
     const onAudioPlay = () => {
         if (selectedAsset && audioElement.current) {
-            onPlay(
-                selectedAsset,
-                audioElement.current.currentTime
-            );
+            onPlay(selectedAsset, audioElement.current.currentTime);
         }
     };
 
@@ -118,9 +108,7 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
     };
 
     const onDirectoryBack = () => {
-        setDirectoryIds((previous) => (
-            previous.slice(0, -1)
-        ));
+        setDirectoryIds((previous) => previous.slice(0, -1));
     };
 
     const onDirectoryClick = (dirId: number) => {
@@ -130,16 +118,9 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
     useEffect(() => {
         if (autoplay && selectedAsset && audioElement.current) {
             audioElement.current.play();
-            onPlay(
-                selectedAsset,
-                audioElement.current.currentTime
-            );
+            onPlay(selectedAsset, audioElement.current.currentTime);
         }
-    }, [
-        selectedAsset,
-        autoplay,
-        onPlay
-    ]);
+    }, [selectedAsset, autoplay, onPlay]);
 
     useEffect(() => onStop, [onStop]);
 

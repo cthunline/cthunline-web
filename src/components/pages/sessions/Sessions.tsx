@@ -43,10 +43,7 @@ const CharacterSelector: React.FC<CharacterSelectorProps> = ({
     return (
         <List>
             {characters.map(({ id, name }) => (
-                <ListItemButton
-                    key={id}
-                    onClick={() => onSelect(id)}
-                >
+                <ListItemButton key={id} onClick={() => onSelect(id)}>
                     {name.trim() || `[${T('common.unknown')}]`}
                 </ListItemButton>
             ))}
@@ -57,27 +54,23 @@ const CharacterSelector: React.FC<CharacterSelectorProps> = ({
 const Sessions: React.FC = () => {
     const { T, user } = useApp();
     const navigate = useNavigate();
-    const {
-        confirmDialog,
-        openDialog,
-        closeDialog
-    } = useDialog();
+    const { confirmDialog, openDialog, closeDialog } = useDialog();
     const { getGame } = useGame();
     const { characterList } = useCharacter({
         loadList: true
     });
-    const {
-        sessionList,
-        deleteSession,
-        createSession
-    } = useSession({
+    const { sessionList, deleteSession, createSession } = useSession({
         loadList: true
     });
 
-    const onJoin = (gameId: string, sessionId: number, isMaster: boolean = false) => {
-        const charList = characterList.filter(({ gameId: charGameId }) => (
-            charGameId === gameId
-        ));
+    const onJoin = (
+        gameId: string,
+        sessionId: number,
+        isMaster: boolean = false
+    ) => {
+        const charList = characterList.filter(
+            ({ gameId: charGameId }) => charGameId === gameId
+        );
         if (isMaster) {
             navigate(`/play/${sessionId}`);
         } else if (charList.length) {
@@ -106,9 +99,7 @@ const Sessions: React.FC = () => {
     const onCreateSession = () => {
         openDialog({
             title: T('page.sessions.newSession'),
-            content: (
-                <SessionForm onSubmit={onSubmitSession} />
-            )
+            content: <SessionForm onSubmit={onSubmitSession} />
         });
     };
 
@@ -122,7 +113,10 @@ const Sessions: React.FC = () => {
     };
 
     return (
-        <Paper elevation={3} className="page-list p-25 flex column start-x center-y">
+        <Paper
+            elevation={3}
+            className="page-list p-25 flex column start-x center-y"
+        >
             <Typography variant="h6" gutterBottom>
                 {T('entity.sessions')}
             </Typography>
@@ -138,12 +132,7 @@ const Sessions: React.FC = () => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {sessionList.map(({
-                            id,
-                            name,
-                            gameId,
-                            master
-                        }) => {
+                        {sessionList.map(({ id, name, gameId, master }) => {
                             const isMaster = master?.id === user?.id;
                             return (
                                 <TableRow key={id}>
@@ -151,14 +140,14 @@ const Sessions: React.FC = () => {
                                         <IconButton
                                             size="medium"
                                             color="primary"
-                                            onClick={() => onJoin(gameId, id, isMaster)}
+                                            onClick={() =>
+                                                onJoin(gameId, id, isMaster)
+                                            }
                                         >
                                             <GiRollingDices />
                                         </IconButton>
                                     </TableCell>
-                                    <TableCell>
-                                        {name}
-                                    </TableCell>
+                                    <TableCell>{name}</TableCell>
                                     <TableCell>
                                         {getGame(gameId)?.name}
                                     </TableCell>
@@ -167,7 +156,10 @@ const Sessions: React.FC = () => {
                                         {isMaster ? (
                                             <>
                                                 {' '}
-                                                <Chip label={T('common.itsYou')} size="small" />
+                                                <Chip
+                                                    label={T('common.itsYou')}
+                                                    size="small"
+                                                />
                                             </>
                                         ) : null}
                                     </TableCell>
@@ -176,7 +168,9 @@ const Sessions: React.FC = () => {
                                             <IconButton
                                                 size="medium"
                                                 color="error"
-                                                onClick={() => onDeleteSession(id, name)}
+                                                onClick={() =>
+                                                    onDeleteSession(id, name)
+                                                }
                                             >
                                                 <MdOutlineDeleteOutline />
                                             </IconButton>

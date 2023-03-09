@@ -1,9 +1,6 @@
 import React, { useEffect } from 'react';
 import Draggable from 'react-draggable';
-import {
-    Box,
-    Paper
-} from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { MdClose } from 'react-icons/md';
 
 import { focusWidget } from '../../../services/widget';
@@ -63,7 +60,10 @@ const Widget: React.FC<WidgetProps> = ({
                     elevation={3}
                 >
                     <Box className="widget-inner flex column full-width full-height">
-                        <Box id={`${id}-bar`} className="widget-bar full-width flex row center">
+                        <Box
+                            id={`${id}-bar`}
+                            className="widget-bar full-width flex row center"
+                        >
                             <Box className="widget-bar-title pl-5 pr-5">
                                 {title ?? ''}
                             </Box>

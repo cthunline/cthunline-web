@@ -8,7 +8,4 @@ export const moneyFields: (keyof DnD5Money)[] = [
     'platinum'
 ];
 
-export const equipmentFields: (keyof DnD5Equipment)[] = [
-    'items',
-    'treasure'
-];
+export const equipmentFields: (keyof DnD5Equipment)[] = ['items', 'treasure'];

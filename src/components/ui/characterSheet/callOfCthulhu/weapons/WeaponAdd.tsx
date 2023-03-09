@@ -1,14 +1,5 @@
-import React, {
-    useCallback,
-    useEffect,
-    useState,
-    useRef
-} from 'react';
-import {
-    Box,
-    TextField,
-    IconButton
-} from '@mui/material';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
+import { Box, TextField, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 import { CoCWeapon } from '@cthunline/games';
 
@@ -49,12 +40,7 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
     const [errors, setErrors] = useState<WeaponErrors>(defaultErrors);
 
     const controlForm = useCallback((): boolean => {
-        const {
-            name,
-            damage,
-            attacks,
-            range
-        } = values;
+        const { name, damage, attacks, range } = values;
         setErrors({
             name: !name,
             damage: !damage,
@@ -68,10 +54,18 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
     useEffect(() => {
         if (!initialRender.current) {
             const updatedErrors: Partial<WeaponErrors> = {};
-            if (values.name) { updatedErrors.name = false; }
-            if (values.damage) { updatedErrors.damage = false; }
-            if (values.attacks) { updatedErrors.attacks = false; }
-            if (values.range) { updatedErrors.range = false; }
+            if (values.name) {
+                updatedErrors.name = false;
+            }
+            if (values.damage) {
+                updatedErrors.damage = false;
+            }
+            if (values.attacks) {
+                updatedErrors.attacks = false;
+            }
+            if (values.range) {
+                updatedErrors.range = false;
+            }
             setErrors((previous) => ({
                 ...previous,
                 ...updatedErrors
@@ -89,7 +83,10 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
             alignItems="center"
         >
             {weaponAddKeys.map(({ key, gridColumn }) => (
-                <Box key={`weapon-add-${key}`} gridColumn={`span ${gridColumn}`}>
+                <Box
+                    key={`weapon-add-${key}`}
+                    gridColumn={`span ${gridColumn}`}
+                >
                     <TextField
                         fullWidth
                         InputProps={{

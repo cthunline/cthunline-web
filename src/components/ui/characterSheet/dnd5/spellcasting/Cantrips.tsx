@@ -1,9 +1,5 @@
 import React, { memo } from 'react';
-import {
-    Box,
-    TextField,
-    IconButton
-} from '@mui/material';
+import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { FiPlusCircle } from 'react-icons/fi';
 
@@ -40,7 +36,10 @@ const Cantrips: React.FC<CantripsProps> = ({
                 )}
             </Box>
             {cantrips.map((cantrip, index) => [
-                <Box key={`cantrip-${index.toString}-name`} gridColumn={`span ${readonly ? '11' : '10'}`}>
+                <Box
+                    key={`cantrip-${index.toString}-name`}
+                    gridColumn={`span ${readonly ? '11' : '10'}`}
+                >
                     <TextField
                         fullWidth
                         InputProps={{
@@ -53,9 +52,11 @@ const Cantrips: React.FC<CantripsProps> = ({
                         size="small"
                         value={cantrip}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            onChange(cantrips.map((cntrp, idx) => (
-                                index === idx ? e.target.value : cntrp
-                            )));
+                            onChange(
+                                cantrips.map((cntrp, idx) =>
+                                    index === idx ? e.target.value : cntrp
+                                )
+                            );
                         }}
                     />
                 </Box>,
@@ -69,9 +70,9 @@ const Cantrips: React.FC<CantripsProps> = ({
                             size="medium"
                             color="error"
                             onClick={() => {
-                                onChange(cantrips.filter((_c, idx) => (
-                                    index !== idx
-                                )));
+                                onChange(
+                                    cantrips.filter((_c, idx) => index !== idx)
+                                );
                             }}
                         >
                             <MdOutlineDeleteOutline />

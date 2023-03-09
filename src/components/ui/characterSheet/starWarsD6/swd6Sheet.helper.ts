@@ -30,7 +30,9 @@ export const controlWoundStatus = (woundStatusData: SWD6WoundStatus) => {
     return woundStatus;
 };
 
-export const controlCharacterData = (characterData: SWD6Character): SWD6Character => {
+export const controlCharacterData = (
+    characterData: SWD6Character
+): SWD6Character => {
     const charData = characterData;
     charData.woundStatus = controlWoundStatus(charData.woundStatus);
     return charData;

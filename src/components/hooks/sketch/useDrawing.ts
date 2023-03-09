@@ -1,8 +1,4 @@
-import React, {
-    useEffect,
-    useRef,
-    useState
-} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { usePlay } from '../../contexts/Play';
 import { SketchCoordinates } from '../../../types';
@@ -33,16 +29,16 @@ const useDrawing = (
     const coordinates = useRef<SketchCoordinates[]>([]);
 
     // handles mouse down on svg container when drawing is enabled
-    const handleDrawingContainerMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
+    const handleDrawingContainerMouseDown = (
+        e: React.MouseEvent<SVGSVGElement>
+    ) => {
         if (isMainClick(e)) {
             if (isMaster && isFreeDrawing && !isDrawing) {
                 e.preventDefault();
                 // initializes coordinates list for the new drawing path
                 coordinates.current = [];
                 // set fresh value for the new path in paths state
-                setPaths((previous) => (
-                    [...previous, '']
-                ));
+                setPaths((previous) => [...previous, '']);
                 // set isDrawing state
                 setIsDrawing(true);
             }
@@ -53,13 +49,17 @@ const useDrawing = (
     const handleDrawingMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
         if (isMaster && isFreeDrawing && isDrawing && svgPoint) {
             // get svg-transformed mouse coordinates
-            const { x, y } = getMouseEventSvgCoordinates(e, svgRef.current, svgPoint);
+            const { x, y } = getMouseEventSvgCoordinates(
+                e,
+                svgRef.current,
+                svgPoint
+            );
             // push coordinates in the current drawing path coordinates
             coordinates.current.push({ x, y });
             // updates current drawing path string in state
             const pathsClone = [...paths];
-            pathsClone[pathsClone.length - 1] = (
-                coordinatesToPath(coordinates.current)
+            pathsClone[pathsClone.length - 1] = coordinatesToPath(
+                coordinates.current
             );
             setPaths(pathsClone);
         }

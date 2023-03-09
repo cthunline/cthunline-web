@@ -12,11 +12,26 @@ import { toast } from 'react-toastify';
 
 import { useApp } from './App';
 import useSession from '../hooks/useSession';
-import useSketch, { SketchHookExport, defaultSketchHookExport } from '../hooks/play/useSketch';
-import useLogs, { LogsHookExport, defaultLogsHookExport } from '../hooks/play/useLogs';
-import useAudio, { AudioHookExport, defaultAudioHookExport } from '../hooks/play/useAudio';
-import useDice, { DiceHookExport, defaultDiceHookExport } from '../hooks/play/useDice';
-import useSessionUsers, { SessionUsersHookExport, defaultSessionUsersHookExport } from '../hooks/play/useSessionUsers';
+import useSketch, {
+    SketchHookExport,
+    defaultSketchHookExport
+} from '../hooks/play/useSketch';
+import useLogs, {
+    LogsHookExport,
+    defaultLogsHookExport
+} from '../hooks/play/useLogs';
+import useAudio, {
+    AudioHookExport,
+    defaultAudioHookExport
+} from '../hooks/play/useAudio';
+import useDice, {
+    DiceHookExport,
+    defaultDiceHookExport
+} from '../hooks/play/useDice';
+import useSessionUsers, {
+    SessionUsersHookExport,
+    defaultSessionUsersHookExport
+} from '../hooks/play/useSessionUsers';
 import { User, PlaySocket } from '../../types';
 
 interface PlayProviderProps {
@@ -25,12 +40,12 @@ interface PlayProviderProps {
     characterId?: number;
 }
 
-interface PlayContextData extends
-    SketchHookExport,
-    AudioHookExport,
-    DiceHookExport,
-    SessionUsersHookExport,
-    LogsHookExport {
+interface PlayContextData
+    extends SketchHookExport,
+        AudioHookExport,
+        DiceHookExport,
+        SessionUsersHookExport,
+        LogsHookExport {
     sessionId: number;
     characterId?: number;
     socket: PlaySocket | null;
@@ -63,7 +78,7 @@ const socketIoConnectOptions = {
 
 const PlayContext = createContext<PlayContextData>(defaultPlayData);
 
-export const PlayProvider:React.FC<PlayProviderProps> = ({
+export const PlayProvider: React.FC<PlayProviderProps> = ({
     sessionId,
     characterId,
     children
@@ -75,20 +90,11 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
     const { T, t, user } = useApp();
     const { session } = useSession({ sessionId });
     const { logs, pushLog } = useLogs();
-    const {
-        users,
-        setUsers,
-        updateUserCharacter,
-        characterUpdate
-    } = useSessionUsers(socket);
+    const { users, setUsers, updateUserCharacter, characterUpdate } =
+        useSessionUsers(socket);
     const { getDiceResultLog, requestDice } = useDice(socket);
-    const {
-        audioData,
-        setAudioTrack,
-        clearAudioTrack,
-        playAudio,
-        stopAudio
-    } = useAudio(socket);
+    const { audioData, setAudioTrack, clearAudioTrack, playAudio, stopAudio } =
+        useAudio(socket);
     const {
         sketchData,
         setSketchData,
@@ -117,171 +123,175 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
 
     const isConnecting = useRef(false);
 
-    const bindSocketEvents = useCallback((sock: PlaySocket) => {
-        sock.on('connect_error', () => {
-            toast.error(T('page.play.error.connectionError'));
-        });
-        sock.on('error', ({ status }) => {
-            toast.error(T('page.play.error.statusError', { status }));
-        });
-        sock.on('connect', () => {
-            isConnecting.current = false;
-            setSocket(sock);
-        });
-        sock.io.on('reconnect_attempt', () => {
-            isConnecting.current = true;
-            pushLog({
-                dateTime: true,
-                user: sock.user,
-                isMaster: sock.isMaster,
-                text: t('page.play.event.reconnecting')
+    const bindSocketEvents = useCallback(
+        (sock: PlaySocket) => {
+            sock.on('connect_error', () => {
+                toast.error(T('page.play.error.connectionError'));
             });
-        });
-        sock.io.on('reconnect', () => {
-            isConnecting.current = false;
-            pushLog({
-                dateTime: true,
-                user: sock.user,
-                isMaster: sock.isMaster,
-                text: t('page.play.event.reconnected')
+            sock.on('error', ({ status }) => {
+                toast.error(T('page.play.error.statusError', { status }));
             });
-        });
-        sock.on('disconnect', (reason) => {
-            if (reason === 'io server disconnect') {
-                setSocket(null);
-            } else {
+            sock.on('connect', () => {
+                isConnecting.current = false;
+                setSocket(sock);
+            });
+            sock.io.on('reconnect_attempt', () => {
+                isConnecting.current = true;
                 pushLog({
                     dateTime: true,
                     user: sock.user,
                     isMaster: sock.isMaster,
-                    text: t('page.play.event.disconnected')
+                    text: t('page.play.event.reconnecting')
                 });
-            }
-        });
-        sock.on('join', ({
-            dateTime,
-            user: sockUser,
-            users: sessionUsers,
-            isMaster
-        }) => {
-            pushLog({
-                dateTime,
-                user: sockUser,
-                isMaster,
-                text: t('page.play.event.joined')
             });
-            setUsers(sessionUsers);
-        });
-        sock.on('leave', ({
-            dateTime,
-            user: sockUser,
-            users: sessionUsers,
-            isMaster
-        }) => {
-            pushLog({
-                dateTime,
-                user: sockUser,
-                isMaster,
-                text: t('page.play.event.left')
+            sock.io.on('reconnect', () => {
+                isConnecting.current = false;
+                pushLog({
+                    dateTime: true,
+                    user: sock.user,
+                    isMaster: sock.isMaster,
+                    text: t('page.play.event.reconnected')
+                });
             });
-            setUsers(sessionUsers);
-        });
-        sock.on('diceResult', ({
-            dateTime,
-            user: sockUser,
-            isMaster,
-            isPrivate,
-            request,
-            result
-        }) => {
-            pushLog({
-                dateTime,
-                user: sockUser,
-                isMaster,
-                text: getDiceResultLog(
+            sock.on('disconnect', (reason) => {
+                if (reason === 'io server disconnect') {
+                    setSocket(null);
+                } else {
+                    pushLog({
+                        dateTime: true,
+                        user: sock.user,
+                        isMaster: sock.isMaster,
+                        text: t('page.play.event.disconnected')
+                    });
+                }
+            });
+            sock.on(
+                'join',
+                ({
+                    dateTime,
+                    user: sockUser,
+                    users: sessionUsers,
+                    isMaster
+                }) => {
+                    pushLog({
+                        dateTime,
+                        user: sockUser,
+                        isMaster,
+                        text: t('page.play.event.joined')
+                    });
+                    setUsers(sessionUsers);
+                }
+            );
+            sock.on(
+                'leave',
+                ({
+                    dateTime,
+                    user: sockUser,
+                    users: sessionUsers,
+                    isMaster
+                }) => {
+                    pushLog({
+                        dateTime,
+                        user: sockUser,
+                        isMaster,
+                        text: t('page.play.event.left')
+                    });
+                    setUsers(sessionUsers);
+                }
+            );
+            sock.on(
+                'diceResult',
+                ({
+                    dateTime,
+                    user: sockUser,
+                    isMaster,
+                    isPrivate,
                     request,
-                    result,
-                    isPrivate
-                )
+                    result
+                }) => {
+                    pushLog({
+                        dateTime,
+                        user: sockUser,
+                        isMaster,
+                        text: getDiceResultLog(request, result, isPrivate)
+                    });
+                }
+            );
+            sock.on(
+                'characterUpdate',
+                ({ dateTime, user: sockUser, isMaster, character }) => {
+                    const eventText = t('page.play.event.editedCharacter', {
+                        name: character.name
+                    });
+                    pushLog({
+                        dateTime,
+                        user: sockUser,
+                        isMaster,
+                        text: eventText
+                    });
+                    updateUserCharacter(sockUser.id, character);
+                }
+            );
+            sock.on('audioPlay', ({ asset, time }) => {
+                setAudioTrack(asset, time);
             });
-        });
-        sock.on('characterUpdate', ({
-            dateTime,
-            user: sockUser,
-            isMaster,
-            character
-        }) => {
-            const eventText = t('page.play.event.editedCharacter', {
-                name: character.name
+            sock.on('audioStop', () => {
+                clearAudioTrack();
             });
-            pushLog({
-                dateTime,
-                user: sockUser,
-                isMaster,
-                text: eventText
+            sock.on('sketchUpdate', ({ sketch }) => {
+                setSketchData((previous) => ({
+                    ...sketch,
+                    events: previous.events
+                }));
             });
-            updateUserCharacter(sockUser.id, character);
-        });
-        sock.on('audioPlay', ({ asset, time }) => {
-            setAudioTrack(asset, time);
-        });
-        sock.on('audioStop', () => {
-            clearAudioTrack();
-        });
-        sock.on('sketchUpdate', ({ sketch }) => {
-            setSketchData((previous) => ({
-                ...sketch,
-                events: previous.events
-            }));
-        });
-    }, [
-        t,
-        T,
-        pushLog,
-        updateUserCharacter,
-        setAudioTrack,
-        clearAudioTrack,
-        getDiceResultLog,
-        setUsers,
-        setSketchData
-    ]);
+        },
+        [
+            t,
+            T,
+            pushLog,
+            updateUserCharacter,
+            setAudioTrack,
+            clearAudioTrack,
+            getDiceResultLog,
+            setUsers,
+            setSketchData
+        ]
+    );
 
-    const connectSocket = useCallback(({
-        sessionId: sessId,
-        isMaster,
-        characterId: charId
-    }: ConnectOptions): PlaySocket => {
-        const sock = io({
-            ...socketIoConnectOptions,
-            query: {
-                sessionId: sessId,
-                characterId: charId
-            }
-        }) as PlaySocket;
-        sock.user = user as User;
-        sock.sessionId = Number(sessId);
-        sock.isMaster = isMaster;
-        sock.characterId = Number(charId);
-        bindSocketEvents(sock);
-        return sock;
-    }, [
-        user,
-        bindSocketEvents
-    ]);
+    const connectSocket = useCallback(
+        ({
+            sessionId: sessId,
+            isMaster,
+            characterId: charId
+        }: ConnectOptions): PlaySocket => {
+            const sock = io({
+                ...socketIoConnectOptions,
+                query: {
+                    sessionId: sessId,
+                    characterId: charId
+                }
+            }) as PlaySocket;
+            sock.user = user as User;
+            sock.sessionId = Number(sessId);
+            sock.isMaster = isMaster;
+            sock.characterId = Number(charId);
+            bindSocketEvents(sock);
+            return sock;
+        },
+        [user, bindSocketEvents]
+    );
 
     const disconnectSocket = useCallback(() => {
         socket?.disconnect();
-    }, [
-        socket
-    ]);
+    }, [socket]);
 
     useEffect(() => {
         (async () => {
             if (
-                (!socket || !socket.connected)
-                && !isConnecting.current
-                && sessionId
-                && session
+                (!socket || !socket.connected) &&
+                !isConnecting.current &&
+                sessionId &&
+                session
             ) {
                 isConnecting.current = true;
                 const isMaster = session.masterId === user?.id;
@@ -311,84 +321,80 @@ export const PlayProvider:React.FC<PlayProviderProps> = ({
                 events: []
             });
         }
-    }, [
-        session,
-        setSketchData
-    ]);
+    }, [session, setSketchData]);
 
-    useEffect(() => (
-        () => disconnectSocket()
-    ), [
-        disconnectSocket
-    ]);
+    useEffect(() => () => disconnectSocket(), [disconnectSocket]);
 
-    const contextValue = useMemo(() => ({
-        sessionId,
-        characterId,
-        socket,
-        users,
-        logs,
-        requestDice,
-        characterUpdate,
-        playAudio,
-        stopAudio,
-        audioData,
-        sketchData,
-        updateSketch,
-        addSketchDrawPath,
-        clearDrawings,
-        undoSketch,
-        clearSketch,
-        addSketchImage,
-        updateSketchImage,
-        updateSketchImages,
-        deleteSketchImage,
-        addSketchToken,
-        addSketchUserTokens,
-        updateMovingToken,
-        attachTokenData,
-        unattachTokenData,
-        duplicateToken,
-        changeTokenColor,
-        deleteSketchToken,
-        clearTokens,
-        setSketchDisplay,
-        isFreeDrawing,
-        setIsFreeDrawing
-    }), [
-        sessionId,
-        characterId,
-        socket,
-        users,
-        logs,
-        requestDice,
-        characterUpdate,
-        playAudio,
-        stopAudio,
-        audioData,
-        sketchData,
-        updateSketch,
-        addSketchDrawPath,
-        undoSketch,
-        clearSketch,
-        addSketchImage,
-        clearDrawings,
-        updateSketchImage,
-        updateSketchImages,
-        deleteSketchImage,
-        addSketchToken,
-        addSketchUserTokens,
-        updateMovingToken,
-        attachTokenData,
-        unattachTokenData,
-        duplicateToken,
-        changeTokenColor,
-        deleteSketchToken,
-        clearTokens,
-        setSketchDisplay,
-        isFreeDrawing,
-        setIsFreeDrawing
-    ]);
+    const contextValue = useMemo(
+        () => ({
+            sessionId,
+            characterId,
+            socket,
+            users,
+            logs,
+            requestDice,
+            characterUpdate,
+            playAudio,
+            stopAudio,
+            audioData,
+            sketchData,
+            updateSketch,
+            addSketchDrawPath,
+            clearDrawings,
+            undoSketch,
+            clearSketch,
+            addSketchImage,
+            updateSketchImage,
+            updateSketchImages,
+            deleteSketchImage,
+            addSketchToken,
+            addSketchUserTokens,
+            updateMovingToken,
+            attachTokenData,
+            unattachTokenData,
+            duplicateToken,
+            changeTokenColor,
+            deleteSketchToken,
+            clearTokens,
+            setSketchDisplay,
+            isFreeDrawing,
+            setIsFreeDrawing
+        }),
+        [
+            sessionId,
+            characterId,
+            socket,
+            users,
+            logs,
+            requestDice,
+            characterUpdate,
+            playAudio,
+            stopAudio,
+            audioData,
+            sketchData,
+            updateSketch,
+            addSketchDrawPath,
+            undoSketch,
+            clearSketch,
+            addSketchImage,
+            clearDrawings,
+            updateSketchImage,
+            updateSketchImages,
+            deleteSketchImage,
+            addSketchToken,
+            addSketchUserTokens,
+            updateMovingToken,
+            attachTokenData,
+            unattachTokenData,
+            duplicateToken,
+            changeTokenColor,
+            deleteSketchToken,
+            clearTokens,
+            setSketchDisplay,
+            isFreeDrawing,
+            setIsFreeDrawing
+        ]
+    );
 
     return (
         <PlayContext.Provider value={contextValue}>

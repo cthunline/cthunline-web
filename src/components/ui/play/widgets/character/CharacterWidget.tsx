@@ -1,9 +1,4 @@
-import React, {
-    useState,
-    useCallback,
-    useEffect,
-    useRef
-} from 'react';
+import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 import { MdEdit, MdOutlineCheck } from 'react-icons/md';
 
@@ -11,11 +6,7 @@ import { useApp } from '../../../../contexts/App';
 import CharacterSheet from '../../../characterSheet/CharacterSheet';
 import useCharacter from '../../../../hooks/useCharacter';
 import Widget from '../../Widget';
-import {
-    WidgetType,
-    Character,
-    CharacterData
-} from '../../../../../types';
+import { WidgetType, Character, CharacterData } from '../../../../../types';
 
 import './CharacterWidget.css';
 
@@ -31,57 +22,56 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
     onClose
 }) => {
     const { T } = useApp();
-    const {
-        getCharacter,
-        editCharacter,
-        uploadPortrait,
-        deletePortrait
-    } = useCharacter();
+    const { getCharacter, editCharacter, uploadPortrait, deletePortrait } =
+        useCharacter();
 
     const [readonly, setReadonly] = useState<boolean>(true);
     const [character, setCharacter] = useState<Character>();
 
     const onChange = useCallback((name: string, data: CharacterData) => {
-        setCharacter((previous) => (
-            previous ? {
-                ...previous,
-                name,
-                data
-            } : previous
-        ));
+        setCharacter((previous) =>
+            previous
+                ? {
+                      ...previous,
+                      name,
+                      data
+                  }
+                : previous
+        );
     }, []);
 
     const skipEdit = useRef(false);
-    const onPortraitChange = useCallback(async (file: File | null) => {
-        const options = {
-            characterId,
-            isToast: false,
-            isRefresh: false
-        };
-        let updatedPortrait: string | null = null;
-        if (file) {
-            const { portrait } = await uploadPortrait({
-                ...options,
-                data: {
-                    portrait: file
-                }
-            });
-            updatedPortrait = portrait;
-        } else {
-            await deletePortrait(options);
-        }
-        skipEdit.current = true;
-        setCharacter((previous) => (
-            previous ? {
-                ...previous,
-                portrait: updatedPortrait
-            } : previous
-        ));
-    }, [
-        characterId,
-        uploadPortrait,
-        deletePortrait
-    ]);
+    const onPortraitChange = useCallback(
+        async (file: File | null) => {
+            const options = {
+                characterId,
+                isToast: false,
+                isRefresh: false
+            };
+            let updatedPortrait: string | null = null;
+            if (file) {
+                const { portrait } = await uploadPortrait({
+                    ...options,
+                    data: {
+                        portrait: file
+                    }
+                });
+                updatedPortrait = portrait;
+            } else {
+                await deletePortrait(options);
+            }
+            skipEdit.current = true;
+            setCharacter((previous) =>
+                previous
+                    ? {
+                          ...previous,
+                          portrait: updatedPortrait
+                      }
+                    : previous
+            );
+        },
+        [characterId, uploadPortrait, deletePortrait]
+    );
 
     useEffect(() => {
         (async () => {
@@ -90,17 +80,15 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
                 setCharacter(char);
             }
         })();
-    }, [
-        characterId,
-        getCharacter
-    ]);
+    }, [characterId, getCharacter]);
 
     const initialRender = useRef(true);
     useEffect(() => {
         if (character) {
             if (initialRender.current) {
                 initialRender.current = false;
-            } if (skipEdit.current) {
+            }
+            if (skipEdit.current) {
                 skipEdit.current = false;
             } else {
                 (async () => {
@@ -118,11 +106,7 @@ const CharacterWidget: React.FC<CharacterWidgetProps> = ({
                 })();
             }
         }
-    }, [
-        character,
-        editCharacter,
-        onUpdate
-    ]);
+    }, [character, editCharacter, onUpdate]);
 
     const widgetActions = readonly ? (
         <MdEdit

@@ -1,8 +1,4 @@
-import {
-    useState,
-    useEffect,
-    useCallback
-} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import Api from '../../../services/api';
@@ -22,11 +18,14 @@ const defaultConfiguration: Configuration = {
 
 export const defaultConfigurationHookData: ConfigurationHookExport = {
     configuration: defaultConfiguration,
-    refreshConfiguration: async () => { /* default */ }
+    refreshConfiguration: async () => {
+        /* default */
+    }
 };
 
 const useConfiguration = () => {
-    const [configuration, setConfiguration] = useState<Configuration>(defaultConfiguration);
+    const [configuration, setConfiguration] =
+        useState<Configuration>(defaultConfiguration);
 
     const refreshConfiguration = useCallback(async () => {
         try {

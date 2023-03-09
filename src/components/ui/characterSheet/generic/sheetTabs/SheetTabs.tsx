@@ -36,11 +36,7 @@ const SheetTabs: React.FC<SheetTabsProps> = ({
                 </Box>
             ) : null}
             {/* tabs */}
-            <Tabs
-                value={selectedIndex}
-                onChange={handleChange}
-                centered
-            >
+            <Tabs value={selectedIndex} onChange={handleChange} centered>
                 {tabs.map((tab) => (
                     <Tab
                         key={`sheet-tab-${tab.key}`}

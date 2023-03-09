@@ -6,23 +6,28 @@ export interface SpellcastingField {
     gridColumn: number;
 }
 
-export const spellcastingFields: SpellcastingField[] = [{
-    key: 'class',
-    type: 'string',
-    gridColumn: 6
-}, {
-    key: 'spellAbility',
-    type: 'number',
-    gridColumn: 2
-}, {
-    key: 'spellSaveDC',
-    type: 'number',
-    gridColumn: 2
-}, {
-    key: 'spellAttackBonus',
-    type: 'number',
-    gridColumn: 2
-}];
+export const spellcastingFields: SpellcastingField[] = [
+    {
+        key: 'class',
+        type: 'string',
+        gridColumn: 6
+    },
+    {
+        key: 'spellAbility',
+        type: 'number',
+        gridColumn: 2
+    },
+    {
+        key: 'spellSaveDC',
+        type: 'number',
+        gridColumn: 2
+    },
+    {
+        key: 'spellAttackBonus',
+        type: 'number',
+        gridColumn: 2
+    }
+];
 
 export const spellLevelFields: (keyof DnD5SpellLevel)[] = [
     'slotsTotal',

@@ -24,11 +24,9 @@ interface AppProviderProps {
     children: JSX.Element | JSX.Element[];
 }
 
-type AppHookExports = (
-    AuthHookExport
-    & ConfigurationHookExport
-    & TranslationHookExport
-);
+type AppHookExports = AuthHookExport &
+    ConfigurationHookExport &
+    TranslationHookExport;
 
 interface AppContextData extends AppHookExports {
     theme: Theme;
@@ -43,7 +41,7 @@ const defaultDialogData: AppContextData = {
 
 const AppContext = createContext<AppContextData>(defaultDialogData);
 
-export const AppProvider:React.FC<AppProviderProps> = ({ children }) => {
+export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     const {
         refreshUser,
         isLoading,
@@ -54,67 +52,56 @@ export const AppProvider:React.FC<AppProviderProps> = ({ children }) => {
         logout,
         handleApiError
     } = useAuth();
-    const {
-        configuration,
-        refreshConfiguration
-    } = useConfiguration();
-    const {
-        t,
-        T,
-        TU,
-        changeLocale
-    } = useTranslation();
+    const { configuration, refreshConfiguration } = useConfiguration();
+    const { t, T, TU, changeLocale } = useTranslation();
 
     const [theme, setTheme] = useState<Theme>(Theme.dark);
 
     useEffect(() => {
         changeLocale(user?.locale ?? configuration.defaultLocale);
-    }, [
-        changeLocale,
-        configuration.defaultLocale,
-        user?.locale
-    ]);
+    }, [changeLocale, configuration.defaultLocale, user?.locale]);
 
-    useEffect(() => (
-        setTheme(user?.theme ?? configuration.defaultTheme)
-    ), [
-        configuration.defaultTheme,
-        user?.theme
-    ]);
+    useEffect(
+        () => setTheme(user?.theme ?? configuration.defaultTheme),
+        [configuration.defaultTheme, user?.theme]
+    );
 
-    const contextValue = useMemo(() => ({
-        theme,
-        refreshUser,
-        isLoading,
-        isLoggedIn,
-        userId,
-        user,
-        login,
-        logout,
-        handleApiError,
-        configuration,
-        refreshConfiguration,
-        t,
-        T,
-        TU,
-        changeLocale
-    }), [
-        theme,
-        refreshUser,
-        isLoading,
-        isLoggedIn,
-        userId,
-        user,
-        login,
-        logout,
-        handleApiError,
-        configuration,
-        refreshConfiguration,
-        t,
-        T,
-        TU,
-        changeLocale
-    ]);
+    const contextValue = useMemo(
+        () => ({
+            theme,
+            refreshUser,
+            isLoading,
+            isLoggedIn,
+            userId,
+            user,
+            login,
+            logout,
+            handleApiError,
+            configuration,
+            refreshConfiguration,
+            t,
+            T,
+            TU,
+            changeLocale
+        }),
+        [
+            theme,
+            refreshUser,
+            isLoading,
+            isLoggedIn,
+            userId,
+            user,
+            login,
+            logout,
+            handleApiError,
+            configuration,
+            refreshConfiguration,
+            t,
+            T,
+            TU,
+            changeLocale
+        ]
+    );
 
     return (
         <AppContext.Provider value={contextValue}>

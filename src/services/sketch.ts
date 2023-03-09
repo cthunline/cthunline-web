@@ -27,7 +27,9 @@ const imageMinSize: SketchSize = {
 export const coordinatesToPath = (coords: SketchCoordinates[]): string => {
     if (coords.length) {
         let path = `M ${coords[0].x} ${coords[0].y}`;
-        let p1; let p2; let end;
+        let p1;
+        let p2;
+        let end;
         for (let i = 1; i < coords.length - 2; i += 2) {
             p1 = coords[i];
             p2 = coords[i + 1];
@@ -83,13 +85,16 @@ export const getMovingItemCoordinates = ({
     const newY = y - deltaY;
     // controls item does not move outside the svg container
     if (
-        newX >= 0 && newX + width <= viewBox.width
-        && newY >= 0 && newY + height <= viewBox.height
+        newX >= 0 &&
+        newX + width <= viewBox.width &&
+        newY >= 0 &&
+        newY + height <= viewBox.height
     ) {
         // calculate tooltip placement
-        const tooltipPlacement = newY > (viewBox.height / 2)
-            ? TooltipPlacement.top
-            : TooltipPlacement.bottom;
+        const tooltipPlacement =
+            newY > viewBox.height / 2
+                ? TooltipPlacement.top
+                : TooltipPlacement.bottom;
         // return coordinates data
         return {
             x: newX,
@@ -107,9 +112,9 @@ interface GetResizingItemCoordAndPosOptions {
     resizingItemData: SketchResizingItemData;
 }
 
-type GetResizingItemCoordAndPosResult = (
-    SketchSize & Partial<SketchCoordinates> | null
-);
+type GetResizingItemCoordAndPosResult =
+    | (SketchSize & Partial<SketchCoordinates>)
+    | null;
 
 // gets new coordinates and position for resizing item
 export const getResizingItemCoordAndPos = ({
@@ -135,15 +140,13 @@ export const getResizingItemCoordAndPos = ({
     // ratio between item width and height
     const sizeRatio = initialWidth / initialHeight;
     // if item X position should be moving while resizing (NW and SW resize buttons)
-    const movingX = (
-        direction === CardinalDirection.nw
-        || direction === CardinalDirection.sw
-    );
+    const movingX =
+        direction === CardinalDirection.nw ||
+        direction === CardinalDirection.sw;
     // if item Y position should be moving while resizing (NW and NE resize buttons)
-    const movingY = (
-        direction === CardinalDirection.nw
-        || direction === CardinalDirection.ne
-    );
+    const movingY =
+        direction === CardinalDirection.nw ||
+        direction === CardinalDirection.ne;
     let newWidth;
     let newHeight;
     let newX = initialX;
@@ -167,12 +170,12 @@ export const getResizingItemCoordAndPos = ({
     const controlPositionX = initialX + newWidth;
     const controlPositionY = initialY + newHeight;
     if (
-        newWidth >= imageMinSize.width
-        && newHeight >= imageMinSize.height
-        && newX >= 0
-        && newY >= 0
-        && controlPositionX <= viewBox.width
-        && controlPositionY <= viewBox.height
+        newWidth >= imageMinSize.width &&
+        newHeight >= imageMinSize.height &&
+        newX >= 0 &&
+        newY >= 0 &&
+        controlPositionX <= viewBox.width &&
+        controlPositionY <= viewBox.height
     ) {
         const data: GetResizingItemCoordAndPosResult = {
             width: newWidth,
@@ -191,7 +194,7 @@ export const getResizingItemCoordAndPos = ({
 
 // swap images in images list so the given index is increased by 1
 // used to bring image forward in the sketch image stack
-export const forwardImage = (images: SketchImageData[], index: number) => (
+export const forwardImage = (images: SketchImageData[], index: number) =>
     [
         ...images.slice(0, index),
         images[index + 1],
@@ -200,12 +203,11 @@ export const forwardImage = (images: SketchImageData[], index: number) => (
     ].map((image, idx) => ({
         ...image,
         index: idx
-    }))
-);
+    }));
 
 // swap images in images list so the given index is decreased by 1
 // used to send image backward in the sketch image stack
-export const backwardImage = (images: SketchImageData[], index: number) => (
+export const backwardImage = (images: SketchImageData[], index: number) =>
     [
         ...images.slice(0, index - 1),
         images[index],
@@ -214,8 +216,7 @@ export const backwardImage = (images: SketchImageData[], index: number) => (
     ].map((image, idx) => ({
         ...image,
         index: idx
-    }))
-);
+    }));
 
 type SketchColorUses = Record<Color, number>;
 // pick a color for a new token based on colors already used
@@ -223,18 +224,19 @@ export const getNewTokenColor = (currentTokens: SketchTokenData[]): Color => {
     const colorUses = Object.fromEntries(
         colors.map((color) => [color, 0])
     ) as SketchColorUses;
-    currentTokens.map(({ color }) => color).forEach((color) => {
-        colorUses[color] += 1;
-    });
+    currentTokens
+        .map(({ color }) => color)
+        .forEach((color) => {
+            colorUses[color] += 1;
+        });
     const minUsesCount = Math.min(...Object.values(colorUses));
     const filteredColors: Partial<SketchColorUses> = Object.fromEntries(
-        Object.entries(colorUses).filter(([, usesCount]) => (
-            usesCount === minUsesCount
-        ))
+        Object.entries(colorUses).filter(
+            ([, usesCount]) => usesCount === minUsesCount
+        )
     );
-    const pickedColor: Color = (
-        randomItem(Object.keys(filteredColors))
-        ?? randomItem(colors as unknown as any[])
-    );
+    const pickedColor: Color =
+        randomItem(Object.keys(filteredColors)) ??
+        randomItem(colors as unknown as any[]);
     return pickedColor;
 };

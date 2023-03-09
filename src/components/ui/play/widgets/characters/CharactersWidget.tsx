@@ -1,10 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import {
-    Box,
-    CircularProgress,
-    Tabs,
-    Tab
-} from '@mui/material';
+import { Box, CircularProgress, Tabs, Tab } from '@mui/material';
 
 import { useApp } from '../../../../contexts/App';
 import CharacterSheet from '../../../characterSheet/CharacterSheet';
@@ -28,13 +23,12 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
         users[0] ?? null
     );
 
-    const setTargetSessionUser = useCallback((userId: number) => {
-        setSessionUser(
-            users.find(({ id }) => id === userId) ?? null
-        );
-    }, [
-        users
-    ]);
+    const setTargetSessionUser = useCallback(
+        (userId: number) => {
+            setSessionUser(users.find(({ id }) => id === userId) ?? null);
+        },
+        [users]
+    );
 
     const onTabChange = (_e: React.SyntheticEvent, userId: number) => {
         setTargetSessionUser(userId);
@@ -50,11 +44,7 @@ const CharactersWidget: React.FC<CharacterWidgetProps> = ({
         } else {
             setSessionUser(null);
         }
-    }, [
-        users,
-        sessionUser,
-        setTargetSessionUser
-    ]);
+    }, [users, sessionUser, setTargetSessionUser]);
 
     return (
         <Widget

@@ -1,8 +1,4 @@
-import {
-    useState,
-    useEffect,
-    useCallback
-} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
@@ -57,10 +53,7 @@ const useUser = ({
             handleApiError(err);
             throw err;
         }
-    }, [
-        listDisabled,
-        handleApiError
-    ]);
+    }, [listDisabled, handleApiError]);
 
     const createUser = async ({
         data,
@@ -148,10 +141,7 @@ const useUser = ({
         if (loadList) {
             refreshUserList();
         }
-    }, [
-        loadList,
-        refreshUserList
-    ]);
+    }, [loadList, refreshUserList]);
 
     return {
         userList,

@@ -13,15 +13,15 @@ interface SanityProps {
     onChange: (data: CoCSanity) => void;
 }
 
-const Sanity: React.FC<SanityProps> = ({
-    data,
-    readonly,
-    onChange
-}) => {
+const Sanity: React.FC<SanityProps> = ({ data, readonly, onChange }) => {
     const { T } = useApp();
 
     return (
-        <Box display="grid" gridTemplateColumns="repeat(12, 1fr)" alignItems="center">
+        <Box
+            display="grid"
+            gridTemplateColumns="repeat(12, 1fr)"
+            alignItems="center"
+        >
             <Box gridColumn="span 3">
                 {T('game.callOfCthulhu.characteristic.sanity')}
             </Box>

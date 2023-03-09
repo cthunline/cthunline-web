@@ -1,11 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-    AppBar,
-    Button,
-    IconButton,
-    Avatar
-} from '@mui/material';
+import { AppBar, Button, IconButton, Avatar } from '@mui/material';
 import { GiD10, GiRollingDices } from 'react-icons/gi';
 import { MdOutlineContactPage, MdOutlineSettings } from 'react-icons/md';
 import { FiFolder } from 'react-icons/fi';
@@ -23,27 +18,30 @@ interface NavMenuItem {
 }
 /* eslint-enable react/no-unused-prop-types */
 
-const navMenuItems: NavMenuItem[] = [{
-    icon: <GiRollingDices size={20} />,
-    route: '/sessions',
-    textKey: 'action.play'
-}, {
-    icon: <MdOutlineContactPage size={20} />,
-    route: '/characters',
-    textKey: 'entity.characters'
-}, {
-    icon: <FiFolder size={20} />,
-    route: '/assets',
-    textKey: 'entity.assets'
-}];
+const navMenuItems: NavMenuItem[] = [
+    {
+        icon: <GiRollingDices size={20} />,
+        route: '/sessions',
+        textKey: 'action.play'
+    },
+    {
+        icon: <MdOutlineContactPage size={20} />,
+        route: '/characters',
+        textKey: 'entity.characters'
+    },
+    {
+        icon: <FiFolder size={20} />,
+        route: '/assets',
+        textKey: 'entity.assets'
+    }
+];
 
 const Nav: React.FC = () => {
     const navigate = useNavigate();
     const { T } = useApp();
 
-    const [userMenuAnchorEl, setUserMenuAnchorEl] = (
-        useState<HTMLElement | null>(null)
-    );
+    const [userMenuAnchorEl, setUserMenuAnchorEl] =
+        useState<HTMLElement | null>(null);
 
     const onUserMenuClick = (e: React.MouseEvent<HTMLElement>) => {
         setUserMenuAnchorEl(e.currentTarget);
@@ -64,16 +62,18 @@ const Nav: React.FC = () => {
                     />
                 </div>
                 <div className="nav-middle grow flex row start-x center-y ml-10 mr-10">
-                    {navMenuItems.map(({ icon, route, textKey }: NavMenuItem) => (
-                        <Button
-                            key={`nav-menu-${route}`}
-                            className="ml-10 mr-10"
-                            startIcon={icon}
-                            onClick={() => navigate(route)}
-                        >
-                            {T(textKey)}
-                        </Button>
-                    ))}
+                    {navMenuItems.map(
+                        ({ icon, route, textKey }: NavMenuItem) => (
+                            <Button
+                                key={`nav-menu-${route}`}
+                                className="ml-10 mr-10"
+                                startIcon={icon}
+                                onClick={() => navigate(route)}
+                            >
+                                {T(textKey)}
+                            </Button>
+                        )
+                    )}
                 </div>
                 <div className="nav-right flex row center ml-10 mr-10">
                     <IconButton size="small" onClick={onUserMenuClick}>

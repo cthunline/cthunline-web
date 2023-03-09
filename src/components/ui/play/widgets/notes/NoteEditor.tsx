@@ -1,13 +1,5 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
-import {
-    Box,
-    TextField,
-    IconButton
-} from '@mui/material';
+import React, { useState, useEffect, useRef } from 'react';
+import { Box, TextField, IconButton } from '@mui/material';
 import { MdArrowBack } from 'react-icons/md';
 
 import { Note } from '../../../../../types';
@@ -19,11 +11,7 @@ interface NoteEditorProps {
     onBack: () => void;
 }
 
-const NoteEditor: React.FC<NoteEditorProps> = ({
-    note,
-    onEdit,
-    onBack
-}) => {
+const NoteEditor: React.FC<NoteEditorProps> = ({ note, onEdit, onBack }) => {
     const { userId } = useApp();
 
     const [title, setTitle] = useState<string>(note.title);
@@ -46,22 +34,12 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
                 });
             }, changeTime);
         }
-    }, [
-        isOwnedByUser,
-        onEdit,
-        note,
-        title,
-        text
-    ]);
+    }, [isOwnedByUser, onEdit, note, title, text]);
 
     return (
         <Box className="notes-widget-editor flex column">
             <Box className="full-width flex row center-y mb-5">
-                <IconButton
-                    className="mr-5"
-                    size="medium"
-                    onClick={onBack}
-                >
+                <IconButton className="mr-5" size="medium" onClick={onBack}>
                     <MdArrowBack />
                 </IconButton>
                 <TextField

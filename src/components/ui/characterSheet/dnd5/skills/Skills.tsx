@@ -11,11 +11,7 @@ interface SkillsProps {
     onChange: (data: Partial<DnD5Skills>) => void;
 }
 
-const Skills: React.FC<SkillsProps> = ({
-    skills,
-    readonly,
-    onChange
-}) => {
+const Skills: React.FC<SkillsProps> = ({ skills, readonly, onChange }) => {
     const { T } = useApp();
 
     return (

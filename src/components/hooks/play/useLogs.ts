@@ -34,12 +34,7 @@ const useLogs = () => {
         return `[${time}]`;
     };
 
-    const pushLog = ({
-        dateTime,
-        user,
-        isMaster,
-        text
-    }: PushLogOptions) => {
+    const pushLog = ({ dateTime, user, isMaster, text }: PushLogOptions) => {
         const parts = [];
         if (dateTime === true) {
             parts.push(getLogTime(DayJs()));
@@ -49,12 +44,15 @@ const useLogs = () => {
         parts.push(getLogUsername(user, isMaster));
         parts.push(text);
         const logText = parts.join(' ');
-        setLogs((previous) => (
-            [...previous, {
-                date: new Date(),
-                text: logText
-            }].slice(-100)
-        ));
+        setLogs((previous) =>
+            [
+                ...previous,
+                {
+                    date: new Date(),
+                    text: logText
+                }
+            ].slice(-100)
+        );
     };
 
     return {

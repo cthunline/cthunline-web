@@ -5,16 +5,21 @@ export interface WoundStatusField {
     textKey: string;
 }
 
-export const woundStatusFields: WoundStatusField[] = [{
-    keys: ['stunned'],
-    textKey: 'stunned'
-}, {
-    keys: ['wounded', 'doublyWounded'],
-    textKey: 'wounded'
-}, {
-    keys: ['incapacitated'],
-    textKey: 'incapacitated'
-}, {
-    keys: ['mortallyWounded'],
-    textKey: 'mortallyWounded'
-}];
+export const woundStatusFields: WoundStatusField[] = [
+    {
+        keys: ['stunned'],
+        textKey: 'stunned'
+    },
+    {
+        keys: ['wounded', 'doublyWounded'],
+        textKey: 'wounded'
+    },
+    {
+        keys: ['incapacitated'],
+        textKey: 'incapacitated'
+    },
+    {
+        keys: ['mortallyWounded'],
+        textKey: 'mortallyWounded'
+    }
+];

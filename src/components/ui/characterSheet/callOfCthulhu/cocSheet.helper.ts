@@ -7,7 +7,9 @@ import {
     CoCCombat
 } from '@cthunline/games';
 
-export const controlCharacteristic = (characteristic: CoCCharacteristic): CoCCharacteristic => {
+export const controlCharacteristic = (
+    characteristic: CoCCharacteristic
+): CoCCharacteristic => {
     const char = characteristic;
     char.half = Math.floor(char.regular / 2);
     char.fifth = Math.floor(char.regular / 5);
@@ -46,7 +48,10 @@ const calculateMove = (characterData: CoCCharacter): number => {
     const { strength, dexterity, size } = characterData.characteristics;
     if (strength.regular < size.regular && dexterity.regular < size.regular) {
         move = 7;
-    } else if (strength.regular > size.regular && dexterity.regular > size.regular) {
+    } else if (
+        strength.regular > size.regular &&
+        dexterity.regular > size.regular
+    ) {
         move = 9;
     }
     if (age >= 80) {
@@ -63,7 +68,9 @@ const calculateMove = (characterData: CoCCharacter): number => {
     return move;
 };
 
-const calculateDamageBonusAndBuild = (characterData: CoCCharacter): Omit<CoCCombat, 'move'> => {
+const calculateDamageBonusAndBuild = (
+    characterData: CoCCharacter
+): Omit<CoCCombat, 'move'> => {
     const { strength, size } = characterData.characteristics;
     const sum = strength.regular + size.regular;
     if (sum >= 205) {
@@ -100,23 +107,20 @@ const calculateCombat = (characterData: CoCCharacter): CoCCombat => {
     };
 };
 
-export const controlCharacterData = (characterData: CoCCharacter): CoCCharacter => {
+export const controlCharacterData = (
+    characterData: CoCCharacter
+): CoCCharacter => {
     const charData = characterData;
-    charData.points.magicPoints.maximum = (
-        Math.floor(charData.characteristics.power.regular / 5)
+    charData.points.magicPoints.maximum = Math.floor(
+        charData.characteristics.power.regular / 5
     );
-    charData.points.magicPoints = controlPoint(
-        charData.points.magicPoints
+    charData.points.magicPoints = controlPoint(charData.points.magicPoints);
+    charData.points.hitPoints.maximum = Math.floor(
+        (charData.characteristics.size.regular +
+            charData.characteristics.constitution.regular) /
+            10
     );
-    charData.points.hitPoints.maximum = (
-        Math.floor((
-            charData.characteristics.size.regular
-            + charData.characteristics.constitution.regular
-        ) / 10)
-    );
-    charData.points.hitPoints = controlPoint(
-        charData.points.hitPoints
-    );
+    charData.points.hitPoints = controlPoint(charData.points.hitPoints);
     charData.sanity.starting = charData.characteristics.power.regular;
     charData.combat = calculateCombat(charData);
     return charData;

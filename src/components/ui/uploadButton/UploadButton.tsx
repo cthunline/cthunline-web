@@ -14,7 +14,7 @@ const UploadButton: React.FC<UploadButtonProps> = ({
     progress,
     allowedMimeTypes,
     onChange
-}) => (
+}) =>
     progress ? (
         <CircularProgress variant="determinate" value={progress} />
     ) : (
@@ -36,7 +36,6 @@ const UploadButton: React.FC<UploadButtonProps> = ({
                 {label}
             </Button>
         </label>
-    )
-);
+    );
 
 export default UploadButton;

@@ -42,20 +42,23 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
 }) => {
     const changeTime = 1000;
     const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-    const onChangeBuffer = useCallback((
-        name: string,
-        characterData: CharacterData,
-        instantRefresh?: boolean | undefined
-    ) => {
-        if (onChange) {
-            if (changeTimer.current) {
-                clearTimeout(changeTimer.current);
+    const onChangeBuffer = useCallback(
+        (
+            name: string,
+            characterData: CharacterData,
+            instantRefresh?: boolean | undefined
+        ) => {
+            if (onChange) {
+                if (changeTimer.current) {
+                    clearTimeout(changeTimer.current);
+                }
+                changeTimer.current = setTimeout(() => {
+                    onChange(name, characterData, instantRefresh);
+                }, changeTime);
             }
-            changeTimer.current = setTimeout(() => {
-                onChange(name, characterData, instantRefresh);
-            }, changeTime);
-        }
-    }, [onChange]);
+        },
+        [onChange]
+    );
 
     const getContent = (): JSX.Element => {
         if (gameId === GameId.callOfCthulhu) {

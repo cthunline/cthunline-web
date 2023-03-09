@@ -1,8 +1,4 @@
-import React, {
-    useEffect,
-    useRef,
-    useState
-} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
     Box,
     TextField,
@@ -15,11 +11,7 @@ import { CoCSkill } from '@cthunline/games';
 
 import { useApp } from '../../../../contexts/App';
 import AutocompleteInput from '../../../autocompleteInput/AutocompleteInput';
-import {
-    SkillData,
-    skillList,
-    defaultSkillValue
-} from './skills.data';
+import { SkillData, skillList, defaultSkillValue } from './skills.data';
 
 interface SkillAddProps {
     onSubmit: (data: CoCSkill) => void;
@@ -55,8 +47,12 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
     useEffect(() => {
         if (!initialRender.current) {
             const updatedErrors: Partial<SkillAddErrors> = {};
-            if (values.name) { updatedErrors.name = false; }
-            if (values.base) { updatedErrors.base = false; }
+            if (values.name) {
+                updatedErrors.name = false;
+            }
+            if (values.base) {
+                updatedErrors.base = false;
+            }
             setErrors((previous) => ({
                 ...previous,
                 ...updatedErrors
@@ -75,12 +71,12 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
         }
     };
 
-    const translatedSkillList: SkillData[] = (
-        skillList.map(({ key, base, development }) => ({
+    const translatedSkillList: SkillData[] = skillList.map(
+        ({ key, base, development }) => ({
             name: T(`game.callOfCthulhu.skill.${key}`),
             base,
             development
-        }))
+        })
     );
 
     return (
@@ -131,17 +127,19 @@ const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
                 <FormControlLabel
                     label={T('game.callOfCthulhu.common.development')}
                     labelPlacement="start"
-                    control={(
+                    control={
                         <Switch
                             checked={values.development}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
                                 setValues((previous) => ({
                                     ...previous,
                                     development: e.target.checked
                                 }));
                             }}
                         />
-                    )}
+                    }
                 />
             </Box>
             <Box gridColumn="span 1">

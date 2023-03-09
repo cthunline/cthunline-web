@@ -1,14 +1,5 @@
-import React, {
-    useCallback,
-    useEffect,
-    useState,
-    useRef
-} from 'react';
-import {
-    Box,
-    TextField,
-    IconButton
-} from '@mui/material';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
+import { Box, TextField, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 import { SWD6Weapon } from '@cthunline/games';
 
@@ -45,10 +36,7 @@ const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
         if (userChanged.current) {
             controlForm();
         }
-    }, [
-        controlForm,
-        values
-    ]);
+    }, [controlForm, values]);
 
     return (
         <Box

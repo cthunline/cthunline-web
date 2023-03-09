@@ -13,7 +13,12 @@ const Combat: React.FC<CombatProps> = ({ combat }) => {
     const { T } = useApp();
 
     return (
-        <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={4}>
+        <Box
+            gridColumn="span 12"
+            display="grid"
+            gridTemplateColumns="repeat(12, 1fr)"
+            gap={4}
+        >
             {combatKeys.map((key) => (
                 <Box
                     key={`combat-${key}`}

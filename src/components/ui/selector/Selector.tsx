@@ -38,9 +38,7 @@ const Selector: React.FC<SelectorProps> = ({
 
     return (
         <FormControl fullWidth error={!!error}>
-            <InputLabel id={selectorId}>
-                {label}
-            </InputLabel>
+            <InputLabel id={selectorId}>{label}</InputLabel>
             <Select
                 size={size}
                 className={className}
@@ -50,10 +48,7 @@ const Selector: React.FC<SelectorProps> = ({
                 label={label}
                 onChange={onChange}
             >
-                {options.map(({
-                    name: optName,
-                    value: optValue
-                }) => (
+                {options.map(({ name: optName, value: optValue }) => (
                     <MenuItem
                         key={`${selectorId}-${optValue}`}
                         value={optValue}
@@ -62,11 +57,7 @@ const Selector: React.FC<SelectorProps> = ({
                     </MenuItem>
                 ))}
             </Select>
-            {error ? (
-                <FormHelperText>
-                    {error}
-                </FormHelperText>
-            ) : null}
+            {error ? <FormHelperText>{error}</FormHelperText> : null}
         </FormControl>
     );
 };

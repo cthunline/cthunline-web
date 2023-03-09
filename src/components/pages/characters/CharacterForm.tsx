@@ -1,9 +1,4 @@
-import React, {
-    useRef,
-    useCallback,
-    useEffect,
-    useState
-} from 'react';
+import React, { useRef, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 
@@ -13,58 +8,57 @@ import { Character, CharacterData } from '../../../types';
 
 const CharacterForm = () => {
     const { characterId: paramCharId } = useParams();
-    const {
-        getCharacter,
-        editCharacter,
-        uploadPortrait,
-        deletePortrait
-    } = useCharacter();
+    const { getCharacter, editCharacter, uploadPortrait, deletePortrait } =
+        useCharacter();
 
     const characterId = Number(paramCharId);
 
     const [character, setCharacter] = useState<Character>();
 
     const onChange = useCallback((name: string, data: CharacterData) => {
-        setCharacter((previous) => (
-            previous ? {
-                ...previous,
-                name,
-                data
-            } : previous
-        ));
+        setCharacter((previous) =>
+            previous
+                ? {
+                      ...previous,
+                      name,
+                      data
+                  }
+                : previous
+        );
     }, []);
 
     const skipEdit = useRef(false);
-    const onPortraitChange = useCallback(async (file: File | null) => {
-        const options = {
-            characterId,
-            isToast: false,
-            isRefresh: false
-        };
-        let updatedPortrait: string | null = null;
-        if (file) {
-            const { portrait } = await uploadPortrait({
-                ...options,
-                data: {
-                    portrait: file
-                }
-            });
-            updatedPortrait = portrait;
-        } else {
-            await deletePortrait(options);
-        }
-        skipEdit.current = true;
-        setCharacter((previous) => (
-            previous ? {
-                ...previous,
-                portrait: updatedPortrait
-            } : previous
-        ));
-    }, [
-        characterId,
-        uploadPortrait,
-        deletePortrait
-    ]);
+    const onPortraitChange = useCallback(
+        async (file: File | null) => {
+            const options = {
+                characterId,
+                isToast: false,
+                isRefresh: false
+            };
+            let updatedPortrait: string | null = null;
+            if (file) {
+                const { portrait } = await uploadPortrait({
+                    ...options,
+                    data: {
+                        portrait: file
+                    }
+                });
+                updatedPortrait = portrait;
+            } else {
+                await deletePortrait(options);
+            }
+            skipEdit.current = true;
+            setCharacter((previous) =>
+                previous
+                    ? {
+                          ...previous,
+                          portrait: updatedPortrait
+                      }
+                    : previous
+            );
+        },
+        [characterId, uploadPortrait, deletePortrait]
+    );
 
     useEffect(() => {
         (async () => {
@@ -73,10 +67,7 @@ const CharacterForm = () => {
                 setCharacter(char);
             }
         })();
-    }, [
-        characterId,
-        getCharacter
-    ]);
+    }, [characterId, getCharacter]);
 
     const initialRender = useRef(true);
     useEffect(() => {
@@ -98,10 +89,7 @@ const CharacterForm = () => {
                 });
             }
         }
-    }, [
-        character,
-        editCharacter
-    ]);
+    }, [character, editCharacter]);
 
     return character ? (
         <CharacterSheet

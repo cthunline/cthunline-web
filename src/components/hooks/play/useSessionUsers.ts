@@ -1,10 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import {
-    PlaySocket,
-    SessionUser,
-    Character
-} from '../../../types';
+import { PlaySocket, SessionUser, Character } from '../../../types';
 
 export interface SessionUsersHookExport {
     users: SessionUser[];
@@ -13,21 +9,25 @@ export interface SessionUsersHookExport {
 
 export const defaultSessionUsersHookExport: SessionUsersHookExport = {
     users: [],
-    characterUpdate: () => { /* default */ }
+    characterUpdate: () => {
+        /* default */
+    }
 };
 
 const useSessionUsers = (socket: PlaySocket | null) => {
     const [users, setUsers] = useState<SessionUser[]>([]);
 
     const updateUserCharacter = (userId: number, character: Character) => {
-        setUsers((previous) => (
-            previous.map((sessionUser: SessionUser) => (
-                sessionUser.id === userId ? {
-                    ...sessionUser,
-                    character
-                } : sessionUser
-            ))
-        ));
+        setUsers((previous) =>
+            previous.map((sessionUser: SessionUser) =>
+                sessionUser.id === userId
+                    ? {
+                          ...sessionUser,
+                          character
+                      }
+                    : sessionUser
+            )
+        );
     };
 
     const characterUpdate = useCallback(() => {

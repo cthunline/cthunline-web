@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 
 import { CardinalDirection } from '../../../../types';
-import SketchItemContextMenu, { ContextMenuData } from './SketchItemContextMenu';
+import SketchItemContextMenu, {
+    ContextMenuData
+} from './SketchItemContextMenu';
 
 import './SketchImage.css';
 
@@ -54,15 +56,21 @@ const SketchImage: React.FC<SketchImageProps> = ({
     onBackward,
     onDelete
 }) => {
-    const [contextMenu, setContextMenu] = useState<ContextMenuData | null>(null);
+    const [contextMenu, setContextMenu] = useState<ContextMenuData | null>(
+        null
+    );
 
     const onContextMenuOpen = (e: React.MouseEvent) => {
         e.preventDefault();
         if (isMaster) {
-            setContextMenu(contextMenu ? null : {
-                left: e.clientX,
-                top: e.clientY
-            });
+            setContextMenu(
+                contextMenu
+                    ? null
+                    : {
+                          left: e.clientX,
+                          top: e.clientY
+                      }
+            );
         }
     };
 
@@ -74,17 +82,11 @@ const SketchImage: React.FC<SketchImageProps> = ({
         // image container
         <svg
             id={`sketch-image-${id}`}
-            className={
-                `sketch-image container ${
-                    isMaster ? 'selectable' : ''
-                } ${
-                    selected ? 'selected' : ''
-                } ${
-                    moving ? 'moving' : ''
-                } ${
-                    resizing ? 'resizing' : ''
-                }`
-            }
+            className={`sketch-image container ${
+                isMaster ? 'selectable' : ''
+            } ${selected ? 'selected' : ''} ${moving ? 'moving' : ''} ${
+                resizing ? 'resizing' : ''
+            }`}
             ref={onRef}
             width={width}
             height={height ?? 'auto'}
@@ -102,21 +104,21 @@ const SketchImage: React.FC<SketchImageProps> = ({
                 onMouseDown={onMouseDown}
             />
             {/* resize rectangles buttons */}
-            {isMaster && selected ? (
-                resizeRects.map((direction, index) => (
-                    <rect
-                        key={`sketch-image-resize-button-${index.toString()}`}
-                        className={`sketch-image sketch-image-resizer ${direction}`}
-                        width="20px"
-                        height="20px"
-                        x="0"
-                        y="0"
-                        onMouseDown={(e) => {
-                            onResizeMouseDown?.(e, direction);
-                        }}
-                    />
-                ))
-            ) : null}
+            {isMaster && selected
+                ? resizeRects.map((direction, index) => (
+                      <rect
+                          key={`sketch-image-resize-button-${index.toString()}`}
+                          className={`sketch-image sketch-image-resizer ${direction}`}
+                          width="20px"
+                          height="20px"
+                          x="0"
+                          y="0"
+                          onMouseDown={(e) => {
+                              onResizeMouseDown?.(e, direction);
+                          }}
+                      />
+                  ))
+                : null}
             {isMaster ? (
                 <SketchItemContextMenu
                     open={!!contextMenu}

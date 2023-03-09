@@ -9,9 +9,7 @@ export const findById = <ObjectType extends { id: string }>(
     list: ObjectType[],
     id: string
 ): ObjectType => {
-    const object = list.find(({ id: objectId }) => (
-        id === objectId
-    ));
+    const object = list.find(({ id: objectId }) => id === objectId);
     if (object) {
         return object;
     }
@@ -19,9 +17,7 @@ export const findById = <ObjectType extends { id: string }>(
 };
 
 export const findIndexById = (list: any[], id: string): number => {
-    const index = list.findIndex(({ id: objectId }) => (
-        id === objectId
-    ));
+    const index = list.findIndex(({ id: objectId }) => id === objectId);
     if (index >= 0) {
         return index;
     }
@@ -29,27 +25,25 @@ export const findIndexById = (list: any[], id: string): number => {
 };
 
 // remove anything but numbers in a string
-export const onlyNumbers = (text: string) => (
-    text.replaceAll(/[^\d]*/g, '')
-);
+export const onlyNumbers = (text: string) => text.replaceAll(/[^\d]*/g, '');
 
 // uppercase the first char of a string
-export const ucfirst = (text: string) => (
-    `${text.charAt(0).toUpperCase()}${text.slice(1)}`
-);
+export const ucfirst = (text: string) =>
+    `${text.charAt(0).toUpperCase()}${text.slice(1)}`;
 
 // same as nodejs Path.join
-export const pathJoin = (...parts: string[]) => (
-    parts.map((part, index) => {
-        if (index) {
-            return part.replace(/^\//, '');
-        }
-        if (index !== parts.length - 1) {
-            return part.replace(/\/$/, '');
-        }
-        return part;
-    }).join('/')
-);
+export const pathJoin = (...parts: string[]) =>
+    parts
+        .map((part, index) => {
+            if (index) {
+                return part.replace(/^\//, '');
+            }
+            if (index !== parts.length - 1) {
+                return part.replace(/\/$/, '');
+            }
+            return part;
+        })
+        .join('/');
 
 // check if event click match the given key
 type MixedEvent = React.MouseEvent | MouseEvent | TouchEvent;
@@ -59,14 +53,13 @@ export const isClickType = (e: MixedEvent, code: number) => {
 };
 
 // check if event click is primary click
-export const isMainClick = (e: React.MouseEvent | MouseEvent | TouchEvent) => (
-    isClickType(e, 0)
-);
+export const isMainClick = (e: React.MouseEvent | MouseEvent | TouchEvent) =>
+    isClickType(e, 0);
 
 // check if event click is secondary click
-export const isSecondaryClick = (e: React.MouseEvent | MouseEvent | TouchEvent) => (
-    isClickType(e, 2)
-);
+export const isSecondaryClick = (
+    e: React.MouseEvent | MouseEvent | TouchEvent
+) => isClickType(e, 2);
 
 // get random number between min and max
 export const randomNumber = (min: number, max: number) => {
@@ -87,17 +80,14 @@ export const randomItem = (array: any[]): any => {
 
 // get css variable value
 const computedStyle = window.getComputedStyle(document.body);
-export const getCssVar = (name: string) => (
-    computedStyle.getPropertyValue(name)
-);
+export const getCssVar = (name: string) => computedStyle.getPropertyValue(name);
 
 // force hex color on 6 characters
-export const forceFullHexColor = (hexColor: string) => (
+export const forceFullHexColor = (hexColor: string) =>
     hexColor.replaceAll(
         /^#([\da-fA-F])([\da-fA-F])([\da-fA-F])$/g,
         '#$1$1$2$2$3$3'
-    )
-);
+    );
 
 // get text color (white or black) depending on background color
 export const getTextColor = (hexColor: string): 'white' | 'black' => {
@@ -107,6 +97,6 @@ export const getTextColor = (hexColor: string): 'white' | 'black' => {
     const hRed = parseInt(cutHex(fullHexColor).substring(0, 2), 16);
     const hGreen = parseInt(cutHex(fullHexColor).substring(2, 4), 16);
     const hBlue = parseInt(cutHex(fullHexColor).substring(4, 6), 16);
-    const brightness = ((hRed * 299) + (hGreen * 587) + (hBlue * 114)) / 1000;
+    const brightness = (hRed * 299 + hGreen * 587 + hBlue * 114) / 1000;
     return brightness > threshold ? 'black' : 'white';
 };

@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { Tooltip } from '@mui/material';
 
 import { useApp } from '../../../contexts/App';
-import SketchItemContextMenu, { ContextMenuData } from './SketchItemContextMenu';
+import SketchItemContextMenu, {
+    ContextMenuData
+} from './SketchItemContextMenu';
 import { getCssVar, getTextColor } from '../../../../services/tools';
 import {
     Color,
@@ -25,7 +27,10 @@ interface SketchTokenProps {
     isMoving: boolean;
     className?: string;
     onRef?: (el: SVGSVGElement | null) => void;
-    onMouseDown?: (e: React.MouseEvent<SVGSVGElement>, isMovable?: boolean) => void;
+    onMouseDown?: (
+        e: React.MouseEvent<SVGSVGElement>,
+        isMovable?: boolean
+    ) => void;
     onAttach?: (user: SessionUser) => void;
     onUnattach?: () => void;
     onDuplicate?: () => void;
@@ -55,7 +60,9 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     const { userId } = useApp();
 
     const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
-    const [contextMenu, setContextMenu] = useState<ContextMenuData | null>(null);
+    const [contextMenu, setContextMenu] = useState<ContextMenuData | null>(
+        null
+    );
 
     const onTooltipClose = () => {
         setTooltipOpen(false);
@@ -64,8 +71,8 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     const onTooltipOpen = (e: React.SyntheticEvent) => {
         const target = e.target as Element;
         if (
-            !target.classList.contains('context-menu')
-            && !target.closest('.context-menu')
+            !target.classList.contains('context-menu') &&
+            !target.closest('.context-menu')
         ) {
             setTooltipOpen(true);
         }
@@ -74,10 +81,14 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     const onContextMenuOpen = (e: React.MouseEvent) => {
         e.preventDefault();
         if (isMaster) {
-            setContextMenu(contextMenu ? null : {
-                left: e.clientX,
-                top: e.clientY
-            });
+            setContextMenu(
+                contextMenu
+                    ? null
+                    : {
+                          left: e.clientX,
+                          top: e.clientY
+                      }
+            );
         }
     };
 
@@ -98,16 +109,21 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     const textX = '50%';
     const textY = fontSize + tokenPadding;
 
-    const isMovable = !!(isMaster || (attachedData && attachedData.userId === userId));
+    const isMovable = !!(
+        isMaster ||
+        (attachedData && attachedData.userId === userId)
+    );
 
     const hexColor = getCssVar(`--palette-${color}`);
     const textColor = `var(--palette-${getTextColor(hexColor)})`;
 
     return (
         <Tooltip
-            title={attachedData ? (
-                `${attachedData.characterName} (${attachedData.userName})`
-            ) : ''}
+            title={
+                attachedData
+                    ? `${attachedData.characterName} (${attachedData.userName})`
+                    : ''
+            }
             placement={tooltipPlacement}
             open={tooltipOpen && !isMoving && !contextMenu}
             onOpen={onTooltipOpen}
@@ -116,7 +132,9 @@ const SketchToken: React.FC<SketchTokenProps> = ({
             <svg
                 ref={onRef}
                 id={`sketch-token-${id}`}
-                className={`sketch-token ${isMovable ? 'movable' : ''} ${className}`}
+                className={`sketch-token ${
+                    isMovable ? 'movable' : ''
+                } ${className}`}
                 viewBox={`0 0 ${tokenSize} ${tokenSize}`}
                 width={tokenSize}
                 height={tokenSize}
@@ -146,7 +164,9 @@ const SketchToken: React.FC<SketchTokenProps> = ({
                         fill={textColor} // eslint-disable-line react/no-unknown-property
                         fontSize={fontSize}
                     >
-                        {attachedData.characterName.charAt(0).toLocaleUpperCase()}
+                        {attachedData.characterName
+                            .charAt(0)
+                            .toLocaleUpperCase()}
                     </text>
                 ) : null}
                 {isMaster ? (

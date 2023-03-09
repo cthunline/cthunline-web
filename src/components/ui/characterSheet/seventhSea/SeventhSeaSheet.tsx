@@ -1,9 +1,4 @@
-import React, {
-    useCallback,
-    useEffect,
-    useRef,
-    useState
-} from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Box, IconButton, TextField } from '@mui/material';
 import {
     GiCharacter,
@@ -76,17 +71,15 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
 }) => {
     const { T } = useApp();
 
-    const [characterData, setCharacterData] = useState<SeventhSeaCharacter>(data);
+    const [characterData, setCharacterData] =
+        useState<SeventhSeaCharacter>(data);
     const [tabIndex, setTabIndex] = useState<number>(0);
 
     useEffect(() => {
         if (listening) {
             setCharacterData(data);
         }
-    }, [
-        listening,
-        data
-    ]);
+    }, [listening, data]);
 
     const initialRender = useRef(true);
     useEffect(() => {
@@ -99,11 +92,7 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
             const characterName = `${properName} ${properConcept}`;
             onChange(characterName, characterData);
         }
-    }, [
-        readonly,
-        onChange,
-        characterData
-    ]);
+    }, [readonly, onChange, characterData]);
 
     const onBiographyChange = useCallback((biography: SeventhSeaBiography) => {
         setCharacterData((previous) => ({
@@ -122,56 +111,52 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
     const onBackgroundAdd = useCallback(() => {
         setCharacterData((previous) => ({
             ...previous,
-            backgrounds: [
-                ...previous.backgrounds,
-                defaultBackground
-            ]
+            backgrounds: [...previous.backgrounds, defaultBackground]
         }));
     }, []);
 
-    const onBackgroundChange = useCallback((index: number, background: SeventhSeaBackground) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            backgrounds: previous.backgrounds.map((bck, idx) => (
-                idx === index ? background : bck
-            ))
-        }));
-    }, []);
+    const onBackgroundChange = useCallback(
+        (index: number, background: SeventhSeaBackground) => {
+            setCharacterData((previous) => ({
+                ...previous,
+                backgrounds: previous.backgrounds.map((bck, idx) =>
+                    idx === index ? background : bck
+                )
+            }));
+        },
+        []
+    );
 
     const onBackgroundDelete = useCallback((index: number) => {
         setCharacterData((previous) => ({
             ...previous,
-            backgrounds: previous.backgrounds.filter((_b, idx) => (
-                idx !== index
-            ))
+            backgrounds: previous.backgrounds.filter((_b, idx) => idx !== index)
         }));
     }, []);
 
     const onStoryAdd = useCallback(() => {
         setCharacterData((previous) => ({
             ...previous,
-            stories: [
-                ...previous.stories,
-                defaultStory
-            ]
+            stories: [...previous.stories, defaultStory]
         }));
     }, []);
 
-    const onStoryChange = useCallback((index: number, story: SeventhSeaStory) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            stories: previous.stories.map((st, idx) => (
-                idx === index ? story : st
-            ))
-        }));
-    }, []);
+    const onStoryChange = useCallback(
+        (index: number, story: SeventhSeaStory) => {
+            setCharacterData((previous) => ({
+                ...previous,
+                stories: previous.stories.map((st, idx) =>
+                    idx === index ? story : st
+                )
+            }));
+        },
+        []
+    );
 
     const onStoryDelete = useCallback((index: number) => {
         setCharacterData((previous) => ({
             ...previous,
-            stories: previous.stories.filter((_s, idx) => (
-                idx !== index
-            ))
+            stories: previous.stories.filter((_s, idx) => idx !== index)
         }));
     }, []);
 
@@ -199,28 +184,26 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
     const onAdvantageAdd = useCallback(() => {
         setCharacterData((previous) => ({
             ...previous,
-            advantages: [
-                ...previous.advantages,
-                defaultAdvantage
-            ]
+            advantages: [...previous.advantages, defaultAdvantage]
         }));
     }, []);
 
-    const onAdvantageChange = useCallback((index: number, advantage: SeventhSeaAdvantage) => {
-        setCharacterData((previous) => ({
-            ...previous,
-            advantages: previous.advantages.map((ad, idx) => (
-                idx === index ? advantage : ad
-            ))
-        }));
-    }, []);
+    const onAdvantageChange = useCallback(
+        (index: number, advantage: SeventhSeaAdvantage) => {
+            setCharacterData((previous) => ({
+                ...previous,
+                advantages: previous.advantages.map((ad, idx) =>
+                    idx === index ? advantage : ad
+                )
+            }));
+        },
+        []
+    );
 
     const onAdvantageDelete = useCallback((index: number) => {
         setCharacterData((previous) => ({
             ...previous,
-            advantages: previous.advantages.filter((_a, idx) => (
-                idx !== index
-            ))
+            advantages: previous.advantages.filter((_a, idx) => idx !== index)
         }));
     }, []);
 
@@ -245,35 +228,40 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
         }));
     }, []);
 
-    const sheetTabs: SheetTab[] = [{
-        key: 'biography',
-        icon: <GiCharacter size={20} />,
-        label: T('game.seventhSea.common.biography')
-    }, {
-        key: 'stories',
-        icon: <GiBookmarklet size={20} />,
-        label: T('game.seventhSea.common.stories')
-    }, {
-        key: 'characteristics',
-        icon: <GiD10 size={20} />,
-        label: T('game.seventhSea.common.characteristics')
-    }, {
-        key: 'advantages',
-        icon: <GiArrowScope size={20} />,
-        label: T('game.seventhSea.common.advantages')
-    }, {
-        key: 'misc',
-        icon: <GiHandBag size={20} />,
-        label: T('game.seventhSea.common.misc')
-    }];
+    const sheetTabs: SheetTab[] = [
+        {
+            key: 'biography',
+            icon: <GiCharacter size={20} />,
+            label: T('game.seventhSea.common.biography')
+        },
+        {
+            key: 'stories',
+            icon: <GiBookmarklet size={20} />,
+            label: T('game.seventhSea.common.stories')
+        },
+        {
+            key: 'characteristics',
+            icon: <GiD10 size={20} />,
+            label: T('game.seventhSea.common.characteristics')
+        },
+        {
+            key: 'advantages',
+            icon: <GiArrowScope size={20} />,
+            label: T('game.seventhSea.common.advantages')
+        },
+        {
+            key: 'misc',
+            icon: <GiHandBag size={20} />,
+            label: T('game.seventhSea.common.misc')
+        }
+    ];
 
-    const getAddButton = (handler: () => void) => (
+    const getAddButton = (handler: () => void) =>
         readonly ? undefined : (
             <IconButton size="medium" onClick={handler}>
                 <FiPlusCircle />
             </IconButton>
-        )
-    );
+        );
 
     return (
         <SheetTabs
@@ -283,200 +271,214 @@ const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
             onChange={(idx) => setTabIndex(idx)}
         >
             {/* biography / backgrounds */}
-            {sheetTabs[tabIndex].key === 'biography' ? [
-                // biography
-                <Box key="SeventhSea-biography" gridColumn="span 9">
-                    <SectionTitle
-                        iconBefore={<GiCharacter size={20} />}
-                        text={T('game.seventhSea.common.biography')}
-                    />
-                    <FieldLayout<SeventhSeaBiography>
-                        gameId={GameId.seventhSea}
-                        fields={biographyFields}
-                        textSectionKey="biography"
-                        data={characterData.biography}
-                        readonly={readonly}
-                        onChange={onBiographyChange}
-                    />
-                </Box>,
-                // portrait
-                <Box key="SeventhSea-portrait" gridColumn="span 3">
-                    <Portrait
-                        value={portrait}
-                        readonly={readonly}
-                        onChange={onPortraitChange}
-                    />
-                </Box>,
-                // hero points
-                <Box key="SeventhSea-heroPoints" gridColumn="span 12">
-                    <SectionTitle
-                        iconBefore={<GiSeaStar size={20} />}
-                        text={T('game.seventhSea.common.heroPoints')}
-                        input={{
-                            value: characterData.heroPoints,
-                            onChange: onHeroPointsChange
-                        }}
-                    />
-                </Box>,
-                // arcana
-                <Box key="SeventhSea-arcana" gridColumn="span 12">
-                    <SectionTitle
-                        iconBefore={<GiCardQueenHearts size={20} />}
-                        text={T('game.seventhSea.common.arcana')}
-                    />
-                    <FieldLayout<SeventhSeaArcana>
-                        gameId={GameId.seventhSea}
-                        fields={arcanaFields}
-                        textSectionKey="arcana"
-                        data={characterData.arcana}
-                        readonly={readonly}
-                        onChange={onArcanaChange}
-                    />
-                </Box>,
-                // backgrounds
-                <Box key="SeventhSea-backgrounds" gridColumn="span 12">
-                    <SectionTitle
-                        iconBefore={<GiScrollQuill size={20} />}
-                        iconAfter={getAddButton(onBackgroundAdd)}
-                        text={T('game.seventhSea.common.backgrounds')}
-                    />
-                    <Backgrounds
-                        backgrounds={characterData.backgrounds}
-                        readonly={readonly}
-                        onChange={onBackgroundChange}
-                        onDelete={onBackgroundDelete}
-                    />
-                </Box>
-            ] : null}
+            {sheetTabs[tabIndex].key === 'biography'
+                ? [
+                      // biography
+                      <Box key="SeventhSea-biography" gridColumn="span 9">
+                          <SectionTitle
+                              iconBefore={<GiCharacter size={20} />}
+                              text={T('game.seventhSea.common.biography')}
+                          />
+                          <FieldLayout<SeventhSeaBiography>
+                              gameId={GameId.seventhSea}
+                              fields={biographyFields}
+                              textSectionKey="biography"
+                              data={characterData.biography}
+                              readonly={readonly}
+                              onChange={onBiographyChange}
+                          />
+                      </Box>,
+                      // portrait
+                      <Box key="SeventhSea-portrait" gridColumn="span 3">
+                          <Portrait
+                              value={portrait}
+                              readonly={readonly}
+                              onChange={onPortraitChange}
+                          />
+                      </Box>,
+                      // hero points
+                      <Box key="SeventhSea-heroPoints" gridColumn="span 12">
+                          <SectionTitle
+                              iconBefore={<GiSeaStar size={20} />}
+                              text={T('game.seventhSea.common.heroPoints')}
+                              input={{
+                                  value: characterData.heroPoints,
+                                  onChange: onHeroPointsChange
+                              }}
+                          />
+                      </Box>,
+                      // arcana
+                      <Box key="SeventhSea-arcana" gridColumn="span 12">
+                          <SectionTitle
+                              iconBefore={<GiCardQueenHearts size={20} />}
+                              text={T('game.seventhSea.common.arcana')}
+                          />
+                          <FieldLayout<SeventhSeaArcana>
+                              gameId={GameId.seventhSea}
+                              fields={arcanaFields}
+                              textSectionKey="arcana"
+                              data={characterData.arcana}
+                              readonly={readonly}
+                              onChange={onArcanaChange}
+                          />
+                      </Box>,
+                      // backgrounds
+                      <Box key="SeventhSea-backgrounds" gridColumn="span 12">
+                          <SectionTitle
+                              iconBefore={<GiScrollQuill size={20} />}
+                              iconAfter={getAddButton(onBackgroundAdd)}
+                              text={T('game.seventhSea.common.backgrounds')}
+                          />
+                          <Backgrounds
+                              backgrounds={characterData.backgrounds}
+                              readonly={readonly}
+                              onChange={onBackgroundChange}
+                              onDelete={onBackgroundDelete}
+                          />
+                      </Box>
+                  ]
+                : null}
             {/* stories */}
-            {sheetTabs[tabIndex].key === 'stories' ? [
-                // stories
-                <Box key="SeventhSea-stories" gridColumn="span 12">
-                    <SectionTitle
-                        iconBefore={<GiCharacter size={20} />}
-                        iconAfter={getAddButton(onStoryAdd)}
-                        text={T('game.seventhSea.common.stories')}
-                    />
-                    <Stories
-                        stories={characterData.stories}
-                        readonly={readonly}
-                        onChange={onStoryChange}
-                        onDelete={onStoryDelete}
-                    />
-                </Box>
-            ] : null}
+            {sheetTabs[tabIndex].key === 'stories'
+                ? [
+                      // stories
+                      <Box key="SeventhSea-stories" gridColumn="span 12">
+                          <SectionTitle
+                              iconBefore={<GiCharacter size={20} />}
+                              iconAfter={getAddButton(onStoryAdd)}
+                              text={T('game.seventhSea.common.stories')}
+                          />
+                          <Stories
+                              stories={characterData.stories}
+                              readonly={readonly}
+                              onChange={onStoryChange}
+                              onDelete={onStoryDelete}
+                          />
+                      </Box>
+                  ]
+                : null}
             {/* characteristics */}
-            {sheetTabs[tabIndex].key === 'characteristics' ? [
-                // traits
-                <Box key="SeventhSea-traits" gridColumn="span 12">
-                    <SectionTitle
-                        iconBefore={<GiD10 size={20} />}
-                        text={T('game.seventhSea.common.traits')}
-                    />
-                    <Characteristics<SeventhSeaTraits>
-                        data={characterData.traits}
-                        textKey="game.seventhSea.trait"
-                        readonly={readonly}
-                        onChange={onTraitsChange}
-                    />
-                </Box>,
-                // skills
-                <Box key="SeventhSea-skills" gridColumn="span 12">
-                    <SectionTitle
-                        iconBefore={<GiSkills size={20} />}
-                        text={T('game.seventhSea.common.skills')}
-                    />
-                    <Characteristics<SeventhSeaSkills>
-                        data={characterData.skills}
-                        textKey="game.seventhSea.skill"
-                        sortByText
-                        readonly={readonly}
-                        onChange={onSkillsChange}
-                    />
-                </Box>,
-                // death spiral
-                <Box key="SeventhSea-deathSpiral" gridColumn="span 12">
-                    <SectionTitle
-                        iconBefore={<GiHeartBeats size={20} />}
-                        text={T('game.seventhSea.common.deathSpiral')}
-                    />
-                    <DeathSpiral
-                        value={characterData.deathSpiral}
-                        readonly={readonly}
-                        onChange={onDeathSpiralChange}
-                    />
-                </Box>
-            ] : null}
+            {sheetTabs[tabIndex].key === 'characteristics'
+                ? [
+                      // traits
+                      <Box key="SeventhSea-traits" gridColumn="span 12">
+                          <SectionTitle
+                              iconBefore={<GiD10 size={20} />}
+                              text={T('game.seventhSea.common.traits')}
+                          />
+                          <Characteristics<SeventhSeaTraits>
+                              data={characterData.traits}
+                              textKey="game.seventhSea.trait"
+                              readonly={readonly}
+                              onChange={onTraitsChange}
+                          />
+                      </Box>,
+                      // skills
+                      <Box key="SeventhSea-skills" gridColumn="span 12">
+                          <SectionTitle
+                              iconBefore={<GiSkills size={20} />}
+                              text={T('game.seventhSea.common.skills')}
+                          />
+                          <Characteristics<SeventhSeaSkills>
+                              data={characterData.skills}
+                              textKey="game.seventhSea.skill"
+                              sortByText
+                              readonly={readonly}
+                              onChange={onSkillsChange}
+                          />
+                      </Box>,
+                      // death spiral
+                      <Box key="SeventhSea-deathSpiral" gridColumn="span 12">
+                          <SectionTitle
+                              iconBefore={<GiHeartBeats size={20} />}
+                              text={T('game.seventhSea.common.deathSpiral')}
+                          />
+                          <DeathSpiral
+                              value={characterData.deathSpiral}
+                              readonly={readonly}
+                              onChange={onDeathSpiralChange}
+                          />
+                      </Box>
+                  ]
+                : null}
             {/* advantages */}
-            {sheetTabs[tabIndex].key === 'advantages' ? [
-                // advantages
-                <Box key="SeventhSea-advantages" gridColumn="span 12">
-                    <SectionTitle
-                        iconBefore={<GiArrowScope size={20} />}
-                        iconAfter={getAddButton(onAdvantageAdd)}
-                        text={T('game.seventhSea.common.advantages')}
-                    />
-                    <Advantages
-                        advantages={characterData.advantages}
-                        readonly={readonly}
-                        onChange={onAdvantageChange}
-                        onDelete={onAdvantageDelete}
-                    />
-                </Box>
-            ] : null}
+            {sheetTabs[tabIndex].key === 'advantages'
+                ? [
+                      // advantages
+                      <Box key="SeventhSea-advantages" gridColumn="span 12">
+                          <SectionTitle
+                              iconBefore={<GiArrowScope size={20} />}
+                              iconAfter={getAddButton(onAdvantageAdd)}
+                              text={T('game.seventhSea.common.advantages')}
+                          />
+                          <Advantages
+                              advantages={characterData.advantages}
+                              readonly={readonly}
+                              onChange={onAdvantageChange}
+                              onDelete={onAdvantageDelete}
+                          />
+                      </Box>
+                  ]
+                : null}
             {/* misc */}
-            {sheetTabs[tabIndex].key === 'misc' ? [
-                // items
-                <Box key="SeventhSea-items" gridColumn="span 12">
-                    <SectionTitle
-                        iconBefore={<GiSaberAndPistol size={20} />}
-                        text={T('game.seventhSea.common.items')}
-                    />
-                    <TextField
-                        fullWidth
-                        multiline
-                        minRows={8}
-                        maxRows={8}
-                        InputProps={{
-                            readOnly: readonly,
-                            classes: {
-                                input: 'input-smaller-text'
-                            }
-                        }}
-                        type="text"
-                        size="small"
-                        value={characterData.items}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            onItemsChange(e.target.value);
-                        }}
-                    />
-                </Box>,
-                // notes
-                <Box key="SeventhSea-notes" gridColumn="span 12">
-                    <SectionTitle
-                        iconBefore={<GiNotebook size={20} />}
-                        text={T('game.seventhSea.common.notes')}
-                    />
-                    <TextField
-                        fullWidth
-                        multiline
-                        minRows={8}
-                        maxRows={8}
-                        InputProps={{
-                            readOnly: readonly,
-                            classes: {
-                                input: 'input-smaller-text'
-                            }
-                        }}
-                        type="text"
-                        size="small"
-                        value={characterData.notes}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            onNotesChange(e.target.value);
-                        }}
-                    />
-                </Box>
-            ] : null}
+            {sheetTabs[tabIndex].key === 'misc'
+                ? [
+                      // items
+                      <Box key="SeventhSea-items" gridColumn="span 12">
+                          <SectionTitle
+                              iconBefore={<GiSaberAndPistol size={20} />}
+                              text={T('game.seventhSea.common.items')}
+                          />
+                          <TextField
+                              fullWidth
+                              multiline
+                              minRows={8}
+                              maxRows={8}
+                              InputProps={{
+                                  readOnly: readonly,
+                                  classes: {
+                                      input: 'input-smaller-text'
+                                  }
+                              }}
+                              type="text"
+                              size="small"
+                              value={characterData.items}
+                              onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                  onItemsChange(e.target.value);
+                              }}
+                          />
+                      </Box>,
+                      // notes
+                      <Box key="SeventhSea-notes" gridColumn="span 12">
+                          <SectionTitle
+                              iconBefore={<GiNotebook size={20} />}
+                              text={T('game.seventhSea.common.notes')}
+                          />
+                          <TextField
+                              fullWidth
+                              multiline
+                              minRows={8}
+                              maxRows={8}
+                              InputProps={{
+                                  readOnly: readonly,
+                                  classes: {
+                                      input: 'input-smaller-text'
+                                  }
+                              }}
+                              type="text"
+                              size="small"
+                              value={characterData.notes}
+                              onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                  onNotesChange(e.target.value);
+                              }}
+                          />
+                      </Box>
+                  ]
+                : null}
         </SheetTabs>
     );
 };

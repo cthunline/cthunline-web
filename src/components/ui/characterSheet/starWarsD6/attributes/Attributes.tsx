@@ -16,7 +16,11 @@ interface AttributeProps {
     readonly: boolean;
     onChange: (attribute: SWD6Attribute, data: SWD6AttributeData) => void;
     onSkillCreate: (attribute: SWD6Attribute, data: SWD6Skill) => void;
-    onSkillChange: (attribute: SWD6Attribute, index: number, data: SWD6Skill) => void;
+    onSkillChange: (
+        attribute: SWD6Attribute,
+        index: number,
+        data: SWD6Skill
+    ) => void;
     onSkillDelete: (attribute: SWD6Attribute, index: number) => void;
 }
 
@@ -28,7 +32,12 @@ const Attributes: React.FC<AttributeProps> = ({
     onSkillChange,
     onSkillDelete
 }) => (
-    <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={4}>
+    <Box
+        gridColumn="span 12"
+        display="grid"
+        gridTemplateColumns="repeat(12, 1fr)"
+        gap={4}
+    >
         {(Object.keys(attributes) as SWD6Attribute[]).map((attribute) => (
             <Attribute
                 key={`attribute-${attribute}`}

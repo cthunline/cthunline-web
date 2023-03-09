@@ -1,9 +1,4 @@
-import {
-    callOfCthulhu,
-    dnd5,
-    starWarsD6,
-    seventhSea
-} from '@cthunline/games';
+import { callOfCthulhu, dnd5, starWarsD6, seventhSea } from '@cthunline/games';
 
 import { GameId } from '../../../types';
 

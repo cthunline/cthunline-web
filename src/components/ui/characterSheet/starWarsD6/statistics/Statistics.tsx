@@ -65,15 +65,25 @@ const Statistics: React.FC<StatisticsProps> = ({
     };
 
     return (
-        <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={1} alignItems="center">
-            {statisticsFields.map(({ key, type }: StatisticsField) => ([
+        <Box
+            gridColumn="span 12"
+            display="grid"
+            gridTemplateColumns="repeat(12, 1fr)"
+            gap={1}
+            alignItems="center"
+        >
+            {statisticsFields.map(({ key, type }: StatisticsField) => [
                 <Box key={`statistics-${key}-label`} gridColumn="span 7">
                     {T(`game.starWarsD6.statistics.${key}`)}
                 </Box>,
-                <Box key={`statistics-${key}-input`} className="text-center" gridColumn="span 3">
+                <Box
+                    key={`statistics-${key}-input`}
+                    className="text-center"
+                    gridColumn="span 3"
+                >
                     {getInput(key, type, statistics)}
                 </Box>
-            ]))}
+            ])}
         </Box>
     );
 };

@@ -9,9 +9,8 @@ const useGame = () => {
 
     const [gameList, setGameList] = useState<Game[]>([]);
 
-    const getGame = (gameId: string) => (
-        gameList.find(({ id }) => gameId === id)
-    );
+    const getGame = (gameId: string) =>
+        gameList.find(({ id }) => gameId === id);
 
     useEffect(() => {
         (async () => {

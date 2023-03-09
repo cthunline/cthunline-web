@@ -46,10 +46,12 @@ const AutocompleteInput = <DataType extends AutocompleteInputData>({
             value={value}
             options={options}
             renderOption={(props, option) => (
+                // eslint-disable-next-line react/jsx-props-no-spreading
                 <li {...props}>{option.name}</li>
             )}
             renderInput={(params) => (
                 <TextField
+                    // eslint-disable-next-line react/jsx-props-no-spreading
                     {...params}
                     error={error}
                     label={label}
@@ -79,9 +81,9 @@ const AutocompleteInput = <DataType extends AutocompleteInputData>({
             filterOptions={(optionList, params) => {
                 const filtered = filter(optionList, params);
                 const { inputValue } = params;
-                const isExisting = optionList.some((option) => (
-                    inputValue === option.name
-                ));
+                const isExisting = optionList.some(
+                    (option) => inputValue === option.name
+                );
                 if (inputValue && !isExisting) {
                     filtered.push({
                         ...defaultValue,

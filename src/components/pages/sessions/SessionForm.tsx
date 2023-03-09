@@ -38,19 +38,9 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSubmit }) => {
             validationSchema={validationSchema}
             onSubmit={onSubmit}
         >
-            {({
-                values,
-                errors,
-                touched,
-                handleChange,
-                handleBlur
-            }) => (
+            {({ values, errors, touched, handleChange, handleBlur }) => (
                 <Form className="form small flex column center">
-                    <Field
-                        validateOnBlur
-                        validateOnChange
-                        name="name"
-                    >
+                    <Field validateOnBlur validateOnChange name="name">
                         {() => (
                             <TextField
                                 className="form-input"
@@ -61,18 +51,12 @@ const SessionForm: React.FC<SessionFormProps> = ({ onSubmit }) => {
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 helperText={
-                                    errors.name
-                                    && touched.name
-                                    && errors.name
+                                    errors.name && touched.name && errors.name
                                 }
                             />
                         )}
                     </Field>
-                    <Field
-                        validateOnBlur
-                        validateOnChange
-                        name="gameId"
-                    >
+                    <Field validateOnBlur validateOnChange name="gameId">
                         {() => (
                             <Selector
                                 label={T('entity.game')}

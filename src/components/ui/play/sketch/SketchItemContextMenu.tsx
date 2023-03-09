@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Menu,
-    MenuItem,
-    Divider
-} from '@mui/material';
+import { Menu, MenuItem, Divider } from '@mui/material';
 
 import { useApp } from '../../../contexts/App';
 import { usePlay } from '../../../contexts/Play';
@@ -137,9 +133,7 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
         playerUsers.map((user) => [
             <MenuItem
                 key={`submenu-${user.id}`}
-                onClick={() => onSelect(
-                    () => onAttach?.(user)
-                )}
+                onClick={() => onSelect(() => onAttach?.(user))}
             >
                 {`${user.character.name} (${user.name})`}
             </MenuItem>
@@ -153,9 +147,7 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
         <Divider key="submenu-divider" />,
         <ColorSelector
             key="submenu-color-selector"
-            onChange={(color: Color) => onSelect(
-                () => onColorChange?.(color)
-            )}
+            onChange={(color: Color) => onSelect(() => onColorChange?.(color))}
         />
     ];
 

@@ -1,10 +1,6 @@
 import React, { memo } from 'react';
 import { Box, TextField } from '@mui/material';
-import {
-    SWD6Attribute,
-    SWD6AttributeData,
-    SWD6Skill
-} from '@cthunline/games';
+import { SWD6Attribute, SWD6AttributeData, SWD6Skill } from '@cthunline/games';
 
 import Skill from './Skill';
 import SkillAdd from './SkillAdd';
@@ -18,7 +14,11 @@ interface AttributeProps {
     readonly: boolean;
     onChange: (attribute: SWD6Attribute, data: SWD6AttributeData) => void;
     onSkillCreate: (attribute: SWD6Attribute, data: SWD6Skill) => void;
-    onSkillChange: (attribute: SWD6Attribute, index: number, data: SWD6Skill) => void;
+    onSkillChange: (
+        attribute: SWD6Attribute,
+        index: number,
+        data: SWD6Skill
+    ) => void;
     onSkillDelete: (attribute: SWD6Attribute, index: number) => void;
 }
 
@@ -87,10 +87,7 @@ const Attribute: React.FC<AttributeProps> = ({
                 />
             ))}
             {readonly ? null : (
-                <SkillAdd
-                    attribute={attribute}
-                    onSubmit={onSkillCreate}
-                />
+                <SkillAdd attribute={attribute} onSubmit={onSkillCreate} />
             )}
         </Box>
     );

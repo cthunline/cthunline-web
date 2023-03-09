@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Paper,
-    Typography,
-    Button,
-    Box
-} from '@mui/material';
+import { Paper, Typography, Button, Box } from '@mui/material';
 import { toast } from 'react-toastify';
 import { HiMusicNote } from 'react-icons/hi';
 import { MdFolder, MdOutlineImage } from 'react-icons/md';
@@ -31,23 +26,11 @@ const limitSizeInMb = 20;
 
 const Assets: React.FC = () => {
     const { T } = useApp();
-    const {
-        confirmDialog,
-        openDialog,
-        closeDialog
-    } = useDialog();
-    const {
-        assetList,
-        uploadAssets,
-        deleteAsset
-    } = useAsset({
+    const { confirmDialog, openDialog, closeDialog } = useDialog();
+    const { assetList, uploadAssets, deleteAsset } = useAsset({
         loadList: true
     });
-    const {
-        directoryList,
-        createDirectory,
-        deleteDirectory
-    } = useDirectory({
+    const { directoryList, createDirectory, deleteDirectory } = useDirectory({
         loadList: true
     });
 
@@ -55,9 +38,7 @@ const Assets: React.FC = () => {
     const [progress, setProgress] = useState<number | null>(null);
 
     const onDirectoryBack = () => {
-        setDirectoryIds((previous) => (
-            previous.slice(0, -1)
-        ));
+        setDirectoryIds((previous) => previous.slice(0, -1));
     };
 
     const onDirectoryClick = (id: number) => {
@@ -78,9 +59,7 @@ const Assets: React.FC = () => {
     const onCreateDirectory = () => {
         openDialog({
             title: T('page.assets.newDirectory'),
-            content: (
-                <DirectoryForm onSubmit={onSubmitDirectory} />
-            )
+            content: <DirectoryForm onSubmit={onSubmitDirectory} />
         });
     };
 
@@ -91,15 +70,19 @@ const Assets: React.FC = () => {
             files.forEach((file) => {
                 const sizeInMb = file.size / (1024 * 1024);
                 if (sizeInMb > limitSizeInMb) {
-                    toast.error(T('page.assets.error.fileTooLarge', {
-                        name: file.name,
-                        limitMb: String(limitSizeInMb)
-                    }));
+                    toast.error(
+                        T('page.assets.error.fileTooLarge', {
+                            name: file.name,
+                            limitMb: String(limitSizeInMb)
+                        })
+                    );
                     valid = false;
                 }
             });
             if (valid) {
-                const directoryId = directoryIds.length ? directoryIds.at(-1) : undefined;
+                const directoryId = directoryIds.length
+                    ? directoryIds.at(-1)
+                    : undefined;
                 await uploadAssets({
                     data: {
                         assets: files,
@@ -116,7 +99,9 @@ const Assets: React.FC = () => {
 
     const onDelete = (type: ExplorerItemType, id: number, name: string) => {
         if (type === ExplorerItemType.directory) {
-            const confirmText = T('page.assets.deleteDirectoryConfirm', { name });
+            const confirmText = T('page.assets.deleteDirectoryConfirm', {
+                name
+            });
             confirmDialog(confirmText, () => {
                 deleteDirectory({ directoryId: id });
             });
@@ -136,26 +121,25 @@ const Assets: React.FC = () => {
             parentId,
             type: ExplorerItemType.directory
         })),
-        ...assetList.map(({
-            id,
-            name,
-            type,
-            directoryId
-        }) => ({
+        ...assetList.map(({ id, name, type, directoryId }) => ({
             id,
             name,
             parentId: directoryId,
             type: ExplorerItemType.file,
-            icon: type === 'audio' ? (
-                <HiMusicNote size={25} />
-            ) : (
-                <MdOutlineImage size={25} />
-            )
+            icon:
+                type === 'audio' ? (
+                    <HiMusicNote size={25} />
+                ) : (
+                    <MdOutlineImage size={25} />
+                )
         }))
     ];
 
     return (
-        <Paper elevation={3} className="page-list p-25 flex column start-x center-y">
+        <Paper
+            elevation={3}
+            className="page-list p-25 flex column start-x center-y"
+        >
             <Typography variant="h6" gutterBottom>
                 {T('entity.assets')}
             </Typography>

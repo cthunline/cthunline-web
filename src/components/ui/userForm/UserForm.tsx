@@ -28,24 +28,30 @@ interface UserFormFieldData {
     password?: boolean;
 }
 
-const fieldList: UserFormFieldData[] = [{
-    field: 'name',
-    textKey: 'common.name'
-}, {
-    field: 'email',
-    textKey: 'user.email'
-}, {
-    field: 'password',
-    textKey: 'user.password',
-    password: true
-}, {
-    field: 'passwordConfirm',
-    textKey: 'user.passwordConfirm',
-    password: true
-}, {
-    field: 'invitationCode',
-    textKey: 'user.invitationCode'
-}];
+const fieldList: UserFormFieldData[] = [
+    {
+        field: 'name',
+        textKey: 'common.name'
+    },
+    {
+        field: 'email',
+        textKey: 'user.email'
+    },
+    {
+        field: 'password',
+        textKey: 'user.password',
+        password: true
+    },
+    {
+        field: 'passwordConfirm',
+        textKey: 'user.passwordConfirm',
+        password: true
+    },
+    {
+        field: 'invitationCode',
+        textKey: 'user.invitationCode'
+    }
+];
 
 const UserForm: React.FC<UserFormProps> = ({
     invitation,
@@ -66,10 +72,15 @@ const UserForm: React.FC<UserFormProps> = ({
         name: Yup.string().min(3, 'Too short').required('Required'),
         email: Yup.string().email('Invalid email').required('Required'),
         password: Yup.string().min(6, 'Too short').required('Required'),
-        passwordConfirm: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match'),
-        ...(invitation ? {
-            invitationCode: Yup.string().required('Required')
-        } : {})
+        passwordConfirm: Yup.string().oneOf(
+            [Yup.ref('password'), null],
+            'Passwords must match'
+        ),
+        ...(invitation
+            ? {
+                  invitationCode: Yup.string().required('Required')
+              }
+            : {})
     });
 
     const onFormSubmit = ({
@@ -79,17 +90,17 @@ const UserForm: React.FC<UserFormProps> = ({
     }: UserFormData) => {
         onSubmit({
             ...data,
-            ...(invitation ? {
-                invitationCode
-            } : {})
+            ...(invitation
+                ? {
+                      invitationCode
+                  }
+                : {})
         });
     };
 
-    const filteredFieldList = invitation ? fieldList : (
-        fieldList.filter(({ field }) => (
-            field !== 'invitationCode'
-        ))
-    );
+    const filteredFieldList = invitation
+        ? fieldList
+        : fieldList.filter(({ field }) => field !== 'invitationCode');
 
     return (
         <Formik
@@ -97,18 +108,9 @@ const UserForm: React.FC<UserFormProps> = ({
             validationSchema={validationSchema}
             onSubmit={onFormSubmit}
         >
-            {({
-                errors,
-                touched,
-                handleChange,
-                handleBlur
-            }) => (
+            {({ errors, touched, handleChange, handleBlur }) => (
                 <Form className="form small flex column center">
-                    {filteredFieldList.map(({
-                        field,
-                        textKey,
-                        password
-                    }) => (
+                    {filteredFieldList.map(({ field, textKey, password }) => (
                         <Field
                             key={field}
                             validateOnBlur
@@ -126,9 +128,9 @@ const UserForm: React.FC<UserFormProps> = ({
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     helperText={
+                                        errors[field] &&
+                                        touched[field] &&
                                         errors[field]
-                                        && touched[field]
-                                        && errors[field]
                                     }
                                 />
                             )}

@@ -42,7 +42,10 @@ export interface SketchHookExport {
     undoSketch: () => void;
     clearSketch: () => void;
     addSketchImage: (url: string, emit?: boolean) => void;
-    updateSketchImage: (image: SketchImageData, newEvents?: SketchEvent[] | EventUpdater) => void;
+    updateSketchImage: (
+        image: SketchImageData,
+        newEvents?: SketchEvent[] | EventUpdater
+    ) => void;
     updateSketchImages: (options: UpdateSketchImagesOptions) => void;
     deleteSketchImage: (id: string, imageData: SketchImageData) => void;
     addSketchToken: () => void;
@@ -68,27 +71,67 @@ export const defaultSketchHookExport: SketchHookExport = {
         tokens: [],
         events: []
     },
-    updateSketch: () => { /* default */ },
-    setSketchDisplay: () => { /* default */ },
+    updateSketch: () => {
+        /* default */
+    },
+    setSketchDisplay: () => {
+        /* default */
+    },
     isFreeDrawing: false,
-    setIsFreeDrawing: () => { /* default */ },
-    addSketchDrawPath: () => { /* default */ },
-    clearDrawings: () => { /* default */ },
-    undoSketch: () => { /* default */ },
-    clearSketch: () => { /* default */ },
-    addSketchImage: () => { /* default */ },
-    updateSketchImage: () => { /* default */ },
-    updateSketchImages: () => { /* default */ },
-    deleteSketchImage: () => { /* default */ },
-    addSketchToken: () => { /* default */ },
-    addSketchUserTokens: () => { /* default */ },
-    updateMovingToken: () => { /* default */ },
-    attachTokenData: () => { /* default */ },
-    unattachTokenData: () => { /* default */ },
-    duplicateToken: () => { /* default */ },
-    changeTokenColor: () => { /* default */ },
-    deleteSketchToken: () => { /* default */ },
-    clearTokens: () => { /* default */ }
+    setIsFreeDrawing: () => {
+        /* default */
+    },
+    addSketchDrawPath: () => {
+        /* default */
+    },
+    clearDrawings: () => {
+        /* default */
+    },
+    undoSketch: () => {
+        /* default */
+    },
+    clearSketch: () => {
+        /* default */
+    },
+    addSketchImage: () => {
+        /* default */
+    },
+    updateSketchImage: () => {
+        /* default */
+    },
+    updateSketchImages: () => {
+        /* default */
+    },
+    deleteSketchImage: () => {
+        /* default */
+    },
+    addSketchToken: () => {
+        /* default */
+    },
+    addSketchUserTokens: () => {
+        /* default */
+    },
+    updateMovingToken: () => {
+        /* default */
+    },
+    attachTokenData: () => {
+        /* default */
+    },
+    unattachTokenData: () => {
+        /* default */
+    },
+    duplicateToken: () => {
+        /* default */
+    },
+    changeTokenColor: () => {
+        /* default */
+    },
+    deleteSketchToken: () => {
+        /* default */
+    },
+    clearTokens: () => {
+        /* default */
+    }
 };
 
 const defaultSketchData: SketchData = {
@@ -155,9 +198,12 @@ const useSketch = (socket: PlaySocket | null) => {
         updateSketch((previous) => ({
             ...previous,
             paths: [...previous.paths, path],
-            events: [...previous.events, {
-                type: SketchEventType.draw
-            }]
+            events: [
+                ...previous.events,
+                {
+                    type: SketchEventType.draw
+                }
+            ]
         }));
     };
 
@@ -165,9 +211,9 @@ const useSketch = (socket: PlaySocket | null) => {
         updateSketch((previous) => ({
             ...previous,
             paths: [],
-            events: previous.events.filter(({ type }) => (
-                type !== SketchEventType.draw
-            ))
+            events: previous.events.filter(
+                ({ type }) => type !== SketchEventType.draw
+            )
         }));
     };
 
@@ -185,14 +231,14 @@ const useSketch = (socket: PlaySocket | null) => {
             const image = getNewImageData(url, previous.images.length);
             return {
                 ...previous,
-                images: [
-                    ...previous.images,
-                    image
-                ],
-                events: [...previous.events, {
-                    type: SketchEventType.imageAdd,
-                    image
-                }]
+                images: [...previous.images, image],
+                events: [
+                    ...previous.events,
+                    {
+                        type: SketchEventType.imageAdd,
+                        image
+                    }
+                ]
             };
         }, emit);
     };
@@ -210,9 +256,9 @@ const useSketch = (socket: PlaySocket | null) => {
             }
             return {
                 ...previous,
-                images: previous.images.map((img) => (
+                images: previous.images.map((img) =>
                     img.id === image.id ? image : img
-                )),
+                ),
                 events
             };
         });
@@ -237,22 +283,27 @@ const useSketch = (socket: PlaySocket | null) => {
     const deleteSketchImage = (id: string, image: SketchImageData) => {
         updateSketch((previous) => ({
             ...previous,
-            images: previous.images.filter(({ id: imgId }) => (
-                id !== imgId
-            )).map((img, index) => ({
-                ...img,
-                index
-            })),
-            events: [...previous.events, {
-                type: SketchEventType.imageDelete,
-                image
-            }]
+            images: previous.images
+                .filter(({ id: imgId }) => id !== imgId)
+                .map((img, index) => ({
+                    ...img,
+                    index
+                })),
+            events: [
+                ...previous.events,
+                {
+                    type: SketchEventType.imageDelete,
+                    image
+                }
+            ]
         }));
     };
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ tokens
 
-    const getNewTokenData = (currentTokens: SketchTokenData[]): SketchTokenData => ({
+    const getNewTokenData = (
+        currentTokens: SketchTokenData[]
+    ): SketchTokenData => ({
         id: generateId(),
         index: currentTokens.length,
         color: getNewTokenColor(currentTokens),
@@ -264,14 +315,14 @@ const useSketch = (socket: PlaySocket | null) => {
             const token = getNewTokenData(previous.tokens);
             return {
                 ...previous,
-                tokens: [
-                    ...previous.tokens,
-                    token
-                ],
-                events: [...previous.events, {
-                    type: SketchEventType.tokenAdd,
-                    token
-                }]
+                tokens: [...previous.tokens, token],
+                events: [
+                    ...previous.events,
+                    {
+                        type: SketchEventType.tokenAdd,
+                        token
+                    }
+                ]
             };
         });
     };
@@ -282,12 +333,7 @@ const useSketch = (socket: PlaySocket | null) => {
             let y = 0;
             const tokens = [...previous.tokens];
             const events = [...previous.events];
-            users.forEach(({
-                id,
-                name,
-                isMaster,
-                character
-            }) => {
+            users.forEach(({ id, name, isMaster, character }) => {
                 if (!isMaster) {
                     const token = getNewTokenData(tokens);
                     if (!x && !y) {
@@ -327,9 +373,9 @@ const useSketch = (socket: PlaySocket | null) => {
     ) => {
         updateSketch((previous) => ({
             ...previous,
-            tokens: previous.tokens.map((tok) => (
+            tokens: previous.tokens.map((tok) =>
                 tok.id === token.id ? token : tok
-            )),
+            ),
             events: events ?? previous.events
         }));
     };
@@ -345,9 +391,9 @@ const useSketch = (socket: PlaySocket | null) => {
         };
         const updater = (previous: SketchData) => ({
             ...previous,
-            tokens: previous.tokens.map((tok) => (
+            tokens: previous.tokens.map((tok) =>
                 tok.id === token.id ? token : tok
-            )),
+            ),
             events: [...previous.events, event]
         });
         if (socket?.isMaster || userAllowed) {
@@ -356,22 +402,24 @@ const useSketch = (socket: PlaySocket | null) => {
         setSketchData(updater as SetStateAction<SketchData>);
     };
 
-    const setTokenAttachedData = (id: string, attachedData: SketchTokenAttachedData | null) => {
+    const setTokenAttachedData = (
+        id: string,
+        attachedData: SketchTokenAttachedData | null
+    ) => {
         updateSketch((previous) => ({
             ...previous,
-            tokens: previous.tokens.map((token) => (
-                token.id === id ? {
-                    ...token,
-                    attachedData
-                } : token
-            ))
+            tokens: previous.tokens.map((token) =>
+                token.id === id
+                    ? {
+                          ...token,
+                          attachedData
+                      }
+                    : token
+            )
         }));
     };
 
-    const attachTokenData = (
-        id: string,
-        sessionUser: SessionUser
-    ) => {
+    const attachTokenData = (id: string, sessionUser: SessionUser) => {
         setTokenAttachedData(id, {
             userId: sessionUser.id,
             userName: sessionUser.name,
@@ -389,16 +437,20 @@ const useSketch = (socket: PlaySocket | null) => {
             const { tokens } = previous;
             const token = findById<SketchTokenData>(tokens, id);
             // use tooltip placement to calculate new token position
-            const newY = token.tooltipPlacement === TooltipPlacement.bottom
-                ? token.y + 75
-                : token.y - 75;
+            const newY =
+                token.tooltipPlacement === TooltipPlacement.bottom
+                    ? token.y + 75
+                    : token.y - 75;
             return {
                 ...previous,
-                tokens: [...tokens, {
-                    ...token,
-                    id: generateId(),
-                    y: newY
-                }]
+                tokens: [
+                    ...tokens,
+                    {
+                        ...token,
+                        id: generateId(),
+                        y: newY
+                    }
+                ]
             };
         });
     };
@@ -406,28 +458,33 @@ const useSketch = (socket: PlaySocket | null) => {
     const changeTokenColor = (id: string, color: Color) => {
         updateSketch((previous) => ({
             ...previous,
-            tokens: previous.tokens.map((token) => (
-                token.id === id ? {
-                    ...token,
-                    color
-                } : token
-            ))
+            tokens: previous.tokens.map((token) =>
+                token.id === id
+                    ? {
+                          ...token,
+                          color
+                      }
+                    : token
+            )
         }));
     };
 
     const deleteSketchToken = (id: string, token: SketchTokenData) => {
         updateSketch((previous) => ({
             ...previous,
-            tokens: previous.tokens.filter(({ id: tokId }) => (
-                id !== tokId
-            )).map((tok, index) => ({
-                ...tok,
-                index
-            })),
-            events: [...previous.events, {
-                type: SketchEventType.tokenDelete,
-                token
-            }]
+            tokens: previous.tokens
+                .filter(({ id: tokId }) => id !== tokId)
+                .map((tok, index) => ({
+                    ...tok,
+                    index
+                })),
+            events: [
+                ...previous.events,
+                {
+                    type: SketchEventType.tokenDelete,
+                    token
+                }
+            ]
         }));
     };
 
@@ -435,9 +492,9 @@ const useSketch = (socket: PlaySocket | null) => {
         updateSketch((previous) => ({
             ...previous,
             tokens: [],
-            events: previous.events.filter(({ type }) => (
-                !type.startsWith('token')
-            ))
+            events: previous.events.filter(
+                ({ type }) => !type.startsWith('token')
+            )
         }));
     };
 
@@ -466,12 +523,12 @@ const useSketch = (socket: PlaySocket | null) => {
             const imageId = lastEvent.image.id;
             updateSketch((previous) => ({
                 ...previous,
-                images: previous.images.filter(({ id }) => (
-                    id !== imageId
-                )).map((img, index) => ({
-                    ...img,
-                    index
-                })),
+                images: previous.images
+                    .filter(({ id }) => id !== imageId)
+                    .map((img, index) => ({
+                        ...img,
+                        index
+                    })),
                 events: popEvents()
             }));
         }
@@ -479,10 +536,7 @@ const useSketch = (socket: PlaySocket | null) => {
 
     const undoImageMoveOrResize = (lastEvent: SketchEvent) => {
         if (lastEvent.image) {
-            updateSketchImage(
-                lastEvent.image,
-                popEvents()
-            );
+            updateSketchImage(lastEvent.image, popEvents());
         }
     };
 
@@ -509,11 +563,10 @@ const useSketch = (socket: PlaySocket | null) => {
             const { image } = lastEvent;
             updateSketch((previous) => ({
                 ...previous,
-                images: lastEvent.type === SketchEventType.imageForward ? (
-                    backwardImage(previous.images, image.index)
-                ) : (
-                    forwardImage(previous.images, image.index)
-                ),
+                images:
+                    lastEvent.type === SketchEventType.imageForward
+                        ? backwardImage(previous.images, image.index)
+                        : forwardImage(previous.images, image.index),
                 events: popEvents()
             }));
         }
@@ -524,12 +577,12 @@ const useSketch = (socket: PlaySocket | null) => {
             const tokenId = lastEvent.token.id;
             updateSketch((previous) => ({
                 ...previous,
-                tokens: previous.tokens.filter(({ id }) => (
-                    id !== tokenId
-                )).map((tok, index) => ({
-                    ...tok,
-                    index
-                })),
+                tokens: previous.tokens
+                    .filter(({ id }) => id !== tokenId)
+                    .map((tok, index) => ({
+                        ...tok,
+                        index
+                    })),
                 events: popEvents()
             }));
         }
@@ -537,10 +590,7 @@ const useSketch = (socket: PlaySocket | null) => {
 
     const undoTokenMove = (lastEvent: SketchEvent) => {
         if (lastEvent.token) {
-            updateSketchToken(
-                lastEvent.token,
-                popEvents()
-            );
+            updateSketchToken(lastEvent.token, popEvents());
         }
     };
 

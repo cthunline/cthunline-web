@@ -1,10 +1,5 @@
 import React, { memo } from 'react';
-import {
-    Box,
-    TextField,
-    Checkbox,
-    IconButton
-} from '@mui/material';
+import { Box, TextField, Checkbox, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { CoCSkill } from '@cthunline/games';
 
@@ -55,9 +50,7 @@ const Skill: React.FC<SkillProps> = ({
                     />
                 ) : null}
             </Box>
-            <Box gridColumn={`span ${readonly ? '6' : '5'}`}>
-                {data.name}
-            </Box>
+            <Box gridColumn={`span ${readonly ? '6' : '5'}`}>{data.name}</Box>
             <Box gridColumn="span 2">
                 <TextField
                     fullWidth

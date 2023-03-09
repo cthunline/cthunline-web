@@ -20,25 +20,20 @@ const Page: React.FC<PageProps> = ({ children }) => {
     useEffect(() => {
         if (isLoggedIn) {
             const { pathname } = location;
-            const page = pages.find(({ regex }) => (
-                regex?.test(pathname)
-            ));
+            const page = pages.find(({ regex }) => regex?.test(pathname));
             setShowNav(page?.showNav ?? true);
         } else {
             setShowNav(false);
         }
-    }, [
-        location,
-        isLoggedIn
-    ]);
+    }, [location, isLoggedIn]);
 
     return (
         <div className={`page flex column full-width full-height ${theme}`}>
             {showNav ? <Nav /> : null}
             <div
-                className={
-                    `content grow flex column center full-width ${showNav ? 'with-nav p-25' : 'full-height'}`
-                }
+                className={`content grow flex column center full-width ${
+                    showNav ? 'with-nav p-25' : 'full-height'
+                }`}
             >
                 {children}
             </div>

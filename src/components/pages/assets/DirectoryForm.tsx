@@ -1,11 +1,7 @@
 import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import {
-    Box,
-    TextField,
-    Button
-} from '@mui/material';
+import { Box, TextField, Button } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
 
 import { useApp } from '../../contexts/App';
@@ -40,18 +36,9 @@ const DirectoryForm: React.FC<DirectoryFormProps> = ({ onSubmit }) => {
                 validationSchema={validationSchema}
                 onSubmit={onFormSubmit}
             >
-                {({
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur
-                }) => (
+                {({ errors, touched, handleChange, handleBlur }) => (
                     <Form className="form small flex column center">
-                        <Field
-                            validateOnBlur
-                            validateOnChange
-                            name="name"
-                        >
+                        <Field validateOnBlur validateOnChange name="name">
                             {() => (
                                 <TextField
                                     className="form-input"
@@ -61,9 +48,9 @@ const DirectoryForm: React.FC<DirectoryFormProps> = ({ onSubmit }) => {
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     helperText={
+                                        errors.name &&
+                                        touched.name &&
                                         errors.name
-                                        && touched.name
-                                        && errors.name
                                     }
                                 />
                             )}

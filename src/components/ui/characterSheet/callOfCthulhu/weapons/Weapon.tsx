@@ -1,9 +1,5 @@
 import React, { memo } from 'react';
-import {
-    Box,
-    TextField,
-    IconButton
-} from '@mui/material';
+import { Box, TextField, IconButton } from '@mui/material';
 import { CoCWeapon } from '@cthunline/games';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
@@ -34,9 +30,7 @@ const Weapon: React.FC<WeaponProps> = ({
             gridTemplateColumns="repeat(24, 1fr)"
             alignItems="center"
         >
-            <Box gridColumn={`span ${readonly ? '10' : '8'}`}>
-                {data.name}
-            </Box>
+            <Box gridColumn={`span ${readonly ? '10' : '8'}`}>{data.name}</Box>
             {weaponKeys.map(({ key, gridColumn }) => (
                 <Box key={`weapon-${key}`} gridColumn={`span ${gridColumn}`}>
                     <TextField

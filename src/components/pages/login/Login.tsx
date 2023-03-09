@@ -1,18 +1,9 @@
 import React from 'react';
 import { Navigate, Link as RouterLink } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import {
-    Formik,
-    Form,
-    Field
-} from 'formik';
+import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
-import {
-    Paper,
-    TextField,
-    Button,
-    Link
-} from '@mui/material';
+import { Paper, TextField, Button, Link } from '@mui/material';
 import { GiD10 } from 'react-icons/gi';
 import { MdLogin } from 'react-icons/md';
 
@@ -29,12 +20,7 @@ const validationSchema = Yup.object().shape({
 });
 
 const Login = () => {
-    const {
-        configuration,
-        T,
-        isLoggedIn,
-        login
-    } = useApp();
+    const { configuration, T, isLoggedIn, login } = useApp();
 
     const initialValues: LoginFormData = {
         email: '',
@@ -63,18 +49,9 @@ const Login = () => {
                 validationSchema={validationSchema}
                 onSubmit={onSubmit}
             >
-                {({
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur
-                }) => (
+                {({ errors, touched, handleChange, handleBlur }) => (
                     <Form className="form small flex column center">
-                        <Field
-                            validateOnBlur
-                            validateOnChange
-                            name="email"
-                        >
+                        <Field validateOnBlur validateOnChange name="email">
                             {() => (
                                 <TextField
                                     className="form-input"
@@ -84,31 +61,29 @@ const Login = () => {
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     helperText={
+                                        errors.email &&
+                                        touched.email &&
                                         errors.email
-                                        && touched.email
-                                        && errors.email
                                     }
                                 />
                             )}
                         </Field>
-                        <Field
-                            validateOnBlur
-                            validateOnChange
-                            name="password"
-                        >
+                        <Field validateOnBlur validateOnChange name="password">
                             {() => (
                                 <TextField
                                     className="form-input"
                                     label={T('user.password')}
                                     name="password"
                                     type="password"
-                                    error={!!errors.password && !!touched.password}
+                                    error={
+                                        !!errors.password && !!touched.password
+                                    }
                                     onChange={handleChange}
                                     onBlur={handleBlur}
                                     helperText={
+                                        errors.password &&
+                                        touched.password &&
                                         errors.password
-                                        && touched.password
-                                        && errors.password
                                     }
                                 />
                             )}

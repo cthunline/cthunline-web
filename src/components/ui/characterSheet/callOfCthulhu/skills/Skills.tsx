@@ -36,9 +36,7 @@ const Skills: React.FC<SkillsProps> = ({
                 onDelete={onDelete}
             />
         ))}
-        {!readonly ? (
-            <SkillAdd onSubmit={onCreate} />
-        ) : null}
+        {!readonly ? <SkillAdd onSubmit={onCreate} /> : null}
     </Box>
 );
 

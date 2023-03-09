@@ -21,13 +21,7 @@ const NotesWidget: React.FC<NotesWidgetProps> = ({ onClose }) => {
     const { T } = useApp();
     const { confirmDialog } = useDialog();
     const { sessionId } = usePlay();
-    const {
-        noteList,
-        createNote,
-        editNote,
-        moveNote,
-        deleteNote
-    } = useNote({
+    const { noteList, createNote, editNote, moveNote, deleteNote } = useNote({
         sessionId,
         loadList: true
     });
@@ -46,11 +40,7 @@ const NotesWidget: React.FC<NotesWidgetProps> = ({ onClose }) => {
     };
 
     const onEdit = async (note: Note) => {
-        const {
-            id,
-            title,
-            text
-        } = note;
+        const { id, title, text } = note;
         await editNote({
             noteId: id,
             data: {
@@ -102,21 +92,20 @@ const NotesWidget: React.FC<NotesWidgetProps> = ({ onClose }) => {
                         onEdit={onEdit}
                         onBack={() => setNoteData(null)}
                     />
-                ) : [
-                    <NoteList
-                        key="note-list"
-                        notes={noteList.notes}
-                        sharedNotes={noteList.sharedNotes}
-                        onSelect={(note: Note) => setNoteData(note)}
-                        onShare={onShare}
-                        onMove={onMove}
-                        onDelete={onDelete}
-                    />,
-                    <NoteCreate
-                        key="note-create"
-                        onCreate={onCreate}
-                    />
-                ]}
+                ) : (
+                    [
+                        <NoteList
+                            key="note-list"
+                            notes={noteList.notes}
+                            sharedNotes={noteList.sharedNotes}
+                            onSelect={(note: Note) => setNoteData(note)}
+                            onShare={onShare}
+                            onMove={onMove}
+                            onDelete={onDelete}
+                        />,
+                        <NoteCreate key="note-create" onCreate={onCreate} />
+                    ]
+                )}
             </Box>
         </Widget>
     );

@@ -29,43 +29,47 @@ const Advantages: React.FC<AdvantagesProps> = ({
         gap={2}
         rowGap={4}
     >
-        {advantages.map((advantage, index) => [
-            <Box
-                key={`advantage-${index.toString()}`}
-                gridColumn="span 11"
-                display="grid"
-                gridTemplateColumns="repeat(12, 1fr)"
-                alignItems="center"
-                gap={2}
-            >
-                <FieldLayout<SeventhSeaAdvantage>
-                    gameId={GameId.seventhSea}
-                    fields={advantageFields}
-                    textSectionKey="advantage"
-                    data={advantage}
-                    readonly={readonly}
-                    onChange={(data) => onChange(index, {
-                        ...advantage,
-                        ...data
-                    })}
-                />
-            </Box>,
-            readonly ? null : (
+        {advantages
+            .map((advantage, index) => [
                 <Box
-                    key={`advantage-${index.toString()}-delete`}
-                    gridColumn="span 1"
+                    key={`advantage-${index.toString()}`}
+                    gridColumn="span 11"
+                    display="grid"
+                    gridTemplateColumns="repeat(12, 1fr)"
                     alignItems="center"
+                    gap={2}
                 >
-                    <IconButton
-                        size="medium"
-                        color="error"
-                        onClick={() => onDelete(index)}
+                    <FieldLayout<SeventhSeaAdvantage>
+                        gameId={GameId.seventhSea}
+                        fields={advantageFields}
+                        textSectionKey="advantage"
+                        data={advantage}
+                        readonly={readonly}
+                        onChange={(data) =>
+                            onChange(index, {
+                                ...advantage,
+                                ...data
+                            })
+                        }
+                    />
+                </Box>,
+                readonly ? null : (
+                    <Box
+                        key={`advantage-${index.toString()}-delete`}
+                        gridColumn="span 1"
+                        alignItems="center"
                     >
-                        <MdOutlineDeleteOutline />
-                    </IconButton>
-                </Box>
-            )
-        ]).flat()}
+                        <IconButton
+                            size="medium"
+                            color="error"
+                            onClick={() => onDelete(index)}
+                        >
+                            <MdOutlineDeleteOutline />
+                        </IconButton>
+                    </Box>
+                )
+            ])
+            .flat()}
     </Box>
 );
 

@@ -1,10 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Box,
-    Button,
-    FormControlLabel,
-    Checkbox
-} from '@mui/material';
+import { Box, Button, FormControlLabel, Checkbox } from '@mui/material';
 import {
     GiD4,
     GiDiceSixFacesSix,
@@ -26,26 +21,34 @@ import {
 
 import './DicesWidget.css';
 
-const defaultSelectedDices = (
-    Object.fromEntries(diceTypes.map((type) => [type, 0])) as DicesData
-);
+const defaultSelectedDices = Object.fromEntries(
+    diceTypes.map((type) => [type, 0])
+) as DicesData;
 
 const getDiceIcon = (
     type: DiceType,
     size: number
 ): JSX.Element | JSX.Element[] | null => {
     switch (type) {
-        case 'D4': return <GiD4 size={size} />;
-        case 'D6': return <GiDiceSixFacesSix size={size} />;
-        case 'D8': return <GiDiceEightFacesEight size={size} />;
-        case 'D10': return <GiD10 size={size} />;
-        case 'D12': return <GiD12 size={size} />;
-        case 'D20': return <GiDiceTwentyFacesTwenty size={size} />;
-        case 'D100': return [
-            <GiD10 size={size} key={`dice-${type}-1`} />,
-            <GiD10 size={size} key={`dice-${type}-2`} />
-        ];
-        default: return null;
+        case 'D4':
+            return <GiD4 size={size} />;
+        case 'D6':
+            return <GiDiceSixFacesSix size={size} />;
+        case 'D8':
+            return <GiDiceEightFacesEight size={size} />;
+        case 'D10':
+            return <GiD10 size={size} />;
+        case 'D12':
+            return <GiD12 size={size} />;
+        case 'D20':
+            return <GiDiceTwentyFacesTwenty size={size} />;
+        case 'D100':
+            return [
+                <GiD10 size={size} key={`dice-${type}-1`} />,
+                <GiD10 size={size} key={`dice-${type}-2`} />
+            ];
+        default:
+            return null;
     }
 };
 
@@ -62,9 +65,8 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
 }) => {
     const { T } = useApp();
 
-    const [selectedDices, setSelectedDices] = useState<DicesData>(
-        defaultSelectedDices
-    );
+    const [selectedDices, setSelectedDices] =
+        useState<DicesData>(defaultSelectedDices);
     const [isPrivate, setIsPrivate] = useState<boolean>(false);
 
     const modifySelectedDice = (type: DiceType, modifier: number) => {
@@ -79,17 +81,13 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
         setIsPrivate(false);
     };
 
-    const selectedDiceTypes = diceTypes.filter((type) => (
-        selectedDices[type] > 0
-    ));
+    const selectedDiceTypes = diceTypes.filter(
+        (type) => selectedDices[type] > 0
+    );
 
     const onSubmit = () => {
-        const request: DicesRequest = (
-            Object.fromEntries(
-                selectedDiceTypes.map((type) => (
-                    [type, selectedDices[type]]
-                ))
-            )
+        const request: DicesRequest = Object.fromEntries(
+            selectedDiceTypes.map((type) => [type, selectedDices[type]])
         );
         onRoll(request, isPrivate);
         resetSelectedDices();
@@ -137,10 +135,7 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
                         className="flex center clickable"
                         onClick={() => modifySelectedDice(type, -1)}
                     >
-                        <Box
-                            className="mr-5"
-                            component="span"
-                        >
+                        <Box className="mr-5" component="span">
                             {`${selectedDices[type]} x`}
                         </Box>
                         {getDiceIcon(type, 30)}
@@ -150,24 +145,23 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
         </Box>
     );
 
-    const getRollPrivateCheckbox = () => (
+    const getRollPrivateCheckbox = () =>
         isMaster ? (
             <FormControlLabel
                 label={T('common.private')}
                 labelPlacement="start"
-                control={(
+                control={
                     <Checkbox
                         checked={isPrivate}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             setIsPrivate(e.target.checked);
                         }}
                     />
-                )}
+                }
             />
-        ) : null
-    );
+        ) : null;
 
-    const getRollButton = () => (
+    const getRollButton = () =>
         selectedDiceTypes.length ? (
             <Box className="flex column center">
                 {getRollPrivateCheckbox()}
@@ -175,8 +169,7 @@ const DicesWidget: React.FC<DicesWidgetProps> = ({
                     {T('action.roll')}
                 </Button>
             </Box>
-        ) : null
-    );
+        ) : null;
 
     return (
         <Widget

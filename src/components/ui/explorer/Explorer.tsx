@@ -49,15 +49,15 @@ const Explorer = ({
     onFileClick,
     onDelete
 }: ExplorerProps) => {
-    const filteredItems = items.filter(({ parentId }) => (
+    const filteredItems = items.filter(({ parentId }) =>
         directoryId ? parentId === directoryId : !parentId
-    ));
-    const directories = filteredItems.filter(({ type }) => (
-        type === ExplorerItemType.directory
-    ));
-    const files = filteredItems.filter(({ type }) => (
-        type === ExplorerItemType.file
-    ));
+    );
+    const directories = filteredItems.filter(
+        ({ type }) => type === ExplorerItemType.directory
+    );
+    const files = filteredItems.filter(
+        ({ type }) => type === ExplorerItemType.file
+    );
 
     const getIcon = (type: ExplorerItemType, icon?: JSX.Element) => {
         if (icon) {
@@ -82,32 +82,31 @@ const Explorer = ({
                     <ListItemText primary=".." />
                 </ListItemButton>
             ) : null}
-            {[...directories, ...files].map(({
-                id,
-                name,
-                type,
-                icon
-            }) => {
+            {[...directories, ...files].map(({ id, name, type, icon }) => {
                 const isDirectory = type === ExplorerItemType.directory;
                 return (
                     <ListItem
                         key={`explorer-${type}-${id}`}
-                        secondaryAction={onDelete ? (
-                            <ListItemSecondaryAction>
-                                <IconButton
-                                    edge="end"
-                                    size="medium"
-                                    color="error"
-                                    onClick={() => onDelete(type, id, name)}
-                                >
-                                    <MdOutlineDeleteOutline />
-                                </IconButton>
-                            </ListItemSecondaryAction>
-                        ) : null}
+                        secondaryAction={
+                            onDelete ? (
+                                <ListItemSecondaryAction>
+                                    <IconButton
+                                        edge="end"
+                                        size="medium"
+                                        color="error"
+                                        onClick={() => onDelete(type, id, name)}
+                                    >
+                                        <MdOutlineDeleteOutline />
+                                    </IconButton>
+                                </ListItemSecondaryAction>
+                            ) : null
+                        }
                         disablePadding
                     >
                         <ListItemButton
-                            className={`${isDirectory || onFileClick ? 'clickable' : ''}`}
+                            className={`${
+                                isDirectory || onFileClick ? 'clickable' : ''
+                            }`}
                             selected={selectedId === id}
                             onClick={() => {
                                 if (isDirectory) {
@@ -117,9 +116,7 @@ const Explorer = ({
                                 }
                             }}
                         >
-                            <ListItemIcon>
-                                {getIcon(type, icon)}
-                            </ListItemIcon>
+                            <ListItemIcon>{getIcon(type, icon)}</ListItemIcon>
                             <ListItemText primary={name} />
                         </ListItemButton>
                     </ListItem>

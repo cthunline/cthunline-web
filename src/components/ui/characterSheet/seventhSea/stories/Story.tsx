@@ -18,12 +18,7 @@ interface StoryProps {
     onChange: (data: SeventhSeaStory) => void;
 }
 
-const Story: React.FC<StoryProps> = ({
-    index,
-    story,
-    readonly,
-    onChange
-}) => {
+const Story: React.FC<StoryProps> = ({ index, story, readonly, onChange }) => {
     const { T } = useApp();
 
     return (
@@ -40,10 +35,12 @@ const Story: React.FC<StoryProps> = ({
                 textSectionKey="story"
                 data={story}
                 readonly={readonly}
-                onChange={(data) => onChange({
-                    ...story,
-                    ...data
-                })}
+                onChange={(data) =>
+                    onChange({
+                        ...story,
+                        ...data
+                    })
+                }
             />
             <Box gridColumn="span 12">
                 {T('game.seventhSea.story.steps')}
@@ -86,9 +83,9 @@ const Story: React.FC<StoryProps> = ({
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             onChange({
                                 ...story,
-                                steps: story.steps.map((st, i) => (
+                                steps: story.steps.map((st, i) =>
                                     i === idx ? e.target.value : st
-                                ))
+                                )
                             });
                         }}
                     />
@@ -105,7 +102,9 @@ const Story: React.FC<StoryProps> = ({
                             onClick={() => {
                                 onChange({
                                     ...story,
-                                    steps: story.steps.filter((_st, i) => i !== idx)
+                                    steps: story.steps.filter(
+                                        (_st, i) => i !== idx
+                                    )
                                 });
                             }}
                         >

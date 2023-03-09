@@ -1,16 +1,6 @@
-import React, {
-    useState,
-    useEffect,
-    useRef
-} from 'react';
-import {
-    Box,
-    Paper
-} from '@mui/material';
-import {
-    FiMinimize2,
-    FiMaximize2
-} from 'react-icons/fi';
+import React, { useState, useEffect, useRef } from 'react';
+import { Box, Paper } from '@mui/material';
+import { FiMinimize2, FiMaximize2 } from 'react-icons/fi';
 
 import { PlayLog } from '../../../types';
 import AutoScroll from '../autoScroll/AutoScroll';
@@ -37,13 +27,17 @@ const Console: React.FC<ConsoleProps> = ({ logs }) => {
 
     useEffect(() => {
         scrollToBottom();
-    }, [
-        logs
-    ]);
+    }, [logs]);
 
     return (
-        <Box className={`console-container ${isMinimized ? 'minimized' : ''}`} ref={consoleRef}>
-            <Paper className="console-paper flex column full-width full-height" elevation={3}>
+        <Box
+            className={`console-container ${isMinimized ? 'minimized' : ''}`}
+            ref={consoleRef}
+        >
+            <Paper
+                className="console-paper flex column full-width full-height"
+                elevation={3}
+            >
                 <Box className="console-bar flex row center-y end-x full-width p-5">
                     <Box className="console-bar-title pl-5 pr-5">
                         {T('entity.console')}
@@ -64,7 +58,11 @@ const Console: React.FC<ConsoleProps> = ({ logs }) => {
                         )}
                     </Box>
                 </Box>
-                <Box className={`console-inner full-width ${isMinimized ? 'hidden' : 'p-10'} zero-height flex column grow`}>
+                <Box
+                    className={`console-inner full-width ${
+                        isMinimized ? 'hidden' : 'p-10'
+                    } zero-height flex column grow`}
+                >
                     <Box
                         className="console-logs full-width flex column grow column scroll-always"
                         ref={consoleRef}

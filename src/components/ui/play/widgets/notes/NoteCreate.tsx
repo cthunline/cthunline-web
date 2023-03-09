@@ -1,9 +1,5 @@
 import React, { useState } from 'react';
-import {
-    Box,
-    TextField,
-    IconButton
-} from '@mui/material';
+import { Box, TextField, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 
 interface NoteCreateProps {
@@ -14,10 +10,7 @@ const NoteCreate: React.FC<NoteCreateProps> = ({ onCreate }) => {
     const [title, setTitle] = useState<string>('');
 
     return (
-        <Box
-            key="notes-form"
-            className="full-width flex row center-y"
-        >
+        <Box key="notes-form" className="full-width flex row center-y">
             <TextField
                 fullWidth
                 size="small"

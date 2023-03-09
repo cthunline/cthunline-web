@@ -32,14 +32,20 @@ interface DialogContextData {
 }
 
 const defaultDialogData: DialogContextData = {
-    confirmDialog: () => { /* default */ },
-    openDialog: () => { /* default */ },
-    closeDialog: () => { /* default */ }
+    confirmDialog: () => {
+        /* default */
+    },
+    openDialog: () => {
+        /* default */
+    },
+    closeDialog: () => {
+        /* default */
+    }
 };
 
 const DialogContext = createContext<DialogContextData>(defaultDialogData);
 
-export const DialogProvider:React.FC<DialogProviderProps> = ({ children }) => {
+export const DialogProvider: React.FC<DialogProviderProps> = ({ children }) => {
     const [dialogOptions, setDialogOptions] = useState<DialogData>({
         open: false,
         title: '',
@@ -48,14 +54,17 @@ export const DialogProvider:React.FC<DialogProviderProps> = ({ children }) => {
     });
 
     // opens a simple confirmation dialog
-    const confirmDialog = useCallback((title: string, onConfirm: () => void) => {
-        setDialogOptions({
-            open: true,
-            title,
-            content: null,
-            onConfirm
-        });
-    }, []);
+    const confirmDialog = useCallback(
+        (title: string, onConfirm: () => void) => {
+            setDialogOptions({
+                open: true,
+                title,
+                content: null,
+                onConfirm
+            });
+        },
+        []
+    );
 
     // opens a dialog box
     // used when content is more complex than a siple confirmation dialog
@@ -75,13 +84,14 @@ export const DialogProvider:React.FC<DialogProviderProps> = ({ children }) => {
         }));
     };
 
-    const contextValue = useMemo(() => ({
-        confirmDialog,
-        openDialog,
-        closeDialog
-    }), [
-        confirmDialog
-    ]);
+    const contextValue = useMemo(
+        () => ({
+            confirmDialog,
+            openDialog,
+            closeDialog
+        }),
+        [confirmDialog]
+    );
 
     return (
         <DialogContext.Provider value={contextValue}>

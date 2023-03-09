@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import {
-    Box,
-    CircularProgress
-} from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 
 import { useApp } from '../../contexts/App';
 import { useDialog } from '../../contexts/Dialog';
@@ -46,10 +43,7 @@ const PlayContent = () => {
     const onWidgetOpen = (widget: WidgetType) => {
         if (!openWidgets.includes(widget)) {
             // if widget is not open then open it
-            setOpenWidgets((previous) => ([
-                ...previous,
-                widget
-            ]));
+            setOpenWidgets((previous) => [...previous, widget]);
         } else {
             // otherwise if it's already open focus it
             const widgetEl = document.querySelector(`#widget-${widget}`);
@@ -60,11 +54,9 @@ const PlayContent = () => {
     };
 
     const onWidgetClose = (widget: WidgetType) => {
-        setOpenWidgets((previous) => (
-            previous.filter((openWidget) => (
-                openWidget !== widget
-            ))
-        ));
+        setOpenWidgets((previous) =>
+            previous.filter((openWidget) => openWidget !== widget)
+        );
     };
 
     const onExit = () => {
@@ -73,7 +65,7 @@ const PlayContent = () => {
         });
     };
 
-    const getWidgets = (widgs: WidgetType[]) => (
+    const getWidgets = (widgs: WidgetType[]) =>
         widgs.map((widget) => {
             const key = `widget-${widget}`;
             switch (widget) {
@@ -113,29 +105,16 @@ const PlayContent = () => {
                         />
                     );
                 case WidgetType.sketch:
-                    return (
-                        <SketchWidget
-                            key={key}
-                            onClose={onWidgetClose}
-                        />
-                    );
+                    return <SketchWidget key={key} onClose={onWidgetClose} />;
                 case WidgetType.notes:
-                    return (
-                        <NotesWidget
-                            key={key}
-                            onClose={onWidgetClose}
-                        />
-                    );
+                    return <NotesWidget key={key} onClose={onWidgetClose} />;
                 default:
                     return null;
             }
-        })
-    );
+        });
 
     if (!socket) {
-        return (
-            <CircularProgress size={100} />
-        );
+        return <CircularProgress size={100} />;
     }
 
     return (
@@ -145,14 +124,15 @@ const PlayContent = () => {
                 onWidgetOpen={onWidgetOpen}
                 onExit={onExit}
             />
-            <Box id="play-content" className="play-content grow flex column p-25">
+            <Box
+                id="play-content"
+                className="play-content grow flex column p-25"
+            >
                 {getWidgets(openWidgets)}
                 {sketchData.displayed ? (
                     <Sketch isMaster={socket?.isMaster} />
                 ) : null}
-                {!socket.isMaster ? (
-                    <Audio />
-                ) : null }
+                {!socket.isMaster ? <Audio /> : null}
                 <Console logs={logs} />
             </Box>
         </Box>

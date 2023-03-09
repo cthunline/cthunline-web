@@ -13,20 +13,25 @@ export interface AttackField {
     gridColumn: number;
 }
 
-export const attackFields: AttackField[] = [{
-    key: 'name',
-    type: 'string',
-    gridColumn: 4
-}, {
-    key: 'attackBonus',
-    type: 'number',
-    gridColumn: 2
-}, {
-    key: 'damage',
-    type: 'string',
-    gridColumn: 3
-}, {
-    key: 'type',
-    type: 'string',
-    gridColumn: 3
-}];
+export const attackFields: AttackField[] = [
+    {
+        key: 'name',
+        type: 'string',
+        gridColumn: 4
+    },
+    {
+        key: 'attackBonus',
+        type: 'number',
+        gridColumn: 2
+    },
+    {
+        key: 'damage',
+        type: 'string',
+        gridColumn: 3
+    },
+    {
+        key: 'type',
+        type: 'string',
+        gridColumn: 3
+    }
+];

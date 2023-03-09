@@ -1,17 +1,9 @@
-import {
-    useState,
-    useEffect,
-    useCallback
-} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
 import { useApp } from '../contexts/App';
-import {
-    Session,
-    SessionCreateBody,
-    SessionEditBody
-} from '../../types';
+import { Session, SessionCreateBody, SessionEditBody } from '../../types';
 
 interface SessionHookOptions {
     loadList?: boolean;
@@ -37,10 +29,7 @@ interface DeleteSessionOptions {
     isToast?: boolean;
 }
 
-const useSession = ({
-    loadList,
-    sessionId
-}: SessionHookOptions = {}) => {
+const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
     const { handleApiError } = useApp();
 
     const [sessionList, setSessionList] = useState<Session[]>([]);
@@ -59,24 +48,28 @@ const useSession = ({
         }
     }, [handleApiError]);
 
-    const getSession = useCallback(async (
-        sessId: number
-    ): Promise<Session> => {
-        try {
-            return await Api.call({
-                method: 'GET',
-                route: `/sessions/${sessId}`
-            });
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    }, [handleApiError]);
+    const getSession = useCallback(
+        async (sessId: number): Promise<Session> => {
+            try {
+                return await Api.call({
+                    method: 'GET',
+                    route: `/sessions/${sessId}`
+                });
+            } catch (err: any) {
+                handleApiError(err);
+                throw err;
+            }
+        },
+        [handleApiError]
+    );
 
-    const refreshSession = useCallback(async (sessId: number) => {
-        const sess = await getSession(sessId);
-        setSession(sess);
-    }, [getSession]);
+    const refreshSession = useCallback(
+        async (sessId: number) => {
+            const sess = await getSession(sessId);
+            setSession(sess);
+        },
+        [getSession]
+    );
 
     const refreshSessionList = useCallback(async () => {
         const sessions = await getSessions();
@@ -86,49 +79,40 @@ const useSession = ({
     const refresh = useCallback(async () => {
         const tasks = [];
         if (sessionId) {
-            tasks.push(
-                refreshSession(sessionId)
-            );
+            tasks.push(refreshSession(sessionId));
         }
         if (loadList) {
-            tasks.push(
-                refreshSessionList()
-            );
+            tasks.push(refreshSessionList());
         }
         await Promise.all(tasks);
-    }, [
-        loadList,
-        sessionId,
-        refreshSession,
-        refreshSessionList
-    ]);
+    }, [loadList, sessionId, refreshSession, refreshSessionList]);
 
-    const createSession = useCallback(async ({
-        data,
-        isRefresh = true,
-        isToast = true
-    }: CreateSessionOptions): Promise<Session> => {
-        try {
-            const sess = await Api.call({
-                method: 'POST',
-                route: '/sessions',
-                data
-            });
-            if (isRefresh) {
-                await refresh();
+    const createSession = useCallback(
+        async ({
+            data,
+            isRefresh = true,
+            isToast = true
+        }: CreateSessionOptions): Promise<Session> => {
+            try {
+                const sess = await Api.call({
+                    method: 'POST',
+                    route: '/sessions',
+                    data
+                });
+                if (isRefresh) {
+                    await refresh();
+                }
+                if (isToast) {
+                    toast.success('Session created');
+                }
+                return sess;
+            } catch (err: any) {
+                handleApiError(err);
+                throw err;
             }
-            if (isToast) {
-                toast.success('Session created');
-            }
-            return sess;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    }, [
-        refresh,
-        handleApiError
-    ]);
+        },
+        [refresh, handleApiError]
+    );
 
     const editSession = async ({
         sessionId: sessId,
@@ -155,36 +139,34 @@ const useSession = ({
         }
     };
 
-    const deleteSession = useCallback(async ({
-        sessionId: sessId,
-        isRefresh = true,
-        isToast = true
-    }: DeleteSessionOptions): Promise<void> => {
-        try {
-            await Api.call({
-                method: 'DELETE',
-                route: `/sessions/${sessId}`
-            });
-            if (isRefresh) {
-                await refresh();
+    const deleteSession = useCallback(
+        async ({
+            sessionId: sessId,
+            isRefresh = true,
+            isToast = true
+        }: DeleteSessionOptions): Promise<void> => {
+            try {
+                await Api.call({
+                    method: 'DELETE',
+                    route: `/sessions/${sessId}`
+                });
+                if (isRefresh) {
+                    await refresh();
+                }
+                if (isToast) {
+                    toast.success('Session deleted');
+                }
+            } catch (err: any) {
+                handleApiError(err);
+                throw err;
             }
-            if (isToast) {
-                toast.success('Session deleted');
-            }
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    }, [
-        refresh,
-        handleApiError
-    ]);
+        },
+        [refresh, handleApiError]
+    );
 
     useEffect(() => {
         refresh();
-    }, [
-        refresh
-    ]);
+    }, [refresh]);
 
     return {
         session,

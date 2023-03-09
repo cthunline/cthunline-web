@@ -34,7 +34,10 @@ const SpellLevel: React.FC<SpellLevelProps> = ({
             alignItems="center"
             gap={2}
         >
-            <Box key={`spellcasting-level-${spellLevel.level}-level`} gridColumn="span 7">
+            <Box
+                key={`spellcasting-level-${spellLevel.level}-level`}
+                gridColumn="span 7"
+            >
                 {`${T('game.dnd5.spellcasting.level')} ${spellLevel.level}`}
                 {readonly ? null : (
                     <Box component="span" className="ml-5">
@@ -58,7 +61,10 @@ const SpellLevel: React.FC<SpellLevelProps> = ({
             {spellLevelFields.map((key) => {
                 const value = spellLevel[key];
                 return (
-                    <Box key={`spellcasting-level-${spellLevel.level}-${key}`} gridColumn="span 2">
+                    <Box
+                        key={`spellcasting-level-${spellLevel.level}-${key}`}
+                        gridColumn="span 2"
+                    >
                         <TextField
                             fullWidth
                             InputProps={{
@@ -71,7 +77,9 @@ const SpellLevel: React.FC<SpellLevelProps> = ({
                             size="small"
                             label={T(`game.dnd5.spellcasting.${key}`)}
                             value={value}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
                                 onChange({
                                     ...spellLevel,
                                     [key]: Number(onlyNumbers(e.target.value))

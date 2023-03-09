@@ -37,33 +37,55 @@ const Characteristics: React.FC<CharacteristicsProps> = ({
     onPointsChange,
     onLuckOrSanityChange
 }) => {
-    const onCharacteristicChange = useCallback((field: string, char: CoCCharacteristic) => {
-        onCharacteristicsChange({
-            [field]: char
-        });
-    }, [onCharacteristicsChange]);
+    const onCharacteristicChange = useCallback(
+        (field: string, char: CoCCharacteristic) => {
+            onCharacteristicsChange({
+                [field]: char
+            });
+        },
+        [onCharacteristicsChange]
+    );
 
-    const onPointChange = useCallback((field: string, point: CoCPoint) => {
-        onPointsChange({
-            [field]: point
-        });
-    }, [onPointsChange]);
+    const onPointChange = useCallback(
+        (field: string, point: CoCPoint) => {
+            onPointsChange({
+                [field]: point
+            });
+        },
+        [onPointsChange]
+    );
 
-    const onLuckChange = useCallback((updatedLuck: CoCLuck) => {
-        onLuckOrSanityChange({
-            luck: updatedLuck
-        });
-    }, [onLuckOrSanityChange]);
+    const onLuckChange = useCallback(
+        (updatedLuck: CoCLuck) => {
+            onLuckOrSanityChange({
+                luck: updatedLuck
+            });
+        },
+        [onLuckOrSanityChange]
+    );
 
-    const onSanityChange = useCallback((updatedSanity: CoCSanity) => {
-        onLuckOrSanityChange({
-            sanity: updatedSanity
-        });
-    }, [onLuckOrSanityChange]);
+    const onSanityChange = useCallback(
+        (updatedSanity: CoCSanity) => {
+            onLuckOrSanityChange({
+                sanity: updatedSanity
+            });
+        },
+        [onLuckOrSanityChange]
+    );
 
     return (
-        <Box gridColumn="span 12" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
-            <Box gridColumn="span 8" display="grid" gridTemplateColumns="repeat(12, 1fr)" gap={2}>
+        <Box
+            gridColumn="span 12"
+            display="grid"
+            gridTemplateColumns="repeat(12, 1fr)"
+            gap={2}
+        >
+            <Box
+                gridColumn="span 8"
+                display="grid"
+                gridTemplateColumns="repeat(12, 1fr)"
+                gap={2}
+            >
                 {charFields.map(({ field, textKey }) => (
                     <Characteristic
                         key={field}
@@ -86,11 +108,7 @@ const Characteristics: React.FC<CharacteristicsProps> = ({
                         onChange={onPointChange}
                     />
                 ))}
-                <Luck
-                    data={luck}
-                    readonly={readonly}
-                    onChange={onLuckChange}
-                />
+                <Luck data={luck} readonly={readonly} onChange={onLuckChange} />
                 <Sanity
                     data={sanity}
                     readonly={readonly}

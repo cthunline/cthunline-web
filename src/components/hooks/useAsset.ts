@@ -1,8 +1,4 @@
-import {
-    useState,
-    useEffect,
-    useCallback
-} from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import Api from '../../services/api';
@@ -44,88 +40,80 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
             handleApiError(err);
             throw err;
         }
-    }, [
-        type,
-        handleApiError
-    ]);
+    }, [type, handleApiError]);
 
     const refreshAssetList = useCallback(async () => {
         const assets = await getAssets();
         setAssetList(assets);
     }, [getAssets]);
 
-    const uploadAssets = useCallback(async ({
-        data,
-        progress,
-        isRefresh = true,
-        isToast = true
-    }: UploadOptions): Promise<Asset[]> => {
-        try {
-            const formData = new FormData();
-            [...data.assets].forEach((file) => {
-                formData.append('assets', file);
-            });
-            if (data.directoryId) {
-                formData.append('directoryId', data.directoryId.toString());
+    const uploadAssets = useCallback(
+        async ({
+            data,
+            progress,
+            isRefresh = true,
+            isToast = true
+        }: UploadOptions): Promise<Asset[]> => {
+            try {
+                const formData = new FormData();
+                [...data.assets].forEach((file) => {
+                    formData.append('assets', file);
+                });
+                if (data.directoryId) {
+                    formData.append('directoryId', data.directoryId.toString());
+                }
+                const { assets } = await Api.call({
+                    method: 'POST',
+                    route: '/assets',
+                    data: formData,
+                    progress
+                });
+                if (isRefresh && loadList) {
+                    await refreshAssetList();
+                }
+                if (isToast) {
+                    const s = assets.length > 1 ? 's' : '';
+                    toast.success(`Asset${s} uploaded`);
+                }
+                return assets;
+            } catch (err: any) {
+                handleApiError(err);
+                throw err;
             }
-            const { assets } = await Api.call({
-                method: 'POST',
-                route: '/assets',
-                data: formData,
-                progress
-            });
-            if (isRefresh && loadList) {
-                await refreshAssetList();
-            }
-            if (isToast) {
-                const s = assets.length > 1 ? 's' : '';
-                toast.success(`Asset${s} uploaded`);
-            }
-            return assets;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    }, [
-        loadList,
-        refreshAssetList,
-        handleApiError
-    ]);
+        },
+        [loadList, refreshAssetList, handleApiError]
+    );
 
-    const deleteAsset = useCallback(async ({
-        assetId,
-        isRefresh = true,
-        isToast = true
-    }: DeleteOptions): Promise<void> => {
-        try {
-            await Api.call({
-                method: 'DELETE',
-                route: `/assets/${assetId}`
-            });
-            if (isRefresh && loadList) {
-                await refreshAssetList();
+    const deleteAsset = useCallback(
+        async ({
+            assetId,
+            isRefresh = true,
+            isToast = true
+        }: DeleteOptions): Promise<void> => {
+            try {
+                await Api.call({
+                    method: 'DELETE',
+                    route: `/assets/${assetId}`
+                });
+                if (isRefresh && loadList) {
+                    await refreshAssetList();
+                }
+                if (isToast) {
+                    toast.success('Asset deleted');
+                }
+            } catch (err: any) {
+                handleApiError(err);
+                throw err;
             }
-            if (isToast) {
-                toast.success('Asset deleted');
-            }
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    }, [
-        loadList,
-        refreshAssetList,
-        handleApiError
-    ]);
+        },
+        [loadList, refreshAssetList, handleApiError]
+    );
 
     useEffect(() => {
         if (loadList) {
             refreshAssetList();
         }
-    }, [
-        loadList,
-        refreshAssetList
-    ]);
+    }, [loadList, refreshAssetList]);
 
     return {
         assetList,

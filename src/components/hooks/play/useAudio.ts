@@ -1,10 +1,6 @@
 import { useState, useCallback } from 'react';
 
-import {
-    PlaySocket,
-    AudioData,
-    Asset
-} from '../../../types';
+import { PlaySocket, AudioData, Asset } from '../../../types';
 
 export interface AudioHookExport {
     audioData: AudioData | null;
@@ -14,8 +10,12 @@ export interface AudioHookExport {
 
 export const defaultAudioHookExport: AudioHookExport = {
     audioData: null,
-    playAudio: () => { /* default */ },
-    stopAudio: () => { /* default */ }
+    playAudio: () => {
+        /* default */
+    },
+    stopAudio: () => {
+        /* default */
+    }
 };
 
 const useAudio = (socket: PlaySocket | null) => {
@@ -33,20 +33,19 @@ const useAudio = (socket: PlaySocket | null) => {
         setAudioData(null);
     };
 
-    const playAudio = useCallback((asset: Asset, time: number) => {
-        socket?.emit('audioPlay', {
-            assetId: asset.id,
-            time
-        });
-    }, [
-        socket
-    ]);
+    const playAudio = useCallback(
+        (asset: Asset, time: number) => {
+            socket?.emit('audioPlay', {
+                assetId: asset.id,
+                time
+            });
+        },
+        [socket]
+    );
 
     const stopAudio = useCallback(() => {
         socket?.emit('audioStop');
-    }, [
-        socket
-    ]);
+    }, [socket]);
 
     return {
         audioData,

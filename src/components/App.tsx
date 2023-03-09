@@ -13,22 +13,24 @@ import './utilities.css';
 const AppContent = () => {
     const { theme } = useApp();
 
-    const materialUiTheme = useMemo(() => (
-        createTheme({
-            palette: {
-                mode: theme
-            },
-            components: {
-                MuiTab: {
-                    styleOverrides: {
-                        root: {
-                            minHeight: 48
+    const materialUiTheme = useMemo(
+        () =>
+            createTheme({
+                palette: {
+                    mode: theme
+                },
+                components: {
+                    MuiTab: {
+                        styleOverrides: {
+                            root: {
+                                minHeight: 48
+                            }
                         }
                     }
                 }
-            }
-        })
-    ), [theme]);
+            }),
+        [theme]
+    );
 
     return (
         <ThemeProvider theme={materialUiTheme}>

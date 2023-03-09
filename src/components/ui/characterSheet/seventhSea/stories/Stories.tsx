@@ -25,30 +25,32 @@ const Stories: React.FC<StoriesProps> = ({
         gap={2}
         rowGap={6}
     >
-        {stories.map((story, index) => [
-            <Story
-                key={`story-${index.toString()}`}
-                index={index}
-                story={story}
-                readonly={readonly}
-                onChange={(data: SeventhSeaStory) => onChange(index, data)}
-            />,
-            readonly ? null : (
-                <Box
-                    key={`background-${index.toString()}-delete`}
-                    gridColumn="span 1"
-                    alignItems="center"
-                >
-                    <IconButton
-                        size="medium"
-                        color="error"
-                        onClick={() => onDelete(index)}
+        {stories
+            .map((story, index) => [
+                <Story
+                    key={`story-${index.toString()}`}
+                    index={index}
+                    story={story}
+                    readonly={readonly}
+                    onChange={(data: SeventhSeaStory) => onChange(index, data)}
+                />,
+                readonly ? null : (
+                    <Box
+                        key={`background-${index.toString()}-delete`}
+                        gridColumn="span 1"
+                        alignItems="center"
                     >
-                        <MdOutlineDeleteOutline />
-                    </IconButton>
-                </Box>
-            )
-        ]).flat()}
+                        <IconButton
+                            size="medium"
+                            color="error"
+                            onClick={() => onDelete(index)}
+                        >
+                            <MdOutlineDeleteOutline />
+                        </IconButton>
+                    </Box>
+                )
+            ])
+            .flat()}
     </Box>
 );
 

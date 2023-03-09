@@ -29,52 +29,61 @@ const Attacks: React.FC<AttacksProps> = ({
             gridTemplateColumns={`repeat(${readonly ? '12' : '13'}, 1fr)`}
             gap={2}
         >
-            {attacks.map((attack, index) => [
-                ...attackFields.map(({ key, type, gridColumn }) => (
-                    <Box
-                        key={`attack-${index.toString()}-${key}`}
-                        gridColumn={`span ${gridColumn}`}
-                        alignItems="center"
-                    >
-                        <TextField
-                            fullWidth
-                            InputProps={{
-                                readOnly: readonly,
-                                classes: {
-                                    input: 'input-smaller-text'
-                                }
-                            }}
-                            type="text"
-                            size="small"
-                            label={T(`game.dnd5.attack.${key}`)}
-                            value={attack[key]}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                                onChange(index, {
-                                    ...attack,
-                                    [key]: type === 'number' ? (
-                                        Number(onlyNumbers(e.target.value))
-                                    ) : e.target.value
-                                });
-                            }}
-                        />
-                    </Box>
-                )),
-                readonly ? null : (
-                    <Box
-                        key={`attack-${index.toString()}-delete`}
-                        gridColumn="span 1"
-                        alignItems="center"
-                    >
-                        <IconButton
-                            size="medium"
-                            color="error"
-                            onClick={() => onDelete(index)}
+            {attacks
+                .map((attack, index) => [
+                    ...attackFields.map(({ key, type, gridColumn }) => (
+                        <Box
+                            key={`attack-${index.toString()}-${key}`}
+                            gridColumn={`span ${gridColumn}`}
+                            alignItems="center"
                         >
-                            <MdOutlineDeleteOutline />
-                        </IconButton>
-                    </Box>
-                )
-            ]).flat()}
+                            <TextField
+                                fullWidth
+                                InputProps={{
+                                    readOnly: readonly,
+                                    classes: {
+                                        input: 'input-smaller-text'
+                                    }
+                                }}
+                                type="text"
+                                size="small"
+                                label={T(`game.dnd5.attack.${key}`)}
+                                value={attack[key]}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                    onChange(index, {
+                                        ...attack,
+                                        [key]:
+                                            type === 'number'
+                                                ? Number(
+                                                      onlyNumbers(
+                                                          e.target.value
+                                                      )
+                                                  )
+                                                : e.target.value
+                                    });
+                                }}
+                            />
+                        </Box>
+                    )),
+                    readonly ? null : (
+                        <Box
+                            key={`attack-${index.toString()}-delete`}
+                            gridColumn="span 1"
+                            alignItems="center"
+                        >
+                            <IconButton
+                                size="medium"
+                                color="error"
+                                onClick={() => onDelete(index)}
+                            >
+                                <MdOutlineDeleteOutline />
+                            </IconButton>
+                        </Box>
+                    )
+                ])
+                .flat()}
         </Box>
     );
 };

@@ -59,7 +59,8 @@ const NoteList: React.FC<NoteListProps> = ({
 }) => {
     const { T, userId } = useApp();
 
-    const [menuContextData, setMenuContextData] = useState<MenuContextData>(emptyMenuContextData);
+    const [menuContextData, setMenuContextData] =
+        useState<MenuContextData>(emptyMenuContextData);
 
     const maxPosition = Math.max(
         ...notes.map(({ position }) => Number(position))
@@ -107,38 +108,38 @@ const NoteList: React.FC<NoteListProps> = ({
 
     return (
         <Box className="notes-list full-width scroll">
-            {notesData.map(({ key, list, header }) => (
+            {notesData.map(({ key, list, header }) =>
                 list.length ? (
                     <List
                         key={key}
-                        subheader={(
+                        subheader={
                             <ListSubheader className="notes-header">
                                 {header}
                             </ListSubheader>
-                        )}
+                        }
                     >
                         {list.map((note) => {
-                            const {
-                                id,
-                                title,
-                                userId: noteUserId
-                            } = note;
+                            const { id, title, userId: noteUserId } = note;
                             const isOwnedByUser = noteUserId === userId;
                             return (
                                 <ListItem
                                     key={`note-${id}`}
-                                    secondaryAction={isOwnedByUser ? (
-                                        <ListItemSecondaryAction className="notes-action">
-                                            <IconButton
-                                                size="medium"
-                                                onClick={(e: React.MouseEvent<HTMLElement>) => {
-                                                    onMenuClick(e, note);
-                                                }}
-                                            >
-                                                <HiOutlineDotsHorizontal />
-                                            </IconButton>
-                                        </ListItemSecondaryAction>
-                                    ) : null}
+                                    secondaryAction={
+                                        isOwnedByUser ? (
+                                            <ListItemSecondaryAction className="notes-action">
+                                                <IconButton
+                                                    size="medium"
+                                                    onClick={(
+                                                        e: React.MouseEvent<HTMLElement>
+                                                    ) => {
+                                                        onMenuClick(e, note);
+                                                    }}
+                                                >
+                                                    <HiOutlineDotsHorizontal />
+                                                </IconButton>
+                                            </ListItemSecondaryAction>
+                                        ) : null
+                                    }
                                     disablePadding
                                 >
                                     <ListItemButton
@@ -151,7 +152,10 @@ const NoteList: React.FC<NoteListProps> = ({
                                                     placement="bottom"
                                                     title={T('common.shared')}
                                                 >
-                                                    <Box className="mr-10" component="span">
+                                                    <Box
+                                                        className="mr-10"
+                                                        component="span"
+                                                    >
                                                         <MdOutlineShare
                                                             className="vertical-middle"
                                                             size={15}
@@ -170,7 +174,7 @@ const NoteList: React.FC<NoteListProps> = ({
                         })}
                     </List>
                 ) : null
-            ))}
+            )}
             <NoteListMenu
                 key="note-menu"
                 contextData={menuContextData}

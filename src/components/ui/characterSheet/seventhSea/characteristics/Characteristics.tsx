@@ -1,9 +1,5 @@
 import React, { memo } from 'react';
-import {
-    Box,
-    Radio,
-    IconButton
-} from '@mui/material';
+import { Box, Radio, IconButton } from '@mui/material';
 import { MdClose } from 'react-icons/md';
 
 import { useApp } from '../../../../contexts/App';
@@ -28,22 +24,17 @@ const Characteristics = <DataType extends Record<string, any>>({
     const { T } = useApp();
 
     const translations = Object.fromEntries(
-        Object.keys(data).map((key: string) => [
-            key,
-            T(`${textKey}.${key}`)
-        ])
+        Object.keys(data).map((key: string) => [key, T(`${textKey}.${key}`)])
     );
 
     const dataKeys = Object.keys(data);
 
     if (sortByText) {
-        dataKeys.sort((a, b) => (
-            translations[a].localeCompare(translations[b])
-        ));
+        dataKeys.sort((a, b) => translations[a].localeCompare(translations[b]));
     }
 
     const columnedKeys: string[] = [];
-    const midIndex = Math.ceil((dataKeys.length / 2) - 1);
+    const midIndex = Math.ceil(dataKeys.length / 2 - 1);
     const firstColumnKeys = dataKeys.slice(0, midIndex + 1);
     const secondColumnKeys = dataKeys.slice(midIndex + 1);
     firstColumnKeys.forEach((key: string, idx: number) => {
@@ -95,7 +86,11 @@ const Characteristics = <DataType extends Record<string, any>>({
                                         if (!readonly) {
                                             onChange({
                                                 ...data,
-                                                [key]: Number((e.target as HTMLInputElement).value)
+                                                [key]: Number(
+                                                    (
+                                                        e.target as HTMLInputElement
+                                                    ).value
+                                                )
                                             });
                                         }
                                     }}

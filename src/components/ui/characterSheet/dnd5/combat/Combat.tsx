@@ -24,11 +24,7 @@ const hitPointKeys: (keyof DnD5HitPoints)[] = [
     'temporary'
 ];
 
-const Combat: React.FC<CombatProps> = ({
-    combat,
-    readonly,
-    onChange
-}) => {
+const Combat: React.FC<CombatProps> = ({ combat, readonly, onChange }) => {
     const { T } = useApp();
 
     return (
@@ -58,11 +54,17 @@ const Combat: React.FC<CombatProps> = ({
                             }}
                             type="text"
                             size="small"
-                            value={isInitiative ? displayModifier(value) : value}
-                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            value={
+                                isInitiative ? displayModifier(value) : value
+                            }
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
                                 if (!isInitiative) {
                                     onChange({
-                                        [key]: Number(onlyNumbers(e.target.value))
+                                        [key]: Number(
+                                            onlyNumbers(e.target.value)
+                                        )
                                     });
                                 }
                             }}
@@ -70,9 +72,7 @@ const Combat: React.FC<CombatProps> = ({
                     </Box>
                 ];
             })}
-            <Box gridColumn="span 2">
-                {T('game.dnd5.combat.hitPoints')}
-            </Box>
+            <Box gridColumn="span 2">{T('game.dnd5.combat.hitPoints')}</Box>
             {hitPointKeys.map((key) => (
                 <Box key={`combat-hitPoints=${key}`} gridColumn="span 2">
                     <TextField
@@ -123,30 +123,39 @@ const Combat: React.FC<CombatProps> = ({
             <Box key="combat-deathSaves-label" gridColumn="span 4">
                 {T('game.dnd5.combat.deathSaves')}
             </Box>
-            {(Object.keys(combat.deathSaves) as (keyof DnD5DeathSaves)[]).map((key) => [
-                <Box key={`combat-deathSaves=${key}-label`} textAlign="right" gridColumn="span 2">
-                    {T(`game.dnd5.common.${key}`)}
-                </Box>,
-                <Box key={`combat-deathSaves=${key}-slider`} gridColumn="span 2">
-                    <Slider
-                        disabled={readonly}
-                        defaultValue={combat.deathSaves[key]}
-                        valueLabelDisplay="auto"
-                        marks
-                        step={1}
-                        min={0}
-                        max={3}
-                        onChange={(_e: Event, value: number | number[]) => {
-                            onChange({
-                                deathSaves: {
-                                    ...combat.deathSaves,
-                                    [key]: value as number
-                                }
-                            });
-                        }}
-                    />
-                </Box>
-            ])}
+            {(Object.keys(combat.deathSaves) as (keyof DnD5DeathSaves)[]).map(
+                (key) => [
+                    <Box
+                        key={`combat-deathSaves=${key}-label`}
+                        textAlign="right"
+                        gridColumn="span 2"
+                    >
+                        {T(`game.dnd5.common.${key}`)}
+                    </Box>,
+                    <Box
+                        key={`combat-deathSaves=${key}-slider`}
+                        gridColumn="span 2"
+                    >
+                        <Slider
+                            disabled={readonly}
+                            defaultValue={combat.deathSaves[key]}
+                            valueLabelDisplay="auto"
+                            marks
+                            step={1}
+                            min={0}
+                            max={3}
+                            onChange={(_e: Event, value: number | number[]) => {
+                                onChange({
+                                    deathSaves: {
+                                        ...combat.deathSaves,
+                                        [key]: value as number
+                                    }
+                                });
+                            }}
+                        />
+                    </Box>
+                ]
+            )}
         </Box>
     );
 };
