@@ -367,9 +367,9 @@ export enum TooltipPlacement {
     left = 'left'
 }
 
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ user's sketch
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Sketch
 
-export interface UserSketch {
+export interface Sketch {
     id: number;
     userId: number;
     name: string;
@@ -378,4 +378,4 @@ export interface UserSketch {
     updatedAt: string;
 }
 
-export type UserSketchCreateBody = Pick<UserSketch, 'name' | 'sketch'>;
+export type SketchCreateBody = Pick<Sketch, 'name' | 'sketch'>;

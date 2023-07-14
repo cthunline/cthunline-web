@@ -1,8 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import Api from '../../services/api';
+import {
+    createCharacter as createCharacterRequest,
+    deleteCharacter as deleteCharacterRequest,
+    editCharacter as editCharacterRequest,
+    getCharacters as getCharactersRequest,
+    getCharacter as getCharacterRequest,
+    deletePortrait as deletePortraitRequest,
+    uploadPortrait as uploadPortraitRequest
+} from '../../services/requests/character';
+
 import { useApp } from '../contexts/App';
+
 import {
     Character,
     CharacterCreateBody,
@@ -51,11 +61,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
     const getCharacters = useCallback(
         async (userId?: number): Promise<Character[]> => {
             try {
-                const userParam = userId ? `?user=${userId}` : '';
-                const { characters } = await Api.call({
-                    method: 'GET',
-                    route: `/characters${userParam}`
-                });
+                const characters = await getCharactersRequest(userId);
                 return characters;
             } catch (err: any) {
                 handleApiError(err);
@@ -68,10 +74,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
     const getCharacter = useCallback(
         async (charId: number): Promise<Character> => {
             try {
-                return await Api.call({
-                    method: 'GET',
-                    route: `/characters/${charId}`
-                });
+                return await getCharacterRequest(charId);
             } catch (err: any) {
                 handleApiError(err);
                 throw err;
@@ -113,11 +116,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
             isToast = true
         }: CreateOptions): Promise<Character> => {
             try {
-                const char = await Api.call({
-                    method: 'POST',
-                    route: '/characters',
-                    data
-                });
+                const char = await createCharacterRequest(data);
                 if (isRefresh) {
                     await refresh();
                 }
@@ -141,11 +140,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
             isToast = true
         }: EditOptions): Promise<Character> => {
             try {
-                const char = await Api.call({
-                    method: 'POST',
-                    route: `/characters/${charId}`,
-                    data
-                });
+                const char = await editCharacterRequest(charId, data);
                 if (isRefresh) {
                     await refresh();
                 }
@@ -168,10 +163,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
             isToast = true
         }: DeleteOptions): Promise<void> => {
             try {
-                await Api.call({
-                    method: 'DELETE',
-                    route: `/characters/${charId}`
-                });
+                await deleteCharacterRequest(charId);
                 if (isRefresh) {
                     await refresh();
                 }
@@ -195,12 +187,9 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
             isToast = true
         }: PortraitUploadOptions): Promise<Character> => {
             try {
-                const formData = new FormData();
-                formData.append('portrait', data.portrait);
-                const char = await Api.call({
-                    method: 'POST',
-                    route: `/characters/${charId}/portrait`,
-                    data: formData,
+                const char = await uploadPortraitRequest({
+                    characterId: charId,
+                    body: data,
                     progress
                 });
                 if (isRefresh) {
@@ -225,10 +214,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
             isToast = true
         }: DeleteOptions): Promise<Character> => {
             try {
-                const char = await Api.call({
-                    method: 'DELETE',
-                    route: `/characters/${charId}/portrait`
-                });
+                const char = await deletePortraitRequest(charId);
                 if (isRefresh) {
                     await refresh();
                 }

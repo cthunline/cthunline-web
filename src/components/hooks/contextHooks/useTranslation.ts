@@ -1,7 +1,8 @@
 import { useState, useCallback } from 'react';
 
-import { Locale } from '../../../types';
 import { ucfirst } from '../../../services/tools';
+
+import { Locale } from '../../../types';
 
 import translations from '../../../lang';
 
@@ -19,6 +20,17 @@ export const defaultTranslationHookData: TranslationHookExport = {
     changeLocale: () => {
         /* default */
     }
+};
+
+const replaceVars = (
+    translation: string,
+    data: Record<string, string>
+): string => {
+    let replaced = translation;
+    Object.entries(data).forEach(([name, text]) => {
+        replaced = replaced.replaceAll(`{${name}}`, text);
+    });
+    return replaced;
 };
 
 const useTranslation = () => {
@@ -54,17 +66,6 @@ const useTranslation = () => {
         },
         [locale]
     );
-
-    const replaceVars = (
-        translation: string,
-        data: Record<string, string>
-    ): string => {
-        let replaced = translation;
-        Object.entries(data).forEach(([name, text]) => {
-            replaced = replaced.replaceAll(`{${name}}`, text);
-        });
-        return replaced;
-    };
 
     // lowercase translation text
     const t = useCallback(

@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import Api from '../../../services/api';
+import { getConfiguration } from '../../../services/requests/configuration';
+
 import { Configuration, Locale, Theme } from '../../../types';
 
 export interface ConfigurationHookExport {
@@ -29,10 +30,7 @@ const useConfiguration = () => {
 
     const refreshConfiguration = useCallback(async () => {
         try {
-            const conf = await Api.call({
-                method: 'GET',
-                route: '/configuration'
-            });
+            const conf = await getConfiguration();
             setConfiguration(conf);
         } catch (err: any) {
             toast.error(err.message);

@@ -13,7 +13,7 @@ import Explorer, {
     ExplorerItem,
     ExplorerItemType
 } from '../../../explorer/Explorer';
-import { Asset, UserSketchCreateBody, WidgetType } from '../../../../../types';
+import { Asset, SketchCreateBody, WidgetType } from '../../../../../types';
 import { usePlay } from '../../../../contexts/Play';
 import { useDialog } from '../../../../contexts/Dialog';
 import useAsset from '../../../../hooks/useAsset';
@@ -74,7 +74,7 @@ const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
         setIsFreeDrawing(!isFreeDrawing);
     };
 
-    const onUserSketchSave = async (data: UserSketchCreateBody) => {
+    const onUserSketchSave = async (data: SketchCreateBody) => {
         await createUserSketch({ data });
         closeDialog();
     };

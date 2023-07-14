@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 
-import Api from '../../services/api';
+import { getGames } from '../../services/requests/game';
+
 import { useApp } from '../contexts/App';
+
 import { Game } from '../../types';
 
 const useGame = () => {
@@ -15,10 +17,7 @@ const useGame = () => {
     useEffect(() => {
         (async () => {
             try {
-                const { games } = await Api.call({
-                    method: 'GET',
-                    route: '/games'
-                });
+                const games = await getGames();
                 setGameList(games);
             } catch (err: any) {
                 handleApiError(err);

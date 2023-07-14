@@ -19,8 +19,8 @@ import { MdOutlineSave, MdOutlineDeleteOutline } from 'react-icons/md';
 
 import { useApp } from '../../../../contexts/App';
 import useUserSketch from '../../../../hooks/useUserSketch';
-import Api from '../../../../../services/api';
-import { Asset, SketchData, UserSketchCreateBody } from '../../../../../types';
+import { getAssetUrl } from '../../../../../services/api';
+import { Asset, SketchData, SketchCreateBody } from '../../../../../types';
 
 import './SketchWidget.css';
 
@@ -55,7 +55,7 @@ export const ImageAssetList: React.FC<ImageListProps> = ({ assets, onAdd }) =>
     assets.length ? (
         <ImageList className="sketch-widget-assets full-width" cols={3} gap={5}>
             {assets.map(({ name, path }, index) => {
-                const src = Api.getAssetUrl(path);
+                const src = getAssetUrl(path);
                 return (
                     <ImageListItem key={`asset-${index.toString()}`}>
                         <img
@@ -79,7 +79,7 @@ export const ImageAssetList: React.FC<ImageListProps> = ({ assets, onAdd }) =>
 
 interface UserSketchFormProps {
     sketch: Omit<SketchData, 'events'>;
-    onSubmit: (data: UserSketchCreateBody) => Promise<void>;
+    onSubmit: (data: SketchCreateBody) => Promise<void>;
 }
 
 const userSketchValidationSchema = Yup.object().shape({
@@ -92,7 +92,7 @@ export const UserSketchForm: React.FC<UserSketchFormProps> = ({
 }) => {
     const { T } = useApp();
 
-    const initialValues: UserSketchCreateBody = {
+    const initialValues: SketchCreateBody = {
         name: '',
         sketch
     };

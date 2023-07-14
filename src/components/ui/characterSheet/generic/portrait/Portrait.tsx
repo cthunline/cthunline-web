@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { MdUploadFile, MdOutlineDeleteOutline } from 'react-icons/md';
 
-import Api from '../../../../../services/api';
+import { getAssetUrl } from '../../../../../services/api';
 
 import './Portrait.css';
 
@@ -50,7 +50,7 @@ const Portrait: React.FC<PortraitProps> = ({ value, readonly, onChange }) => {
                 {value ? (
                     <img
                         className="character-portrait-image"
-                        src={Api.getAssetUrl(value)}
+                        src={getAssetUrl(value)}
                         alt="Character Portrait"
                     />
                 ) : null}

@@ -1,8 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import Api from '../../services/api';
+import {
+    createDirectory as createDirectoryRequest,
+    deleteDirectory as deleteDirectoryRequest,
+    editDirectory as editDirectoryRequest,
+    getDirectories as getDirectoriesRequest
+} from '../../services/requests/directory';
+
 import { useApp } from '../contexts/App';
+
 import { Directory, DirectoryCreateBody, DirectoryEditBody } from '../../types';
 
 interface DirectoryHookOptions {
@@ -35,10 +42,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
 
     const getDirectories = useCallback(async (): Promise<Directory[]> => {
         try {
-            const { directories } = await Api.call({
-                method: 'GET',
-                route: '/directories'
-            });
+            const directories = await getDirectoriesRequest();
             return directories;
         } catch (err: any) {
             handleApiError(err);
@@ -59,11 +63,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
         isToast = true
     }: CreateOptions): Promise<Directory> => {
         try {
-            const dir = await Api.call({
-                method: 'POST',
-                route: '/directories',
-                data
-            });
+            const dir = await createDirectoryRequest(data);
             if (isRefresh && loadList) {
                 await refreshDirectoryList();
             }
@@ -84,11 +84,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
         isToast = true
     }: EditOptions): Promise<Directory> => {
         try {
-            const dir = await Api.call({
-                method: 'POST',
-                route: `/directories/${directoryId}`,
-                data
-            });
+            const dir = await editDirectoryRequest(directoryId, data);
             if (isRefresh && loadList) {
                 await refreshDirectoryList();
             }
@@ -109,10 +105,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
             isToast = true
         }: DeleteOptions): Promise<void> => {
             try {
-                await Api.call({
-                    method: 'DELETE',
-                    route: `/directories/${directoryId}`
-                });
+                await deleteDirectoryRequest(directoryId);
                 if (isRefresh && loadList) {
                     await refreshDirectoryList();
                 }

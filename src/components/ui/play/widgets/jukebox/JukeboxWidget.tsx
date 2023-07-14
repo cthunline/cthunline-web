@@ -9,7 +9,7 @@ import Explorer, {
     ExplorerItem,
     ExplorerItemType
 } from '../../../explorer/Explorer';
-import Api from '../../../../../services/api';
+import { getAssetUrl } from '../../../../../services/api';
 import useAsset from '../../../../hooks/useAsset';
 import useDirectory from '../../../../hooks/useDirectory';
 
@@ -146,7 +146,7 @@ const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
                         <audio
                             ref={audioElement}
                             className="jukebox-player full-width mt-10"
-                            src={Api.getAssetUrl(selectedAsset.path)}
+                            src={getAssetUrl(selectedAsset.path)}
                             controls // eslint-disable-line react/no-unknown-property
                             autoPlay={false}
                             onPlay={onAudioPlay} // eslint-disable-line react/no-unknown-property

@@ -1,8 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import Api from '../../services/api';
+import {
+    createNote as createNoteRequest,
+    deleteNote as deleteNoteRequest,
+    editNote as editNoteRequest,
+    getNote as getNoteRequest,
+    getNotes as getNotesRequest,
+    moveNote as moveNoteRequest
+} from '../../services/requests/note';
+
 import { useApp } from '../contexts/App';
+
 import { Note, NoteCreateBody, NoteEditBody } from '../../types';
 
 interface NoteHookOptions {
@@ -51,10 +60,7 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
 
     const getNotes = useCallback(async (): Promise<NoteList> => {
         try {
-            const { notes, sharedNotes } = await Api.call({
-                method: 'GET',
-                route: `/sessions/${sessionId}/notes?include=true`
-            });
+            const { notes, sharedNotes } = await getNotesRequest(sessionId);
             return { notes, sharedNotes };
         } catch (err: any) {
             handleApiError(err);
@@ -65,10 +71,7 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
     const getNote = useCallback(
         async (noteId: number): Promise<Note> => {
             try {
-                return await Api.call({
-                    method: 'GET',
-                    route: `/notes/${noteId}`
-                });
+                return await getNoteRequest(noteId);
             } catch (err: any) {
                 handleApiError(err);
                 throw err;
@@ -97,11 +100,7 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
             isToast = true
         }: CreateNoteOptions): Promise<Note> => {
             try {
-                const note = await Api.call({
-                    method: 'POST',
-                    route: `/sessions/${sessionId}/notes`,
-                    data
-                });
+                const note = await createNoteRequest(sessionId, data);
                 if (isRefresh) {
                     await refresh();
                 }
@@ -124,11 +123,7 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
         isToast = true
     }: EditNoteOptions): Promise<Note> => {
         try {
-            const note = await Api.call({
-                method: 'POST',
-                route: `/notes/${noteId}`,
-                data
-            });
+            const note = await editNoteRequest(noteId, data);
             if (isRefresh) {
                 await refresh();
             }
@@ -149,10 +144,7 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
         isToast = true
     }: MoveNoteOptions): Promise<Note> => {
         try {
-            const note = await Api.call({
-                method: 'PUT',
-                route: `/notes/${noteId}/${direction}`
-            });
+            const note = await moveNoteRequest(noteId, direction);
             if (isRefresh) {
                 await refresh();
             }
@@ -173,10 +165,7 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
             isToast = true
         }: DeleteNoteOptions): Promise<void> => {
             try {
-                await Api.call({
-                    method: 'DELETE',
-                    route: `/notes/${noteId}`
-                });
+                await deleteNoteRequest(noteId);
                 if (isRefresh) {
                     await refresh();
                 }

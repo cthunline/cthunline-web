@@ -1,8 +1,16 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import Api from '../../services/api';
+import {
+    getSessions as getSessionsRequest,
+    getSession as getSessionRequest,
+    createSession as createSessionRequest,
+    editSession as editSessionRequest,
+    deleteSession as deleteSessionRequest
+} from '../../services/requests/session';
+
 import { useApp } from '../contexts/App';
+
 import { Session, SessionCreateBody, SessionEditBody } from '../../types';
 
 interface SessionHookOptions {
@@ -37,11 +45,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
 
     const getSessions = useCallback(async (): Promise<Session[]> => {
         try {
-            const { sessions } = await Api.call({
-                method: 'GET',
-                route: '/sessions?include=true'
-            });
-            return sessions;
+            return await getSessionsRequest();
         } catch (err: any) {
             handleApiError(err);
             throw err;
@@ -51,10 +55,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
     const getSession = useCallback(
         async (sessId: number): Promise<Session> => {
             try {
-                return await Api.call({
-                    method: 'GET',
-                    route: `/sessions/${sessId}`
-                });
+                return await getSessionRequest(sessId);
             } catch (err: any) {
                 handleApiError(err);
                 throw err;
@@ -94,11 +95,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
             isToast = true
         }: CreateSessionOptions): Promise<Session> => {
             try {
-                const sess = await Api.call({
-                    method: 'POST',
-                    route: '/sessions',
-                    data
-                });
+                const sess = await createSessionRequest(data);
                 if (isRefresh) {
                     await refresh();
                 }
@@ -121,11 +118,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
         isToast = true
     }: EditSessionOptions): Promise<Session> => {
         try {
-            const sess = await Api.call({
-                method: 'POST',
-                route: `/sessions/${sessId}`,
-                data
-            });
+            const sess = await editSessionRequest(sessId, data);
             if (isRefresh) {
                 await refresh();
             }
@@ -146,10 +139,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
             isToast = true
         }: DeleteSessionOptions): Promise<void> => {
             try {
-                await Api.call({
-                    method: 'DELETE',
-                    route: `/sessions/${sessId}`
-                });
+                await deleteSessionRequest(sessId);
                 if (isRefresh) {
                     await refresh();
                 }

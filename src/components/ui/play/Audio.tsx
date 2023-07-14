@@ -8,7 +8,7 @@ import {
     IoVolumeMute
 } from 'react-icons/io5';
 
-import Api from '../../../services/api';
+import { getAssetUrl } from '../../../services/api';
 import { usePlay } from '../../contexts/Play';
 
 import './Audio.css';
@@ -32,7 +32,7 @@ const Audio = () => {
     useEffect(() => {
         if (audioData && audioData.playing) {
             const { path, time } = audioData;
-            const url = Api.getAssetUrl(path);
+            const url = getAssetUrl(path);
             if (audioElement.current.src !== url) {
                 audioElement.current.src = url;
             }

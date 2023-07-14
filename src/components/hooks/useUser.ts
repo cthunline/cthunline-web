@@ -1,8 +1,16 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import Api from '../../services/api';
+import {
+    getUsers as getUsersRequest,
+    createUser as createUserRequest,
+    editUser as editUserRequest,
+    generateInvitationCode as generateInvitationCodeRequest,
+    registerUser as registerUserRequest
+} from '../../services/requests/user';
+
 import { useApp } from '../contexts/App';
+
 import {
     User,
     UserCreateBody,
@@ -43,11 +51,7 @@ const useUser = ({
 
     const refreshUserList = useCallback(async () => {
         try {
-            const urlQuery = listDisabled ? '?disabled=true' : '';
-            const { users } = await Api.call({
-                method: 'GET',
-                route: `/users${urlQuery}`
-            });
+            const users = await getUsersRequest(listDisabled);
             setUserList(users);
         } catch (err: any) {
             handleApiError(err);
@@ -61,11 +65,7 @@ const useUser = ({
         isToast = true
     }: CreateOptions): Promise<User> => {
         try {
-            const user = await Api.call({
-                method: 'POST',
-                route: '/users',
-                data
-            });
+            const user = await createUserRequest(data);
             if (isRefresh && loadList) {
                 await refreshUserList();
             }
@@ -86,11 +86,7 @@ const useUser = ({
         isToast = true
     }: EditOptions): Promise<User> => {
         try {
-            const user = await Api.call({
-                method: 'POST',
-                route: `/users/${userId}`,
-                data
-            });
+            const user = await editUserRequest(userId, data);
             if (isRefresh && loadList) {
                 await refreshUserList();
             }
@@ -109,11 +105,7 @@ const useUser = ({
         isToast = true
     }: RegisterOptions): Promise<User> => {
         try {
-            const user = await Api.call({
-                method: 'POST',
-                route: '/register',
-                data
-            });
+            const user = await registerUserRequest(data);
             if (isToast) {
                 toast.success('Registered successfully');
             }
@@ -126,10 +118,7 @@ const useUser = ({
 
     const generateInvitationCode = async (): Promise<string> => {
         try {
-            const { code } = await Api.call({
-                method: 'POST',
-                route: '/invitation'
-            });
+            const code = await generateInvitationCodeRequest();
             return code;
         } catch (err: any) {
             handleApiError(err);

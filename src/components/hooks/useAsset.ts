@@ -1,8 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import Api from '../../services/api';
+import {
+    deleteAsset as deleteAssetRequest,
+    getAssets as getAssetsRequest,
+    uploadAssets as uploadAssetsRequest
+} from '../../services/requests/asset';
+
 import { useApp } from '../contexts/App';
+
 import { Asset, AssetCreateBody } from '../../types';
 
 interface AssetHookOptions {
@@ -30,12 +36,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
 
     const getAssets = useCallback(async (): Promise<Asset[]> => {
         try {
-            const typeQuery = type ? `?type=${type}` : '';
-            const { assets } = await Api.call({
-                method: 'GET',
-                route: `/assets${typeQuery}`
-            });
-            return assets;
+            return await getAssetsRequest(type);
         } catch (err: any) {
             handleApiError(err);
             throw err;
@@ -55,17 +56,8 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
             isToast = true
         }: UploadOptions): Promise<Asset[]> => {
             try {
-                const formData = new FormData();
-                [...data.assets].forEach((file) => {
-                    formData.append('assets', file);
-                });
-                if (data.directoryId) {
-                    formData.append('directoryId', data.directoryId.toString());
-                }
-                const { assets } = await Api.call({
-                    method: 'POST',
-                    route: '/assets',
-                    data: formData,
+                const assets = await uploadAssetsRequest({
+                    body: data,
                     progress
                 });
                 if (isRefresh && loadList) {
@@ -91,10 +83,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
             isToast = true
         }: DeleteOptions): Promise<void> => {
             try {
-                await Api.call({
-                    method: 'DELETE',
-                    route: `/assets/${assetId}`
-                });
+                await deleteAssetRequest(assetId);
                 if (isRefresh && loadList) {
                     await refreshAssetList();
                 }

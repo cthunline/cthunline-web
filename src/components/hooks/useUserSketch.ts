@@ -1,12 +1,19 @@
 import { useState, useEffect, useCallback } from 'react';
 import { toast } from 'react-toastify';
 
-import Api from '../../services/api';
+import {
+    createSketch,
+    deleteSketch,
+    getSketch,
+    getSketchs
+} from '../../services/requests/sketch';
+
 import { useApp } from '../contexts/App';
-import { UserSketch, UserSketchCreateBody } from '../../types';
+
+import { Sketch, SketchCreateBody } from '../../types';
 
 interface CreateUserSketchOptions {
-    data: UserSketchCreateBody;
+    data: SketchCreateBody;
     isRefresh?: boolean;
     isToast?: boolean;
 }
@@ -20,15 +27,11 @@ interface DeleteUserSketchOptions {
 const useUserSketch = (loadList: boolean = false) => {
     const { handleApiError } = useApp();
 
-    const [userSketchs, setUserSketchs] = useState<UserSketch[]>([]);
+    const [userSketchs, setUserSketchs] = useState<Sketch[]>([]);
 
-    const getUserSketchs = useCallback(async (): Promise<UserSketch[]> => {
+    const getUserSketchs = useCallback(async (): Promise<Sketch[]> => {
         try {
-            const { sketchs } = await Api.call({
-                method: 'GET',
-                route: '/sketchs'
-            });
-            return sketchs;
+            return await getSketchs();
         } catch (err: any) {
             handleApiError(err);
             throw err;
@@ -36,12 +39,9 @@ const useUserSketch = (loadList: boolean = false) => {
     }, [handleApiError]);
 
     const getUserSketch = useCallback(
-        async (sketchId: number): Promise<UserSketch> => {
+        async (sketchId: number): Promise<Sketch> => {
             try {
-                return await Api.call({
-                    method: 'GET',
-                    route: `/sketchs/${sketchId}`
-                });
+                return await getSketch(sketchId);
             } catch (err: any) {
                 handleApiError(err);
                 throw err;
@@ -62,13 +62,9 @@ const useUserSketch = (loadList: boolean = false) => {
             data,
             isRefresh = true,
             isToast = true
-        }: CreateUserSketchOptions): Promise<UserSketch> => {
+        }: CreateUserSketchOptions): Promise<Sketch> => {
             try {
-                const sketch = await Api.call({
-                    method: 'POST',
-                    route: '/sketchs',
-                    data
-                });
+                const sketch = await createSketch(data);
                 if (isRefresh) {
                     await refresh();
                 }
@@ -91,10 +87,7 @@ const useUserSketch = (loadList: boolean = false) => {
             isToast = true
         }: DeleteUserSketchOptions): Promise<void> => {
             try {
-                await Api.call({
-                    method: 'DELETE',
-                    route: `/sketchs/${sketchId}`
-                });
+                await deleteSketch(sketchId);
                 if (isRefresh) {
                     await refresh();
                 }

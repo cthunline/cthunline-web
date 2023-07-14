@@ -1,7 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { toast } from 'react-toastify';
 
-import Api from '../../../services/api';
+import { getUser } from '../../../services/requests/user';
+import {
+    login as loginRequest,
+    logout as logoutRequest,
+    checkAuth as checkAuthRequest
+} from '../../../services/requests/auth';
+
 import { User } from '../../../types';
 
 interface AuthData {
@@ -47,12 +53,6 @@ const defaultAuthData: AuthData = {
 const useAuth = () => {
     const [authData, setAuthData] = useState<AuthData>(defaultAuthData);
 
-    const getUser = async (userId: number) =>
-        Api.call({
-            method: 'GET',
-            route: `/users/${userId}`
-        });
-
     const refreshUser = useCallback(async () => {
         if (authData.userId) {
             const user = await getUser(authData.userId);
@@ -65,10 +65,7 @@ const useAuth = () => {
 
     const logout = useCallback(async (callApi: boolean = true) => {
         if (callApi) {
-            await Api.call({
-                method: 'DELETE',
-                route: '/auth'
-            });
+            await logoutRequest();
         }
         setAuthData({
             ...defaultAuthData,
@@ -79,19 +76,14 @@ const useAuth = () => {
     const login = useCallback(
         async (email: string, password: string): Promise<void> => {
             try {
-                const { id } = await Api.call({
-                    method: 'POST',
-                    route: '/auth',
-                    data: {
-                        email,
-                        password
-                    }
+                const user = await loginRequest({
+                    email,
+                    password
                 });
-                const user = await getUser(id);
                 setAuthData({
                     isLoading: false,
                     isLoggedIn: true,
-                    userId: id,
+                    userId: user.id,
                     user
                 });
             } catch (err) {
@@ -129,15 +121,11 @@ const useAuth = () => {
     useEffect(() => {
         (async () => {
             try {
-                const { id } = await Api.call({
-                    method: 'GET',
-                    route: '/auth'
-                });
-                const user = await getUser(id);
+                const user = await checkAuthRequest();
                 setAuthData({
                     isLoading: false,
                     isLoggedIn: true,
-                    userId: id,
+                    userId: user.id,
                     user
                 });
             } catch (err: any) {
