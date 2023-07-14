@@ -25,7 +25,9 @@ export const defaultAdvantage: SeventhSeaAdvantage = {
     description: ''
 };
 
-export const traitSkillLimiter = <DataType>(data: DataType): DataType =>
+export const traitSkillLimiter = <DataType extends Record<string, number>>(
+    data: DataType
+): DataType =>
     Object.fromEntries(
         Object.entries(data).map(([key, value]) => {
             let val = value;

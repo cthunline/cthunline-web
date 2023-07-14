@@ -1,4 +1,4 @@
-import Axios, { AxiosRequestHeaders } from 'axios';
+import Axios, { AxiosHeaders } from 'axios';
 
 import { pathJoin } from './tools';
 
@@ -14,13 +14,11 @@ interface ApiCallOptions {
 const Api = {
     async call({ method, route, data, progress }: ApiCallOptions) {
         const url = pathJoin('/api', route);
-        const headers: AxiosRequestHeaders =
-            data instanceof FormData
-                ? {}
-                : {
-                      Accept: 'application/json',
-                      'Content-Type': 'application/json'
-                  };
+        const headers = new AxiosHeaders();
+        if (!(data instanceof FormData)) {
+            headers.set('Accept', 'application/json');
+            headers.set('Content-Type', 'application/json');
+        }
         const response = await Axios({
             withCredentials: true,
             method,
@@ -29,11 +27,14 @@ const Api = {
             data,
             onUploadProgress: progress
                 ? (progressEvent) => {
-                      progress(
-                          Math.round(
-                              (progressEvent.loaded * 100) / progressEvent.total
-                          )
-                      );
+                      if (progressEvent.total) {
+                          progress(
+                              Math.round(
+                                  (progressEvent.loaded * 100) /
+                                      progressEvent.total
+                              )
+                          );
+                      }
                   }
                 : undefined
         });

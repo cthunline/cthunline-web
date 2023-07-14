@@ -62,7 +62,7 @@ const validationSchema = Yup.object().shape(
                 is: (val: string) => !!val,
                 then: (schema) => schema.required('Required')
             })
-            .oneOf([Yup.ref('password'), null], 'Passwords must match')
+            .oneOf([Yup.ref('password'), ''], 'Passwords must match')
     },
     [
         ['oldPassword', 'password'],
