@@ -54,77 +54,78 @@ const useUser = ({
             const users = await getUsersRequest(listDisabled);
             setUserList(users);
         } catch (err: any) {
-            handleApiError(err);
-            throw err;
+            throw handleApiError(err);
         }
     }, [listDisabled, handleApiError]);
 
-    const createUser = async ({
-        data,
-        isRefresh = true,
-        isToast = true
-    }: CreateOptions): Promise<User> => {
-        try {
-            const user = await createUserRequest(data);
-            if (isRefresh && loadList) {
-                await refreshUserList();
+    const createUser = useCallback(
+        async ({
+            data,
+            isRefresh = true,
+            isToast = true
+        }: CreateOptions): Promise<User> => {
+            try {
+                const user = await createUserRequest(data);
+                if (isRefresh && loadList) {
+                    await refreshUserList();
+                }
+                if (isToast) {
+                    toast.success('User created');
+                }
+                return user;
+            } catch (err: any) {
+                throw handleApiError(err);
             }
-            if (isToast) {
-                toast.success('User created');
-            }
-            return user;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    };
+        },
+        [handleApiError, loadList, refreshUserList]
+    );
 
-    const editUser = async ({
-        userId,
-        data,
-        isRefresh = true,
-        isToast = true
-    }: EditOptions): Promise<User> => {
-        try {
-            const user = await editUserRequest(userId, data);
-            if (isRefresh && loadList) {
-                await refreshUserList();
+    const editUser = useCallback(
+        async ({
+            userId,
+            data,
+            isRefresh = true,
+            isToast = true
+        }: EditOptions): Promise<User> => {
+            try {
+                const user = await editUserRequest(userId, data);
+                if (isRefresh && loadList) {
+                    await refreshUserList();
+                }
+                if (isToast) {
+                    toast.success('User edited');
+                }
+                return user;
+            } catch (err: any) {
+                throw handleApiError(err);
             }
-            if (isToast) {
-                toast.success('User edited');
-            }
-            return user;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    };
+        },
+        [handleApiError, loadList, refreshUserList]
+    );
 
-    const registerUser = async ({
-        data,
-        isToast = true
-    }: RegisterOptions): Promise<User> => {
-        try {
-            const user = await registerUserRequest(data);
-            if (isToast) {
-                toast.success('Registered successfully');
+    const registerUser = useCallback(
+        async ({ data, isToast = true }: RegisterOptions): Promise<User> => {
+            try {
+                const user = await registerUserRequest(data);
+                if (isToast) {
+                    toast.success('Registered successfully');
+                }
+                return user;
+            } catch (err: any) {
+                throw handleApiError(err);
             }
-            return user;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    };
+        },
+        [handleApiError]
+    );
 
-    const generateInvitationCode = async (): Promise<string> => {
+    const generateInvitationCode = useCallback(async (): Promise<string> => {
         try {
             const code = await generateInvitationCodeRequest();
             return code;
         } catch (err: any) {
-            handleApiError(err);
-            throw err;
+            throw handleApiError(err);
         }
-    };
+    }, [handleApiError]);
 
     useEffect(() => {
         if (loadList) {

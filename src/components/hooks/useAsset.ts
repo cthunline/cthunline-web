@@ -38,8 +38,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
         try {
             return await getAssetsRequest(type);
         } catch (err: any) {
-            handleApiError(err);
-            throw err;
+            throw handleApiError(err);
         }
     }, [type, handleApiError]);
 
@@ -69,8 +68,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
                 }
                 return assets;
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [loadList, refreshAssetList, handleApiError]
@@ -91,8 +89,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
                     toast.success('Asset deleted');
                 }
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [loadList, refreshAssetList, handleApiError]

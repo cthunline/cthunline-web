@@ -33,8 +33,7 @@ const useUserSketch = (loadList: boolean = false) => {
         try {
             return await getSketchs();
         } catch (err: any) {
-            handleApiError(err);
-            throw err;
+            throw handleApiError(err);
         }
     }, [handleApiError]);
 
@@ -43,8 +42,7 @@ const useUserSketch = (loadList: boolean = false) => {
             try {
                 return await getSketch(sketchId);
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [handleApiError]
@@ -73,8 +71,7 @@ const useUserSketch = (loadList: boolean = false) => {
                 }
                 return sketch;
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [refresh, handleApiError]
@@ -95,8 +92,7 @@ const useUserSketch = (loadList: boolean = false) => {
                     toast.success('Sketch deleted');
                 }
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [refresh, handleApiError]

@@ -64,8 +64,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 const characters = await getCharactersRequest(userId);
                 return characters;
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [handleApiError]
@@ -76,8 +75,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
             try {
                 return await getCharacterRequest(charId);
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [handleApiError]
@@ -125,8 +123,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 }
                 return char;
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [refresh, handleApiError]
@@ -149,8 +146,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 }
                 return char;
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [refresh, handleApiError]
@@ -171,8 +167,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                     toast.success('Character deleted');
                 }
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [refresh, handleApiError]
@@ -200,8 +195,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 }
                 return char;
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [refresh, handleApiError]
@@ -223,8 +217,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 }
                 return char;
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [refresh, handleApiError]

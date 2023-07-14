@@ -63,8 +63,7 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
             const { notes, sharedNotes } = await getNotesRequest(sessionId);
             return { notes, sharedNotes };
         } catch (err: any) {
-            handleApiError(err);
-            throw err;
+            throw handleApiError(err);
         }
     }, [sessionId, handleApiError]);
 
@@ -73,8 +72,7 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
             try {
                 return await getNoteRequest(noteId);
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [handleApiError]
@@ -109,54 +107,57 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
                 }
                 return note;
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [sessionId, refresh, handleApiError]
     );
 
-    const editNote = async ({
-        noteId,
-        data,
-        isRefresh = true,
-        isToast = true
-    }: EditNoteOptions): Promise<Note> => {
-        try {
-            const note = await editNoteRequest(noteId, data);
-            if (isRefresh) {
-                await refresh();
+    const editNote = useCallback(
+        async ({
+            noteId,
+            data,
+            isRefresh = true,
+            isToast = true
+        }: EditNoteOptions): Promise<Note> => {
+            try {
+                const note = await editNoteRequest(noteId, data);
+                if (isRefresh) {
+                    await refresh();
+                }
+                if (isToast) {
+                    toast.success('Note edited');
+                }
+                return note;
+            } catch (err: any) {
+                throw handleApiError(err);
             }
-            if (isToast) {
-                toast.success('Note edited');
-            }
-            return note;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    };
+        },
+        [handleApiError, refresh]
+    );
 
-    const moveNote = async ({
-        noteId,
-        direction,
-        isRefresh = true,
-        isToast = true
-    }: MoveNoteOptions): Promise<Note> => {
-        try {
-            const note = await moveNoteRequest(noteId, direction);
-            if (isRefresh) {
-                await refresh();
+    const moveNote = useCallback(
+        async ({
+            noteId,
+            direction,
+            isRefresh = true,
+            isToast = true
+        }: MoveNoteOptions): Promise<Note> => {
+            try {
+                const note = await moveNoteRequest(noteId, direction);
+                if (isRefresh) {
+                    await refresh();
+                }
+                if (isToast) {
+                    toast.success('Note moved');
+                }
+                return note;
+            } catch (err: any) {
+                throw handleApiError(err);
             }
-            if (isToast) {
-                toast.success('Note moved');
-            }
-            return note;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    };
+        },
+        [handleApiError, refresh]
+    );
 
     const deleteNote = useCallback(
         async ({
@@ -173,8 +174,7 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
                     toast.success('Note deleted');
                 }
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [refresh, handleApiError]

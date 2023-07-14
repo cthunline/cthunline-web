@@ -20,8 +20,7 @@ const useGame = () => {
                 const games = await getGames();
                 setGameList(games);
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         })();
     }, [handleApiError]);

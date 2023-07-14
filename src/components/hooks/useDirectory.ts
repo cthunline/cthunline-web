@@ -45,8 +45,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
             const directories = await getDirectoriesRequest();
             return directories;
         } catch (err: any) {
-            handleApiError(err);
-            throw err;
+            throw handleApiError(err);
         }
     }, [handleApiError]);
 
@@ -57,46 +56,50 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
         }
     }, [user, getDirectories]);
 
-    const createDirectory = async ({
-        data,
-        isRefresh = true,
-        isToast = true
-    }: CreateOptions): Promise<Directory> => {
-        try {
-            const dir = await createDirectoryRequest(data);
-            if (isRefresh && loadList) {
-                await refreshDirectoryList();
+    const createDirectory = useCallback(
+        async ({
+            data,
+            isRefresh = true,
+            isToast = true
+        }: CreateOptions): Promise<Directory> => {
+            try {
+                const dir = await createDirectoryRequest(data);
+                if (isRefresh && loadList) {
+                    await refreshDirectoryList();
+                }
+                if (isToast) {
+                    toast.success('Directory created');
+                }
+                return dir;
+            } catch (err: any) {
+                throw handleApiError(err);
             }
-            if (isToast) {
-                toast.success('Directory created');
-            }
-            return dir;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    };
+        },
+        [handleApiError, refreshDirectoryList, loadList]
+    );
 
-    const editDirectory = async ({
-        directoryId,
-        data,
-        isRefresh = true,
-        isToast = true
-    }: EditOptions): Promise<Directory> => {
-        try {
-            const dir = await editDirectoryRequest(directoryId, data);
-            if (isRefresh && loadList) {
-                await refreshDirectoryList();
+    const editDirectory = useCallback(
+        async ({
+            directoryId,
+            data,
+            isRefresh = true,
+            isToast = true
+        }: EditOptions): Promise<Directory> => {
+            try {
+                const dir = await editDirectoryRequest(directoryId, data);
+                if (isRefresh && loadList) {
+                    await refreshDirectoryList();
+                }
+                if (isToast) {
+                    toast.success('Directory edited');
+                }
+                return dir;
+            } catch (err: any) {
+                throw handleApiError(err);
             }
-            if (isToast) {
-                toast.success('Directory edited');
-            }
-            return dir;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    };
+        },
+        [handleApiError, refreshDirectoryList, loadList]
+    );
 
     const deleteDirectory = useCallback(
         async ({
@@ -113,8 +116,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
                     toast.success('Directory deleted');
                 }
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [loadList, refreshDirectoryList, handleApiError]

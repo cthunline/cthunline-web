@@ -47,8 +47,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
         try {
             return await getSessionsRequest();
         } catch (err: any) {
-            handleApiError(err);
-            throw err;
+            throw handleApiError(err);
         }
     }, [handleApiError]);
 
@@ -57,8 +56,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
             try {
                 return await getSessionRequest(sessId);
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [handleApiError]
@@ -104,33 +102,34 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
                 }
                 return sess;
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [refresh, handleApiError]
     );
 
-    const editSession = async ({
-        sessionId: sessId,
-        data,
-        isRefresh = true,
-        isToast = true
-    }: EditSessionOptions): Promise<Session> => {
-        try {
-            const sess = await editSessionRequest(sessId, data);
-            if (isRefresh) {
-                await refresh();
+    const editSession = useCallback(
+        async ({
+            sessionId: sessId,
+            data,
+            isRefresh = true,
+            isToast = true
+        }: EditSessionOptions): Promise<Session> => {
+            try {
+                const sess = await editSessionRequest(sessId, data);
+                if (isRefresh) {
+                    await refresh();
+                }
+                if (isToast) {
+                    toast.success('Session edited');
+                }
+                return sess;
+            } catch (err: any) {
+                throw handleApiError(err);
             }
-            if (isToast) {
-                toast.success('Session edited');
-            }
-            return sess;
-        } catch (err: any) {
-            handleApiError(err);
-            throw err;
-        }
-    };
+        },
+        [handleApiError, refresh]
+    );
 
     const deleteSession = useCallback(
         async ({
@@ -147,8 +146,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
                     toast.success('Session deleted');
                 }
             } catch (err: any) {
-                handleApiError(err);
-                throw err;
+                throw handleApiError(err);
             }
         },
         [refresh, handleApiError]

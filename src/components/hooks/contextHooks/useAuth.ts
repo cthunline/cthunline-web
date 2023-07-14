@@ -21,7 +21,7 @@ export interface AuthHookExport extends AuthData {
     refreshUser: () => Promise<void>;
     login: (email: string, password: string) => Promise<void>;
     logout: (callApi?: boolean) => Promise<void>;
-    handleApiError: (err: any) => void;
+    handleApiError: (err: any) => typeof err;
 }
 
 export const defaultAuthHookData: AuthHookExport = {
@@ -96,7 +96,7 @@ const useAuth = () => {
 
     const isAuthError = useRef<boolean>(false);
     const handleApiError = useCallback(
-        (err: any): void => {
+        (err: any): typeof err => {
             if (
                 authData.isLoggedIn &&
                 !isAuthError.current &&
@@ -108,6 +108,7 @@ const useAuth = () => {
             } else {
                 toast.error(err?.response?.data?.error ?? err.message);
             }
+            return err;
         },
         [authData, logout]
     );
