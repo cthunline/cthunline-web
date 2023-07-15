@@ -4,10 +4,10 @@
 }
 
 .svg-container:not(.free-drawing)
-.sketch-token.movable.moving
-.sketch-token-circle,
+    .sketch-token.movable.moving
+    .sketch-token-circle,
 .svg-container:not(.free-drawing)
-.sketch-token.movable.moving
-.sketch-token-text {
+    .sketch-token.movable.moving
+    .sketch-token-text {
     cursor: grabbing;
 }

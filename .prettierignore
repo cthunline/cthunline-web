@@ -1,4 +1,3 @@
-**/*.css
 vite.config.ts
 build
 node_modules
