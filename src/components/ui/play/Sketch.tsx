@@ -184,6 +184,16 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                             }}
                         />
                     ))}
+                    {/* drawing paths */}
+                    {paths.map((path, index) => (
+                        <path
+                            key={`sketch-path-${index.toString()}`}
+                            stroke="var(--palette-font)"
+                            strokeWidth={5}
+                            d={path}
+                            fill="none" // eslint-disable-line react/no-unknown-property
+                        />
+                    ))}
                     {/* tokens */}
                     {tokens.map(
                         ({
@@ -250,16 +260,6 @@ const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
                             );
                         }
                     )}
-                    {/* drawing paths */}
-                    {paths.map((path, index) => (
-                        <path
-                            key={`sketch-path-${index.toString()}`}
-                            stroke="var(--palette-font)"
-                            strokeWidth={5}
-                            d={path}
-                            fill="none" // eslint-disable-line react/no-unknown-property
-                        />
-                    ))}
                 </svg>
             </ClickAwayListener>
         </Box>
