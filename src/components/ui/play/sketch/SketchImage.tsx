@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { CardinalDirection } from '../../../../types';
 import SketchItemContextMenu, {
@@ -37,7 +37,7 @@ interface SketchImageProps {
     onDelete?: () => void;
 }
 
-const SketchImage: React.FC<SketchImageProps> = ({
+const SketchImage = ({
     id,
     isMaster,
     url,
@@ -55,7 +55,7 @@ const SketchImage: React.FC<SketchImageProps> = ({
     onForward,
     onBackward,
     onDelete
-}) => {
+}: SketchImageProps) => {
     const [contextMenu, setContextMenu] = useState<ContextMenuData | null>(
         null
     );

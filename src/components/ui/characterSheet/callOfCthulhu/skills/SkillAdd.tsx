@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
     Box,
     TextField,
@@ -27,7 +27,7 @@ const defaultErrors = {
     base: false
 };
 
-const SkillAdd: React.FC<SkillAddProps> = ({ onSubmit }) => {
+const SkillAdd = ({ onSubmit }: SkillAddProps) => {
     const { T } = useApp();
 
     const [selectorValue, setSelectorValue] = useState<SkillData | null>(null);

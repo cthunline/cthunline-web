@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { Box, ClickAwayListener } from '@mui/material';
 
 import { usePlay } from '../../contexts/Play';
@@ -21,7 +21,7 @@ interface SketchProps {
     isMaster?: boolean;
 }
 
-const Sketch: React.FC<SketchProps> = ({ isMaster }) => {
+const Sketch = ({ isMaster }: SketchProps) => {
     // reference to the main svg container element (#svg-container)
     const svgRef =
         useRef<SVGSVGElement>() as React.MutableRefObject<SVGSVGElement>;

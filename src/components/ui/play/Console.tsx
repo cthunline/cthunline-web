@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Box, Paper } from '@mui/material';
 import { FiMinimize2, FiMaximize2 } from 'react-icons/fi';
 
@@ -12,7 +12,7 @@ interface ConsoleProps {
     logs: PlayLog[];
 }
 
-const Console: React.FC<ConsoleProps> = ({ logs }) => {
+const Console = ({ logs }: ConsoleProps) => {
     const { T } = useApp();
 
     const [isMinimized, setIsMinimized] = useState<boolean>(false);

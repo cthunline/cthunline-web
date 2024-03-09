@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, FormControlLabel, Checkbox } from '@mui/material';
 import { CoCStatus } from '@cthunline/games';
 
@@ -11,7 +11,7 @@ interface StatusProps {
     onChange: (data: CoCStatus) => void;
 }
 
-const Status: React.FC<StatusProps> = ({ readonly, status, onChange }) => {
+const Status = ({ readonly, status, onChange }: StatusProps) => {
     const { T } = useApp();
 
     return (

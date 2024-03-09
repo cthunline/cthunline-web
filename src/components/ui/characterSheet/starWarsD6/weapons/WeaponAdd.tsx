@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 import { SWD6Weapon } from '@cthunline/games';
@@ -19,7 +19,7 @@ const defaultValues = {
     ammo: ''
 };
 
-const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
+const WeaponAdd = ({ onSubmit }: WeaponAddProps) => {
     const { T } = useApp();
 
     const [values, setValues] = useState<SWD6Weapon>(defaultValues);

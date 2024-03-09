@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { SeventhSeaAdvantage } from '@cthunline/games';
@@ -16,12 +16,12 @@ interface AdvantagesProps {
     onDelete: (index: number) => void;
 }
 
-const Advantages: React.FC<AdvantagesProps> = ({
+const Advantages = ({
     advantages,
     readonly,
     onChange,
     onDelete
-}) => (
+}: AdvantagesProps) => (
     <Box
         gridColumn="span 12"
         display="grid"

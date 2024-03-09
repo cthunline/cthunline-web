@@ -1,4 +1,3 @@
-import React from 'react';
 import { Typography } from '@mui/material';
 import { GiWizardFace } from 'react-icons/gi';
 
@@ -10,7 +9,7 @@ interface ErrorProps {
     type: ErrorType;
 }
 
-const Error: React.FC<ErrorProps> = ({ type }) => {
+const ErrorPage = ({ type }: ErrorProps) => {
     const { T } = useApp();
 
     const errors = {
@@ -39,4 +38,4 @@ const Error: React.FC<ErrorProps> = ({ type }) => {
     );
 };
 
-export default Error;
+export default ErrorPage;

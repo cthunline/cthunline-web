@@ -1,4 +1,4 @@
-import React, { useCallback, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 import { Paper } from '@mui/material';
 import {
     CoCCharacter,
@@ -30,7 +30,7 @@ export interface CharacterSheetProps {
     onPortraitChange?: (file: File | null) => void;
 }
 
-const CharacterSheet: React.FC<CharacterSheetProps> = ({
+const CharacterSheet = ({
     readonly,
     gameId,
     data,
@@ -39,7 +39,7 @@ const CharacterSheet: React.FC<CharacterSheetProps> = ({
     onChange,
     portrait,
     onPortraitChange
-}) => {
+}: CharacterSheetProps) => {
     const changeTime = 1000;
     const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
     const onChangeBuffer = useCallback(

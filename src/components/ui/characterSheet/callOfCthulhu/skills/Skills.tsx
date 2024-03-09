@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box } from '@mui/material';
 import { CoCSkill } from '@cthunline/games';
 
@@ -13,13 +13,13 @@ interface SkillsProps {
     onCreate: (data: CoCSkill) => void;
 }
 
-const Skills: React.FC<SkillsProps> = ({
+const Skills = ({
     skills,
     readonly,
     onChange,
     onDelete,
     onCreate
-}) => (
+}: SkillsProps) => (
     <Box
         gridColumn="span 12"
         display="grid"

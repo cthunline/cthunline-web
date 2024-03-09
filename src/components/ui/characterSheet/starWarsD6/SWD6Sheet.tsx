@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 import {
     GiCharacter,
@@ -30,7 +30,7 @@ import Attributes from './attributes/Attributes';
 import Statistics from './statistics/Statistics';
 import WoundStatus from './woundStatus/WoundStatus';
 import Weapons from './weapons/Weapons';
-import { ReactComponent as SWD6Logo } from '../../../../assets/games/starWarsD6.svg';
+import SWD6Logo from '../../../svg/games/StarWarsD6';
 import { controlCharacterData } from './swd6Sheet.helper';
 import fields from './fields.json';
 
@@ -50,14 +50,14 @@ export interface SWD6SheetProps {
     onPortraitChange?: (file: File | null) => void;
 }
 
-const SWD6Sheet: React.FC<SWD6SheetProps> = ({
+const SWD6Sheet = ({
     readonly,
     data,
     listening,
     onChange,
     portrait,
     onPortraitChange
-}) => {
+}: SWD6SheetProps) => {
     const { T } = useApp();
 
     const [characterData, setCharacterData] = useState<SWD6Character>(data);

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button } from '@mui/material';
@@ -18,7 +17,7 @@ const validationSchema = Yup.object().shape({
     gameId: Yup.string().required('Required')
 });
 
-const SessionForm: React.FC<SessionFormProps> = ({ onSubmit }) => {
+const SessionForm = ({ onSubmit }: SessionFormProps) => {
     const { T } = useApp();
     const { gameList } = useGame();
 

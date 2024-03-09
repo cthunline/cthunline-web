@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box } from '@mui/material';
 
 import { Color, colors } from '../../../types';
@@ -10,10 +9,7 @@ interface ColorSelectorProps {
     onChange?: (color: Color) => void;
 }
 
-const ColorSelector: React.FC<ColorSelectorProps> = ({
-    className,
-    onChange
-}) => (
+const ColorSelector = ({ className, onChange }: ColorSelectorProps) => (
     <Box
         className={`color-selector p-5 ${className}`}
         display="grid"

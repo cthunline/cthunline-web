@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, Radio, IconButton } from '@mui/material';
 import { MdClose } from 'react-icons/md';
 

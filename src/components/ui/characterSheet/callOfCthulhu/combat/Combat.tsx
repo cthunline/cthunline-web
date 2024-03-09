@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { CoCCombat } from '@cthunline/games';
 
@@ -9,7 +9,7 @@ interface CombatProps {
     combat: CoCCombat;
 }
 
-const Combat: React.FC<CombatProps> = ({ combat }) => {
+const Combat = ({ combat }: CombatProps) => {
     const { T } = useApp();
 
     return (

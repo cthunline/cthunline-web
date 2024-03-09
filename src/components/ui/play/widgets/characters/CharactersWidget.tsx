@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Box, CircularProgress, Tabs, Tab } from '@mui/material';
 
 import { useApp } from '../../../../contexts/App';
@@ -13,10 +13,7 @@ interface CharacterWidgetProps {
     onClose: (widget: WidgetType) => void;
 }
 
-const CharactersWidget: React.FC<CharacterWidgetProps> = ({
-    users,
-    onClose
-}) => {
+const CharactersWidget = ({ users, onClose }: CharacterWidgetProps) => {
     const { T } = useApp();
 
     const [sessionUser, setSessionUser] = useState<SessionUser | null>(

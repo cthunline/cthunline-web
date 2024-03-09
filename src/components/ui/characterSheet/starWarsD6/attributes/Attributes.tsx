@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box } from '@mui/material';
 import {
     SWD6Attributes,
@@ -24,14 +24,14 @@ interface AttributeProps {
     onSkillDelete: (attribute: SWD6Attribute, index: number) => void;
 }
 
-const Attributes: React.FC<AttributeProps> = ({
+const Attributes = ({
     attributes,
     readonly,
     onChange,
     onSkillCreate,
     onSkillChange,
     onSkillDelete
-}) => (
+}: AttributeProps) => (
     <Box
         gridColumn="span 12"
         display="grid"

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box } from '@mui/material';
 import { DnD5Skills } from '@cthunline/games';
 
@@ -11,7 +11,7 @@ interface SkillsProps {
     onChange: (data: Partial<DnD5Skills>) => void;
 }
 
-const Skills: React.FC<SkillsProps> = ({ skills, readonly, onChange }) => {
+const Skills = ({ skills, readonly, onChange }: SkillsProps) => {
     const { T } = useApp();
 
     return (

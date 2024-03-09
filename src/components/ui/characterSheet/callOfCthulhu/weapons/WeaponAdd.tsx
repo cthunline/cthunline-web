@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 import { CoCWeapon } from '@cthunline/games';
@@ -33,7 +33,7 @@ const defaultErrors = {
     range: false
 };
 
-const WeaponAdd: React.FC<WeaponAddProps> = ({ onSubmit }) => {
+const WeaponAdd = ({ onSubmit }: WeaponAddProps) => {
     const { T } = useApp();
 
     const [values, setValues] = useState<CoCWeapon>(defaultValues);

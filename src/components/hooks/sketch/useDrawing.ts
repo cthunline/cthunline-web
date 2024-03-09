@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { usePlay } from '../../contexts/Play';
 import { SketchCoordinates } from '../../../types';

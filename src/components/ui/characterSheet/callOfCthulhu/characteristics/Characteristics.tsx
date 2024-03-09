@@ -1,4 +1,4 @@
-import React, { memo, useCallback } from 'react';
+import { memo, useCallback } from 'react';
 import { Box } from '@mui/material';
 import {
     CoCCharacter,
@@ -27,7 +27,7 @@ interface CharacteristicsProps {
     onLuckOrSanityChange: (data: Partial<CoCCharacter>) => void;
 }
 
-const Characteristics: React.FC<CharacteristicsProps> = ({
+const Characteristics = ({
     readonly,
     characteristics,
     points,
@@ -36,7 +36,7 @@ const Characteristics: React.FC<CharacteristicsProps> = ({
     onCharacteristicsChange,
     onPointsChange,
     onLuckOrSanityChange
-}) => {
+}: CharacteristicsProps) => {
     const onCharacteristicChange = useCallback(
         (field: string, char: CoCCharacteristic) => {
             onCharacteristicsChange({

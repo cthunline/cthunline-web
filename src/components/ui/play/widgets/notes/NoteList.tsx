@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
     Box,
     IconButton,
@@ -49,14 +49,14 @@ interface NotesData {
     user?: User;
 }
 
-const NoteList: React.FC<NoteListProps> = ({
+const NoteList = ({
     notes,
     sharedNotes,
     onSelect,
     onShare,
     onMove,
     onDelete
-}) => {
+}: NoteListProps) => {
     const { T, userId } = useApp();
 
     const [menuContextData, setMenuContextData] =

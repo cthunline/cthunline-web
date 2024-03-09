@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import Nav from '../nav/Nav';
@@ -11,7 +11,7 @@ interface PageProps {
     children: JSX.Element | JSX.Element[];
 }
 
-const Page: React.FC<PageProps> = ({ children }) => {
+const Page = ({ children }: PageProps) => {
     const { isLoggedIn, theme } = useApp();
     const location = useLocation();
 

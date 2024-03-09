@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Menu,
@@ -40,10 +39,7 @@ interface SettingsMenuProps {
     handleClose: () => void;
 }
 
-const SettingsMenu: React.FC<SettingsMenuProps> = ({
-    anchorEl,
-    handleClose
-}) => {
+const SettingsMenu = ({ anchorEl, handleClose }: SettingsMenuProps) => {
     const navigate = useNavigate();
     const { T, logout, user } = useApp();
 

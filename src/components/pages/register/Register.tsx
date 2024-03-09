@@ -1,11 +1,10 @@
-import React from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { Paper, Typography } from '@mui/material';
 
 import { useApp } from '../../contexts/App';
 import useUser from '../../hooks/useUser';
 import UserForm, { UserSubmitData } from '../../ui/userForm/UserForm';
-import Error from '../error/Error';
+import ErrorPage from '../error/ErrorPage';
 
 const Register = () => {
     const { T } = useApp();
@@ -23,7 +22,7 @@ const Register = () => {
     }
 
     if (!configuration.registrationEnabled) {
-        return <Error type="forbidden" />;
+        return <ErrorPage type="forbidden" />;
     }
 
     return (

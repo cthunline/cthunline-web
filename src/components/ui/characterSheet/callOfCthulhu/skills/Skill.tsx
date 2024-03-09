@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, Checkbox, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { CoCSkill } from '@cthunline/games';
@@ -16,13 +16,7 @@ interface SkillProps {
     onDelete: (index: number) => void;
 }
 
-const Skill: React.FC<SkillProps> = ({
-    index,
-    data,
-    readonly,
-    onChange,
-    onDelete
-}) => {
+const Skill = ({ index, data, readonly, onChange, onDelete }: SkillProps) => {
     const { T } = useApp();
 
     return (

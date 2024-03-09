@@ -1,29 +1,28 @@
-import React from 'react';
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 
 import { useApp } from './contexts/App';
 import Page from './layout/page/Page';
 import { pages } from './router.data';
-import { Login, Error, Register } from './pages';
+import { Login, ErrorPage, Register } from './pages';
 
 interface RequireAuthProps {
     children: React.ReactElement;
     admin?: boolean;
 }
 
-const RequireAuth: React.FC<RequireAuthProps> = ({ children, admin }) => {
+const RequireAuth = ({ children, admin }: RequireAuthProps) => {
     const { isLoggedIn, user } = useApp();
     if (isLoggedIn) {
         if (admin && !user?.isAdmin) {
-            return <Error type="forbidden" />;
+            return <ErrorPage type="forbidden" />;
         }
         return children;
     }
     return <Navigate to="/login" />;
 };
 
-const Router: React.FC = () => {
+const Router = () => {
     const { isLoading } = useApp();
 
     if (isLoading) {
@@ -65,7 +64,7 @@ const Router: React.FC = () => {
                         path="*"
                         element={
                             <RequireAuth>
-                                <Error type="notFound" />
+                                <ErrorPage type="notFound" />
                             </RequireAuth>
                         }
                     />

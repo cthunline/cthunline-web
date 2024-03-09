@@ -1,4 +1,4 @@
-import React, {
+import {
     createContext,
     useState,
     useEffect,
@@ -78,11 +78,11 @@ const socketIoConnectOptions = {
 
 const PlayContext = createContext<PlayContextData>(defaultPlayData);
 
-export const PlayProvider: React.FC<PlayProviderProps> = ({
+export const PlayProvider = ({
     sessionId,
     characterId,
     children
-}) => {
+}: PlayProviderProps) => {
     const [socket, setSocket] = useState<PlaySocket | null>(
         defaultPlayData.socket
     );

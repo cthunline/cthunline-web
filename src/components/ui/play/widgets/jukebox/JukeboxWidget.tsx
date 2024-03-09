@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Box, Checkbox } from '@mui/material';
 import { HiMusicNote } from 'react-icons/hi';
 
@@ -21,11 +21,7 @@ interface JukeboxWidgetProps {
     onClose: (widget: WidgetType) => void;
 }
 
-const JukeboxWidget: React.FC<JukeboxWidgetProps> = ({
-    onPlay,
-    onStop,
-    onClose
-}) => {
+const JukeboxWidget = ({ onPlay, onStop, onClose }: JukeboxWidgetProps) => {
     const { T } = useApp();
     const { assetList } = useAsset({
         loadList: true,

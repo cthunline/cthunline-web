@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     Menu,
     MenuItem,
@@ -29,13 +28,13 @@ export interface NoteListMenuProps {
     onDelete: (id: number) => void;
 }
 
-const NoteListMenu: React.FC<NoteListMenuProps> = ({
+const NoteListMenu = ({
     contextData: { anchorEl, note, canMoveUp, canMoveDown },
     handleClose,
     onShare,
     onMove,
     onDelete
-}) => {
+}: NoteListMenuProps) => {
     const { T } = useApp();
 
     return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box } from '@mui/material';
 
 import { useApp } from '../../../../contexts/App';
@@ -17,7 +17,7 @@ interface NotesWidgetProps {
     onClose: (widget: WidgetType) => void;
 }
 
-const NotesWidget: React.FC<NotesWidgetProps> = ({ onClose }) => {
+const NotesWidget = ({ onClose }: NotesWidgetProps) => {
     const { T } = useApp();
     const { confirmDialog } = useDialog();
     const { sessionId } = usePlay();

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, Checkbox } from '@mui/material';
 import { SWD6Statistics } from '@cthunline/games';
 
@@ -12,11 +12,7 @@ interface StatisticsProps {
     onChange: (data: SWD6Statistics) => void;
 }
 
-const Statistics: React.FC<StatisticsProps> = ({
-    statistics,
-    readonly,
-    onChange
-}) => {
+const Statistics = ({ statistics, readonly, onChange }: StatisticsProps) => {
     const { T } = useApp();
 
     const getInput = (

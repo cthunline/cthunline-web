@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { SWD6Attribute, SWD6Skill } from '@cthunline/games';
@@ -18,14 +18,14 @@ interface SkillProps {
     onDelete: (attribute: SWD6Attribute, index: number) => void;
 }
 
-const Skill: React.FC<SkillProps> = ({
+const Skill = ({
     attribute,
     index,
     data,
     readonly,
     onChange,
     onDelete
-}) => (
+}: SkillProps) => (
     <Box
         gridColumn="span 12"
         display="grid"

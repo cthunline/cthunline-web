@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { MdUploadFile, MdOutlineDeleteOutline } from 'react-icons/md';
 
@@ -14,7 +14,7 @@ interface PortraitProps {
 
 const allowedMimeTypes = ['image/jpeg', 'image/png'];
 
-const Portrait: React.FC<PortraitProps> = ({ value, readonly, onChange }) => {
+const Portrait = ({ value, readonly, onChange }: PortraitProps) => {
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -23,6 +23,7 @@ const Portrait: React.FC<PortraitProps> = ({ value, readonly, onChange }) => {
     };
 
     const getInputButton = () => (
+        // eslint-disable-next-line jsx-a11y/label-has-associated-control
         <label htmlFor="character-portrait-input">
             <input
                 id="character-portrait-input"

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Box,
@@ -34,10 +33,10 @@ interface CharacterSelectorProps {
     onSelect: (charId: number) => void;
 }
 
-const CharacterSelector: React.FC<CharacterSelectorProps> = ({
+const CharacterSelector = ({
     characters,
     onSelect
-}) => {
+}: CharacterSelectorProps) => {
     const { T } = useApp();
 
     return (
@@ -51,7 +50,7 @@ const CharacterSelector: React.FC<CharacterSelectorProps> = ({
     );
 };
 
-const Sessions: React.FC = () => {
+const Sessions = () => {
     const { T, user } = useApp();
     const navigate = useNavigate();
     const { confirmDialog, openDialog, closeDialog } = useDialog();

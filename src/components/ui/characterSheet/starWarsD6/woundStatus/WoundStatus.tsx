@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, Checkbox } from '@mui/material';
 import { SWD6WoundStatus } from '@cthunline/games';
 
@@ -11,11 +11,7 @@ interface WoundStatusProps {
     onChange: (data: SWD6WoundStatus) => void;
 }
 
-const WoundStatus: React.FC<WoundStatusProps> = ({
-    woundStatus,
-    readonly,
-    onChange
-}) => {
+const WoundStatus = ({ woundStatus, readonly, onChange }: WoundStatusProps) => {
     const { T } = useApp();
 
     return (

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { Box, TextField, Button } from '@mui/material';
@@ -22,7 +21,7 @@ const initialValues: DirectoryFormData = {
     name: ''
 };
 
-const DirectoryForm: React.FC<DirectoryFormProps> = ({ onSubmit }) => {
+const DirectoryForm = ({ onSubmit }: DirectoryFormProps) => {
     const { T } = useApp();
 
     const onFormSubmit = async ({ name }: DirectoryFormData) => {

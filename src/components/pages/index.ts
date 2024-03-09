@@ -9,7 +9,7 @@ import Users from './users/Users';
 import Sessions from './sessions/Sessions';
 import SessionForm from './sessions/SessionForm';
 import Play from './play/Play';
-import Error from './error/Error';
+import ErrorPage from './error/ErrorPage';
 
 export {
     Login,
@@ -23,5 +23,5 @@ export {
     Sessions,
     SessionForm,
     Play,
-    Error
+    ErrorPage
 };

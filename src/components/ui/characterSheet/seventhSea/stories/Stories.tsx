@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { SeventhSeaStory } from '@cthunline/games';
@@ -12,12 +12,7 @@ interface StoriesProps {
     onDelete: (index: number) => void;
 }
 
-const Stories: React.FC<StoriesProps> = ({
-    stories,
-    readonly,
-    onChange,
-    onDelete
-}) => (
+const Stories = ({ stories, readonly, onChange, onDelete }: StoriesProps) => (
     <Box
         gridColumn="span 12"
         display="grid"

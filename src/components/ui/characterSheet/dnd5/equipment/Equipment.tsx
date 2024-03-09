@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { DnD5Equipment } from '@cthunline/games';
 
@@ -12,11 +12,7 @@ interface EquipmentProps {
     onChange: (data: Partial<DnD5Equipment>) => void;
 }
 
-const Equipment: React.FC<EquipmentProps> = ({
-    equipment,
-    readonly,
-    onChange
-}) => {
+const Equipment = ({ equipment, readonly, onChange }: EquipmentProps) => {
     const { T } = useApp();
 
     return (

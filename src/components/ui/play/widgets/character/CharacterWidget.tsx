@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useRef } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 import { MdEdit, MdOutlineCheck } from 'react-icons/md';
 
@@ -16,11 +16,11 @@ interface CharacterWidgetProps {
     onClose: (widget: WidgetType) => void;
 }
 
-const CharacterWidget: React.FC<CharacterWidgetProps> = ({
+const CharacterWidget = ({
     characterId,
     onUpdate,
     onClose
-}) => {
+}: CharacterWidgetProps) => {
     const { T } = useApp();
     const { getCharacter, editCharacter, uploadPortrait, deletePortrait } =
         useCharacter();

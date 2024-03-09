@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 
@@ -6,7 +6,7 @@ interface NoteCreateProps {
     onCreate: (title: string) => void;
 }
 
-const NoteCreate: React.FC<NoteCreateProps> = ({ onCreate }) => {
+const NoteCreate = ({ onCreate }: NoteCreateProps) => {
     const [title, setTitle] = useState<string>('');
 
     return (

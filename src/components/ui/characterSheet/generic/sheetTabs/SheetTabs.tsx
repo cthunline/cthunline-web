@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Tabs, Tab } from '@mui/material';
 
 import './SheetTabs.css';
@@ -17,13 +16,13 @@ export interface SheetTabsProps {
     onChange: (index: number) => void;
 }
 
-const SheetTabs: React.FC<SheetTabsProps> = ({
+const SheetTabs = ({
     children,
     tabs,
     selectedIndex,
     logoSvgComponent: SVGLogo,
     onChange
-}) => {
+}: SheetTabsProps) => {
     const handleChange = (_e: React.SyntheticEvent, value: number) => {
         onChange(value);
     };

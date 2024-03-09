@@ -1,10 +1,4 @@
-import React, {
-    createContext,
-    useContext,
-    useEffect,
-    useMemo,
-    useState
-} from 'react';
+import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
 import useAuth, {
     AuthHookExport,
@@ -41,7 +35,7 @@ const defaultDialogData: AppContextData = {
 
 const AppContext = createContext<AppContextData>(defaultDialogData);
 
-export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
+export const AppProvider = ({ children }: AppProviderProps) => {
     const {
         refreshUser,
         isLoading,

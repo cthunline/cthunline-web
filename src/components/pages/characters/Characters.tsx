@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Box,
@@ -30,7 +29,7 @@ interface GameSelectorProps {
     onSelect: (gameId: string) => void;
 }
 
-const GameSelector: React.FC<GameSelectorProps> = ({ games, onSelect }) => (
+const GameSelector = ({ games, onSelect }: GameSelectorProps) => (
     <List>
         {games.map(({ id, name }) => (
             <ListItemButton key={id} onClick={() => onSelect(id)}>
@@ -40,7 +39,7 @@ const GameSelector: React.FC<GameSelectorProps> = ({ games, onSelect }) => (
     </List>
 );
 
-const Characters: React.FC = () => {
+const Characters = () => {
     const { T } = useApp();
     const navigate = useNavigate();
     const { confirmDialog, openDialog, closeDialog } = useDialog();

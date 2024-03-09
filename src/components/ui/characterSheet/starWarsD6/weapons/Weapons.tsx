@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box } from '@mui/material';
 import { SWD6Weapon } from '@cthunline/games';
 
@@ -13,13 +13,13 @@ interface WeaponsProps {
     onCreate: (data: SWD6Weapon) => void;
 }
 
-const Weapons: React.FC<WeaponsProps> = ({
+const Weapons = ({
     weapons,
     readonly,
     onChange,
     onDelete,
     onCreate
-}) => (
+}: WeaponsProps) => (
     <Box
         gridColumn="span 12"
         display="grid"

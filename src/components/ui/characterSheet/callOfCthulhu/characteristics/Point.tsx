@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, Tooltip } from '@mui/material';
 import { CoCPoint } from '@cthunline/games';
 
@@ -15,13 +15,7 @@ interface PointProps {
     onChange: (field: string, data: CoCPoint) => void;
 }
 
-const Point: React.FC<PointProps> = ({
-    field,
-    textKey,
-    data,
-    readonly,
-    onChange
-}) => {
+const Point = ({ field, textKey, data, readonly, onChange }: PointProps) => {
     const { T, TU } = useApp();
 
     return (

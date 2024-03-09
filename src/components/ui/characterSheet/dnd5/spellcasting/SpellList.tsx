@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, Checkbox, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { DnD5Spell } from '@cthunline/games';
@@ -9,11 +9,7 @@ interface SpellListProps {
     onChange: (data: DnD5Spell[]) => void;
 }
 
-const SpellList: React.FC<SpellListProps> = ({
-    spells,
-    readonly,
-    onChange
-}) => (
+const SpellList = ({ spells, readonly, onChange }: SpellListProps) => (
     <>
         {spells.map(({ prepared, name }, index) => [
             <Box key={`spell-${index.toString}-prepared`} gridColumn="span 1">

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 
 import { GameId } from '../../../../../types';

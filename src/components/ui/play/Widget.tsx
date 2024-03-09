@@ -25,14 +25,14 @@ interface WidgetProps {
     onClose?: () => void;
 }
 
-const Widget: React.FC<WidgetProps> = ({
+const Widget = ({
     title,
     id,
     className,
     actions,
     children,
     onClose
-}) => {
+}: WidgetProps) => {
     const nodeRef = React.useRef<HTMLElement>(null);
 
     useEffect(() => {

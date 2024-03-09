@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 import { SWD6Attribute, SWD6Skill } from '@cthunline/games';
@@ -12,7 +12,7 @@ interface SkillProps {
     onSubmit: (attribute: SWD6Attribute, data: SWD6Skill) => void;
 }
 
-const SkillAdd: React.FC<SkillProps> = ({ attribute, onSubmit }) => {
+const SkillAdd = ({ attribute, onSubmit }: SkillProps) => {
     const { T } = useApp();
 
     const [selectorValue, setSelectorValue] = useState<SWD6Skill | null>(null);

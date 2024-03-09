@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     Button,
     Dialog,
@@ -19,13 +18,13 @@ interface CustomDialogProps {
     onClose: () => void;
 }
 
-const CustomDialog: React.FC<CustomDialogProps> = ({
+const CustomDialog = ({
     open,
     title,
     content,
     onConfirm,
     onClose
-}) => {
+}: CustomDialogProps) => {
     const { T } = useApp();
 
     return (

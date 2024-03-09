@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Tooltip } from '@mui/material';
 import { GiRollingDiceCup } from 'react-icons/gi';
 import { HiMusicNote } from 'react-icons/hi';
@@ -67,11 +66,7 @@ interface PlayMenuItemProps {
     onClick: () => void;
 }
 
-const PlayMenuItem: React.FC<PlayMenuItemProps> = ({
-    icon,
-    textKey,
-    onClick
-}) => {
+const PlayMenuItem = ({ icon, textKey, onClick }: PlayMenuItemProps) => {
     const { T } = useApp();
     return (
         <Box className="play-menu-item flex center">
@@ -87,11 +82,7 @@ const PlayMenuItem: React.FC<PlayMenuItemProps> = ({
     );
 };
 
-const PlayMenu: React.FC<PlayMenuProps> = ({
-    isMaster,
-    onWidgetOpen,
-    onExit
-}) => {
+const PlayMenu = ({ isMaster, onWidgetOpen, onExit }: PlayMenuProps) => {
     const items = playMenuItems.filter(
         ({ adminOnly, playerOnly }) =>
             (isMaster && !playerOnly) || (!isMaster && !adminOnly)

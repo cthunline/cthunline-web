@@ -1,4 +1,3 @@
-import React from 'react';
 import { Button, CircularProgress } from '@mui/material';
 import { MdUploadFile } from 'react-icons/md';
 
@@ -9,12 +8,12 @@ interface UploadButtonProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const UploadButton: React.FC<UploadButtonProps> = ({
+const UploadButton = ({
     label,
     progress,
     allowedMimeTypes,
     onChange
-}) =>
+}: UploadButtonProps) =>
     progress ? (
         <CircularProgress variant="determinate" value={progress} />
     ) : (

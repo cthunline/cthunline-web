@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     ImageList,
     ImageListItem,
@@ -30,11 +29,7 @@ export interface ActionButtonData {
     handler: () => void;
 }
 
-export const ActionButton: React.FC<ActionButtonData> = ({
-    text,
-    handler,
-    icon
-}) => (
+export const ActionButton = ({ text, handler, icon }: ActionButtonData) => (
     <Tooltip placement="bottom" title={text}>
         <IconButton
             className="sketch-action-button ml-15 mr-15"
@@ -51,7 +46,7 @@ interface ImageListProps {
     onAdd: (src: string) => void;
 }
 
-export const ImageAssetList: React.FC<ImageListProps> = ({ assets, onAdd }) =>
+export const ImageAssetList = ({ assets, onAdd }: ImageListProps) =>
     assets.length ? (
         <ImageList className="sketch-widget-assets full-width" cols={3} gap={5}>
             {assets.map(({ name, path }, index) => {
@@ -86,10 +81,7 @@ const userSketchValidationSchema = Yup.object().shape({
     name: Yup.string().min(3, 'Too short').required('Required')
 });
 
-export const UserSketchForm: React.FC<UserSketchFormProps> = ({
-    sketch,
-    onSubmit
-}) => {
+export const UserSketchForm = ({ sketch, onSubmit }: UserSketchFormProps) => {
     const { T } = useApp();
 
     const initialValues: SketchCreateBody = {
@@ -140,9 +132,7 @@ interface UserSketchSelectorProps {
     onSelect: (sketchId: number) => void;
 }
 
-export const UserSketchSelector: React.FC<UserSketchSelectorProps> = ({
-    onSelect
-}) => {
+export const UserSketchSelector = ({ onSelect }: UserSketchSelectorProps) => {
     const { userSketchs, deleteUserSketch } = useUserSketch(true);
 
     const onDelete = async (sketchId: number) => {

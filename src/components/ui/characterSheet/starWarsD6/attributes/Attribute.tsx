@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { SWD6Attribute, SWD6AttributeData, SWD6Skill } from '@cthunline/games';
 
@@ -22,7 +22,7 @@ interface AttributeProps {
     onSkillDelete: (attribute: SWD6Attribute, index: number) => void;
 }
 
-const Attribute: React.FC<AttributeProps> = ({
+const Attribute = ({
     attribute,
     data,
     readonly,
@@ -30,7 +30,7 @@ const Attribute: React.FC<AttributeProps> = ({
     onSkillCreate,
     onSkillChange,
     onSkillDelete
-}) => {
+}: AttributeProps) => {
     const { T } = useApp();
 
     return (

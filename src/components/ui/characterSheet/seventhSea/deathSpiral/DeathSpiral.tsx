@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, IconButton, Radio } from '@mui/material';
 import { MdClose } from 'react-icons/md';
 
@@ -10,11 +10,7 @@ interface DeathSpiralProps {
     onChange: (value: number) => void;
 }
 
-const DeathSpiral: React.FC<DeathSpiralProps> = ({
-    value,
-    readonly,
-    onChange
-}) => {
+const DeathSpiral = ({ value, readonly, onChange }: DeathSpiralProps) => {
     const getRadioButton = (radioCount: number, radioValue: number) => (
         <Box
             key={`deathSpiral-${radioValue.toString()}`}

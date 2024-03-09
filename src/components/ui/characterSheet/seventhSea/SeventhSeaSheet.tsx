@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Box, IconButton, TextField } from '@mui/material';
 import {
     GiCharacter,
@@ -37,7 +37,7 @@ import Stories from './stories/Stories';
 import Characteristics from './characteristics/Characteristics';
 import DeathSpiral from './deathSpiral/DeathSpiral';
 import Advantages from './advantages/Advantages';
-import { ReactComponent as SeventhSeaLogo } from '../../../../assets/games/seventhSea.svg';
+import SeventhSeaLogo from '../../../svg/games/SeventhSea';
 import {
     defaultBackground,
     defaultStory,
@@ -61,14 +61,14 @@ export interface SeventhSeaSheetProps {
     onPortraitChange?: (file: File | null) => void;
 }
 
-const SeventhSeaSheet: React.FC<SeventhSeaSheetProps> = ({
+const SeventhSeaSheet = ({
     readonly,
     data,
     listening,
     onChange,
     portrait,
     onPortraitChange
-}) => {
+}: SeventhSeaSheetProps) => {
     const { T } = useApp();
 
     const [characterData, setCharacterData] =

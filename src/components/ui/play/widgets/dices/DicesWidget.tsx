@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, FormControlLabel, Checkbox } from '@mui/material';
 import {
     GiD4,
@@ -58,11 +58,7 @@ interface DicesWidgetProps {
     onClose: (widget: WidgetType) => void;
 }
 
-const DicesWidget: React.FC<DicesWidgetProps> = ({
-    isMaster,
-    onRoll,
-    onClose
-}) => {
+const DicesWidget = ({ isMaster, onRoll, onClose }: DicesWidgetProps) => {
     const { T } = useApp();
 
     const [selectedDices, setSelectedDices] =

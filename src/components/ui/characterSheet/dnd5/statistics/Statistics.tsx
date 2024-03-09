@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { DnD5Statistics } from '@cthunline/games';
 
@@ -11,11 +11,7 @@ interface StatisticsProps {
     onChange: (data: Partial<DnD5Statistics>) => void;
 }
 
-const Statistics: React.FC<StatisticsProps> = ({
-    statistics,
-    readonly,
-    onChange
-}) => {
+const Statistics = ({ statistics, readonly, onChange }: StatisticsProps) => {
     const { T } = useApp();
 
     return (

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { DnD5Attack } from '@cthunline/games';
@@ -14,12 +14,7 @@ interface AttacksProps {
     onDelete: (index: number) => void;
 }
 
-const Attacks: React.FC<AttacksProps> = ({
-    attacks,
-    readonly,
-    onChange,
-    onDelete
-}) => {
+const Attacks = ({ attacks, readonly, onChange, onDelete }: AttacksProps) => {
     const { T } = useApp();
 
     return (

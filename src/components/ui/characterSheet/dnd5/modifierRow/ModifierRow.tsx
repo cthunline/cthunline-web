@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, Checkbox } from '@mui/material';
 
 import { displayModifier } from '../dnd5Sheet.helper';
@@ -11,13 +11,13 @@ interface ModifierRowProps {
     onProficientChange: (proficient: boolean) => void;
 }
 
-const ModifierRow: React.FC<ModifierRowProps> = ({
+const ModifierRow = ({
     readonly,
     text,
     modifier,
     proficient,
     onProficientChange
-}) => (
+}: ModifierRowProps) => (
     <>
         <Box gridColumn="span 7">{text}</Box>
         <Box gridColumn="span 3">

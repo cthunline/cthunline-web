@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { CoCLuck } from '@cthunline/games';
 
@@ -12,7 +12,7 @@ interface LuckProps {
     onChange: (data: CoCLuck) => void;
 }
 
-const Luck: React.FC<LuckProps> = ({ data, readonly, onChange }) => {
+const Luck = ({ data, readonly, onChange }: LuckProps) => {
     const { T } = useApp();
 
     return (

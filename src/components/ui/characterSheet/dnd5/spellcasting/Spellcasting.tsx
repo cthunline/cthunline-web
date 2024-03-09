@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { DnD5Spellcasting } from '@cthunline/games';
 
@@ -14,11 +14,11 @@ interface SpellcastingProps {
     onChange: (data: Partial<DnD5Spellcasting>) => void;
 }
 
-const Spellcasting: React.FC<SpellcastingProps> = ({
+const Spellcasting = ({
     spellcasting,
     readonly,
     onChange
-}) => {
+}: SpellcastingProps) => {
     const { T } = useApp();
 
     const maxLevel = Math.max(

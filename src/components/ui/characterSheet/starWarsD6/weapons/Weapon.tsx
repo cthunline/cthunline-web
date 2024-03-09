@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { SWD6Weapon } from '@cthunline/games';
@@ -14,13 +14,7 @@ interface WeaponProps {
     onDelete: (index: number) => void;
 }
 
-const Weapon: React.FC<WeaponProps> = ({
-    index,
-    data,
-    readonly,
-    onChange,
-    onDelete
-}) => {
+const Weapon = ({ index, data, readonly, onChange, onDelete }: WeaponProps) => {
     const { T } = useApp();
 
     return (

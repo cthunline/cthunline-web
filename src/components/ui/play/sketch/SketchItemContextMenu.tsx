@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Menu, MenuItem, Divider } from '@mui/material';
 
 import { useApp } from '../../../contexts/App';
@@ -32,7 +32,7 @@ enum SubMenuType {
     color = 'color'
 }
 
-const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
+const SketchItemContextMenu = ({
     open,
     position,
     onForward,
@@ -43,7 +43,7 @@ const SketchItemContextMenu: React.FC<SketchItemContextMenuProps> = ({
     onColorChange,
     onDelete,
     onClose
-}) => {
+}: SketchItemContextMenuProps) => {
     const { T } = useApp();
     const { users } = usePlay();
 

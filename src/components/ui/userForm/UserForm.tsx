@@ -1,4 +1,3 @@
-import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button } from '@mui/material';
@@ -53,11 +52,7 @@ const fieldList: UserFormFieldData[] = [
     }
 ];
 
-const UserForm: React.FC<UserFormProps> = ({
-    invitation,
-    buttonText,
-    onSubmit
-}) => {
+const UserForm = ({ invitation, buttonText, onSubmit }: UserFormProps) => {
     const { T } = useApp();
 
     const initialValues: UserFormData = {

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, Tooltip } from '@mui/material';
 import { CoCCharacteristic } from '@cthunline/games';
 
@@ -15,13 +15,13 @@ interface CharacteristicProps {
     onChange: (field: string, data: CoCCharacteristic) => void;
 }
 
-const Characteristic: React.FC<CharacteristicProps> = ({
+const Characteristic = ({
     field,
     textKey,
     data,
     readonly,
     onChange
-}) => {
+}: CharacteristicProps) => {
     const { T, TU } = useApp();
 
     return (

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { FiPlusCircle } from 'react-icons/fi';
@@ -11,11 +11,7 @@ interface CantripsProps {
     onChange: (data: string[]) => void;
 }
 
-const Cantrips: React.FC<CantripsProps> = ({
-    cantrips,
-    readonly,
-    onChange
-}) => {
+const Cantrips = ({ cantrips, readonly, onChange }: CantripsProps) => {
     const { T } = useApp();
 
     return (

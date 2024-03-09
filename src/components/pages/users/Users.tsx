@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     Box,
     Paper,
@@ -23,7 +22,7 @@ import useUser from '../../hooks/useUser';
 import Invitation from './Invitation';
 import UserForm, { UserSubmitData } from '../../ui/userForm/UserForm';
 
-const Users: React.FC = () => {
+const Users = () => {
     const { T, configuration, user } = useApp();
     const { openDialog, closeDialog } = useDialog();
     const { userList, editUser, createUser } = useUser({

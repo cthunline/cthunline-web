@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Switch, FormControlLabel, Typography } from '@mui/material';
 import { GoPencil } from 'react-icons/go';
 import { BsEraserFill } from 'react-icons/bs';
@@ -33,7 +33,7 @@ interface SketchWidgetProps {
     onClose: (widget: WidgetType) => void;
 }
 
-const SketchWidget: React.FC<SketchWidgetProps> = ({ onClose }) => {
+const SketchWidget = ({ onClose }: SketchWidgetProps) => {
     const { T } = useApp();
     const { confirmDialog, openDialog, closeDialog } = useDialog();
     const {

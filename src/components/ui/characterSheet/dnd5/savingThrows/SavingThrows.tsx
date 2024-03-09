@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box } from '@mui/material';
 import { DnD5SavingThrows, DnD5Abilities } from '@cthunline/games';
 
@@ -11,11 +11,11 @@ interface SavingThrowsProps {
     onChange: (data: Partial<DnD5SavingThrows>) => void;
 }
 
-const SavingThrows: React.FC<SavingThrowsProps> = ({
+const SavingThrows = ({
     savingThrows,
     readonly,
     onChange
-}) => {
+}: SavingThrowsProps) => {
     const { T } = useApp();
 
     return (

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, IconButton, TextField } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
@@ -18,7 +18,7 @@ interface StoryProps {
     onChange: (data: SeventhSeaStory) => void;
 }
 
-const Story: React.FC<StoryProps> = ({ index, story, readonly, onChange }) => {
+const Story = ({ index, story, readonly, onChange }: StoryProps) => {
     const { T } = useApp();
 
     return (

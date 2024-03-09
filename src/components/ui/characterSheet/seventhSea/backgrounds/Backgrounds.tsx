@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { SeventhSeaBackground } from '@cthunline/games';
@@ -16,12 +16,12 @@ interface BackgroundsProps {
     onDelete: (index: number) => void;
 }
 
-const Backgrounds: React.FC<BackgroundsProps> = ({
+const Backgrounds = ({
     backgrounds,
     readonly,
     onChange,
     onDelete
-}) => (
+}: BackgroundsProps) => (
     <Box
         gridColumn="span 12"
         display="grid"

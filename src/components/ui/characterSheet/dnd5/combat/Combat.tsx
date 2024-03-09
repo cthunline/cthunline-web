@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, Slider } from '@mui/material';
 import { DnD5Combat, DnD5DeathSaves, DnD5HitPoints } from '@cthunline/games';
 
@@ -24,7 +24,7 @@ const hitPointKeys: (keyof DnD5HitPoints)[] = [
     'temporary'
 ];
 
-const Combat: React.FC<CombatProps> = ({ combat, readonly, onChange }) => {
+const Combat = ({ combat, readonly, onChange }: CombatProps) => {
     const { T } = useApp();
 
     return (

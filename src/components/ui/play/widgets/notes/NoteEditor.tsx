@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { MdArrowBack } from 'react-icons/md';
 
@@ -11,7 +11,7 @@ interface NoteEditorProps {
     onBack: () => void;
 }
 
-const NoteEditor: React.FC<NoteEditorProps> = ({ note, onEdit, onBack }) => {
+const NoteEditor = ({ note, onEdit, onBack }: NoteEditorProps) => {
     const { userId } = useApp();
 
     const [title, setTitle] = useState<string>(note.title);

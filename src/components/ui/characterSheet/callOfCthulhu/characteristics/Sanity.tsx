@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { CoCSanity } from '@cthunline/games';
 
@@ -13,7 +13,7 @@ interface SanityProps {
     onChange: (data: CoCSanity) => void;
 }
 
-const Sanity: React.FC<SanityProps> = ({ data, readonly, onChange }) => {
+const Sanity = ({ data, readonly, onChange }: SanityProps) => {
     const { T } = useApp();
 
     return (

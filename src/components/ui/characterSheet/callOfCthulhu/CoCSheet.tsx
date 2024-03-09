@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Box } from '@mui/material';
 import {
     GiCharacter,
@@ -31,7 +31,7 @@ import Status from './status/Status';
 import Skills from './skills/Skills';
 import Combat from './combat/Combat';
 import Weapons from './weapons/Weapons';
-import { ReactComponent as CoCLogo } from '../../../../assets/games/callOfCthulhu.svg';
+import CoCLogo from '../../../svg/games/CallOfCthulhu';
 import { controlCharacterData } from './cocSheet.helper';
 import fields from './fields.json';
 
@@ -51,14 +51,14 @@ export interface CoCSheetProps {
     onPortraitChange?: (file: File | null) => void;
 }
 
-const CoCSheet: React.FC<CoCSheetProps> = ({
+const CoCSheet = ({
     readonly,
     data,
     listening,
     onChange,
     portrait,
     onPortraitChange
-}) => {
+}: CoCSheetProps) => {
     const { T } = useApp();
 
     const [characterData, setCharacterData] = useState<CoCCharacter>(data);

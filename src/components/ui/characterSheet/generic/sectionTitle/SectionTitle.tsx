@@ -1,4 +1,3 @@
-import React from 'react';
 import { Typography, Box, TextField } from '@mui/material';
 
 import './SectionTitle.css';

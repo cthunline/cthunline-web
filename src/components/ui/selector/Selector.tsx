@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     Select,
     SelectChangeEvent,
@@ -24,7 +23,7 @@ interface SelectorProps {
     onChange: (e: SelectChangeEvent) => void;
 }
 
-const Selector: React.FC<SelectorProps> = ({
+const Selector = ({
     className,
     size,
     options,
@@ -33,7 +32,7 @@ const Selector: React.FC<SelectorProps> = ({
     value,
     error,
     onChange
-}) => {
+}: SelectorProps) => {
     const selectorId = `selector-${name}`;
 
     return (

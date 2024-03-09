@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Box, TextField, CircularProgress } from '@mui/material';
 import { toast } from 'react-toastify';
 import { MdContentCopy } from 'react-icons/md';
 
 import useUser from '../../hooks/useUser';
 
-const Invitation: React.FC = () => {
+const Invitation = () => {
     const { generateInvitationCode } = useUser();
 
     const [invitationCode, setInvitationCode] = useState<string>();

@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import { memo } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { FiPlusCircle } from 'react-icons/fi';
@@ -17,13 +17,13 @@ interface SpellLevelProps {
     onDelete: () => void;
 }
 
-const SpellLevel: React.FC<SpellLevelProps> = ({
+const SpellLevel = ({
     spellLevel,
     readonly,
     onChange,
     isDelete,
     onDelete
-}) => {
+}: SpellLevelProps) => {
     const { T } = useApp();
 
     return (

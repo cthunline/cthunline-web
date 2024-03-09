@@ -9,12 +9,12 @@ interface SvgIconButtonProps {
     onClick?: (e: React.MouseEvent<SVGCircleElement>) => void;
 }
 
-const SvgIconButton: React.FC<SvgIconButtonProps> = ({
+const SvgIconButton = ({
     icon,
     size,
     className,
     onClick
-}) => {
+}: SvgIconButtonProps) => {
     const buttonPadding = size / 10;
     const buttonSize = size + buttonPadding * 2;
     const circleRadius = buttonSize / 2;

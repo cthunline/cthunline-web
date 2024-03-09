@@ -1,4 +1,4 @@
-import React, {
+import {
     createContext,
     useState,
     useContext,
@@ -45,7 +45,7 @@ const defaultDialogData: DialogContextData = {
 
 const DialogContext = createContext<DialogContextData>(defaultDialogData);
 
-export const DialogProvider: React.FC<DialogProviderProps> = ({ children }) => {
+export const DialogProvider = ({ children }: DialogProviderProps) => {
     const [dialogOptions, setDialogOptions] = useState<DialogData>({
         open: false,
         title: '',

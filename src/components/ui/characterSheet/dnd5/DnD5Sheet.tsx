@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Box, IconButton } from '@mui/material';
 import {
     GiCharacter,
@@ -43,7 +43,7 @@ import Combat from './combat/Combat';
 import Attacks from './attacks/Attacks';
 import Equipment from './equipment/Equipment';
 import Spellcasting from './spellcasting/Spellcasting';
-import { ReactComponent as DnD5Logo } from '../../../../assets/games/dnd5.svg';
+import DnD5Logo from '../../../svg/games/DnD5';
 import { getDefaulSpellLevel } from './spellcasting/spellcasting.data';
 import { defaultAttack } from './attacks/attacks.data';
 import { controlCharacterData } from './dnd5Sheet.helper';
@@ -88,14 +88,14 @@ export interface DnD5SheetProps {
     onPortraitChange?: (file: File | null) => void;
 }
 
-const DnD5Sheet: React.FC<DnD5SheetProps> = ({
+const DnD5Sheet = ({
     readonly,
     data,
     listening,
     onChange,
     portrait,
     onPortraitChange
-}) => {
+}: DnD5SheetProps) => {
     const { T } = useApp();
 
     const [characterData, setCharacterData] = useState<DnD5Character>(data);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Tooltip } from '@mui/material';
 
 import { useApp } from '../../../contexts/App';
@@ -38,7 +38,7 @@ interface SketchTokenProps {
     onDelete?: () => void;
 }
 
-const SketchToken: React.FC<SketchTokenProps> = ({
+const SketchToken = ({
     id,
     isMaster,
     size,
@@ -56,7 +56,7 @@ const SketchToken: React.FC<SketchTokenProps> = ({
     onDuplicate,
     onColorChange,
     onDelete
-}) => {
+}: SketchTokenProps) => {
     const { userId } = useApp();
 
     const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Paper, Typography, Button, Box } from '@mui/material';
 import { toast } from 'react-toastify';
 import { HiMusicNote } from 'react-icons/hi';
@@ -24,7 +24,7 @@ const allowedMimeTypes = [
 
 const limitSizeInMb = 20;
 
-const Assets: React.FC = () => {
+const Assets = () => {
     const { T } = useApp();
     const { confirmDialog, openDialog, closeDialog } = useDialog();
     const { assetList, uploadAssets, deleteAsset } = useAsset({

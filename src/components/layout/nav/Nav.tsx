@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppBar, Button, IconButton, Avatar } from '@mui/material';
 import { GiD10, GiRollingDices } from 'react-icons/gi';
@@ -36,7 +36,7 @@ const navMenuItems: NavMenuItem[] = [
     }
 ];
 
-const Nav: React.FC = () => {
+const Nav = () => {
     const navigate = useNavigate();
     const { T } = useApp();
 
