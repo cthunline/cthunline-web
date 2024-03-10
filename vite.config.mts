@@ -2,16 +2,10 @@ import { loadEnv, defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 
-const env = loadEnv(
-  'dev',
-  process.cwd()
-);
+const env = loadEnv('dev', process.cwd());
 
 export default defineConfig({
-    plugins: [
-        react(),
-        svgr()
-    ],
+    plugins: [react(), svgr()],
     server: {
         port: 3030,
         open: true,
