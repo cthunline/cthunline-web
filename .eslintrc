@@ -11,15 +11,13 @@
         "airbnb",
         "airbnb/hooks",
         "airbnb-typescript",
-        "prettier",
-        "plugin:react/jsx-runtime"
+        "plugin:react/jsx-runtime",
+        "prettier"
     ],
     "plugins": [
         "risxss"
     ],
     "rules": {
-        "@typescript-eslint/comma-dangle": ["error", "never"],
-        "@typescript-eslint/indent": "off",
         "@typescript-eslint/lines-between-class-members": [
             "error",
             "always",
@@ -27,7 +25,6 @@
                 "exceptAfterSingleLine": true
             }
         ],
-        "comma-dangle": "off",
         "import/no-extraneous-dependencies": [
             "error",
             {
@@ -35,7 +32,6 @@
             }
         ],
         "import/prefer-default-export": "off",
-        "indent": "off",
         "lines-between-class-members": "off",
         "radix": "off",
         "react/function-component-definition": [
@@ -44,8 +40,6 @@
                 "namedComponents": "arrow-function"
             }
         ],
-        "react/jsx-indent": ["error", 4],
-        "react/jsx-indent-props": ["error", 4],
         "react/jsx-props-no-spreading": "off",
         "react/require-default-props": "off",
         "risxss/catch-potential-xss-react": "error",
