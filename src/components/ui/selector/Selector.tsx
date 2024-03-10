@@ -7,7 +7,7 @@ import {
     FormHelperText
 } from '@mui/material';
 
-interface SelectorOption {
+export interface SelectorOption {
     name: string;
     value: string | number;
 }

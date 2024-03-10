@@ -8,6 +8,7 @@ import {
     getCharacters as getCharactersRequest,
     getCharacter as getCharacterRequest,
     deletePortrait as deletePortraitRequest,
+    transferCharacter as transferCharacterRequest,
     uploadPortrait as uploadPortraitRequest
 } from '../../services/requests/character';
 
@@ -40,6 +41,13 @@ interface EditOptions {
 
 interface DeleteOptions {
     characterId: number;
+    isRefresh?: boolean;
+    isToast?: boolean;
+}
+
+interface TransferOptions {
+    characterId: number;
+    userId: number;
     isRefresh?: boolean;
     isToast?: boolean;
 }
@@ -173,6 +181,28 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
         [refresh, handleApiError]
     );
 
+    const transferCharacter = useCallback(
+        async ({
+            characterId: charId,
+            userId,
+            isRefresh = true,
+            isToast = true
+        }: TransferOptions): Promise<void> => {
+            try {
+                await transferCharacterRequest(charId, userId);
+                if (isRefresh) {
+                    await refresh();
+                }
+                if (isToast) {
+                    toast.success('Character transfered');
+                }
+            } catch (err: any) {
+                throw handleApiError(err);
+            }
+        },
+        [refresh, handleApiError]
+    );
+
     const uploadPortrait = useCallback(
         async ({
             characterId: charId,
@@ -235,6 +265,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
         createCharacter,
         editCharacter,
         deleteCharacter,
+        transferCharacter,
         uploadPortrait,
         deletePortrait
     };

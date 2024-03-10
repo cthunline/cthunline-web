@@ -46,6 +46,16 @@ export const deleteCharacter = async (characterId: number) => {
     });
 };
 
+export const transferCharacter = async (
+    characterId: number,
+    userId: number
+) => {
+    await callApi({
+        method: 'PUT',
+        route: `/characters/${characterId}/transfer/${userId}`
+    });
+};
+
 interface UploadPortraitOptions {
     characterId: number;
     body: PortraitUploadBody;

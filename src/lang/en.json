@@ -32,6 +32,7 @@
         "privatly": "privatly",
         "public": "public",
         "publicly": "publicly",
+        "required": "required",
         "shared": "shared",
         "theme": "theme",
         "unknown": "unknown"
@@ -73,7 +74,9 @@
         },
         "characters": {
             "deleteCharacterConfirm": "delete character {name} ?",
-            "selectGame": "select a game"
+            "selectGame": "select a game",
+            "selectTransferUser": "select a user",
+            "transferCharacterConfirm": "transfer character ?"
         },
         "error": {
             "notFound": {
