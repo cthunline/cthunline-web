@@ -9,7 +9,7 @@
         "format": "npx eslint . --fix --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --write . && npx tsc --noEmit && npx stylelint --fix \"**/*.css\" --max-warnings=0"
     },
     "dependencies": {
-        "@cthunline/games": "^2.3.1",
+        "@cthunline/games": "^2.4.1",
         "@emotion/react": "^11.11.4",
         "@emotion/styled": "^11.11.0",
         "@mui/material": "^5.15.12",
