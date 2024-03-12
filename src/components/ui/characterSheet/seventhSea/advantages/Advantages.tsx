@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { SeventhSeaAdvantage } from '@cthunline/games';
@@ -73,4 +72,4 @@ const Advantages = ({
     </Box>
 );
 
-export default memo(Advantages);
+export default Advantages;

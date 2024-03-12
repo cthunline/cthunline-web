@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { DnD5Attack } from '@cthunline/games';
@@ -83,4 +82,4 @@ const Attacks = ({ attacks, readonly, onChange, onDelete }: AttacksProps) => {
     );
 };
 
-export default memo(Attacks);
+export default Attacks;

@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { SWD6Attribute, SWD6AttributeData, SWD6Skill } from '@cthunline/games';
 
@@ -93,4 +92,4 @@ const Attribute = ({
     );
 };
 
-export default memo(Attribute);
+export default Attribute;

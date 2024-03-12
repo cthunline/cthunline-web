@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { DnD5Equipment } from '@cthunline/games';
 
@@ -88,4 +87,4 @@ const Equipment = ({ equipment, readonly, onChange }: EquipmentProps) => {
     );
 };
 
-export default memo(Equipment);
+export default Equipment;

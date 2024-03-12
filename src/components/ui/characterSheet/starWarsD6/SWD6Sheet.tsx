@@ -75,7 +75,7 @@ const SWD6Sheet = ({
             initialRender.current = false;
         } else if (!readonly) {
             const { name, occupation } = characterData.biography;
-            const properName = name ?? '[No Name]';
+            const properName = name || '[No Name]';
             const properOccupation = occupation ? `(${occupation})` : '';
             const characterName = `${properName} ${properOccupation}`;
             onChange(characterName, characterData);

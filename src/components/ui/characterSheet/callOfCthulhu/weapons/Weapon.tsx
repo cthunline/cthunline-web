@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { CoCWeapon } from '@cthunline/games';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
@@ -63,4 +62,4 @@ const Weapon = ({ index, data, readonly, onChange, onDelete }: WeaponProps) => {
     );
 };
 
-export default memo(Weapon);
+export default Weapon;

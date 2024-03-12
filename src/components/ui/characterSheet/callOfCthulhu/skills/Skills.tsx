@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box } from '@mui/material';
 import { CoCSkill } from '@cthunline/games';
 
@@ -40,4 +39,4 @@ const Skills = ({
     </Box>
 );
 
-export default memo(Skills);
+export default Skills;

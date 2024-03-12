@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box } from '@mui/material';
 import { SWD6Weapon } from '@cthunline/games';
 
@@ -40,4 +39,4 @@ const Weapons = ({
     </Box>
 );
 
-export default memo(Weapons);
+export default Weapons;

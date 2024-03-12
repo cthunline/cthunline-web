@@ -70,7 +70,7 @@ const Characters = () => {
         const char = await createCharacter({
             data: {
                 gameId,
-                name: '',
+                name: 'New',
                 data: getDefaultData(gameId)
             },
             isRefresh: false,

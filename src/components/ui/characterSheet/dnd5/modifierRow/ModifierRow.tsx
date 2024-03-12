@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, Checkbox } from '@mui/material';
 
 import { displayModifier } from '../dnd5Sheet.helper';
@@ -47,4 +46,4 @@ const ModifierRow = ({
     </>
 );
 
-export default memo(ModifierRow);
+export default ModifierRow;

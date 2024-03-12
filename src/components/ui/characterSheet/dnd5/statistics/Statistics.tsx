@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { DnD5Statistics } from '@cthunline/games';
 
@@ -68,4 +67,4 @@ const Statistics = ({ statistics, readonly, onChange }: StatisticsProps) => {
     );
 };
 
-export default memo(Statistics);
+export default Statistics;

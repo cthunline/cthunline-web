@@ -7,7 +7,6 @@ const StarWarsD6 = (props: SVGProps<SVGSVGElement>) => (
         height="135px"
         viewBox="0 0 999 135"
         version="1.1"
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
     >
         <title>Star Wars D6 logo</title>

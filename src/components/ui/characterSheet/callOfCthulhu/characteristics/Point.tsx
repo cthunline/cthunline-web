@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, Tooltip } from '@mui/material';
 import { CoCPoint } from '@cthunline/games';
 
@@ -68,4 +67,4 @@ const Point = ({ field, textKey, data, readonly, onChange }: PointProps) => {
     );
 };
 
-export default memo(Point);
+export default Point;

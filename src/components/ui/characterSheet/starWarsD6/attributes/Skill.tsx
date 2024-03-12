@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { SWD6Attribute, SWD6Skill } from '@cthunline/games';
@@ -79,4 +78,4 @@ const Skill = ({
     </Box>
 );
 
-export default memo(Skill);
+export default Skill;

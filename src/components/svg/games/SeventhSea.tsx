@@ -8,7 +8,6 @@ const SeventhSea = (props: SVGProps<SVGSVGElement>) => (
         width="400"
         height="184.08736349453977"
         viewBox="0, 0, 400,184.08736349453977"
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
     >
         <title>Seventh Sea logo</title>

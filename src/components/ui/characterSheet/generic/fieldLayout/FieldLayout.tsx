@@ -1,5 +1,4 @@
-import { memo } from 'react';
-import { Box, TextField } from '@mui/material';
+import { Box, Checkbox, FormControlLabel, TextField } from '@mui/material';
 
 import { GameId } from '../../../../../types';
 import { useApp } from '../../../../contexts/App';
@@ -13,7 +12,119 @@ export interface Field<DataType> {
     type?: string;
     lines?: number;
     children?: Field<DataType>[];
+    readonly?: boolean;
 }
+
+interface InputProps<DataType> {
+    index: number;
+    field: Field<DataType>;
+    gameId: GameId;
+    textSectionKey: string;
+    data: DataType;
+    readonly: boolean;
+    onChange: (data: DataType) => void;
+}
+
+const FieldInput = <DataType extends {}>({
+    index,
+    gameId,
+    field: { key, title, type, lines, readonly: fieldReadonly },
+    textSectionKey,
+    data,
+    readonly,
+    onChange
+}: InputProps<DataType>) => {
+    const { T } = useApp();
+    return (
+        <>
+            {title ? (
+                <SectionTitle
+                    key={`field-${String(key ?? index)}-title`}
+                    text={T(`game.${gameId}.${textSectionKey}.${String(key)}`)}
+                />
+            ) : null}
+            {key ? (
+                <TextField
+                    key={`field-${String(key ?? index)}-input`}
+                    fullWidth
+                    multiline={!!lines}
+                    minRows={lines}
+                    maxRows={lines}
+                    InputProps={{
+                        readOnly: fieldReadonly || readonly,
+                        classes: {
+                            input: 'input-smaller-text'
+                        }
+                    }}
+                    type="text"
+                    size="small"
+                    label={T(
+                        `game.${gameId}.${textSectionKey}.${String(key ?? index)}`
+                    )}
+                    name={key.toString()}
+                    value={data[key]}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        const { value } = e.target;
+                        const parsedValue =
+                            type === 'number'
+                                ? Number(onlyNumbers(value))
+                                : value;
+                        onChange({
+                            ...data,
+                            [key]: parsedValue
+                        });
+                    }}
+                />
+            ) : null}
+        </>
+    );
+};
+
+const FieldCheckbox = <DataType extends {}>({
+    index,
+    gameId,
+    field: { key, title, readonly: fieldReadonly },
+    textSectionKey,
+    data,
+    readonly,
+    onChange
+}: InputProps<DataType>) => {
+    const { T } = useApp();
+    return (
+        <>
+            {title ? (
+                <SectionTitle
+                    key={`field-${String(key ?? index)}-title`}
+                    text={T(`game.${gameId}.${textSectionKey}.${String(key)}`)}
+                />
+            ) : null}
+            {key ? (
+                <FormControlLabel
+                    key={`field-${String(key ?? index)}-switch`}
+                    label={T(
+                        `game.${gameId}.${textSectionKey}.${String(key ?? index)}`
+                    )}
+                    labelPlacement="start"
+                    control={
+                        <Checkbox
+                            checked={!!data[key]}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                                if (!fieldReadonly && !readonly) {
+                                    onChange({
+                                        ...data,
+                                        [key]: e.target.checked
+                                    });
+                                }
+                            }}
+                        />
+                    }
+                />
+            ) : null}
+        </>
+    );
+};
 
 interface FieldLayoutProps<DataType> {
     gameId: GameId;
@@ -22,67 +133,22 @@ interface FieldLayoutProps<DataType> {
     data: DataType;
     readonly: boolean;
     onChange: (data: DataType) => void;
+    rowGap?: number;
+    columnGap?: number;
 }
 
-const FieldLayout = <DataType extends {}>({
-    gameId,
-    fields,
-    textSectionKey,
-    data,
-    readonly,
-    onChange
-}: FieldLayoutProps<DataType>) => {
-    const { T } = useApp();
-
-    const getInput = (
-        { key, title, type, lines }: Field<DataType>,
-        index: number
-    ) => [
-        title ? (
-            <SectionTitle
-                key={`field-${String(key ?? index)}-title`}
-                text={T(`game.${gameId}.${textSectionKey}.${String(key)}`)}
-            />
-        ) : null,
-        key ? (
-            <TextField
-                key={`field-${String(key ?? index)}-input`}
-                fullWidth
-                multiline={!!lines}
-                minRows={lines}
-                maxRows={lines}
-                InputProps={{
-                    readOnly: readonly,
-                    classes: {
-                        input: 'input-smaller-text'
-                    }
-                }}
-                type="text"
-                size="small"
-                label={T(
-                    `game.${gameId}.${textSectionKey}.${String(key ?? index)}`
-                )}
-                name={key.toString()}
-                value={data[key]}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    const { value } = e.target;
-                    const parsedValue =
-                        type === 'number' ? Number(onlyNumbers(value)) : value;
-                    onChange({
-                        ...data,
-                        [key]: parsedValue
-                    });
-                }}
-            />
-        ) : null
-    ];
-
+const FieldLayout = <DataType extends {}>(
+    props: FieldLayoutProps<DataType>
+) => {
+    const { fields, columnGap, rowGap } = props;
     return (
         <Box
             gridColumn="span 12"
             display="grid"
             gridTemplateColumns="repeat(12, 1fr)"
             gap={2}
+            columnGap={columnGap}
+            rowGap={rowGap}
         >
             {fields.map((field, index) =>
                 field.children ? (
@@ -99,7 +165,19 @@ const FieldLayout = <DataType extends {}>({
                                 gridColumn={`span ${childField.gridColumn}`}
                                 gap={2}
                             >
-                                {getInput(childField, idx)}
+                                {childField.type === 'boolean' ? (
+                                    <FieldCheckbox
+                                        {...props}
+                                        field={childField}
+                                        index={idx}
+                                    />
+                                ) : (
+                                    <FieldInput
+                                        {...props}
+                                        field={childField}
+                                        index={idx}
+                                    />
+                                )}
                             </Box>
                         ))}
                     </Box>
@@ -109,7 +187,19 @@ const FieldLayout = <DataType extends {}>({
                         gridColumn={`span ${field.gridColumn}`}
                         gap={2}
                     >
-                        {getInput(field, index)}
+                        {field.type === 'boolean' ? (
+                            <FieldCheckbox
+                                {...props}
+                                field={field}
+                                index={index}
+                            />
+                        ) : (
+                            <FieldInput
+                                {...props}
+                                field={field}
+                                index={index}
+                            />
+                        )}
                     </Box>
                 )
             )}
@@ -117,4 +207,4 @@ const FieldLayout = <DataType extends {}>({
     );
 };
 
-export default memo(FieldLayout) as typeof FieldLayout;
+export default FieldLayout;

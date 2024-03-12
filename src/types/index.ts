@@ -3,7 +3,8 @@ import {
     CoCCharacter,
     DnD5Character,
     SeventhSeaCharacter,
-    SWD6Character
+    SWD6Character,
+    WarhammerFantasyCharacter
 } from '@cthunline/games';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ theme
@@ -175,7 +176,8 @@ export type CharacterData =
     | CoCCharacter
     | DnD5Character
     | SeventhSeaCharacter
-    | SWD6Character;
+    | SWD6Character
+    | WarhammerFantasyCharacter;
 
 export interface Character<GenericCharacterData = CharacterData> {
     id: number;
@@ -202,7 +204,8 @@ export enum GameId {
     callOfCthulhu = 'callOfCthulhu',
     dnd5 = 'dnd5',
     seventhSea = 'seventhSea',
-    starWarsD6 = 'starWarsD6'
+    starWarsD6 = 'starWarsD6',
+    warhammerFantasy = 'warhammerFantasy'
 }
 
 export interface Game {

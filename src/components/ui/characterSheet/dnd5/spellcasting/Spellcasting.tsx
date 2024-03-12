@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { DnD5Spellcasting } from '@cthunline/games';
 
@@ -109,4 +108,4 @@ const Spellcasting = ({
     );
 };
 
-export default memo(Spellcasting);
+export default Spellcasting;

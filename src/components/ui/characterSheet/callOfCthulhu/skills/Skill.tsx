@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, Checkbox, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { CoCSkill } from '@cthunline/games';
@@ -101,4 +100,4 @@ const Skill = ({ index, data, readonly, onChange, onDelete }: SkillProps) => {
     );
 };
 
-export default memo(Skill);
+export default Skill;

@@ -19,7 +19,7 @@ interface SelectorProps {
     label?: string;
     name: string;
     value?: string;
-    error?: string;
+    error?: string | boolean;
     onChange: (e: SelectChangeEvent) => void;
 }
 
@@ -36,7 +36,7 @@ const Selector = ({
     const selectorId = `selector-${name}`;
 
     return (
-        <FormControl fullWidth error={!!error}>
+        <FormControl fullWidth error={!!error} size={size}>
             <InputLabel id={selectorId}>{label}</InputLabel>
             <Select
                 size={size}
@@ -56,7 +56,9 @@ const Selector = ({
                     </MenuItem>
                 ))}
             </Select>
-            {error ? <FormHelperText>{error}</FormHelperText> : null}
+            {error && typeof error === 'string' ? (
+                <FormHelperText>{error}</FormHelperText>
+            ) : null}
         </FormControl>
     );
 };

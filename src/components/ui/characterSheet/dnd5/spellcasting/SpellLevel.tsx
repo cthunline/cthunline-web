@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { FiPlusCircle } from 'react-icons/fi';
@@ -120,4 +119,4 @@ const SpellLevel = ({
     );
 };
 
-export default memo(SpellLevel);
+export default SpellLevel;

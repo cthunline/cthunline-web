@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box } from '@mui/material';
 import { DnD5Skills } from '@cthunline/games';
 
@@ -46,4 +45,4 @@ const Skills = ({ skills, readonly, onChange }: SkillsProps) => {
     );
 };
 
-export default memo(Skills);
+export default Skills;

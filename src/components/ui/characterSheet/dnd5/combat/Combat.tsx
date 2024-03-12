@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, Slider } from '@mui/material';
 import { DnD5Combat, DnD5DeathSaves, DnD5HitPoints } from '@cthunline/games';
 
@@ -160,4 +159,4 @@ const Combat = ({ combat, readonly, onChange }: CombatProps) => {
     );
 };
 
-export default memo(Combat);
+export default Combat;

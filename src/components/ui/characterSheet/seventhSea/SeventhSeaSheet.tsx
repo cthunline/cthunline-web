@@ -87,7 +87,7 @@ const SeventhSeaSheet = ({
             initialRender.current = false;
         } else if (!readonly) {
             const { name, concept } = characterData.biography;
-            const properName = name ?? '[No Name]';
+            const properName = name || '[No Name]';
             const properConcept = concept ? `(${concept})` : '';
             const characterName = `${properName} ${properConcept}`;
             onChange(characterName, characterData);

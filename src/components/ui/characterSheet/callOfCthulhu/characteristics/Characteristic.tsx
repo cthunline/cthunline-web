@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, Tooltip } from '@mui/material';
 import { CoCCharacteristic } from '@cthunline/games';
 
@@ -75,4 +74,4 @@ const Characteristic = ({
     );
 };
 
-export default memo(Characteristic);
+export default Characteristic;

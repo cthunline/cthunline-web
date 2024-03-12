@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, IconButton, TextField } from '@mui/material';
 import { FiPlusCircle } from 'react-icons/fi';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
@@ -117,4 +116,4 @@ const Story = ({ index, story, readonly, onChange }: StoryProps) => {
     );
 };
 
-export default memo(Story);
+export default Story;

@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { CoCSanity } from '@cthunline/games';
 
@@ -54,4 +53,4 @@ const Sanity = ({ data, readonly, onChange }: SanityProps) => {
     );
 };
 
-export default memo(Sanity);
+export default Sanity;

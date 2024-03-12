@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, Radio, IconButton } from '@mui/material';
 import { MdClose } from 'react-icons/md';
 
@@ -120,4 +119,4 @@ const Characteristics = <DataType extends Record<string, any>>({
     );
 };
 
-export default memo(Characteristics) as typeof Characteristics;
+export default Characteristics;

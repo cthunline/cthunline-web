@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box } from '@mui/material';
 import {
     SWD6Attributes,
@@ -53,4 +52,4 @@ const Attributes = ({
     </Box>
 );
 
-export default memo(Attributes);
+export default Attributes;

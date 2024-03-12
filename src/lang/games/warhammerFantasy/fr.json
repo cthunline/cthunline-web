@@ -1,0 +1,220 @@
+{
+    "warhammerFantasy": {
+        "common": {
+            "characteristics": "caractéristiques",
+            "characteristic": "caractéristique",
+            "basicSkills": "compétences de base",
+            "otherSkills": "comp. groupées et avancées",
+            "wounds": "blessures",
+            "ambitions": "ambitions",
+            "party": "groupe"
+        },
+        "tabs": {
+            "biographyAndStatus": "bio & statut",
+            "characteristicsAndSkills": "caracs & comps",
+            "talentsAndSpells": "talents & sorts",
+            "equipment": "équipement"
+        },
+        "biography": {
+            "biography": "biographie",
+            "name": "nom",
+            "species": "race",
+            "class": "classe",
+            "career": "carrière",
+            "careerLevel": "échelon",
+            "careerPath": "schéma de carrière",
+            "status": "statut",
+            "age": "âge",
+            "height": "taille",
+            "hair": "cheveux",
+            "eyes": "yeux"
+        },
+        "characteristic": {
+            "initial": "initiales",
+            "advances": "augmentées",
+            "current": "courantes"
+        },
+        "characteristics": {
+            "weaponSkill": {
+                "long": "capacité de combat",
+                "short": "CC"
+            },
+            "ballisticSkill": {
+                "long": "capacité de tir",
+                "short": "CT"
+            },
+            "strength": {
+                "long": "force",
+                "short": "F"
+            },
+            "toughness": {
+                "long": "endurance",
+                "short": "E"
+            },
+            "initiative": {
+                "long": "initiative",
+                "short": "I"
+            },
+            "agility": {
+                "long": "agilité",
+                "short": "Ag"
+            },
+            "dexterity": {
+                "long": "dextérité",
+                "short": "Dex"
+            },
+            "intelligence": {
+                "long": "intelligence",
+                "short": "Int"
+            },
+            "willpower": {
+                "long": "force mentale",
+                "short": "FM"
+            },
+            "fellowship": {
+                "long": "sociabilité",
+                "short": "Soc"
+            }
+        },
+        "fate": {
+            "fate": "destin",
+            "fortune": "chance"
+        },
+        "resilience": {
+            "resilience": "résilience",
+            "resolve": "détermination",
+            "motivation": "motivation"
+        },
+        "experience": {
+            "experience": "expérience",
+            "current": "actuelle",
+            "spent": "dépensée",
+            "total": "totale"
+        },
+        "movement": {
+            "movement": "mouvement",
+            "walk": "marche",
+            "run": "course"
+        },
+        "skill": {
+            "name": "nom",
+            "advances": "aug.",
+            "skill": "comp"
+        },
+        "basicSkills": {
+            "art": "art",
+            "athletics": "athlétisme",
+            "bribery": "subordination",
+            "charm": "charme",
+            "charmAnimal": "emprise animaux",
+            "climb": "escalade",
+            "cool": "calme",
+            "consumeAlcohol": "résistance à l'alcool",
+            "dodge": "esquive",
+            "drive": "conduite d'attelage",
+            "endurance": "résistance",
+            "entertain": "divertissement",
+            "gamble": "pari",
+            "gossip": "ragot",
+            "haggle": "marchandage",
+            "intimidate": "intimidation",
+            "intuition": "intuition",
+            "leadership": "commandement",
+            "meleeBasic": "corps à corps (base)",
+            "melee": "corps à corps",
+            "navigation": "navigation",
+            "outdoorSurvival": "survie en extérieur",
+            "perception": "perception",
+            "ride": "chevaucher",
+            "row": "ramer",
+            "stealth": "discrétion"
+        },
+        "otherSkill": {
+            "groupedAdvancedSkills": "comp. groupées & avancées"
+        },
+        "talents": {
+            "name": "nom",
+            "timesTaken": "nombre pris",
+            "description": "description"
+        },
+        "ambitions": {
+            "shortTerm": "à court terme",
+            "longTerm": "long à long terme"
+        },
+        "party": {
+            "name": "nom du groupe",
+            "shortTerm": "à court terme",
+            "longTerm": "long à long terme",
+            "members": "membres"
+        },
+        "armour": {
+            "name": "nom",
+            "locations": "localisation",
+            "encumbrance": "encombrement",
+            "armourPoints": "points d'armure",
+            "quatlities": "atouts / défauts"
+        },
+        "armourPoints": {
+            "head": "tête",
+            "rightArm": "bras droit",
+            "leftArm": "bras gauche",
+            "body": "corps",
+            "rightLeg": "jambe droite",
+            "leftLeg": "jambe gauche",
+            "shield": "bouclier"
+        },
+        "trappings": {
+            "name": "nom",
+            "encumbrance": "encombrement"
+        },
+        "psychology": "psychologie",
+        "corruptionMutation": "corruption & mutation",
+        "wealth": {
+            "brassPennies": {
+                "long": "sous de cuivre",
+                "short": "SC"
+            },
+            "silverShillings": {
+                "long": "pistoles d'argent",
+                "short": "PA"
+            },
+            "goldCrowns": {
+                "long": "couronnes d'or",
+                "short": "CO"
+            }
+        },
+        "encumbrance": {
+            "weapons": "armes",
+            "armour": "armure",
+            "trappings": "possessions",
+            "maximum": "enc. max.",
+            "total": "total"
+        },
+        "wounds": {
+            "strengthBonus": "bonus de force",
+            "twiceToughnessBonus": "bonus d'endurance x 2",
+            "willpowerBonus": "bonus de force mentale",
+            "hardy": "dur à cuire",
+            "total": "total",
+            "current": "blessures",
+            "notes": "notes"
+        },
+        "weapons": {
+            "name": "nom",
+            "group": "groupe",
+            "encumbrance": "encombrement",
+            "rangeReach": "portée/allonge",
+            "damage": "dégâts",
+            "qualities": "atouts/défauts"
+        },
+        "spells": {
+            "name": "nom",
+            "castingNumber": "niveau d'incantation",
+            "range": "portée",
+            "target": "cible",
+            "duration": "durée",
+            "effect": "effets",
+            "sin": "péché"
+        }
+    }
+}

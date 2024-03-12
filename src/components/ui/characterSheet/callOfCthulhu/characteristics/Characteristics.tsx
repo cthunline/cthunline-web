@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react';
+import { useCallback } from 'react';
 import { Box } from '@mui/material';
 import {
     CoCCharacter,
@@ -119,4 +119,4 @@ const Characteristics = ({
     );
 };
 
-export default memo(Characteristics);
+export default Characteristics;

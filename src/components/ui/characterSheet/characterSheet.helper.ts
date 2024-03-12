@@ -1,8 +1,13 @@
-import { callOfCthulhu, dnd5, starWarsD6, seventhSea } from '@cthunline/games';
+import {
+    callOfCthulhu,
+    dnd5,
+    starWarsD6,
+    seventhSea,
+    warhammerFantasy
+} from '@cthunline/games';
 
 import { GameId } from '../../../types';
 
-// eslint-disable-next-line import/prefer-default-export
 export const getDefaultData = (gameId: string) => {
     if (gameId === GameId.callOfCthulhu) {
         return callOfCthulhu.default;
@@ -15,6 +20,9 @@ export const getDefaultData = (gameId: string) => {
     }
     if (gameId === GameId.starWarsD6) {
         return starWarsD6.default;
+    }
+    if (gameId === GameId.warhammerFantasy) {
+        return warhammerFantasy.default;
     }
     throw new Error('Could not get default character data');
 };

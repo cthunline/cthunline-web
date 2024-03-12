@@ -9,10 +9,10 @@
         "format": "npx eslint . --fix --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --write . && npx tsc --noEmit && npx stylelint --fix \"**/*.css\" --max-warnings=0"
     },
     "dependencies": {
-        "@cthunline/games": "^2.4.1",
+        "@cthunline/games": "^2.4.14",
         "@emotion/react": "^11.11.4",
         "@emotion/styled": "^11.11.0",
-        "@mui/material": "^5.15.12",
+        "@mui/material": "^5.15.13",
         "axios": "^1.6.7",
         "dayjs": "^1.11.10",
         "eslint-plugin-risxss": "^2.1.0",
@@ -24,16 +24,16 @@
         "react-icons": "^5.0.1",
         "react-router-dom": "^6.22.3",
         "react-toastify": "^10.0.4",
-        "socket.io-client": "^4.7.4",
+        "socket.io-client": "^4.7.5",
         "yup": "^1.4.0"
     },
     "devDependencies": {
         "@types/hoist-non-react-statics": "^3.3.5",
-        "@types/node": "^20.11.25",
-        "@types/react": "^18.2.64",
-        "@types/react-dom": "^18.2.21",
-        "@typescript-eslint/eslint-plugin": "^7.1.1",
-        "@typescript-eslint/parser": "^7.1.1",
+        "@types/node": "^20.11.27",
+        "@types/react": "^18.2.66",
+        "@types/react-dom": "^18.2.22",
+        "@typescript-eslint/eslint-plugin": "^7.2.0",
+        "@typescript-eslint/parser": "^7.2.0",
         "@vitejs/plugin-react": "^4.2.1",
         "eslint": "^8.57.0",
         "eslint-config-airbnb": "^19.0.4",
@@ -49,7 +49,7 @@
         "stylelint-config-standard": "^36.0.0",
         "stylelint-order": "^6.0.4",
         "typescript": "^5.4.2",
-        "vite": "^5.1.5",
+        "vite": "^5.1.6",
         "vite-plugin-svgr": "^4.2.0"
     }
 }

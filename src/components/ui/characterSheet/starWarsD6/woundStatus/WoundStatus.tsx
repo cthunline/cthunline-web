@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, Checkbox } from '@mui/material';
 import { SWD6WoundStatus } from '@cthunline/games';
 
@@ -57,4 +56,4 @@ const WoundStatus = ({ woundStatus, readonly, onChange }: WoundStatusProps) => {
     );
 };
 
-export default memo(WoundStatus);
+export default WoundStatus;

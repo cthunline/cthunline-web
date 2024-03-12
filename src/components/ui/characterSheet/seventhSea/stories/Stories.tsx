@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { SeventhSeaStory } from '@cthunline/games';
@@ -49,4 +48,4 @@ const Stories = ({ stories, readonly, onChange, onDelete }: StoriesProps) => (
     </Box>
 );
 
-export default memo(Stories);
+export default Stories;

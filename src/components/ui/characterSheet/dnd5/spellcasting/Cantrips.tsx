@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { FiPlusCircle } from 'react-icons/fi';
@@ -80,4 +79,4 @@ const Cantrips = ({ cantrips, readonly, onChange }: CantripsProps) => {
     );
 };
 
-export default memo(Cantrips);
+export default Cantrips;

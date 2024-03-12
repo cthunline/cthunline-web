@@ -14,6 +14,7 @@ export interface SheetTabsProps {
     selectedIndex: number;
     logoSvgComponent?: React.FC<React.SVGProps<SVGSVGElement>>;
     onChange: (index: number) => void;
+    wrapContentGrid?: boolean;
 }
 
 const SheetTabs = ({
@@ -21,7 +22,8 @@ const SheetTabs = ({
     tabs,
     selectedIndex,
     logoSvgComponent: SVGLogo,
-    onChange
+    onChange,
+    wrapContentGrid = true
 }: SheetTabsProps) => {
     const handleChange = (_e: React.SyntheticEvent, value: number) => {
         onChange(value);
@@ -46,15 +48,19 @@ const SheetTabs = ({
                 ))}
             </Tabs>
             {/* content */}
-            <Box
-                className="grow full-width scroll p-25 pt-15"
-                display="grid"
-                gridTemplateColumns="repeat(12, 1fr)"
-                columnGap={2}
-                rowGap={4}
-            >
-                {children}
-            </Box>
+            {wrapContentGrid ? (
+                <Box
+                    className="grow full-width scroll p-25 pt-15"
+                    display="grid"
+                    gridTemplateColumns="repeat(12, 1fr)"
+                    columnGap={2}
+                    rowGap={4}
+                >
+                    {children}
+                </Box>
+            ) : (
+                children
+            )}
         </Box>
     );
 };

@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { DnD5Abilities } from '@cthunline/games';
 
@@ -88,4 +87,4 @@ const Abilities = ({ abilities, readonly, onChange }: AbilitiesProps) => {
     );
 };
 
-export default memo(Abilities);
+export default Abilities;

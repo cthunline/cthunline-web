@@ -9,7 +9,6 @@ const DnD5 = (props: SVGProps<SVGSVGElement>) => (
         height="81.296669"
         viewBox="0 0 615.29065 81.296669"
         xmlns="http://www.w3.org/2000/svg"
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
     >
         <title>Dungeons & Dragons logo</title>

@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, FormControlLabel, Checkbox } from '@mui/material';
 import { CoCStatus } from '@cthunline/games';
 
@@ -43,4 +42,4 @@ const Status = ({ readonly, status, onChange }: StatusProps) => {
     );
 };
 
-export default memo(Status);
+export default Status;

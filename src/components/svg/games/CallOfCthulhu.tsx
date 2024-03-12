@@ -8,7 +8,6 @@ const CallOfCthulhu = (props: SVGProps<SVGSVGElement>) => (
         height="118.000000pt"
         viewBox="0 0 1145.000000 118.000000"
         preserveAspectRatio="xMidYMid meet"
-        // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
     >
         <title>Call of Cthulhu logo</title>

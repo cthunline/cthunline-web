@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { CoCLuck } from '@cthunline/games';
 
@@ -51,4 +50,4 @@ const Luck = ({ data, readonly, onChange }: LuckProps) => {
     );
 };
 
-export default memo(Luck);
+export default Luck;

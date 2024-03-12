@@ -1,0 +1,103 @@
+import {
+    type WarhammerFantasyCharacteristics,
+    type WarhammerFantasyCharacter,
+    type WarhammerFantasyWounds,
+    type WarhammerFantasyCharacteristicName,
+    type WarhammerFantasyCharacteristic,
+    type WarhammerFantasyBasicSkills,
+    type WarhammerFantasyBasicSkillName,
+    WarhammerFantasyOtherSkill
+} from '@cthunline/games';
+
+export const getCharacteristicBonus = (
+    char: WarhammerFantasyCharacteristic
+): number => Math.floor(char.current / 10);
+
+export const controlStatus = (
+    partialChar: Partial<WarhammerFantasyCharacter>
+): Partial<WarhammerFantasyCharacter> => {
+    const char = { ...partialChar };
+    if (char.experience) {
+        char.experience = {
+            ...char.experience,
+            total: char.experience.current + char.experience.spent
+        };
+    }
+    return char;
+};
+
+export const controlWounds = (
+    chars: WarhammerFantasyCharacteristics,
+    wounds: WarhammerFantasyWounds
+): WarhammerFantasyWounds => {
+    const strengthBonus = getCharacteristicBonus(chars.strength);
+    const twiceToughnessBonus = 2 * getCharacteristicBonus(chars.toughness);
+    const willpowerBonus = getCharacteristicBonus(chars.willpower);
+    const hardyValue = wounds.hardy
+        ? getCharacteristicBonus(chars.toughness)
+        : 0;
+    const total =
+        strengthBonus + twiceToughnessBonus + willpowerBonus + hardyValue;
+    const current = wounds.current > total ? total : wounds.current;
+    return {
+        strengthBonus,
+        twiceToughnessBonus,
+        willpowerBonus,
+        hardy: wounds.hardy,
+        total,
+        current,
+        notes: wounds.notes
+    };
+};
+
+export const controlSkills = (
+    characteristics: WarhammerFantasyCharacteristics,
+    basicSkills: WarhammerFantasyBasicSkills,
+    otherSkills: WarhammerFantasyOtherSkill[]
+): WarhammerFantasyBasicSkills => {
+    const calculatedSkills: WarhammerFantasyBasicSkills = { ...basicSkills };
+    (Object.keys(calculatedSkills) as WarhammerFantasyBasicSkillName[]).forEach(
+        (skillName) => {
+            const basicSkill = calculatedSkills[skillName];
+            const char = characteristics[basicSkill.characteristicName];
+            calculatedSkills[skillName].skill =
+                char.current + basicSkill.advances;
+        }
+    );
+    const calculatedOtherSkills = [...otherSkills];
+    calculatedOtherSkills.forEach((otherSkill, index) => {
+        const char = characteristics[otherSkill.characteristicName];
+        calculatedOtherSkills[index].skill = char.current + otherSkill.advances;
+    });
+    return calculatedSkills;
+};
+
+export const controlCharacteristic = (
+    char: WarhammerFantasyCharacteristic
+): WarhammerFantasyCharacteristic => ({
+    ...char,
+    current: char.initial + char.advances
+});
+
+export const controlCharacteristics = (
+    character: WarhammerFantasyCharacter
+): WarhammerFantasyCharacter => {
+    const calculatedChars: WarhammerFantasyCharacteristics = {
+        ...character.characteristics
+    };
+    (
+        Object.keys(calculatedChars) as WarhammerFantasyCharacteristicName[]
+    ).forEach((char) => {
+        calculatedChars[char] = controlCharacteristic(calculatedChars[char]);
+    });
+    return {
+        ...character,
+        characteristics: calculatedChars,
+        wounds: controlWounds(calculatedChars, character.wounds),
+        basicSkills: controlSkills(
+            calculatedChars,
+            character.basicSkills,
+            character.otherSkills
+        )
+    };
+};

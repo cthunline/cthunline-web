@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField } from '@mui/material';
 import { CoCCombat } from '@cthunline/games';
 
@@ -50,4 +49,4 @@ const Combat = ({ combat }: CombatProps) => {
     );
 };
 
-export default memo(Combat);
+export default Combat;

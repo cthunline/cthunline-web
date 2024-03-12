@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, IconButton, Radio } from '@mui/material';
 import { MdClose } from 'react-icons/md';
 
@@ -99,4 +98,4 @@ const DeathSpiral = ({ value, readonly, onChange }: DeathSpiralProps) => {
     );
 };
 
-export default memo(DeathSpiral);
+export default DeathSpiral;

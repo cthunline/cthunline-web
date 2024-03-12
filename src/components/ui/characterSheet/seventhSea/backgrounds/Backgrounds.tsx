@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { SeventhSeaBackground } from '@cthunline/games';
@@ -64,4 +63,4 @@ const Backgrounds = ({
     </Box>
 );
 
-export default memo(Backgrounds);
+export default Backgrounds;

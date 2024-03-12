@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, Checkbox } from '@mui/material';
 import { SWD6Statistics } from '@cthunline/games';
 
@@ -84,4 +83,4 @@ const Statistics = ({ statistics, readonly, onChange }: StatisticsProps) => {
     );
 };
 
-export default memo(Statistics);
+export default Statistics;

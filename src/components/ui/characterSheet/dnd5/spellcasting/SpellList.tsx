@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, TextField, Checkbox, IconButton } from '@mui/material';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { DnD5Spell } from '@cthunline/games';
@@ -78,4 +77,4 @@ const SpellList = ({ spells, readonly, onChange }: SpellListProps) => (
     </>
 );
 
-export default memo(SpellList);
+export default SpellList;

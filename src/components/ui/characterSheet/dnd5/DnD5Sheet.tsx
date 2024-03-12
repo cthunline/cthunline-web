@@ -113,7 +113,7 @@ const DnD5Sheet = ({
             initialRender.current = false;
         } else if (!readonly) {
             const { name, background } = characterData.biography;
-            const properName = name ?? '[No Name]';
+            const properName = name || '[No Name]';
             const properBackground = background ? `(${background})` : '';
             const characterName = `${properName} ${properBackground}`;
             onChange(characterName, characterData);

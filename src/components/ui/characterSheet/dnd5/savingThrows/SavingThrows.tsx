@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box } from '@mui/material';
 import { DnD5SavingThrows, DnD5Abilities } from '@cthunline/games';
 
@@ -52,4 +51,4 @@ const SavingThrows = ({
     );
 };
 
-export default memo(SavingThrows);
+export default SavingThrows;

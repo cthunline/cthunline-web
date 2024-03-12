@@ -4,7 +4,8 @@ import {
     CoCCharacter,
     DnD5Character,
     SeventhSeaCharacter,
-    SWD6Character
+    SWD6Character,
+    WarhammerFantasyCharacter
 } from '@cthunline/games';
 
 import { CharacterData, GameId } from '../../../types';
@@ -12,6 +13,7 @@ import CoCSheet from './callOfCthulhu/CoCSheet';
 import DnD5Sheet from './dnd5/DnD5Sheet';
 import SeventhSeaSheet from './seventhSea/SeventhSeaSheet';
 import SWD6Sheet from './starWarsD6/SWD6Sheet';
+import WarhammerFantasySheet from './warhammerFantasy/WarhammerFantasySheet';
 
 import './CharacterSheet.css';
 
@@ -102,6 +104,18 @@ const CharacterSheet = ({
                 <SWD6Sheet
                     readonly={readonly}
                     data={data as SWD6Character}
+                    listening={listening}
+                    onChange={onChangeBuffer}
+                    portrait={portrait}
+                    onPortraitChange={onPortraitChange}
+                />
+            );
+        }
+        if (gameId === GameId.warhammerFantasy) {
+            return (
+                <WarhammerFantasySheet
+                    readonly={readonly}
+                    data={data as WarhammerFantasyCharacter}
                     listening={listening}
                     onChange={onChangeBuffer}
                     portrait={portrait}

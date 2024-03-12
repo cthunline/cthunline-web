@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Box, IconButton } from '@mui/material';
 import { MdUploadFile, MdOutlineDeleteOutline } from 'react-icons/md';
 
@@ -66,4 +65,4 @@ const Portrait = ({ value, readonly, onChange }: PortraitProps) => {
     );
 };
 
-export default memo(Portrait);
+export default Portrait;
