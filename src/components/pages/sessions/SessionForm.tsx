@@ -1,7 +1,9 @@
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import { TextField, Button } from '@mui/material';
+import { TextField, Button, Stack } from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { MdOutlineSave } from 'react-icons/md';
+import { useMemo } from 'react';
+import z from 'zod';
 
 import { useApp } from '../../contexts/App';
 import Selector from '../../ui/selector/Selector';
@@ -12,73 +14,76 @@ interface SessionFormProps {
     onSubmit: (data: SessionCreateBody) => Promise<void>;
 }
 
-const validationSchema = Yup.object().shape({
-    name: Yup.string().min(3, 'Too short').required('Required'),
-    gameId: Yup.string().required('Required')
+const sessionFormSchema = z.object({
+    name: z.string().min(3),
+    gameId: z.string().min(1)
 });
+
+type SessionFormData = z.infer<typeof sessionFormSchema>;
 
 const SessionForm = ({ onSubmit }: SessionFormProps) => {
     const { T } = useApp();
     const { gameList } = useGame();
 
-    const initialValues: SessionCreateBody = {
-        gameId: '',
-        name: ''
-    };
+    const gameOptions = useMemo(
+        () =>
+            gameList.map(({ id, name }) => ({
+                name,
+                value: id
+            })),
+        [gameList]
+    );
 
-    const gameOptions = gameList.map(({ id, name }) => ({
-        name,
-        value: id
-    }));
+    const { control, handleSubmit } = useForm<SessionFormData>({
+        resolver: zodResolver(sessionFormSchema),
+        defaultValues: {
+            name: '',
+            gameId: ''
+        }
+    });
 
     return (
-        <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onSubmit}
+        <Stack
+            component="form"
+            onSubmit={handleSubmit(onSubmit)}
+            direction="column"
+            gap="1rem"
+            padding="0.25rem 0"
         >
-            {({ values, errors, touched, handleChange, handleBlur }) => (
-                <Form className="form small flex column center">
-                    <Field validateOnBlur validateOnChange name="name">
-                        {() => (
-                            <TextField
-                                className="form-input"
-                                autoComplete="new-password"
-                                label={T('common.name')}
-                                name="name"
-                                error={!!errors.name && !!touched.name}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                helperText={
-                                    errors.name && touched.name && errors.name
-                                }
-                            />
-                        )}
-                    </Field>
-                    <Field validateOnBlur validateOnChange name="gameId">
-                        {() => (
-                            <Selector
-                                label={T('entity.game')}
-                                name="gameId"
-                                options={gameOptions}
-                                value={values.gameId}
-                                onChange={handleChange}
-                                error={errors.gameId}
-                            />
-                        )}
-                    </Field>
-                    <Button
-                        className="form-button"
-                        type="submit"
-                        variant="contained"
-                        size="large"
-                        startIcon={<MdOutlineSave />}
-                    >
-                        {T('action.create')}
-                    </Button>
-                </Form>
-            )}
-        </Formik>
+            <Controller
+                name="name"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                    <TextField
+                        {...field}
+                        className="form-input"
+                        label={T('common.name')}
+                        error={!!error}
+                    />
+                )}
+            />
+            <Controller
+                name="gameId"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                    <Selector
+                        {...field}
+                        label={T('entity.game')}
+                        options={gameOptions}
+                        error={!!error}
+                    />
+                )}
+            />
+            <Button
+                className="form-button"
+                type="submit"
+                variant="contained"
+                size="large"
+                startIcon={<MdOutlineSave />}
+            >
+                {T('action.create')}
+            </Button>
+        </Stack>
     );
 };
 

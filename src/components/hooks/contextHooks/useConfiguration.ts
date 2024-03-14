@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 
 import { getConfiguration } from '../../../services/requests/configuration';
 
-import { Configuration, Locale, Theme } from '../../../types';
+import { Configuration } from '../../../types';
 
 export interface ConfigurationHookExport {
     configuration: Configuration;
@@ -13,8 +13,8 @@ export interface ConfigurationHookExport {
 const defaultConfiguration: Configuration = {
     registrationEnabled: false,
     invitationEnabled: false,
-    defaultTheme: Theme.dark,
-    defaultLocale: Locale.en
+    defaultTheme: 'dark',
+    defaultLocale: 'en'
 };
 
 export const defaultConfigurationHookData: ConfigurationHookExport = {

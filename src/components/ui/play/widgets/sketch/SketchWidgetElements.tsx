@@ -1,3 +1,8 @@
+import { MdOutlineSave, MdOutlineDeleteOutline } from 'react-icons/md';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { HiPlus } from 'react-icons/hi';
+import z from 'zod';
 import {
     ImageList,
     ImageListItem,
@@ -9,12 +14,9 @@ import {
     List,
     ListItem,
     ListItemButton,
-    ListItemSecondaryAction
+    ListItemSecondaryAction,
+    Stack
 } from '@mui/material';
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import { HiPlus } from 'react-icons/hi';
-import { MdOutlineSave, MdOutlineDeleteOutline } from 'react-icons/md';
 
 import { useApp } from '../../../../contexts/App';
 import useUserSketch from '../../../../hooks/useUserSketch';
@@ -77,54 +79,59 @@ interface UserSketchFormProps {
     onSubmit: (data: SketchCreateBody) => Promise<void>;
 }
 
-const userSketchValidationSchema = Yup.object().shape({
-    name: Yup.string().min(3, 'Too short').required('Required')
+const userSketchFormSchema = z.object({
+    name: z.string().min(3)
 });
+
+type UserSketchFormData = z.infer<typeof userSketchFormSchema>;
 
 export const UserSketchForm = ({ sketch, onSubmit }: UserSketchFormProps) => {
     const { T } = useApp();
 
-    const initialValues: SketchCreateBody = {
-        name: '',
-        sketch
+    const { control, handleSubmit } = useForm<UserSketchFormData>({
+        resolver: zodResolver(userSketchFormSchema),
+        defaultValues: {
+            name: ''
+        }
+    });
+
+    const onFormSubmit = ({ name }: UserSketchFormData) => {
+        onSubmit({
+            name,
+            sketch
+        });
     };
 
     return (
-        <Formik
-            initialValues={initialValues}
-            validationSchema={userSketchValidationSchema}
-            onSubmit={onSubmit}
+        <Stack
+            component="form"
+            onSubmit={handleSubmit(onFormSubmit)}
+            direction="column"
+            gap="1rem"
+            padding="0.25rem 0"
         >
-            {({ errors, touched, handleChange, handleBlur }) => (
-                <Form className="form small flex column center">
-                    <Field validateOnBlur validateOnChange name="name">
-                        {() => (
-                            <TextField
-                                className="form-input"
-                                autoComplete="new-password"
-                                label={T('common.name')}
-                                name="name"
-                                error={!!errors.name && !!touched.name}
-                                onChange={handleChange}
-                                onBlur={handleBlur}
-                                helperText={
-                                    errors.name && touched.name && errors.name
-                                }
-                            />
-                        )}
-                    </Field>
-                    <Button
-                        className="form-button"
-                        type="submit"
-                        variant="contained"
-                        size="large"
-                        startIcon={<MdOutlineSave />}
-                    >
-                        {T('action.save')}
-                    </Button>
-                </Form>
-            )}
-        </Formik>
+            <Controller
+                name="name"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                    <TextField
+                        {...field}
+                        className="form-input"
+                        label={T('common.name')}
+                        error={!!error}
+                    />
+                )}
+            />
+            <Button
+                className="form-button"
+                type="submit"
+                variant="contained"
+                size="large"
+                startIcon={<MdOutlineSave />}
+            >
+                {T('action.save')}
+            </Button>
+        </Stack>
     );
 };
 

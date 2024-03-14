@@ -9,17 +9,11 @@ import {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ theme
 
-export enum Theme {
-    dark = 'dark',
-    light = 'light'
-}
+export type Theme = 'dark' | 'light';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ translation
 
-export enum Locale {
-    en = 'en',
-    fr = 'fr'
-}
+export type Locale = 'en' | 'fr';
 
 export const languages: Record<Locale, string> = {
     en: 'english',

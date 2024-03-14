@@ -1,10 +1,36 @@
-import { Formik, Form, Field } from 'formik';
-import * as Yup from 'yup';
-import { TextField, Button } from '@mui/material';
+import { useForm, Controller } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { TextField, Button, Stack } from '@mui/material';
 import { MdOutlineSave } from 'react-icons/md';
+import z from 'zod';
 
 import { useApp } from '../../contexts/App';
-import { UserCreateBody } from '../../../types';
+
+const userFormSchema = z
+    .object({
+        name: z.string().min(3),
+        email: z.string().email(),
+        password: z.string().min(6),
+        passwordConfirm: z.string(),
+        invitationCode: z.string()
+    })
+    .superRefine(({ password, passwordConfirm }, ctx) => {
+        if (passwordConfirm !== password) {
+            ctx.addIssue({
+                path: ['passwordConfirm'],
+                code: z.ZodIssueCode.custom
+            });
+        }
+    });
+
+type UserFormData = z.infer<typeof userFormSchema>;
+
+export type UserSubmitData = Omit<
+    UserFormData,
+    'passwordConfirm' | 'invitationCode'
+> & {
+    invitationCode?: string;
+};
 
 interface UserFormProps {
     invitation?: boolean;
@@ -12,70 +38,18 @@ interface UserFormProps {
     onSubmit: (data: UserSubmitData) => void;
 }
 
-interface UserFormData extends UserCreateBody {
-    passwordConfirm: string;
-    invitationCode?: string;
-}
-
-export type UserSubmitData = Omit<UserFormData, 'passwordConfirm'>;
-
-type UserFormField = keyof UserFormData;
-
-interface UserFormFieldData {
-    field: UserFormField;
-    textKey: string;
-    password?: boolean;
-}
-
-const fieldList: UserFormFieldData[] = [
-    {
-        field: 'name',
-        textKey: 'common.name'
-    },
-    {
-        field: 'email',
-        textKey: 'user.email'
-    },
-    {
-        field: 'password',
-        textKey: 'user.password',
-        password: true
-    },
-    {
-        field: 'passwordConfirm',
-        textKey: 'user.passwordConfirm',
-        password: true
-    },
-    {
-        field: 'invitationCode',
-        textKey: 'user.invitationCode'
-    }
-];
-
 const UserForm = ({ invitation, buttonText, onSubmit }: UserFormProps) => {
     const { T } = useApp();
 
-    const initialValues: UserFormData = {
-        name: '',
-        email: '',
-        password: '',
-        passwordConfirm: '',
-        invitationCode: ''
-    };
-
-    const validationSchema = Yup.object().shape({
-        name: Yup.string().min(3, 'Too short').required('Required'),
-        email: Yup.string().email('Invalid email').required('Required'),
-        password: Yup.string().min(6, 'Too short').required('Required'),
-        passwordConfirm: Yup.string().oneOf(
-            [Yup.ref('password'), ''],
-            'Passwords must match'
-        ),
-        ...(invitation
-            ? {
-                  invitationCode: Yup.string().required('Required')
-              }
-            : {})
+    const { control, handleSubmit } = useForm<UserFormData>({
+        resolver: zodResolver(userFormSchema),
+        defaultValues: {
+            name: '',
+            email: '',
+            password: '',
+            passwordConfirm: '',
+            invitationCode: ''
+        }
     });
 
     const onFormSubmit = ({
@@ -85,64 +59,92 @@ const UserForm = ({ invitation, buttonText, onSubmit }: UserFormProps) => {
     }: UserFormData) => {
         onSubmit({
             ...data,
-            ...(invitation
-                ? {
-                      invitationCode
-                  }
-                : {})
+            ...(invitation ? { invitationCode: invitationCode ?? '' } : {})
         });
     };
 
-    const filteredFieldList = invitation
-        ? fieldList
-        : fieldList.filter(({ field }) => field !== 'invitationCode');
-
     return (
-        <Formik
-            initialValues={initialValues}
-            validationSchema={validationSchema}
-            onSubmit={onFormSubmit}
+        <Stack
+            direction="column"
+            width="25rem"
+            gap="1rem"
+            component="form"
+            onSubmit={handleSubmit(onFormSubmit)}
         >
-            {({ errors, touched, handleChange, handleBlur }) => (
-                <Form className="form small flex column center">
-                    {filteredFieldList.map(({ field, textKey, password }) => (
-                        <Field
-                            key={field}
-                            validateOnBlur
-                            validateOnChange
-                            name={field}
-                        >
-                            {() => (
-                                <TextField
-                                    className="form-input"
-                                    autoComplete="new-password"
-                                    label={T(textKey)}
-                                    name={field}
-                                    type={password ? 'password' : 'text'}
-                                    error={!!errors[field] && !!touched[field]}
-                                    onChange={handleChange}
-                                    onBlur={handleBlur}
-                                    helperText={
-                                        errors[field] &&
-                                        touched[field] &&
-                                        errors[field]
-                                    }
-                                />
-                            )}
-                        </Field>
-                    ))}
-                    <Button
-                        className="form-button"
-                        type="submit"
-                        variant="contained"
-                        size="large"
-                        startIcon={<MdOutlineSave />}
-                    >
-                        {buttonText ?? 'Create'}
-                    </Button>
-                </Form>
+            <Controller
+                name="name"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                    <TextField
+                        {...field}
+                        className="form-input full-width"
+                        label={T(`common.name`)}
+                        error={!!error}
+                    />
+                )}
+            />
+            <Controller
+                name="email"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                    <TextField
+                        {...field}
+                        className="form-input full-width"
+                        label={T(`user.email`)}
+                        error={!!error}
+                    />
+                )}
+            />
+            <Controller
+                name="password"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                    <TextField
+                        {...field}
+                        className="form-input full-width"
+                        label={T(`user.password`)}
+                        type="password"
+                        error={!!error}
+                    />
+                )}
+            />
+            <Controller
+                name="passwordConfirm"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                    <TextField
+                        {...field}
+                        className="form-input full-width"
+                        label={T(`user.passwordConfirm`)}
+                        type="password"
+                        error={!!error}
+                    />
+                )}
+            />
+            {invitation && (
+                <Controller
+                    name="invitationCode"
+                    control={control}
+                    render={({ field, fieldState: { error } }) => (
+                        <TextField
+                            {...field}
+                            className="form-input full-width"
+                            label={T(`user.invitationCode`)}
+                            error={!!error}
+                        />
+                    )}
+                />
             )}
-        </Formik>
+            <Button
+                className="form-button"
+                type="submit"
+                variant="contained"
+                size="large"
+                startIcon={<MdOutlineSave />}
+            >
+                {buttonText ?? 'Create'}
+            </Button>
+        </Stack>
     );
 };
 

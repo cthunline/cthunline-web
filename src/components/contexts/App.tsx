@@ -27,7 +27,7 @@ interface AppContextData extends AppHookExports {
 }
 
 const defaultDialogData: AppContextData = {
-    theme: Theme.dark,
+    theme: 'dark',
     ...defaultAuthHookData,
     ...defaultConfigurationHookData,
     ...defaultTranslationHookData
@@ -49,7 +49,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
     const { configuration, refreshConfiguration } = useConfiguration();
     const { t, T, TU, changeLocale } = useTranslation();
 
-    const [theme, setTheme] = useState<Theme>(Theme.dark);
+    const [theme, setTheme] = useState<Theme>('dark');
 
     useEffect(() => {
         changeLocale(user?.locale ?? configuration.defaultLocale);

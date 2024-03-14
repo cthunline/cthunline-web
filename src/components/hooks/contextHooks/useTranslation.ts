@@ -34,7 +34,7 @@ const replaceVars = (
 };
 
 const useTranslation = () => {
-    const [locale, setLocale] = useState<Locale>(Locale.en);
+    const [locale, setLocale] = useState<Locale>('en');
 
     const changeLocale = useCallback((loc: Locale) => {
         if (translations[loc]) {
