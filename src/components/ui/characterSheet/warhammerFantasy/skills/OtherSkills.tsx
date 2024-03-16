@@ -7,10 +7,9 @@ import {
 } from '@cthunline/games';
 
 import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import { useApp } from '../../../../contexts/App';
-import { columnHeads } from './skills.data';
-import SkillRow from './SkillRow';
 import AddOtherSkillRow from './AddOtherSkillRow';
+import { useApp } from '../../../../contexts/App';
+import SkillRow from './SkillRow';
 
 interface OtherSkillsProps {
     readonly: boolean;
@@ -59,22 +58,6 @@ const OtherSkills = ({ readonly, character, onChange }: OtherSkillsProps) => {
                 text={T('game.warhammerFantasy.common.otherSkills')}
             />
             <Grid container columns={readonly ? 8 : 9} spacing={2}>
-                {!!character.otherSkills.length && (
-                    <>
-                        {columnHeads.map(({ textKey, columnSpan, center }) => (
-                            <Grid
-                                key={`otherSkill-columnHead-${textKey}`}
-                                xs={columnSpan}
-                                display="flex"
-                                alignItems="center"
-                                justifyContent={center ? 'center' : undefined}
-                            >
-                                {T(`game.warhammerFantasy.${textKey}`)}
-                            </Grid>
-                        ))}
-                        {!readonly && <Grid xs={1} />}
-                    </>
-                )}
                 {character.otherSkills.map((otherSkill, index) => (
                     <SkillRow
                         key={`otherSkill-row-${index.toString()}`}

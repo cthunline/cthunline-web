@@ -48,8 +48,7 @@ const FieldInput = <DataType extends {}>({
                     key={`field-${String(key ?? index)}-input`}
                     fullWidth
                     multiline={!!lines}
-                    minRows={lines}
-                    maxRows={lines}
+                    rows={lines}
                     InputProps={{
                         readOnly: fieldReadonly || readonly,
                         classes: {

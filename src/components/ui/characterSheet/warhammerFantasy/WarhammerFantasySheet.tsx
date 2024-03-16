@@ -8,17 +8,28 @@ import {
     GiLightBackpack
 } from 'react-icons/gi';
 
-import { controlCharacteristics } from './warhammerFantasySheet.helper';
+import {
+    controlCharacteristics,
+    controlItems
+} from './warhammerFantasySheet.helper';
 import WarhammerFantasyLogo from '../../../svg/games/WarhammerFantasy';
 import SheetTabs, { SheetTab } from '../generic/sheetTabs/SheetTabs';
 import Characteristics from './characteristics/Characteristics';
 import { type CharacterData } from '../../../../types';
+import ArmourPoints from './armourPoints/ArmourPoints';
 import Portrait from '../generic/portrait/Portrait';
+import Encumbrance from './encumbrance/Encumbrance';
 import { useApp } from '../../../contexts/App';
 import BasicSkills from './skills/BasicSkills';
-import Biography from './biography/Biography';
-import Status from './status/Status';
 import OtherSkills from './skills/OtherSkills';
+import Biography from './biography/Biography';
+import Trappings from './trappings/Trappings';
+import Talents from './talents/Talents';
+import Weapons from './weapons/Weapons';
+import Status from './status/Status';
+import Spells from './spells/Spells';
+import Armour from './armour/Armour';
+import Wealth from './wealth/Wealth';
 
 export interface WarhammerFantasySheetProps {
     readonly: boolean;
@@ -85,6 +96,18 @@ const WarhammerFantasySheet = ({
         []
     );
 
+    const onCharacterItemsChange = useCallback(
+        (partialChar: Partial<WarhammerFantasyCharacter>) => {
+            setCharacterData((previous) =>
+                controlItems({
+                    ...previous,
+                    ...partialChar
+                })
+            );
+        },
+        []
+    );
+
     const onCharacteristicsChange = useCallback(
         (partialChar: Partial<WarhammerFantasyCharacter>) => {
             setCharacterData((previous) =>
@@ -101,22 +124,22 @@ const WarhammerFantasySheet = ({
         {
             key: 'biographyAndStatus',
             icon: <GiCharacter size={20} />,
-            label: T('game.warhammerFantasy.tabs.biographyAndStatus')
+            label: T('game.warhammerFantasy.tab.biographyAndStatus')
         },
         {
             key: 'characteristicsAndSkills',
             icon: <GiD10 size={20} />,
-            label: T('game.warhammerFantasy.tabs.characteristicsAndSkills')
+            label: T('game.warhammerFantasy.tab.characteristicsAndSkills')
         },
         {
             key: 'talentsAndSpells',
             icon: <GiSpellBook size={20} />,
-            label: T('game.warhammerFantasy.tabs.talentsAndSpells')
+            label: T('game.warhammerFantasy.tab.talentsAndSpells')
         },
         {
             key: 'equipment',
             icon: <GiLightBackpack size={20} />,
-            label: T('game.warhammerFantasy.tabs.equipment')
+            label: T('game.warhammerFantasy.tab.equipment')
         }
     ];
 
@@ -187,6 +210,68 @@ const WarhammerFantasySheet = ({
                         readonly={readonly}
                         character={characterData}
                         onChange={onPartialCharacterChange}
+                    />
+                </Stack>
+            ) : null}
+            {/* talents & spells */}
+            {sheetTabs[tabIndex].key === 'talentsAndSpells' ? (
+                <Stack
+                    direction="column"
+                    gap="1rem"
+                    flex={1}
+                    width="100%"
+                    className="scroll p-25 pt-15"
+                >
+                    <Talents
+                        readonly={readonly}
+                        character={characterData}
+                        onChange={onCharacteristicsChange}
+                    />
+                    <Spells
+                        readonly={readonly}
+                        character={characterData}
+                        onChange={onCharacteristicsChange}
+                    />
+                </Stack>
+            ) : null}
+            {/* equipment */}
+            {sheetTabs[tabIndex].key === 'equipment' ? (
+                <Stack
+                    direction="column"
+                    gap="1rem"
+                    flex={1}
+                    width="100%"
+                    className="scroll p-25 pt-15"
+                >
+                    <Stack direction="row" gap="2rem">
+                        <ArmourPoints
+                            readonly={readonly}
+                            character={characterData}
+                            onChange={onCharacterItemsChange}
+                            flex="6"
+                        />
+                        <Wealth
+                            readonly={readonly}
+                            character={characterData}
+                            onChange={onCharacterItemsChange}
+                            flex="3"
+                        />
+                        <Encumbrance character={characterData} flex="4" />
+                    </Stack>
+                    <Armour
+                        readonly={readonly}
+                        character={characterData}
+                        onChange={onCharacterItemsChange}
+                    />
+                    <Weapons
+                        readonly={readonly}
+                        character={characterData}
+                        onChange={onCharacterItemsChange}
+                    />
+                    <Trappings
+                        readonly={readonly}
+                        character={characterData}
+                        onChange={onCharacterItemsChange}
                     />
                 </Stack>
             ) : null}

@@ -67,8 +67,7 @@ const Story = ({ index, story, readonly, onChange }: StoryProps) => {
                     <TextField
                         fullWidth
                         multiline
-                        minRows={3}
-                        maxRows={3}
+                        rows={3}
                         InputProps={{
                             readOnly: readonly,
                             classes: {

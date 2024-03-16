@@ -156,19 +156,19 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
                     <Stack direction="column" gap="0.5rem" width="100%">
                         <SectionTitle
                             iconBefore={<GiBrain size={20} />}
-                            text={T('game.warhammerFantasy.psychology')}
+                            text={T('game.warhammerFantasy.common.psychology')}
                         />
                         <TextField
                             fullWidth
                             multiline
-                            minRows={4}
-                            maxRows={4}
+                            rows={4}
                             InputProps={{
                                 readOnly: readonly,
                                 classes: {
                                     input: 'input-smaller-text'
                                 }
                             }}
+                            label={T('game.warhammerFantasy.common.psychology')}
                             type="text"
                             size="small"
                             value={character.psychology}
@@ -183,19 +183,23 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
                     <Stack direction="column" gap="0.5rem" width="100%">
                         <SectionTitle
                             iconBefore={<GiBrainTentacle size={20} />}
-                            text={T('game.warhammerFantasy.corruptionMutation')}
+                            text={T(
+                                'game.warhammerFantasy.common.corruptionMutation'
+                            )}
                         />
                         <TextField
                             fullWidth
                             multiline
-                            minRows={4}
-                            maxRows={4}
+                            rows={4}
                             InputProps={{
                                 readOnly: readonly,
                                 classes: {
                                     input: 'input-smaller-text'
                                 }
                             }}
+                            label={T(
+                                'game.warhammerFantasy.common.corruptionMutation'
+                            )}
                             type="text"
                             size="small"
                             value={character.corruptionMutation}

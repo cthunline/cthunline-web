@@ -9,7 +9,6 @@ import {
 
 import SectionTitle from '../../generic/sectionTitle/SectionTitle';
 import { useApp } from '../../../../contexts/App';
-import { columnHeads } from './skills.data';
 import SkillRow from './SkillRow';
 
 const { basicSkillNames } = warhammerFantasy.data;
@@ -50,17 +49,6 @@ const BasicSkills = ({ readonly, character, onChange }: BasicSkillsProps) => {
                 text={T('game.warhammerFantasy.common.basicSkills')}
             />
             <Grid container columns={8} spacing={2}>
-                {columnHeads.map(({ textKey, columnSpan, center }) => (
-                    <Grid
-                        key={`basicSkill-columnHead-${textKey}`}
-                        xs={columnSpan}
-                        display="flex"
-                        alignItems="center"
-                        justifyContent={center ? 'center' : undefined}
-                    >
-                        {T(`game.warhammerFantasy.${textKey}`)}
-                    </Grid>
-                ))}
                 {basicSkillNames.map((basicSkillName) => (
                     <SkillRow
                         key={`basicSkill-row-${basicSkillName}`}

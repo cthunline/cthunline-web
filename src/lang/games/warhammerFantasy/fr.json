@@ -6,10 +6,21 @@
             "basicSkills": "compétences de base",
             "otherSkills": "comp. groupées et avancées",
             "wounds": "blessures",
+            "psychology": "psychologie",
+            "corruptionMutation": "corruption & mutation",
             "ambitions": "ambitions",
-            "party": "groupe"
+            "party": "groupe",
+            "talents": "talents",
+            "spellsAndPrayers": "sorts et prières",
+            "sin": "péché",
+            "armour": "armure",
+            "armourPoints": "points d'armure",
+            "weapons": "armes",
+            "trappings": "possessions",
+            "wealth": "richesses",
+            "encumbrance": "encombrement"
         },
-        "tabs": {
+        "tab": {
             "biographyAndStatus": "bio & statut",
             "characteristicsAndSkills": "caracs & comps",
             "talentsAndSpells": "talents & sorts",
@@ -99,7 +110,7 @@
         "skill": {
             "name": "nom",
             "advances": "aug.",
-            "skill": "comp"
+            "skill": "comp."
         },
         "basicSkills": {
             "art": "art",
@@ -132,7 +143,7 @@
         "otherSkill": {
             "groupedAdvancedSkills": "comp. groupées & avancées"
         },
-        "talents": {
+        "talent": {
             "name": "nom",
             "timesTaken": "nombre pris",
             "description": "description"
@@ -152,7 +163,7 @@
             "locations": "localisation",
             "encumbrance": "encombrement",
             "armourPoints": "points d'armure",
-            "quatlities": "atouts / défauts"
+            "qualities": "atouts / défauts"
         },
         "armourPoints": {
             "head": "tête",
@@ -163,25 +174,14 @@
             "leftLeg": "jambe gauche",
             "shield": "bouclier"
         },
-        "trappings": {
+        "trapping": {
             "name": "nom",
             "encumbrance": "encombrement"
         },
-        "psychology": "psychologie",
-        "corruptionMutation": "corruption & mutation",
         "wealth": {
-            "brassPennies": {
-                "long": "sous de cuivre",
-                "short": "SC"
-            },
-            "silverShillings": {
-                "long": "pistoles d'argent",
-                "short": "PA"
-            },
-            "goldCrowns": {
-                "long": "couronnes d'or",
-                "short": "CO"
-            }
+            "brassPennies": "sous de cuivre",
+            "silverShillings": "pistoles d'argent",
+            "goldCrowns": "couronnes d'or"
         },
         "encumbrance": {
             "weapons": "armes",
@@ -199,7 +199,7 @@
             "current": "blessures",
             "notes": "notes"
         },
-        "weapons": {
+        "weapon": {
             "name": "nom",
             "group": "groupe",
             "encumbrance": "encombrement",
@@ -207,14 +207,14 @@
             "damage": "dégâts",
             "qualities": "atouts/défauts"
         },
-        "spells": {
+        "spell": {
             "name": "nom",
             "castingNumber": "niveau d'incantation",
+            "castingNumberShort": "NI",
             "range": "portée",
             "target": "cible",
             "duration": "durée",
-            "effect": "effets",
-            "sin": "péché"
+            "effect": "effets"
         }
     }
 }

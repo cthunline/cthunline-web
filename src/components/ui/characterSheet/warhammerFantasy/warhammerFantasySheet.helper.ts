@@ -6,7 +6,8 @@ import {
     type WarhammerFantasyCharacteristic,
     type WarhammerFantasyBasicSkills,
     type WarhammerFantasyBasicSkillName,
-    WarhammerFantasyOtherSkill
+    type WarhammerFantasyOtherSkill,
+    type WarhammerFantasyEncumbrance
 } from '@cthunline/games';
 
 export const getCharacteristicBonus = (
@@ -49,6 +50,44 @@ export const controlWounds = (
         notes: wounds.notes
     };
 };
+
+const sumEncumbrance = (items: { encumbrance: number }[]) => {
+    let sum = 0;
+    items.forEach(({ encumbrance }) => {
+        sum += encumbrance;
+    });
+    return sum;
+};
+
+export const controlEncumbrance = (
+    character: WarhammerFantasyCharacter
+): WarhammerFantasyEncumbrance => {
+    const strengthBonus = getCharacteristicBonus(
+        character.characteristics.strength
+    );
+    const toughnessBonus = getCharacteristicBonus(
+        character.characteristics.toughness
+    );
+    const maximum = strengthBonus + toughnessBonus;
+    const weapons = sumEncumbrance(character.weapons);
+    const armour = sumEncumbrance(character.armour);
+    const trappings = sumEncumbrance(character.trappings);
+    const total = weapons + armour + trappings;
+    return {
+        weapons,
+        armour,
+        trappings,
+        total,
+        maximum
+    };
+};
+
+export const controlItems = (
+    character: WarhammerFantasyCharacter
+): WarhammerFantasyCharacter => ({
+    ...character,
+    encumbrance: controlEncumbrance(character)
+});
 
 export const controlSkills = (
     characteristics: WarhammerFantasyCharacteristics,
@@ -98,6 +137,7 @@ export const controlCharacteristics = (
             calculatedChars,
             character.basicSkills,
             character.otherSkills
-        )
+        ),
+        encumbrance: controlEncumbrance(character)
     };
 };

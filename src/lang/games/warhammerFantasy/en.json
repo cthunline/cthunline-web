@@ -6,10 +6,21 @@
             "basicSkills": "basic skills",
             "otherSkills": "grouped & advanced skills",
             "wounds": "wounds",
+            "psychology": "psychology",
+            "corruptionMutation": "corruption & mutation",
             "ambitions": "ambitions",
-            "party": "party"
+            "party": "party",
+            "talents": "talents",
+            "spellsAndPrayers": "spells and prayers",
+            "sin": "sin",
+            "armour": "armour",
+            "armourPoints": "armour points",
+            "weapons": "weapons",
+            "trappings": "trappings",
+            "wealth": "wealth",
+            "encumbrance": "encumbrance"
         },
-        "tabs": {
+        "tab": {
             "biographyAndStatus": "bio & status",
             "characteristicsAndSkills": "characs & skills",
             "talentsAndSpells": "talents & spells",
@@ -129,7 +140,7 @@
             "row": "row",
             "stealth": "stealth"
         },
-        "talents": {
+        "talent": {
             "name": "talent name",
             "timesTaken": "times taken",
             "description": "description"
@@ -149,7 +160,7 @@
             "locations": "locations",
             "encumbrance": "encumbrance",
             "armourPoints": "armour points",
-            "quatlities": "qualities"
+            "qualities": "qualities"
         },
         "armourPoints": {
             "head": "head",
@@ -160,25 +171,14 @@
             "leftLeg": "left leg",
             "shield": "shield"
         },
-        "trappings": {
+        "trapping": {
             "name": "name",
             "encumbrance": "encumbrance"
         },
-        "psychology": "psychology",
-        "corruptionMutation": "corruption & mutation",
         "wealth": {
-            "brassPennies": {
-                "long": "brass pennies",
-                "short": "D"
-            },
-            "silverShillings": {
-                "long": "silver shillings",
-                "short": "SS"
-            },
-            "goldCrowns": {
-                "long": "gold crowns",
-                "short": "GC"
-            }
+            "brassPennies": "brass pennies",
+            "silverShillings": "silver shillings",
+            "goldCrowns": "gold crowns"
         },
         "encumbrance": {
             "weapons": "weapons",
@@ -196,7 +196,7 @@
             "current": "current",
             "notes": "notes"
         },
-        "weapons": {
+        "weapon": {
             "name": "name",
             "group": "group",
             "encumbrance": "encumbrance",
@@ -204,14 +204,14 @@
             "damage": "damage",
             "qualities": "qualities"
         },
-        "spells": {
+        "spell": {
             "name": "name",
             "castingNumber": "casting number",
+            "castingNumberShort": "CN",
             "range": "range",
             "target": "target",
             "duration": "duration",
-            "effect": "effect",
-            "sin": "sin"
+            "effect": "effect"
         }
     }
 }

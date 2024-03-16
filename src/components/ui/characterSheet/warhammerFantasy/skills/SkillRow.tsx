@@ -13,11 +13,17 @@ import { useApp } from '../../../../contexts/App';
 
 interface SkillRowInputProps {
     readonly: boolean;
+    label?: string;
     value: number;
     onChange?: (value: number) => void;
 }
 
-const SkillRowInput = ({ readonly, value, onChange }: SkillRowInputProps) => (
+const SkillRowInput = ({
+    readonly,
+    label,
+    value,
+    onChange
+}: SkillRowInputProps) => (
     <TextField
         fullWidth
         InputProps={{
@@ -29,6 +35,7 @@ const SkillRowInput = ({ readonly, value, onChange }: SkillRowInputProps) => (
         sx={{ input: { textAlign: 'center' } }}
         type="text"
         size="small"
+        label={label}
         value={value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             onChange?.(Number(onlyNumbers(e.target.value)));
@@ -85,12 +92,17 @@ const SkillRow = ({
             <Grid xs={1} display="flex" alignItems="center">
                 <SkillRowInput
                     readonly={readonly}
+                    label={T('game.warhammerFantasy.skill.advances')}
                     value={skill.advances}
                     onChange={onAdvancesChange}
                 />
             </Grid>
             <Grid xs={1} display="flex" alignItems="center">
-                <SkillRowInput readonly value={skill.skill} />
+                <SkillRowInput
+                    readonly
+                    label={T('game.warhammerFantasy.skill.skill')}
+                    value={skill.skill}
+                />
             </Grid>
             {!readonly && !!onDelete && (
                 <Grid

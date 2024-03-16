@@ -60,8 +60,7 @@ const Equipment = ({ equipment, readonly, onChange }: EquipmentProps) => {
                         <TextField
                             fullWidth
                             multiline
-                            minRows={5}
-                            maxRows={5}
+                            rows={5}
                             InputProps={{
                                 readOnly: readonly,
                                 classes: {

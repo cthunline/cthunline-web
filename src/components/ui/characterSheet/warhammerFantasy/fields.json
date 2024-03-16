@@ -145,30 +145,6 @@
             "gridColumn": 12
         }
     ],
-    "encumbrance": [
-        {
-            "key": "weapons",
-            "gridColumn": 12
-        },
-        {
-            "key": "armour",
-            "gridColumn": 12
-        },
-        {
-            "key": "trappings",
-            "gridColumn": 12
-        },
-        {
-            "key": "maximum",
-            "gridColumn": 12,
-            "readonly": true
-        },
-        {
-            "key": "total",
-            "gridColumn": 12,
-            "readonly": true
-        }
-    ],
     "wounds": [
         {
             "gridColumn": 12,

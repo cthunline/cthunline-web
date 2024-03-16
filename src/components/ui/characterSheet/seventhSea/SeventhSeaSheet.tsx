@@ -432,8 +432,7 @@ const SeventhSeaSheet = ({
                           <TextField
                               fullWidth
                               multiline
-                              minRows={8}
-                              maxRows={8}
+                              rows={8}
                               InputProps={{
                                   readOnly: readonly,
                                   classes: {
@@ -459,8 +458,7 @@ const SeventhSeaSheet = ({
                           <TextField
                               fullWidth
                               multiline
-                              minRows={8}
-                              maxRows={8}
+                              rows={8}
                               InputProps={{
                                   readOnly: readonly,
                                   classes: {

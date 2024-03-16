@@ -61,8 +61,7 @@ const NoteEditor = ({ note, onEdit, onBack }: NoteEditorProps) => {
                     readOnly: !isOwnedByUser
                 }}
                 multiline
-                minRows={14}
-                maxRows={14}
+                rows={14}
                 type="text"
                 value={text}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
