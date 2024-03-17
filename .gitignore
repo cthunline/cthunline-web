@@ -22,5 +22,7 @@ dist-ssr
 *.sln
 *.sw?
 
+.scannerwork
+
 .env*
 !.env.sample
