@@ -2,11 +2,12 @@ import { useState, useCallback, useEffect, useRef } from 'react';
 import { Box, CircularProgress } from '@mui/material';
 import { MdEdit, MdOutlineCheck } from 'react-icons/md';
 
-import { useApp } from '../../../../contexts/App';
+import { WidgetType, Character, CharacterData } from '../../../../../types';
 import CharacterSheet from '../../../characterSheet/CharacterSheet';
 import useCharacter from '../../../../hooks/useCharacter';
+import { deepEqual } from '../../../../../services/tools';
+import { useApp } from '../../../../contexts/App';
 import Widget from '../../Widget';
-import { WidgetType, Character, CharacterData } from '../../../../../types';
 
 import './CharacterWidget.css';
 
@@ -28,17 +29,27 @@ const CharacterWidget = ({
     const [readonly, setReadonly] = useState<boolean>(true);
     const [character, setCharacter] = useState<Character>();
 
-    const onChange = useCallback((name: string, data: CharacterData) => {
-        setCharacter((previous) =>
-            previous
-                ? {
-                      ...previous,
-                      name,
-                      data
-                  }
-                : previous
-        );
-    }, []);
+    const onChange = useCallback(
+        (name: string, data: CharacterData) => {
+            const checkData = {
+                ...character,
+                name,
+                data
+            };
+            if (!deepEqual(checkData, character)) {
+                setCharacter((previous) =>
+                    previous
+                        ? {
+                              ...previous,
+                              name,
+                              data
+                          }
+                        : previous
+                );
+            }
+        },
+        [character]
+    );
 
     const skipEdit = useRef(false);
     const onPortraitChange = useCallback(
@@ -87,8 +98,7 @@ const CharacterWidget = ({
         if (character) {
             if (initialRender.current) {
                 initialRender.current = false;
-            }
-            if (skipEdit.current) {
+            } else if (skipEdit.current) {
                 skipEdit.current = false;
             } else {
                 (async () => {

@@ -2,9 +2,10 @@ import { useRef, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 
+import { Character, CharacterData } from '../../../types';
+import { deepEqual } from '../../../services/tools';
 import useCharacter from '../../hooks/useCharacter';
 import { CharacterSheet } from '../../ui';
-import { Character, CharacterData } from '../../../types';
 
 const CharacterForm = () => {
     const { characterId: paramCharId } = useParams();
@@ -15,17 +16,27 @@ const CharacterForm = () => {
 
     const [character, setCharacter] = useState<Character>();
 
-    const onChange = useCallback((name: string, data: CharacterData) => {
-        setCharacter((previous) =>
-            previous
-                ? {
-                      ...previous,
-                      name,
-                      data
-                  }
-                : previous
-        );
-    }, []);
+    const onChange = useCallback(
+        (name: string, data: CharacterData) => {
+            const changeData = {
+                ...character,
+                name,
+                data
+            };
+            if (!deepEqual(changeData, character)) {
+                setCharacter((previous) =>
+                    previous
+                        ? {
+                              ...previous,
+                              name,
+                              data
+                          }
+                        : previous
+                );
+            }
+        },
+        [character]
+    );
 
     const skipEdit = useRef(false);
     const onPortraitChange = useCallback(

@@ -100,3 +100,40 @@ export const getTextColor = (hexColor: string): 'white' | 'black' => {
     const brightness = (hRed * 299 + hGreen * 587 + hBlue * 114) / 1000;
     return brightness > threshold ? 'black' : 'white';
 };
+
+// check if a variable is an object
+export const isObject = (val: any): val is Record<string, any> =>
+    val !== null && typeof val === 'object' && !Array.isArray(val);
+
+// deep equality check
+export const deepEqual = (val1: any, val2: any): boolean => {
+    if (val1 === val2) {
+        return true;
+    }
+    if (Array.isArray(val1) && Array.isArray(val2)) {
+        if (val1.length !== val2.length) {
+            return false;
+        }
+        for (let i = 0; i < val1.length; i += 1) {
+            if (!deepEqual(val1[i], val2[i])) {
+                return false;
+            }
+        }
+        return true;
+    }
+    if (isObject(val1) && isObject(val2)) {
+        const val1Keys = Object.keys(val1);
+        const val2Keys = Object.keys(val2);
+        if (val1Keys.length !== val2Keys.length) {
+            return false;
+        }
+        for (let i = 0; i < val1Keys.length; i += 1) {
+            const key = val1Keys[i];
+            if (!val2Keys.includes(key) || !deepEqual(val1[key], val2[key])) {
+                return false;
+            }
+        }
+        return true;
+    }
+    return false;
+};
