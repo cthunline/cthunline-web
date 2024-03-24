@@ -48,38 +48,46 @@
     "fate": [
         {
             "key": "fate",
+            "type": "number",
             "gridColumn": 12
         },
         {
             "key": "fortune",
+            "type": "number",
             "gridColumn": 12
         }
     ],
     "resilience": [
         {
             "key": "resilience",
+            "type": "number",
             "gridColumn": 12
         },
         {
             "key": "resolve",
+            "type": "number",
             "gridColumn": 12
         },
         {
             "key": "motivation",
+            "type": "number",
             "gridColumn": 12
         }
     ],
     "experience": [
         {
             "key": "current",
+            "type": "number",
             "gridColumn": 12
         },
         {
             "key": "spent",
+            "type": "number",
             "gridColumn": 12
         },
         {
             "key": "total",
+            "type": "number",
             "gridColumn": 12,
             "readonly": true
         }
@@ -87,14 +95,17 @@
     "movement": [
         {
             "key": "movement",
+            "type": "number",
             "gridColumn": 12
         },
         {
             "key": "walk",
+            "type": "number",
             "gridColumn": 12
         },
         {
             "key": "run",
+            "type": "number",
             "gridColumn": 12
         }
     ],
@@ -134,14 +145,17 @@
     "wealth": [
         {
             "key": "brassPennies",
+            "type": "number",
             "gridColumn": 12
         },
         {
             "key": "silverShillings",
+            "type": "number",
             "gridColumn": 12
         },
         {
             "key": "goldCrowns",
+            "type": "number",
             "gridColumn": 12
         }
     ],
@@ -176,6 +190,7 @@
                 },
                 {
                     "key": "current",
+                    "type": "number",
                     "gridColumn": 6
                 }
             ]
