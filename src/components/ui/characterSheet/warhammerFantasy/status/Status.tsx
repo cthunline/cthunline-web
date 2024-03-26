@@ -21,16 +21,20 @@ import {
     type WarhammerFantasyParty
 } from '@cthunline/games';
 
+import { controlStatus, controlWounds } from '../warhammerFantasySheet.helper';
 import FieldLayout, { Field } from '../../generic/fieldLayout/FieldLayout';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import { controlStatus, controlWounds } from '../warhammerFantasySheet.helper';
 import { useApp } from '../../../../contexts/App';
 import { GameId } from '../../../../../types';
 import fields from '../fields.json';
 
 const fateFields = fields.fate as Field<WarhammerFantasyFate>[];
-const resilienceFields =
-    fields.resilience as Field<WarhammerFantasyResilience>[];
+const resilienceFields = fields.resilience as Field<
+    Omit<WarhammerFantasyResilience, 'motivation'>
+>[];
+const motivationFields = fields.motivation as Field<
+    Pick<WarhammerFantasyResilience, 'motivation'>
+>[];
 const experienceFields =
     fields.experience as Field<WarhammerFantasyExperience>[];
 const movementFields = fields.movement as Field<WarhammerFantasyMovement>[];
@@ -49,42 +53,58 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
     return (
         <>
             <Stack direction="row" gap="2rem" width="100%">
-                {/* fate */}
-                <Stack direction="column" gap="0.5rem" flex="1 0">
-                    <SectionTitle
-                        iconBefore={<GiCartwheel size={20} />}
-                        text={T('game.warhammerFantasy.fate.fate')}
-                    />
-                    <FieldLayout<WarhammerFantasyFate>
-                        gameId={GameId.warhammerFantasy}
-                        fields={fateFields}
-                        textSectionKey="fate"
-                        data={character.fate}
-                        readonly={readonly}
-                        onChange={(fate: WarhammerFantasyFate) =>
-                            onChange(controlStatus({ fate }))
-                        }
-                        rowGap={2}
-                        columnGap={0}
-                    />
-                </Stack>
-                {/* resilience */}
-                <Stack direction="column" gap="0.5rem" flex="1 0">
-                    <SectionTitle
-                        iconBefore={<GiOvermind size={20} />}
-                        text={T('game.warhammerFantasy.resilience.resilience')}
-                    />
+                <Stack direction="column" gap="1rem" flex="2 0">
+                    <Stack direction="row" gap="2rem">
+                        {/* fate */}
+                        <Stack direction="column" gap="0.5rem" flex="1 0">
+                            <SectionTitle
+                                iconBefore={<GiCartwheel size={20} />}
+                                text={T('game.warhammerFantasy.fate.fate')}
+                            />
+                            <FieldLayout<WarhammerFantasyFate>
+                                gameId={GameId.warhammerFantasy}
+                                fields={fateFields}
+                                textSectionKey="fate"
+                                data={character.fate}
+                                readonly={readonly}
+                                onChange={(fate: WarhammerFantasyFate) =>
+                                    onChange(controlStatus({ fate }))
+                                }
+                                rowGap={2}
+                                columnGap={0}
+                            />
+                        </Stack>
+                        {/* resilience */}
+                        <Stack direction="column" gap="0.5rem" flex="1 0">
+                            <SectionTitle
+                                iconBefore={<GiOvermind size={20} />}
+                                text={T(
+                                    'game.warhammerFantasy.resilience.resilience'
+                                )}
+                            />
+                            <FieldLayout<WarhammerFantasyResilience>
+                                gameId={GameId.warhammerFantasy}
+                                fields={resilienceFields}
+                                textSectionKey="resilience"
+                                data={character.resilience}
+                                readonly={readonly}
+                                onChange={(
+                                    resilience: WarhammerFantasyResilience
+                                ) => onChange(controlStatus({ resilience }))}
+                                rowGap={2}
+                                columnGap={0}
+                            />
+                        </Stack>
+                    </Stack>
                     <FieldLayout<WarhammerFantasyResilience>
                         gameId={GameId.warhammerFantasy}
-                        fields={resilienceFields}
+                        fields={motivationFields}
                         textSectionKey="resilience"
                         data={character.resilience}
                         readonly={readonly}
                         onChange={(resilience: WarhammerFantasyResilience) =>
                             onChange({ resilience })
                         }
-                        rowGap={2}
-                        columnGap={0}
                     />
                 </Stack>
                 {/* experience */}

@@ -25,7 +25,7 @@ interface InputProps<DataType> {
     onChange: (data: DataType) => void;
 }
 
-const FieldInput = <DataType extends {}>({
+export const FieldInput = <DataType extends {}>({
     index,
     gameId,
     field: { key, title, type, lines, readonly: fieldReadonly },

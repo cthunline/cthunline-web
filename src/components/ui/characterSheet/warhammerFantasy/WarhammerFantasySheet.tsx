@@ -8,10 +8,6 @@ import {
     GiLightBackpack
 } from 'react-icons/gi';
 
-import {
-    controlCharacteristics,
-    controlItems
-} from './warhammerFantasySheet.helper';
 import WarhammerFantasyLogo from '../../../svg/games/WarhammerFantasy';
 import SheetTabs, { SheetTab } from '../generic/sheetTabs/SheetTabs';
 import Characteristics from './characteristics/Characteristics';
@@ -30,6 +26,10 @@ import Status from './status/Status';
 import Spells from './spells/Spells';
 import Armour from './armour/Armour';
 import Wealth from './wealth/Wealth';
+import {
+    controlCharacteristics,
+    controlItems
+} from './warhammerFantasySheet.helper';
 
 export interface WarhammerFantasySheetProps {
     readonly: boolean;

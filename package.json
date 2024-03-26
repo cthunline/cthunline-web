@@ -9,11 +9,11 @@
         "format": "npx eslint . --fix --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --write . && npx tsc --noEmit && npx stylelint --fix \"**/*.css\" --max-warnings=0"
     },
     "dependencies": {
-        "@cthunline/games": "^2.4.15",
+        "@cthunline/games": "^2.5.0",
         "@emotion/react": "^11.11.4",
         "@emotion/styled": "^11.11.0",
         "@hookform/resolvers": "^3.3.4",
-        "@mui/material": "^5.15.13",
+        "@mui/material": "^5.15.14",
         "axios": "^1.6.8",
         "dayjs": "^1.11.10",
         "eslint-plugin-risxss": "^2.1.0",
@@ -21,7 +21,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-draggable": "^4.4.6",
-        "react-hook-form": "^7.51.0",
+        "react-hook-form": "^7.51.2",
         "react-icons": "^5.0.1",
         "react-router-dom": "^6.22.3",
         "react-toastify": "^10.0.5",
@@ -30,11 +30,11 @@
     },
     "devDependencies": {
         "@types/hoist-non-react-statics": "^3.3.5",
-        "@types/node": "^20.11.28",
-        "@types/react": "^18.2.66",
+        "@types/node": "^20.11.30",
+        "@types/react": "^18.2.72",
         "@types/react-dom": "^18.2.22",
-        "@typescript-eslint/eslint-plugin": "^7.2.0",
-        "@typescript-eslint/parser": "^7.2.0",
+        "@typescript-eslint/eslint-plugin": "^7.4.0",
+        "@typescript-eslint/parser": "^7.4.0",
         "@vitejs/plugin-react": "^4.2.1",
         "eslint": "^8.57.0",
         "eslint-config-airbnb": "^19.0.4",
@@ -46,11 +46,11 @@
         "eslint-plugin-react-hooks": "^4.6.0",
         "husky": "^9.0.11",
         "prettier": "^3.2.5",
-        "stylelint": "^16.2.1",
+        "stylelint": "^16.3.1",
         "stylelint-config-standard": "^36.0.0",
         "stylelint-order": "^6.0.4",
-        "typescript": "^5.4.2",
-        "vite": "^5.1.6",
+        "typescript": "^5.4.3",
+        "vite": "^5.2.6",
         "vite-plugin-svgr": "^4.2.0"
     }
 }

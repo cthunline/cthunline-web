@@ -67,10 +67,11 @@
             "key": "resolve",
             "type": "number",
             "gridColumn": 12
-        },
+        }
+    ],
+    "motivation": [
         {
             "key": "motivation",
-            "type": "number",
             "gridColumn": 12
         }
     ],
