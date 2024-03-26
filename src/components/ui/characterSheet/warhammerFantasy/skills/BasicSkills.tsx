@@ -1,6 +1,7 @@
 import Grid from '@mui/material/Unstable_Grid2';
 import { GiSkills } from 'react-icons/gi';
 import { Stack } from '@mui/material';
+import { useMemo } from 'react';
 import {
     warhammerFantasy,
     type WarhammerFantasyCharacter,
@@ -21,8 +22,30 @@ interface BasicSkillsProps {
     ) => void;
 }
 
+type SortedBasicSkillNameData = {
+    name: WarhammerFantasyBasicSkillName;
+    translatedName: string;
+};
+
 const BasicSkills = ({ readonly, character, onChange }: BasicSkillsProps) => {
     const { T } = useApp();
+
+    const sortedBasicSkillNames: SortedBasicSkillNameData[] = useMemo(() => {
+        const data = basicSkillNames.map((name) => ({
+            name,
+            translatedName: T(`game.warhammerFantasy.basicSkills.${name}`)
+        }));
+        data.sort((a, b) => {
+            if (a.translatedName < b.translatedName) {
+                return -1;
+            }
+            if (a.translatedName > b.translatedName) {
+                return 1;
+            }
+            return 0;
+        });
+        return data;
+    }, [T]);
 
     const onBasicSkillAdvancesChange = (
         name: WarhammerFantasyBasicSkillName,
@@ -49,15 +72,15 @@ const BasicSkills = ({ readonly, character, onChange }: BasicSkillsProps) => {
                 text={T('game.warhammerFantasy.common.basicSkills')}
             />
             <Grid container columns={8} spacing={2}>
-                {basicSkillNames.map((basicSkillName) => (
+                {sortedBasicSkillNames.map(({ name, translatedName }) => (
                     <SkillRow
-                        key={`basicSkill-row-${basicSkillName}`}
+                        key={`basicSkill-row-${name}`}
                         readonly={readonly}
                         character={character}
-                        skill={character.basicSkills[basicSkillName]}
-                        skillName={basicSkillName}
+                        skill={character.basicSkills[name]}
+                        skillTranslatedName={translatedName}
                         onAdvancesChange={(val: number) => {
-                            onBasicSkillAdvancesChange(basicSkillName, val);
+                            onBasicSkillAdvancesChange(name, val);
                         }}
                     />
                 ))}

@@ -3,7 +3,6 @@ import { IconButton, TextField } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 import {
     type WarhammerFantasyCharacter,
-    type WarhammerFantasyBasicSkillName,
     type WarhammerFantasyBasicSkill,
     type WarhammerFantasyOtherSkill
 } from '@cthunline/games';
@@ -54,12 +53,12 @@ type SkillRowProps = {
 } & (
     | {
           skill: WarhammerFantasyBasicSkill;
-          skillName: WarhammerFantasyBasicSkillName;
+          skillTranslatedName: string;
           onDelete?: never;
       }
     | {
           skill: WarhammerFantasyOtherSkill;
-          skillName?: never;
+          skillTranslatedName?: never;
           onDelete: () => void;
       }
 );
@@ -68,7 +67,7 @@ const SkillRow = ({
     readonly,
     character,
     skill,
-    skillName,
+    skillTranslatedName,
     onDelete,
     onAdvancesChange
 }: SkillRowProps) => {
@@ -77,9 +76,7 @@ const SkillRow = ({
     return (
         <>
             <Grid xs={4} display="flex" alignItems="center">
-                {isOther
-                    ? skill.name
-                    : T(`game.warhammerFantasy.basicSkills.${skillName}`)}
+                {isOther ? skill.name : skillTranslatedName}
             </Grid>
             <Grid xs={1} display="flex" alignItems="center">
                 {T(
