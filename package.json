@@ -1,10 +1,10 @@
 {
     "name": "cthunline-web",
-    "version": "1.3.2",
+    "version": "1.3.3",
     "scripts": {
         "dev": "vite serve src --config vite.config.mts",
         "build": "vite build src --config vite.config.mts --outDir ../build",
-        "prepare": "husky install",
+        "prepare": "husky",
         "lint": "npx eslint . --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --check . && npx tsc --noEmit && npx stylelint \"**/*.css\" --max-warnings=0",
         "format": "npx eslint . --fix --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --write . && npx tsc --noEmit && npx stylelint --fix \"**/*.css\" --max-warnings=0"
     },
