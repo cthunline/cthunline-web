@@ -6,7 +6,6 @@ name: cthunline-web-ci
 trigger:
   branch:
   - master
-  - dev
   event:
   - push
   - pull_request
@@ -39,7 +38,7 @@ steps:
   - install
   when:
     branch:
-    - dev
+    - master
     event:
     - push
 
