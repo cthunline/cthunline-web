@@ -26,6 +26,7 @@ import FieldLayout, { Field } from '../../generic/fieldLayout/FieldLayout';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle';
 import { useApp } from '../../../../contexts/App';
 import { GameId } from '../../../../../types';
+import Advantage from './Advantage';
 import fields from '../fields.json';
 
 const fateFields = fields.fate as Field<WarhammerFantasyFate>[];
@@ -147,8 +148,19 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
                 </Stack>
             </Stack>
             <Stack direction="row" gap="2rem" width="100%">
-                {/* wounds */}
                 <Stack direction="column" gap="0.5rem" flex="1 0">
+                    {/* advantage */}
+                    <Advantage
+                        character={character}
+                        readonly={readonly}
+                        onChange={(
+                            partialChar: Pick<
+                                WarhammerFantasyCharacter,
+                                'advantage'
+                            >
+                        ) => onChange(partialChar)}
+                    />
+                    {/* wounds */}
                     <SectionTitle
                         iconBefore={<GiHeartPlus size={20} />}
                         text={T('game.warhammerFantasy.common.wounds')}

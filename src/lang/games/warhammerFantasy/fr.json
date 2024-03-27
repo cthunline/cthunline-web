@@ -18,7 +18,8 @@
             "weapons": "armes",
             "trappings": "possessions",
             "wealth": "richesses",
-            "encumbrance": "encombrement"
+            "encumbrance": "encombrement",
+            "advantage": "avantage"
         },
         "tab": {
             "biographyAndStatus": "bio & statut",
