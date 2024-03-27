@@ -139,7 +139,7 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
                         data={character.movement}
                         readonly={readonly}
                         onChange={(movement: WarhammerFantasyMovement) =>
-                            onChange({ movement })
+                            onChange(controlStatus({ movement }))
                         }
                         rowGap={2}
                         columnGap={0}

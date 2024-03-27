@@ -42,6 +42,13 @@ export const controlStatus = (
             total: char.experience.current + char.experience.spent
         };
     }
+    if (char.movement) {
+        char.movement = {
+            ...char.movement,
+            walk: char.movement.movement * 2,
+            run: char.movement.movement * 4
+        };
+    }
     return char;
 };
 
