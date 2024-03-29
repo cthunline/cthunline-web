@@ -75,7 +75,7 @@ export const ImageAssetList = ({ assets, onAdd }: ImageListProps) =>
     ) : null;
 
 interface UserSketchFormProps {
-    sketch: Omit<SketchData, 'events'>;
+    data: Omit<SketchData, 'events'>;
     onSubmit: (data: SketchCreateBody) => Promise<void>;
 }
 
@@ -85,7 +85,7 @@ const userSketchFormSchema = z.object({
 
 type UserSketchFormData = z.infer<typeof userSketchFormSchema>;
 
-export const UserSketchForm = ({ sketch, onSubmit }: UserSketchFormProps) => {
+export const UserSketchForm = ({ data, onSubmit }: UserSketchFormProps) => {
     const { T } = useApp();
 
     const { control, handleSubmit } = useForm<UserSketchFormData>({
@@ -98,7 +98,7 @@ export const UserSketchForm = ({ sketch, onSubmit }: UserSketchFormProps) => {
     const onFormSubmit = ({ name }: UserSketchFormData) => {
         onSubmit({
             name,
-            sketch
+            data
         });
     };
 

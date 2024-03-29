@@ -370,9 +370,9 @@ export interface Sketch {
     id: number;
     userId: number;
     name: string;
-    sketch: Omit<SketchData, 'events'>;
+    data: Omit<SketchData, 'events'>;
     createdAt: string;
     updatedAt: string;
 }
 
-export type SketchCreateBody = Pick<Sketch, 'name' | 'sketch'>;
+export type SketchCreateBody = Pick<Sketch, 'name' | 'data'>;

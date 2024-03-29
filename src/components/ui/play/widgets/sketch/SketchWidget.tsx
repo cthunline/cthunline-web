@@ -80,9 +80,9 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
     };
 
     const onUserSketchLoad = async (sketchId: number) => {
-        const { sketch } = await getUserSketch(sketchId);
+        const { data } = await getUserSketch(sketchId);
         updateSketch(() => ({
-            ...sketch,
+            ...data,
             events: []
         }));
         closeDialog();
@@ -153,12 +153,12 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                 text: T('widget.sketch.saveSketch'),
                 icon: <GiSave size={30} />,
                 handler: () => {
-                    const { events, ...sketch } = sketchData;
+                    const { events, ...data } = sketchData;
                     openDialog({
                         title: T('widget.sketch.saveSketch'),
                         content: (
                             <UserSketchForm
-                                sketch={sketch}
+                                data={data}
                                 onSubmit={onUserSketchSave}
                             />
                         )
