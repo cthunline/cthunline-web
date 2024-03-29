@@ -137,3 +137,24 @@ export const deepEqual = (val1: any, val2: any): boolean => {
     }
     return false;
 };
+
+/**
+Sorts an array of objets by object property.
+*/
+export const sortObjectsBy = <T>(objects: T[], property: keyof T) => {
+    objects.sort((a, b) => {
+        const aVal = a[property];
+        const bVal = b[property];
+        const properAVal =
+            typeof aVal === 'string' ? aVal.toLocaleLowerCase() : aVal;
+        const properBVal =
+            typeof bVal === 'string' ? bVal.toLocaleLowerCase() : bVal;
+        if (properAVal < properBVal) {
+            return -1;
+        }
+        if (properAVal > properBVal) {
+            return 1;
+        }
+        return 0;
+    });
+};

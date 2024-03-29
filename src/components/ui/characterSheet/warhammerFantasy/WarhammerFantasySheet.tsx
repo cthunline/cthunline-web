@@ -27,8 +27,12 @@ import Spells from './spells/Spells';
 import Armour from './armour/Armour';
 import Wealth from './wealth/Wealth';
 import {
+    type ControlItemsSortOnly,
     controlCharacteristics,
-    controlItems
+    controlItems,
+    controlSpells,
+    controlTalents,
+    sortOtherSkills
 } from './warhammerFantasySheet.helper';
 
 export interface WarhammerFantasySheetProps {
@@ -96,13 +100,43 @@ const WarhammerFantasySheet = ({
         []
     );
 
-    const onCharacterItemsChange = useCallback(
+    const onTalentsChange = useCallback(
         (partialChar: Partial<WarhammerFantasyCharacter>) => {
             setCharacterData((previous) =>
-                controlItems({
+                controlTalents({
                     ...previous,
                     ...partialChar
                 })
+            );
+        },
+        []
+    );
+
+    const onSpellsChange = useCallback(
+        (partialChar: Partial<WarhammerFantasyCharacter>) => {
+            setCharacterData((previous) =>
+                controlSpells({
+                    ...previous,
+                    ...partialChar
+                })
+            );
+        },
+        []
+    );
+
+    const onItemsChange = useCallback(
+        (
+            partialChar: Partial<WarhammerFantasyCharacter>,
+            sortOnly?: ControlItemsSortOnly
+        ) => {
+            setCharacterData((previous) =>
+                controlItems(
+                    {
+                        ...previous,
+                        ...partialChar
+                    },
+                    sortOnly
+                )
             );
         },
         []
@@ -112,6 +146,18 @@ const WarhammerFantasySheet = ({
         (partialChar: Partial<WarhammerFantasyCharacter>) => {
             setCharacterData((previous) =>
                 controlCharacteristics({
+                    ...previous,
+                    ...partialChar
+                })
+            );
+        },
+        []
+    );
+
+    const onOtherSkillsChange = useCallback(
+        (partialChar: Partial<WarhammerFantasyCharacter>) => {
+            setCharacterData((previous) =>
+                sortOtherSkills({
                     ...previous,
                     ...partialChar
                 })
@@ -204,12 +250,12 @@ const WarhammerFantasySheet = ({
                     <BasicSkills
                         readonly={readonly}
                         character={characterData}
-                        onChange={onPartialCharacterChange}
+                        onChange={onCharacteristicsChange}
                     />
                     <OtherSkills
                         readonly={readonly}
                         character={characterData}
-                        onChange={onPartialCharacterChange}
+                        onChange={onOtherSkillsChange}
                     />
                 </Stack>
             ) : null}
@@ -225,12 +271,12 @@ const WarhammerFantasySheet = ({
                     <Talents
                         readonly={readonly}
                         character={characterData}
-                        onChange={onCharacteristicsChange}
+                        onChange={onTalentsChange}
                     />
                     <Spells
                         readonly={readonly}
                         character={characterData}
-                        onChange={onCharacteristicsChange}
+                        onChange={onSpellsChange}
                     />
                 </Stack>
             ) : null}
@@ -247,13 +293,13 @@ const WarhammerFantasySheet = ({
                         <ArmourPoints
                             readonly={readonly}
                             character={characterData}
-                            onChange={onCharacterItemsChange}
+                            onChange={onPartialCharacterChange}
                             flex="6"
                         />
                         <Wealth
                             readonly={readonly}
                             character={characterData}
-                            onChange={onCharacterItemsChange}
+                            onChange={onPartialCharacterChange}
                             flex="3"
                         />
                         <Encumbrance character={characterData} flex="4" />
@@ -261,17 +307,23 @@ const WarhammerFantasySheet = ({
                     <Armour
                         readonly={readonly}
                         character={characterData}
-                        onChange={onCharacterItemsChange}
+                        onChange={(partialChar) =>
+                            onItemsChange(partialChar, 'armour')
+                        }
                     />
                     <Weapons
                         readonly={readonly}
                         character={characterData}
-                        onChange={onCharacterItemsChange}
+                        onChange={(partialChar) =>
+                            onItemsChange(partialChar, 'weapons')
+                        }
                     />
                     <Trappings
                         readonly={readonly}
                         character={characterData}
-                        onChange={onCharacterItemsChange}
+                        onChange={(partialChar) =>
+                            onItemsChange(partialChar, 'trappings')
+                        }
                     />
                 </Stack>
             ) : null}

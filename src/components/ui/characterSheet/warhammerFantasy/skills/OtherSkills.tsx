@@ -1,7 +1,6 @@
 import Grid from '@mui/material/Unstable_Grid2';
 import { GiJuggler } from 'react-icons/gi';
 import { Stack } from '@mui/material';
-import { useMemo } from 'react';
 import {
     type WarhammerFantasyCharacter,
     type WarhammerFantasyOtherSkill
@@ -23,24 +22,8 @@ interface OtherSkillsProps {
 const OtherSkills = ({ readonly, character, onChange }: OtherSkillsProps) => {
     const { T } = useApp();
 
-    const sortedOtherSkills = useMemo(() => {
-        const data = [...character.otherSkills];
-        data.sort((a, b) => {
-            const aName = a.name.toLocaleLowerCase();
-            const bName = b.name.toLocaleLowerCase();
-            if (aName < bName) {
-                return -1;
-            }
-            if (aName > bName) {
-                return 1;
-            }
-            return 0;
-        });
-        return data;
-    }, [character.otherSkills]);
-
     const onOtherSkillAdvancesChange = (index: number, advances: number) => {
-        const otherSkills = [...sortedOtherSkills];
+        const otherSkills = [...character.otherSkills];
         const otherSkill = otherSkills[index];
         if (otherSkill) {
             const char =
@@ -75,7 +58,7 @@ const OtherSkills = ({ readonly, character, onChange }: OtherSkillsProps) => {
                 text={T('game.warhammerFantasy.common.otherSkills')}
             />
             <Grid container columns={readonly ? 8 : 9} spacing={2}>
-                {sortedOtherSkills.map((otherSkill, index) => (
+                {character.otherSkills.map((otherSkill, index) => (
                     <SkillRow
                         key={`otherSkill-row-${index.toString()}`}
                         readonly={readonly}
