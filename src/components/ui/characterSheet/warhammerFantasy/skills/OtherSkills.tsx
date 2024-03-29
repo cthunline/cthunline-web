@@ -26,10 +26,12 @@ const OtherSkills = ({ readonly, character, onChange }: OtherSkillsProps) => {
     const sortedOtherSkills = useMemo(() => {
         const data = [...character.otherSkills];
         data.sort((a, b) => {
-            if (a.name < b.name) {
+            const aName = a.name.toLocaleLowerCase();
+            const bName = b.name.toLocaleLowerCase();
+            if (aName < bName) {
                 return -1;
             }
-            if (a.name > b.name) {
+            if (aName > bName) {
                 return 1;
             }
             return 0;
@@ -38,7 +40,7 @@ const OtherSkills = ({ readonly, character, onChange }: OtherSkillsProps) => {
     }, [character.otherSkills]);
 
     const onOtherSkillAdvancesChange = (index: number, advances: number) => {
-        const otherSkills = [...character.otherSkills];
+        const otherSkills = [...sortedOtherSkills];
         const otherSkill = otherSkills[index];
         if (otherSkill) {
             const char =
