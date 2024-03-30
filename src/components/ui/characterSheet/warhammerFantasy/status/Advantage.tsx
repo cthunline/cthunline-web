@@ -23,14 +23,16 @@ const Advantage = ({
     const { T } = useApp();
 
     const handleChange = (action: 'increase' | 'decrease') => {
-        if (action === 'increase') {
-            onChange({
-                advantage: character.advantage + 1
-            });
-        } else if (action === 'decrease' && character.advantage > 0) {
-            onChange({
-                advantage: character.advantage - 1
-            });
+        if (!readonly) {
+            if (action === 'increase') {
+                onChange({
+                    advantage: character.advantage + 1
+                });
+            } else if (action === 'decrease' && character.advantage > 0) {
+                onChange({
+                    advantage: character.advantage - 1
+                });
+            }
         }
     };
 
@@ -47,21 +49,25 @@ const Advantage = ({
                 alignItems="center"
                 justifyContent="end"
             >
-                <IconButton
-                    size="small"
-                    onClick={() => handleChange('decrease')}
-                >
-                    <FaMinus />
-                </IconButton>
+                {!readonly && (
+                    <IconButton
+                        size="small"
+                        onClick={() => handleChange('decrease')}
+                    >
+                        <FaMinus />
+                    </IconButton>
+                )}
                 <Box minWidth="2.5rem" textAlign="center">
                     {character.advantage}
                 </Box>
-                <IconButton
-                    size="small"
-                    onClick={() => handleChange('increase')}
-                >
-                    <FaPlus />
-                </IconButton>
+                {!readonly && (
+                    <IconButton
+                        size="small"
+                        onClick={() => handleChange('increase')}
+                    >
+                        <FaPlus />
+                    </IconButton>
+                )}
             </Stack>
         </Stack>
     );
