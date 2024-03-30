@@ -158,6 +158,7 @@
     "widget": {
         "sketch": {
             "addToken": "ajouter un token",
+            "clearDrawingsConfirm": "supprimer les dessins ?",
             "clearSketchConfirm": "vider le plateau ?",
             "clearTokensConfirm": "supprimer les tokens ?",
             "drawing": "dessin",

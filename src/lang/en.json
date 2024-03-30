@@ -158,6 +158,7 @@
     "widget": {
         "sketch": {
             "addToken": "add token",
+            "clearDrawingsConfirm": "clear drawings ?",
             "clearSketchConfirm": "clear the sketch ?",
             "clearTokensConfirm": "clear the tokens ?",
             "drawing": "drawing",

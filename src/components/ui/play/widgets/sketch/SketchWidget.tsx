@@ -103,7 +103,12 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
             {
                 text: T('widget.sketch.eraseDrawings'),
                 icon: <BsEraserFill size={25} />,
-                handler: clearDrawings
+                handler: () => {
+                    confirmDialog(
+                        T('widget.sketch.clearDrawingsConfirm'),
+                        clearDrawings
+                    );
+                }
             },
             {
                 text: T('widget.sketch.addToken'),
