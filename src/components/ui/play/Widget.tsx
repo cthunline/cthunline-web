@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
-import Draggable from 'react-draggable';
 import { Box, Paper } from '@mui/material';
+import React, { useEffect } from 'react';
 import { MdClose } from 'react-icons/md';
+import Draggable from 'react-draggable';
 
 import { focusWidget } from '../../../services/widget';
 

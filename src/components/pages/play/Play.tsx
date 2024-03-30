@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Box, CircularProgress } from '@mui/material';
 
@@ -37,6 +37,8 @@ const PlayContent = () => {
         stopAudio,
         sketchData
     } = usePlay();
+
+    const playContentRef = useRef<HTMLDivElement>(null);
 
     const [openWidgets, setOpenWidgets] = useState<WidgetType[]>([]);
 
@@ -125,6 +127,7 @@ const PlayContent = () => {
                 onExit={onExit}
             />
             <Box
+                ref={playContentRef}
                 id="play-content"
                 className="play-content grow flex column p-25"
             >
@@ -133,7 +136,7 @@ const PlayContent = () => {
                     <Sketch isMaster={socket?.isMaster} />
                 ) : null}
                 {!socket.isMaster ? <Audio /> : null}
-                <Console logs={logs} />
+                <Console logs={logs} playContentRef={playContentRef} />
             </Box>
         </Box>
     );
