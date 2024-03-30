@@ -376,3 +376,5 @@ export interface Sketch {
 }
 
 export type SketchCreateBody = Pick<Sketch, 'name' | 'data'>;
+
+export type SketchUpdateBody = Partial<SketchCreateBody>;

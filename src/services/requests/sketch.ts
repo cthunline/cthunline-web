@@ -1,6 +1,10 @@
 import { callApi } from '../api';
 
-import { Sketch, SketchCreateBody } from '../../types';
+import {
+    Sketch,
+    type SketchCreateBody,
+    type SketchUpdateBody
+} from '../../types';
 
 export const getSketchs = async () => {
     const { sketchs } = await callApi<{ sketchs: Sketch[] }>({
@@ -20,6 +24,13 @@ export const createSketch = async (body: SketchCreateBody) =>
     callApi<Sketch>({
         method: 'POST',
         route: '/sketchs',
+        body
+    });
+
+export const updateSketch = async (sketchId: number, body: SketchUpdateBody) =>
+    callApi<Sketch>({
+        method: 'POST',
+        route: `/sketchs/${sketchId}`,
         body
     });
 

@@ -161,9 +161,11 @@
             "clearDrawingsConfirm": "supprimer les dessins ?",
             "clearSketchConfirm": "vider le plateau ?",
             "clearTokensConfirm": "supprimer les tokens ?",
+            "deleteSketchConfirm": "supprimer le plateau ?",
             "drawing": "dessin",
             "eraseDrawings": "supprimer les dessins",
             "loadSketch": "charger un plateau",
+            "overwriteSketchConfirm": "écraser le plateau ?",
             "removeTokens": "supprimer les tokens",
             "saveSketch": "sauvegarder le plateau",
             "spawnPlayerTokens": "générer les tokens de joueurs"

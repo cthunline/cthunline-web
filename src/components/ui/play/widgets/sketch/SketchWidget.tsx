@@ -1,31 +1,33 @@
-import { useState } from 'react';
 import { Box, Switch, FormControlLabel, Typography } from '@mui/material';
-import { GoPencil } from 'react-icons/go';
-import { BsEraserFill } from 'react-icons/bs';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
-import { IoPeopleCircle } from 'react-icons/io5';
 import { MdDelete, MdUndo } from 'react-icons/md';
+import { IoPeopleCircle } from 'react-icons/io5';
 import { GiSave, GiLoad } from 'react-icons/gi';
+import { BsEraserFill } from 'react-icons/bs';
+import { GoPencil } from 'react-icons/go';
+import React, { useState } from 'react';
 
+import ActionButton, { type ActionButtonData } from './elements/ActionButton';
+import UserSketchLoadModal from './elements/UserSketchLoadModal';
+import UserSketchSaveModal from './elements/UserSketchSaveModal';
+import useUserSketch from '../../../../hooks/useUserSketch';
+import useDirectory from '../../../../hooks/useDirectory';
+import { useDialog } from '../../../../contexts/Dialog';
+import ImageAssetList from './elements/ImageAssetList';
+import { usePlay } from '../../../../contexts/Play';
 import { useApp } from '../../../../contexts/App';
+import useAsset from '../../../../hooks/useAsset';
 import Widget from '../../Widget';
+import {
+    WidgetType,
+    type Asset,
+    type SketchCreateBody,
+    SketchUpdateBody
+} from '../../../../../types';
 import Explorer, {
-    ExplorerItem,
+    type ExplorerItem,
     ExplorerItemType
 } from '../../../explorer/Explorer';
-import { Asset, SketchCreateBody, WidgetType } from '../../../../../types';
-import { usePlay } from '../../../../contexts/Play';
-import { useDialog } from '../../../../contexts/Dialog';
-import useAsset from '../../../../hooks/useAsset';
-import useDirectory from '../../../../hooks/useDirectory';
-import useUserSketch from '../../../../hooks/useUserSketch';
-import {
-    ImageAssetList,
-    ActionButton,
-    ActionButtonData,
-    UserSketchForm,
-    UserSketchSelector
-} from './SketchWidgetElements';
 
 import './SketchWidget.css';
 
@@ -35,7 +37,7 @@ interface SketchWidgetProps {
 
 const SketchWidget = ({ onClose }: SketchWidgetProps) => {
     const { T } = useApp();
-    const { confirmDialog, openDialog, closeDialog } = useDialog();
+    const { confirmDialog } = useDialog();
     const {
         users,
         isFreeDrawing,
@@ -58,9 +60,18 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
     const { directoryList } = useDirectory({
         loadList: true
     });
-    const { createUserSketch, getUserSketch } = useUserSketch();
+    const {
+        userSketchs,
+        createUserSketch,
+        getUserSketch,
+        updateUserSketch,
+        deleteUserSketch
+    } = useUserSketch(true);
 
     const [directoryIds, setDirectoryIds] = useState<number[]>([]);
+
+    const [saveModalOpen, setSaveModalOpen] = useState<boolean>(false);
+    const [loadModalOpen, setLoadModalOpen] = useState<boolean>(false);
 
     const onExplorerBack = () => {
         setDirectoryIds((previous) => previous.slice(0, -1));
@@ -75,17 +86,29 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
     };
 
     const onUserSketchSave = async (data: SketchCreateBody) => {
-        await createUserSketch({ data });
-        closeDialog();
+        setSaveModalOpen(false);
+        createUserSketch({ data });
+    };
+
+    const onUserSketchOverwrite = async (
+        sketchId: number,
+        data: SketchUpdateBody
+    ) => {
+        setSaveModalOpen(false);
+        updateUserSketch({ sketchId, data });
     };
 
     const onUserSketchLoad = async (sketchId: number) => {
+        setLoadModalOpen(false);
         const { data } = await getUserSketch(sketchId);
         updateSketch(() => ({
             ...data,
             events: []
         }));
-        closeDialog();
+    };
+
+    const onUserSketchDelete = async (sketchId: number) => {
+        await deleteUserSketch({ sketchId });
     };
 
     const actionButtons: ActionButtonData[][] = [
@@ -158,28 +181,14 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                 text: T('widget.sketch.saveSketch'),
                 icon: <GiSave size={30} />,
                 handler: () => {
-                    const { events, ...data } = sketchData;
-                    openDialog({
-                        title: T('widget.sketch.saveSketch'),
-                        content: (
-                            <UserSketchForm
-                                data={data}
-                                onSubmit={onUserSketchSave}
-                            />
-                        )
-                    });
+                    setSaveModalOpen(true);
                 }
             },
             {
                 text: T('widget.sketch.loadSketch'),
                 icon: <GiLoad size={30} />,
                 handler: () => {
-                    openDialog({
-                        title: T('widget.sketch.loadSketch'),
-                        content: (
-                            <UserSketchSelector onSelect={onUserSketchLoad} />
-                        )
-                    });
+                    setLoadModalOpen(true);
                 }
             }
         ]
@@ -197,6 +206,8 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
     const directoryAssets: Asset[] = assetList.filter(({ directoryId }) =>
         directoryIds.length ? directoryId === directoryIds.at(-1) : !directoryId
     );
+
+    const { events, ...data } = sketchData;
 
     return (
         <Widget
@@ -261,6 +272,21 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                       ]
                     : null}
             </Box>
+            <UserSketchSaveModal
+                open={saveModalOpen}
+                userSketchs={userSketchs}
+                data={data}
+                onCreate={onUserSketchSave}
+                onOverwrite={onUserSketchOverwrite}
+                onClose={() => setSaveModalOpen(false)}
+            />
+            <UserSketchLoadModal
+                open={loadModalOpen}
+                userSketchs={userSketchs}
+                onLoad={onUserSketchLoad}
+                onDelete={onUserSketchDelete}
+                onClose={() => setLoadModalOpen(false)}
+            />
         </Widget>
     );
 };

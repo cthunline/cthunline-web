@@ -12,9 +12,10 @@ import './CustomDialog.css';
 
 interface CustomDialogProps {
     open: boolean;
-    title: string;
-    content: JSX.Element | null;
-    onConfirm: (() => void) | null;
+    title?: string;
+    content?: React.ReactNode;
+    onConfirm?: () => void;
+    onCancel?: () => void;
     onClose: () => void;
 }
 
@@ -23,23 +24,26 @@ const CustomDialog = ({
     title,
     content,
     onConfirm,
+    onCancel,
     onClose
 }: CustomDialogProps) => {
     const { T } = useApp();
-
     return (
         <Dialog
+            transitionDuration={0}
             PaperProps={{
                 className: 'custom-dialog'
             }}
             open={open}
             onClose={onClose}
         >
-            <DialogTitle>{title}</DialogTitle>
-            {content ? <DialogContent>{content}</DialogContent> : null}
-            {onConfirm ? (
+            {!!title && <DialogTitle>{title}</DialogTitle>}
+            {!!content && <DialogContent>{content}</DialogContent>}
+            {!!onConfirm && (
                 <DialogActions>
-                    <Button onClick={onClose}>{T('action.cancel')}</Button>
+                    <Button onClick={onCancel ?? onClose}>
+                        {T('action.cancel')}
+                    </Button>
                     <Button
                         onClick={() => {
                             onConfirm();
@@ -49,7 +53,7 @@ const CustomDialog = ({
                         {T('action.confirm')}
                     </Button>
                 </DialogActions>
-            ) : null}
+            )}
         </Dialog>
     );
 };

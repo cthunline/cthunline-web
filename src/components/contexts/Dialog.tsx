@@ -1,9 +1,12 @@
+import { Box } from '@mui/material';
 import {
     createContext,
     useState,
     useContext,
     useCallback,
-    useMemo
+    useMemo,
+    useRef,
+    createRef
 } from 'react';
 
 // do not import from ui index to avoid circular dependency
@@ -15,20 +18,21 @@ interface DialogProviderProps {
 
 interface DialogData {
     open: boolean;
-    title: string;
-    content: JSX.Element | null;
-    onConfirm: (() => void) | null;
+    title?: string;
+    content?: React.ReactNode;
+    onConfirm?: () => void;
 }
 
 interface DialogOptions {
-    title: string;
-    content: JSX.Element;
+    title?: string;
+    content?: React.ReactNode;
 }
 
 interface DialogContextData {
     confirmDialog: (text: string, onConfirm: () => void) => void;
     openDialog: (options: DialogOptions) => void;
     closeDialog: () => void;
+    dialogPortalRef: React.RefObject<HTMLDivElement>;
 }
 
 const defaultDialogData: DialogContextData = {
@@ -40,18 +44,18 @@ const defaultDialogData: DialogContextData = {
     },
     closeDialog: () => {
         /* default */
-    }
+    },
+    dialogPortalRef: createRef()
 };
 
 const DialogContext = createContext<DialogContextData>(defaultDialogData);
 
 export const DialogProvider = ({ children }: DialogProviderProps) => {
     const [dialogOptions, setDialogOptions] = useState<DialogData>({
-        open: false,
-        title: '',
-        content: null,
-        onConfirm: null
+        open: false
     });
+
+    const dialogPortalRef = useRef<HTMLDivElement>(null);
 
     // opens a simple confirmation dialog
     const confirmDialog = useCallback(
@@ -59,7 +63,6 @@ export const DialogProvider = ({ children }: DialogProviderProps) => {
             setDialogOptions({
                 open: true,
                 title,
-                content: null,
                 onConfirm
             });
         },
@@ -72,8 +75,7 @@ export const DialogProvider = ({ children }: DialogProviderProps) => {
         setDialogOptions({
             open: true,
             title,
-            content,
-            onConfirm: null
+            content
         });
     };
 
@@ -88,7 +90,8 @@ export const DialogProvider = ({ children }: DialogProviderProps) => {
         () => ({
             confirmDialog,
             openDialog,
-            closeDialog
+            closeDialog,
+            dialogPortalRef
         }),
         [confirmDialog]
     );
@@ -96,14 +99,13 @@ export const DialogProvider = ({ children }: DialogProviderProps) => {
     return (
         <DialogContext.Provider value={contextValue}>
             {children}
+            <Box id="dialog-portal" ref={dialogPortalRef} />
             <CustomDialog
                 open={dialogOptions.open}
                 title={dialogOptions.title}
                 content={dialogOptions.content}
                 onConfirm={dialogOptions.onConfirm}
-                onClose={() => {
-                    closeDialog();
-                }}
+                onClose={() => closeDialog()}
             />
         </DialogContext.Provider>
     );

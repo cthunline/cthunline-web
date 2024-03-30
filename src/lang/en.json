@@ -161,9 +161,11 @@
             "clearDrawingsConfirm": "clear drawings ?",
             "clearSketchConfirm": "clear the sketch ?",
             "clearTokensConfirm": "clear the tokens ?",
+            "deleteSketchConfirm": "delete sketch ?",
             "drawing": "drawing",
             "eraseDrawings": "erase drawings",
             "loadSketch": "load sketch",
+            "overwriteSketchConfirm": "overwrite sketch ?",
             "removeTokens": "remove tokens",
             "saveSketch": "save sketch",
             "spawnPlayerTokens": "spawn player tokens"

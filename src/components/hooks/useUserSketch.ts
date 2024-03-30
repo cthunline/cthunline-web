@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 
 import {
     createSketch,
+    updateSketch,
     deleteSketch,
     getSketch,
     getSketchs
@@ -10,10 +11,21 @@ import {
 
 import { useApp } from '../contexts/App';
 
-import { Sketch, SketchCreateBody } from '../../types';
+import {
+    Sketch,
+    type SketchCreateBody,
+    type SketchUpdateBody
+} from '../../types';
 
 interface CreateUserSketchOptions {
     data: SketchCreateBody;
+    isRefresh?: boolean;
+    isToast?: boolean;
+}
+
+interface UpdateUserSketchOptions {
+    sketchId: number;
+    data: SketchUpdateBody;
     isRefresh?: boolean;
     isToast?: boolean;
 }
@@ -77,6 +89,29 @@ const useUserSketch = (loadList: boolean = false) => {
         [refresh, handleApiError]
     );
 
+    const updateUserSketch = useCallback(
+        async ({
+            sketchId,
+            data,
+            isRefresh = true,
+            isToast = true
+        }: UpdateUserSketchOptions): Promise<Sketch> => {
+            try {
+                const sketch = await updateSketch(sketchId, data);
+                if (isRefresh) {
+                    await refresh();
+                }
+                if (isToast) {
+                    toast.success('Sketch overwritten');
+                }
+                return sketch;
+            } catch (err: any) {
+                throw handleApiError(err);
+            }
+        },
+        [refresh, handleApiError]
+    );
+
     const deleteUserSketch = useCallback(
         async ({
             sketchId,
@@ -107,6 +142,7 @@ const useUserSketch = (loadList: boolean = false) => {
         refresh,
         getUserSketch,
         createUserSketch,
+        updateUserSketch,
         deleteUserSketch
     };
 };
