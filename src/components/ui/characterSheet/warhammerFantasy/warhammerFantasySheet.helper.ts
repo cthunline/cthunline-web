@@ -20,24 +20,6 @@ export const controlStatus = (
     partialChar: Partial<WarhammerFantasyCharacter>
 ): Partial<WarhammerFantasyCharacter> => {
     const char = { ...partialChar };
-    if (char.fate) {
-        char.fate = {
-            ...char.fate,
-            fortune:
-                char.fate.fortune > char.fate.fate
-                    ? char.fate.fate
-                    : char.fate.fortune
-        };
-    }
-    if (char.resilience) {
-        char.resilience = {
-            ...char.resilience,
-            resolve:
-                char.resilience.resolve > char.resilience.resilience
-                    ? char.resilience.resilience
-                    : char.resilience.resolve
-        };
-    }
     if (char.experience) {
         char.experience = {
             ...char.experience,
