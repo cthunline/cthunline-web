@@ -188,8 +188,9 @@
             "weapons": "armes",
             "armour": "armure",
             "trappings": "possessions",
-            "maximum": "enc. max.",
-            "total": "total"
+            "total": "total",
+            "maximumBonus": "bonus enc.",
+            "maximum": "enc. max."
         },
         "wounds": {
             "strengthBonus": "bonus de force",

@@ -4,18 +4,26 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { GiSpikedArmor } from 'react-icons/gi';
 
 import SectionTitle from '../../generic/sectionTitle/SectionTitle';
+import { onlyNumbers } from '../../../../../services/tools';
 import { useApp } from '../../../../contexts/App';
 
 interface EncumbranceInputProps {
     label?: string;
     value: number;
+    readonly?: boolean;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const EncumbranceInput = ({ label, value }: EncumbranceInputProps) => (
+const EncumbranceInput = ({
+    label,
+    value,
+    readonly = true,
+    onChange
+}: EncumbranceInputProps) => (
     <TextField
         fullWidth
         InputProps={{
-            readOnly: true,
+            readOnly: readonly,
             classes: {
                 input: 'input-smaller-text'
             }
@@ -25,16 +33,37 @@ const EncumbranceInput = ({ label, value }: EncumbranceInputProps) => (
         size="small"
         label={label}
         value={value}
+        onChange={onChange}
     />
 );
 
 interface EncumbranceProps {
     character: WarhammerFantasyCharacter;
     flex?: string | number;
+    readonly?: boolean;
+    onChange: (
+        partialChar: Pick<WarhammerFantasyCharacter, 'encumbrance'>
+    ) => void;
 }
 
-const Encumbrance = ({ character, flex }: EncumbranceProps) => {
+const Encumbrance = ({
+    character,
+    flex,
+    readonly,
+    onChange
+}: EncumbranceProps) => {
     const { T } = useApp();
+
+    const onBonusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        onChange({
+            ...character,
+            encumbrance: {
+                ...character.encumbrance,
+                maximumBonus: Number(onlyNumbers(e.target.value))
+            }
+        });
+    };
+
     return (
         <Stack direction="column" gap="0.5rem" flex={flex}>
             <SectionTitle
@@ -64,6 +93,16 @@ const Encumbrance = ({ character, flex }: EncumbranceProps) => {
                     <EncumbranceInput
                         label={T('game.warhammerFantasy.encumbrance.total')}
                         value={character.encumbrance.total}
+                    />
+                </Grid>
+                <Grid xs={1} display="flex" alignItems="center">
+                    <EncumbranceInput
+                        label={T(
+                            'game.warhammerFantasy.encumbrance.maximumBonus'
+                        )}
+                        value={character.encumbrance.maximumBonus}
+                        readonly={readonly}
+                        onChange={onBonusChange}
                     />
                 </Grid>
                 <Grid xs={1} display="flex" alignItems="center">

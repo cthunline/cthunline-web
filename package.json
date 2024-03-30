@@ -9,9 +9,9 @@
         "format": "npx eslint . --fix --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --write . && npx tsc --noEmit && npx stylelint --fix \"**/*.css\" --max-warnings=0"
     },
     "dependencies": {
-        "@cthunline/games": "^2.5.1",
+        "@cthunline/games": "^2.5.3",
         "@emotion/react": "^11.11.4",
-        "@emotion/styled": "^11.11.0",
+        "@emotion/styled": "^11.11.5",
         "@hookform/resolvers": "^3.3.4",
         "@mui/material": "^5.15.14",
         "axios": "^1.6.8",
@@ -30,9 +30,9 @@
     },
     "devDependencies": {
         "@types/hoist-non-react-statics": "^3.3.5",
-        "@types/node": "^20.11.30",
+        "@types/node": "^20.12.2",
         "@types/react": "^18.2.73",
-        "@types/react-dom": "^18.2.22",
+        "@types/react-dom": "^18.2.23",
         "@typescript-eslint/eslint-plugin": "^7.4.0",
         "@typescript-eslint/parser": "^7.4.0",
         "@vitejs/plugin-react": "^4.2.1",
@@ -50,7 +50,7 @@
         "stylelint-config-standard": "^36.0.0",
         "stylelint-order": "^6.0.4",
         "typescript": "^5.4.3",
-        "vite": "^5.2.6",
+        "vite": "^5.2.7",
         "vite-plugin-svgr": "^4.2.0"
     }
 }

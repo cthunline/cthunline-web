@@ -32,7 +32,8 @@ import {
     controlItems,
     controlSpells,
     controlTalents,
-    sortOtherSkills
+    sortOtherSkills,
+    controlEncumbrance
 } from './warhammerFantasySheet.helper';
 
 export interface WarhammerFantasySheetProps {
@@ -138,6 +139,22 @@ const WarhammerFantasySheet = ({
                     sortOnly
                 )
             );
+        },
+        []
+    );
+
+    const onEncumbranceChange = useCallback(
+        (partialChar: Partial<WarhammerFantasyCharacter>) => {
+            setCharacterData((previous) => {
+                const updatedChar = {
+                    ...previous,
+                    ...partialChar
+                };
+                return {
+                    ...updatedChar,
+                    encumbrance: controlEncumbrance(updatedChar)
+                };
+            });
         },
         []
     );
@@ -302,7 +319,12 @@ const WarhammerFantasySheet = ({
                             onChange={onPartialCharacterChange}
                             flex="3"
                         />
-                        <Encumbrance character={characterData} flex="4" />
+                        <Encumbrance
+                            readonly={readonly}
+                            character={characterData}
+                            onChange={onEncumbranceChange}
+                            flex="4"
+                        />
                     </Stack>
                     <Armour
                         readonly={readonly}

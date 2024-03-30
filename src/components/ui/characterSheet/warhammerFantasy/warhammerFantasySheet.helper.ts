@@ -95,7 +95,8 @@ export const controlEncumbrance = (
     const toughnessBonus = getCharacteristicBonus(
         character.characteristics.toughness
     );
-    const maximum = strengthBonus + toughnessBonus;
+    const { maximumBonus } = character.encumbrance;
+    const maximum = strengthBonus + toughnessBonus + maximumBonus;
     const weapons = sumEncumbrance(character.weapons);
     const armour = sumEncumbrance(character.armour);
     const trappings = sumEncumbrance(character.trappings);
@@ -105,6 +106,7 @@ export const controlEncumbrance = (
         armour,
         trappings,
         total,
+        maximumBonus,
         maximum
     };
 };
