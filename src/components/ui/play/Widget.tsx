@@ -7,15 +7,28 @@ import { focusWidget } from '../../../services/widget';
 
 import './Widget.css';
 
-declare module 'react-draggable' {
-    export interface DraggableProps {
-        children: React.ReactNode;
-    }
-}
+const triggerEvent = (el: Document | Element, event: string) => {
+    el.dispatchEvent(
+        new MouseEvent(event, {
+            bubbles: true,
+            cancelable: true
+        })
+    );
+};
 
-// workaround for react 18 compatibility
-// https://github.com/react-grid-layout/react-draggable/issues/647
-// https://github.com/react-grid-layout/react-draggable/pull/648
+// fake drag event used to move the widget in bounds
+// if its size or window size have changed
+const fakeDrag = (id: string) => {
+    const handleBar = document.querySelector(`#${id}-bar`);
+    if (handleBar) {
+        triggerEvent(handleBar, 'mousedown');
+        setTimeout(() => {
+            triggerEvent(handleBar, 'mousemove');
+            triggerEvent(handleBar, 'mouseup');
+        }, 0);
+    }
+};
+
 interface WidgetProps {
     title?: string;
     id: string;
@@ -34,6 +47,20 @@ const Widget = ({
     onClose
 }: WidgetProps) => {
     const nodeRef = React.useRef<HTMLElement>(null);
+
+    // on widget or window resize trigger a fake drag
+    // to keep widget in bounds
+    useEffect(() => {
+        if (!nodeRef.current) {
+            return () => {};
+        }
+        const resizeObserver = new ResizeObserver(() => {
+            fakeDrag(id);
+        });
+        resizeObserver.observe(document.body);
+        resizeObserver.observe(nodeRef.current);
+        return () => resizeObserver.disconnect();
+    }, [id]);
 
     useEffect(() => {
         if (nodeRef.current) {
