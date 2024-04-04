@@ -1,6 +1,6 @@
 import { callApi } from '../api';
 
-import { User } from '../../types';
+import { type User } from '../../types';
 
 interface LoginBody {
     email: string;

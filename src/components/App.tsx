@@ -1,44 +1,33 @@
-import { useMemo } from 'react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { ToastContainer } from 'react-toastify';
+import { Notifications } from '@mantine/notifications';
+import { ModalsProvider } from '@mantine/modals';
+import { MantineProvider } from '@mantine/core';
 
 import { AppProvider, useApp } from './contexts/App';
-import { DialogProvider } from './contexts/Dialog';
+import { mantineTheme } from './theme';
 import Router from './Router';
 
-import 'react-toastify/dist/ReactToastify.css';
-import './App.css';
+import 'normalize.css';
+import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
+import '@szhsin/react-menu/dist/index.css';
+import '@szhsin/react-menu/dist/theme-dark.css';
+
 import './utilities.css';
+import './App.css';
 
 const AppContent = () => {
     const { theme } = useApp();
-
-    const materialUiTheme = useMemo(
-        () =>
-            createTheme({
-                palette: {
-                    mode: theme
-                },
-                components: {
-                    MuiTab: {
-                        styleOverrides: {
-                            root: {
-                                minHeight: 48
-                            }
-                        }
-                    }
-                }
-            }),
-        [theme]
-    );
-
     return (
-        <ThemeProvider theme={materialUiTheme}>
-            <DialogProvider>
+        <MantineProvider
+            theme={mantineTheme}
+            defaultColorScheme="dark"
+            forceColorScheme={theme}
+        >
+            <ModalsProvider>
+                <Notifications />
                 <Router />
-                <ToastContainer theme={theme} />
-            </DialogProvider>
-        </ThemeProvider>
+            </ModalsProvider>
+        </MantineProvider>
     );
 };
 

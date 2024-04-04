@@ -1,10 +1,12 @@
 import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
-import { CircularProgress } from '@mui/material';
+import { Loader } from '@mantine/core';
 
+import Register from './pages/register/Register';
+import ErrorPage from './pages/error/ErrorPage';
 import { useApp } from './contexts/App';
-import Page from './layout/page/Page';
+import Login from './pages/login/Login';
 import { pages } from './router.data';
-import { Login, ErrorPage, Register } from './pages';
+import Page from './layout/Page';
 
 interface RequireAuthProps {
     children: React.ReactElement;
@@ -29,7 +31,7 @@ const Router = () => {
         return (
             <BrowserRouter>
                 <Page>
-                    <CircularProgress size={100} />
+                    <Loader size="xl" />
                 </Page>
             </BrowserRouter>
         );

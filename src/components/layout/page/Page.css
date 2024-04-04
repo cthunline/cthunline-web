@@ -1,8 +1,0 @@
-.page {
-    background: var(--palette-background);
-    color: var(--palette-font);
-}
-
-.content.with-nav {
-    height: calc(100% - 60px);
-}

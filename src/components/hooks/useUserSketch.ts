@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'react-toastify';
 
+import { toast } from '../../services/toast';
+import { useApp } from '../contexts/App';
 import {
     createSketch,
     updateSketch,
@@ -8,11 +9,8 @@ import {
     getSketch,
     getSketchs
 } from '../../services/requests/sketch';
-
-import { useApp } from '../contexts/App';
-
 import {
-    Sketch,
+    type Sketch,
     type SketchCreateBody,
     type SketchUpdateBody
 } from '../../types';

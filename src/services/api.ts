@@ -1,4 +1,4 @@
-import Axios, { AxiosHeaders, AxiosProgressEvent } from 'axios';
+import Axios, { AxiosHeaders, type AxiosProgressEvent } from 'axios';
 
 import { pathJoin } from './tools';
 

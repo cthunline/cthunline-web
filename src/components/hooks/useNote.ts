@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'react-toastify';
 
+import { type Note, type NoteCreateBody, type NoteEditBody } from '../../types';
+import { toast } from '../../services/toast';
+import { useApp } from '../contexts/App';
 import {
     createNote as createNoteRequest,
     deleteNote as deleteNoteRequest,
@@ -9,10 +11,6 @@ import {
     getNotes as getNotesRequest,
     moveNote as moveNoteRequest
 } from '../../services/requests/note';
-
-import { useApp } from '../contexts/App';
-
-import { Note, NoteCreateBody, NoteEditBody } from '../../types';
 
 interface NoteHookOptions {
     sessionId: number;

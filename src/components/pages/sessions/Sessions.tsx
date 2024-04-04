@@ -1,32 +1,24 @@
-import { useNavigate } from 'react-router-dom';
-import {
-    Box,
-    Paper,
-    Typography,
-    Button,
-    IconButton,
-    Chip,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    List,
-    ListItemButton
-} from '@mui/material';
-import { HiPlus } from 'react-icons/hi';
+import { ActionIcon, Button, Chip, Table } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { GiRollingDices } from 'react-icons/gi';
-import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { modals } from '@mantine/modals';
+import { HiPlus } from 'react-icons/hi';
+import { useMemo } from 'react';
 
-import SessionForm from './SessionForm';
-import { useApp } from '../../contexts/App';
-import { useDialog } from '../../contexts/Dialog';
-import useGame from '../../hooks/useGame';
 import useCharacter from '../../hooks/useCharacter';
 import useSession from '../../hooks/useSession';
-import { Character, SessionCreateBody } from '../../../types';
+import { toast } from '../../../services/toast';
+import { useApp } from '../../contexts/App';
+import useGame from '../../hooks/useGame';
+import Select from '../../common/Select';
+import SessionForm from './SessionForm';
+import {
+    type SelectOption,
+    type Character,
+    type SessionCreateBody
+} from '../../../types';
+import ContentBox from '../../common/ContentBox';
 
 interface CharacterSelectorProps {
     characters: Character[];
@@ -37,23 +29,33 @@ const CharacterSelector = ({
     characters,
     onSelect
 }: CharacterSelectorProps) => {
-    const { T } = useApp();
-
+    const options: SelectOption<number>[] = useMemo(
+        () =>
+            characters.map(({ id, name }) => ({
+                value: id,
+                label: name
+            })),
+        [characters]
+    );
     return (
-        <List>
-            {characters.map(({ id, name }) => (
-                <ListItemButton key={id} onClick={() => onSelect(id)}>
-                    {name.trim() || `[${T('common.unknown')}]`}
-                </ListItemButton>
-            ))}
-        </List>
+        <Select
+            valueType="number"
+            options={options}
+            onChange={(characterId: number | null) => {
+                if (characterId) {
+                    onSelect(characterId);
+                }
+            }}
+        />
     );
 };
+
+const selectCharacterModalId = 'select-character-modal';
+const createSessionModalId = 'create-session-modal';
 
 const Sessions = () => {
     const { T, user } = useApp();
     const navigate = useNavigate();
-    const { confirmDialog, openDialog, closeDialog } = useDialog();
     const { getGame } = useGame();
     const { characterList } = useCharacter({
         loadList: true
@@ -73,13 +75,15 @@ const Sessions = () => {
         if (isMaster) {
             navigate(`/play/${sessionId}`);
         } else if (charList.length) {
-            openDialog({
+            modals.open({
+                modalId: selectCharacterModalId,
+                centered: true,
                 title: T('page.sessions.selectCharacter'),
-                content: (
+                children: (
                     <CharacterSelector
                         characters={charList}
                         onSelect={(characterId) => {
-                            closeDialog();
+                            modals.close(selectCharacterModalId);
                             navigate(`/play/${sessionId}/${characterId}`);
                         }}
                     />
@@ -92,107 +96,103 @@ const Sessions = () => {
 
     const onSubmitSession = async (data: SessionCreateBody) => {
         await createSession({ data });
-        closeDialog();
+        modals.close(createSessionModalId);
     };
 
     const onCreateSession = () => {
-        openDialog({
+        modals.open({
+            modalId: createSessionModalId,
+            centered: true,
             title: T('page.sessions.newSession'),
-            content: <SessionForm onSubmit={onSubmitSession} />
+            children: <SessionForm onSubmit={onSubmitSession} />
         });
     };
 
     const onDeleteSession = (sessionId: number, name: string) => {
         const confirmText = T('page.sessions.deleteSessionConfirm', { name });
-        confirmDialog(confirmText, () => {
-            deleteSession({
-                sessionId
-            });
+        modals.openConfirmModal({
+            centered: true,
+            title: confirmText,
+            labels: {
+                confirm: T('action.confirm'),
+                cancel: T('action.cancel')
+            },
+            onConfirm: () => {
+                deleteSession({
+                    sessionId
+                });
+            }
         });
     };
 
     return (
-        <Paper
-            elevation={3}
-            className="page-list p-25 flex column start-x center-y"
-        >
-            <Typography variant="h6" gutterBottom>
-                {T('entity.sessions')}
-            </Typography>
-            <TableContainer>
+        <ContentBox>
+            <ContentBox.Title>{T('entity.sessions')}</ContentBox.Title>
+            <ContentBox.Content>
                 <Table stickyHeader>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell />
-                            <TableCell>{T('common.name')}</TableCell>
-                            <TableCell>{T('entity.game')}</TableCell>
-                            <TableCell>{T('entity.gameMaster')}</TableCell>
-                            <TableCell />
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
+                    <Table.Thead>
+                        <Table.Tr>
+                            <Table.Th />
+                            <Table.Th>{T('common.name')}</Table.Th>
+                            <Table.Th>{T('entity.game')}</Table.Th>
+                            <Table.Th>{T('entity.gameMaster')}</Table.Th>
+                            <Table.Th />
+                        </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
                         {sessionList.map(({ id, name, gameId, master }) => {
                             const isMaster = master?.id === user?.id;
                             return (
-                                <TableRow key={id}>
-                                    <TableCell>
-                                        <IconButton
-                                            size="medium"
-                                            color="primary"
+                                <Table.Tr key={id}>
+                                    <Table.Td>
+                                        <ActionIcon
                                             onClick={() =>
                                                 onJoin(gameId, id, isMaster)
                                             }
                                         >
                                             <GiRollingDices />
-                                        </IconButton>
-                                    </TableCell>
-                                    <TableCell>{name}</TableCell>
-                                    <TableCell>
-                                        {getGame(gameId)?.name}
-                                    </TableCell>
-                                    <TableCell>
+                                        </ActionIcon>
+                                    </Table.Td>
+                                    <Table.Td>{name}</Table.Td>
+                                    <Table.Td>{getGame(gameId)?.name}</Table.Td>
+                                    <Table.Td>
                                         {master?.name}
                                         {isMaster ? (
                                             <>
                                                 {' '}
                                                 <Chip
-                                                    label={T('common.itsYou')}
-                                                    size="small"
-                                                />
+                                                    size="xs"
+                                                    display="inline-block"
+                                                >
+                                                    {T('common.itsYou')}
+                                                </Chip>
                                             </>
                                         ) : null}
-                                    </TableCell>
-                                    <TableCell align="right">
+                                    </Table.Td>
+                                    <Table.Td align="right">
                                         {isMaster ? (
-                                            <IconButton
-                                                size="medium"
-                                                color="error"
+                                            <ActionIcon
+                                                color="red"
                                                 onClick={() =>
                                                     onDeleteSession(id, name)
                                                 }
                                             >
                                                 <MdOutlineDeleteOutline />
-                                            </IconButton>
+                                            </ActionIcon>
                                         ) : null}
-                                    </TableCell>
-                                </TableRow>
+                                    </Table.Td>
+                                </Table.Tr>
                             );
                         })}
-                    </TableBody>
+                    </Table.Tbody>
                 </Table>
-            </TableContainer>
-            <Box className="flex row end-x full-width mt-20">
-                <Button
-                    className="create-button"
-                    variant="contained"
-                    size="medium"
-                    startIcon={<HiPlus />}
-                    onClick={onCreateSession}
-                >
+            </ContentBox.Content>
+            <ContentBox.Footer>
+                <Button leftSection={<HiPlus />} onClick={onCreateSession}>
                     {T('action.create')}
                 </Button>
-            </Box>
-        </Paper>
+            </ContentBox.Footer>
+        </ContentBox>
     );
 };
 

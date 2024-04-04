@@ -1,11 +1,11 @@
 import { useRef, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { CircularProgress } from '@mui/material';
+import { Loader } from '@mantine/core';
 
-import { Character, CharacterData } from '../../../types';
+import CharacterSheet from '../../features/characterSheet/CharacterSheet';
+import { type Character, type CharacterData } from '../../../types';
 import { deepEqual } from '../../../services/tools';
 import useCharacter from '../../hooks/useCharacter';
-import { CharacterSheet } from '../../ui';
 
 const CharacterForm = () => {
     const { characterId: paramCharId } = useParams();
@@ -112,7 +112,7 @@ const CharacterForm = () => {
             onPortraitChange={onPortraitChange}
         />
     ) : (
-        <CircularProgress size={100} />
+        <Loader size="xl" />
     );
 };
 

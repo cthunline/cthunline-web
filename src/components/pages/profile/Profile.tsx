@@ -1,21 +1,16 @@
-import {
-    Box,
-    Paper,
-    TextField,
-    Button,
-    Typography,
-    Stack
-} from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { zodResolver } from 'mantine-form-zod-resolver';
 import { MdOutlineSave } from 'react-icons/md';
+import { useForm } from '@mantine/form';
 import z from 'zod';
+import { Box, Button, Group, Stack, TextInput, Title } from '@mantine/core';
 
-import Selector from '../../ui/selector/Selector';
+import { type SelectOption, languages } from '../../../types';
 import { ucfirst } from '../../../services/tools';
+import ContentBox from '../../common/ContentBox';
 import { useApp } from '../../contexts/App';
-import { languages } from '../../../types';
 import useUser from '../../hooks/useUser';
+import Form from '../../common/Form';
+import Select from '../../common/Select';
 
 const profileFormSchema = z
     .object({
@@ -50,23 +45,29 @@ const profileFormSchema = z
 
 type ProfileFormData = z.infer<typeof profileFormSchema>;
 
-const themeOptions = [
-    { name: 'Dark', value: 'dark' },
-    { name: 'Light', value: 'light' }
+const themeOptions: SelectOption<string>[] = [
+    { label: 'Dark', value: 'dark' },
+    { label: 'Light', value: 'light' }
 ];
 
-const languageOptions = Object.entries(languages).map(([value, name]) => ({
-    name: ucfirst(name),
-    value
-}));
+const languageOptions: SelectOption<string>[] = Object.entries(languages).map(
+    ([value, name]) => ({
+        label: ucfirst(name),
+        value
+    })
+);
 
 const Profile = () => {
     const { T, user, refreshUser } = useApp();
     const { editUser } = useUser();
 
-    const { control, handleSubmit, reset } = useForm<ProfileFormData>({
-        resolver: zodResolver(profileFormSchema),
-        defaultValues: {
+    const {
+        onSubmit: handleSubmit,
+        getInputProps,
+        setValues
+    } = useForm<ProfileFormData>({
+        validate: zodResolver(profileFormSchema),
+        initialValues: {
             theme: user?.theme ?? 'dark',
             locale: user?.locale ?? 'en',
             oldPassword: '',
@@ -94,7 +95,7 @@ const Profile = () => {
                     : {})
             }
         });
-        reset({
+        setValues({
             theme,
             locale,
             oldPassword: '',
@@ -105,113 +106,55 @@ const Profile = () => {
     };
 
     return (
-        <Paper elevation={3} className="p-25">
-            <Stack
-                direction="column"
-                width="25rem"
-                gap="1rem"
-                component="form"
-                onSubmit={handleSubmit(onFormSubmit)}
-            >
-                <Stack direction="row" width="100%">
-                    <Box className="half mr-10">
-                        <Typography
-                            className="full-width"
-                            variant="h6"
-                            gutterBottom
-                        >
-                            {T('common.theme')}
-                        </Typography>
-                        <Controller
-                            name="theme"
-                            control={control}
-                            render={({ field, fieldState: { error } }) => (
-                                <Selector
-                                    {...field}
-                                    className="form-input"
+        <ContentBox maw="25rem">
+            <ContentBox.Content>
+                <Form onSubmit={handleSubmit(onFormSubmit)}>
+                    <Stack w="100%" gap="1rem">
+                        <Group w="100%" gap="0.5rem">
+                            <Box flex={0.5}>
+                                <Select
+                                    {...getInputProps('theme')}
+                                    valueType="string"
                                     options={themeOptions}
-                                    error={!!error}
+                                    label={T('common.theme')}
                                 />
-                            )}
-                        />
-                    </Box>
-                    <Box className="half ml-10">
-                        <Typography
-                            className="full-width"
-                            variant="h6"
-                            gutterBottom
-                        >
-                            {T('common.language')}
-                        </Typography>
-                        <Controller
-                            name="locale"
-                            control={control}
-                            render={({ field, fieldState: { error } }) => (
-                                <Selector
-                                    {...field}
-                                    className="form-input"
+                            </Box>
+                            <Box flex={0.5}>
+                                <Select
+                                    {...getInputProps('locale')}
+                                    valueType="string"
                                     options={languageOptions}
-                                    error={!!error}
+                                    label={T('common.language')}
                                 />
-                            )}
-                        />
-                    </Box>
-                </Stack>
-                <Typography className="full-width" variant="h6" gutterBottom>
-                    {T('page.profile.changePassword')}
-                </Typography>
-                <Controller
-                    name="oldPassword"
-                    control={control}
-                    render={({ field, fieldState: { error } }) => (
-                        <TextField
-                            {...field}
-                            className="form-input full-width"
+                            </Box>
+                        </Group>
+                        <Title order={6}>
+                            {T('page.profile.changePassword')}
+                        </Title>
+                        <TextInput
+                            {...getInputProps('oldPassword')}
+                            type="password"
                             label={T(`page.profile.oldPassword`)}
-                            type="password"
-                            error={!!error}
                         />
-                    )}
-                />
-                <Controller
-                    name="password"
-                    control={control}
-                    render={({ field, fieldState: { error } }) => (
-                        <TextField
-                            {...field}
-                            className="form-input full-width"
-                            autoComplete="new-password"
+                        <TextInput
+                            {...getInputProps('password')}
+                            type="password"
                             label={T(`page.profile.newPassword`)}
-                            type="password"
-                            error={!!error}
-                        />
-                    )}
-                />
-                <Controller
-                    name="passwordConfirm"
-                    control={control}
-                    render={({ field, fieldState: { error } }) => (
-                        <TextField
-                            {...field}
-                            className="form-input full-width"
                             autoComplete="new-password"
-                            label={T(`page.profile.newPasswordConfirm`)}
-                            type="password"
-                            error={!!error}
                         />
-                    )}
-                />
-                <Button
-                    className="form-button"
-                    type="submit"
-                    variant="contained"
-                    size="large"
-                    startIcon={<MdOutlineSave />}
-                >
-                    {T('action.save')}
-                </Button>
-            </Stack>
-        </Paper>
+                        <TextInput
+                            {...getInputProps('passwordConfirm')}
+                            type="password"
+                            label={T(`page.profile.newPasswordConfirm`)}
+                            autoComplete="new-password"
+                        />
+                        <Button type="submit" leftSection={<MdOutlineSave />}>
+                            {T('action.save')}
+                        </Button>
+                    </Stack>
+                </Form>
+            </ContentBox.Content>
+        </ContentBox>
     );
 };
 

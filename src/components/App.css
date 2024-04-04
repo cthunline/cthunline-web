@@ -1,15 +1,37 @@
+/* structure */
+
+html,
+body {
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}
+
+/* global styles */
+
+body {
+    background-color: var(--palette-background);
+    font-family: Verdana, Arial, sans-serif;
+}
+
 /* global variables */
 
-:root .page.dark {
+:root[data-mantine-color-scheme='dark'] {
     --palette-background: #111416;
     --palette-background-secondary: #1a1d1f;
     --palette-background-tertiary: #454545;
-    --palette-background-quaternary: #888a8b;
+    --palette-background-quaternary: #030303;
     --palette-font: #fff;
     --palette-primary: #90caf9;
 }
 
-:root .page.light {
+:root[data-mantine-color-scheme='light'] {
     --palette-background: #f8f9fa;
     --palette-background-secondary: #e9ecef;
     --palette-background-tertiary: #dee2e6;
@@ -34,46 +56,3 @@
     --palette-gray: #888a8b;
     --palette-darkgray: #454545;
 }
-
-/* structure */
-
-html,
-body {
-    box-sizing: border-box;
-    font-family: Roboto, Helvetica, Arial, sans-serif;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-}
-
-html * {
-    box-sizing: inherit;
-}
-
-#root {
-    height: 100%;
-    width: 100%;
-}
-
-/* stylelint-disable selector-class-pattern */
-
-/* material ui rules & overrides */
-#root .MuiTextField-root input[readonly] + fieldset,
-#root .MuiTextField-root:focus input[readonly] + fieldset,
-#root .MuiTextField-root:hover input[readonly] + fieldset,
-#root .MuiTextField-root textarea[readonly] + textarea[readonly] + fieldset,
-#root
-    .MuiTextField-root:focus
-    textarea[readonly]
-    + textarea[readonly]
-    + fieldset,
-#root
-    .MuiTextField-root:hover
-    textarea[readonly]
-    + textarea[readonly]
-    + fieldset {
-    border: 1px solid rgb(255 255 255 / 5%);
-}
-
-/* stylelint-enable selector-class-pattern */

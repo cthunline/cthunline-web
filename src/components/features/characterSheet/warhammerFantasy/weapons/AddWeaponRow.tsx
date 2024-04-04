@@ -1,0 +1,132 @@
+import { type WarhammerFantasyWeapon } from '@cthunline/games';
+import { ActionIcon, Box, Group, Stack } from '@mantine/core';
+import { zodResolver } from 'mantine-form-zod-resolver';
+import { FiPlusCircle } from 'react-icons/fi';
+import { useForm } from '@mantine/form';
+import z from 'zod';
+
+import TextInput from '../../../../common/TextInput';
+import { useApp } from '../../../../contexts/App';
+import Form from '../../../../common/Form';
+
+const weaponFormSchema = z.object({
+    name: z.string().min(1),
+    group: z.string(),
+    encumbrance: z.preprocess((v) => Number(v), z.number().int()),
+    rangeReach: z.string(),
+    damage: z.string(),
+    qualities: z.string()
+});
+
+type WeaponFormData = z.infer<typeof weaponFormSchema>;
+
+const formId = 'weapon-add-form';
+
+type AddWeaponRowProps = {
+    onCreate: (weapon: WarhammerFantasyWeapon) => void;
+};
+
+const AddWeaponRow = ({ onCreate }: AddWeaponRowProps) => {
+    const { T } = useApp();
+
+    const {
+        onSubmit: handleSubmit,
+        getInputProps,
+        reset
+    } = useForm<WeaponFormData>({
+        validate: zodResolver(weaponFormSchema),
+        initialValues: {
+            name: '',
+            group: '',
+            encumbrance: 0,
+            rangeReach: '',
+            damage: '',
+            qualities: ''
+        }
+    });
+
+    const onFormSubmit = async (weapon: WeaponFormData) => {
+        onCreate(weapon);
+        reset();
+    };
+
+    return (
+        <Group w="100%" gap="0.25rem">
+            <Stack w="100%" gap="0.25rem">
+                <Group w="100%" gap="0.25rem">
+                    <Form id={formId} onSubmit={handleSubmit(onFormSubmit)} />
+                    <Box flex="6 0">
+                        <TextInput
+                            {...getInputProps('name')}
+                            variant="contained"
+                            w="100%"
+                            form={formId}
+                            label={T('game.warhammerFantasy.weapon.name')}
+                            size="sm"
+                        />
+                    </Box>
+                    <Box flex="3 0">
+                        <TextInput
+                            {...getInputProps('group')}
+                            variant="contained"
+                            w="100%"
+                            form={formId}
+                            label={T('game.warhammerFantasy.weapon.group')}
+                            size="sm"
+                        />
+                    </Box>
+                    <Box flex="2 0">
+                        <TextInput
+                            {...getInputProps('encumbrance')}
+                            variant="contained"
+                            w="100%"
+                            form={formId}
+                            ta="center"
+                            label={T(
+                                'game.warhammerFantasy.weapon.encumbrance'
+                            )}
+                            size="sm"
+                        />
+                    </Box>
+                    <Box flex="3 0">
+                        <TextInput
+                            {...getInputProps('rangeReach')}
+                            variant="contained"
+                            w="100%"
+                            form={formId}
+                            label={T('game.warhammerFantasy.weapon.rangeReach')}
+                            size="sm"
+                        />
+                    </Box>
+                </Group>
+                <Group w="100%" gap="0.25rem">
+                    <Box flex="3 0">
+                        <TextInput
+                            {...getInputProps('damage')}
+                            variant="contained"
+                            w="100%"
+                            form={formId}
+                            label={T('game.warhammerFantasy.weapon.damage')}
+                            size="sm"
+                        />
+                    </Box>
+                    <Box flex="11 0">
+                        <TextInput
+                            {...getInputProps('qualities')}
+                            variant="contained"
+                            w="100%"
+                            form={formId}
+                            label={T('game.warhammerFantasy.weapon.qualities')}
+                            size="sm"
+                        />
+                    </Box>
+                </Group>
+            </Stack>
+            <ActionIcon type="submit" form={formId}>
+                <FiPlusCircle />
+            </ActionIcon>
+        </Group>
+    );
+};
+
+export default AddWeaponRow;

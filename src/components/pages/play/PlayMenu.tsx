@@ -1,13 +1,11 @@
-import { Box, Tooltip } from '@mui/material';
+import { MdOutlineContactPage, MdLogout, MdDraw } from 'react-icons/md';
+import { ActionIcon, Stack, Tooltip } from '@mantine/core';
 import { GiRollingDiceCup } from 'react-icons/gi';
 import { HiMusicNote } from 'react-icons/hi';
 import { CgNotes } from 'react-icons/cg';
-import { MdOutlineContactPage, MdLogout, MdDraw } from 'react-icons/md';
 
 import { useApp } from '../../contexts/App';
 import { WidgetType } from '../../../types';
-
-import './PlayMenu.css';
 
 interface PlayMenuProps {
     isMaster: boolean;
@@ -69,16 +67,11 @@ interface PlayMenuItemProps {
 const PlayMenuItem = ({ icon, textKey, onClick }: PlayMenuItemProps) => {
     const { T } = useApp();
     return (
-        <Box className="play-menu-item flex center">
-            <Tooltip
-                placement="right"
-                title={<div className="play-menu-tooltip">{T(textKey)}</div>}
-            >
-                <Box className="clickable" onClick={onClick}>
-                    {icon}
-                </Box>
-            </Tooltip>
-        </Box>
+        <Tooltip label={T(textKey)} position="right">
+            <ActionIcon variant="subtle" size="xl" onClick={onClick}>
+                {icon}
+            </ActionIcon>
+        </Tooltip>
     );
 };
 
@@ -88,7 +81,7 @@ const PlayMenu = ({ isMaster, onWidgetOpen, onExit }: PlayMenuProps) => {
             (isMaster && !playerOnly) || (!isMaster && !adminOnly)
     );
     return (
-        <Box className="play-menu flex column full-height">
+        <Stack w="4rem" h="100%">
             {items.map(({ icon, textKey, widget }) => (
                 <PlayMenuItem
                     key={`play-menu-${widget}`}
@@ -102,7 +95,7 @@ const PlayMenu = ({ isMaster, onWidgetOpen, onExit }: PlayMenuProps) => {
                 textKey="action.exit"
                 onClick={() => onExit()}
             />
-        </Box>
+        </Stack>
     );
 };
 

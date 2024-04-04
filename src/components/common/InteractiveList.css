@@ -1,0 +1,17 @@
+.interactive-list-item {
+    isolation: isolate;
+    position: relative;
+}
+
+.interactive-list-item:hover::before {
+    background-color: var(--palette-primary);
+    border-radius: 0.25rem;
+    content: '';
+    height: 100%;
+    left: 0;
+    opacity: 0.075;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}

@@ -1,9 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'react-toastify';
 
 import { getConfiguration } from '../../../services/requests/configuration';
-
-import { Configuration } from '../../../types';
+import { type Configuration } from '../../../types';
+import { toast } from '../../../services/toast';
 
 export interface ConfigurationHookExport {
     configuration: Configuration;

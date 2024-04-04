@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'react-toastify';
 
+import { toast } from '../../services/toast';
+import { useApp } from '../contexts/App';
 import {
     getUsers as getUsersRequest,
     createUser as createUserRequest,
@@ -8,14 +9,11 @@ import {
     generateInvitationCode as generateInvitationCodeRequest,
     registerUser as registerUserRequest
 } from '../../services/requests/user';
-
-import { useApp } from '../contexts/App';
-
 import {
-    User,
-    UserCreateBody,
-    UserEditBody,
-    UserRegisterBody
+    type User,
+    type UserCreateBody,
+    type UserEditBody,
+    type UserRegisterBody
 } from '../../types';
 
 interface UserHookOptions {

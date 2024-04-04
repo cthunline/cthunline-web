@@ -1,16 +1,18 @@
 import { useState, useEffect, useRef } from 'react';
 
+import { sketchItemContextMenuId } from '../../features/play/sketch/SketchItemContextMenu';
+import { findById, findIndexById, isMainClick } from '../../../services/tools';
 import { usePlay } from '../../contexts/Play';
 import {
-    SketchImageData,
-    SketchMovingItemData,
-    SketchResizingItemData,
-    CardinalDirection,
+    type SketchImageData,
+    type SketchMovingItemData,
+    type SketchResizingItemData,
+    type CardinalDirection,
     SketchEventType,
-    SketchTokenData,
+    type SketchTokenData,
     SketchItemType,
     TooltipPlacement,
-    SketchEvent
+    type SketchEvent
 } from '../../../types';
 import {
     getMouseEventSvgCoordinates,
@@ -19,7 +21,6 @@ import {
     forwardImage,
     backwardImage
 } from '../../../services/sketch';
-import { findById, findIndexById, isMainClick } from '../../../services/tools';
 
 // this hook holds states and event handlers for sketch items (images and tokens)
 // it is meant to be used by the sketch component and sub components
@@ -255,8 +256,10 @@ const useItems = (
                 const element = e.currentTarget.closest('svg');
                 // check if we click on a context menu or context menu backdrop
                 const isContextMenu =
-                    (e.target as Element).classList.contains('context-menu') ||
-                    !!(e.target as Element).closest('.context-menu');
+                    (e.target as Element).id === sketchItemContextMenuId ||
+                    !!(e.target as Element).closest(
+                        `#${sketchItemContextMenuId}`
+                    );
                 if (element && !isContextMenu) {
                     itemHasMovedOfResized.current = false;
                     // gets item position

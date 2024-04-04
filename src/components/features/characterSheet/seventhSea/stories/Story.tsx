@@ -1,0 +1,106 @@
+import {
+    ActionIcon,
+    Box,
+    Group,
+    Stack,
+    Textarea,
+    type StackProps
+} from '@mantine/core';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { type SeventhSeaStory } from '@cthunline/games';
+import { FiPlusCircle } from 'react-icons/fi';
+
+import FieldLayout from '../../generic/fieldLayout/FieldLayout';
+import { useApp } from '../../../../contexts/App';
+import { GameId } from '../../../../../types';
+import { storyFields } from '../fields';
+
+interface StoryProps extends Pick<StackProps, 'flex'> {
+    index: number;
+    story: SeventhSeaStory;
+    readonly: boolean;
+    onChange: (data: SeventhSeaStory) => void;
+}
+
+const Story = ({ index, story, readonly, onChange }: StoryProps) => {
+    const { T } = useApp();
+    return (
+        <Stack gap="1rem">
+            <FieldLayout<SeventhSeaStory>
+                gameId={GameId.seventhSea}
+                fields={storyFields}
+                textSectionKey="story"
+                data={story}
+                readonly={readonly}
+                onChange={(data) =>
+                    onChange({
+                        ...story,
+                        ...data
+                    })
+                }
+            />
+            <Group gap="1rem">
+                {T('game.seventhSea.story.steps')}
+                {!readonly && (
+                    <Box component="span" className="ml-5">
+                        <ActionIcon
+                            onClick={() => {
+                                onChange({
+                                    ...story,
+                                    steps: [...story.steps, '']
+                                });
+                            }}
+                        >
+                            <FiPlusCircle />
+                        </ActionIcon>
+                    </Box>
+                )}
+            </Group>
+            {story.steps.map((step, idx) => (
+                <Group
+                    key={`story-${index.toString()}-step-${idx.toString()}`}
+                    w="100%"
+                    gap="1rem"
+                >
+                    <Box flex="1 0">
+                        <Textarea
+                            w="100%"
+                            rows={3}
+                            readOnly={readonly}
+                            size="sm"
+                            label={(idx + 1).toString()}
+                            value={step}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLTextAreaElement>
+                            ) => {
+                                onChange({
+                                    ...story,
+                                    steps: story.steps.map((st, i) =>
+                                        i === idx ? e.target.value : st
+                                    )
+                                });
+                            }}
+                        />
+                    </Box>
+                    {!readonly && (
+                        <ActionIcon
+                            color="red"
+                            onClick={() => {
+                                onChange({
+                                    ...story,
+                                    steps: story.steps.filter(
+                                        (_st, i) => i !== idx
+                                    )
+                                });
+                            }}
+                        >
+                            <MdOutlineDeleteOutline />
+                        </ActionIcon>
+                    )}
+                </Group>
+            ))}
+        </Stack>
+    );
+};
+
+export default Story;

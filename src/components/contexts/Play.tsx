@@ -1,3 +1,4 @@
+import { io } from 'socket.io-client';
 import {
     createContext,
     useState,
@@ -7,32 +8,31 @@ import {
     useRef,
     useMemo
 } from 'react';
-import { io } from 'socket.io-client';
-import { toast } from 'react-toastify';
 
-import { useApp } from './App';
+import { type User, type PlaySocket } from '../../types';
 import useSession from '../hooks/useSession';
+import { toast } from '../../services/toast';
+import { useApp } from './App';
 import useSketch, {
-    SketchHookExport,
+    type SketchHookExport,
     defaultSketchHookExport
 } from '../hooks/play/useSketch';
 import useLogs, {
-    LogsHookExport,
+    type LogsHookExport,
     defaultLogsHookExport
 } from '../hooks/play/useLogs';
 import useAudio, {
-    AudioHookExport,
+    type AudioHookExport,
     defaultAudioHookExport
 } from '../hooks/play/useAudio';
 import useDice, {
-    DiceHookExport,
+    type DiceHookExport,
     defaultDiceHookExport
 } from '../hooks/play/useDice';
 import useSessionUsers, {
-    SessionUsersHookExport,
+    type SessionUsersHookExport,
     defaultSessionUsersHookExport
 } from '../hooks/play/useSessionUsers';
-import { User, PlaySocket } from '../../types';
 
 interface PlayProviderProps {
     children: JSX.Element | JSX.Element[];

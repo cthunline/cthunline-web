@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-import { PlaySocket, AudioData, Asset } from '../../../types';
+import { type PlaySocket, type AudioData, type Asset } from '../../../types';
 
 export interface AudioHookExport {
     audioData: AudioData | null;

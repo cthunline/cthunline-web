@@ -1,30 +1,19 @@
-import {
-    Box,
-    Paper,
-    Typography,
-    Button,
-    Switch,
-    Chip,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
-} from '@mui/material';
-import { HiPlus } from 'react-icons/hi';
-import { MdCheck } from 'react-icons/md';
+import { Button, Chip, Switch, Table } from '@mantine/core';
 import { FaRegHandshake } from 'react-icons/fa';
+import { MdCheck } from 'react-icons/md';
+import { modals } from '@mantine/modals';
+import { HiPlus } from 'react-icons/hi';
 
+import UserForm, { type UserSubmitData } from '../../features/user/UserForm';
+import ContentBox from '../../common/ContentBox';
 import { useApp } from '../../contexts/App';
-import { useDialog } from '../../contexts/Dialog';
 import useUser from '../../hooks/useUser';
 import Invitation from './Invitation';
-import UserForm, { UserSubmitData } from '../../ui/userForm/UserForm';
+
+const createUserModalId = 'create-user-modal';
 
 const Users = () => {
     const { T, configuration, user } = useApp();
-    const { openDialog, closeDialog } = useDialog();
     const { userList, editUser, createUser } = useUser({
         loadList: true,
         listDisabled: true
@@ -32,68 +21,65 @@ const Users = () => {
 
     const onSubmit = async (data: UserSubmitData) => {
         await createUser({ data });
-        closeDialog();
+        modals.close(createUserModalId);
     };
 
     const onCreate = () => {
-        openDialog({
+        modals.open({
+            modalId: createUserModalId,
+            centered: true,
             title: T('page.users.newUser'),
-            content: <UserForm onSubmit={onSubmit} />
+            children: <UserForm onSubmit={onSubmit} />
         });
     };
 
     const onInvite = () => {
-        openDialog({
+        modals.open({
+            centered: true,
             title: T('user.invitationCode'),
-            content: <Invitation />
+            children: <Invitation />
         });
     };
 
     return (
-        <Paper
-            elevation={3}
-            className="page-list p-25 flex column start-x center-y"
-        >
-            <Typography variant="h6" gutterBottom>
-                {T('entity.users')}
-            </Typography>
-            <TableContainer>
+        <ContentBox>
+            <ContentBox.Title>{T('entity.users')}</ContentBox.Title>
+            <ContentBox.Content>
                 <Table stickyHeader>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>{T('common.name')}</TableCell>
-                            <TableCell>{T('user.email')}</TableCell>
-                            <TableCell>{T('user.admin')}</TableCell>
-                            <TableCell>{T('status.enabled')}</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
+                    <Table.Thead>
+                        <Table.Tr>
+                            <Table.Th>{T('common.name')}</Table.Th>
+                            <Table.Th>{T('user.email')}</Table.Th>
+                            <Table.Th>{T('user.admin')}</Table.Th>
+                            <Table.Th>{T('status.enabled')}</Table.Th>
+                        </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
                         {userList.map(
                             ({ id, name, email, isAdmin, isEnabled }) => {
                                 const itsYou = id === user?.id;
                                 return (
-                                    <TableRow key={id}>
-                                        <TableCell>
+                                    <Table.Tr key={id}>
+                                        <Table.Td>
                                             {name}
                                             {itsYou ? (
                                                 <>
                                                     {' '}
                                                     <Chip
-                                                        label={T(
-                                                            'common.itsYou'
-                                                        )}
-                                                        size="small"
-                                                    />
+                                                        size="xs"
+                                                        display="inline-block"
+                                                    >
+                                                        {T('common.itsYou')}
+                                                    </Chip>
                                                 </>
                                             ) : null}
-                                        </TableCell>
-                                        <TableCell>{email}</TableCell>
-                                        <TableCell>
+                                        </Table.Td>
+                                        <Table.Td>{email}</Table.Td>
+                                        <Table.Td>
                                             {itsYou ? (
                                                 <MdCheck size={25} />
                                             ) : (
                                                 <Switch
-                                                    size="small"
                                                     checked={isAdmin}
                                                     onChange={(
                                                         e: React.ChangeEvent<HTMLInputElement>
@@ -102,20 +88,20 @@ const Users = () => {
                                                             userId: id,
                                                             data: {
                                                                 isAdmin:
-                                                                    e.target
+                                                                    e
+                                                                        .currentTarget
                                                                         .checked
                                                             }
                                                         })
                                                     }
                                                 />
                                             )}
-                                        </TableCell>
-                                        <TableCell>
+                                        </Table.Td>
+                                        <Table.Td>
                                             {itsYou ? (
                                                 <MdCheck size={25} />
                                             ) : (
                                                 <Switch
-                                                    size="small"
                                                     checked={isEnabled}
                                                     onChange={(
                                                         e: React.ChangeEvent<HTMLInputElement>
@@ -124,44 +110,34 @@ const Users = () => {
                                                             userId: id,
                                                             data: {
                                                                 isEnabled:
-                                                                    e.target
+                                                                    e
+                                                                        .currentTarget
                                                                         .checked
                                                             }
                                                         })
                                                     }
                                                 />
                                             )}
-                                        </TableCell>
-                                    </TableRow>
+                                        </Table.Td>
+                                    </Table.Tr>
                                 );
                             }
                         )}
-                    </TableBody>
+                    </Table.Tbody>
                 </Table>
-            </TableContainer>
-            <Box className="flex row end-x full-width mt-20">
+            </ContentBox.Content>
+            <ContentBox.Footer>
                 {configuration.registrationEnabled &&
                 configuration.invitationEnabled ? (
-                    <Button
-                        className="mr-10"
-                        variant="contained"
-                        size="medium"
-                        startIcon={<FaRegHandshake />}
-                        onClick={onInvite}
-                    >
+                    <Button leftSection={<FaRegHandshake />} onClick={onInvite}>
                         {T('action.invite')}
                     </Button>
                 ) : null}
-                <Button
-                    variant="contained"
-                    size="medium"
-                    startIcon={<HiPlus />}
-                    onClick={onCreate}
-                >
+                <Button leftSection={<HiPlus />} onClick={onCreate}>
                     {T('action.create')}
                 </Button>
-            </Box>
-        </Paper>
+            </ContentBox.Footer>
+        </ContentBox>
     );
 };
 

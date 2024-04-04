@@ -4,7 +4,7 @@ import { getGames } from '../../services/requests/game';
 
 import { useApp } from '../contexts/App';
 
-import { Game } from '../../types';
+import { type Game } from '../../types';
 
 const useGame = () => {
     const { handleApiError } = useApp();

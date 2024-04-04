@@ -1,10 +1,10 @@
 import { callApi } from '../api';
 
 import {
-    User,
-    UserCreateBody,
-    UserEditBody,
-    UserRegisterBody
+    type User,
+    type UserCreateBody,
+    type UserEditBody,
+    type UserRegisterBody
 } from '../../types';
 
 export const getUsers = async (includeDisabled?: boolean) => {

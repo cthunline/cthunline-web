@@ -1,6 +1,6 @@
 import { callApi } from '../api';
 
-import { Game } from '../../types';
+import { type Game } from '../../types';
 
 export const getGames = async () => {
     const { games } = await callApi<{ games: Game[] }>({

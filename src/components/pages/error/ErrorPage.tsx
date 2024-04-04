@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material';
 import { GiWizardFace } from 'react-icons/gi';
+import { Stack, Title } from '@mantine/core';
 
 import { useApp } from '../../contexts/App';
 
@@ -26,15 +26,11 @@ const ErrorPage = ({ type }: ErrorProps) => {
     const { title, message } = errors[type];
 
     return (
-        <div className="flex column center">
+        <Stack align="center">
             <GiWizardFace size={100} className="mb-20" />
-            <Typography variant="h4" gutterBottom>
-                {title}
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-                {message}
-            </Typography>
-        </div>
+            <Title order={4}>{title}</Title>
+            <Title order={5}>{message}</Title>
+        </Stack>
     );
 };
 

@@ -1,4 +1,4 @@
-import { Locale } from '../types';
+import { type Locale } from '../types';
 
 import enTranslations from './en.json';
 import enCoCTranslations from './games/callOfCthulhu/en.json';

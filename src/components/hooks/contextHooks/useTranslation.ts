@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react';
 
 import { ucfirst } from '../../../services/tools';
 
-import { Locale } from '../../../types';
+import { type Locale } from '../../../types';
 
 import translations from '../../../lang';
 

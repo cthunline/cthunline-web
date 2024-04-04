@@ -1,14 +1,13 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { toast } from 'react-toastify';
 
 import { getUser } from '../../../services/requests/user';
+import { toast } from '../../../services/toast';
+import { type User } from '../../../types';
 import {
     login as loginRequest,
     logout as logoutRequest,
     checkAuth as checkAuthRequest
 } from '../../../services/requests/auth';
-
-import { User } from '../../../types';
 
 interface AuthData {
     isLoading: boolean;

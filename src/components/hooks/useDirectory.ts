@@ -1,16 +1,18 @@
 import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'react-toastify';
 
+import { toast } from '../../services/toast';
+import { useApp } from '../contexts/App';
+import {
+    type Directory,
+    type DirectoryCreateBody,
+    type DirectoryEditBody
+} from '../../types';
 import {
     createDirectory as createDirectoryRequest,
     deleteDirectory as deleteDirectoryRequest,
     editDirectory as editDirectoryRequest,
     getDirectories as getDirectoriesRequest
 } from '../../services/requests/directory';
-
-import { useApp } from '../contexts/App';
-
-import { Directory, DirectoryCreateBody, DirectoryEditBody } from '../../types';
 
 interface DirectoryHookOptions {
     loadList?: boolean;

@@ -1,0 +1,3 @@
+.death-spiral:not(:hover) .death-spiral-clear {
+    display: none;
+}

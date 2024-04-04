@@ -1,15 +1,15 @@
-import { useState, SetStateAction } from 'react';
+import { useState, type SetStateAction } from 'react';
 
 import {
-    PlaySocket,
-    SketchData,
-    SketchEvent,
+    type PlaySocket,
+    type SketchData,
+    type SketchEvent,
     SketchEventType,
-    SketchImageData,
-    SketchTokenData,
-    SessionUser,
-    SketchTokenAttachedData,
-    Color,
+    type SketchImageData,
+    type SketchTokenData,
+    type SessionUser,
+    type SketchTokenAttachedData,
+    type Color,
     TooltipPlacement
 } from '../../../types';
 import {

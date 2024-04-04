@@ -1,12 +1,12 @@
 import {
-    Color,
+    type Color,
     colors,
-    SketchImageData,
-    SketchCoordinates,
-    SketchSize,
+    type SketchImageData,
+    type SketchCoordinates,
+    type SketchSize,
     CardinalDirection,
-    SketchResizingItemData,
-    SketchTokenData,
+    type SketchResizingItemData,
+    type SketchTokenData,
     TooltipPlacement
 } from '../types';
 import { randomItem } from './tools';

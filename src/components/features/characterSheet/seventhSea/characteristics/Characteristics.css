@@ -1,0 +1,3 @@
+.characteristic:not(:hover) .characteristic-clear {
+    display: none;
+}

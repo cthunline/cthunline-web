@@ -1,6 +1,10 @@
 import { callApi } from '../api';
 
-import { Session, SessionCreateBody, SessionEditBody } from '../../types';
+import {
+    type Session,
+    type SessionCreateBody,
+    type SessionEditBody
+} from '../../types';
 
 export const getSessions = async () => {
     const { sessions } = await callApi<{ sessions: Session[] }>({

@@ -1,15 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'react-toastify';
 
+import { type Asset, type AssetCreateBody } from '../../types';
+import { toast } from '../../services/toast';
+import { useApp } from '../contexts/App';
 import {
     deleteAsset as deleteAssetRequest,
     getAssets as getAssetsRequest,
     uploadAssets as uploadAssetsRequest
 } from '../../services/requests/asset';
-
-import { useApp } from '../contexts/App';
-
-import { Asset, AssetCreateBody } from '../../types';
 
 interface AssetHookOptions {
     loadList?: boolean;

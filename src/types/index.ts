@@ -1,10 +1,10 @@
-import { Socket } from 'socket.io-client';
+import { type Socket } from 'socket.io-client';
 import {
-    CoCCharacter,
-    DnD5Character,
-    SeventhSeaCharacter,
-    SWD6Character,
-    WarhammerFantasyCharacter
+    type CoCCharacter,
+    type DnD5Character,
+    type SeventhSeaCharacter,
+    type SWD6Character,
+    type WarhammerFantasyCharacter
 } from '@cthunline/games';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ theme
@@ -49,6 +49,19 @@ export const colors = [
 ] as const;
 
 export type Color = (typeof colors)[number];
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ select
+
+export interface SelectOption<ValueType extends string | number = number> {
+    value: ValueType;
+    label: string;
+    disabled?: boolean;
+}
+
+export interface SelectOptionGroup<ValueType extends string | number = number> {
+    group: string;
+    items: SelectOption<ValueType>[];
+}
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ user
 

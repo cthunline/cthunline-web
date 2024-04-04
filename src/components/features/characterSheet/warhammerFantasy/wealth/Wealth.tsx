@@ -1,0 +1,43 @@
+import { GiCash } from 'react-icons/gi';
+import { Stack } from '@mantine/core';
+import {
+    type WarhammerFantasyCharacter,
+    type WarhammerFantasyWealth
+} from '@cthunline/games';
+
+import SectionTitle from '../../generic/sectionTitle/SectionTitle';
+import FieldLayout from '../../generic/fieldLayout/FieldLayout';
+import { useApp } from '../../../../contexts/App';
+import { GameId } from '../../../../../types';
+import { wealthFields } from '../fields';
+
+export interface WealthProps {
+    readonly: boolean;
+    character: WarhammerFantasyCharacter;
+    onChange: (partialChar: Pick<WarhammerFantasyCharacter, 'wealth'>) => void;
+    flex: string | number;
+}
+
+const Wealth = ({ readonly, character, onChange, flex }: WealthProps) => {
+    const { T } = useApp();
+    return (
+        <Stack gap="0.5rem" flex={flex}>
+            <SectionTitle
+                iconBefore={<GiCash size={20} />}
+                text={T('game.warhammerFantasy.common.wealth')}
+            />
+            <FieldLayout<WarhammerFantasyWealth>
+                gameId={GameId.warhammerFantasy}
+                fields={wealthFields}
+                textSectionKey="wealth"
+                data={character.wealth}
+                readonly={readonly}
+                onChange={(wealth: WarhammerFantasyWealth) =>
+                    onChange({ wealth })
+                }
+            />
+        </Stack>
+    );
+};
+
+export default Wealth;

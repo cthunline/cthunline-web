@@ -1,5 +1,5 @@
-import { Typography } from '@mui/material';
 import { GiWizardFace } from 'react-icons/gi';
+import { Title } from '@mantine/core';
 
 import { useApp } from '../../contexts/App';
 
@@ -9,9 +9,7 @@ const Home = () => {
     return (
         <div className="flex column center">
             <GiWizardFace size={100} className="mb-20" />
-            <Typography variant="h4" gutterBottom>
-                {T('page.home.welcome')}
-            </Typography>
+            <Title order={4}>{T('page.home.welcome')}</Title>
         </div>
     );
 };

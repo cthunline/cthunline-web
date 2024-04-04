@@ -1,7 +1,6 @@
+import { ActionIcon, CopyButton, Group, Input, Loader } from '@mantine/core';
 import { useState, useEffect, useRef } from 'react';
-import { Box, TextField, CircularProgress } from '@mui/material';
-import { toast } from 'react-toastify';
-import { MdContentCopy } from 'react-icons/md';
+import { MdCheck, MdContentCopy } from 'react-icons/md';
 
 import useUser from '../../hooks/useUser';
 
@@ -9,13 +8,6 @@ const Invitation = () => {
     const { generateInvitationCode } = useUser();
 
     const [invitationCode, setInvitationCode] = useState<string>();
-
-    const onCopy = () => {
-        if (invitationCode) {
-            navigator.clipboard.writeText(invitationCode);
-            toast.success('Invitation code copied to clipboard');
-        }
-    };
 
     const initialGeneration = useRef<boolean>(false);
     useEffect(() => {
@@ -29,25 +21,23 @@ const Invitation = () => {
     }, [generateInvitationCode]);
 
     if (!invitationCode) {
-        return <CircularProgress />;
+        return <Loader />;
     }
 
     return (
-        <Box className="flex row center-y">
-            <TextField
-                className="grow"
-                value={invitationCode}
-                size="small"
-                InputProps={{
-                    readOnly: true
-                }}
-            />
-            <MdContentCopy
-                className="clickable ml-10"
-                size={25}
-                onClick={onCopy}
-            />
-        </Box>
+        <Group justify="center">
+            <Input value={invitationCode} readOnly flex={1} />
+            <CopyButton value={invitationCode}>
+                {({ copied, copy }) => (
+                    <ActionIcon
+                        onClick={copy}
+                        color={copied ? 'green' : undefined}
+                    >
+                        {copied ? <MdCheck /> : <MdContentCopy />}
+                    </ActionIcon>
+                )}
+            </CopyButton>
+        </Group>
     );
 };
 

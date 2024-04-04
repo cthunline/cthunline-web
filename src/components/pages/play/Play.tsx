@@ -1,31 +1,26 @@
-import { useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Box, CircularProgress } from '@mui/material';
+import { Group, Loader, Stack } from '@mantine/core';
+import { useRef, useState } from 'react';
+import { modals } from '@mantine/modals';
 
-import { useApp } from '../../contexts/App';
-import { useDialog } from '../../contexts/Dialog';
+import CharactersWidget from '../../features/play/widgets/characters/CharactersWidget';
+import CharacterWidget from '../../features/play/widgets/character/CharacterWidget';
+import JukeboxWidget from '../../features/play/widgets/jukebox/JukeboxWidget';
+import SketchWidget from '../../features/play/widgets/sketch/SketchWidget';
+import NotesWidget from '../../features/play/widgets/notes/NotesWidget';
+import DicesWidget from '../../features/play/widgets/dices/DicesWidget';
 import { PlayProvider, usePlay } from '../../contexts/Play';
-import PlayMenu from './PlayMenu';
-import { WidgetType } from '../../../types';
 import { focusWidget } from '../../../services/widget';
-import {
-    Console,
-    DicesWidget,
-    CharacterWidget,
-    CharactersWidget,
-    JukeboxWidget,
-    SketchWidget,
-    NotesWidget,
-    Audio,
-    Sketch
-} from '../../ui';
-
-import './Play.css';
+import Console from '../../features/play/Console';
+import Sketch from '../../features/play/Sketch';
+import Audio from '../../features/play/Audio';
+import { useApp } from '../../contexts/App';
+import { WidgetType } from '../../../types';
+import PlayMenu from './PlayMenu';
 
 const PlayContent = () => {
     const { T } = useApp();
     const navigate = useNavigate();
-    const { confirmDialog } = useDialog();
     const {
         characterId,
         socket,
@@ -62,8 +57,16 @@ const PlayContent = () => {
     };
 
     const onExit = () => {
-        confirmDialog(T('page.play.exitConfirm'), () => {
-            navigate('/sessions');
+        modals.openConfirmModal({
+            centered: true,
+            title: T('page.play.exitConfirm'),
+            labels: {
+                confirm: T('action.confirm'),
+                cancel: T('action.cancel')
+            },
+            onConfirm: () => {
+                navigate('/sessions');
+            }
         });
     };
 
@@ -116,20 +119,22 @@ const PlayContent = () => {
         });
 
     if (!socket) {
-        return <CircularProgress size={100} />;
+        return <Loader size="xl" />;
     }
 
     return (
-        <Box className="play-container flex row full-width full-height">
+        <Group w="100%" h="100%">
             <PlayMenu
                 isMaster={socket.isMaster}
                 onWidgetOpen={onWidgetOpen}
                 onExit={onExit}
             />
-            <Box
+            <Stack
                 ref={playContentRef}
-                id="play-content"
-                className="play-content grow flex column p-25"
+                pos="relative"
+                flex={1}
+                p="1rem"
+                h="100%"
             >
                 {getWidgets(openWidgets)}
                 {sketchData.displayed ? (
@@ -137,8 +142,8 @@ const PlayContent = () => {
                 ) : null}
                 {!socket.isMaster ? <Audio /> : null}
                 <Console logs={logs} playContentRef={playContentRef} />
-            </Box>
-        </Box>
+            </Stack>
+        </Group>
     );
 };
 

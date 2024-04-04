@@ -1,7 +1,7 @@
 import { callApi } from '../api';
 
 import {
-    Sketch,
+    type Sketch,
     type SketchCreateBody,
     type SketchUpdateBody
 } from '../../types';

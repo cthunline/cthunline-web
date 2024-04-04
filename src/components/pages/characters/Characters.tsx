@@ -1,30 +1,18 @@
-import { useState } from 'react';
-import { HiPlus } from 'react-icons/hi';
-import { useNavigate } from 'react-router-dom';
 import { MdEdit, MdOutlineDeleteOutline, MdOutlineSend } from 'react-icons/md';
-import {
-    Box,
-    Paper,
-    Typography,
-    Button,
-    IconButton,
-    List,
-    ListItemButton,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow
-} from '@mui/material';
+import { ActionIcon, Button, Table } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { modals } from '@mantine/modals';
+import { HiPlus } from 'react-icons/hi';
 
-import { getDefaultData } from '../../ui/characterSheet/characterSheet.helper';
-import TransferModal, { type TransferData } from './TransferModal';
+import { getDefaultData } from '../../features/characterSheet/characterSheet.helper';
+import TransferForm, { type TransferData } from './TransferForm';
+import { type Game, type SelectOption } from '../../../types';
 import useCharacter from '../../hooks/useCharacter';
-import { useDialog } from '../../contexts/Dialog';
+import ContentBox from '../../common/ContentBox';
 import { useApp } from '../../contexts/App';
 import useGame from '../../hooks/useGame';
-import { Game } from '../../../types';
+import Select from '../../common/Select';
 
 interface TransferModalData {
     isOpen: boolean;
@@ -36,20 +24,34 @@ interface GameSelectorProps {
     onSelect: (gameId: string) => void;
 }
 
-const GameSelector = ({ games, onSelect }: GameSelectorProps) => (
-    <List>
-        {games.map(({ id, name }) => (
-            <ListItemButton key={id} onClick={() => onSelect(id)}>
-                {name}
-            </ListItemButton>
-        ))}
-    </List>
-);
+const GameSelector = ({ games, onSelect }: GameSelectorProps) => {
+    const options: SelectOption<string>[] = useMemo(
+        () =>
+            games.map(({ id, name }) => ({
+                value: id,
+                label: name
+            })),
+        [games]
+    );
+    return (
+        <Select
+            valueType="string"
+            options={options}
+            onChange={(gameId: string | null) => {
+                if (gameId) {
+                    onSelect(gameId);
+                }
+            }}
+        />
+    );
+};
+
+const createCharacterModalId = 'transfer-character-modal';
+const transferCharacterModalId = 'transfer-character-modal';
 
 const Characters = () => {
     const { T } = useApp();
     const navigate = useNavigate();
-    const { confirmDialog, openDialog, closeDialog } = useDialog();
     const { getGame, gameList } = useGame();
     const {
         characterList,
@@ -76,30 +78,18 @@ const Characters = () => {
             isRefresh: false,
             isToast: false
         });
-        closeDialog();
+        modals.close(createCharacterModalId);
         navigate(`/characters/${char.id}`, {
             replace: true
         });
     };
 
     const onGameSelect = () => {
-        openDialog({
+        modals.open({
+            modalId: createCharacterModalId,
+            centered: true,
             title: T('page.characters.selectGame'),
-            content: <GameSelector games={gameList} onSelect={onCreate} />
-        });
-    };
-
-    const onTransfer = (characterId: number) => {
-        setTransferModalData({
-            characterId,
-            isOpen: true
-        });
-    };
-
-    const onTransferModalClose = () => {
-        setTransferModalData({
-            characterId: 0,
-            isOpen: false
+            children: <GameSelector games={gameList} onSelect={onCreate} />
         });
     };
 
@@ -108,11 +98,41 @@ const Characters = () => {
             characterId: 0,
             isOpen: false
         });
-        confirmDialog(T('page.characters.transferCharacterConfirm'), () => {
-            transferCharacter({
-                characterId,
-                userId
-            });
+        modals.openConfirmModal({
+            centered: true,
+            title: T('page.characters.transferCharacterConfirm'),
+            labels: {
+                confirm: T('action.confirm'),
+                cancel: T('action.cancel')
+            },
+            onConfirm: () => {
+                transferCharacter({
+                    characterId,
+                    userId
+                });
+            }
+        });
+    };
+
+    const onTransfer = (characterId: number) => {
+        setTransferModalData({
+            characterId,
+            isOpen: true
+        });
+        modals.open({
+            modalId: transferCharacterModalId,
+            centered: true,
+            title: T('page.characters.selectTransferUser'),
+            children: (
+                <TransferForm
+                    characterId={transferModalData.characterId}
+                    onConfirm={(data: TransferData) => {
+                        onTransferModalConfirm(data);
+                        modals.close(transferCharacterModalId);
+                    }}
+                    onCancel={() => modals.close(transferCharacterModalId)}
+                />
+            )
         });
     };
 
@@ -124,80 +144,65 @@ const Characters = () => {
         const confirmText = T('page.characters.deleteCharacterConfirm', {
             name
         });
-        confirmDialog(confirmText, () => {
-            deleteCharacter({
-                characterId
-            });
+        modals.openConfirmModal({
+            centered: true,
+            title: confirmText,
+            labels: {
+                confirm: T('action.confirm'),
+                cancel: T('action.cancel')
+            },
+            onConfirm: () => {
+                deleteCharacter({
+                    characterId
+                });
+            }
         });
     };
 
     return (
-        <Paper
-            elevation={3}
-            className="page-list p-25 flex column start-x center-y"
-        >
-            <Typography variant="h6" gutterBottom>
-                {T('entity.characters')}
-            </Typography>
-            <TableContainer>
+        <ContentBox>
+            <ContentBox.Title>{T('entity.characters')}</ContentBox.Title>
+            <ContentBox.Content>
                 <Table stickyHeader>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>{T('entity.game')}</TableCell>
-                            <TableCell>{T('common.name')}</TableCell>
-                            <TableCell />
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
+                    <Table.Thead>
+                        <Table.Tr>
+                            <Table.Th>{T('entity.game')}</Table.Th>
+                            <Table.Th>{T('common.name')}</Table.Th>
+                            <Table.Th />
+                        </Table.Tr>
+                    </Table.Thead>
+                    <Table.Tbody>
                         {characterList.map(({ id, name, gameId }) => (
-                            <TableRow key={id}>
-                                <TableCell>{getGame(gameId)?.name}</TableCell>
-                                <TableCell>
+                            <Table.Tr key={id}>
+                                <Table.Td>{getGame(gameId)?.name}</Table.Td>
+                                <Table.Td>
                                     {name.trim() || `[${T('common.unknown')}]`}
-                                </TableCell>
-                                <TableCell align="right">
-                                    <IconButton
-                                        size="medium"
-                                        onClick={() => onTransfer(id)}
-                                    >
+                                </Table.Td>
+                                <Table.Td align="right">
+                                    <ActionIcon onClick={() => onTransfer(id)}>
                                         <MdOutlineSend />
-                                    </IconButton>{' '}
-                                    <IconButton
-                                        size="medium"
-                                        onClick={() => onEdit(id)}
-                                    >
+                                    </ActionIcon>{' '}
+                                    <ActionIcon onClick={() => onEdit(id)}>
                                         <MdEdit />
-                                    </IconButton>{' '}
-                                    <IconButton
-                                        size="medium"
-                                        color="error"
+                                    </ActionIcon>{' '}
+                                    <ActionIcon
+                                        color="red"
                                         onClick={() => onDelete(id, name)}
                                     >
                                         <MdOutlineDeleteOutline />
-                                    </IconButton>
-                                </TableCell>
-                            </TableRow>
+                                    </ActionIcon>
+                                </Table.Td>
+                            </Table.Tr>
                         ))}
-                    </TableBody>
+                    </Table.Tbody>
                 </Table>
-            </TableContainer>
-            <Box className="flex row end-x full-width mt-20">
-                <Button
-                    variant="contained"
-                    size="medium"
-                    startIcon={<HiPlus />}
-                    onClick={onGameSelect}
-                >
+            </ContentBox.Content>
+            <ContentBox.Footer>
+                <Button leftSection={<HiPlus />} onClick={onGameSelect}>
                     {T('action.create')}
                 </Button>
-            </Box>
-            <TransferModal
-                open={transferModalData.isOpen}
-                characterId={transferModalData.characterId}
-                onConfirm={onTransferModalConfirm}
-                onClose={onTransferModalClose}
-            />
-        </Paper>
+            </ContentBox.Footer>
+        </ContentBox>
     );
 };
 

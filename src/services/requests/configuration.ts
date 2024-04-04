@@ -1,6 +1,6 @@
 import { callApi } from '../api';
 
-import { Configuration } from '../../types';
+import { type Configuration } from '../../types';
 
 export const getConfiguration = async () =>
     callApi<Configuration>({

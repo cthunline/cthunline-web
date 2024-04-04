@@ -1,6 +1,6 @@
 import { callApi } from '../api';
 
-import { Asset } from '../../types';
+import { type Asset } from '../../types';
 
 export const getAssets = async (type?: 'audio' | 'image') => {
     const typeQuery = type ? `?type=${type}` : '';

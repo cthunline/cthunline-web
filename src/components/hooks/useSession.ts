@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'react-toastify';
 
+import { toast } from '../../services/toast';
+import { useApp } from '../contexts/App';
 import {
     getSessions as getSessionsRequest,
     getSession as getSessionRequest,
@@ -8,10 +9,11 @@ import {
     editSession as editSessionRequest,
     deleteSession as deleteSessionRequest
 } from '../../services/requests/session';
-
-import { useApp } from '../contexts/App';
-
-import { Session, SessionCreateBody, SessionEditBody } from '../../types';
+import {
+    type Session,
+    type SessionCreateBody,
+    type SessionEditBody
+} from '../../types';
 
 interface SessionHookOptions {
     loadList?: boolean;

@@ -1,13 +1,11 @@
-import {
-    Home,
-    Characters,
-    CharacterForm,
-    Assets,
-    Profile,
-    Users,
-    Sessions,
-    Play
-} from './pages';
+import CharacterForm from './pages/characters/CharacterForm';
+import Characters from './pages/characters/Characters';
+import Sessions from './pages/sessions/Sessions';
+import Profile from './pages/profile/Profile';
+import Assets from './pages/assets/Assets';
+import Users from './pages/users/Users';
+import Home from './pages/home/Home';
+import Play from './pages/play/Play';
 
 export interface RouterPage {
     path: string;

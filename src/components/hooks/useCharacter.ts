@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { toast } from 'react-toastify';
 
+import { toast } from '../../services/toast';
+import { useApp } from '../contexts/App';
 import {
     createCharacter as createCharacterRequest,
     deleteCharacter as deleteCharacterRequest,
@@ -12,13 +13,11 @@ import {
     uploadPortrait as uploadPortraitRequest
 } from '../../services/requests/character';
 
-import { useApp } from '../contexts/App';
-
 import {
-    Character,
-    CharacterCreateBody,
-    CharacterEditBody,
-    PortraitUploadBody
+    type Character,
+    type CharacterCreateBody,
+    type CharacterEditBody,
+    type PortraitUploadBody
 } from '../../types';
 
 interface CharacterHookOptions {

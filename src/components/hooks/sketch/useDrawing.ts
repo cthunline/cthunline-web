@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { usePlay } from '../../contexts/Play';
-import { SketchCoordinates } from '../../../types';
+import { type SketchCoordinates } from '../../../types';
 import {
     coordinatesToPath,
     getMouseEventSvgCoordinates

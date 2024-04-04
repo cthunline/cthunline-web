@@ -1,6 +1,10 @@
 import { callApi } from '../api';
 
-import { Directory, DirectoryCreateBody, DirectoryEditBody } from '../../types';
+import {
+    type Directory,
+    type DirectoryCreateBody,
+    type DirectoryEditBody
+} from '../../types';
 
 export const getDirectories = async () => {
     const { directories } = await callApi<{ directories: Directory[] }>({

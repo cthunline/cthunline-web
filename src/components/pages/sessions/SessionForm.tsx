@@ -1,14 +1,15 @@
-import { TextField, Button, Stack } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { Button, Stack, TextInput } from '@mantine/core';
+import { zodResolver } from 'mantine-form-zod-resolver';
 import { MdOutlineSave } from 'react-icons/md';
+import { useForm } from '@mantine/form';
 import { useMemo } from 'react';
 import z from 'zod';
 
+import { type SelectOption, type SessionCreateBody } from '../../../types';
 import { useApp } from '../../contexts/App';
-import Selector from '../../ui/selector/Selector';
-import { SessionCreateBody } from '../../../types';
 import useGame from '../../hooks/useGame';
+import Select from '../../common/Select';
+import Form from '../../common/Form';
 
 interface SessionFormProps {
     onSubmit: (data: SessionCreateBody) => Promise<void>;
@@ -25,65 +26,41 @@ const SessionForm = ({ onSubmit }: SessionFormProps) => {
     const { T } = useApp();
     const { gameList } = useGame();
 
-    const gameOptions = useMemo(
+    const gameOptions: SelectOption<string>[] = useMemo(
         () =>
             gameList.map(({ id, name }) => ({
-                name,
+                label: name,
                 value: id
             })),
         [gameList]
     );
 
-    const { control, handleSubmit } = useForm<SessionFormData>({
-        resolver: zodResolver(sessionFormSchema),
-        defaultValues: {
+    const { onSubmit: handleSubmit, getInputProps } = useForm<SessionFormData>({
+        validate: zodResolver(sessionFormSchema),
+        initialValues: {
             name: '',
             gameId: ''
         }
     });
 
     return (
-        <Stack
-            component="form"
-            onSubmit={handleSubmit(onSubmit)}
-            direction="column"
-            gap="1rem"
-            padding="0.25rem 0"
-        >
-            <Controller
-                name="name"
-                control={control}
-                render={({ field, fieldState: { error } }) => (
-                    <TextField
-                        {...field}
-                        className="form-input"
-                        label={T('common.name')}
-                        error={!!error}
-                    />
-                )}
-            />
-            <Controller
-                name="gameId"
-                control={control}
-                render={({ field, fieldState: { error } }) => (
-                    <Selector
-                        {...field}
-                        label={T('entity.game')}
-                        options={gameOptions}
-                        error={!!error}
-                    />
-                )}
-            />
-            <Button
-                className="form-button"
-                type="submit"
-                variant="contained"
-                size="large"
-                startIcon={<MdOutlineSave />}
-            >
-                {T('action.create')}
-            </Button>
-        </Stack>
+        <Form onSubmit={handleSubmit(onSubmit)}>
+            <Stack gap="1rem" py="0.25rem">
+                <TextInput
+                    {...getInputProps('name')}
+                    label={T('common.name')}
+                />
+                <Select
+                    {...getInputProps('gameId')}
+                    valueType="string"
+                    options={gameOptions}
+                    label={T('entity.game')}
+                />
+                <Button type="submit" leftSection={<MdOutlineSave />}>
+                    {T('action.create')}
+                </Button>
+            </Stack>
+        </Form>
     );
 };
 

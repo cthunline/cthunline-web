@@ -20,6 +20,7 @@
         "common": {
             "biography": "biographie",
             "attributesAndSkills": "attributs & compétences",
+            "skill": "compétence",
             "statistics": "statistiques",
             "woundStatus": "dommages",
             "weapon": "arme",

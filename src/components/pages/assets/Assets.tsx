@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import { Paper, Typography, Button, Box } from '@mui/material';
-import { toast } from 'react-toastify';
+import { MdFolder, MdOutlineImage, MdUploadFile } from 'react-icons/md';
+import { Button, FileButton, RingProgress } from '@mantine/core';
 import { HiMusicNote } from 'react-icons/hi';
-import { MdFolder, MdOutlineImage } from 'react-icons/md';
+import { modals } from '@mantine/modals';
+import { useState } from 'react';
 
-import Explorer, {
-    ExplorerItem,
-    ExplorerItemType
-} from '../../ui/explorer/Explorer';
-import UploadButton from '../../ui/uploadButton/UploadButton';
-import { useApp } from '../../contexts/App';
-import { useDialog } from '../../contexts/Dialog';
-import useAsset from '../../hooks/useAsset';
 import useDirectory from '../../hooks/useDirectory';
+import ContentBox from '../../common/ContentBox';
+import { toast } from '../../../services/toast';
+import { useApp } from '../../contexts/App';
+import useAsset from '../../hooks/useAsset';
 import DirectoryForm from './DirectoryForm';
+import FileExplorer, {
+    type FileExplorerItem,
+    FileExplorerItemType
+} from '../../common/FileExplorer';
 
 const allowedMimeTypes = [
     'image/jpeg',
@@ -24,9 +24,10 @@ const allowedMimeTypes = [
 
 const limitSizeInMb = 20;
 
+const createDirModalId = 'create-directory-modal';
+
 const Assets = () => {
     const { T } = useApp();
-    const { confirmDialog, openDialog, closeDialog } = useDialog();
     const { assetList, uploadAssets, deleteAsset } = useAsset({
         loadList: true
     });
@@ -53,19 +54,20 @@ const Assets = () => {
                 parentId
             }
         });
-        closeDialog();
+        modals.close(createDirModalId);
     };
 
     const onCreateDirectory = () => {
-        openDialog({
+        modals.open({
+            modalId: createDirModalId,
+            centered: true,
             title: T('page.assets.newDirectory'),
-            content: <DirectoryForm onSubmit={onSubmitDirectory} />
+            children: <DirectoryForm onSubmit={onSubmitDirectory} />
         });
     };
 
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files?.length) {
-            const files: File[] = [...e.target.files];
+    const handleFileChange = async (files: File[]) => {
+        if (files.length) {
             let valid = true;
             files.forEach((file) => {
                 const sizeInMb = file.size / (1024 * 1024);
@@ -97,35 +99,51 @@ const Assets = () => {
         }
     };
 
-    const onDelete = (type: ExplorerItemType, id: number, name: string) => {
-        if (type === ExplorerItemType.directory) {
+    const onDelete = (type: FileExplorerItemType, id: number, name: string) => {
+        if (type === FileExplorerItemType.directory) {
             const confirmText = T('page.assets.deleteDirectoryConfirm', {
                 name
             });
-            confirmDialog(confirmText, () => {
-                deleteDirectory({ directoryId: id });
+            modals.openConfirmModal({
+                centered: true,
+                title: confirmText,
+                labels: {
+                    confirm: T('action.confirm'),
+                    cancel: T('action.cancel')
+                },
+                onConfirm: () => {
+                    deleteDirectory({ directoryId: id });
+                }
             });
         }
-        if (type === ExplorerItemType.file) {
+        if (type === FileExplorerItemType.file) {
             const confirmText = T('page.assets.deleteAssetConfirm', { name });
-            confirmDialog(confirmText, () => {
-                deleteAsset({ assetId: id });
+            modals.openConfirmModal({
+                centered: true,
+                title: confirmText,
+                labels: {
+                    confirm: T('action.confirm'),
+                    cancel: T('action.cancel')
+                },
+                onConfirm: () => {
+                    deleteAsset({ assetId: id });
+                }
             });
         }
     };
 
-    const items: ExplorerItem[] = [
+    const items: FileExplorerItem[] = [
         ...directoryList.map(({ id, name, parentId }) => ({
             id,
             name,
             parentId,
-            type: ExplorerItemType.directory
+            type: FileExplorerItemType.directory
         })),
         ...assetList.map(({ id, name, type, directoryId }) => ({
             id,
             name,
             parentId: directoryId,
-            type: ExplorerItemType.file,
+            type: FileExplorerItemType.file,
             icon:
                 type === 'audio' ? (
                     <HiMusicNote size={25} />
@@ -136,40 +154,40 @@ const Assets = () => {
     ];
 
     return (
-        <Paper
-            elevation={3}
-            className="page-list p-25 flex column start-x center-y"
-        >
-            <Typography variant="h6" gutterBottom>
-                {T('entity.assets')}
-            </Typography>
-            <Explorer
-                className="scroll mb-10"
-                items={items}
-                directoryId={directoryIds.at(-1)}
-                onDirectoryBack={onDirectoryBack}
-                onDirectoryClick={onDirectoryClick}
-                onDelete={onDelete}
-            />
-            <Box className="align-end">
-                <Button
-                    className="mr-10"
-                    variant="contained"
-                    size="medium"
-                    component="span"
-                    startIcon={<MdFolder />}
-                    onClick={onCreateDirectory}
-                >
+        <ContentBox>
+            <ContentBox.Title>{T('entity.assets')}</ContentBox.Title>
+            <ContentBox.Content>
+                <FileExplorer
+                    items={items}
+                    directoryId={directoryIds.at(-1)}
+                    onDirectoryBack={onDirectoryBack}
+                    onDirectoryClick={onDirectoryClick}
+                    onDelete={onDelete}
+                />
+            </ContentBox.Content>
+            <ContentBox.Footer>
+                <Button leftSection={<MdFolder />} onClick={onCreateDirectory}>
                     {T('page.assets.newDirectory')}
                 </Button>
-                <UploadButton
-                    label={T('page.assets.uploadAsset')}
-                    progress={progress}
-                    allowedMimeTypes={allowedMimeTypes}
-                    onChange={handleFileChange}
-                />
-            </Box>
-        </Paper>
+                {progress ? (
+                    <RingProgress
+                        sections={[{ value: progress, color: 'blue' }]}
+                    />
+                ) : (
+                    <FileButton
+                        multiple
+                        onChange={handleFileChange}
+                        accept={allowedMimeTypes.join(',')}
+                    >
+                        {(props) => (
+                            <Button {...props} leftSection={<MdUploadFile />}>
+                                {T('page.assets.uploadAsset')}
+                            </Button>
+                        )}
+                    </FileButton>
+                )}
+            </ContentBox.Footer>
+        </ContentBox>
     );
 };
 

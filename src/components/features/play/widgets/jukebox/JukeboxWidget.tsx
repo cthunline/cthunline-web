@@ -1,0 +1,167 @@
+import { useEffect, useRef, useState } from 'react';
+import { Box, Checkbox } from '@mantine/core';
+import { HiMusicNote } from 'react-icons/hi';
+
+import { WidgetType, type Asset } from '../../../../../types';
+import { getAssetUrl } from '../../../../../services/api';
+import useDirectory from '../../../../hooks/useDirectory';
+import useAsset from '../../../../hooks/useAsset';
+import { useApp } from '../../../../contexts/App';
+import Widget from '../../Widget';
+import FileExplorer, {
+    type FileExplorerItem,
+    FileExplorerItemType
+} from '../../../../common/FileExplorer';
+
+interface JukeboxWidgetProps {
+    onPlay: (asset: Asset, time: number) => void;
+    onStop: () => void;
+    onClose: (widget: WidgetType) => void;
+}
+
+const JukeboxWidget = ({ onPlay, onStop, onClose }: JukeboxWidgetProps) => {
+    const { T } = useApp();
+    const { assetList } = useAsset({
+        loadList: true,
+        type: 'audio'
+    });
+    const { directoryList } = useDirectory({
+        loadList: true
+    });
+
+    const [directoryIds, setDirectoryIds] = useState<number[]>([]);
+    const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
+    const [autoplay, setAutoplay] = useState<boolean>(true);
+
+    const audioElement =
+        useRef<HTMLAudioElement>() as React.MutableRefObject<HTMLAudioElement>;
+
+    const explorerItems: FileExplorerItem[] = [
+        ...directoryList.map(({ id, name, parentId }) => ({
+            id,
+            name,
+            parentId,
+            type: FileExplorerItemType.directory
+        })),
+        ...assetList.map(({ id, name, directoryId }) => ({
+            id,
+            name,
+            parentId: directoryId,
+            type: FileExplorerItemType.file,
+            icon: <HiMusicNote size={25} />
+        }))
+    ];
+
+    const autoplayNext = () => {
+        if (selectedAsset) {
+            const currentDirectoryId = directoryIds.at(-1);
+            const currentItems = explorerItems.filter(({ parentId }) =>
+                currentDirectoryId ? parentId === currentDirectoryId : !parentId
+            );
+            const currentItemIndex = currentItems.findIndex(
+                ({ id }) => selectedAsset.id === id
+            );
+            if (currentItemIndex >= 0 && currentItems[currentItemIndex + 1]) {
+                const asset = assetList.find(
+                    ({ id }) => id === currentItems[currentItemIndex + 1].id
+                );
+                if (asset) {
+                    if (selectedAsset?.id !== asset.id) {
+                        onStop();
+                    }
+                    setSelectedAsset(asset);
+                }
+            }
+        }
+    };
+
+    const onFileClick = (assetId: number) => {
+        const asset = assetList.find(({ id }) => id === assetId);
+        if (asset) {
+            if (selectedAsset?.id !== asset.id) {
+                onStop();
+            }
+            setSelectedAsset(asset);
+        }
+    };
+
+    const onAudioPlay = () => {
+        if (selectedAsset && audioElement.current) {
+            onPlay(selectedAsset, audioElement.current.currentTime);
+        }
+    };
+
+    const onAudioPause = () => {
+        onStop();
+    };
+
+    const onAudioEnded = () => {
+        if (autoplay) {
+            autoplayNext();
+        }
+    };
+
+    const onDirectoryBack = () => {
+        setDirectoryIds((previous) => previous.slice(0, -1));
+    };
+
+    const onDirectoryClick = (dirId: number) => {
+        setDirectoryIds((previous) => [...previous, dirId]);
+    };
+
+    useEffect(() => {
+        if (autoplay && selectedAsset && audioElement.current) {
+            audioElement.current.play();
+            onPlay(selectedAsset, audioElement.current.currentTime);
+        }
+    }, [selectedAsset, autoplay, onPlay]);
+
+    useEffect(() => onStop, [onStop]);
+
+    return (
+        <Widget
+            id={`widget-${WidgetType.jukebox}`}
+            title={T('entity.jukebox')}
+            onClose={() => onClose(WidgetType.jukebox)}
+        >
+            <Box w="400px">
+                <FileExplorer
+                    scroll
+                    mah="300px"
+                    items={explorerItems}
+                    directoryId={directoryIds.at(-1)}
+                    selectedId={selectedAsset?.id}
+                    onDirectoryBack={onDirectoryBack}
+                    onDirectoryClick={onDirectoryClick}
+                    onFileClick={onFileClick}
+                />
+                <Box>
+                    {selectedAsset ? (
+                        // eslint-disable-next-line jsx-a11y/media-has-caption
+                        <audio
+                            ref={audioElement}
+                            className="jukebox-player full-width mt-10"
+                            src={getAssetUrl(selectedAsset.path)}
+                            controls // eslint-disable-line react/no-unknown-property
+                            autoPlay={false}
+                            onPlay={onAudioPlay} // eslint-disable-line react/no-unknown-property
+                            onPause={onAudioPause} // eslint-disable-line react/no-unknown-property
+                            onEnded={onAudioEnded} // eslint-disable-line react/no-unknown-property
+                        />
+                    ) : null}
+                </Box>
+                <Box className="text-right">
+                    {T('widget.jukebox.autoplay')}
+                    <Checkbox
+                        checked={autoplay}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            setAutoplay(e.target.checked);
+                        }}
+                    />
+                </Box>
+            </Box>
+        </Widget>
+    );
+};
+
+export default JukeboxWidget;

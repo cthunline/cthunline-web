@@ -1,0 +1,77 @@
+import { Box, Group, Stack } from '@mantine/core';
+import {
+    type SWD6Attribute,
+    type SWD6AttributeData,
+    type SWD6Skill
+} from '@cthunline/games';
+
+import TextInput from '../../../../common/TextInput';
+import { useApp } from '../../../../contexts/App';
+import SkillAdd from './SkillAdd';
+import Skill from './Skill';
+
+interface AttributeProps {
+    attribute: SWD6Attribute;
+    data: SWD6AttributeData;
+    readonly: boolean;
+    onChange: (attribute: SWD6Attribute, data: SWD6AttributeData) => void;
+    onSkillCreate: (attribute: SWD6Attribute, data: SWD6Skill) => void;
+    onSkillChange: (
+        attribute: SWD6Attribute,
+        index: number,
+        data: SWD6Skill
+    ) => void;
+    onSkillDelete: (attribute: SWD6Attribute, index: number) => void;
+}
+
+const Attribute = ({
+    attribute,
+    data,
+    readonly,
+    onChange,
+    onSkillCreate,
+    onSkillChange,
+    onSkillDelete
+}: AttributeProps) => {
+    const { T } = useApp();
+
+    return (
+        <Stack w="100%">
+            <Group w="100%">
+                <Box flex="2 0" fs="1.1rem" fw="bold">
+                    {T(`game.starWarsD6.attribute.${attribute}`)}
+                </Box>
+                <Box flex="1 0">
+                    <TextInput
+                        w="100%"
+                        readOnly={readonly}
+                        size="sm"
+                        value={data.value}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onChange(attribute, {
+                                ...data,
+                                value: e.target.value
+                            });
+                        }}
+                    />
+                </Box>
+            </Group>
+            {data.skills.map((skill, index) => (
+                <Skill
+                    key={`skill-${attribute}-${index.toString()}`}
+                    attribute={attribute}
+                    index={index}
+                    data={skill}
+                    readonly={readonly}
+                    onChange={onSkillChange}
+                    onDelete={onSkillDelete}
+                />
+            ))}
+            {!readonly && (
+                <SkillAdd attribute={attribute} onSubmit={onSkillCreate} />
+            )}
+        </Stack>
+    );
+};
+
+export default Attribute;
