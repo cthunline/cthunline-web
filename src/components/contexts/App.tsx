@@ -1,18 +1,18 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
+import { type Theme } from '../../types/index.js';
 import useAuth, {
     type AuthHookExport,
     defaultAuthHookData
-} from '../hooks/contextHooks/useAuth';
+} from '../hooks/contextHooks/useAuth.js';
 import useConfiguration, {
     type ConfigurationHookExport,
     defaultConfigurationHookData
-} from '../hooks/contextHooks/useConfiguration';
+} from '../hooks/contextHooks/useConfiguration.js';
 import useTranslation, {
     type TranslationHookExport,
     defaultTranslationHookData
-} from '../hooks/contextHooks/useTranslation';
-import { type Theme } from '../../types';
+} from '../hooks/contextHooks/useTranslation.js';
 
 interface AppProviderProps {
     children: JSX.Element | JSX.Element[];

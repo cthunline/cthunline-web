@@ -5,12 +5,12 @@ import {
     type WarhammerFantasySpell
 } from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import { onlyNumbers } from '../../../../../services/tools';
-import { useApp } from '../../../../contexts/App';
-import AddSpellRow from './AddSpellRow';
-import SpellRow from './SpellRow';
-import TextInput from '../../../../common/TextInput';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
+import AddSpellRow from './AddSpellRow.js';
+import SpellRow from './SpellRow.js';
 
 interface SpellsProps {
     readonly: boolean;

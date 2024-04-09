@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
-import { CardinalDirection } from '../../../../types';
+import { CardinalDirection } from '../../../../types/index.js';
 import SketchItemContextMenu, {
     contextMenuHandler,
     type ContextMenuPosition
-} from './SketchItemContextMenu';
+} from './SketchItemContextMenu.js';
 
 import './SketchImage.css';
 

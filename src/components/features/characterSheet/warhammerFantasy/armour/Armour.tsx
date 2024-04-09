@@ -5,10 +5,10 @@ import {
     type WarhammerFantasyArmour
 } from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import { useApp } from '../../../../contexts/App';
-import AddArmourRow from './AddArmourRow';
-import ArmourRow from './ArmourRow';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import { useApp } from '../../../../contexts/App.js';
+import AddArmourRow from './AddArmourRow.js';
+import ArmourRow from './ArmourRow.js';
 
 interface ArmourProps {
     readonly: boolean;

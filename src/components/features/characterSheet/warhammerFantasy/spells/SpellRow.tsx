@@ -2,9 +2,9 @@ import { ActionIcon, Box, Group, Stack, Textarea } from '@mantine/core';
 import { type WarhammerFantasySpell } from '@cthunline/games';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { onlyNumbers } from '../../../../../services/tools';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
 
 type SpellRowInputProps = {
     readonly: boolean;

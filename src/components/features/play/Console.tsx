@@ -2,9 +2,9 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa6';
 import { Box, Group, Paper, Stack } from '@mantine/core';
 
-import AutoScroll from '../../common/AutoScroll';
-import { useApp } from '../../contexts/App';
-import { type PlayLog } from '../../../types';
+import { type PlayLog } from '../../../types/index.js';
+import AutoScroll from '../../common/AutoScroll.js';
+import { useApp } from '../../contexts/App.js';
 
 const getBaseHeight = (el: HTMLDivElement) => {
     const { clientHeight } = el;

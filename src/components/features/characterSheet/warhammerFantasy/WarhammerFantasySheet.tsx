@@ -11,26 +11,26 @@ import {
     GiLightBackpack
 } from 'react-icons/gi';
 
-import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs';
-import WarhammerFantasyLogo from '../../../svg/games/WarhammerFantasy';
-import Characteristics from './characteristics/Characteristics';
-import SectionTitle from '../generic/sectionTitle/SectionTitle';
-import { GameId, type CharacterData } from '../../../../types';
-import FieldLayout from '../generic/fieldLayout/FieldLayout';
-import ArmourPoints from './armourPoints/ArmourPoints';
-import Portrait from '../generic/portrait/Portrait';
-import Encumbrance from './encumbrance/Encumbrance';
-import { useApp } from '../../../contexts/App';
-import BasicSkills from './skills/BasicSkills';
-import OtherSkills from './skills/OtherSkills';
-import Trappings from './trappings/Trappings';
-import { biographyFields } from './fields';
-import Talents from './talents/Talents';
-import Weapons from './weapons/Weapons';
-import Status from './status/Status';
-import Spells from './spells/Spells';
-import Armour from './armour/Armour';
-import Wealth from './wealth/Wealth';
+import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
+import WarhammerFantasyLogo from '../../../svg/games/WarhammerFantasy.js';
+import { GameId, type CharacterData } from '../../../../types/index.js';
+import Characteristics from './characteristics/Characteristics.js';
+import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
+import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
+import ArmourPoints from './armourPoints/ArmourPoints.js';
+import Portrait from '../generic/portrait/Portrait.js';
+import Encumbrance from './encumbrance/Encumbrance.js';
+import { useApp } from '../../../contexts/App.js';
+import BasicSkills from './skills/BasicSkills.js';
+import OtherSkills from './skills/OtherSkills.js';
+import Trappings from './trappings/Trappings.js';
+import { biographyFields } from './fields.js';
+import Talents from './talents/Talents.js';
+import Weapons from './weapons/Weapons.js';
+import Status from './status/Status.js';
+import Spells from './spells/Spells.js';
+import Armour from './armour/Armour.js';
+import Wealth from './wealth/Wealth.js';
 import {
     type ControlItemsSortOnly,
     controlCharacteristics,
@@ -39,7 +39,7 @@ import {
     controlTalents,
     sortOtherSkills,
     controlEncumbrance
-} from './warhammerFantasySheet.helper';
+} from './warhammerFantasySheet.helper.js';
 
 export interface WarhammerFantasySheetProps {
     readonly: boolean;

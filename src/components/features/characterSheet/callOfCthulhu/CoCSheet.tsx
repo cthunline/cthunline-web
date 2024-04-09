@@ -20,20 +20,20 @@ import {
     type CoCStory
 } from '@cthunline/games';
 
-import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs';
-import SectionTitle from '../generic/sectionTitle/SectionTitle';
-import Characteristics from './characteristics/Characteristics';
-import { type CharacterData, GameId } from '../../../../types';
-import FieldLayout from '../generic/fieldLayout/FieldLayout';
-import { controlCharacterData } from './cocSheet.helper';
-import { biographyFields, storyFields } from './fields';
-import CoCLogo from '../../../svg/games/CallOfCthulhu';
-import Portrait from '../generic/portrait/Portrait';
-import { useApp } from '../../../contexts/App';
-import Weapons from './weapons/Weapons';
-import Status from './status/Status';
-import Skills from './skills/Skills';
-import Combat from './combat/Combat';
+import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
+import { type CharacterData, GameId } from '../../../../types/index.js';
+import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
+import Characteristics from './characteristics/Characteristics.js';
+import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
+import { controlCharacterData } from './cocSheet.helper.js';
+import { biographyFields, storyFields } from './fields.js';
+import CoCLogo from '../../../svg/games/CallOfCthulhu.js';
+import Portrait from '../generic/portrait/Portrait.js';
+import { useApp } from '../../../contexts/App.js';
+import Weapons from './weapons/Weapons.js';
+import Status from './status/Status.js';
+import Skills from './skills/Skills.js';
+import Combat from './combat/Combat.js';
 
 export interface CoCSheetProps {
     readonly: boolean;

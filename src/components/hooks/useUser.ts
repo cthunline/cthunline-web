@@ -1,20 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import { toast } from '../../services/toast';
-import { useApp } from '../contexts/App';
+import { toast } from '../../services/toast.js';
+import { useApp } from '../contexts/App.js';
 import {
     getUsers as getUsersRequest,
     createUser as createUserRequest,
     editUser as editUserRequest,
     generateInvitationCode as generateInvitationCodeRequest,
     registerUser as registerUserRequest
-} from '../../services/requests/user';
+} from '../../services/requests/user.js';
 import {
     type User,
     type UserCreateBody,
     type UserEditBody,
     type UserRegisterBody
-} from '../../types';
+} from '../../types/index.js';
 
 interface UserHookOptions {
     loadList?: boolean;

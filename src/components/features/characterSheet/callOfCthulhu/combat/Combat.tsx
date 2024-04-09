@@ -1,9 +1,9 @@
 import { type CoCCombat } from '@cthunline/games';
 import { Box, Group } from '@mantine/core';
 
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
-import { combatKeys } from './combat.data';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
+import { combatKeys } from './combat.data.js';
 
 interface CombatProps {
     combat: CoCCombat;

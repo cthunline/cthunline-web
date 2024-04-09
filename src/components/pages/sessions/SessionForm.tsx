@@ -5,11 +5,14 @@ import { useForm } from '@mantine/form';
 import { useMemo } from 'react';
 import z from 'zod';
 
-import { type SelectOption, type SessionCreateBody } from '../../../types';
-import { useApp } from '../../contexts/App';
-import useGame from '../../hooks/useGame';
-import Select from '../../common/Select';
-import Form from '../../common/Form';
+import { useApp } from '../../contexts/App.js';
+import useGame from '../../hooks/useGame.js';
+import Select from '../../common/Select.js';
+import Form from '../../common/Form.js';
+import {
+    type SelectOption,
+    type SessionCreateBody
+} from '../../../types/index.js';
 
 interface SessionFormProps {
     onSubmit: (data: SessionCreateBody) => Promise<void>;

@@ -2,10 +2,10 @@ import { type WarhammerFantasyCharacter } from '@cthunline/games';
 import { GiSpikedArmor } from 'react-icons/gi';
 import { Grid, Stack } from '@mantine/core';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import { onlyNumbers } from '../../../../../services/tools';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
 
 interface EncumbranceInputProps {
     label?: string;

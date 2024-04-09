@@ -1,11 +1,11 @@
 import { type CoCSanity } from '@cthunline/games';
 import { Box, Group } from '@mantine/core';
 
-import { onlyNumbers } from '../../../../../services/tools';
-import TextInput from '../../../../common/TextInput';
-import { sanityKeys } from './characteristics.data';
-import { controlSanity } from '../cocSheet.helper';
-import { useApp } from '../../../../contexts/App';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { sanityKeys } from './characteristics.data.js';
+import { controlSanity } from '../cocSheet.helper.js';
+import { useApp } from '../../../../contexts/App.js';
 
 interface SanityProps {
     data: CoCSanity;

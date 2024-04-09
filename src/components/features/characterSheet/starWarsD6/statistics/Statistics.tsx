@@ -1,10 +1,10 @@
-import { type SWD6Statistics } from '@cthunline/games';
 import { Box, Checkbox, Group, Stack } from '@mantine/core';
+import { type SWD6Statistics } from '@cthunline/games';
 
-import { type StatisticsField, statisticsFields } from './statistics.data';
-import { onlyNumbers } from '../../../../../services/tools';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
+import { type StatisticsField, statisticsFields } from './statistics.data.js';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
 
 interface StatisticsInputProps {
     statKey: keyof SWD6Statistics;

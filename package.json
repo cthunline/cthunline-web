@@ -1,9 +1,10 @@
 {
     "name": "cthunline-web",
     "version": "1.4.0",
+    "type": "module",
     "scripts": {
-        "dev": "vite serve src --config vite.config.mts",
-        "build": "vite build src --config vite.config.mts --outDir ../build",
+        "dev": "vite serve src --config vite.config.ts",
+        "build": "vite build src --config vite.config.ts --outDir ../build",
         "prepare": "husky",
         "lint": "npx eslint . --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --check . && npx tsc --noEmit && npx stylelint \"**/*.css\" --max-warnings=0",
         "format": "npx eslint . --fix --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --write . && npx tsc --noEmit && npx stylelint --fix \"**/*.css\" --max-warnings=0"
@@ -21,7 +22,7 @@
         "eslint-plugin-risxss": "^2.1.0",
         "install": "^0.13.0",
         "mantine-form-zod-resolver": "^1.1.0",
-        "nanoid": "^4.0.2",
+        "nanoid": "^5.0.7",
         "normalize.css": "^8.0.1",
         "npm": "^10.5.1",
         "react": "^18.2.0",

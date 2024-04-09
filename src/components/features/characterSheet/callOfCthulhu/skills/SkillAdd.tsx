@@ -3,12 +3,12 @@ import { type CoCSkill } from '@cthunline/games';
 import { FiPlusCircle } from 'react-icons/fi';
 import { useMemo, useReducer } from 'react';
 
-import { type SkillData, skillList, defaultSkillValue } from './skills.data';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
+import { type SkillData, skillList, defaultSkillValue } from './skills.data.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
 import AutocompleteInput, {
     type AutocompleteInputValue
-} from '../../../../common/AutocompleteInput';
+} from '../../../../common/AutocompleteInput.js';
 
 interface SkillAddProps {
     onSubmit: (data: CoCSkill) => void;

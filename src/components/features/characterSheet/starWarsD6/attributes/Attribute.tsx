@@ -5,10 +5,10 @@ import {
     type SWD6Skill
 } from '@cthunline/games';
 
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
-import SkillAdd from './SkillAdd';
-import Skill from './Skill';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
+import SkillAdd from './SkillAdd.js';
+import Skill from './Skill.js';
 
 interface AttributeProps {
     attribute: SWD6Attribute;

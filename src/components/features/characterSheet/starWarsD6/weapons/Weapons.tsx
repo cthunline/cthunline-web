@@ -1,8 +1,8 @@
 import { type SWD6Weapon } from '@cthunline/games';
 import { Stack } from '@mantine/core';
 
-import WeaponAdd from './WeaponAdd';
-import Weapon from './Weapon';
+import WeaponAdd from './WeaponAdd.js';
+import Weapon from './Weapon.js';
 
 interface WeaponsProps {
     weapons: SWD6Weapon[];

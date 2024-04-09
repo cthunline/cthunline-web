@@ -1,3 +1,6 @@
+import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { type SeventhSeaStory } from '@cthunline/games';
+import { FiPlusCircle } from 'react-icons/fi';
 import {
     ActionIcon,
     Box,
@@ -6,14 +9,11 @@ import {
     Textarea,
     type StackProps
 } from '@mantine/core';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
-import { type SeventhSeaStory } from '@cthunline/games';
-import { FiPlusCircle } from 'react-icons/fi';
 
-import FieldLayout from '../../generic/fieldLayout/FieldLayout';
-import { useApp } from '../../../../contexts/App';
-import { GameId } from '../../../../../types';
-import { storyFields } from '../fields';
+import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
+import { GameId } from '../../../../../types/index.js';
+import { useApp } from '../../../../contexts/App.js';
+import { storyFields } from '../fields.js';
 
 interface StoryProps extends Pick<StackProps, 'flex'> {
     index: number;

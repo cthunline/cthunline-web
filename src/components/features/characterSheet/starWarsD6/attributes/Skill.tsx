@@ -1,9 +1,9 @@
+import { type SWD6Attribute, type SWD6Skill } from '@cthunline/games';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { ActionIcon, Box, Group } from '@mantine/core';
-import { type SWD6Attribute, type SWD6Skill } from '@cthunline/games';
 
-import TextInput from '../../../../common/TextInput';
-import { skillFields } from './skills.data';
+import TextInput from '../../../../common/TextInput.js';
+import { skillFields } from './skills.data.js';
 
 interface SkillProps {
     attribute: SWD6Attribute;

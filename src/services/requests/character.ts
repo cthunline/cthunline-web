@@ -1,11 +1,11 @@
-import { callApi } from '../api';
+import { callApi } from '../api.js';
 
 import {
     type Character,
     type CharacterCreateBody,
     type CharacterEditBody,
     type PortraitUploadBody
-} from '../../types';
+} from '../../types/index.js';
 
 export const getCharacters = async (userId?: number) => {
     const userParam = userId ? `?user=${userId}` : '';

@@ -1,11 +1,11 @@
 import { type CoCCharacteristic } from '@cthunline/games';
 import { Box, Group, Tooltip } from '@mantine/core';
 
-import { onlyNumbers } from '../../../../../services/tools';
-import { controlCharacteristic } from '../cocSheet.helper';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
-import { charKeys } from './characteristics.data';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import { controlCharacteristic } from '../cocSheet.helper.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
+import { charKeys } from './characteristics.data.js';
 
 interface CharacteristicProps {
     field: string;

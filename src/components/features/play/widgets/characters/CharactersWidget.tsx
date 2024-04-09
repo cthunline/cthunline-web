@@ -1,10 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Box, Group, Loader, Tabs } from '@mantine/core';
 
-import { WidgetType, type SessionUser } from '../../../../../types';
-import CharacterSheet from '../../../characterSheet/CharacterSheet';
-import { useApp } from '../../../../contexts/App';
-import Widget from '../../Widget';
+import { WidgetType, type SessionUser } from '../../../../../types/index.js';
+import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
+import { useApp } from '../../../../contexts/App.js';
+import Widget from '../../Widget.js';
 
 interface CharacterWidgetProps {
     users: SessionUser[];

@@ -5,10 +5,10 @@ import {
     type WarhammerFantasyTalent
 } from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import { useApp } from '../../../../contexts/App';
-import AddTalentRow from './AddTalentRow';
-import TalentRow from './TalentRow';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import { useApp } from '../../../../contexts/App.js';
+import AddTalentRow from './AddTalentRow.js';
+import TalentRow from './TalentRow.js';
 
 interface TalentsProps {
     readonly: boolean;

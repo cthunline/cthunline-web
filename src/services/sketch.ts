@@ -8,8 +8,8 @@ import {
     type SketchResizingItemData,
     type SketchTokenData,
     TooltipPlacement
-} from '../types';
-import { randomItem } from './tools';
+} from '../types/index.js';
+import { randomItem } from './tools.js';
 
 // main svg container viewbox size
 export const viewBox: SketchSize = {

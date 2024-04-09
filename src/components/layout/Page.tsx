@@ -2,9 +2,9 @@ import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { AppShell, Stack } from '@mantine/core';
 
-import { useApp } from '../contexts/App';
-import { pages } from '../router.data';
-import Nav from './Nav';
+import { useApp } from '../contexts/App.js';
+import { pages } from '../router.data.js';
+import Nav from './Nav.js';
 
 interface PageProps {
     children: JSX.Element | JSX.Element[];

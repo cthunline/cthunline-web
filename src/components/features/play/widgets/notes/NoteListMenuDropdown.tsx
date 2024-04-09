@@ -6,8 +6,8 @@ import {
     MdOutlineShare
 } from 'react-icons/md';
 
-import { useApp } from '../../../../contexts/App';
-import { type Note } from '../../../../../types';
+import { type Note } from '../../../../../types/index.js';
+import { useApp } from '../../../../contexts/App.js';
 
 export interface NoteListMenuDropdownProps {
     note: Note | null;

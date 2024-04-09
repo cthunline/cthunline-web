@@ -9,26 +9,28 @@ import { modals } from '@mantine/modals';
 import type React from 'react';
 import { useState } from 'react';
 
-import ActionButton, { type ActionButtonData } from './elements/ActionButton';
-import useUserSketch from '../../../../hooks/useUserSketch';
-import useDirectory from '../../../../hooks/useDirectory';
-import ImageAssetList from './elements/ImageAssetList';
-import UserSketchLoad from './elements/UserSketchLoad';
-import UserSketchSave from './elements/UserSketchSave';
-import { usePlay } from '../../../../contexts/Play';
-import { useApp } from '../../../../contexts/App';
-import useAsset from '../../../../hooks/useAsset';
-import Widget from '../../Widget';
+import useUserSketch from '../../../../hooks/useUserSketch.js';
+import useDirectory from '../../../../hooks/useDirectory.js';
+import ImageAssetList from './elements/ImageAssetList.js';
+import UserSketchLoad from './elements/UserSketchLoad.js';
+import UserSketchSave from './elements/UserSketchSave.js';
+import { usePlay } from '../../../../contexts/Play.js';
+import { useApp } from '../../../../contexts/App.js';
+import useAsset from '../../../../hooks/useAsset.js';
+import Widget from '../../Widget.js';
+import ActionButton, {
+    type ActionButtonData
+} from './elements/ActionButton.js';
 import {
     WidgetType,
     type Asset,
     type SketchCreateBody,
     type SketchUpdateBody
-} from '../../../../../types';
+} from '../../../../../types/index.js';
 import FileExplorer, {
     type FileExplorerItem,
     FileExplorerItemType
-} from '../../../../common/FileExplorer';
+} from '../../../../common/FileExplorer.js';
 
 interface SketchWidgetProps {
     onClose: (widget: WidgetType) => void;

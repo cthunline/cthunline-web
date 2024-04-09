@@ -2,9 +2,9 @@ import { type SeventhSeaBackground } from '@cthunline/games';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 
-import FieldLayout from '../../generic/fieldLayout/FieldLayout';
-import { GameId } from '../../../../../types';
-import { backgroundFields } from '../fields';
+import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
+import { GameId } from '../../../../../types/index.js';
+import { backgroundFields } from '../fields.js';
 
 interface BackgroundsProps {
     backgrounds: SeventhSeaBackground[];

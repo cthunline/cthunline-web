@@ -1,7 +1,7 @@
 import { Autocomplete, type AutocompleteProps } from '@mantine/core';
 import { useMemo } from 'react';
 
-import { type TextInputVariant } from './TextInput';
+import { type TextInputVariant } from './TextInput.js';
 
 export interface AutocompleteInputValue<
     D extends { [f in F]: string },

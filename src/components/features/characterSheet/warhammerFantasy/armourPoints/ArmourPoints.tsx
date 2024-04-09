@@ -5,10 +5,10 @@ import {
     type WarhammerFantasyArmourPoints
 } from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import { onlyNumbers } from '../../../../../services/tools';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
 
 interface ArmourPointsInputProps {
     readonly: boolean;

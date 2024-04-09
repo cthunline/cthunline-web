@@ -1,5 +1,5 @@
-import { type DicesRequest, type PlaySocket } from '../../../types';
-import { useApp } from '../../contexts/App';
+import { type DicesRequest, type PlaySocket } from '../../../types/index.js';
+import { useApp } from '../../contexts/App.js';
 
 export interface DiceHookExport {
     requestDice: (request: DicesRequest, isPrivate: boolean) => void;

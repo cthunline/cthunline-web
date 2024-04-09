@@ -10,7 +10,7 @@ import {
     type WarhammerFantasyEncumbrance
 } from '@cthunline/games';
 
-import { sortObjectsBy } from '../../../../services/tools';
+import { sortObjectsBy } from '../../../../services/tools.js';
 
 export const getCharacteristicBonus = (
     char: WarhammerFantasyCharacteristic

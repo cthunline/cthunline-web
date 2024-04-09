@@ -21,12 +21,16 @@ import {
     type WarhammerFantasyParty
 } from '@cthunline/games';
 
-import { controlStatus, controlWounds } from '../warhammerFantasySheet.helper';
-import FieldLayout from '../../generic/fieldLayout/FieldLayout';
-import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import { useApp } from '../../../../contexts/App';
-import { GameId } from '../../../../../types';
-import Advantage from './Advantage';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
+import TextInput from '../../../../common/TextInput.js';
+import { GameId } from '../../../../../types/index.js';
+import { useApp } from '../../../../contexts/App.js';
+import Advantage from './Advantage.js';
+import {
+    controlStatus,
+    controlWounds
+} from '../warhammerFantasySheet.helper.js';
 import {
     fateFields,
     resilienceFields,
@@ -35,8 +39,7 @@ import {
     woundsFields,
     ambitionsFields,
     partyFields
-} from '../fields';
-import TextInput from '../../../../common/TextInput';
+} from '../fields.js';
 
 export interface StatusProps {
     readonly: boolean;

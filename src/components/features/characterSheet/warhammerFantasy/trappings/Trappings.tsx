@@ -5,10 +5,10 @@ import {
     type WarhammerFantasyTrapping
 } from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import { useApp } from '../../../../contexts/App';
-import AddTrappingRow from './AddTrappingRow';
-import TrappingRow from './TrappingRow';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import { useApp } from '../../../../contexts/App.js';
+import AddTrappingRow from './AddTrappingRow.js';
+import TrappingRow from './TrappingRow.js';
 
 interface TrappingsProps {
     readonly: boolean;

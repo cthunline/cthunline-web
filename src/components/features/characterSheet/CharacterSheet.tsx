@@ -8,12 +8,12 @@ import {
     type CoCCharacter
 } from '@cthunline/games';
 
-import WarhammerFantasySheet from './warhammerFantasy/WarhammerFantasySheet';
-import { type CharacterData, GameId } from '../../../types';
-import SeventhSeaSheet from './seventhSea/SeventhSeaSheet';
-import CoCSheet from './callOfCthulhu/CoCSheet';
-import SWD6Sheet from './starWarsD6/SWD6Sheet';
-import DnD5Sheet from './dnd5/DnD5Sheet';
+import WarhammerFantasySheet from './warhammerFantasy/WarhammerFantasySheet.js';
+import { type CharacterData, GameId } from '../../../types/index.js';
+import SeventhSeaSheet from './seventhSea/SeventhSeaSheet.js';
+import CoCSheet from './callOfCthulhu/CoCSheet.js';
+import SWD6Sheet from './starWarsD6/SWD6Sheet.js';
+import DnD5Sheet from './dnd5/DnD5Sheet.js';
 
 export interface CharacterSheetProps {
     readonly: boolean;

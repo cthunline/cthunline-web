@@ -5,10 +5,10 @@ import {
     type DnD5HitPoints
 } from '@cthunline/games';
 
-import { onlyNumbers } from '../../../../../services/tools';
-import { displayModifier } from '../dnd5Sheet.helper';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import { displayModifier } from '../dnd5Sheet.helper.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
 
 interface CombatProps {
     combat: DnD5Combat;

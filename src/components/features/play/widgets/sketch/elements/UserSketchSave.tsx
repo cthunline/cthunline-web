@@ -6,14 +6,14 @@ import { modals } from '@mantine/modals';
 import { useForm } from '@mantine/form';
 import z from 'zod';
 
-import { useApp } from '../../../../../contexts/App';
-import Form from '../../../../../common/Form';
+import { useApp } from '../../../../../contexts/App.js';
+import Form from '../../../../../common/Form.js';
 import {
     type SketchData,
     type SketchCreateBody,
     type SketchUpdateBody,
     type Sketch
-} from '../../../../../../types';
+} from '../../../../../../types/index.js';
 
 const userSketchFormSchema = z.object({
     name: z.string().min(3)

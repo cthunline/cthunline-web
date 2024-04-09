@@ -6,7 +6,7 @@ import {
     type SWD6Skill
 } from '@cthunline/games';
 
-import Attribute from './Attribute';
+import Attribute from './Attribute.js';
 
 interface AttributeProps {
     attributes: SWD6Attributes;

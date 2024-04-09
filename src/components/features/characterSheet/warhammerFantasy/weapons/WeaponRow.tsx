@@ -2,9 +2,9 @@ import { type WarhammerFantasyWeapon } from '@cthunline/games';
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { onlyNumbers } from '../../../../../services/tools';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
 
 type WeaponRowInputProps = {
     readonly: boolean;

@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import { type Asset, type AssetCreateBody } from '../../types';
-import { toast } from '../../services/toast';
-import { useApp } from '../contexts/App';
+import { type Asset, type AssetCreateBody } from '../../types/index.js';
+import { toast } from '../../services/toast.js';
+import { useApp } from '../contexts/App.js';
 import {
     deleteAsset as deleteAssetRequest,
     getAssets as getAssetsRequest,
     uploadAssets as uploadAssetsRequest
-} from '../../services/requests/asset';
+} from '../../services/requests/asset.js';
 
 interface AssetHookOptions {
     loadList?: boolean;

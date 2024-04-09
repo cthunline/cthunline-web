@@ -1,10 +1,12 @@
 import { Checkbox, Grid, Textarea } from '@mantine/core';
 
-import TextInput, { type TextInputVariant } from '../../../../common/TextInput';
-import { onlyNumbers } from '../../../../../services/tools';
-import SectionTitle from '../sectionTitle/SectionTitle';
-import { type GameId } from '../../../../../types';
-import { useApp } from '../../../../contexts/App';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import { type GameId } from '../../../../../types/index.js';
+import SectionTitle from '../sectionTitle/SectionTitle.js';
+import { useApp } from '../../../../contexts/App.js';
+import TextInput, {
+    type TextInputVariant
+} from '../../../../common/TextInput.js';
 
 export interface Field<DataType> {
     key?: keyof DataType;

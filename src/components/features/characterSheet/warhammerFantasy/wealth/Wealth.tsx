@@ -5,11 +5,11 @@ import {
     type WarhammerFantasyWealth
 } from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import FieldLayout from '../../generic/fieldLayout/FieldLayout';
-import { useApp } from '../../../../contexts/App';
-import { GameId } from '../../../../../types';
-import { wealthFields } from '../fields';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
+import { GameId } from '../../../../../types/index.js';
+import { useApp } from '../../../../contexts/App.js';
+import { wealthFields } from '../fields.js';
 
 export interface WealthProps {
     readonly: boolean;

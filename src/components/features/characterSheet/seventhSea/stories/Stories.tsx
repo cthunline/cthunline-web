@@ -2,7 +2,7 @@ import { ActionIcon, Group, Stack } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { type SeventhSeaStory } from '@cthunline/games';
 
-import Story from './Story';
+import Story from './Story.js';
 
 interface StoriesProps {
     stories: SeventhSeaStory[];

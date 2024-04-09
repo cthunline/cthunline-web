@@ -1,12 +1,12 @@
 import { type DnD5Spellcasting } from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
 
-import { onlyNumbers } from '../../../../../services/tools';
-import { spellcastingFields } from './spellcasting.data';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
-import SpellLevel from './SpellLevel';
-import Cantrips from './Cantrips';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import { spellcastingFields } from './spellcasting.data.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
+import SpellLevel from './SpellLevel.js';
+import Cantrips from './Cantrips.js';
 
 interface SpellcastingProps {
     spellcasting: DnD5Spellcasting;

@@ -26,24 +26,24 @@ import {
     type SeventhSeaAdvantage
 } from '@cthunline/games';
 
-import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs';
-import SectionTitle from '../generic/sectionTitle/SectionTitle';
-import Characteristics from './characteristics/Characteristics';
-import { type CharacterData, GameId } from '../../../../types';
-import FieldLayout from '../generic/fieldLayout/FieldLayout';
-import SeventhSeaLogo from '../../../svg/games/SeventhSea';
-import { biographyFields, arcanaFields } from './fields';
-import Backgrounds from './backgrounds/Backgrounds';
-import Portrait from '../generic/portrait/Portrait';
-import DeathSpiral from './deathSpiral/DeathSpiral';
-import Advantages from './advantages/Advantages';
-import { useApp } from '../../../contexts/App';
-import Stories from './stories/Stories';
+import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
+import { type CharacterData, GameId } from '../../../../types/index.js';
+import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
+import Characteristics from './characteristics/Characteristics.js';
+import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
+import SeventhSeaLogo from '../../../svg/games/SeventhSea.js';
+import { biographyFields, arcanaFields } from './fields.js';
+import Backgrounds from './backgrounds/Backgrounds.js';
+import Portrait from '../generic/portrait/Portrait.js';
+import DeathSpiral from './deathSpiral/DeathSpiral.js';
+import Advantages from './advantages/Advantages.js';
+import { useApp } from '../../../contexts/App.js';
+import Stories from './stories/Stories.js';
 import {
     defaultBackground,
     defaultStory,
     defaultAdvantage
-} from './seventhSeaSheet.helper';
+} from './seventhSeaSheet.helper.js';
 
 export interface SeventhSeaSheetProps {
     readonly: boolean;

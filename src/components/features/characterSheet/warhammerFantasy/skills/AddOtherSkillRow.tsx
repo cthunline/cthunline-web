@@ -8,9 +8,9 @@ import {
     type WarhammerFantasyCharacter
 } from '@cthunline/games';
 
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
-import Select from '../../../../common/Select';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
+import Select from '../../../../common/Select.js';
 
 interface OtherSkillFormData {
     name: string;

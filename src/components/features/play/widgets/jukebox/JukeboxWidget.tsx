@@ -2,16 +2,16 @@ import { useEffect, useRef, useState } from 'react';
 import { Box, Checkbox } from '@mantine/core';
 import { HiMusicNote } from 'react-icons/hi';
 
-import { WidgetType, type Asset } from '../../../../../types';
-import { getAssetUrl } from '../../../../../services/api';
-import useDirectory from '../../../../hooks/useDirectory';
-import useAsset from '../../../../hooks/useAsset';
-import { useApp } from '../../../../contexts/App';
-import Widget from '../../Widget';
+import { WidgetType, type Asset } from '../../../../../types/index.js';
+import { getAssetUrl } from '../../../../../services/api.js';
+import useDirectory from '../../../../hooks/useDirectory.js';
+import useAsset from '../../../../hooks/useAsset.js';
+import { useApp } from '../../../../contexts/App.js';
+import Widget from '../../Widget.js';
 import FileExplorer, {
     type FileExplorerItem,
     FileExplorerItemType
-} from '../../../../common/FileExplorer';
+} from '../../../../common/FileExplorer.js';
 
 interface JukeboxWidgetProps {
     onPlay: (asset: Asset, time: number) => void;

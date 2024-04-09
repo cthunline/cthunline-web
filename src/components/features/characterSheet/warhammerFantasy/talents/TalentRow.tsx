@@ -2,9 +2,9 @@ import { type WarhammerFantasyTalent } from '@cthunline/games';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { ActionIcon, Box, Group } from '@mantine/core';
 
-import { onlyNumbers } from '../../../../../services/tools';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
 
 type TalentRowInputProps = {
     readonly: boolean;

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiUsers } from 'react-icons/fi';
 
-import { useApp } from '../contexts/App';
+import { useApp } from '../contexts/App.js';
 
 interface NavMenuItem {
     icon: JSX.Element;

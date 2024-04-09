@@ -1,11 +1,11 @@
-import { callApi } from '../api';
+import { callApi } from '../api.js';
 
 import {
     type User,
     type UserCreateBody,
     type UserEditBody,
     type UserRegisterBody
-} from '../../types';
+} from '../../types/index.js';
 
 export const getUsers = async (includeDisabled?: boolean) => {
     const urlQuery = includeDisabled ? '?disabled=true' : '';

@@ -5,10 +5,10 @@ import {
     type WarhammerFantasyOtherSkill
 } from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import AddOtherSkillRow from './AddOtherSkillRow';
-import { useApp } from '../../../../contexts/App';
-import SkillRow from './SkillRow';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import AddOtherSkillRow from './AddOtherSkillRow.js';
+import { useApp } from '../../../../contexts/App.js';
+import SkillRow from './SkillRow.js';
 
 interface OtherSkillsProps {
     readonly: boolean;

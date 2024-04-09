@@ -1,7 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import { toast } from '../../services/toast';
-import { useApp } from '../contexts/App';
+import { toast } from '../../services/toast.js';
+import { useApp } from '../contexts/App.js';
+import {
+    type Character,
+    type CharacterCreateBody,
+    type CharacterEditBody,
+    type PortraitUploadBody
+} from '../../types/index.js';
 import {
     createCharacter as createCharacterRequest,
     deleteCharacter as deleteCharacterRequest,
@@ -11,14 +17,7 @@ import {
     deletePortrait as deletePortraitRequest,
     transferCharacter as transferCharacterRequest,
     uploadPortrait as uploadPortraitRequest
-} from '../../services/requests/character';
-
-import {
-    type Character,
-    type CharacterCreateBody,
-    type CharacterEditBody,
-    type PortraitUploadBody
-} from '../../types';
+} from '../../services/requests/character.js';
 
 interface CharacterHookOptions {
     loadList?: boolean;

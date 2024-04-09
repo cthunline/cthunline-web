@@ -2,10 +2,10 @@ import { useRef, useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Loader } from '@mantine/core';
 
-import CharacterSheet from '../../features/characterSheet/CharacterSheet';
-import { type Character, type CharacterData } from '../../../types';
-import { deepEqual } from '../../../services/tools';
-import useCharacter from '../../hooks/useCharacter';
+import CharacterSheet from '../../features/characterSheet/CharacterSheet.js';
+import { type Character, type CharacterData } from '../../../types/index.js';
+import { deepEqual } from '../../../services/tools.js';
+import useCharacter from '../../hooks/useCharacter.js';
 
 const CharacterForm = () => {
     const { characterId: paramCharId } = useParams();

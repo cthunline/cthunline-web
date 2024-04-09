@@ -2,11 +2,11 @@ import { ActionIcon, Box, Checkbox, Group } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { type CoCSkill } from '@cthunline/games';
 
-import { onlyNumbers } from '../../../../../services/tools';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
-import { controlSkill } from '../cocSheet.helper';
-import { skillKeys } from './skills.data';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
+import { controlSkill } from '../cocSheet.helper.js';
+import { skillKeys } from './skills.data.js';
 
 interface SkillProps {
     index: number;

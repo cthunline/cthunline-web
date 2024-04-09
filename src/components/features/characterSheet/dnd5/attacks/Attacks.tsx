@@ -2,10 +2,10 @@ import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { type DnD5Attack } from '@cthunline/games';
 
-import { onlyNumbers } from '../../../../../services/tools';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
-import { attackFields } from './attacks.data';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
+import { attackFields } from './attacks.data.js';
 
 interface AttacksProps {
     attacks: DnD5Attack[];

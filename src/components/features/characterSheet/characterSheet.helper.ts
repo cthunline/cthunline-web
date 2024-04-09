@@ -6,7 +6,7 @@ import {
     warhammerFantasy
 } from '@cthunline/games';
 
-import { GameId } from '../../../types';
+import { GameId } from '../../../types/index.js';
 
 export const getDefaultData = (gameId: string) => {
     if (gameId === GameId.callOfCthulhu) {

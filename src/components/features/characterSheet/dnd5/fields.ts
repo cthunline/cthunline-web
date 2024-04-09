@@ -3,7 +3,8 @@ import {
     type DnD5Features,
     type DnD5Story
 } from '@cthunline/games';
-import { type Field } from '../generic/fieldLayout/FieldLayout';
+
+import { type Field } from '../generic/fieldLayout/FieldLayout.js';
 
 export const biographyFields: Field<DnD5Biography>[] = [
     {

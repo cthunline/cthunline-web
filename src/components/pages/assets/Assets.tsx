@@ -4,16 +4,16 @@ import { HiMusicNote } from 'react-icons/hi';
 import { modals } from '@mantine/modals';
 import { useState } from 'react';
 
-import useDirectory from '../../hooks/useDirectory';
-import ContentBox from '../../common/ContentBox';
-import { toast } from '../../../services/toast';
-import { useApp } from '../../contexts/App';
-import useAsset from '../../hooks/useAsset';
-import DirectoryForm from './DirectoryForm';
+import useDirectory from '../../hooks/useDirectory.js';
+import ContentBox from '../../common/ContentBox.js';
+import { toast } from '../../../services/toast.js';
+import { useApp } from '../../contexts/App.js';
+import useAsset from '../../hooks/useAsset.js';
+import DirectoryForm from './DirectoryForm.js';
 import FileExplorer, {
     type FileExplorerItem,
     FileExplorerItemType
-} from '../../common/FileExplorer';
+} from '../../common/FileExplorer.js';
 
 const allowedMimeTypes = [
     'image/jpeg',

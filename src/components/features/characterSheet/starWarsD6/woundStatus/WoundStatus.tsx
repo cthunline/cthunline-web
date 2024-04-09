@@ -1,8 +1,11 @@
 import { Box, Checkbox, Group, Stack } from '@mantine/core';
 import { type SWD6WoundStatus } from '@cthunline/games';
 
-import { type WoundStatusField, woundStatusFields } from './woundStatus.data';
-import { useApp } from '../../../../contexts/App';
+import { useApp } from '../../../../contexts/App.js';
+import {
+    type WoundStatusField,
+    woundStatusFields
+} from './woundStatus.data.js';
 
 interface WoundStatusProps {
     woundStatus: SWD6WoundStatus;

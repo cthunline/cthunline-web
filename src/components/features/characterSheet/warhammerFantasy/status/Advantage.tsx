@@ -3,8 +3,8 @@ import { type WarhammerFantasyCharacter } from '@cthunline/games';
 import { FaPlus, FaMinus } from 'react-icons/fa6';
 import { GiOrbDirection } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import { useApp } from '../../../../contexts/App';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import { useApp } from '../../../../contexts/App.js';
 
 export interface AdvantageProps extends Omit<GroupProps, 'onChange'> {
     readonly: boolean;

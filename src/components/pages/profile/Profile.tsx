@@ -4,13 +4,13 @@ import { useForm } from '@mantine/form';
 import z from 'zod';
 import { Box, Button, Group, Stack, TextInput, Title } from '@mantine/core';
 
-import { type SelectOption, languages } from '../../../types';
-import { ucfirst } from '../../../services/tools';
-import ContentBox from '../../common/ContentBox';
-import { useApp } from '../../contexts/App';
-import useUser from '../../hooks/useUser';
-import Form from '../../common/Form';
-import Select from '../../common/Select';
+import { type SelectOption, languages } from '../../../types/index.js';
+import { ucfirst } from '../../../services/tools.js';
+import ContentBox from '../../common/ContentBox.js';
+import { useApp } from '../../contexts/App.js';
+import useUser from '../../hooks/useUser.js';
+import Select from '../../common/Select.js';
+import Form from '../../common/Form.js';
 
 const profileFormSchema = z
     .object({

@@ -1,7 +1,7 @@
 import { GiWizardFace } from 'react-icons/gi';
 import { Title } from '@mantine/core';
 
-import { useApp } from '../../contexts/App';
+import { useApp } from '../../contexts/App.js';
 
 const Home = () => {
     const { T } = useApp();

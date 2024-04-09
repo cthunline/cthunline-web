@@ -5,7 +5,10 @@ import {
     type SelectProps as MantineSelectProps
 } from '@mantine/core';
 
-import { type SelectOption, type SelectOptionGroup } from '../../types';
+import {
+    type SelectOption,
+    type SelectOptionGroup
+} from '../../types/index.js';
 
 type SelectProps = Omit<
     MantineSelectProps,

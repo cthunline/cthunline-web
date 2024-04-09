@@ -6,11 +6,11 @@ import { useForm } from '@mantine/form';
 import { GiD10 } from 'react-icons/gi';
 import z from 'zod';
 
-import ContentBox from '../../common/ContentBox';
-import { toast } from '../../../services/toast';
-import { useApp } from '../../contexts/App';
-import Form from '../../common/Form';
-import Link from '../../common/Link';
+import ContentBox from '../../common/ContentBox.js';
+import { toast } from '../../../services/toast.js';
+import { useApp } from '../../contexts/App.js';
+import Form from '../../common/Form.js';
+import Link from '../../common/Link.js';
 
 const loginFormSchema = z.object({
     email: z.string().email(),

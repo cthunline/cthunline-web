@@ -2,9 +2,9 @@ import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { ActionIcon } from '@mantine/core';
 import { modals } from '@mantine/modals';
 
-import InteractiveList from '../../../../../common/InteractiveList';
-import { type Sketch } from '../../../../../../types';
-import { useApp } from '../../../../../contexts/App';
+import InteractiveList from '../../../../../common/InteractiveList.js';
+import { type Sketch } from '../../../../../../types/index.js';
+import { useApp } from '../../../../../contexts/App.js';
 
 interface UserSketchSelectorProps {
     userSketchs: Sketch[];

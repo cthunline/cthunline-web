@@ -29,25 +29,25 @@ import {
     type DnD5Spellcasting
 } from '@cthunline/games';
 
-import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs';
-import { biographyFields, featuresFields, storyFields } from './fields';
-import { getDefaulSpellLevel } from './spellcasting/spellcasting.data';
-import { type CharacterData, GameId } from '../../../../types';
-import SectionTitle from '../generic/sectionTitle/SectionTitle';
-import FieldLayout from '../generic/fieldLayout/FieldLayout';
-import { controlCharacterData } from './dnd5Sheet.helper';
-import SavingThrows from './savingThrows/SavingThrows';
-import { defaultAttack } from './attacks/attacks.data';
-import Spellcasting from './spellcasting/Spellcasting';
-import Portrait from '../generic/portrait/Portrait';
-import Statistics from './statistics/Statistics';
-import { useApp } from '../../../contexts/App';
-import DnD5Logo from '../../../svg/games/DnD5';
-import Abilities from './abilities/Abilities';
-import Equipment from './equipment/Equipment';
-import Attacks from './attacks/Attacks';
-import Combat from './combat/Combat';
-import Skills from './skills/Skills';
+import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
+import { biographyFields, featuresFields, storyFields } from './fields.js';
+import { getDefaulSpellLevel } from './spellcasting/spellcasting.data.js';
+import { type CharacterData, GameId } from '../../../../types/index.js';
+import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
+import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
+import { controlCharacterData } from './dnd5Sheet.helper.js';
+import SavingThrows from './savingThrows/SavingThrows.js';
+import { defaultAttack } from './attacks/attacks.data.js';
+import Spellcasting from './spellcasting/Spellcasting.js';
+import Portrait from '../generic/portrait/Portrait.js';
+import Statistics from './statistics/Statistics.js';
+import { useApp } from '../../../contexts/App.js';
+import DnD5Logo from '../../../svg/games/DnD5.js';
+import Abilities from './abilities/Abilities.js';
+import Equipment from './equipment/Equipment.js';
+import Attacks from './attacks/Attacks.js';
+import Combat from './combat/Combat.js';
+import Skills from './skills/Skills.js';
 
 type PartialDataField =
     | 'abilities'

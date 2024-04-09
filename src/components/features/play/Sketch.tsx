@@ -2,18 +2,18 @@ import { useClickOutside } from '@mantine/hooks';
 import { useEffect, useRef } from 'react';
 import { Box } from '@mantine/core';
 
-import useDrawing from '../../hooks/sketch/useDrawing';
-import useItems from '../../hooks/sketch/useItems';
-import { viewBox } from '../../../services/sketch';
-import SketchImage from './sketch/SketchImage';
-import SketchToken from './sketch/SketchToken';
-import { usePlay } from '../../contexts/Play';
+import useDrawing from '../../hooks/sketch/useDrawing.js';
+import useItems from '../../hooks/sketch/useItems.js';
+import { viewBox } from '../../../services/sketch.js';
+import SketchImage from './sketch/SketchImage.js';
+import SketchToken from './sketch/SketchToken.js';
+import { usePlay } from '../../contexts/Play.js';
 import {
     type CardinalDirection,
     type Color,
     type SessionUser,
     SketchItemType
-} from '../../../types';
+} from '../../../types/index.js';
 
 interface SketchProps {
     isMaster?: boolean;

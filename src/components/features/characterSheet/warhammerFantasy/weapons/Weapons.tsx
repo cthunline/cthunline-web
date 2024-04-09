@@ -5,10 +5,10 @@ import {
     type WarhammerFantasyWeapon
 } from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle';
-import { useApp } from '../../../../contexts/App';
-import AddWeaponRow from './AddWeaponRow';
-import WeaponRow from './WeaponRow';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import { useApp } from '../../../../contexts/App.js';
+import AddWeaponRow from './AddWeaponRow.js';
+import WeaponRow from './WeaponRow.js';
 
 interface WeaponsProps {
     readonly: boolean;

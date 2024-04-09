@@ -4,11 +4,11 @@ import { MdCheck } from 'react-icons/md';
 import { modals } from '@mantine/modals';
 import { HiPlus } from 'react-icons/hi';
 
-import UserForm, { type UserSubmitData } from '../../features/user/UserForm';
-import ContentBox from '../../common/ContentBox';
-import { useApp } from '../../contexts/App';
-import useUser from '../../hooks/useUser';
-import Invitation from './Invitation';
+import UserForm, { type UserSubmitData } from '../../features/user/UserForm.js';
+import ContentBox from '../../common/ContentBox.js';
+import { useApp } from '../../contexts/App.js';
+import useUser from '../../hooks/useUser.js';
+import Invitation from './Invitation.js';
 
 const createUserModalId = 'create-user-modal';
 

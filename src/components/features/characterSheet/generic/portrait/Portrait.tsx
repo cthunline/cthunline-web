@@ -1,7 +1,7 @@
 import { MdUploadFile, MdOutlineDeleteOutline } from 'react-icons/md';
 import { ActionIcon, FileButton, Stack } from '@mantine/core';
 
-import { getAssetUrl } from '../../../../../services/api';
+import { getAssetUrl } from '../../../../../services/api.js';
 
 interface PortraitProps {
     value: string | null;

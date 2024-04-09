@@ -1,10 +1,10 @@
-import { callApi } from '../api';
+import { callApi } from '../api.js';
 
 import {
     type Sketch,
     type SketchCreateBody,
     type SketchUpdateBody
-} from '../../types';
+} from '../../types/index.js';
 
 export const getSketchs = async () => {
     const { sketchs } = await callApi<{ sketchs: Sketch[] }>({

@@ -4,11 +4,11 @@ import { useForm } from '@mantine/form';
 import { useMemo } from 'react';
 import z from 'zod';
 
-import { type SelectOption } from '../../../types';
-import { useApp } from '../../contexts/App';
-import useUser from '../../hooks/useUser';
-import Select from '../../common/Select';
-import Form from '../../common/Form';
+import { type SelectOption } from '../../../types/index.js';
+import { useApp } from '../../contexts/App.js';
+import useUser from '../../hooks/useUser.js';
+import Select from '../../common/Select.js';
+import Form from '../../common/Form.js';
 
 const transferFormSchema = z.object({
     userId: z.number().int().min(1)

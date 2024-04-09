@@ -6,7 +6,7 @@ import {
     MdOutlineKeyboardBackspace
 } from 'react-icons/md';
 
-import InteractiveList from './InteractiveList';
+import InteractiveList from './InteractiveList.js';
 
 export enum FileExplorerItemType {
     directory = 'directory',

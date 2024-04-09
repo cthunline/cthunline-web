@@ -1,11 +1,11 @@
 import { Box, Group, Tooltip } from '@mantine/core';
 import { type CoCPoint } from '@cthunline/games';
 
-import { onlyNumbers } from '../../../../../services/tools';
-import TextInput from '../../../../common/TextInput';
-import { pointsKeys } from './characteristics.data';
-import { useApp } from '../../../../contexts/App';
-import { controlPoint } from '../cocSheet.helper';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { pointsKeys } from './characteristics.data.js';
+import { useApp } from '../../../../contexts/App.js';
+import { controlPoint } from '../cocSheet.helper.js';
 
 interface PointProps {
     field: string;

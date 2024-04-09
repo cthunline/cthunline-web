@@ -2,10 +2,10 @@ import { ActionIcon, Box, Menu, Title, Tooltip } from '@mantine/core';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { MdOutlineShare } from 'react-icons/md';
 
-import InteractiveList from '../../../../common/InteractiveList';
-import { type Note, type User } from '../../../../../types';
-import NoteListMenuDropdown from './NoteListMenuDropdown';
-import { useApp } from '../../../../contexts/App';
+import InteractiveList from '../../../../common/InteractiveList.js';
+import { type Note, type User } from '../../../../../types/index.js';
+import NoteListMenuDropdown from './NoteListMenuDropdown.js';
+import { useApp } from '../../../../contexts/App.js';
 
 interface NoteListProps {
     notes: Note[];

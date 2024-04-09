@@ -4,8 +4,8 @@ import { MdOutlineContactPage } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { FiFolder } from 'react-icons/fi';
 
-import { useApp } from '../contexts/App';
-import NavMenu from './NavMenu';
+import { useApp } from '../contexts/App.js';
+import NavMenu from './NavMenu.js';
 
 /* eslint-disable react/no-unused-prop-types */
 interface NavMenuItem {

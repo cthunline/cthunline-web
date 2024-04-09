@@ -2,8 +2,8 @@ import { ActionIcon, Group, Stack, TextInput, Textarea } from '@mantine/core';
 import { useState, useEffect, useRef } from 'react';
 import { MdArrowBack } from 'react-icons/md';
 
-import { useApp } from '../../../../contexts/App';
-import { type Note } from '../../../../../types';
+import { type Note } from '../../../../../types/index.js';
+import { useApp } from '../../../../contexts/App.js';
 
 interface NoteEditorProps {
     note: Note;

@@ -3,11 +3,11 @@ import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { type DnD5SpellLevel } from '@cthunline/games';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import { spellLevelFields, defaultSpell } from './spellcasting.data';
-import { onlyNumbers } from '../../../../../services/tools';
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
-import SpellList from './SpellList';
+import { spellLevelFields, defaultSpell } from './spellcasting.data.js';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
+import SpellList from './SpellList.js';
 
 interface SpellLevelProps {
     spellLevel: DnD5SpellLevel;

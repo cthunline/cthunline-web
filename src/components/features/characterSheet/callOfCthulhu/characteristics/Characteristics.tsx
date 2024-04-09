@@ -10,11 +10,11 @@ import {
     type CoCSanity
 } from '@cthunline/games';
 
-import { charFields, pointsFields } from './characteristics.data';
-import Characteristic from './Characteristic';
-import Sanity from './Sanity';
-import Point from './Point';
-import Luck from './Luck';
+import { charFields, pointsFields } from './characteristics.data.js';
+import Characteristic from './Characteristic.js';
+import Sanity from './Sanity.js';
+import Point from './Point.js';
+import Luck from './Luck.js';
 
 interface CharacteristicsProps {
     characteristics: CoCCharacteristics;

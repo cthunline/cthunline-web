@@ -6,19 +6,19 @@ import { modals } from '@mantine/modals';
 import { HiPlus } from 'react-icons/hi';
 import { useMemo } from 'react';
 
-import useCharacter from '../../hooks/useCharacter';
-import useSession from '../../hooks/useSession';
-import { toast } from '../../../services/toast';
-import { useApp } from '../../contexts/App';
-import useGame from '../../hooks/useGame';
-import Select from '../../common/Select';
-import SessionForm from './SessionForm';
+import useCharacter from '../../hooks/useCharacter.js';
+import ContentBox from '../../common/ContentBox.js';
+import useSession from '../../hooks/useSession.js';
+import { toast } from '../../../services/toast.js';
+import { useApp } from '../../contexts/App.js';
+import useGame from '../../hooks/useGame.js';
+import Select from '../../common/Select.js';
+import SessionForm from './SessionForm.js';
 import {
     type SelectOption,
     type Character,
     type SessionCreateBody
-} from '../../../types';
-import ContentBox from '../../common/ContentBox';
+} from '../../../types/index.js';
 
 interface CharacterSelectorProps {
     characters: Character[];

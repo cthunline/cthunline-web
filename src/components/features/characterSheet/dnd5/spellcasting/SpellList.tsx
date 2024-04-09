@@ -2,7 +2,7 @@ import { ActionIcon, Box, Checkbox, Group, Stack } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { type DnD5Spell } from '@cthunline/games';
 
-import TextInput from '../../../../common/TextInput';
+import TextInput from '../../../../common/TextInput.js';
 
 interface SpellListProps {
     spells: DnD5Spell[];

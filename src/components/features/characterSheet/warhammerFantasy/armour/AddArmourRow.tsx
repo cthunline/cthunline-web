@@ -5,9 +5,9 @@ import { FiPlusCircle } from 'react-icons/fi';
 import { useForm } from '@mantine/form';
 import z from 'zod';
 
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
-import Form from '../../../../common/Form';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
+import Form from '../../../../common/Form.js';
 
 const armourFormSchema = z.object({
     name: z.string().min(1),

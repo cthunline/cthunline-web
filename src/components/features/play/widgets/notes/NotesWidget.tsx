@@ -2,14 +2,14 @@ import { modals } from '@mantine/modals';
 import { Stack } from '@mantine/core';
 import { useState } from 'react';
 
-import { type Note, WidgetType } from '../../../../../types';
-import { usePlay } from '../../../../contexts/Play';
-import { useApp } from '../../../../contexts/App';
-import useNote from '../../../../hooks/useNote';
-import NoteCreate from './NoteCreate';
-import NoteEditor from './NoteEditor';
-import Widget from '../../Widget';
-import NoteList from './NoteList';
+import { type Note, WidgetType } from '../../../../../types/index.js';
+import { usePlay } from '../../../../contexts/Play.js';
+import { useApp } from '../../../../contexts/App.js';
+import useNote from '../../../../hooks/useNote.js';
+import NoteCreate from './NoteCreate.js';
+import NoteEditor from './NoteEditor.js';
+import Widget from '../../Widget.js';
+import NoteList from './NoteList.js';
 
 interface NotesWidgetProps {
     onClose: (widget: WidgetType) => void;

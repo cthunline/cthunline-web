@@ -9,30 +9,30 @@ import {
     useMemo
 } from 'react';
 
-import { type User, type PlaySocket } from '../../types';
-import useSession from '../hooks/useSession';
-import { toast } from '../../services/toast';
-import { useApp } from './App';
+import { type User, type PlaySocket } from '../../types/index.js';
+import useSession from '../hooks/useSession.js';
+import { toast } from '../../services/toast.js';
+import { useApp } from './App.js';
 import useSketch, {
     type SketchHookExport,
     defaultSketchHookExport
-} from '../hooks/play/useSketch';
+} from '../hooks/play/useSketch.js';
 import useLogs, {
     type LogsHookExport,
     defaultLogsHookExport
-} from '../hooks/play/useLogs';
+} from '../hooks/play/useLogs.js';
 import useAudio, {
     type AudioHookExport,
     defaultAudioHookExport
-} from '../hooks/play/useAudio';
+} from '../hooks/play/useAudio.js';
 import useDice, {
     type DiceHookExport,
     defaultDiceHookExport
-} from '../hooks/play/useDice';
+} from '../hooks/play/useDice.js';
 import useSessionUsers, {
     type SessionUsersHookExport,
     defaultSessionUsersHookExport
-} from '../hooks/play/useSessionUsers';
+} from '../hooks/play/useSessionUsers.js';
 
 interface PlayProviderProps {
     children: JSX.Element | JSX.Element[];

@@ -4,7 +4,7 @@ import {
     type PlaySocket,
     type SessionUser,
     type Character
-} from '../../../types';
+} from '../../../types/index.js';
 
 export interface SessionUsersHookExport {
     users: SessionUser[];

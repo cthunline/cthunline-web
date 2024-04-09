@@ -1,19 +1,19 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import { toast } from '../../services/toast';
-import { useApp } from '../contexts/App';
+import { toast } from '../../services/toast.js';
+import { useApp } from '../contexts/App.js';
 import {
     createSketch,
     updateSketch,
     deleteSketch,
     getSketch,
     getSketchs
-} from '../../services/requests/sketch';
+} from '../../services/requests/sketch.js';
 import {
     type Sketch,
     type SketchCreateBody,
     type SketchUpdateBody
-} from '../../types';
+} from '../../types/index.js';
 
 interface CreateUserSketchOptions {
     data: SketchCreateBody;

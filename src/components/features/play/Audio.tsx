@@ -8,8 +8,8 @@ import {
     IoVolumeMute
 } from 'react-icons/io5';
 
-import { getAssetUrl } from '../../../services/api';
-import { usePlay } from '../../contexts/Play';
+import { getAssetUrl } from '../../../services/api.js';
+import { usePlay } from '../../contexts/Play.js';
 
 const Audio = () => {
     const { audioData } = usePlay();

@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { usePlay } from '../../contexts/Play';
-import { type SketchCoordinates } from '../../../types';
+import { type SketchCoordinates } from '../../../types/index.js';
+import { isMainClick } from '../../../services/tools.js';
+import { usePlay } from '../../contexts/Play.js';
 import {
     coordinatesToPath,
     getMouseEventSvgCoordinates
-} from '../../../services/sketch';
-import { isMainClick } from '../../../services/tools';
+} from '../../../services/sketch.js';
 
 // this hook holds state and event handlers for sketch drawing
 // it is meant to be used by the sketch component and sub components

@@ -6,7 +6,7 @@ import {
     type SeventhSeaStory
 } from '@cthunline/games';
 
-import { type Field } from '../generic/fieldLayout/FieldLayout';
+import { type Field } from '../generic/fieldLayout/FieldLayout.js';
 
 export const biographyFields: Field<SeventhSeaBiography>[] = [
     {

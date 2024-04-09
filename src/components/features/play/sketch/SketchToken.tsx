@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react';
 import { Tooltip } from '@mantine/core';
 
-import { getCssVar, getTextColor } from '../../../../services/tools';
-import { useApp } from '../../../contexts/App';
+import { getCssVar, getTextColor } from '../../../../services/tools.js';
+import { useApp } from '../../../contexts/App.js';
 import SketchItemContextMenu, {
     type ContextMenuPosition,
     contextMenuHandler
-} from './SketchItemContextMenu';
+} from './SketchItemContextMenu.js';
 import {
     type Color,
     type SessionUser,
     type SketchTokenAttachedData,
     type TooltipPlacement
-} from '../../../../types';
+} from '../../../../types/index.js';
 
 import './SketchToken.css';
 

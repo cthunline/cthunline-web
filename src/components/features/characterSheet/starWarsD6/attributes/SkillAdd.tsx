@@ -3,11 +3,11 @@ import { ActionIcon, Box, Group } from '@mantine/core';
 import { FiPlusCircle } from 'react-icons/fi';
 import { useReducer, useMemo } from 'react';
 
-import { skillList, defaultSkillData } from './skills.data';
-import { useApp } from '../../../../contexts/App';
+import { skillList, defaultSkillData } from './skills.data.js';
+import { useApp } from '../../../../contexts/App.js';
 import AutocompleteInput, {
     type AutocompleteInputValue
-} from '../../../../common/AutocompleteInput';
+} from '../../../../common/AutocompleteInput.js';
 
 interface SkillProps {
     attribute: SWD6Attribute;

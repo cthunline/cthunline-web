@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 
-import { getGames } from '../../services/requests/game';
-
-import { useApp } from '../contexts/App';
-
-import { type Game } from '../../types';
+import { getGames } from '../../services/requests/game.js';
+import { type Game } from '../../types/index.js';
+import { useApp } from '../contexts/App.js';
 
 const useGame = () => {
     const { handleApiError } = useApp();

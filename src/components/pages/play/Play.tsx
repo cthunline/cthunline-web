@@ -3,20 +3,20 @@ import { Group, Loader, Stack } from '@mantine/core';
 import { useRef, useState } from 'react';
 import { modals } from '@mantine/modals';
 
-import CharactersWidget from '../../features/play/widgets/characters/CharactersWidget';
-import CharacterWidget from '../../features/play/widgets/character/CharacterWidget';
-import JukeboxWidget from '../../features/play/widgets/jukebox/JukeboxWidget';
-import SketchWidget from '../../features/play/widgets/sketch/SketchWidget';
-import NotesWidget from '../../features/play/widgets/notes/NotesWidget';
-import DicesWidget from '../../features/play/widgets/dices/DicesWidget';
-import { PlayProvider, usePlay } from '../../contexts/Play';
-import { focusWidget } from '../../../services/widget';
-import Console from '../../features/play/Console';
-import Sketch from '../../features/play/Sketch';
-import Audio from '../../features/play/Audio';
-import { useApp } from '../../contexts/App';
-import { WidgetType } from '../../../types';
-import PlayMenu from './PlayMenu';
+import CharactersWidget from '../../features/play/widgets/characters/CharactersWidget.js';
+import CharacterWidget from '../../features/play/widgets/character/CharacterWidget.js';
+import JukeboxWidget from '../../features/play/widgets/jukebox/JukeboxWidget.js';
+import SketchWidget from '../../features/play/widgets/sketch/SketchWidget.js';
+import NotesWidget from '../../features/play/widgets/notes/NotesWidget.js';
+import DicesWidget from '../../features/play/widgets/dices/DicesWidget.js';
+import { PlayProvider, usePlay } from '../../contexts/Play.js';
+import { focusWidget } from '../../../services/widget.js';
+import Console from '../../features/play/Console.js';
+import { WidgetType } from '../../../types/index.js';
+import Sketch from '../../features/play/Sketch.js';
+import Audio from '../../features/play/Audio.js';
+import { useApp } from '../../contexts/App.js';
+import PlayMenu from './PlayMenu.js';
 
 const PlayContent = () => {
     const { T } = useApp();

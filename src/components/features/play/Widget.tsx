@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { MdClose } from 'react-icons/md';
 import Draggable from 'react-draggable';
 
-import { focusWidget } from '../../../services/widget';
+import { focusWidget } from '../../../services/widget.js';
 
 const triggerEvent = (el: Document | Element, event: string) => {
     el.dispatchEvent(

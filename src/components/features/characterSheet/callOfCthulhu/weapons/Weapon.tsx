@@ -2,9 +2,9 @@ import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { ActionIcon, Box, Group } from '@mantine/core';
 import { type CoCWeapon } from '@cthunline/games';
 
-import TextInput from '../../../../common/TextInput';
-import { useApp } from '../../../../contexts/App';
-import { weaponKeys } from './weapons.data';
+import TextInput from '../../../../common/TextInput.js';
+import { useApp } from '../../../../contexts/App.js';
+import { weaponKeys } from './weapons.data.js';
 
 interface WeaponProps {
     index: number;

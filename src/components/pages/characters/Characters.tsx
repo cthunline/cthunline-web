@@ -5,14 +5,14 @@ import { useMemo, useState } from 'react';
 import { modals } from '@mantine/modals';
 import { HiPlus } from 'react-icons/hi';
 
-import { getDefaultData } from '../../features/characterSheet/characterSheet.helper';
-import TransferForm, { type TransferData } from './TransferForm';
-import { type Game, type SelectOption } from '../../../types';
-import useCharacter from '../../hooks/useCharacter';
-import ContentBox from '../../common/ContentBox';
-import { useApp } from '../../contexts/App';
-import useGame from '../../hooks/useGame';
-import Select from '../../common/Select';
+import { getDefaultData } from '../../features/characterSheet/characterSheet.helper.js';
+import { type Game, type SelectOption } from '../../../types/index.js';
+import TransferForm, { type TransferData } from './TransferForm.js';
+import useCharacter from '../../hooks/useCharacter.js';
+import ContentBox from '../../common/ContentBox.js';
+import { useApp } from '../../contexts/App.js';
+import useGame from '../../hooks/useGame.js';
+import Select from '../../common/Select.js';
 
 interface TransferModalData {
     isOpen: boolean;

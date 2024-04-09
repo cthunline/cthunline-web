@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import DayJs from 'dayjs';
 
-import { useApp } from '../../contexts/App';
-import { type PlayLog, type User } from '../../../types';
+import { type PlayLog, type User } from '../../../types/index.js';
+import { useApp } from '../../contexts/App.js';
 
 export interface LogsHookExport {
     logs: PlayLog[];

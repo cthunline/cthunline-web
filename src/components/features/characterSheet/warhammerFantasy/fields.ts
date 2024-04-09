@@ -10,7 +10,7 @@ import {
     type WarhammerFantasyBiography
 } from '@cthunline/games';
 
-import { type Field } from '../generic/fieldLayout/FieldLayout';
+import { type Field } from '../generic/fieldLayout/FieldLayout.js';
 
 export const biographyFields: Field<WarhammerFantasyBiography>[] = [
     {

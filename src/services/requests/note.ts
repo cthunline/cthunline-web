@@ -1,6 +1,10 @@
-import { callApi } from '../api';
+import { callApi } from '../api.js';
 
-import { type Note, type NoteCreateBody, type NoteEditBody } from '../../types';
+import {
+    type Note,
+    type NoteCreateBody,
+    type NoteEditBody
+} from '../../types/index.js';
 
 export const getNotes = async (sessionId: number) => {
     const { notes, sharedNotes } = await callApi<{

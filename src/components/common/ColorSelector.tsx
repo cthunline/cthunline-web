@@ -1,6 +1,6 @@
 import { Group, UnstyledButton } from '@mantine/core';
 
-import { type Color, colors } from '../../types';
+import { type Color, colors } from '../../types/index.js';
 
 interface ColorSelectorProps {
     onChange?: (color: Color) => void;

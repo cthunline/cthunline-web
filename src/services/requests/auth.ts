@@ -1,6 +1,6 @@
-import { callApi } from '../api';
+import { callApi } from '../api.js';
 
-import { type User } from '../../types';
+import { type User } from '../../types/index.js';
 
 interface LoginBody {
     email: string;

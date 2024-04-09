@@ -9,15 +9,15 @@ import {
     GiDiceTwentyFacesTwenty
 } from 'react-icons/gi';
 
-import { useApp } from '../../../../contexts/App';
-import Widget from '../../Widget';
+import { useApp } from '../../../../contexts/App.js';
+import Widget from '../../Widget.js';
 import {
     WidgetType,
     type DiceType,
     type DicesData,
     type DicesRequest,
     diceTypes
-} from '../../../../../types';
+} from '../../../../../types/index.js';
 
 const defaultSelectedDices = Object.fromEntries(
     diceTypes.map((type) => [type, 0])

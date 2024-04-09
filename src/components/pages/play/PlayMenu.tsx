@@ -4,8 +4,8 @@ import { GiRollingDiceCup } from 'react-icons/gi';
 import { HiMusicNote } from 'react-icons/hi';
 import { CgNotes } from 'react-icons/cg';
 
-import { useApp } from '../../contexts/App';
-import { WidgetType } from '../../../types';
+import { WidgetType } from '../../../types/index.js';
+import { useApp } from '../../contexts/App.js';
 
 interface PlayMenuProps {
     isMaster: boolean;
