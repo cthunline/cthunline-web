@@ -173,7 +173,7 @@ const Characters = () => {
                     </Table.Thead>
                     <Table.Tbody>
                         {characterList.map(({ id, name, gameId }) => (
-                            <Table.Tr key={id}>
+                            <Table.Tr key={`character-${id}`}>
                                 <Table.Td>{getGame(gameId)?.name}</Table.Td>
                                 <Table.Td>
                                     {name.trim() || `[${T('common.unknown')}]`}

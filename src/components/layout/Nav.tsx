@@ -71,7 +71,11 @@ const Nav = () => {
             </AppShell.Section>
             <AppShell.Section grow style={sectionStyle}>
                 {navMenuItems.map(({ icon, route, textKey }: NavMenuItem) => (
-                    <UnstyledButton component={Link} to={route}>
+                    <UnstyledButton
+                        key={`nav-item-${textKey}`}
+                        component={Link}
+                        to={route}
+                    >
                         <Group
                             className={`nav-item ${pathname === route ? 'selected' : ''}`}
                             align="center"

@@ -143,7 +143,7 @@ const Sessions = () => {
                         {sessionList.map(({ id, name, gameId, master }) => {
                             const isMaster = master?.id === user?.id;
                             return (
-                                <Table.Tr key={id}>
+                                <Table.Tr key={`session-${id}`}>
                                     <Table.Td>
                                         <ActionIcon
                                             onClick={() =>
