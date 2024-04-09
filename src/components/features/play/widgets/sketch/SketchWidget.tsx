@@ -110,6 +110,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
     };
 
     const onUserSketchDelete = async (sketchId: number) => {
+        modals.close(loadSketchModalId);
         await deleteUserSketch({ sketchId });
     };
 

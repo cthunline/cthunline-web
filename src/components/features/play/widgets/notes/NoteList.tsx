@@ -68,7 +68,7 @@ const NoteList = ({
         <Box w="100%" h="360px" style={{ overflowY: 'auto' }}>
             {notesData.map(({ key, list, header }) =>
                 list.length ? (
-                    <Stack w="100%" gap="0.5rem">
+                    <Stack key={`notes-section-${key}`} w="100%" gap="0.5rem">
                         <Title key={`${key}-title`} order={6}>
                             {header}
                         </Title>

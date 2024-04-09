@@ -29,7 +29,6 @@
         "language": "language",
         "name": "name",
         "private": "private",
-        "privatly": "privatly",
         "public": "public",
         "publicly": "publicly",
         "required": "required",
@@ -97,6 +96,7 @@
                 "statusError": "socket {status} error"
             },
             "event": {
+                "dicePrivateResult": "secretly rolled {request} and the result is {result}",
                 "diceResult": "rolled {request} and the result is {result}",
                 "disconnected": "disconnected",
                 "editedCharacter": "edited character {name}",

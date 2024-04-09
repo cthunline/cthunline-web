@@ -129,6 +129,7 @@ const SketchItemContextMenu = ({
                     label={T('page.play.sketch.changeColor')}
                 >
                     <ColorSelector
+                        maw="10rem"
                         onChange={(color: Color) => {
                             onColorChange?.(color);
                             onClose();

@@ -44,7 +44,7 @@ const NoteEditor = ({ note, onEdit, onBack }: NoteEditorProps) => {
                 </ActionIcon>
                 <TextInput
                     readOnly={!isOwnedByUser}
-                    w="100%"
+                    flex={1}
                     value={title}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setTitle(e.target.value);

@@ -23,36 +23,36 @@ interface PlayMenuItemData {
 
 const playMenuItems: PlayMenuItemData[] = [
     {
-        icon: <MdOutlineContactPage size={40} />,
+        icon: <MdOutlineContactPage size="2.25rem" />,
         textKey: 'entity.character',
         widget: WidgetType.character,
         playerOnly: true
     },
     {
-        icon: <MdOutlineContactPage size={40} />,
+        icon: <MdOutlineContactPage size="2.25rem" />,
         textKey: 'entity.characters',
         widget: WidgetType.characters,
         adminOnly: true
     },
     {
-        icon: <GiRollingDiceCup size={40} />,
+        icon: <GiRollingDiceCup size="2.25rem" />,
         textKey: 'entity.dices',
         widget: WidgetType.dices
     },
     {
-        icon: <MdDraw size={40} />,
+        icon: <MdDraw size="2.25rem" />,
         textKey: 'entity.sketch',
         widget: WidgetType.sketch,
         adminOnly: true
     },
     {
-        icon: <HiMusicNote size={40} />,
+        icon: <HiMusicNote size="2.25rem" />,
         textKey: 'entity.jukebox',
         widget: WidgetType.jukebox,
         adminOnly: true
     },
     {
-        icon: <CgNotes size={40} />,
+        icon: <CgNotes size="2.25rem" />,
         textKey: 'entity.notes',
         widget: WidgetType.notes
     }
@@ -81,7 +81,7 @@ const PlayMenu = ({ isMaster, onWidgetOpen, onExit }: PlayMenuProps) => {
             (isMaster && !playerOnly) || (!isMaster && !adminOnly)
     );
     return (
-        <Stack w="3.5rem" h="100%">
+        <Stack w="3.5rem" h="100%" gap="1.5rem">
             {items.map(({ icon, textKey, widget }) => (
                 <PlayMenuItem
                     key={`play-menu-${widget}`}
@@ -91,7 +91,7 @@ const PlayMenu = ({ isMaster, onWidgetOpen, onExit }: PlayMenuProps) => {
                 />
             ))}
             <PlayMenuItem
-                icon={<MdLogout size={40} />}
+                icon={<MdLogout size="2.25rem" />}
                 textKey="action.exit"
                 onClick={() => onExit()}
             />

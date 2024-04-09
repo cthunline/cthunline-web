@@ -52,6 +52,8 @@ interface NoteList {
     sharedNotes: Note[];
 }
 
+const defaultNoteTitle = '?';
+
 const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
     const { handleApiError } = useApp();
 
@@ -100,7 +102,10 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
             isToast = true
         }: CreateNoteOptions): Promise<Note> => {
             try {
-                const note = await createNoteRequest(sessionId, data);
+                const note = await createNoteRequest(sessionId, {
+                    ...data,
+                    title: data.title.trim() ? data.title : defaultNoteTitle
+                });
                 if (isRefresh) {
                     await refresh();
                 }
@@ -123,7 +128,16 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
             isToast = true
         }: EditNoteOptions): Promise<Note> => {
             try {
-                const note = await editNoteRequest(noteId, data);
+                const note = await editNoteRequest(noteId, {
+                    ...data,
+                    ...(Object.hasOwn(data, 'title')
+                        ? {
+                              title: data.title?.trim()
+                                  ? data.title
+                                  : defaultNoteTitle
+                          }
+                        : {})
+                });
                 if (isRefresh) {
                     await refresh();
                 }

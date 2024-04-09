@@ -29,7 +29,6 @@
         "language": "langue",
         "name": "nom",
         "private": "privé",
-        "privatly": "secrètement",
         "public": "public",
         "publicly": "publiquement",
         "required": "requis",
@@ -97,6 +96,7 @@
                 "statusError": "Erreur de socket {status}"
             },
             "event": {
+                "dicePrivateResult": "a secrètement jeté {request} et le résultat est {result}",
                 "diceResult": "a jeté {request} et le résultat est {result}",
                 "disconnected": "déconnecté",
                 "editedCharacter": "a édité le personnage {name}",

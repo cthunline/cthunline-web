@@ -1,4 +1,4 @@
-import { ActionIcon, Box, Group, Stack, TextInput } from '@mantine/core';
+import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { FiPlusCircle } from 'react-icons/fi';
 import { MdSaveAs } from 'react-icons/md';
@@ -6,6 +6,7 @@ import { modals } from '@mantine/modals';
 import { useForm } from '@mantine/form';
 import z from 'zod';
 
+import TextInput from '../../../../../common/TextInput.js';
 import { useApp } from '../../../../../contexts/App.js';
 import Form from '../../../../../common/Form.js';
 import {
@@ -68,9 +69,10 @@ const UserSketchSave = ({
     return (
         <Stack>
             <Form onSubmit={handleSubmit(onFormSubmit)}>
-                <Group component="form" gap="0.5rem" py="0.25rem">
+                <Group gap="0.5rem" py="0.25rem">
                     <TextInput
                         {...getInputProps('name')}
+                        variant="contained"
                         label={T('common.name')}
                         flex={1}
                     />

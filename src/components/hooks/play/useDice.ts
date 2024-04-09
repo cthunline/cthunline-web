@@ -26,12 +26,11 @@ const useDice = (socket: PlaySocket | null) => {
         const requestText = Object.entries(request)
             .map(([type, count]) => `${count}${type}`)
             .join(' + ');
-        const privatly = isPrivate ? `${t('common.privatly')} ` : '';
-        const resultText = t('page.play.event.diceResult', {
+        const textKey = `page.play.event.${isPrivate ? 'dicePrivateResult' : 'diceResult'}`;
+        return t(textKey, {
             request: requestText,
             result: String(result)
         });
-        return `${privatly}${resultText}`;
     };
 
     return {

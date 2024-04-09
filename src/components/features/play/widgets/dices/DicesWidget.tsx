@@ -1,4 +1,11 @@
-import { Button, Checkbox, Group, Stack, UnstyledButton } from '@mantine/core';
+import {
+    ActionIcon,
+    Button,
+    Checkbox,
+    Group,
+    Stack,
+    Tooltip
+} from '@mantine/core';
 import { useState } from 'react';
 import {
     GiD4,
@@ -23,7 +30,10 @@ const defaultSelectedDices = Object.fromEntries(
     diceTypes.map((type) => [type, 0])
 ) as DicesData;
 
-const getDiceIcon = (type: DiceType, size: number): React.ReactNode => {
+const getDiceIcon = (
+    type: DiceType,
+    size: number | string
+): React.ReactNode => {
     switch (type) {
         case 'D4':
             return <GiD4 size={size} />;
@@ -91,25 +101,40 @@ const DicesWidget = ({ isMaster, onRoll, onClose }: DicesWidgetProps) => {
             onClose={() => onClose(WidgetType.dices)}
         >
             <Stack w="400px" gap="1rem">
-                <Group gap="0.5rem">
+                <Group gap="0.5rem 2.5rem" my="0.25rem" justify="center">
                     {diceTypes.map((type) => (
-                        <UnstyledButton
-                            key={`dice-item-${type}`}
-                            onClick={() => modifySelectedDice(type, 1)}
-                        >
-                            {getDiceIcon(type, 50)}
-                        </UnstyledButton>
+                        <Tooltip label={type} position="bottom">
+                            <ActionIcon
+                                key={`dice-item-${type}`}
+                                variant="subtle"
+                                h="3.5rem"
+                                w="auto"
+                                px="0.25rem"
+                                onClick={() => modifySelectedDice(type, 1)}
+                            >
+                                {getDiceIcon(type, '2.5rem')}
+                            </ActionIcon>
+                        </Tooltip>
                     ))}
                 </Group>
-                <Group>
+                <Group gap="0.25rem 1rem" justify="center">
                     {selectedDiceTypes.map((type) => (
-                        <UnstyledButton
-                            key={`dice-selected-${type}`}
-                            onClick={() => modifySelectedDice(type, -1)}
-                        >
-                            {`${selectedDices[type]} x `}
-                            {getDiceIcon(type, 30)}
-                        </UnstyledButton>
+                        <Tooltip label={type} position="bottom">
+                            <ActionIcon
+                                key={`dice-item-${type}`}
+                                variant="subtle"
+                                h="2.5em"
+                                w="auto"
+                                px="0.25rem"
+                                fz="1.25rem"
+                                color="red"
+                                onClick={() => modifySelectedDice(type, -1)}
+                            >
+                                {`${selectedDices[type]} x`}
+                                &nbsp;
+                                {getDiceIcon(type, '2rem')}
+                            </ActionIcon>
+                        </Tooltip>
                     ))}
                 </Group>
                 {!!selectedDiceTypes.length && (
