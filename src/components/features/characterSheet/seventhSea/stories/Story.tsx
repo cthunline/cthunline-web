@@ -42,7 +42,7 @@ const Story = ({ index, story, readonly, onChange }: StoryProps) => {
             <Group gap="1rem">
                 {T('game.seventhSea.story.steps')}
                 {!readonly && (
-                    <Box component="span" className="ml-5">
+                    <Box component="span">
                         <ActionIcon
                             onClick={() => {
                                 onChange({

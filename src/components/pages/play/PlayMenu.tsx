@@ -81,7 +81,7 @@ const PlayMenu = ({ isMaster, onWidgetOpen, onExit }: PlayMenuProps) => {
             (isMaster && !playerOnly) || (!isMaster && !adminOnly)
     );
     return (
-        <Stack w="4rem" h="100%">
+        <Stack w="3.5rem" h="100%">
             {items.map(({ icon, textKey, widget }) => (
                 <PlayMenuItem
                     key={`play-menu-${widget}`}

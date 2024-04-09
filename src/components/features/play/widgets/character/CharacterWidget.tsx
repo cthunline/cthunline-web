@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
 import { MdEdit, MdOutlineCheck } from 'react-icons/md';
-import { Box, Loader } from '@mantine/core';
+import { ActionIcon, Box, Loader } from '@mantine/core';
 
 import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
 import useCharacter from '../../../../hooks/useCharacter.js';
@@ -121,17 +121,21 @@ const CharacterWidget = ({
     }, [character, editCharacter, onUpdate]);
 
     const widgetActions = readonly ? (
-        <MdEdit
-            className="clickable"
-            size={20}
+        <ActionIcon
+            variant="subtle"
+            size="sm"
             onClick={() => setReadonly(false)}
-        />
+        >
+            <MdEdit size="1rem" />
+        </ActionIcon>
     ) : (
-        <MdOutlineCheck
-            className="clickable"
-            size={20}
+        <ActionIcon
+            variant="subtle"
+            size="sm"
             onClick={() => setReadonly(true)}
-        />
+        >
+            <MdOutlineCheck size="1rem" />
+        </ActionIcon>
     );
 
     return (

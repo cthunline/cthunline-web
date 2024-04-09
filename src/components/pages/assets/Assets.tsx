@@ -154,7 +154,7 @@ const Assets = () => {
     ];
 
     return (
-        <ContentBox>
+        <ContentBox h="65%">
             <ContentBox.Title>{T('entity.assets')}</ContentBox.Title>
             <ContentBox.Content>
                 <FileExplorer

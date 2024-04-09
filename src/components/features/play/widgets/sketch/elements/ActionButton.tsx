@@ -1,15 +1,25 @@
-import { ActionIcon, Tooltip } from '@mantine/core';
+import { ActionIcon, type ActionIconProps, Tooltip } from '@mantine/core';
 
 export interface ActionButtonData {
     text: string;
     icon: JSX.Element;
+    variant?: ActionIconProps['variant'];
     handler: () => void;
+    disabled?: boolean;
 }
 
-const ActionButton = ({ text, handler, icon }: ActionButtonData) => (
+const ActionButton = ({
+    text,
+    handler,
+    icon,
+    variant,
+    disabled
+}: ActionButtonData) => (
     <Tooltip position="bottom" label={text}>
         <ActionIcon
-            className="sketch-action-button ml-15 mr-15"
+            variant={variant ?? 'subtle'}
+            disabled={disabled}
+            size="lg"
             onClick={handler}
         >
             {icon}

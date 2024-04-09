@@ -1,0 +1,5 @@
+.nav-item:hover,
+.nav-item.selected {
+    text-decoration: underline;
+    text-underline-offset: 0.25rem;
+}

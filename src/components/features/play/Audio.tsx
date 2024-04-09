@@ -81,7 +81,11 @@ const Audio = () => {
                 />
             </Group>
             {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-            <audio ref={audioElement} className="hidden" autoPlay={false} />
+            <audio
+                ref={audioElement}
+                autoPlay={false}
+                style={{ display: 'none' }}
+            />
         </Box>
     );
 };

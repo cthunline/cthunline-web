@@ -12,7 +12,6 @@ import '@mantine/notifications/styles.css';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/theme-dark.css';
 
-import './utilities.css';
 import './App.css';
 
 const AppContent = () => {

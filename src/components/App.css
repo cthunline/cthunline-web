@@ -56,3 +56,16 @@ body {
     --palette-gray: #888a8b;
     --palette-darkgray: #454545;
 }
+
+/* mantine styles */
+
+.cancel-button {
+    background-color: var(--mantine-color-default);
+    border: calc(0.0625rem * var(--mantine-scale)) solid
+        var(--mantine-color-default-border);
+    color: var(--mantine-color-default-color);
+}
+
+.cancel-button:hover {
+    background-color: var(--mantine-color-default-hover);
+}

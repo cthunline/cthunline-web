@@ -1,13 +1,13 @@
-import { Box, Group, Stack, Switch, Title } from '@mantine/core';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
+import { Group, Stack, Switch, Title } from '@mantine/core';
 import { MdDelete, MdUndo } from 'react-icons/md';
 import { IoPeopleCircle } from 'react-icons/io5';
 import { GiSave, GiLoad } from 'react-icons/gi';
 import { BsEraserFill } from 'react-icons/bs';
 import { GoPencil } from 'react-icons/go';
 import { modals } from '@mantine/modals';
-import type React from 'react';
 import { useState } from 'react';
+import type React from 'react';
 
 import useUserSketch from '../../../../hooks/useUserSketch.js';
 import useDirectory from '../../../../hooks/useDirectory.js';
@@ -117,17 +117,13 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
         [
             {
                 text: T('widget.sketch.drawing'),
-                icon: (
-                    <GoPencil
-                        size={25}
-                        className={isFreeDrawing ? '' : 'opacity-half'}
-                    />
-                ),
+                icon: <GoPencil size="1.25rem" />,
+                variant: isFreeDrawing ? 'filled' : undefined,
                 handler: toogleIsFreeDrawing
             },
             {
                 text: T('widget.sketch.eraseDrawings'),
-                icon: <BsEraserFill size={25} />,
+                icon: <BsEraserFill size="1.25rem" />,
                 handler: () => {
                     modals.openConfirmModal({
                         centered: true,
@@ -142,31 +138,25 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
             },
             {
                 text: T('widget.sketch.addToken'),
-                icon: <IoMdAddCircle size={30} />,
+                icon: <IoMdAddCircle size="1.5rem" />,
                 handler: addSketchToken
             },
             {
                 text: T('widget.sketch.spawnPlayerTokens'),
-                icon: <IoPeopleCircle size={30} />,
+                icon: <IoPeopleCircle size="1.5rem" />,
                 handler: () => addSketchUserTokens(users)
             },
             {
                 text: T('action.undo'),
-                icon: (
-                    <MdUndo
-                        size={30}
-                        className={
-                            sketchData.events.length ? '' : 'opacity-half'
-                        }
-                    />
-                ),
+                icon: <MdUndo size="1.5rem" />,
+                disabled: !sketchData.events.length,
                 handler: undoSketch
             }
         ],
         [
             {
                 text: T('widget.sketch.removeTokens'),
-                icon: <IoMdCloseCircle size={30} />,
+                icon: <IoMdCloseCircle size="1.5rem" />,
                 handler: () => {
                     modals.openConfirmModal({
                         centered: true,
@@ -181,7 +171,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
             },
             {
                 text: T('action.clear'),
-                icon: <MdDelete size={30} />,
+                icon: <MdDelete size="1.5rem" />,
                 handler: () => {
                     modals.openConfirmModal({
                         centered: true,
@@ -196,7 +186,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
             },
             {
                 text: T('widget.sketch.saveSketch'),
-                icon: <GiSave size={30} />,
+                icon: <GiSave size="1.5rem" />,
                 handler: () => {
                     modals.open({
                         modalId: saveSketchModalId,
@@ -214,7 +204,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
             },
             {
                 text: T('widget.sketch.loadSketch'),
-                icon: <GiLoad size={30} />,
+                icon: <GiLoad size="1.5rem" />,
                 handler: () => {
                     modals.open({
                         modalId: loadSketchModalId,
@@ -256,6 +246,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                     label={T('action.display')}
                     labelPosition="left"
                     checked={sketchData.displayed}
+                    my="0.5rem"
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         setSketchDisplay(e.target.checked);
                     }}
@@ -266,20 +257,32 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                               <Group
                                   key={`scketch-actions-${idx.toString()}`}
                                   justify="center"
+                                  gap="2rem"
                               >
                                   {buttonsRow.map(
-                                      ({ text, icon, handler }, index) => (
+                                      (
+                                          {
+                                              text,
+                                              icon,
+                                              variant,
+                                              disabled,
+                                              handler
+                                          },
+                                          index
+                                      ) => (
                                           <ActionButton
                                               key={`scketch-action-${index.toString()}`}
                                               text={text}
                                               icon={icon}
+                                              variant={variant}
+                                              disabled={disabled}
                                               handler={handler}
                                           />
                                       )
                                   )}
                               </Group>
                           )),
-                          <Box key="scketch-assets" w="100%">
+                          <Stack key="scketch-assets" w="100%" gap="0.5rem">
                               <Title order={6}>{T('entity.assets')}</Title>
                               <FileExplorer
                                   scroll
@@ -297,7 +300,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                                       addSketchImage(src, false)
                                   }
                               />
-                          </Box>
+                          </Stack>
                       ]
                     : null}
             </Stack>

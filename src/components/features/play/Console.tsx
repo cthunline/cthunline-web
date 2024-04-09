@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { FaChevronUp, FaChevronDown } from 'react-icons/fa6';
-import { Box, Group, Paper, Stack } from '@mantine/core';
+import { ActionIcon, Stack, Text } from '@mantine/core';
 
 import { type PlayLog } from '../../../types/index.js';
 import AutoScroll from '../../common/AutoScroll.js';
 import { useApp } from '../../contexts/App.js';
+import WidgetPaper from './WidgetPaper.js';
 
 const getBaseHeight = (el: HTMLDivElement) => {
     const { clientHeight } = el;
@@ -71,73 +72,54 @@ const Console = ({ logs, playContentRef }: ConsoleProps) => {
     useEffect(() => {
         scrollToBottom();
     }, [logs]);
-
     return (
-        <Paper
-            shadow="md"
+        <WidgetPaper
+            id="console-widget"
+            title={T('entity.console')}
             pos="absolute"
             bottom="20px"
             right="20px"
             w="450px"
             h={consoleHeight}
             style={{ zIndex: 0 }}
+            contentProps={{
+                display: displayMode === 'minimized' ? 'none' : 'block',
+                p: displayMode === 'minimized' ? undefined : '0.5rem'
+            }}
+            actions={
+                <>
+                    <ActionIcon
+                        variant="subtle"
+                        size="sm"
+                        onClick={() => changeDisplay('decrease')}
+                    >
+                        <FaChevronDown size="1rem" />
+                    </ActionIcon>
+                    <ActionIcon
+                        variant="subtle"
+                        size="sm"
+                        onClick={() => changeDisplay('increase')}
+                    >
+                        <FaChevronUp size="1rem" />
+                    </ActionIcon>
+                </>
+            }
         >
-            <Stack w="100%" h="100%">
-                <Group
-                    align="center"
-                    justify="start"
-                    bg="var(--palette-background-tertiary)"
-                    w="100%"
-                    h="30px"
-                    p="0.25rem"
-                >
-                    <Box px="0.25rem">{T('entity.console')}</Box>
-                    <Group
-                        align="center"
-                        justify="end"
-                        gap="0.5rem"
-                        flex={1}
-                        p="0.25rem"
-                    >
-                        <FaChevronDown
-                            size={20}
-                            className="clickable"
-                            onClick={() => changeDisplay('decrease')}
-                        />
-                        <FaChevronUp
-                            size={20}
-                            className="clickable"
-                            onClick={() => changeDisplay('increase')}
-                        />
-                    </Group>
-                </Group>
-                <Stack
-                    display={displayMode === 'minimized' ? 'none' : 'block'}
-                    p={displayMode === 'minimized' ? undefined : '10px'}
-                    w="100%"
-                    h={0}
-                    flex={1}
-                >
-                    <Stack
-                        ref={consoleRef}
-                        w="100%"
-                        h="100%"
-                        style={{ overflowY: 'scroll' }}
-                    >
-                        {logs.map(({ text }, index) => (
-                            <Box
-                                key={`console-log-${index.toString()}`}
-                                fs="0.825rem"
-                                my="0.25rem"
-                            >
-                                {text}
-                            </Box>
-                        ))}
-                        <AutoScroll />
-                    </Stack>
-                </Stack>
+            <Stack
+                ref={consoleRef}
+                w="100%"
+                h="100%"
+                gap="0.25rem"
+                style={{ overflowY: 'scroll' }}
+            >
+                {logs.map(({ text }, index) => (
+                    <Text key={`console-log-${index.toString()}`} fz="0.825rem">
+                        {text}
+                    </Text>
+                ))}
+                <AutoScroll />
             </Stack>
-        </Paper>
+        </WidgetPaper>
     );
 };
 

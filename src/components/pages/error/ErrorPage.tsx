@@ -27,7 +27,7 @@ const ErrorPage = ({ type }: ErrorProps) => {
 
     return (
         <Stack align="center">
-            <GiWizardFace size={100} className="mb-20" />
+            <GiWizardFace size={100} />
             <Title order={4}>{title}</Title>
             <Title order={5}>{message}</Title>
         </Stack>

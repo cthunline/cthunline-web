@@ -1,5 +1,5 @@
+import { Checkbox, Group, Stack } from '@mantine/core';
 import { useEffect, useRef, useState } from 'react';
-import { Box, Checkbox } from '@mantine/core';
 import { HiMusicNote } from 'react-icons/hi';
 
 import { WidgetType, type Asset } from '../../../../../types/index.js';
@@ -124,7 +124,7 @@ const JukeboxWidget = ({ onPlay, onStop, onClose }: JukeboxWidgetProps) => {
             title={T('entity.jukebox')}
             onClose={() => onClose(WidgetType.jukebox)}
         >
-            <Box w="400px">
+            <Stack w="400px" gap="0.5rem">
                 <FileExplorer
                     scroll
                     mah="300px"
@@ -135,31 +135,30 @@ const JukeboxWidget = ({ onPlay, onStop, onClose }: JukeboxWidgetProps) => {
                     onDirectoryClick={onDirectoryClick}
                     onFileClick={onFileClick}
                 />
-                <Box>
-                    {selectedAsset ? (
-                        // eslint-disable-next-line jsx-a11y/media-has-caption
-                        <audio
-                            ref={audioElement}
-                            className="jukebox-player full-width mt-10"
-                            src={getAssetUrl(selectedAsset.path)}
-                            controls // eslint-disable-line react/no-unknown-property
-                            autoPlay={false}
-                            onPlay={onAudioPlay} // eslint-disable-line react/no-unknown-property
-                            onPause={onAudioPause} // eslint-disable-line react/no-unknown-property
-                            onEnded={onAudioEnded} // eslint-disable-line react/no-unknown-property
-                        />
-                    ) : null}
-                </Box>
-                <Box className="text-right">
-                    {T('widget.jukebox.autoplay')}
+                {selectedAsset ? (
+                    // eslint-disable-next-line jsx-a11y/media-has-caption
+                    <audio
+                        ref={audioElement}
+                        style={{ width: '100%' }}
+                        src={getAssetUrl(selectedAsset.path)}
+                        controls // eslint-disable-line react/no-unknown-property
+                        autoPlay={false}
+                        onPlay={onAudioPlay} // eslint-disable-line react/no-unknown-property
+                        onPause={onAudioPause} // eslint-disable-line react/no-unknown-property
+                        onEnded={onAudioEnded} // eslint-disable-line react/no-unknown-property
+                    />
+                ) : null}
+                <Group justify="end">
                     <Checkbox
                         checked={autoplay}
+                        label={T('widget.jukebox.autoplay')}
+                        labelPosition="left"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                             setAutoplay(e.target.checked);
                         }}
                     />
-                </Box>
-            </Box>
+                </Group>
+            </Stack>
         </Widget>
     );
 };

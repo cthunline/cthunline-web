@@ -38,7 +38,7 @@ const Attribute = ({
     return (
         <Stack w="100%">
             <Group w="100%">
-                <Box flex="2 0" fs="1.1rem" fw="bold">
+                <Box flex="2 0" fz="1.1rem" fw="bold">
                     {T(`game.starWarsD6.attribute.${attribute}`)}
                 </Box>
                 <Box flex="1 0">

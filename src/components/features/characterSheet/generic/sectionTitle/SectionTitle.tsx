@@ -1,4 +1,4 @@
-import { Box, Group, TextInput, Title } from '@mantine/core';
+import { Group, TextInput, Title } from '@mantine/core';
 
 interface SectionTitleProps {
     text: string;
@@ -30,19 +30,17 @@ const SectionTitle = ({
         </Title>
         {iconAfter}
         {!!input && (
-            <Box className="ml-20" component="span">
-                <TextInput
-                    w="4.5rem"
-                    readOnly={input.readonly}
-                    size="sm"
-                    value={input.value}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        if (input.onChange) {
-                            input.onChange(Number(e.target.value));
-                        }
-                    }}
-                />
-            </Box>
+            <TextInput
+                w="4.5rem"
+                readOnly={input.readonly}
+                size="sm"
+                value={input.value}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    if (input.onChange) {
+                        input.onChange(Number(e.target.value));
+                    }
+                }}
+            />
         )}
     </Group>
 );

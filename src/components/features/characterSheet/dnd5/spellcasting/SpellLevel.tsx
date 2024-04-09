@@ -32,7 +32,7 @@ const SpellLevel = ({
                 <Box flex="7 0">
                     {`${T('game.dnd5.spellcasting.level')} ${spellLevel.level}`}
                     {readonly ? null : (
-                        <Box component="span" className="ml-5">
+                        <Box component="span" ml="0.25rem">
                             <ActionIcon
                                 onClick={() => {
                                     onChange({

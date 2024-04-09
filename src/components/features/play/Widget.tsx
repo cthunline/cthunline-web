@@ -1,9 +1,9 @@
-import { Box, Group, Paper, Stack } from '@mantine/core';
 import React, { useEffect } from 'react';
-import { MdClose } from 'react-icons/md';
 import Draggable from 'react-draggable';
+import { Box } from '@mantine/core';
 
 import { focusWidget } from '../../../services/widget.js';
+import WidgetPaper from './WidgetPaper.js';
 
 const triggerEvent = (el: Document | Element, event: string) => {
     el.dispatchEvent(
@@ -28,15 +28,17 @@ const fakeDrag = (id: string) => {
 };
 
 interface WidgetProps {
-    title?: string;
+    title: string;
     id: string;
-    actions?: JSX.Element | JSX.Element[];
-    children?: JSX.Element | JSX.Element[] | string;
-    onClose?: () => void;
+    actions?: React.ReactNode;
+    children?: React.ReactNode;
+    onClose: () => void;
 }
 
-const Widget = ({ title, id, actions, children, onClose }: WidgetProps) => {
+const Widget = (props: WidgetProps) => {
     const nodeRef = React.useRef<HTMLDivElement>(null);
+
+    const { id } = props;
 
     // on widget or window resize trigger a fake drag
     // to keep widget in bounds
@@ -76,39 +78,7 @@ const Widget = ({ title, id, actions, children, onClose }: WidgetProps) => {
                 miw="200px"
                 mih="100px"
             >
-                <Paper shadow="md" w="100%" miw="200px" h="100%" mih="100px">
-                    <Stack w="100%" miw="200px" h="100%" mih="100px">
-                        <Group
-                            id={`${id}-bar`}
-                            justify="center"
-                            align="center"
-                            bg="var(--palette-background-tertiary)"
-                            w="100%"
-                            h="30px"
-                        >
-                            <Box>{title ?? ''}</Box>
-                            <Box flex={1} ta="end">
-                                {actions}
-                            </Box>
-                            <MdClose
-                                className="clickable"
-                                size={25}
-                                onClick={onClose}
-                            />
-                        </Group>
-                        <Box
-                            w="100%"
-                            h="calc(100% - 30px)"
-                            mih="70px"
-                            p="10px"
-                            onMouseDown={(e) => {
-                                focusWidget(e.currentTarget);
-                            }}
-                        >
-                            {children}
-                        </Box>
-                    </Stack>
-                </Paper>
+                <WidgetPaper {...props} />
             </Box>
         </Draggable>
     );

@@ -47,11 +47,7 @@ const CharactersWidget = ({ users, onClose }: CharacterWidgetProps) => {
             title={T('entity.characters')}
             onClose={() => onClose(WidgetType.characters)}
         >
-            <Group
-                className="characters-widget flex row start"
-                w="900px"
-                h="500px"
-            >
+            <Group className="characters-widget" w="900px" h="500px">
                 {users.length && sessionUser ? (
                     <Tabs
                         w="150px"

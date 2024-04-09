@@ -33,7 +33,7 @@ const TransferForm = ({
     onCancel
 }: TransferFormProps) => {
     const { userList } = useUser({ loadList: true });
-    const { T } = useApp();
+    const { T, userId: currentUserId } = useApp();
 
     const { onSubmit: handleSubmit, getInputProps } = useForm<TransferFormData>(
         {
@@ -41,14 +41,18 @@ const TransferForm = ({
         }
     );
 
-    const userOptions: SelectOption<number>[] = useMemo(
-        () =>
-            userList.map(({ id, name }) => ({
-                value: id,
-                label: name
-            })),
-        [userList]
-    );
+    const userOptions = useMemo(() => {
+        const options: SelectOption<number>[] = [];
+        userList.forEach(({ id, name }) => {
+            if (id !== currentUserId) {
+                options.push({
+                    value: id,
+                    label: name
+                });
+            }
+        });
+        return options;
+    }, [currentUserId, userList]);
 
     const onSubmit = ({ userId }: TransferFormData) => {
         onConfirm?.({
@@ -59,15 +63,17 @@ const TransferForm = ({
 
     return (
         <Form onSubmit={handleSubmit(onSubmit)}>
-            <Stack align="center" gap="0.5rem">
+            <Stack align="center" gap="1rem" w="100%">
                 <Select
                     {...getInputProps('userId')}
                     valueType="number"
-                    label={T('entity.user')}
                     options={userOptions}
+                    w="100%"
                 />
                 <Group justify="flex-end">
-                    <Button onClick={onCancel}>{T('action.cancel')}</Button>
+                    <Button className="button-cancel" onClick={onCancel}>
+                        {T('action.cancel')}
+                    </Button>
                     <Button type="submit">{T('action.confirm')}</Button>
                 </Group>
             </Stack>

@@ -1,4 +1,4 @@
-import { ActionIcon, Box, Menu, Title, Tooltip } from '@mantine/core';
+import { ActionIcon, Box, Menu, Stack, Title, Tooltip } from '@mantine/core';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { MdOutlineShare } from 'react-icons/md';
 
@@ -68,12 +68,8 @@ const NoteList = ({
         <Box w="100%" h="360px" style={{ overflowY: 'auto' }}>
             {notesData.map(({ key, list, header }) =>
                 list.length ? (
-                    <>
-                        <Title
-                            key={`${key}-title`}
-                            order={6}
-                            bg="var(--palette-background-secondary)"
-                        >
+                    <Stack w="100%" gap="0.5rem">
+                        <Title key={`${key}-title`} order={6}>
                             {header}
                         </Title>
                         <InteractiveList key={key}>
@@ -91,11 +87,8 @@ const NoteList = ({
                                                     position="bottom"
                                                     label={T('common.shared')}
                                                 >
-                                                    <Box>
-                                                        <MdOutlineShare
-                                                            className="vertical-middle"
-                                                            size={15}
-                                                        />
+                                                    <Box h="1rem">
+                                                        <MdOutlineShare size="1rem" />
                                                     </Box>
                                                 </Tooltip>
                                             )
@@ -130,7 +123,7 @@ const NoteList = ({
                                 );
                             })}
                         </InteractiveList>
-                    </>
+                    </Stack>
                 ) : null
             )}
         </Box>

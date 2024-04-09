@@ -29,7 +29,7 @@ const Page = ({ children }: PageProps) => {
     return (
         <AppShell
             header={{
-                height: '4rem',
+                height: '3.5rem',
                 collapsed: !showNav
             }}
             display="block"
