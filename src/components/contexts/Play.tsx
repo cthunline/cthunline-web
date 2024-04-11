@@ -123,7 +123,7 @@ export const PlayProvider = ({
 
     const isConnecting = useRef(false);
 
-    const characterUpdateTimers = useRef<Record<number, NodeJS.Timeout>>({});
+    const characterUpdateTimers = useRef<Record<number, number>>({});
     const characterUpdateTimerMs = 5000;
 
     const bindSocketEvents = useCallback(
@@ -228,12 +228,12 @@ export const PlayProvider = ({
                     });
                     updateUserCharacter(sockUser.id, character);
                     if (characterUpdateTimers.current[character.id]) {
-                        clearTimeout(
+                        window.clearTimeout(
                             characterUpdateTimers.current[character.id]
                         );
                     }
-                    characterUpdateTimers.current[character.id] = setTimeout(
-                        () => {
+                    characterUpdateTimers.current[character.id] =
+                        window.setTimeout(() => {
                             pushLog({
                                 dateTime,
                                 user: sockUser,
@@ -241,9 +241,7 @@ export const PlayProvider = ({
                                 text: eventText
                             });
                             delete characterUpdateTimers.current[character.id];
-                        },
-                        characterUpdateTimerMs
-                    );
+                        }, characterUpdateTimerMs);
                 }
             );
             sock.on('audioPlay', ({ asset, time }) => {

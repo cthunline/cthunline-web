@@ -179,6 +179,8 @@ export type NoteEditBody = Partial<NoteCreateBody>;
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ character
 
+export type CharacterSheetStatus = 'idle' | 'saving' | 'saved';
+
 export type CharacterData =
     | CoCCharacter
     | DnD5Character

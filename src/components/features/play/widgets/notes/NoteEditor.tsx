@@ -21,13 +21,13 @@ const NoteEditor = ({ note, onEdit, onBack }: NoteEditorProps) => {
     const isOwnedByUser = note.userId === userId;
 
     const changeTime = 1000;
-    const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const changeTimer = useRef<number | null>(null);
     useEffect(() => {
         if (isOwnedByUser) {
-            if (changeTimer.current) {
-                clearTimeout(changeTimer.current);
+            if (changeTimer.current !== null) {
+                window.clearTimeout(changeTimer.current);
             }
-            changeTimer.current = setTimeout(() => {
+            changeTimer.current = window.setTimeout(() => {
                 onEdit({
                     ...note,
                     title,

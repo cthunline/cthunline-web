@@ -11,9 +11,13 @@ import {
     GiLightBackpack
 } from 'react-icons/gi';
 
+import {
+    type CharacterSheetStatus,
+    GameId,
+    type CharacterData
+} from '../../../../types/index.js';
 import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
 import WarhammerFantasyLogo from '../../../svg/games/WarhammerFantasy.js';
-import { GameId, type CharacterData } from '../../../../types/index.js';
 import Characteristics from './characteristics/Characteristics.js';
 import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
 import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
@@ -42,6 +46,7 @@ import {
 } from './warhammerFantasySheet.helper.js';
 
 export interface WarhammerFantasySheetProps {
+    status: CharacterSheetStatus;
     readonly: boolean;
     data: WarhammerFantasyCharacter;
     listening?: boolean;
@@ -55,6 +60,7 @@ export interface WarhammerFantasySheetProps {
 }
 
 const WarhammerFantasySheet = ({
+    status,
     readonly,
     data,
     listening,
@@ -213,6 +219,8 @@ const WarhammerFantasySheet = ({
 
     return (
         <SheetTabs
+            readonly={readonly}
+            status={status}
             logoSvgComponent={WarhammerFantasyLogo}
             tabs={Object.values(sheetTabs)}
             selectedValue={tabValue}

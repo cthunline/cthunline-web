@@ -20,8 +20,12 @@ import {
     type SWD6Story
 } from '@cthunline/games';
 
+import {
+    type CharacterData,
+    GameId,
+    type CharacterSheetStatus
+} from '../../../../types/index.js';
 import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
-import { type CharacterData, GameId } from '../../../../types/index.js';
 import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
 import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
 import { controlCharacterData } from './swd6Sheet.helper.js';
@@ -35,6 +39,7 @@ import { useApp } from '../../../contexts/App.js';
 import Weapons from './weapons/Weapons.js';
 
 export interface SWD6SheetProps {
+    status: CharacterSheetStatus;
     readonly: boolean;
     data: SWD6Character;
     listening?: boolean;
@@ -48,6 +53,7 @@ export interface SWD6SheetProps {
 }
 
 const SWD6Sheet = ({
+    status,
     readonly,
     data,
     listening,
@@ -236,6 +242,8 @@ const SWD6Sheet = ({
 
     return (
         <SheetTabs
+            readonly={readonly}
+            status={status}
             logoSvgComponent={SWD6Logo}
             tabs={Object.values(sheetTabs)}
             selectedValue={tabValue}

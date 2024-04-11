@@ -1,4 +1,7 @@
-import { Box, Stack, Tabs } from '@mantine/core';
+import { Box, Group, Stack, Tabs } from '@mantine/core';
+
+import { type CharacterSheetStatus } from '../../../../../types/index.js';
+import Status from '../../Status.js';
 
 export interface SheetTab {
     key: string;
@@ -8,6 +11,8 @@ export interface SheetTab {
 
 export interface SheetTabsProps {
     children: React.ReactNode;
+    readonly: boolean;
+    status: CharacterSheetStatus;
     tabs: SheetTab[];
     selectedValue: string;
     logoSvgComponent?: React.FC<React.SVGProps<SVGSVGElement>>;
@@ -16,6 +21,8 @@ export interface SheetTabsProps {
 
 const SheetTabs = ({
     children,
+    readonly,
+    status,
     tabs,
     selectedValue,
     logoSvgComponent: SVGLogo,
@@ -24,19 +31,31 @@ const SheetTabs = ({
     const handleChange = (value: string | null) => {
         onChange(value ?? '');
     };
-
     return (
         <Stack mah="100%" gap="0.5rem">
             {SVGLogo ? (
-                <Box w="100%" h="2rem" my="0.5rem" px="1.5rem" ta="center">
-                    <SVGLogo
-                        fill="var(--palette-font)"
-                        style={{
-                            maxWidth: '100%',
-                            maxHeight: '100%'
-                        }}
-                    />
-                </Box>
+                <Group
+                    w="100%"
+                    h="2rem"
+                    my="0.5rem"
+                    px="1.5rem"
+                    align="start"
+                    justify="start"
+                >
+                    <Box w="2rem" h="100%" />
+                    <Box flex="1 0" h="100%">
+                        <SVGLogo
+                            fill="var(--palette-font)"
+                            style={{
+                                maxWidth: '100%',
+                                maxHeight: '100%'
+                            }}
+                        />
+                    </Box>
+                    <Group w="2rem" h="100%" align="center" justify="end">
+                        {!readonly && <Status status={status} />}
+                    </Group>
+                </Group>
             ) : null}
             {/* tabs */}
             <Tabs value={selectedValue} onChange={handleChange}>

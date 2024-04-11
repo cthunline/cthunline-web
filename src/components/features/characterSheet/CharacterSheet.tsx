@@ -9,6 +9,7 @@ import {
 } from '@cthunline/games';
 
 import WarhammerFantasySheet from './warhammerFantasy/WarhammerFantasySheet.js';
+import useCharacterSheetStatus from '../../hooks/useCharacterSheetStatus.js';
 import { type CharacterData, GameId } from '../../../types/index.js';
 import SeventhSeaSheet from './seventhSea/SeventhSeaSheet.js';
 import CoCSheet from './callOfCthulhu/CoCSheet.js';
@@ -40,8 +41,10 @@ const CharacterSheet = ({
     portrait,
     onPortraitChange
 }: CharacterSheetProps) => {
+    const { status, updateStatus } = useCharacterSheetStatus();
+
     const changeTime = 1000;
-    const changeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const changeTimer = useRef<number | null>(null);
     const onChangeBuffer = useCallback(
         (
             name: string,
@@ -49,21 +52,24 @@ const CharacterSheet = ({
             instantRefresh?: boolean | undefined
         ) => {
             if (onChange) {
-                if (changeTimer.current) {
-                    clearTimeout(changeTimer.current);
+                updateStatus('saving');
+                if (changeTimer.current !== null) {
+                    window.clearTimeout(changeTimer.current);
                 }
-                changeTimer.current = setTimeout(() => {
+                changeTimer.current = window.setTimeout(() => {
                     onChange(name, characterData, instantRefresh);
+                    updateStatus('saved');
                 }, changeTime);
             }
         },
-        [onChange]
+        [onChange, updateStatus]
     );
 
     const getContent = (): JSX.Element => {
         if (gameId === GameId.callOfCthulhu) {
             return (
                 <CoCSheet
+                    status={status}
                     readonly={readonly}
                     data={data as CoCCharacter}
                     listening={listening}
@@ -76,6 +82,7 @@ const CharacterSheet = ({
         if (gameId === GameId.dnd5) {
             return (
                 <DnD5Sheet
+                    status={status}
                     readonly={readonly}
                     data={data as DnD5Character}
                     listening={listening}
@@ -88,6 +95,7 @@ const CharacterSheet = ({
         if (gameId === GameId.seventhSea) {
             return (
                 <SeventhSeaSheet
+                    status={status}
                     readonly={readonly}
                     data={data as SeventhSeaCharacter}
                     listening={listening}
@@ -100,6 +108,7 @@ const CharacterSheet = ({
         if (gameId === GameId.starWarsD6) {
             return (
                 <SWD6Sheet
+                    status={status}
                     readonly={readonly}
                     data={data as SWD6Character}
                     listening={listening}
@@ -112,6 +121,7 @@ const CharacterSheet = ({
         if (gameId === GameId.warhammerFantasy) {
             return (
                 <WarhammerFantasySheet
+                    status={status}
                     readonly={readonly}
                     data={data as WarhammerFantasyCharacter}
                     listening={listening}

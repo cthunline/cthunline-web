@@ -26,8 +26,12 @@ import {
     type SeventhSeaAdvantage
 } from '@cthunline/games';
 
+import {
+    type CharacterData,
+    GameId,
+    type CharacterSheetStatus
+} from '../../../../types/index.js';
 import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
-import { type CharacterData, GameId } from '../../../../types/index.js';
 import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
 import Characteristics from './characteristics/Characteristics.js';
 import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
@@ -47,6 +51,7 @@ import {
 } from './seventhSeaSheet.helper.js';
 
 export interface SeventhSeaSheetProps {
+    status: CharacterSheetStatus;
     readonly: boolean;
     data: SeventhSeaCharacter;
     listening?: boolean;
@@ -60,6 +65,7 @@ export interface SeventhSeaSheetProps {
 }
 
 const SeventhSeaSheet = ({
+    status,
     readonly,
     data,
     listening,
@@ -263,6 +269,8 @@ const SeventhSeaSheet = ({
 
     return (
         <SheetTabs
+            readonly={readonly}
+            status={status}
             logoSvgComponent={SeventhSeaLogo}
             tabs={Object.values(sheetTabs)}
             selectedValue={tabValue}

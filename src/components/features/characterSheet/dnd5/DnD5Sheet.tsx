@@ -29,10 +29,14 @@ import {
     type DnD5Spellcasting
 } from '@cthunline/games';
 
+import {
+    type CharacterData,
+    GameId,
+    type CharacterSheetStatus
+} from '../../../../types/index.js';
 import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
 import { biographyFields, featuresFields, storyFields } from './fields.js';
 import { getDefaulSpellLevel } from './spellcasting/spellcasting.data.js';
-import { type CharacterData, GameId } from '../../../../types/index.js';
 import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
 import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
 import { controlCharacterData } from './dnd5Sheet.helper.js';
@@ -72,6 +76,7 @@ type PartialDataType =
 type PartialData = Partial<PartialDataType>;
 
 export interface DnD5SheetProps {
+    status: CharacterSheetStatus;
     readonly: boolean;
     data: DnD5Character;
     listening?: boolean;
@@ -85,6 +90,7 @@ export interface DnD5SheetProps {
 }
 
 const DnD5Sheet = ({
+    status,
     readonly,
     data,
     listening,
@@ -232,6 +238,8 @@ const DnD5Sheet = ({
 
     return (
         <SheetTabs
+            readonly={readonly}
+            status={status}
             logoSvgComponent={DnD5Logo}
             tabs={Object.values(sheetTabs)}
             selectedValue={tabValue}

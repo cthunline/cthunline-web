@@ -148,8 +148,11 @@
         }
     },
     "status": {
+        "saving": "modifié",
         "disabled": "désactivé",
-        "enabled": "activé"
+        "enabled": "activé",
+        "idle": "aucune modification",
+        "saved": "sauvegardé"
     },
     "user": {
         "admin": "admin",

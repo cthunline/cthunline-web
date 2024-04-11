@@ -20,8 +20,12 @@ import {
     type CoCStory
 } from '@cthunline/games';
 
+import {
+    type CharacterData,
+    GameId,
+    type CharacterSheetStatus
+} from '../../../../types/index.js';
 import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
-import { type CharacterData, GameId } from '../../../../types/index.js';
 import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
 import Characteristics from './characteristics/Characteristics.js';
 import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
@@ -36,6 +40,7 @@ import Skills from './skills/Skills.js';
 import Combat from './combat/Combat.js';
 
 export interface CoCSheetProps {
+    status: CharacterSheetStatus;
     readonly: boolean;
     data: CoCCharacter;
     listening?: boolean;
@@ -49,6 +54,7 @@ export interface CoCSheetProps {
 }
 
 const CoCSheet = ({
+    status,
     readonly,
     data,
     listening,
@@ -128,10 +134,10 @@ const CoCSheet = ({
         []
     );
 
-    const onStatusChange = useCallback((status: CoCStatus) => {
+    const onStatusChange = useCallback((cocStatus: CoCStatus) => {
         setCharacterData((previous) => ({
             ...previous,
-            status
+            status: cocStatus
         }));
     }, []);
 
@@ -218,6 +224,8 @@ const CoCSheet = ({
 
     return (
         <SheetTabs
+            readonly={readonly}
+            status={status}
             logoSvgComponent={CoCLogo}
             tabs={Object.values(sheetTabs)}
             selectedValue={tabValue}
