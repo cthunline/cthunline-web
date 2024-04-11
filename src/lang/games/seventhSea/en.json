@@ -67,6 +67,7 @@
             "name": "name",
             "goal": "goal",
             "reward": "reward",
+            "step": "step",
             "steps": "steps"
         },
         "trait": {

@@ -1,12 +1,11 @@
-import { Checkbox, Grid, Textarea } from '@mantine/core';
+import { Checkbox, Grid } from '@mantine/core';
 
 import { onlyNumbers } from '../../../../../services/tools.js';
 import { type GameId } from '../../../../../types/index.js';
 import SectionTitle from '../sectionTitle/SectionTitle.js';
+import Textarea from '../../../../common/Textarea.js';
 import { useApp } from '../../../../contexts/App.js';
-import TextInput, {
-    type TextInputVariant
-} from '../../../../common/TextInput.js';
+import TextInput from '../../../../common/TextInput.js';
 
 export interface Field<DataType> {
     key?: keyof DataType;
@@ -16,7 +15,6 @@ export interface Field<DataType> {
     lines?: number;
     children?: Field<DataType>[];
     readonly?: boolean;
-    variant?: TextInputVariant;
 }
 
 interface InputProps<DataType> {
@@ -32,7 +30,7 @@ interface InputProps<DataType> {
 export const FieldInput = <DataType extends {}>({
     index,
     gameId,
-    field: { key, title, type, lines, variant, readonly: fieldReadonly },
+    field: { key, title, type, lines, readonly: fieldReadonly },
     textSectionKey,
     data,
     readonly,
@@ -51,6 +49,7 @@ export const FieldInput = <DataType extends {}>({
             {!!key && !!lines && (
                 <Textarea
                     key={`field-${String(key ?? index)}-input`}
+                    variant="contained"
                     w="100%"
                     rows={lines}
                     readOnly={fieldReadonly || readonly}
@@ -74,8 +73,8 @@ export const FieldInput = <DataType extends {}>({
             )}
             {!!key && !lines && (
                 <TextInput
-                    variant={variant}
                     key={`field-${String(key ?? index)}-input`}
+                    variant="contained"
                     w="100%"
                     readOnly={fieldReadonly || readonly}
                     size="sm"
@@ -152,14 +151,15 @@ interface FieldLayoutProps<DataType> {
     data: DataType;
     readonly: boolean;
     onChange: (data: DataType) => void;
+    gap?: string | number;
 }
 
 const FieldLayout = <DataType extends {}>(
     props: FieldLayoutProps<DataType>
 ) => {
-    const { fields } = props;
+    const { fields, gap } = props;
     return (
-        <Grid w="100%">
+        <Grid w="100%" gutter={gap}>
             {fields.map((field, index) => (
                 <Grid.Col
                     key={`field-${String(field.key ?? index)}`}

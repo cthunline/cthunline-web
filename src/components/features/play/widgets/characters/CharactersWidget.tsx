@@ -47,7 +47,12 @@ const CharactersWidget = ({ users, onClose }: CharacterWidgetProps) => {
             title={T('entity.characters')}
             onClose={() => onClose(WidgetType.characters)}
         >
-            <Group className="characters-widget" w="900px" h="500px">
+            <Group
+                className="characters-widget"
+                w="900px"
+                h="500px"
+                align="start"
+            >
                 {users.length && sessionUser ? (
                     <Tabs
                         w="150px"
@@ -55,7 +60,7 @@ const CharactersWidget = ({ users, onClose }: CharacterWidgetProps) => {
                         value={sessionUser.id.toString()}
                         onChange={onTabChange}
                     >
-                        <Tabs.List>
+                        <Tabs.List w="100%">
                             {users.map(({ id, name }) => (
                                 <Tabs.Tab
                                     key={`characters-user-${id}`}
@@ -68,7 +73,7 @@ const CharactersWidget = ({ users, onClose }: CharacterWidgetProps) => {
                     </Tabs>
                 ) : null}
                 {sessionUser ? (
-                    <Box flex={1} w="750px">
+                    <Box flex={1} w="750px" h="100%">
                         <CharacterSheet
                             readonly
                             gameId={sessionUser.character.gameId}

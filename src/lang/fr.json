@@ -66,6 +66,7 @@
             "deleteAssetConfirm": "supprimer ressource {name} ?",
             "deleteDirectoryConfirm": "supprimer dossier {name} ?",
             "newDirectory": "nouveau dossier",
+            "noAsset": "aucune ressource disponible",
             "uploadAsset": "ajouter ressource",
             "error": {
                 "fileTooLarge": "la taille du fichier {name} est trop grande (max {limitMb}Mb)"
@@ -73,6 +74,7 @@
         },
         "characters": {
             "deleteCharacterConfirm": "supprimer personnage {name} ?",
+            "noCharacter": "aucun personnage disponible",
             "selectGame": "sélectionner un jeu",
             "selectTransferUser": "sélectionner un utilisateur",
             "transferCharacterConfirm": "transférer personnage ?"
@@ -135,6 +137,7 @@
         "sessions": {
             "deleteSessionConfirm": "supprimer la session {name} ?",
             "newSession": "nouvelle session",
+            "noSession": "aucune session disponible",
             "selectCharacter": "sélectionner un personnage",
             "error": {
                 "noCharacterAvailable": "aucun personnage disponible pour ce jeu"

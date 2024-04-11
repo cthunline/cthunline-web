@@ -19,7 +19,7 @@ const Advantages = ({
     onChange,
     onDelete
 }: AdvantagesProps) => (
-    <Stack w="100%" gap="1rem">
+    <Stack w="100%" gap="1.5rem">
         {advantages.map((advantage, index) => (
             <Group
                 key={`advantage-${index.toString()}`}

@@ -1,7 +1,7 @@
 import { Autocomplete, type AutocompleteProps } from '@mantine/core';
 import { useMemo } from 'react';
 
-import { type TextInputVariant } from './TextInput.js';
+import { type InputVariant } from './TextInput.js';
 
 export interface AutocompleteInputValue<
     D extends { [f in F]: string },
@@ -15,7 +15,7 @@ export interface AutocompleteInputProps<
     D extends { [f in F]: string },
     F extends string
 > extends Omit<AutocompleteProps, 'data' | 'value' | 'onChange'> {
-    variant?: TextInputVariant;
+    variant?: InputVariant;
     data: D[];
     field: F;
     value: AutocompleteInputValue<D, F>;

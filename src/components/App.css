@@ -58,6 +58,7 @@ body {
 }
 
 /* mantine styles */
+/* stylelint-disable selector-class-pattern */
 
 .cancel-button {
     background-color: var(--mantine-color-default);
@@ -69,3 +70,33 @@ body {
 .cancel-button:hover {
     background-color: var(--mantine-color-default-hover);
 }
+
+.mantine-InputWrapper-root.contained {
+    position: relative;
+}
+
+.mantine-InputWrapper-root .mantine-Input-input[readonly] {
+    background-color: transparent;
+    outline: none;
+}
+
+.mantine-InputWrapper-root .mantine-Input-input[readonly]:focus {
+    border-color: var(--mantine-color-dark-4);
+}
+
+.mantine-InputWrapper-root.contained .mantine-InputWrapper-label {
+    font-size: var(--mantine-font-size-xs);
+    left: 0;
+    max-width: 100%;
+    overflow: hidden;
+    padding-left: var(--mantine-spacing-xs);
+    padding-right: var(--mantine-spacing-xs);
+    pointer-events: none;
+    position: absolute;
+    text-overflow: ellipsis;
+    top: -0.6rem;
+    white-space: nowrap;
+    z-index: 1;
+}
+
+/* stylelint-enable selector-class-pattern */

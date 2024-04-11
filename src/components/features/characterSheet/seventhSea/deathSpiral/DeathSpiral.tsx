@@ -22,7 +22,7 @@ const RadioButton = ({
         <Group justify="center">
             <Radio
                 size={radioCount === 5 ? 'lg' : 'sm'}
-                checked={value >= radioValue}
+                defaultChecked={value >= radioValue}
                 value={radioValue}
                 onClick={(e) => {
                     if (!readonly) {

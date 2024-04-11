@@ -13,7 +13,7 @@ interface SpellListProps {
 const SpellList = ({ spells, readonly, onChange }: SpellListProps) => (
     <Stack w="100%" gap="1rem">
         {spells.map(({ prepared, name }, index) => (
-            <Group gap="1rem">
+            <Group key={`spell-${index.toString()}`} gap="1rem">
                 <Checkbox
                     checked={prepared}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

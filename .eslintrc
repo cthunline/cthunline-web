@@ -43,6 +43,7 @@
                 "namedComponents": "arrow-function"
             }
         ],
+        "react/jsx-key": "error",
         "react/jsx-props-no-spreading": "off",
         "react/require-default-props": "off",
         "risxss/catch-potential-xss-react": "error",

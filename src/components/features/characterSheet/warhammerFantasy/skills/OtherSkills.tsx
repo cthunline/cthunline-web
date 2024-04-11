@@ -51,12 +51,12 @@ const OtherSkills = ({ readonly, character, onChange }: OtherSkillsProps) => {
     };
 
     return (
-        <Stack gap="0.5rem" w="100%">
+        <Stack gap="1rem" w="100%">
             <SectionTitle
                 iconBefore={<GiJuggler size={20} />}
                 text={T('game.warhammerFantasy.common.otherSkills')}
             />
-            <Stack gap="0.5rem" w="100%">
+            <Stack gap="1rem" w="100%">
                 {character.otherSkills.map((otherSkill, index) => (
                     <SkillRow
                         key={`otherSkill-row-${index.toString()}`}

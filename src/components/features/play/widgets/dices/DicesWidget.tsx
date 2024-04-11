@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
     ActionIcon,
     Button,
@@ -6,7 +7,6 @@ import {
     Stack,
     Tooltip
 } from '@mantine/core';
-import { useState } from 'react';
 import {
     GiD4,
     GiDiceSixFacesSix,
@@ -103,7 +103,11 @@ const DicesWidget = ({ isMaster, onRoll, onClose }: DicesWidgetProps) => {
             <Stack w="400px" gap="1rem">
                 <Group gap="0.5rem 2.5rem" my="0.25rem" justify="center">
                     {diceTypes.map((type) => (
-                        <Tooltip label={type} position="bottom">
+                        <Tooltip
+                            key={`dice-${type}`}
+                            label={type}
+                            position="bottom"
+                        >
                             <ActionIcon
                                 key={`dice-item-${type}`}
                                 variant="subtle"
@@ -119,7 +123,11 @@ const DicesWidget = ({ isMaster, onRoll, onClose }: DicesWidgetProps) => {
                 </Group>
                 <Group gap="0.25rem 1rem" justify="center">
                     {selectedDiceTypes.map((type) => (
-                        <Tooltip label={type} position="bottom">
+                        <Tooltip
+                            key={`dice-selected-${type}`}
+                            label={type}
+                            position="bottom"
+                        >
                             <ActionIcon
                                 key={`dice-item-${type}`}
                                 variant="subtle"

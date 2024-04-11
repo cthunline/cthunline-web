@@ -65,12 +65,12 @@ const BasicSkills = ({ readonly, character, onChange }: BasicSkillsProps) => {
     };
 
     return (
-        <Stack gap="0.5rem" w="100%">
+        <Stack gap="1rem" w="100%">
             <SectionTitle
                 iconBefore={<GiSkills size={20} />}
                 text={T('game.warhammerFantasy.common.basicSkills')}
             />
-            <Stack gap="0.5rem" w="100%">
+            <Stack gap="1rem" w="100%">
                 {sortedBasicSkillNames.map(({ name, translatedName }) => (
                     <SkillRow
                         key={`basicSkill-row-${name}`}

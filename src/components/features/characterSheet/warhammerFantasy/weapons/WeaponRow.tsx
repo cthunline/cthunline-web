@@ -62,9 +62,9 @@ const WeaponRow = ({
 }: WeaponRowProps) => {
     const { T } = useApp();
     return (
-        <Group w="100%">
-            <Stack w="100%">
-                <Group w="100%">
+        <Group w="100%" gap="1rem">
+            <Stack flex="1 0" gap="0.5rem">
+                <Group w="100%" gap="0.5rem">
                     <Box flex="6 0">
                         <WeaponRowInput
                             readonly={readonly}
@@ -112,7 +112,7 @@ const WeaponRow = ({
                         />
                     </Box>
                 </Group>
-                <Group w="100%">
+                <Group w="100%" gap="0.5rem">
                     <Box flex="3 0">
                         <WeaponRowInput
                             readonly={readonly}

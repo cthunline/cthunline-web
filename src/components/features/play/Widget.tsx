@@ -5,28 +5,6 @@ import { Box } from '@mantine/core';
 import { focusWidget } from '../../../services/widget.js';
 import WidgetPaper from './WidgetPaper.js';
 
-const triggerEvent = (el: Document | Element, event: string) => {
-    el.dispatchEvent(
-        new MouseEvent(event, {
-            bubbles: true,
-            cancelable: true
-        })
-    );
-};
-
-// fake drag event used to move the widget in bounds
-// if its size or window size have changed
-const fakeDrag = (id: string) => {
-    const handleBar = document.querySelector(`#${id}-bar`);
-    if (handleBar) {
-        triggerEvent(handleBar, 'mousedown');
-        setTimeout(() => {
-            triggerEvent(handleBar, 'mousemove');
-            triggerEvent(handleBar, 'mouseup');
-        }, 0);
-    }
-};
-
 interface WidgetProps {
     title: string;
     id: string;
@@ -39,20 +17,6 @@ const Widget = (props: WidgetProps) => {
     const nodeRef = React.useRef<HTMLDivElement>(null);
 
     const { id } = props;
-
-    // on widget or window resize trigger a fake drag
-    // to keep widget in bounds
-    useEffect(() => {
-        if (!nodeRef.current) {
-            return () => {};
-        }
-        const resizeObserver = new ResizeObserver(() => {
-            fakeDrag(id);
-        });
-        resizeObserver.observe(document.body);
-        resizeObserver.observe(nodeRef.current);
-        return () => resizeObserver.disconnect();
-    }, [id]);
 
     useEffect(() => {
         if (nodeRef.current) {

@@ -40,12 +40,12 @@ const Weapons = ({ readonly, character, onChange }: WeaponsProps) => {
     };
 
     return (
-        <Stack gap="0.5rem" w="100%">
+        <Stack gap="1rem" w="100%">
             <SectionTitle
                 iconBefore={<GiAxeSword size={20} />}
                 text={T('game.warhammerFantasy.common.weapons')}
             />
-            <Stack gap="0.5rem" w="100%">
+            <Stack gap="1rem" w="100%">
                 {character.weapons.map((weapon, index) => (
                     <WeaponRow
                         key={`weapon-row-${index.toString()}`}

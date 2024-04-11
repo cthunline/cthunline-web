@@ -67,12 +67,12 @@ const ArmourPoints = ({
     };
 
     return (
-        <Stack gap="0.5rem" flex={flex}>
+        <Stack gap="1rem" flex={flex}>
             <SectionTitle
                 iconBefore={<GiSpikedArmor size={20} />}
                 text={T('game.warhammerFantasy.common.armourPoints')}
             />
-            <Grid columns={3} gutter="0.25rem">
+            <Grid columns={3} gutter="0.5rem">
                 <Grid.Col span={1} />
                 <Grid.Col span={1} display="flex">
                     <ArmourPointsInput

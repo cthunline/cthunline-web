@@ -1,5 +1,5 @@
-import { ActionIcon, Box, Group, Stack, Textarea } from '@mantine/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { FiPlusCircle } from 'react-icons/fi';
 import {
     GiCharacter,
@@ -37,6 +37,7 @@ import Backgrounds from './backgrounds/Backgrounds.js';
 import Portrait from '../generic/portrait/Portrait.js';
 import DeathSpiral from './deathSpiral/DeathSpiral.js';
 import Advantages from './advantages/Advantages.js';
+import Textarea from '../../../common/Textarea.js';
 import { useApp } from '../../../contexts/App.js';
 import Stories from './stories/Stories.js';
 import {

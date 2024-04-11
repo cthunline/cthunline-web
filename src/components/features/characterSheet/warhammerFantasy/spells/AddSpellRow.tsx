@@ -1,11 +1,13 @@
-import { ActionIcon, Box, Group, Stack, Textarea } from '@mantine/core';
+import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { type WarhammerFantasySpell } from '@cthunline/games';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { FiPlusCircle } from 'react-icons/fi';
 import { useForm } from '@mantine/form';
 import z from 'zod';
 
+import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
+import Textarea from '../../../../common/Textarea.js';
 import { useApp } from '../../../../contexts/App.js';
 import Form from '../../../../common/Form.js';
 
@@ -50,67 +52,79 @@ const AddSpellRow = ({ onCreate }: AddSpellRowProps) => {
         reset();
     };
 
+    const castingNumberProps = getInputProps('castingNumber');
+
     return (
-        <Group w="100%" gap="0.25rem">
-            <Stack w="100%" gap="0.25rem">
-                <Group w="100%" gap="0.25rem">
+        <Group w="100%" gap="1rem">
+            <Stack flex="1 0" gap="0.5rem">
+                <Stack w="100%" gap={0}>
                     <Form id={formId} onSubmit={handleSubmit(onFormSubmit)} />
-                    <Box flex="5 0">
-                        <TextInput
-                            {...getInputProps('name')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            label={T('game.warhammerFantasy.spell.name')}
-                            size="sm"
-                        />
-                    </Box>
-                    <Box flex="1 0">
-                        <TextInput
-                            {...getInputProps('castingNumber')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            ta="center"
-                            label={T(
-                                'game.warhammerFantasy.spell.castingNumber'
-                            )}
-                            size="sm"
-                        />
-                    </Box>
-                    <Box flex="2 0">
-                        <TextInput
-                            {...getInputProps('range')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            label={T('game.warhammerFantasy.spell.range')}
-                            size="sm"
-                        />
-                    </Box>
-                    <Box flex="2 0">
-                        <TextInput
-                            {...getInputProps('target')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            label={T('game.warhammerFantasy.spell.target')}
-                            size="sm"
-                        />
-                    </Box>
-                    <Box flex="2 0">
-                        <TextInput
-                            {...getInputProps('duration')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            label={T('game.warhammerFantasy.spell.duration')}
-                            size="sm"
-                        />
-                    </Box>
-                </Group>
+                    <Group w="100%" gap="0.5rem">
+                        <Box flex="5 0">
+                            <TextInput
+                                {...getInputProps('name')}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                label={T('game.warhammerFantasy.spell.name')}
+                                size="sm"
+                            />
+                        </Box>
+                        <Box flex="1 0">
+                            <TextInput
+                                {...castingNumberProps}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                ta="center"
+                                label={T(
+                                    'game.warhammerFantasy.spell.castingNumber'
+                                )}
+                                size="sm"
+                                onChange={(e) => {
+                                    castingNumberProps.onChange?.(
+                                        Number(onlyNumbers(e.target.value))
+                                    );
+                                }}
+                            />
+                        </Box>
+                        <Box flex="2 0">
+                            <TextInput
+                                {...getInputProps('range')}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                label={T('game.warhammerFantasy.spell.range')}
+                                size="sm"
+                            />
+                        </Box>
+                        <Box flex="2 0">
+                            <TextInput
+                                {...getInputProps('target')}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                label={T('game.warhammerFantasy.spell.target')}
+                                size="sm"
+                            />
+                        </Box>
+                        <Box flex="2 0">
+                            <TextInput
+                                {...getInputProps('duration')}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                label={T(
+                                    'game.warhammerFantasy.spell.duration'
+                                )}
+                                size="sm"
+                            />
+                        </Box>
+                    </Group>
+                </Stack>
                 <Textarea
                     {...getInputProps('effect')}
+                    variant="contained"
                     w="100%"
                     form={formId}
                     label={T('game.warhammerFantasy.spell.effect')}

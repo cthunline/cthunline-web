@@ -117,6 +117,7 @@ export const sanityKeys: KeyData<CoCSanity>[] = [
     },
     {
         key: 'maximum',
-        textKey: 'max'
+        textKey: 'max',
+        editable: true
     }
 ];

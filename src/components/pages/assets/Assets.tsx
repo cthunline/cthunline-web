@@ -1,6 +1,7 @@
 import { MdFolder, MdOutlineImage, MdUploadFile } from 'react-icons/md';
-import { Button, FileButton, RingProgress } from '@mantine/core';
+import { Alert, Button, FileButton, RingProgress } from '@mantine/core';
 import { HiMusicNote } from 'react-icons/hi';
+import { FaInfo } from 'react-icons/fa6';
 import { modals } from '@mantine/modals';
 import { useState } from 'react';
 
@@ -157,13 +158,23 @@ const Assets = () => {
         <ContentBox h="65%">
             <ContentBox.Title>{T('entity.assets')}</ContentBox.Title>
             <ContentBox.Content>
-                <FileExplorer
-                    items={items}
-                    directoryId={directoryIds.at(-1)}
-                    onDirectoryBack={onDirectoryBack}
-                    onDirectoryClick={onDirectoryClick}
-                    onDelete={onDelete}
-                />
+                {items.length ? (
+                    <FileExplorer
+                        items={items}
+                        directoryId={directoryIds.at(-1)}
+                        onDirectoryBack={onDirectoryBack}
+                        onDirectoryClick={onDirectoryClick}
+                        onDelete={onDelete}
+                    />
+                ) : (
+                    <Alert
+                        w="100%"
+                        variant="default"
+                        color="gray"
+                        title={T('page.assets.noAsset')}
+                        icon={<FaInfo />}
+                    />
+                )}
             </ContentBox.Content>
             <ContentBox.Footer>
                 <Button leftSection={<MdFolder />} onClick={onCreateDirectory}>

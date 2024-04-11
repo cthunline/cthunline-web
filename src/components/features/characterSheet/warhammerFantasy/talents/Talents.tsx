@@ -40,12 +40,12 @@ const Talents = ({ readonly, character, onChange }: TalentsProps) => {
     };
 
     return (
-        <Stack gap="0.5rem" w="100%">
+        <Stack gap="1rem" w="100%">
             <SectionTitle
                 iconBefore={<GiInspiration size={20} />}
                 text={T('game.warhammerFantasy.common.talents')}
             />
-            <Stack gap="0.5rem" w="100%">
+            <Stack gap="1rem" w="100%">
                 {character.talents.map((talent, index) => (
                     <TalentRow
                         key={`talent-row-${index.toString()}`}

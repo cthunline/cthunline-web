@@ -1,17 +1,11 @@
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { type SeventhSeaStory } from '@cthunline/games';
 import { FiPlusCircle } from 'react-icons/fi';
-import {
-    ActionIcon,
-    Box,
-    Group,
-    Stack,
-    Textarea,
-    type StackProps
-} from '@mantine/core';
+import { ActionIcon, Box, Group, Stack, type StackProps } from '@mantine/core';
 
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import { GameId } from '../../../../../types/index.js';
+import Textarea from '../../../../common/Textarea.js';
 import { useApp } from '../../../../contexts/App.js';
 import { storyFields } from '../fields.js';
 
@@ -64,11 +58,12 @@ const Story = ({ index, story, readonly, onChange }: StoryProps) => {
                 >
                     <Box flex="1 0">
                         <Textarea
+                            variant="contained"
                             w="100%"
                             rows={3}
                             readOnly={readonly}
                             size="sm"
-                            label={(idx + 1).toString()}
+                            label={`${T('game.seventhSea.story.step')} ${(idx + 1).toString()}`}
                             value={step}
                             onChange={(
                                 e: React.ChangeEvent<HTMLTextAreaElement>

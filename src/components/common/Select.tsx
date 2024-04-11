@@ -5,6 +5,7 @@ import {
     type SelectProps as MantineSelectProps
 } from '@mantine/core';
 
+import { type InputVariant } from './TextInput.js';
 import {
     type SelectOption,
     type SelectOptionGroup
@@ -12,9 +13,10 @@ import {
 
 type SelectProps = Omit<
     MantineSelectProps,
-    'data' | 'defaultValue' | 'value' | 'onChange'
-> &
-    (
+    'variant' | 'data' | 'defaultValue' | 'value' | 'onChange'
+> & {
+    variant?: InputVariant;
+} & (
         | {
               valueType?: 'string';
               options: (SelectOption<string> | SelectOptionGroup<string>)[];
@@ -43,6 +45,8 @@ const isGroupOption = (
     Object.hasOwn(option, 'group') && Object.hasOwn(option, 'items');
 
 const Select = ({
+    variant,
+    className,
     valueType,
     options,
     defaultValue,
@@ -91,6 +95,8 @@ const Select = ({
     return (
         <MantineSelect
             {...props}
+            variant={variant === 'contained' ? 'default' : variant}
+            className={`${className ?? ''} ${variant === 'contained' ? 'contained' : ''}`}
             data={data}
             defaultValue={stringDefaultValue}
             value={stringValue}

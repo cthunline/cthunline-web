@@ -234,7 +234,7 @@ const WarhammerFantasySheet = ({
                                 gameId={GameId.warhammerFantasy}
                                 fields={biographyFields}
                                 textSectionKey="biography"
-                                data={data.biography}
+                                data={characterData.biography}
                                 readonly={readonly}
                                 onChange={(
                                     biography: WarhammerFantasyBiography

@@ -3,12 +3,10 @@ import {
     type TextInputProps as MantineTextInputProps
 } from '@mantine/core';
 
-import './TextInput.css';
-
-export type TextInputVariant = 'default' | 'filled' | 'contained' | 'unstyled';
+export type InputVariant = 'default' | 'filled' | 'contained' | 'unstyled';
 
 export interface TextInputProps extends Omit<MantineTextInputProps, 'variant'> {
-    variant?: TextInputVariant;
+    variant?: InputVariant;
 }
 
 const TextInput = ({ className, variant, ...props }: TextInputProps) => (

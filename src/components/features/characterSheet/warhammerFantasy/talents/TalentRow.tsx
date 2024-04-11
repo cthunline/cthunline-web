@@ -62,42 +62,44 @@ const TalentRow = ({
 }: TalentRowProps) => {
     const { T } = useApp();
     return (
-        <Group w="100%">
-            <Box flex="3 0">
-                <TalentRowInput
-                    readonly={readonly}
-                    type="string"
-                    label={T('game.warhammerFantasy.talent.name')}
-                    value={talent.name}
-                    onChange={(name: string) => {
-                        onChange({ ...talent, name });
-                    }}
-                />
-            </Box>
-            <Box flex="1 0">
-                <TalentRowInput
-                    readonly={readonly}
-                    type="number"
-                    label={T('game.warhammerFantasy.talent.timesTaken')}
-                    value={talent.timesTaken}
-                    onChange={(timesTaken: number) => {
-                        onChange({ ...talent, timesTaken });
-                    }}
-                />
-            </Box>
-            <Box flex="4 0">
-                <TalentRowInput
-                    readonly={readonly}
-                    type="string"
-                    label={T('game.warhammerFantasy.talent.description')}
-                    value={talent.description}
-                    onChange={(description: string) => {
-                        onChange({ ...talent, description });
-                    }}
-                />
-            </Box>
+        <Group w="100%" gap="1rem">
+            <Group flex="1 0" gap="0.5rem">
+                <Box flex="3 0">
+                    <TalentRowInput
+                        readonly={readonly}
+                        type="string"
+                        label={T('game.warhammerFantasy.talent.name')}
+                        value={talent.name}
+                        onChange={(name: string) => {
+                            onChange({ ...talent, name });
+                        }}
+                    />
+                </Box>
+                <Box flex="1 0">
+                    <TalentRowInput
+                        readonly={readonly}
+                        type="number"
+                        label={T('game.warhammerFantasy.talent.timesTaken')}
+                        value={talent.timesTaken}
+                        onChange={(timesTaken: number) => {
+                            onChange({ ...talent, timesTaken });
+                        }}
+                    />
+                </Box>
+                <Box flex="4 0">
+                    <TalentRowInput
+                        readonly={readonly}
+                        type="string"
+                        label={T('game.warhammerFantasy.talent.description')}
+                        value={talent.description}
+                        onChange={(description: string) => {
+                            onChange({ ...talent, description });
+                        }}
+                    />
+                </Box>
+            </Group>
             {!readonly && !!onDelete && (
-                <ActionIcon size="medium" onClick={onDelete}>
+                <ActionIcon color="red" onClick={onDelete}>
                     <MdOutlineDeleteOutline />
                 </ActionIcon>
             )}

@@ -19,7 +19,7 @@ const Backgrounds = ({
     onChange,
     onDelete
 }: BackgroundsProps) => (
-    <Stack w="100%" gap="1rem">
+    <Stack w="100%" gap="1.5rem">
         {backgrounds.map((background, index) => (
             <Group key={`background-${index.toString()}`} w="100%" gap="1rem">
                 <Box flex="1 0">

@@ -1,7 +1,8 @@
-import { ActionIcon, Button, Chip, Table } from '@mantine/core';
+import { ActionIcon, Alert, Button, Chip, Table } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { GiRollingDices } from 'react-icons/gi';
 import { useNavigate } from 'react-router-dom';
+import { FaInfo } from 'react-icons/fa6';
 import { modals } from '@mantine/modals';
 import { HiPlus } from 'react-icons/hi';
 import { useMemo } from 'react';
@@ -129,63 +130,78 @@ const Sessions = () => {
         <ContentBox>
             <ContentBox.Title>{T('entity.sessions')}</ContentBox.Title>
             <ContentBox.Content>
-                <Table stickyHeader>
-                    <Table.Thead>
-                        <Table.Tr>
-                            <Table.Th />
-                            <Table.Th>{T('common.name')}</Table.Th>
-                            <Table.Th>{T('entity.game')}</Table.Th>
-                            <Table.Th>{T('entity.gameMaster')}</Table.Th>
-                            <Table.Th />
-                        </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>
-                        {sessionList.map(({ id, name, gameId, master }) => {
-                            const isMaster = master?.id === user?.id;
-                            return (
-                                <Table.Tr key={`session-${id}`}>
-                                    <Table.Td>
-                                        <ActionIcon
-                                            onClick={() =>
-                                                onJoin(gameId, id, isMaster)
-                                            }
-                                        >
-                                            <GiRollingDices />
-                                        </ActionIcon>
-                                    </Table.Td>
-                                    <Table.Td>{name}</Table.Td>
-                                    <Table.Td>{getGame(gameId)?.name}</Table.Td>
-                                    <Table.Td>
-                                        {master?.name}
-                                        {isMaster ? (
-                                            <>
-                                                {' '}
-                                                <Chip
-                                                    size="xs"
-                                                    display="inline-block"
-                                                >
-                                                    {T('common.itsYou')}
-                                                </Chip>
-                                            </>
-                                        ) : null}
-                                    </Table.Td>
-                                    <Table.Td align="right">
-                                        {isMaster ? (
+                {sessionList.length ? (
+                    <Table stickyHeader>
+                        <Table.Thead>
+                            <Table.Tr>
+                                <Table.Th />
+                                <Table.Th>{T('common.name')}</Table.Th>
+                                <Table.Th>{T('entity.game')}</Table.Th>
+                                <Table.Th>{T('entity.gameMaster')}</Table.Th>
+                                <Table.Th />
+                            </Table.Tr>
+                        </Table.Thead>
+                        <Table.Tbody>
+                            {sessionList.map(({ id, name, gameId, master }) => {
+                                const isMaster = master?.id === user?.id;
+                                return (
+                                    <Table.Tr key={`session-${id}`}>
+                                        <Table.Td>
                                             <ActionIcon
-                                                color="red"
                                                 onClick={() =>
-                                                    onDeleteSession(id, name)
+                                                    onJoin(gameId, id, isMaster)
                                                 }
                                             >
-                                                <MdOutlineDeleteOutline />
+                                                <GiRollingDices />
                                             </ActionIcon>
-                                        ) : null}
-                                    </Table.Td>
-                                </Table.Tr>
-                            );
-                        })}
-                    </Table.Tbody>
-                </Table>
+                                        </Table.Td>
+                                        <Table.Td>{name}</Table.Td>
+                                        <Table.Td>
+                                            {getGame(gameId)?.name}
+                                        </Table.Td>
+                                        <Table.Td>
+                                            {master?.name}
+                                            {isMaster ? (
+                                                <>
+                                                    {' '}
+                                                    <Chip
+                                                        size="xs"
+                                                        display="inline-block"
+                                                    >
+                                                        {T('common.itsYou')}
+                                                    </Chip>
+                                                </>
+                                            ) : null}
+                                        </Table.Td>
+                                        <Table.Td align="right">
+                                            {isMaster ? (
+                                                <ActionIcon
+                                                    color="red"
+                                                    onClick={() =>
+                                                        onDeleteSession(
+                                                            id,
+                                                            name
+                                                        )
+                                                    }
+                                                >
+                                                    <MdOutlineDeleteOutline />
+                                                </ActionIcon>
+                                            ) : null}
+                                        </Table.Td>
+                                    </Table.Tr>
+                                );
+                            })}
+                        </Table.Tbody>
+                    </Table>
+                ) : (
+                    <Alert
+                        w="100%"
+                        variant="default"
+                        color="gray"
+                        title={T('page.sessions.noSession')}
+                        icon={<FaInfo />}
+                    />
+                )}
             </ContentBox.Content>
             <ContentBox.Footer>
                 <Button leftSection={<HiPlus />} onClick={onCreateSession}>

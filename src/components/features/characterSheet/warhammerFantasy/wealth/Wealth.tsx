@@ -21,12 +21,13 @@ export interface WealthProps {
 const Wealth = ({ readonly, character, onChange, flex }: WealthProps) => {
     const { T } = useApp();
     return (
-        <Stack gap="0.5rem" flex={flex}>
+        <Stack gap="1rem" flex={flex}>
             <SectionTitle
                 iconBefore={<GiCash size={20} />}
                 text={T('game.warhammerFantasy.common.wealth')}
             />
             <FieldLayout<WarhammerFantasyWealth>
+                gap="0.5rem"
                 gameId={GameId.warhammerFantasy}
                 fields={wealthFields}
                 textSectionKey="wealth"

@@ -5,6 +5,7 @@ import { FiPlusCircle } from 'react-icons/fi';
 import { useForm } from '@mantine/form';
 import z from 'zod';
 
+import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../contexts/App.js';
 import Form from '../../../../common/Form.js';
@@ -48,59 +49,76 @@ const AddArmourRow = ({ onCreate }: AddArmourRowProps) => {
         reset();
     };
 
+    const encumbranceProps = getInputProps('encumbrance');
+    const armourPointsProps = getInputProps('armourPoints');
+
     return (
-        <Group w="100%" gap="0.25rem">
-            <Stack w="100%" gap="0.25rem">
-                <Group w="100%" gap="0.25rem">
+        <Group w="100%" gap="1rem">
+            <Stack flex="1 0" gap="0.5rem">
+                <Stack w="100%" gap={0}>
                     <Form id={formId} onSubmit={handleSubmit(onFormSubmit)} />
-                    <Box flex="6 0">
-                        <TextInput
-                            {...getInputProps('name')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            label={T('game.warhammerFantasy.armour.name')}
-                            size="sm"
-                        />
-                    </Box>
-                    <Box flex="4 0">
-                        <TextInput
-                            {...getInputProps('locations')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            ta="center"
-                            label={T('game.warhammerFantasy.armour.locations')}
-                            size="sm"
-                        />
-                    </Box>
-                    <Box flex="2 0">
-                        <TextInput
-                            {...getInputProps('encumbrance')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            ta="center"
-                            label={T(
-                                'game.warhammerFantasy.armour.encumbrance'
-                            )}
-                            size="sm"
-                        />
-                    </Box>
-                    <Box flex="2 0">
-                        <TextInput
-                            {...getInputProps('armourPoints')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            ta="center"
-                            label={T(
-                                'game.warhammerFantasy.armour.armourPoints'
-                            )}
-                            size="sm"
-                        />
-                    </Box>
-                </Group>
+                    <Group w="100%" gap="0.5rem">
+                        <Box flex="6 0">
+                            <TextInput
+                                {...getInputProps('name')}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                label={T('game.warhammerFantasy.armour.name')}
+                                size="sm"
+                            />
+                        </Box>
+                        <Box flex="4 0">
+                            <TextInput
+                                {...getInputProps('locations')}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                ta="center"
+                                label={T(
+                                    'game.warhammerFantasy.armour.locations'
+                                )}
+                                size="sm"
+                            />
+                        </Box>
+                        <Box flex="2 0">
+                            <TextInput
+                                {...encumbranceProps}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                ta="center"
+                                label={T(
+                                    'game.warhammerFantasy.armour.encumbrance'
+                                )}
+                                size="sm"
+                                onChange={(e) => {
+                                    encumbranceProps.onChange?.(
+                                        Number(onlyNumbers(e.target.value))
+                                    );
+                                }}
+                            />
+                        </Box>
+                        <Box flex="2 0">
+                            <TextInput
+                                {...armourPointsProps}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                ta="center"
+                                label={T(
+                                    'game.warhammerFantasy.armour.armourPoints'
+                                )}
+                                size="sm"
+                                onChange={(e) => {
+                                    armourPointsProps.onChange?.(
+                                        Number(onlyNumbers(e.target.value))
+                                    );
+                                }}
+                            />
+                        </Box>
+                    </Group>
+                </Stack>
                 <TextInput
                     {...getInputProps('qualities')}
                     variant="contained"

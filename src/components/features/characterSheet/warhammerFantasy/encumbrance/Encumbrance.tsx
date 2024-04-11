@@ -60,12 +60,12 @@ const Encumbrance = ({
     };
 
     return (
-        <Stack gap="0.5rem" flex={flex}>
+        <Stack gap="1rem" flex={flex}>
             <SectionTitle
                 iconBefore={<GiSpikedArmor size={20} />}
                 text={T('game.warhammerFantasy.common.encumbrance')}
             />
-            <Grid columns={2} gutter="0.25rem">
+            <Grid columns={2} gutter="0.5rem">
                 <Grid.Col span={1}>
                     <EncumbranceInput
                         label={T('game.warhammerFantasy.encumbrance.weapons')}

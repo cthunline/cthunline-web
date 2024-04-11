@@ -225,7 +225,7 @@ const DnD5Sheet = ({
 
     const getAddButton = (handler: () => void) =>
         readonly ? undefined : (
-            <ActionIcon size="medium" onClick={handler}>
+            <ActionIcon size="sm" onClick={handler}>
                 <FiPlusCircle />
             </ActionIcon>
         );

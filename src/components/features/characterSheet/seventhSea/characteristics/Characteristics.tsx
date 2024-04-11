@@ -58,7 +58,7 @@ const Characteristics = <DataType extends Record<string, any>>({
                                         {[1, 2, 3, 4, 5].map((value) => (
                                             <Radio
                                                 key={`characteristi-${key}-radio-${value.toString()}`}
-                                                checked={score >= value}
+                                                defaultChecked={score >= value}
                                                 value={value}
                                                 size="sm"
                                                 onClick={(e) => {

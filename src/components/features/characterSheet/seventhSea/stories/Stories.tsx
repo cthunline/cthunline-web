@@ -12,7 +12,7 @@ interface StoriesProps {
 }
 
 const Stories = ({ stories, readonly, onChange, onDelete }: StoriesProps) => (
-    <Stack w="100%" gap="1rem">
+    <Stack w="100%" gap="3rem">
         {stories.map((story, index) => (
             <Group
                 key={`story-${index.toString()}`}

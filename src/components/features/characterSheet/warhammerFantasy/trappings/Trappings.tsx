@@ -50,7 +50,7 @@ const Trappings = ({ readonly, character, onChange }: TrappingsProps) => {
                 iconBefore={<GiSwissArmyKnife size={20} />}
                 text={T('game.warhammerFantasy.common.trappings')}
             />
-            <Stack gap="0.5rem" w="100%">
+            <Stack gap="1rem" w="100%">
                 {character.trappings.map((trapping, index) => (
                     <TrappingRow
                         key={`trapping-row-${index.toString()}`}

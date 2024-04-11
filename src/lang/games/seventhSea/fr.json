@@ -67,6 +67,7 @@
             "name": "nom",
             "goal": "objectif",
             "reward": "récompense",
+            "step": "étape",
             "steps": "étapes"
         },
         "trait": {

@@ -62,9 +62,9 @@ const ArmourRow = ({
 }: ArmourRowProps) => {
     const { T } = useApp();
     return (
-        <Group w="100%">
-            <Stack w="100%">
-                <Group w="100%">
+        <Group w="100%" gap="1rem">
+            <Stack flex="1 0" gap="0.5rem">
+                <Group w="100%" gap="0.5rem">
                     <Box flex="6 0">
                         <ArmourRowInput
                             readonly={readonly}

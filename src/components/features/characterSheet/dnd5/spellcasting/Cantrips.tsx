@@ -29,7 +29,7 @@ const Cantrips = ({ cantrips, readonly, onChange }: CantripsProps) => {
                 )}
             </Group>
             {cantrips.map((cantrip, index) => [
-                <Group key={`cantrip-${index.toString}`} w="100%" gap="1rem">
+                <Group key={`cantrip-${index.toString()}`} w="100%" gap="1rem">
                     <Box flex="1 0">
                         <TextInput
                             w="100%"

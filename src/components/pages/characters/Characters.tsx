@@ -1,7 +1,8 @@
 import { MdEdit, MdOutlineDeleteOutline, MdOutlineSend } from 'react-icons/md';
-import { ActionIcon, Button, Table } from '@mantine/core';
+import { ActionIcon, Alert, Button, Table } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
 import { useMemo, useState } from 'react';
+import { FaInfo } from 'react-icons/fa6';
 import { modals } from '@mantine/modals';
 import { HiPlus } from 'react-icons/hi';
 
@@ -163,39 +164,52 @@ const Characters = () => {
         <ContentBox>
             <ContentBox.Title>{T('entity.characters')}</ContentBox.Title>
             <ContentBox.Content>
-                <Table stickyHeader>
-                    <Table.Thead>
-                        <Table.Tr>
-                            <Table.Th>{T('entity.game')}</Table.Th>
-                            <Table.Th>{T('common.name')}</Table.Th>
-                            <Table.Th />
-                        </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>
-                        {characterList.map(({ id, name, gameId }) => (
-                            <Table.Tr key={`character-${id}`}>
-                                <Table.Td>{getGame(gameId)?.name}</Table.Td>
-                                <Table.Td>
-                                    {name.trim() || `[${T('common.unknown')}]`}
-                                </Table.Td>
-                                <Table.Td align="right">
-                                    <ActionIcon onClick={() => onTransfer(id)}>
-                                        <MdOutlineSend />
-                                    </ActionIcon>{' '}
-                                    <ActionIcon onClick={() => onEdit(id)}>
-                                        <MdEdit />
-                                    </ActionIcon>{' '}
-                                    <ActionIcon
-                                        color="red"
-                                        onClick={() => onDelete(id, name)}
-                                    >
-                                        <MdOutlineDeleteOutline />
-                                    </ActionIcon>
-                                </Table.Td>
+                {characterList.length ? (
+                    <Table stickyHeader>
+                        <Table.Thead>
+                            <Table.Tr>
+                                <Table.Th>{T('entity.game')}</Table.Th>
+                                <Table.Th>{T('common.name')}</Table.Th>
+                                <Table.Th />
                             </Table.Tr>
-                        ))}
-                    </Table.Tbody>
-                </Table>
+                        </Table.Thead>
+                        <Table.Tbody>
+                            {characterList.map(({ id, name, gameId }) => (
+                                <Table.Tr key={`character-${id}`}>
+                                    <Table.Td>{getGame(gameId)?.name}</Table.Td>
+                                    <Table.Td>
+                                        {name.trim() ||
+                                            `[${T('common.unknown')}]`}
+                                    </Table.Td>
+                                    <Table.Td align="right">
+                                        <ActionIcon
+                                            onClick={() => onTransfer(id)}
+                                        >
+                                            <MdOutlineSend />
+                                        </ActionIcon>{' '}
+                                        <ActionIcon onClick={() => onEdit(id)}>
+                                            <MdEdit />
+                                        </ActionIcon>{' '}
+                                        <ActionIcon
+                                            color="red"
+                                            onClick={() => onDelete(id, name)}
+                                        >
+                                            <MdOutlineDeleteOutline />
+                                        </ActionIcon>
+                                    </Table.Td>
+                                </Table.Tr>
+                            ))}
+                        </Table.Tbody>
+                    </Table>
+                ) : (
+                    <Alert
+                        w="100%"
+                        variant="default"
+                        color="gray"
+                        title={T('page.characters.noCharacter')}
+                        icon={<FaInfo />}
+                    />
+                )}
             </ContentBox.Content>
             <ContentBox.Footer>
                 <Button leftSection={<HiPlus />} onClick={onGameSelect}>

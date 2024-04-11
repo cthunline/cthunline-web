@@ -76,7 +76,7 @@ const AddOtherSkillRow = ({ character, onCreate }: AddOtherSkillRowProps) => {
 
     return (
         <Group w="100%">
-            <Box flex="4 0">
+            <Box flex="1 0">
                 <TextInput
                     variant="contained"
                     w="100%"
@@ -91,8 +91,9 @@ const AddOtherSkillRow = ({ character, onCreate }: AddOtherSkillRowProps) => {
                     }}
                 />
             </Box>
-            <Box flex="4 0">
+            <Box flex="1 0">
                 <Select
+                    variant="contained"
                     valueType="string"
                     label={T('game.warhammerFantasy.common.characteristic')}
                     name="gameId"
@@ -109,30 +110,28 @@ const AddOtherSkillRow = ({ character, onCreate }: AddOtherSkillRowProps) => {
                     }}
                 />
             </Box>
-            <Box flex="1 0">
-                <ActionIcon
-                    onClick={() => {
-                        const { name, characteristicName } = otherSkillFormData;
-                        if (name && characteristicName) {
-                            const characteristic =
-                                character.characteristics[characteristicName];
-                            onCreate({
-                                name,
-                                characteristicName,
-                                advances: 0,
-                                skill: characteristic.current
-                            });
-                            resetForm();
-                        } else {
-                            updateOtherSkillFormData({
-                                updateErrors: true
-                            });
-                        }
-                    }}
-                >
-                    <FiPlusCircle />
-                </ActionIcon>
-            </Box>
+            <ActionIcon
+                onClick={() => {
+                    const { name, characteristicName } = otherSkillFormData;
+                    if (name && characteristicName) {
+                        const characteristic =
+                            character.characteristics[characteristicName];
+                        onCreate({
+                            name,
+                            characteristicName,
+                            advances: 0,
+                            skill: characteristic.current
+                        });
+                        resetForm();
+                    } else {
+                        updateOtherSkillFormData({
+                            updateErrors: true
+                        });
+                    }
+                }}
+            >
+                <FiPlusCircle />
+            </ActionIcon>
         </Group>
     );
 };

@@ -43,7 +43,7 @@ const Page = ({ children }: PageProps) => {
                     justify="center"
                     w="100%"
                     h="100%"
-                    p="1.5rem"
+                    p="1rem"
                 >
                     {children}
                 </Stack>

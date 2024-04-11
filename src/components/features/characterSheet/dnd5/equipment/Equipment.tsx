@@ -1,9 +1,10 @@
 import { type DnD5Equipment } from '@cthunline/games';
-import { Box, Group, Stack, Textarea } from '@mantine/core';
+import { Box, Group, Stack } from '@mantine/core';
 
 import { moneyFields, equipmentFields } from './equipment.data.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
+import Textarea from '../../../../common/Textarea.js';
 import { useApp } from '../../../../contexts/App.js';
 
 interface EquipmentProps {
@@ -50,6 +51,7 @@ const Equipment = ({ equipment, readonly, onChange }: EquipmentProps) => {
                 {...equipmentFields.map((key) => (
                     <Box key={`equipment-${key}`} flex="1 0">
                         <Textarea
+                            variant="contained"
                             w="100%"
                             rows={5}
                             readOnly={readonly}

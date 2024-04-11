@@ -5,6 +5,7 @@ import { FiPlusCircle } from 'react-icons/fi';
 import { useForm } from '@mantine/form';
 import z from 'zod';
 
+import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../contexts/App.js';
 import Form from '../../../../common/Form.js';
@@ -50,56 +51,72 @@ const AddWeaponRow = ({ onCreate }: AddWeaponRowProps) => {
         reset();
     };
 
+    const encumbranceProps = getInputProps('encumbrance');
+
     return (
-        <Group w="100%" gap="0.25rem">
-            <Stack w="100%" gap="0.25rem">
-                <Group w="100%" gap="0.25rem">
-                    <Form id={formId} onSubmit={handleSubmit(onFormSubmit)} />
-                    <Box flex="6 0">
-                        <TextInput
-                            {...getInputProps('name')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            label={T('game.warhammerFantasy.weapon.name')}
-                            size="sm"
-                        />
-                    </Box>
-                    <Box flex="3 0">
-                        <TextInput
-                            {...getInputProps('group')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            label={T('game.warhammerFantasy.weapon.group')}
-                            size="sm"
-                        />
-                    </Box>
-                    <Box flex="2 0">
-                        <TextInput
-                            {...getInputProps('encumbrance')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            ta="center"
-                            label={T(
-                                'game.warhammerFantasy.weapon.encumbrance'
-                            )}
-                            size="sm"
-                        />
-                    </Box>
-                    <Box flex="3 0">
-                        <TextInput
-                            {...getInputProps('rangeReach')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            label={T('game.warhammerFantasy.weapon.rangeReach')}
-                            size="sm"
-                        />
-                    </Box>
-                </Group>
-                <Group w="100%" gap="0.25rem">
+        <Group w="100%" gap="1rem">
+            <Stack flex="1 0" gap="0.5rem">
+                <Stack w="100%" gap={0}>
+                    <Form
+                        id={formId}
+                        onSubmit={handleSubmit(onFormSubmit)}
+                        w={0}
+                        h={0}
+                    />
+                    <Group w="100%" gap="0.5rem">
+                        <Box flex="6 0">
+                            <TextInput
+                                {...getInputProps('name')}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                label={T('game.warhammerFantasy.weapon.name')}
+                                size="sm"
+                            />
+                        </Box>
+                        <Box flex="3 0">
+                            <TextInput
+                                {...getInputProps('group')}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                label={T('game.warhammerFantasy.weapon.group')}
+                                size="sm"
+                            />
+                        </Box>
+                        <Box flex="2 0">
+                            <TextInput
+                                {...encumbranceProps}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                ta="center"
+                                label={T(
+                                    'game.warhammerFantasy.weapon.encumbrance'
+                                )}
+                                size="sm"
+                                onChange={(e) => {
+                                    encumbranceProps.onChange?.(
+                                        Number(onlyNumbers(e.target.value))
+                                    );
+                                }}
+                            />
+                        </Box>
+                        <Box flex="3 0">
+                            <TextInput
+                                {...getInputProps('rangeReach')}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                label={T(
+                                    'game.warhammerFantasy.weapon.rangeReach'
+                                )}
+                                size="sm"
+                            />
+                        </Box>
+                    </Group>
+                </Stack>
+                <Group w="100%" gap="0.5rem">
                     <Box flex="3 0">
                         <TextInput
                             {...getInputProps('damage')}

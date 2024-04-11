@@ -123,7 +123,7 @@ const PlayContent = () => {
     }
 
     return (
-        <Group w="100%" h="100%">
+        <Group w="100%" h="100%" gap={0}>
             <PlayMenu
                 isMaster={socket.isMaster}
                 onWidgetOpen={onWidgetOpen}

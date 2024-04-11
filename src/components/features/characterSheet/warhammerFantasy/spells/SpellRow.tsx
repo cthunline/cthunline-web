@@ -1,10 +1,11 @@
-import { ActionIcon, Box, Group, Stack, Textarea } from '@mantine/core';
+import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { type WarhammerFantasySpell } from '@cthunline/games';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../contexts/App.js';
+import Textarea from '../../../../common/Textarea.js';
 
 type SpellRowInputProps = {
     readonly: boolean;
@@ -59,9 +60,9 @@ type SpellRowProps = {
 const SpellRow = ({ readonly, spell, onChange, onDelete }: SpellRowProps) => {
     const { T } = useApp();
     return (
-        <Group w="100%">
-            <Stack w="100%">
-                <Group w="100%">
+        <Group w="100%" gap="1rem">
+            <Stack flex="1 0" gap="0.5rem">
+                <Group w="100%" gap="0.5rem">
                     <Box flex="5 0">
                         <SpellRowInput
                             readonly={readonly}
@@ -125,6 +126,7 @@ const SpellRow = ({ readonly, spell, onChange, onDelete }: SpellRowProps) => {
                     </Box>
                 </Group>
                 <Textarea
+                    variant="contained"
                     w="100%"
                     readOnly={readonly}
                     size="sm"

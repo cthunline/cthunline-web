@@ -62,18 +62,13 @@ const Audio = () => {
     };
 
     return (
-        <Box
-            pos="absolute"
-            top="10px"
-            right="30px"
-            w="150px"
-            style={{ zIndex: 0 }}
-        >
-            <Group align="center" justify="center" gap="0.5rem">
+        <Box pos="absolute" top={0} right={0} w="10rem" style={{ zIndex: 0 }}>
+            <Group align="center" justify="center" gap="1rem">
                 <ActionIcon onClick={() => setIsMute(!isMute)}>
                     {getIcon()}
                 </ActionIcon>
                 <Slider
+                    flex="1 0"
                     value={volumePercent}
                     onChange={onVolumeChange}
                     min={0}

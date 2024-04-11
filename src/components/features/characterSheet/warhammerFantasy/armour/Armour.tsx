@@ -38,12 +38,12 @@ const Armour = ({ readonly, character, onChange }: ArmourProps) => {
     };
 
     return (
-        <Stack gap="0.5rem" w="100%">
+        <Stack gap="1rem" w="100%">
             <SectionTitle
                 iconBefore={<GiChestArmor size={20} />}
                 text={T('game.warhammerFantasy.common.armour')}
             />
-            <Stack gap="0.5rem" w="100%">
+            <Stack gap="1rem" w="100%">
                 {character.armour.map((armour, index) => (
                     <ArmourRow
                         key={`armour-row-${index.toString()}`}

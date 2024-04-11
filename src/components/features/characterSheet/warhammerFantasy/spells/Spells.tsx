@@ -44,12 +44,12 @@ const Spells = ({ readonly, character, onChange }: SpellsProps) => {
     };
 
     return (
-        <Stack gap="0.5rem" w="100%">
+        <Stack gap="1rem" w="100%">
             <SectionTitle
                 iconBefore={<GiSpellBook size={20} />}
                 text={T('game.warhammerFantasy.common.spellsAndPrayers')}
             />
-            <Stack gap="0.5rem" w="100%">
+            <Stack gap="1rem" w="100%">
                 {character.spells.map((spell, index) => (
                     <SpellRow
                         key={`spell-row-${index.toString()}`}

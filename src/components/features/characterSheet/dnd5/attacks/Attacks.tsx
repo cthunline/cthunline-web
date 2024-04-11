@@ -56,14 +56,12 @@ const Attacks = ({ attacks, readonly, onChange, onDelete }: AttacksProps) => {
                             </Box>
                         ))}
                         {!readonly && (
-                            <Box>
-                                <ActionIcon
-                                    color="red"
-                                    onClick={() => onDelete(index)}
-                                >
-                                    <MdOutlineDeleteOutline />
-                                </ActionIcon>
-                            </Box>
+                            <ActionIcon
+                                color="red"
+                                onClick={() => onDelete(index)}
+                            >
+                                <MdOutlineDeleteOutline />
+                            </ActionIcon>
                         )}
                     </Group>
                 ))
