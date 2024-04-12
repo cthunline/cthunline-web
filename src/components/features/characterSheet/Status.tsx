@@ -1,5 +1,5 @@
-import { FaFloppyDisk, FaRegCircleDot } from 'react-icons/fa6';
-import { Tooltip, Box, Loader } from '@mantine/core';
+import { Tooltip, Loader, Group } from '@mantine/core';
+import { FaCircle } from 'react-icons/fa6';
 import { useMemo } from 'react';
 
 import { type CharacterSheetStatus } from '../../../types/index.js';
@@ -23,21 +23,21 @@ const Status = ({ status }: StatusProps) => {
                 idle: {
                     text: T('status.idle'),
                     content: (
-                        <FaRegCircleDot
-                            size="1.25rem"
+                        <FaCircle
+                            size="0.75rem"
                             color="var(--mantine-color-grey-filled)"
                         />
                     )
                 },
                 saving: {
                     text: T('status.saving'),
-                    content: <Loader size="sm" color="orange" />
+                    content: <Loader size="xs" color="orange" />
                 },
                 saved: {
                     text: T('status.saved'),
                     content: (
-                        <FaFloppyDisk
-                            size="1.25rem"
+                        <FaCircle
+                            size="0.75rem"
                             color="var(--mantine-color-green-filled)"
                         />
                     )
@@ -50,7 +50,9 @@ const Status = ({ status }: StatusProps) => {
 
     return (
         <Tooltip label={text} position="bottom">
-            <Box>{content}</Box>
+            <Group w="2rem" h="100%" align="center" justify="center">
+                {content}
+            </Group>
         </Tooltip>
     );
 };
