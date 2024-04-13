@@ -1,8 +1,9 @@
+import { useEffect, useMemo, useRef } from 'react';
 import { useClickOutside } from '@mantine/hooks';
-import { useEffect, useRef } from 'react';
-import { Box } from '@mantine/core';
+import { Group } from '@mantine/core';
 
 import useDrawing from '../../hooks/sketch/useDrawing.js';
+import CharacterPortraits from './CharacterPortraits.js';
 import useItems from '../../hooks/sketch/useItems.js';
 import { viewBox } from '../../../services/sketch.js';
 import SketchImage from './sketch/SketchImage.js';
@@ -10,8 +11,8 @@ import SketchToken from './sketch/SketchToken.js';
 import { usePlay } from '../../contexts/Play.js';
 import {
     type CardinalDirection,
-    type Color,
     type SessionUser,
+    type Color,
     SketchItemType
 } from '../../../types/index.js';
 
@@ -25,6 +26,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
         useRef<SVGSVGElement>() as React.MutableRefObject<SVGSVGElement>;
 
     const {
+        users,
         isFreeDrawing,
         sketchData,
         attachTokenData,
@@ -59,6 +61,11 @@ const Sketch = ({ isMaster }: SketchProps) => {
         handleImageForward,
         handleImageBackward
     } = useItems(svgRef, isMaster);
+
+    const players = useMemo(
+        () => users.filter(({ isMaster: isUserMaster }) => !isUserMaster),
+        [users]
+    );
 
     // handles mouseClick outside of the sketch
     const sketchContainerRef = useClickOutside(() => {
@@ -112,13 +119,17 @@ const Sketch = ({ isMaster }: SketchProps) => {
     }, [isFreeDrawing, setSelectedImageId]);
 
     return (
-        <Box
+        <Group
             ref={sketchContainerRef}
             w="100%"
             h="100%"
-            ta="center"
+            align="start"
+            justify="center"
             style={{ userSelect: 'none' }}
+            wrap="nowrap"
         >
+            {/* character portraits */}
+            <CharacterPortraits players={players} />
             {/* main svg container */}
             <svg
                 ref={svgRef}
@@ -134,8 +145,8 @@ const Sketch = ({ isMaster }: SketchProps) => {
                 onContextMenu={handleContextMenu}
                 style={{
                     background: 'var(--palette-background-secondary)',
-                    maxHeight: '100%',
                     maxWidth: '100%',
+                    maxHeight: '100%',
                     cursor: isFreeDrawing ? 'crosshair' : undefined
                 }}
             >
@@ -247,7 +258,9 @@ const Sketch = ({ isMaster }: SketchProps) => {
                     }
                 )}
             </svg>
-        </Box>
+            {/* empty character portraits container to compensate the one on the left */}
+            <CharacterPortraits players={[]} />
+        </Group>
     );
 };
 

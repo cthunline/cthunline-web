@@ -191,6 +191,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                 handler: () => {
                     modals.open({
                         modalId: saveSketchModalId,
+                        centered: true,
                         title: T('widget.sketch.saveSketch'),
                         children: (
                             <UserSketchSave
@@ -209,6 +210,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                 handler: () => {
                     modals.open({
                         modalId: loadSketchModalId,
+                        centered: true,
                         title: T('widget.sketch.loadSketch'),
                         children: (
                             <UserSketchLoad
