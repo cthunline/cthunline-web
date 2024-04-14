@@ -177,7 +177,9 @@
             "spawnPlayerTokens": "spawn player tokens"
         },
         "jukebox": {
-            "autoplay": "autoplay"
+            "autoplay": "autoplay",
+            "repeat": "repeat",
+            "shuffle": "shuffle"
         }
     }
 }

@@ -1,8 +1,9 @@
 import { Checkbox, Group, Stack } from '@mantine/core';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useReducer, useRef, useState } from 'react';
 import { HiMusicNote } from 'react-icons/hi';
 
 import { WidgetType, type Asset } from '../../../../../types/index.js';
+import { shuffleArray } from '../../../../../services/tools.js';
 import { getAssetUrl } from '../../../../../services/api.js';
 import useDirectory from '../../../../hooks/useDirectory.js';
 import useAsset from '../../../../hooks/useAsset.js';
@@ -12,6 +13,18 @@ import FileExplorer, {
     type FileExplorerItem,
     FileExplorerItemType
 } from '../../../../common/FileExplorer.js';
+
+interface AudioOptions {
+    autoplay: boolean;
+    repeat: boolean;
+    shuffle: boolean;
+}
+
+const defaultAudioOptions: AudioOptions = {
+    autoplay: true,
+    repeat: true,
+    shuffle: false
+};
 
 interface JukeboxWidgetProps {
     onPlay: (asset: Asset, time: number) => void;
@@ -31,45 +44,69 @@ const JukeboxWidget = ({ onPlay, onStop, onClose }: JukeboxWidgetProps) => {
 
     const [directoryIds, setDirectoryIds] = useState<number[]>([]);
     const [selectedAsset, setSelectedAsset] = useState<Asset | null>(null);
-    const [autoplay, setAutoplay] = useState<boolean>(true);
+    const [audioOptions, updateAudioOptions] = useReducer(
+        (
+            prev: AudioOptions,
+            updateData: Partial<AudioOptions>
+        ): AudioOptions => ({
+            ...prev,
+            ...updateData
+        }),
+        defaultAudioOptions
+    );
 
     const audioElement =
         useRef<HTMLAudioElement>() as React.MutableRefObject<HTMLAudioElement>;
 
-    const explorerItems: FileExplorerItem[] = [
-        ...directoryList.map(({ id, name, parentId }) => ({
-            id,
-            name,
-            parentId,
-            type: FileExplorerItemType.directory
-        })),
-        ...assetList.map(({ id, name, directoryId }) => ({
-            id,
-            name,
-            parentId: directoryId,
-            type: FileExplorerItemType.file,
-            icon: <HiMusicNote size={25} />
-        }))
-    ];
+    const [explorerItems, audioAssets] = useMemo(() => {
+        const items: FileExplorerItem[] = [
+            ...directoryList.map(({ id, name, parentId }) => ({
+                id,
+                name,
+                parentId,
+                type: FileExplorerItemType.directory
+            })),
+            ...assetList.map(({ id, name, directoryId }) => ({
+                id,
+                name,
+                parentId: directoryId,
+                type: FileExplorerItemType.file,
+                icon: <HiMusicNote size={25} />
+            }))
+        ];
+        const currentDirectoryId = directoryIds.at(-1);
+        let assets = assetList.filter(({ directoryId }) =>
+            currentDirectoryId
+                ? directoryId === currentDirectoryId
+                : !directoryId
+        );
+        if (audioOptions.shuffle) {
+            assets = shuffleArray(assets);
+        }
+        return [items, assets];
+    }, [directoryIds, directoryList, assetList, audioOptions.shuffle]);
 
     const autoplayNext = () => {
         if (selectedAsset) {
-            const currentDirectoryId = directoryIds.at(-1);
-            const currentItems = explorerItems.filter(({ parentId }) =>
-                currentDirectoryId ? parentId === currentDirectoryId : !parentId
-            );
-            const currentItemIndex = currentItems.findIndex(
+            const currentAudioAssetIndex = audioAssets.findIndex(
                 ({ id }) => selectedAsset.id === id
             );
-            if (currentItemIndex >= 0 && currentItems[currentItemIndex + 1]) {
-                const asset = assetList.find(
-                    ({ id }) => id === currentItems[currentItemIndex + 1].id
-                );
-                if (asset) {
-                    if (selectedAsset?.id !== asset.id) {
-                        onStop();
+            if (currentAudioAssetIndex >= 0) {
+                let nextIndex = currentAudioAssetIndex + 1;
+                if (audioOptions.repeat && nextIndex > audioAssets.length - 1) {
+                    nextIndex = 0;
+                }
+                const nextAsset = audioAssets[nextIndex];
+                if (nextAsset) {
+                    const asset = assetList.find(
+                        ({ id }) => id === nextAsset.id
+                    );
+                    if (asset) {
+                        if (selectedAsset?.id !== asset.id) {
+                            onStop();
+                        }
+                        setSelectedAsset(asset);
                     }
-                    setSelectedAsset(asset);
                 }
             }
         }
@@ -96,7 +133,7 @@ const JukeboxWidget = ({ onPlay, onStop, onClose }: JukeboxWidgetProps) => {
     };
 
     const onAudioEnded = () => {
-        if (autoplay) {
+        if (audioOptions.autoplay) {
             autoplayNext();
         }
     };
@@ -110,11 +147,11 @@ const JukeboxWidget = ({ onPlay, onStop, onClose }: JukeboxWidgetProps) => {
     };
 
     useEffect(() => {
-        if (autoplay && selectedAsset && audioElement.current) {
+        if (audioOptions.autoplay && selectedAsset && audioElement.current) {
             audioElement.current.play();
             onPlay(selectedAsset, audioElement.current.currentTime);
         }
-    }, [selectedAsset, autoplay, onPlay]);
+    }, [selectedAsset, audioOptions.autoplay, onPlay]);
 
     useEffect(() => onStop, [onStop]);
 
@@ -148,13 +185,29 @@ const JukeboxWidget = ({ onPlay, onStop, onClose }: JukeboxWidgetProps) => {
                         onEnded={onAudioEnded} // eslint-disable-line react/no-unknown-property
                     />
                 ) : null}
-                <Group justify="end">
+                <Group justify="end" gap="1rem">
                     <Checkbox
-                        checked={autoplay}
+                        checked={audioOptions.shuffle}
+                        label={T('widget.jukebox.shuffle')}
+                        labelPosition="left"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            updateAudioOptions({ shuffle: e.target.checked });
+                        }}
+                    />
+                    <Checkbox
+                        checked={audioOptions.repeat}
+                        label={T('widget.jukebox.repeat')}
+                        labelPosition="left"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            updateAudioOptions({ repeat: e.target.checked });
+                        }}
+                    />
+                    <Checkbox
+                        checked={audioOptions.autoplay}
                         label={T('widget.jukebox.autoplay')}
                         labelPosition="left"
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setAutoplay(e.target.checked);
+                            updateAudioOptions({ autoplay: e.target.checked });
                         }}
                     />
                 </Group>

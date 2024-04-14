@@ -177,7 +177,9 @@
             "spawnPlayerTokens": "générer les tokens de joueurs"
         },
         "jukebox": {
-            "autoplay": "lecture auto."
+            "autoplay": "lecture auto.",
+            "repeat": "répéter",
+            "shuffle": "aléatoire"
         }
     }
 }

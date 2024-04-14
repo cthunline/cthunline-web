@@ -87,6 +87,7 @@ const FileExplorer = ({
                     return (
                         <InteractiveList.Item
                             key={`explorer-${type}-${id}`}
+                            selected={!!selectedId && selectedId === id}
                             leftIcon={getIcon(type, icon)}
                             rightAction={
                                 !!onDelete && (

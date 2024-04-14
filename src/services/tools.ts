@@ -78,6 +78,16 @@ export const randomItem = (array: any[]): any => {
     return array[randomIndex];
 };
 
+// shuffle an array (randomize items order)
+export const shuffleArray = (array: any[]) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], array[i]];
+    }
+    return shuffled;
+};
+
 // get css variable value
 const computedStyle = window.getComputedStyle(document.body);
 export const getCssVar = (name: string) => computedStyle.getPropertyValue(name);

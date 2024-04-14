@@ -3,7 +3,8 @@
     position: relative;
 }
 
-.interactive-list-item:hover::before {
+.interactive-list-item:hover::before,
+.interactive-list-item-selected::before {
     background-color: var(--palette-primary);
     border-radius: 0.25rem;
     content: '';

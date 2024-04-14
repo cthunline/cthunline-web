@@ -23,16 +23,18 @@ interface InteractiveListItemProps {
     onClick?: () => void;
     leftIcon?: React.ReactNode;
     rightAction?: React.ReactNode;
+    selected?: boolean;
 }
 
 const InteractiveListItem = ({
     children,
     onClick,
     leftIcon,
-    rightAction
+    rightAction,
+    selected
 }: InteractiveListItemProps) => (
     <Group
-        className="interactive-list-item"
+        className={`interactive-list-item${selected ? ' interactive-list-item-selected' : ''}`}
         align="center"
         justify="center"
         gap={0}
