@@ -16,7 +16,8 @@ import {
     type SessionUser,
     type SketchTokenAttachedData,
     type Color,
-    TooltipPlacement
+    TooltipPlacement,
+    type SketchDrawingPath
 } from '../../../types/index.js';
 
 interface UpdateSketchImagesOptions {
@@ -36,8 +37,10 @@ export interface SketchHookExport {
     ) => void;
     setSketchDisplay: (value: boolean) => void;
     isFreeDrawing: boolean;
-    setIsFreeDrawing: (value: boolean) => void;
-    addSketchDrawPath: (path: string) => void;
+    drawingColor: Color;
+    setDrawingColor: (color: Color) => void;
+    toggleFreeDrawing: () => void;
+    addSketchDrawPath: (path: SketchDrawingPath) => void;
     clearDrawings: () => void;
     undoSketch: () => void;
     clearSketch: () => void;
@@ -78,7 +81,11 @@ export const defaultSketchHookExport: SketchHookExport = {
         /* default */
     },
     isFreeDrawing: false,
-    setIsFreeDrawing: () => {
+    drawingColor: 'white',
+    setDrawingColor: () => {
+        /* default */
+    },
+    toggleFreeDrawing: () => {
         /* default */
     },
     addSketchDrawPath: () => {
@@ -160,6 +167,7 @@ const defaultTokenData: Omit<SketchTokenData, 'id' | 'index' | 'color'> = {
 const useSketch = (socket: PlaySocket | null) => {
     const [sketchData, setSketchData] = useState<SketchData>(defaultSketchData);
     const [isFreeDrawing, setIsFreeDrawing] = useState<boolean>(false);
+    const [drawingColor, setDrawingColor] = useState<Color>('white');
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ sketch
 
@@ -194,7 +202,11 @@ const useSketch = (socket: PlaySocket | null) => {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ drawing
 
-    const addSketchDrawPath = (path: string) => {
+    const toggleFreeDrawing = () => {
+        setIsFreeDrawing((prev) => !prev);
+    };
+
+    const addSketchDrawPath = (path: SketchDrawingPath) => {
         updateSketch((previous) => ({
             ...previous,
             paths: [...previous.paths, path],
@@ -654,7 +666,9 @@ const useSketch = (socket: PlaySocket | null) => {
         updateSketch,
         setSketchDisplay,
         isFreeDrawing,
-        setIsFreeDrawing,
+        drawingColor,
+        setDrawingColor,
+        toggleFreeDrawing,
         addSketchDrawPath,
         clearDrawings,
         addSketchImage,

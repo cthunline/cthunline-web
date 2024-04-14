@@ -101,7 +101,9 @@ export const PlayProvider = ({
         updateSketch,
         setSketchDisplay,
         isFreeDrawing,
-        setIsFreeDrawing,
+        drawingColor,
+        setDrawingColor,
+        toggleFreeDrawing,
         addSketchDrawPath,
         clearDrawings,
         addSketchImage,
@@ -384,7 +386,9 @@ export const PlayProvider = ({
             clearTokens,
             setSketchDisplay,
             isFreeDrawing,
-            setIsFreeDrawing
+            drawingColor,
+            setDrawingColor,
+            toggleFreeDrawing
         }),
         [
             sessionId,
@@ -418,7 +422,9 @@ export const PlayProvider = ({
             clearTokens,
             setSketchDisplay,
             isFreeDrawing,
-            setIsFreeDrawing
+            drawingColor,
+            setDrawingColor,
+            toggleFreeDrawing
         ]
     );
 

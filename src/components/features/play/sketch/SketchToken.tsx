@@ -3,10 +3,10 @@ import { Tooltip } from '@mantine/core';
 
 import { getCssVar, getTextColor } from '../../../../services/tools.js';
 import { useApp } from '../../../contexts/App.js';
-import SketchItemContextMenu, {
+import SketchContextMenu, {
     type ContextMenuPosition,
     contextMenuHandler
-} from './SketchItemContextMenu.js';
+} from './SketchContextMenu.js';
 import {
     type Color,
     type SessionUser,
@@ -25,6 +25,7 @@ interface SketchTokenProps {
     x: number;
     y: number;
     tooltipPlacement: TooltipPlacement;
+    isDrawing: boolean;
     isMoving: boolean;
     className?: string;
     onRef?: (el: SVGSVGElement | null) => void;
@@ -48,6 +49,7 @@ const SketchToken = ({
     x,
     y,
     tooltipPlacement,
+    isDrawing,
     isMoving,
     className,
     onRef,
@@ -79,7 +81,7 @@ const SketchToken = ({
     };
 
     const onContextMenu = (pos: ContextMenuPosition) => {
-        if (isMaster) {
+        if (isMaster && !isDrawing) {
             setContextMenuPosition(pos);
         }
     };
@@ -90,8 +92,10 @@ const SketchToken = ({
     };
 
     useEffect(() => {
-        onContextMenuClose();
-    }, [isMoving]);
+        if (isMoving || isDrawing) {
+            onContextMenuClose();
+        }
+    }, [isMoving, isDrawing]);
 
     const tokenPadding = size / 15;
     const tokenSize = size + tokenPadding * 2;
@@ -170,7 +174,7 @@ const SketchToken = ({
                     </text>
                 ) : null}
                 {isMaster ? (
-                    <SketchItemContextMenu
+                    <SketchContextMenu
                         position={contextMenuPosition}
                         onAttach={onAttach}
                         onUnattach={onUnattach}

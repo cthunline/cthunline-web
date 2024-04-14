@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { type SketchCoordinates } from '../../../types/index.js';
+import {
+    type SketchDrawingPath,
+    type SketchCoordinates
+} from '../../../types/index.js';
 import { isMainClick } from '../../../services/tools.js';
 import { usePlay } from '../../contexts/Play.js';
 import {
@@ -14,10 +17,10 @@ const useDrawing = (
     svgRef: React.MutableRefObject<SVGSVGElement>,
     isMaster: boolean = false
 ) => {
-    const { isFreeDrawing, addSketchDrawPath } = usePlay();
+    const { isFreeDrawing, addSketchDrawPath, drawingColor } = usePlay();
 
     // list of drawing paths (strings to put directly in path element "d" attribute)
-    const [paths, setPaths] = useState<string[]>([]);
+    const [paths, setPaths] = useState<SketchDrawingPath[]>([]);
     // DOMPoint used to calculate transformed coordinates the the svg viewbox
     // const [svgPoint, setSvgPoint] = useState<DOMPoint>();
     // tells if user is currently drawing a path
@@ -38,7 +41,13 @@ const useDrawing = (
                 // initializes coordinates list for the new drawing path
                 coordinates.current = [];
                 // set fresh value for the new path in paths state
-                setPaths((previous) => [...previous, '']);
+                setPaths((previous) => [
+                    ...previous,
+                    {
+                        d: '',
+                        color: drawingColor
+                    }
+                ]);
                 // set isDrawing state
                 setIsDrawing(true);
             }
@@ -58,7 +67,7 @@ const useDrawing = (
             coordinates.current.push({ x, y });
             // updates current drawing path string in state
             const pathsClone = [...paths];
-            pathsClone[pathsClone.length - 1] = coordinatesToPath(
+            pathsClone[pathsClone.length - 1].d = coordinatesToPath(
                 coordinates.current
             );
             setPaths(pathsClone);

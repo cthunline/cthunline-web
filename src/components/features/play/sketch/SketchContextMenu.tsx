@@ -16,7 +16,7 @@ export interface ContextMenuPosition {
     y: number;
 }
 
-export const sketchItemContextMenuId = 'sketch-item-context-menu';
+export const sketchContextMenuId = 'sketch-item-context-menu';
 
 export const contextMenuHandler =
     <E extends Element>(
@@ -29,9 +29,7 @@ export const contextMenuHandler =
         }
         e.preventDefault();
         const target = e.target as Node;
-        const contextMenu = document.querySelector(
-            `#${sketchItemContextMenuId}`
-        );
+        const contextMenu = document.querySelector(`#${sketchContextMenuId}`);
         if (contextMenu && target && contextMenu.contains(target)) {
             onClose();
         } else {
@@ -39,7 +37,7 @@ export const contextMenuHandler =
         }
     };
 
-interface SketchItemContextMenuProps {
+interface SketchContextMenuProps {
     position: ContextMenuPosition | null;
     onClose: () => void;
     onForward?: () => void;
@@ -48,10 +46,11 @@ interface SketchItemContextMenuProps {
     onUnattach?: () => void;
     onDuplicate?: () => void;
     onColorChange?: (color: Color) => void;
+    onColorPick?: (color: Color) => void;
     onDelete?: () => void;
 }
 
-const SketchItemContextMenu = ({
+const SketchContextMenu = ({
     position,
     onClose,
     onForward,
@@ -60,8 +59,9 @@ const SketchItemContextMenu = ({
     onUnattach,
     onDuplicate,
     onColorChange,
+    onColorPick,
     onDelete
-}: SketchItemContextMenuProps) => {
+}: SketchContextMenuProps) => {
     const { colorScheme } = useMantineColorScheme();
     const { T } = useApp();
 
@@ -70,16 +70,16 @@ const SketchItemContextMenu = ({
     const playerUsers = users.filter(({ isMaster }) => !isMaster);
 
     const isDivider =
-        !!onForward &&
-        !!onBackward &&
-        !!onAttach &&
-        !!onUnattach &&
-        !!onDuplicate &&
+        !!onForward ||
+        !!onBackward ||
+        !!onAttach ||
+        !!onUnattach ||
+        !!onDuplicate ||
         !!onColorChange;
 
     return (
         <ControlledMenu
-            id={sketchItemContextMenuId}
+            id={sketchContextMenuId}
             state={position ? 'open' : 'closed'}
             anchorPoint={position ?? undefined}
             onClose={onClose}
@@ -96,6 +96,17 @@ const SketchItemContextMenu = ({
             {!!onBackward && (
                 <MenuItem key="backward" onClick={onBackward}>
                     {T('page.play.sketch.backward')}
+                </MenuItem>
+            )}
+            {!!onColorPick && (
+                <MenuItem key="backward" onClick={onBackward}>
+                    <ColorSelector
+                        maw="10rem"
+                        onChange={(color: Color) => {
+                            onColorPick?.(color);
+                            onClose();
+                        }}
+                    />
                 </MenuItem>
             )}
             {!!onAttach && !!playerUsers.length && (
@@ -137,7 +148,7 @@ const SketchItemContextMenu = ({
                     />
                 </SubMenu>
             )}
-            {isDivider && <MenuDivider key="divider" />}
+            {!!onDelete && isDivider && <MenuDivider key="divider" />}
             {!!onDelete && (
                 <MenuItem key="delete" onClick={onDelete}>
                     {T('page.play.sketch.delete')}
@@ -147,4 +158,4 @@ const SketchItemContextMenu = ({
     );
 };
 
-export default SketchItemContextMenu;
+export default SketchContextMenu;

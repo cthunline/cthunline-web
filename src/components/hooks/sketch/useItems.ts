@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-import { sketchItemContextMenuId } from '../../features/play/sketch/SketchItemContextMenu.js';
+import { sketchContextMenuId } from '../../features/play/sketch/SketchContextMenu.js';
 import { usePlay } from '../../contexts/Play.js';
 import {
     findById,
@@ -260,10 +260,8 @@ const useItems = (
                 const element = e.currentTarget.closest('svg');
                 // check if we click on a context menu or context menu backdrop
                 const isContextMenu =
-                    (e.target as Element).id === sketchItemContextMenuId ||
-                    !!(e.target as Element).closest(
-                        `#${sketchItemContextMenuId}`
-                    );
+                    (e.target as Element).id === sketchContextMenuId ||
+                    !!(e.target as Element).closest(`#${sketchContextMenuId}`);
                 if (element && !isContextMenu) {
                     itemHasMovedOfResized.current = false;
                     // gets item position

@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 
 import { CardinalDirection } from '../../../../types/index.js';
-import SketchItemContextMenu, {
+import SketchContextMenu, {
     contextMenuHandler,
     type ContextMenuPosition
-} from './SketchItemContextMenu.js';
+} from './SketchContextMenu.js';
 
 import './SketchImage.css';
 
@@ -24,6 +24,7 @@ interface SketchImageProps {
     x: number;
     y: number;
     selected?: boolean;
+    isDrawing: boolean;
     moving?: boolean;
     resizing?: boolean;
     onRef?: (el: SVGSVGElement | null) => void;
@@ -47,6 +48,7 @@ const SketchImage = ({
     x,
     y,
     selected,
+    isDrawing,
     moving,
     resizing,
     onRef,
@@ -61,7 +63,7 @@ const SketchImage = ({
         useState<ContextMenuPosition | null>(null);
 
     const onContextMenu = (pos: ContextMenuPosition) => {
-        if (isMaster) {
+        if (isMaster && !isDrawing) {
             setContextMenuPosition(pos);
         }
     };
@@ -71,8 +73,10 @@ const SketchImage = ({
     };
 
     useEffect(() => {
-        onContextMenuClose();
-    }, [moving]);
+        if (moving || isDrawing) {
+            onContextMenuClose();
+        }
+    }, [moving, isDrawing]);
 
     return (
         // image container
@@ -119,7 +123,7 @@ const SketchImage = ({
                   ))
                 : null}
             {isMaster ? (
-                <SketchItemContextMenu
+                <SketchContextMenu
                     position={contextMenuPosition}
                     onForward={onForward}
                     onBackward={onBackward}

@@ -44,7 +44,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
     const {
         users,
         isFreeDrawing,
-        setIsFreeDrawing,
+        toggleFreeDrawing,
         sketchData,
         updateSketch,
         setSketchDisplay,
@@ -83,10 +83,6 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
         setDirectoryIds((previous) => [...previous, dirId]);
     };
 
-    const toogleIsFreeDrawing = () => {
-        setIsFreeDrawing(!isFreeDrawing);
-    };
-
     const onUserSketchSave = async (data: SketchCreateBody) => {
         modals.close(saveSketchModalId);
         createUserSketch({ data });
@@ -120,7 +116,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                 text: T('widget.sketch.drawing'),
                 icon: <GoPencil size="1.25rem" />,
                 variant: isFreeDrawing ? 'filled' : undefined,
-                handler: toogleIsFreeDrawing
+                handler: toggleFreeDrawing
             },
             {
                 text: T('widget.sketch.eraseDrawings'),

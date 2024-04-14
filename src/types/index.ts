@@ -270,10 +270,15 @@ export interface AudioData extends Asset {
 
 export interface SketchData {
     displayed: boolean;
-    paths: string[];
+    paths: SketchDrawingPath[];
     images: SketchImageData[];
     tokens: SketchTokenData[];
     events: SketchEvent[];
+}
+
+export interface SketchDrawingPath {
+    d: string;
+    color: string;
 }
 
 export interface SketchImageData {

@@ -1,7 +1,11 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useClickOutside } from '@mantine/hooks';
 import { Group } from '@mantine/core';
 
+import SketchContextMenu, {
+    type ContextMenuPosition,
+    contextMenuHandler
+} from './sketch/SketchContextMenu.js';
 import useDrawing from '../../hooks/sketch/useDrawing.js';
 import CharacterPortraits from './CharacterPortraits.js';
 import useItems from '../../hooks/sketch/useItems.js';
@@ -28,6 +32,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
     const {
         users,
         isFreeDrawing,
+        setDrawingColor,
         sketchData,
         attachTokenData,
         unattachTokenData,
@@ -62,6 +67,9 @@ const Sketch = ({ isMaster }: SketchProps) => {
         handleImageBackward
     } = useItems(svgRef, isMaster);
 
+    const [contextMenuPosition, setContextMenuPosition] =
+        useState<ContextMenuPosition | null>(null);
+
     const players = useMemo(
         () => users.filter(({ isMaster: isUserMaster }) => !isUserMaster),
         [users]
@@ -74,10 +82,40 @@ const Sketch = ({ isMaster }: SketchProps) => {
         }
     });
 
+    const onContextMenu = (pos: ContextMenuPosition) => {
+        if (isMaster) {
+            setContextMenuPosition(pos);
+        }
+    };
+
+    const onContextMenuClose = () => {
+        setContextMenuPosition(null);
+    };
+
+    // handles context menu on main sketch container
+    const handleContextMenu = (e: React.MouseEvent<SVGSVGElement>) => {
+        if (isFreeDrawing) {
+            contextMenuHandler<SVGSVGElement>(
+                onContextMenu,
+                onContextMenuClose
+            )(e);
+        } else {
+            e.preventDefault();
+        }
+    };
+
     // handles mouseDown on the main svg container element
     const handleMouseDown = (e: React.MouseEvent<SVGSVGElement>) => {
-        handleDrawingContainerMouseDown(e);
-        handleItemContainerMouseDown(e);
+        if (e.button !== 2) {
+            setContextMenuPosition(null);
+            if (e.button === 0) {
+                handleDrawingContainerMouseDown(e);
+                handleItemContainerMouseDown(e);
+            } else {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+        }
     };
 
     // handles mouseMove on the main svg container element
@@ -98,10 +136,8 @@ const Sketch = ({ isMaster }: SketchProps) => {
         handleItemMouseUpOrLeave();
     };
 
-    // handles context menu on main sketch container
-    const handleContextMenu = (e: React.MouseEvent) => {
-        // disables context menu on sketch
-        e.preventDefault();
+    const onColorPick = (color: Color) => {
+        setDrawingColor(color);
     };
 
     useEffect(() => {
@@ -162,6 +198,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
                         x={x}
                         y={y}
                         selected={selectedImageId === id}
+                        isDrawing={isFreeDrawing}
                         moving={
                             movingItem?.type === SketchItemType.image &&
                             movingItem?.id === id
@@ -198,10 +235,10 @@ const Sketch = ({ isMaster }: SketchProps) => {
                 {paths.map((path, index) => (
                     <path
                         key={`sketch-path-${index.toString()}`}
-                        stroke="var(--palette-font)"
+                        stroke={`var(--palette-${path.color})`}
                         strokeWidth={5}
-                        d={path}
-                        fill="none" // eslint-disable-line react/no-unknown-property
+                        d={path.d}
+                        fill="none"
                     />
                 ))}
                 {/* tokens */}
@@ -221,6 +258,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
                                 x={x}
                                 y={y}
                                 tooltipPlacement={tooltipPlacement}
+                                isDrawing={isFreeDrawing}
                                 isMoving={isMoving}
                                 onMouseDown={(e, isMovable) => {
                                     handleItemMouseDown(
@@ -260,6 +298,13 @@ const Sketch = ({ isMaster }: SketchProps) => {
             </svg>
             {/* empty character portraits container to compensate the one on the left */}
             <CharacterPortraits players={[]} />
+            {isMaster ? (
+                <SketchContextMenu
+                    position={contextMenuPosition}
+                    onColorPick={onColorPick}
+                    onClose={onContextMenuClose}
+                />
+            ) : null}
         </Group>
     );
 };
