@@ -297,6 +297,15 @@ export const PlayProvider = ({
         socket?.disconnect();
     }, [socket]);
 
+    const onCtrlZ = useCallback(
+        (event: KeyboardEvent) => {
+            if (event.ctrlKey && event.key === 'z') {
+                undoSketch();
+            }
+        },
+        [undoSketch]
+    );
+
     useEffect(() => {
         (async () => {
             if (
@@ -336,6 +345,11 @@ export const PlayProvider = ({
     }, [session, setSketchData]);
 
     useEffect(() => () => disconnectSocket(), [disconnectSocket]);
+
+    useEffect(() => {
+        document.addEventListener('keydown', onCtrlZ);
+        return () => document.removeEventListener('keydown', onCtrlZ);
+    }, [onCtrlZ]);
 
     const contextValue = useMemo(
         () => ({
