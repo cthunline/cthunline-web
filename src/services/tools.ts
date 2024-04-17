@@ -149,16 +149,30 @@ export const deepEqual = (val1: any, val2: any): boolean => {
 };
 
 /**
-Sorts an array of objets by object property.
+Remove diacritics (like accented characters) from a string
+*/
+export const removeDiacritics = (str: string) =>
+    str
+        .toLocaleLowerCase()
+        .normalize('NFD')
+        .replace(/\p{Diacritic}/gu, '');
+
+/**
+Sorts an array of objets by object property. If property values are strings,
+they are lowercased and diatrics are removed without sorting.
 */
 export const sortObjectsBy = <T>(objects: T[], property: keyof T) => {
     objects.sort((a, b) => {
         const aVal = a[property];
         const bVal = b[property];
         const properAVal =
-            typeof aVal === 'string' ? aVal.toLocaleLowerCase() : aVal;
+            typeof aVal === 'string'
+                ? removeDiacritics(aVal.toLocaleLowerCase())
+                : aVal;
         const properBVal =
-            typeof bVal === 'string' ? bVal.toLocaleLowerCase() : bVal;
+            typeof bVal === 'string'
+                ? removeDiacritics(bVal.toLocaleLowerCase())
+                : bVal;
         if (properAVal < properBVal) {
             return -1;
         }
