@@ -18,6 +18,7 @@ const TextInput = ({
 }: TextInputProps) => (
     <MantineTextInput
         {...props}
+        error={!!props.error}
         variant={variant === 'contained' ? 'default' : variant}
         className={`${className ?? ''} ${variant === 'contained' ? 'contained' : ''} ${center ? 'center' : ''}`}
     />
