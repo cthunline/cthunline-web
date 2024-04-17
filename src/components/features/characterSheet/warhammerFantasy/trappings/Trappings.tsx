@@ -9,6 +9,10 @@ import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../contexts/App.js';
 import AddTrappingRow from './AddTrappingRow.js';
 import TrappingRow from './TrappingRow.js';
+import {
+    type MoveAction,
+    arrayMoveUpDown
+} from '../../../../../services/tools.js';
 
 interface TrappingsProps {
     readonly: boolean;
@@ -36,6 +40,19 @@ const Trappings = ({ readonly, character, onChange }: TrappingsProps) => {
         });
     };
 
+    const onTrappingMove = (index: number, action: MoveAction) => {
+        const movedTrappings = arrayMoveUpDown(
+            character.trappings,
+            index,
+            action
+        );
+        if (movedTrappings) {
+            onChange({
+                trappings: movedTrappings
+            });
+        }
+    };
+
     const onTrappingDelete = (index: number) => {
         onChange({
             trappings: character.trappings.filter(
@@ -58,6 +75,9 @@ const Trappings = ({ readonly, character, onChange }: TrappingsProps) => {
                         trapping={trapping}
                         onChange={(tal: WarhammerFantasyTrapping) => {
                             onTrappingChange(index, tal);
+                        }}
+                        onMove={(action) => {
+                            onTrappingMove(index, action);
                         }}
                         onDelete={() => {
                             onTrappingDelete(index);

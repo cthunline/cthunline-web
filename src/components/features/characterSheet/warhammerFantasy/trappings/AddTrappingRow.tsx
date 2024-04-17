@@ -48,7 +48,7 @@ const AddTrappingRow = ({ onCreate }: AddTrappingRowProps) => {
     return (
         <Stack w="100%" gap={0}>
             <Form id={formId} onSubmit={handleSubmit(onFormSubmit)} />
-            <Group w="100%">
+            <Group w="100%" gap="0.5rem">
                 <Box flex="7 0">
                     <TextInput
                         {...getInputProps('name')}

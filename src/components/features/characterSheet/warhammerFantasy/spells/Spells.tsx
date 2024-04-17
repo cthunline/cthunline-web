@@ -6,11 +6,15 @@ import {
 } from '@cthunline/games';
 
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../contexts/App.js';
 import AddSpellRow from './AddSpellRow.js';
 import SpellRow from './SpellRow.js';
+import {
+    type MoveAction,
+    arrayMoveUpDown,
+    onlyNumbers
+} from '../../../../../services/tools.js';
 
 interface SpellsProps {
     readonly: boolean;
@@ -37,6 +41,15 @@ const Spells = ({ readonly, character, onChange }: SpellsProps) => {
         });
     };
 
+    const onSpellMove = (index: number, action: MoveAction) => {
+        const movedSpells = arrayMoveUpDown(character.spells, index, action);
+        if (movedSpells) {
+            onChange({
+                spells: movedSpells
+            });
+        }
+    };
+
     const onSpellDelete = (index: number) => {
         onChange({
             spells: character.spells.filter((_spell, idx) => index !== idx)
@@ -57,6 +70,9 @@ const Spells = ({ readonly, character, onChange }: SpellsProps) => {
                         spell={spell}
                         onChange={(spll: WarhammerFantasySpell) => {
                             onSpellChange(index, spll);
+                        }}
+                        onMove={(action) => {
+                            onSpellMove(index, action);
                         }}
                         onDelete={() => {
                             onSpellDelete(index);

@@ -168,3 +168,41 @@ export const sortObjectsBy = <T>(objects: T[], property: keyof T) => {
         return 0;
     });
 };
+
+/**
+Moves an array item from an index to another index.
+*/
+export const arrayMove = <T extends any>(
+    array: T[],
+    fromIndex: number,
+    toIndex: number
+) => {
+    const newArray = [...array];
+    const startIndex = fromIndex < 0 ? newArray.length + fromIndex : fromIndex;
+    if (startIndex >= 0 && startIndex < newArray.length) {
+        const endIndex = toIndex < 0 ? newArray.length + toIndex : toIndex;
+        const [item] = newArray.splice(fromIndex, 1);
+        newArray.splice(endIndex, 0, item);
+    }
+    return newArray;
+};
+
+export type MoveAction = 'up' | 'down';
+
+/**
+Moves an array item up or down. Moving an item 'up' means decreasing 
+its index, moving an item 'down' means increasing its index. If the
+move is invalid then returns false.
+*/
+export const arrayMoveUpDown = <T extends any>(
+    array: T[],
+    index: number,
+    action: MoveAction
+): T[] | false => {
+    const { length } = array;
+    const newIndex = action === 'up' ? index - 1 : index + 1;
+    if (newIndex >= 0 && newIndex < length) {
+        return arrayMove(array, index, newIndex);
+    }
+    return false;
+};

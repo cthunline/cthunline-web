@@ -1,57 +1,17 @@
 import { type WarhammerFantasyTalent } from '@cthunline/games';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
-import { ActionIcon, Box, Group, Stack } from '@mantine/core';
+import { Box, Group, Stack } from '@mantine/core';
 
-import { onlyNumbers } from '../../../../../services/tools.js';
-import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { type MoveAction } from '../../../../../services/tools.js';
+import RowMenuButton from '../generic/RowMenuButton.js';
 import Textarea from '../../../../common/Textarea.js';
-
-type TalentRowInputProps = {
-    readonly: boolean;
-    label?: string;
-} & (
-    | {
-          type: 'string';
-          value: string;
-          onChange?: (value: string) => void;
-      }
-    | {
-          type: 'number';
-          value: number;
-          onChange?: (value: number) => void;
-      }
-);
-
-const TalentRowInput = ({
-    readonly,
-    type,
-    label,
-    value,
-    onChange
-}: TalentRowInputProps) => (
-    <TextInput
-        variant="contained"
-        w="100%"
-        readOnly={readonly}
-        ta={type === 'number' ? 'center' : undefined}
-        size="sm"
-        label={label}
-        value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if (type === 'number') {
-                onChange?.(Number(onlyNumbers(e.target.value)));
-            } else {
-                onChange?.(e.target.value);
-            }
-        }}
-    />
-);
+import { useApp } from '../../../../contexts/App.js';
+import RowInput from '../generic/RowInput.js';
 
 type TalentRowProps = {
     readonly: boolean;
     talent: WarhammerFantasyTalent;
     onChange: (talent: WarhammerFantasyTalent) => void;
+    onMove: (action: MoveAction) => void;
     onDelete: () => void;
 };
 
@@ -59,6 +19,7 @@ const TalentRow = ({
     readonly,
     talent,
     onChange,
+    onMove,
     onDelete
 }: TalentRowProps) => {
     const { T } = useApp();
@@ -67,7 +28,7 @@ const TalentRow = ({
             <Stack flex="1 0" gap="0.5rem">
                 <Group flex="1 0" gap="0.5rem">
                     <Box flex="6 0">
-                        <TalentRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.talent.name')}
@@ -78,8 +39,9 @@ const TalentRow = ({
                         />
                     </Box>
                     <Box flex="1 0">
-                        <TalentRowInput
+                        <RowInput
                             readonly={readonly}
+                            center
                             type="number"
                             label={T('game.warhammerFantasy.talent.timesTaken')}
                             value={talent.timesTaken}
@@ -102,9 +64,7 @@ const TalentRow = ({
                 />
             </Stack>
             {!readonly && !!onDelete && (
-                <ActionIcon color="red" onClick={onDelete}>
-                    <MdOutlineDeleteOutline />
-                </ActionIcon>
+                <RowMenuButton onMove={onMove} onDelete={onDelete} />
             )}
         </Group>
     );

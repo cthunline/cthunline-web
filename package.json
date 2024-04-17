@@ -61,5 +61,11 @@
         "typescript": "^5.4.5",
         "vite": "^5.2.8",
         "vite-plugin-svgr": "^4.2.0"
+    },
+    "overrides": {
+        "react-sortable-hoc": {
+            "react": "18.2.0",
+            "react-dom": "18.2.0"
+        }
     }
 }

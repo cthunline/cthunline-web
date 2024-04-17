@@ -1,70 +1,34 @@
-import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { type WarhammerFantasySpell } from '@cthunline/games';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { Box, Group, Stack } from '@mantine/core';
 
-import { onlyNumbers } from '../../../../../services/tools.js';
-import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { type MoveAction } from '../../../../../services/tools.js';
+import RowMenuButton from '../generic/RowMenuButton.js';
 import Textarea from '../../../../common/Textarea.js';
-
-type SpellRowInputProps = {
-    readonly: boolean;
-    center?: boolean;
-    label?: string;
-} & (
-    | {
-          type: 'string';
-          value: string;
-          onChange?: (value: string) => void;
-      }
-    | {
-          type: 'number';
-          value: number;
-          onChange?: (value: number) => void;
-      }
-);
-
-const SpellRowInput = ({
-    readonly,
-    center,
-    label,
-    type,
-    value,
-    onChange
-}: SpellRowInputProps) => (
-    <TextInput
-        variant="contained"
-        w="100%"
-        readOnly={readonly}
-        ta={center ? 'center' : undefined}
-        size="sm"
-        label={label}
-        value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if (type === 'number') {
-                onChange?.(Number(onlyNumbers(e.target.value)));
-            } else {
-                onChange?.(e.target.value);
-            }
-        }}
-    />
-);
+import { useApp } from '../../../../contexts/App.js';
+import RowInput from '../generic/RowInput.js';
 
 type SpellRowProps = {
     readonly: boolean;
     spell: WarhammerFantasySpell;
     onChange: (spell: WarhammerFantasySpell) => void;
+    onMove: (action: MoveAction) => void;
     onDelete: () => void;
 };
 
-const SpellRow = ({ readonly, spell, onChange, onDelete }: SpellRowProps) => {
+const SpellRow = ({
+    readonly,
+    spell,
+    onChange,
+    onMove,
+    onDelete
+}: SpellRowProps) => {
     const { T } = useApp();
     return (
         <Group w="100%" gap="1rem">
             <Stack flex="1 0" gap="0.5rem">
                 <Group w="100%" gap="0.5rem">
                     <Box flex="5 0">
-                        <SpellRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.spell.name')}
@@ -75,7 +39,7 @@ const SpellRow = ({ readonly, spell, onChange, onDelete }: SpellRowProps) => {
                         />
                     </Box>
                     <Box flex="1 0">
-                        <SpellRowInput
+                        <RowInput
                             readonly={readonly}
                             type="number"
                             label={T(
@@ -89,7 +53,7 @@ const SpellRow = ({ readonly, spell, onChange, onDelete }: SpellRowProps) => {
                         />
                     </Box>
                     <Box flex="2 0">
-                        <SpellRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.spell.range')}
@@ -101,7 +65,7 @@ const SpellRow = ({ readonly, spell, onChange, onDelete }: SpellRowProps) => {
                         />
                     </Box>
                     <Box flex="2 0">
-                        <SpellRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.spell.target')}
@@ -113,7 +77,7 @@ const SpellRow = ({ readonly, spell, onChange, onDelete }: SpellRowProps) => {
                         />
                     </Box>
                     <Box flex="2 0">
-                        <SpellRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.spell.duration')}
@@ -137,11 +101,7 @@ const SpellRow = ({ readonly, spell, onChange, onDelete }: SpellRowProps) => {
                     }}
                 />
             </Stack>
-            {!readonly && (
-                <ActionIcon color="red" onClick={onDelete}>
-                    <MdOutlineDeleteOutline />
-                </ActionIcon>
-            )}
+            {!readonly && <RowMenuButton onMove={onMove} onDelete={onDelete} />}
         </Group>
     );
 };

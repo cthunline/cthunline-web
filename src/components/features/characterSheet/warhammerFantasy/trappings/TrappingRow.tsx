@@ -1,56 +1,16 @@
 import { type WarhammerFantasyTrapping } from '@cthunline/games';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
-import { ActionIcon, Box, Group } from '@mantine/core';
+import { Box, Group } from '@mantine/core';
 
-import { onlyNumbers } from '../../../../../services/tools.js';
-import TextInput from '../../../../common/TextInput.js';
+import { type MoveAction } from '../../../../../services/tools.js';
+import RowMenuButton from '../generic/RowMenuButton.js';
 import { useApp } from '../../../../contexts/App.js';
-
-type TrappingRowInputProps = {
-    readonly: boolean;
-    label?: string;
-} & (
-    | {
-          type: 'string';
-          value: string;
-          onChange?: (value: string) => void;
-      }
-    | {
-          type: 'number';
-          value: number;
-          onChange?: (value: number) => void;
-      }
-);
-
-const TrappingRowInput = ({
-    readonly,
-    type,
-    label,
-    value,
-    onChange
-}: TrappingRowInputProps) => (
-    <TextInput
-        variant="contained"
-        w="100%"
-        readOnly={readonly}
-        ta={type === 'number' ? 'center' : undefined}
-        size="sm"
-        label={label}
-        value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if (type === 'number') {
-                onChange?.(Number(onlyNumbers(e.target.value)));
-            } else {
-                onChange?.(e.target.value);
-            }
-        }}
-    />
-);
+import RowInput from '../generic/RowInput.js';
 
 type TrappingRowProps = {
     readonly: boolean;
     trapping: WarhammerFantasyTrapping;
     onChange: (trapping: WarhammerFantasyTrapping) => void;
+    onMove: (action: MoveAction) => void;
     onDelete: () => void;
 };
 
@@ -58,13 +18,14 @@ const TrappingRow = ({
     readonly,
     trapping,
     onChange,
+    onMove,
     onDelete
 }: TrappingRowProps) => {
     const { T } = useApp();
     return (
-        <Group w="100%">
+        <Group w="100%" gap="0.5rem">
             <Box flex="7 0">
-                <TrappingRowInput
+                <RowInput
                     readonly={readonly}
                     type="string"
                     label={T('game.warhammerFantasy.trapping.name')}
@@ -75,9 +36,10 @@ const TrappingRow = ({
                 />
             </Box>
             <Box flex="1 0">
-                <TrappingRowInput
+                <RowInput
                     readonly={readonly}
                     type="number"
+                    center
                     label={T('game.warhammerFantasy.trapping.encumbrance')}
                     value={trapping.encumbrance}
                     onChange={(encumbrance: number) => {
@@ -86,9 +48,7 @@ const TrappingRow = ({
                 />
             </Box>
             {!readonly && !!onDelete && (
-                <ActionIcon color="red" onClick={onDelete}>
-                    <MdOutlineDeleteOutline />
-                </ActionIcon>
+                <RowMenuButton onMove={onMove} onDelete={onDelete} />
             )}
         </Group>
     );

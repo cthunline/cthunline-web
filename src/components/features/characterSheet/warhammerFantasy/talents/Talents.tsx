@@ -9,6 +9,10 @@ import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../contexts/App.js';
 import AddTalentRow from './AddTalentRow.js';
 import TalentRow from './TalentRow.js';
+import {
+    type MoveAction,
+    arrayMoveUpDown
+} from '../../../../../services/tools.js';
 
 interface TalentsProps {
     readonly: boolean;
@@ -33,6 +37,15 @@ const Talents = ({ readonly, character, onChange }: TalentsProps) => {
         });
     };
 
+    const onTalentMove = (index: number, action: MoveAction) => {
+        const movedTalents = arrayMoveUpDown(character.talents, index, action);
+        if (movedTalents) {
+            onChange({
+                talents: movedTalents
+            });
+        }
+    };
+
     const onTalentDelete = (index: number) => {
         onChange({
             talents: character.talents.filter((_talent, idx) => index !== idx)
@@ -53,6 +66,9 @@ const Talents = ({ readonly, character, onChange }: TalentsProps) => {
                         talent={talent}
                         onChange={(tal: WarhammerFantasyTalent) => {
                             onTalentChange(index, tal);
+                        }}
+                        onMove={(action) => {
+                            onTalentMove(index, action);
                         }}
                         onDelete={() => {
                             onTalentDelete(index);

@@ -9,6 +9,10 @@ import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../contexts/App.js';
 import AddWeaponRow from './AddWeaponRow.js';
 import WeaponRow from './WeaponRow.js';
+import {
+    type MoveAction,
+    arrayMoveUpDown
+} from '../../../../../services/tools.js';
 
 interface WeaponsProps {
     readonly: boolean;
@@ -33,6 +37,15 @@ const Weapons = ({ readonly, character, onChange }: WeaponsProps) => {
         });
     };
 
+    const onWeaponMove = (index: number, action: MoveAction) => {
+        const movedWeapons = arrayMoveUpDown(character.weapons, index, action);
+        if (movedWeapons) {
+            onChange({
+                weapons: movedWeapons
+            });
+        }
+    };
+
     const onWeaponDelete = (index: number) => {
         onChange({
             weapons: character.weapons.filter((_weapon, idx) => index !== idx)
@@ -53,6 +66,9 @@ const Weapons = ({ readonly, character, onChange }: WeaponsProps) => {
                         weapon={weapon}
                         onChange={(arm: WarhammerFantasyWeapon) => {
                             onWeaponChange(index, arm);
+                        }}
+                        onMove={(action) => {
+                            onWeaponMove(index, action);
                         }}
                         onDelete={() => {
                             onWeaponDelete(index);

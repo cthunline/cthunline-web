@@ -10,8 +10,6 @@ import {
     type WarhammerFantasyEncumbrance
 } from '@cthunline/games';
 
-import { sortObjectsBy } from '../../../../services/tools.js';
-
 export const getCharacteristicBonus = (
     char: WarhammerFantasyCharacteristic
 ): number => Math.floor(char.current / 10);
@@ -96,27 +94,11 @@ export const controlEncumbrance = (
 export type ControlItemsSortOnly = 'weapons' | 'trappings' | 'armour';
 
 export const controlItems = (
-    character: WarhammerFantasyCharacter,
-    sortOnly?: ControlItemsSortOnly
-): WarhammerFantasyCharacter => {
-    const { weapons, trappings, armour } = character;
-    if (!sortOnly || sortOnly === 'weapons') {
-        sortObjectsBy(weapons, 'name');
-    }
-    if (!sortOnly || sortOnly === 'trappings') {
-        sortObjectsBy(trappings, 'name');
-    }
-    if (!sortOnly || sortOnly === 'armour') {
-        sortObjectsBy(armour, 'name');
-    }
-    return {
-        ...character,
-        weapons,
-        trappings,
-        armour,
-        encumbrance: controlEncumbrance(character)
-    };
-};
+    character: WarhammerFantasyCharacter
+): WarhammerFantasyCharacter => ({
+    ...character,
+    encumbrance: controlEncumbrance(character)
+});
 
 export const controlSkills = (
     characteristics: WarhammerFantasyCharacteristics,
@@ -144,7 +126,6 @@ export const sortOtherSkills = (
     character: WarhammerFantasyCharacter
 ): WarhammerFantasyCharacter => {
     const { otherSkills } = character;
-    sortObjectsBy(otherSkills, 'name');
     return {
         ...character,
         otherSkills
@@ -179,27 +160,5 @@ export const controlCharacteristics = (
             character.otherSkills
         ),
         encumbrance: controlEncumbrance(character)
-    };
-};
-
-export const controlSpells = (
-    character: WarhammerFantasyCharacter
-): WarhammerFantasyCharacter => {
-    const { spells } = character;
-    sortObjectsBy(spells, 'name');
-    return {
-        ...character,
-        spells
-    };
-};
-
-export const controlTalents = (
-    character: WarhammerFantasyCharacter
-): WarhammerFantasyCharacter => {
-    const { talents } = character;
-    sortObjectsBy(talents, 'name');
-    return {
-        ...character,
-        talents
     };
 };

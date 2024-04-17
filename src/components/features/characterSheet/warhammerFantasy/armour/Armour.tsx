@@ -9,6 +9,10 @@ import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../contexts/App.js';
 import AddArmourRow from './AddArmourRow.js';
 import ArmourRow from './ArmourRow.js';
+import {
+    type MoveAction,
+    arrayMoveUpDown
+} from '../../../../../services/tools.js';
 
 interface ArmourProps {
     readonly: boolean;
@@ -31,6 +35,15 @@ const Armour = ({ readonly, character, onChange }: ArmourProps) => {
         });
     };
 
+    const onArmourMove = (index: number, action: MoveAction) => {
+        const movedArmour = arrayMoveUpDown(character.armour, index, action);
+        if (movedArmour) {
+            onChange({
+                armour: movedArmour
+            });
+        }
+    };
+
     const onArmourDelete = (index: number) => {
         onChange({
             armour: character.armour.filter((_armour, idx) => index !== idx)
@@ -51,6 +64,9 @@ const Armour = ({ readonly, character, onChange }: ArmourProps) => {
                         armour={armour}
                         onChange={(arm: WarhammerFantasyArmour) => {
                             onArmourChange(index, arm);
+                        }}
+                        onMove={(action) => {
+                            onArmourMove(index, action);
                         }}
                         onDelete={() => {
                             onArmourDelete(index);

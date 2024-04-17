@@ -1,41 +1,14 @@
-import { MdOutlineDeleteOutline } from 'react-icons/md';
-import { ActionIcon, Box, Group } from '@mantine/core';
+import { Box, Group } from '@mantine/core';
 import {
     type WarhammerFantasyCharacter,
     type WarhammerFantasyBasicSkill,
     type WarhammerFantasyOtherSkill
 } from '@cthunline/games';
 
-import { onlyNumbers } from '../../../../../services/tools.js';
-import TextInput from '../../../../common/TextInput.js';
+import { type MoveAction } from '../../../../../services/tools.js';
+import RowMenuButton from '../generic/RowMenuButton.js';
 import { useApp } from '../../../../contexts/App.js';
-
-interface SkillRowInputProps {
-    readonly: boolean;
-    label?: string;
-    value: number;
-    onChange?: (value: number) => void;
-}
-
-const SkillRowInput = ({
-    readonly,
-    label,
-    value,
-    onChange
-}: SkillRowInputProps) => (
-    <TextInput
-        variant="contained"
-        w="100%"
-        readOnly={readonly}
-        center
-        size="sm"
-        label={label}
-        value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            onChange?.(Number(onlyNumbers(e.target.value)));
-        }}
-    />
-);
+import RowInput from '../generic/RowInput.js';
 
 const isOtherSkill = (
     skill: WarhammerFantasyBasicSkill | WarhammerFantasyOtherSkill
@@ -49,11 +22,13 @@ type SkillRowProps = {
     | {
           skill: WarhammerFantasyBasicSkill;
           skillTranslatedName: string;
+          onMove?: never;
           onDelete?: never;
       }
     | {
           skill: WarhammerFantasyOtherSkill;
           skillTranslatedName?: never;
+          onMove: (action: MoveAction) => void;
           onDelete: () => void;
       }
 );
@@ -63,6 +38,7 @@ const SkillRow = ({
     character,
     skill,
     skillTranslatedName,
+    onMove,
     onDelete,
     onAdvancesChange
 }: SkillRowProps) => {
@@ -80,24 +56,24 @@ const SkillRow = ({
                 {character.characteristics[skill.characteristicName].current}
             </Box>
             <Box flex="1 0">
-                <SkillRowInput
+                <RowInput
                     readonly={readonly}
+                    type="number"
                     label={T('game.warhammerFantasy.skill.advances')}
                     value={skill.advances}
                     onChange={onAdvancesChange}
                 />
             </Box>
             <Box flex="1 0">
-                <SkillRowInput
+                <RowInput
                     readonly
+                    type="number"
                     label={T('game.warhammerFantasy.skill.skill')}
                     value={skill.skill}
                 />
             </Box>
-            {!readonly && !!onDelete && (
-                <ActionIcon color="red" onClick={onDelete}>
-                    <MdOutlineDeleteOutline />
-                </ActionIcon>
+            {!readonly && !!onMove && !!onDelete && (
+                <RowMenuButton onMove={onMove} onDelete={onDelete} />
             )}
         </Group>
     );

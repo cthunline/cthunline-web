@@ -1,56 +1,16 @@
 import { type WarhammerFantasyArmour } from '@cthunline/games';
-import { ActionIcon, Box, Group, Stack } from '@mantine/core';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { Box, Group, Stack } from '@mantine/core';
 
-import { onlyNumbers } from '../../../../../services/tools.js';
-import TextInput from '../../../../common/TextInput.js';
+import { type MoveAction } from '../../../../../services/tools.js';
+import RowMenuButton from '../generic/RowMenuButton.js';
 import { useApp } from '../../../../contexts/App.js';
-
-type ArmourRowInputProps = {
-    readonly: boolean;
-    label?: string;
-} & (
-    | {
-          type: 'string';
-          value: string;
-          onChange?: (value: string) => void;
-      }
-    | {
-          type: 'number';
-          value: number;
-          onChange?: (value: number) => void;
-      }
-);
-
-const ArmourRowInput = ({
-    readonly,
-    type,
-    label,
-    value,
-    onChange
-}: ArmourRowInputProps) => (
-    <TextInput
-        variant="contained"
-        w="100%"
-        readOnly={readonly}
-        ta={type === 'number' ? 'center' : undefined}
-        size="sm"
-        label={label}
-        value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if (type === 'number') {
-                onChange?.(Number(onlyNumbers(e.target.value)));
-            } else {
-                onChange?.(e.target.value);
-            }
-        }}
-    />
-);
+import RowInput from '../generic/RowInput.js';
 
 type ArmourRowProps = {
     readonly: boolean;
     armour: WarhammerFantasyArmour;
     onChange: (armour: WarhammerFantasyArmour) => void;
+    onMove: (action: MoveAction) => void;
     onDelete: () => void;
 };
 
@@ -58,6 +18,7 @@ const ArmourRow = ({
     readonly,
     armour,
     onChange,
+    onMove,
     onDelete
 }: ArmourRowProps) => {
     const { T } = useApp();
@@ -66,7 +27,7 @@ const ArmourRow = ({
             <Stack flex="1 0" gap="0.5rem">
                 <Group w="100%" gap="0.5rem">
                     <Box flex="6 0">
-                        <ArmourRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.armour.name')}
@@ -77,7 +38,7 @@ const ArmourRow = ({
                         />
                     </Box>
                     <Box flex="4 0">
-                        <ArmourRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.armour.locations')}
@@ -88,8 +49,9 @@ const ArmourRow = ({
                         />
                     </Box>
                     <Box flex="2 0">
-                        <ArmourRowInput
+                        <RowInput
                             readonly={readonly}
+                            center
                             type="number"
                             label={T(
                                 'game.warhammerFantasy.armour.encumbrance'
@@ -101,8 +63,9 @@ const ArmourRow = ({
                         />
                     </Box>
                     <Box flex="2 0">
-                        <ArmourRowInput
+                        <RowInput
                             readonly={readonly}
+                            center
                             type="number"
                             label={T(
                                 'game.warhammerFantasy.armour.armourPoints'
@@ -114,7 +77,7 @@ const ArmourRow = ({
                         />
                     </Box>
                 </Group>
-                <ArmourRowInput
+                <RowInput
                     readonly={readonly}
                     type="string"
                     label={T('game.warhammerFantasy.armour.qualities')}
@@ -125,9 +88,7 @@ const ArmourRow = ({
                 />
             </Stack>
             {!readonly && !!onDelete && (
-                <ActionIcon color="red" onClick={onDelete}>
-                    <MdOutlineDeleteOutline />
-                </ActionIcon>
+                <RowMenuButton onMove={onMove} onDelete={onDelete} />
             )}
         </Group>
     );

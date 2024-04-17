@@ -150,7 +150,11 @@ const SketchContextMenu = ({
             )}
             {!!onDelete && isDivider && <MenuDivider key="divider" />}
             {!!onDelete && (
-                <MenuItem key="delete" onClick={onDelete}>
+                <MenuItem
+                    key="delete"
+                    style={{ color: 'var(--mantine-color-red-text)' }}
+                    onClick={onDelete}
+                >
                     {T('page.play.sketch.delete')}
                 </MenuItem>
             )}

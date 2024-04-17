@@ -1,56 +1,16 @@
 import { type WarhammerFantasyWeapon } from '@cthunline/games';
-import { ActionIcon, Box, Group, Stack } from '@mantine/core';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { Box, Group, Stack } from '@mantine/core';
 
-import { onlyNumbers } from '../../../../../services/tools.js';
-import TextInput from '../../../../common/TextInput.js';
+import { type MoveAction } from '../../../../../services/tools.js';
+import RowMenuButton from '../generic/RowMenuButton.js';
 import { useApp } from '../../../../contexts/App.js';
-
-type WeaponRowInputProps = {
-    readonly: boolean;
-    label?: string;
-} & (
-    | {
-          type: 'string';
-          value: string;
-          onChange?: (value: string) => void;
-      }
-    | {
-          type: 'number';
-          value: number;
-          onChange?: (value: number) => void;
-      }
-);
-
-const WeaponRowInput = ({
-    readonly,
-    type,
-    label,
-    value,
-    onChange
-}: WeaponRowInputProps) => (
-    <TextInput
-        variant="contained"
-        w="100%"
-        readOnly={readonly}
-        ta={type === 'number' ? 'center' : undefined}
-        size="sm"
-        label={label}
-        value={value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            if (type === 'number') {
-                onChange?.(Number(onlyNumbers(e.target.value)));
-            } else {
-                onChange?.(e.target.value);
-            }
-        }}
-    />
-);
+import RowInput from '../generic/RowInput.js';
 
 type WeaponRowProps = {
     readonly: boolean;
     weapon: WarhammerFantasyWeapon;
     onChange: (weapon: WarhammerFantasyWeapon) => void;
+    onMove: (action: MoveAction) => void;
     onDelete: () => void;
 };
 
@@ -58,6 +18,7 @@ const WeaponRow = ({
     readonly,
     weapon,
     onChange,
+    onMove,
     onDelete
 }: WeaponRowProps) => {
     const { T } = useApp();
@@ -66,7 +27,7 @@ const WeaponRow = ({
             <Stack flex="1 0" gap="0.5rem">
                 <Group w="100%" gap="0.5rem">
                     <Box flex="6 0">
-                        <WeaponRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.weapon.name')}
@@ -77,7 +38,7 @@ const WeaponRow = ({
                         />
                     </Box>
                     <Box flex="3 0">
-                        <WeaponRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.weapon.group')}
@@ -88,9 +49,10 @@ const WeaponRow = ({
                         />
                     </Box>
                     <Box flex="2 0">
-                        <WeaponRowInput
+                        <RowInput
                             readonly={readonly}
                             type="number"
+                            center
                             label={T(
                                 'game.warhammerFantasy.weapon.encumbrance'
                             )}
@@ -101,7 +63,7 @@ const WeaponRow = ({
                         />
                     </Box>
                     <Box flex="3 0">
-                        <WeaponRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.weapon.rangeReach')}
@@ -114,7 +76,7 @@ const WeaponRow = ({
                 </Group>
                 <Group w="100%" gap="0.5rem">
                     <Box flex="3 0">
-                        <WeaponRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.weapon.damage')}
@@ -125,7 +87,7 @@ const WeaponRow = ({
                         />
                     </Box>
                     <Box flex="11 0">
-                        <WeaponRowInput
+                        <RowInput
                             readonly={readonly}
                             type="string"
                             label={T('game.warhammerFantasy.weapon.qualities')}
@@ -138,9 +100,7 @@ const WeaponRow = ({
                 </Group>
             </Stack>
             {!readonly && !!onDelete && (
-                <ActionIcon color="red" onClick={onDelete}>
-                    <MdOutlineDeleteOutline />
-                </ActionIcon>
+                <RowMenuButton onMove={onMove} onDelete={onDelete} />
             )}
         </Group>
     );

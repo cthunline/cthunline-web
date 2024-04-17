@@ -9,6 +9,10 @@ import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import AddOtherSkillRow from './AddOtherSkillRow.js';
 import { useApp } from '../../../../contexts/App.js';
 import SkillRow from './SkillRow.js';
+import {
+    type MoveAction,
+    arrayMoveUpDown
+} from '../../../../../services/tools.js';
 
 interface OtherSkillsProps {
     readonly: boolean;
@@ -42,6 +46,19 @@ const OtherSkills = ({ readonly, character, onChange }: OtherSkillsProps) => {
         });
     };
 
+    const onOtherSkillMove = (index: number, action: MoveAction) => {
+        const movedOtherSkills = arrayMoveUpDown(
+            character.otherSkills,
+            index,
+            action
+        );
+        if (movedOtherSkills) {
+            onChange({
+                otherSkills: movedOtherSkills
+            });
+        }
+    };
+
     const onOtherSkillDelete = (index: number) => {
         onChange({
             otherSkills: character.otherSkills.filter(
@@ -65,6 +82,9 @@ const OtherSkills = ({ readonly, character, onChange }: OtherSkillsProps) => {
                         skill={otherSkill}
                         onAdvancesChange={(val: number) => {
                             onOtherSkillAdvancesChange(index, val);
+                        }}
+                        onMove={(action) => {
+                            onOtherSkillMove(index, action);
                         }}
                         onDelete={() => {
                             onOtherSkillDelete(index);
