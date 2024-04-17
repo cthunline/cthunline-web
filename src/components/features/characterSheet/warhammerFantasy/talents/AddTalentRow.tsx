@@ -73,7 +73,7 @@ const AddTalentRow = ({ onCreate }: AddTalentRowProps) => {
                             variant="contained"
                             w="100%"
                             form={formId}
-                            ta="center"
+                            center
                             label={T('game.warhammerFantasy.talent.timesTaken')}
                             size="sm"
                             onChange={(e) => {

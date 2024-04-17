@@ -90,7 +90,7 @@ const AddWeaponRow = ({ onCreate }: AddWeaponRowProps) => {
                                 variant="contained"
                                 w="100%"
                                 form={formId}
-                                ta="center"
+                                center
                                 label={T(
                                     'game.warhammerFantasy.weapon.encumbrance'
                                 )}

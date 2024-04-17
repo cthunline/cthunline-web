@@ -99,6 +99,10 @@ body {
     z-index: 1;
 }
 
+.mantine-InputWrapper-root.center .mantine-Input-input {
+    text-align: center;
+}
+
 .mantine-Tabs-tab .mantine-Tabs-tabLabel {
     max-width: 100%;
 }

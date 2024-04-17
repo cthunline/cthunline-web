@@ -68,7 +68,11 @@ const Characteristics = ({
             <Grid columns={25} gutter="0.25rem">
                 <Grid.Col span={5} />
                 {characteristicNames.map((char) => (
-                    <Grid.Col key={`characteristic-name-${char}`} span={2}>
+                    <Grid.Col
+                        key={`characteristic-name-${char}`}
+                        span={2}
+                        ta="center"
+                    >
                         {T(
                             `game.warhammerFantasy.characteristics.${char}.short`
                         )}
@@ -91,7 +95,7 @@ const Characteristics = ({
                                 variant="contained"
                                 w="100%"
                                 readOnly={readonly || charVal === 'current'}
-                                ta="center"
+                                center
                                 size="sm"
                                 value={character.characteristics[char][charVal]}
                                 onChange={(

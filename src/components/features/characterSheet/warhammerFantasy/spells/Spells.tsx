@@ -72,7 +72,7 @@ const Spells = ({ readonly, character, onChange }: SpellsProps) => {
             <TextInput
                 readOnly={readonly}
                 w="5rem"
-                ta="center"
+                center
                 size="sm"
                 value={character.sin}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

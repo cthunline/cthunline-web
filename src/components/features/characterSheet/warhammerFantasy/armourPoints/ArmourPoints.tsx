@@ -27,7 +27,7 @@ const ArmourPointsInput = ({
         variant="contained"
         w="100%"
         readOnly={readonly}
-        ta="center"
+        center
         size="sm"
         label={label}
         value={value}

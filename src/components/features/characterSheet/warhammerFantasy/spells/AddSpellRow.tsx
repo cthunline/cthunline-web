@@ -76,7 +76,7 @@ const AddSpellRow = ({ onCreate }: AddSpellRowProps) => {
                                 variant="contained"
                                 w="100%"
                                 form={formId}
-                                ta="center"
+                                center
                                 label={T(
                                     'game.warhammerFantasy.spell.castingNumber'
                                 )}

@@ -74,7 +74,7 @@ const AddArmourRow = ({ onCreate }: AddArmourRowProps) => {
                                 variant="contained"
                                 w="100%"
                                 form={formId}
-                                ta="center"
+                                center
                                 label={T(
                                     'game.warhammerFantasy.armour.locations'
                                 )}
@@ -87,7 +87,7 @@ const AddArmourRow = ({ onCreate }: AddArmourRowProps) => {
                                 variant="contained"
                                 w="100%"
                                 form={formId}
-                                ta="center"
+                                center
                                 label={T(
                                     'game.warhammerFantasy.armour.encumbrance'
                                 )}
@@ -105,7 +105,7 @@ const AddArmourRow = ({ onCreate }: AddArmourRowProps) => {
                                 variant="contained"
                                 w="100%"
                                 form={formId}
-                                ta="center"
+                                center
                                 label={T(
                                     'game.warhammerFantasy.armour.armourPoints'
                                 )}

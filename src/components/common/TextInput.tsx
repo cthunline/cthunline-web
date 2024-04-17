@@ -7,13 +7,19 @@ export type InputVariant = 'default' | 'filled' | 'contained' | 'unstyled';
 
 export interface TextInputProps extends Omit<MantineTextInputProps, 'variant'> {
     variant?: InputVariant;
+    center?: boolean;
 }
 
-const TextInput = ({ className, variant, ...props }: TextInputProps) => (
+const TextInput = ({
+    className,
+    variant,
+    center,
+    ...props
+}: TextInputProps) => (
     <MantineTextInput
         {...props}
         variant={variant === 'contained' ? 'default' : variant}
-        className={`${className ?? ''} ${variant === 'contained' ? 'contained' : ''}`}
+        className={`${className ?? ''} ${variant === 'contained' ? 'contained' : ''} ${center ? 'center' : ''}`}
     />
 );
 

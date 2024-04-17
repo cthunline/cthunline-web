@@ -65,7 +65,7 @@ const AddTrappingRow = ({ onCreate }: AddTrappingRowProps) => {
                         variant="contained"
                         w="100%"
                         form={formId}
-                        ta="center"
+                        center
                         label={T('game.warhammerFantasy.trapping.encumbrance')}
                         size="sm"
                         onChange={(e) => {
