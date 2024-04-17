@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Box, Group, Loader, Tabs } from '@mantine/core';
+import { Box, Group, Loader, Stack, Tabs } from '@mantine/core';
 
 import { WidgetType, type SessionUser } from '../../../../../types/index.js';
 import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
@@ -61,12 +61,32 @@ const CharactersWidget = ({ users, onClose }: CharacterWidgetProps) => {
                         onChange={onTabChange}
                     >
                         <Tabs.List w="100%">
-                            {users.map(({ id, name }) => (
+                            {users.map(({ id, name, character }) => (
                                 <Tabs.Tab
                                     key={`characters-user-${id}`}
                                     value={id.toString()}
+                                    w="100%"
                                 >
-                                    {name}
+                                    <Stack gap="0.25rem">
+                                        <Box
+                                            style={{
+                                                overflow: 'hidden',
+                                                whiteSpace: 'nowrap',
+                                                textOverflow: 'ellipsis'
+                                            }}
+                                        >
+                                            {character.name}
+                                        </Box>
+                                        <Box
+                                            style={{
+                                                overflow: 'hidden',
+                                                whiteSpace: 'nowrap',
+                                                textOverflow: 'ellipsis'
+                                            }}
+                                        >
+                                            <i>({name})</i>
+                                        </Box>
+                                    </Stack>
                                 </Tabs.Tab>
                             ))}
                         </Tabs.List>

@@ -99,4 +99,8 @@ body {
     z-index: 1;
 }
 
+.mantine-Tabs-tab .mantine-Tabs-tabLabel {
+    max-width: 100%;
+}
+
 /* stylelint-enable selector-class-pattern */
