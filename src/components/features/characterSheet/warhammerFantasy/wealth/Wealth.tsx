@@ -1,5 +1,6 @@
+import { Box, Group, Stack } from '@mantine/core';
 import { GiCash } from 'react-icons/gi';
-import { Stack } from '@mantine/core';
+import { useMemo } from 'react';
 import {
     type WarhammerFantasyCharacter,
     type WarhammerFantasyWealth
@@ -19,24 +20,47 @@ export interface WealthProps {
 }
 
 const Wealth = ({ readonly, character, onChange, flex }: WealthProps) => {
-    const { T } = useApp();
+    const { T, TU } = useApp();
+
+    const [P, S, GC] = useMemo(
+        () => [
+            TU('game.warhammerFantasy.wealth.short.brassPennies'),
+            TU('game.warhammerFantasy.wealth.short.silverShillings'),
+            TU('game.warhammerFantasy.wealth.short.goldCrowns')
+        ],
+        [TU]
+    );
+
     return (
         <Stack gap="1rem" flex={flex}>
             <SectionTitle
                 iconBefore={<GiCash size={20} />}
                 text={T('game.warhammerFantasy.common.wealth')}
             />
-            <FieldLayout<WarhammerFantasyWealth>
-                gap="0.5rem"
-                gameId={GameId.warhammerFantasy}
-                fields={wealthFields}
-                textSectionKey="wealth"
-                data={character.wealth}
-                readonly={readonly}
-                onChange={(wealth: WarhammerFantasyWealth) =>
-                    onChange({ wealth })
-                }
-            />
+            <Group w="100%" gap="1rem">
+                <Box flex="6 0">
+                    <FieldLayout<WarhammerFantasyWealth>
+                        gap="0.5rem"
+                        gameId={GameId.warhammerFantasy}
+                        fields={wealthFields}
+                        textSectionKey="wealth"
+                        data={character.wealth}
+                        readonly={readonly}
+                        onChange={(wealth: WarhammerFantasyWealth) =>
+                            onChange({ wealth })
+                        }
+                    />
+                </Box>
+                <Stack flex="5 0" gap="0.5rem">
+                    <Box h="2.25rem" />
+                    <Group h="2.25rem" fz="0.8rem" align="center">
+                        {`1 ${S} = 12 ${P}`}
+                    </Group>
+                    <Group h="2.25rem" fz="0.8rem" align="center">
+                        {`1 ${GC} = 20 ${S}`}
+                    </Group>
+                </Stack>
+            </Group>
         </Stack>
     );
 };

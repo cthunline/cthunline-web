@@ -182,7 +182,12 @@
         "wealth": {
             "brassPennies": "sous de cuivre",
             "silverShillings": "pistoles d'argent",
-            "goldCrowns": "couronnes d'or"
+            "goldCrowns": "couronnes d'or",
+            "short": {
+                "brassPennies": "sc",
+                "silverShillings": "pa",
+                "goldCrowns": "co"
+            }
         },
         "encumbrance": {
             "weapons": "armes",

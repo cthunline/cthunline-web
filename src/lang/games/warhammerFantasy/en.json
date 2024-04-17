@@ -179,7 +179,12 @@
         "wealth": {
             "brassPennies": "brass pennies",
             "silverShillings": "silver shillings",
-            "goldCrowns": "gold crowns"
+            "goldCrowns": "gold crowns",
+            "short": {
+                "brassPennies": "p",
+                "silverShillings": "s",
+                "goldCrowns": "gc"
+            }
         },
         "encumbrance": {
             "weapons": "weapons",

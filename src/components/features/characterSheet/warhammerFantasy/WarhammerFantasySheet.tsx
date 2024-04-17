@@ -259,24 +259,24 @@ const WarhammerFantasySheet = ({
             {/* equipment */}
             {sheetTabs[tabValue]?.key === 'equipment' && (
                 <Stack w="100%">
-                    <Group w="100%">
+                    <Group w="100%" gap="1.5rem">
                         <ArmourPoints
                             readonly={readonly}
                             character={characterData}
                             onChange={onPartialCharacterChange}
-                            flex="6 0"
+                            flex="11 0"
                         />
                         <Wealth
                             readonly={readonly}
                             character={characterData}
                             onChange={onPartialCharacterChange}
-                            flex="3 0"
+                            flex="9 0"
                         />
                         <Encumbrance
                             readonly={readonly}
                             character={characterData}
                             onChange={onEncumbranceChange}
-                            flex="4 0"
+                            flex="7 0"
                         />
                     </Group>
                     <Armour
