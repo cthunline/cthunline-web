@@ -9,6 +9,7 @@ import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../contexts/App.js';
 import Form from '../../../../common/Form.js';
+import Textarea from '../../../../common/Textarea.js';
 
 const talentFormSchema = z.object({
     name: z.string().min(1),
@@ -56,46 +57,46 @@ const AddTalentRow = ({ onCreate }: AddTalentRowProps) => {
                 h={0}
             />
             <Group w="100%" gap="1rem">
-                <Group flex="1 0" gap="0.5rem">
-                    <Box flex="3 0">
-                        <TextInput
-                            {...getInputProps('name')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            label={T('game.warhammerFantasy.talent.name')}
-                            size="sm"
-                        />
-                    </Box>
-                    <Box flex="1 0">
-                        <TextInput
-                            {...timesTakenProps}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            center
-                            label={T('game.warhammerFantasy.talent.timesTaken')}
-                            size="sm"
-                            onChange={(e) => {
-                                timesTakenProps.onChange?.(
-                                    Number(onlyNumbers(e.target.value))
-                                );
-                            }}
-                        />
-                    </Box>
-                    <Box flex="4 0">
-                        <TextInput
-                            {...getInputProps('description')}
-                            variant="contained"
-                            w="100%"
-                            form={formId}
-                            label={T(
-                                'game.warhammerFantasy.talent.description'
-                            )}
-                            size="sm"
-                        />
-                    </Box>
-                </Group>
+                <Stack flex="1 0" gap="0.5rem">
+                    <Group flex="1 0" gap="0.5rem">
+                        <Box flex="6 0">
+                            <TextInput
+                                {...getInputProps('name')}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                label={T('game.warhammerFantasy.talent.name')}
+                                size="sm"
+                            />
+                        </Box>
+                        <Box flex="1 0">
+                            <TextInput
+                                {...timesTakenProps}
+                                variant="contained"
+                                w="100%"
+                                form={formId}
+                                center
+                                label={T(
+                                    'game.warhammerFantasy.talent.timesTaken'
+                                )}
+                                size="sm"
+                                onChange={(e) => {
+                                    timesTakenProps.onChange?.(
+                                        Number(onlyNumbers(e.target.value))
+                                    );
+                                }}
+                            />
+                        </Box>
+                    </Group>
+                    <Textarea
+                        {...getInputProps('description')}
+                        form={formId}
+                        variant="contained"
+                        w="100%"
+                        size="sm"
+                        label={T('game.warhammerFantasy.talent.description')}
+                    />
+                </Stack>
                 <ActionIcon type="submit" form={formId}>
                     <FiPlusCircle />
                 </ActionIcon>
