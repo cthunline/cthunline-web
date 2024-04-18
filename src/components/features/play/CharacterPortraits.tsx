@@ -1,3 +1,4 @@
+import { FaRegUser } from 'react-icons/fa6';
 import { modals } from '@mantine/modals';
 import {
     BackgroundImage,
@@ -82,7 +83,19 @@ const CharacterPortraits = ({ players, ...props }: CharacterPortraitsProps) => {
                                         w="100%"
                                         h="100%"
                                     />
-                                ) : null}
+                                ) : (
+                                    <Stack
+                                        align="center"
+                                        justify="center"
+                                        w="100%"
+                                        h="100%"
+                                    >
+                                        <FaRegUser
+                                            size="3.5rem"
+                                            opacity={0.25}
+                                        />
+                                    </Stack>
+                                )}
                             </UnstyledButton>
                         </Paper>
                     );
