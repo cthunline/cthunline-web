@@ -81,8 +81,10 @@ const useDrawing = (
             setIsDrawing(false);
             // insert new draw path to context sketchData
             const lastPath = paths.at(-1);
-            if (lastPath) {
+            if (lastPath?.d) {
                 addSketchDrawPath(lastPath);
+            } else {
+                setPaths((prev) => prev.slice(0, -1));
             }
         }
     };
