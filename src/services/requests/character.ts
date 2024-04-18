@@ -34,7 +34,7 @@ export const editCharacter = async (
     body: CharacterEditBody
 ) =>
     callApi<Character>({
-        method: 'POST',
+        method: 'PATCH',
         route: `/characters/${characterId}`,
         body
     });

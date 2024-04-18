@@ -65,6 +65,7 @@
         "assets": {
             "deleteAssetConfirm": "supprimer ressource {name} ?",
             "deleteDirectoryConfirm": "supprimer dossier {name} ?",
+            "editDirectory": "modifier dossier",
             "newDirectory": "nouveau dossier",
             "noAsset": "aucune ressource disponible",
             "uploadAsset": "ajouter ressource",

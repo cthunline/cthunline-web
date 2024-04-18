@@ -29,7 +29,7 @@ export const createSession = async (body: SessionCreateBody) =>
 
 export const editSession = async (sessionId: number, body: SessionEditBody) =>
     callApi<Session>({
-        method: 'POST',
+        method: 'PATCH',
         route: `/sessions/${sessionId}`,
         body
     });

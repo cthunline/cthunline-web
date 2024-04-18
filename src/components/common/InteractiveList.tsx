@@ -56,9 +56,15 @@ const InteractiveListItem = ({
             <Box flex={1}>{children}</Box>
         </UnstyledButton>
         {!!rightAction && (
-            <Box px="0.75rem" py="0.5rem">
+            <Group
+                align="center"
+                justify="center"
+                gap="0.5rem"
+                px="0.75rem"
+                py="0.5rem"
+            >
                 {rightAction}
-            </Box>
+            </Group>
         )}
     </Group>
 );

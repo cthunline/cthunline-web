@@ -14,17 +14,21 @@ const directoryFormSchema = z.object({
 type DirectoryFormData = z.infer<typeof directoryFormSchema>;
 
 interface DirectoryFormProps {
+    name?: string;
     onSubmit: (name: string) => void;
 }
 
-const DirectoryForm = ({ onSubmit }: DirectoryFormProps) => {
+const DirectoryForm = ({
+    name: initialName = '',
+    onSubmit
+}: DirectoryFormProps) => {
     const { T } = useApp();
 
     const { onSubmit: handleSubmit, getInputProps } =
         useForm<DirectoryFormData>({
             validate: zodResolver(directoryFormSchema),
             initialValues: {
-                name: ''
+                name: initialName
             }
         });
 

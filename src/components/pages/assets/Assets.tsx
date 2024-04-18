@@ -26,15 +26,17 @@ const allowedMimeTypes = [
 const limitSizeInMb = 20;
 
 const createDirModalId = 'create-directory-modal';
+const editDirModalId = 'edit-directory-modal';
 
 const Assets = () => {
     const { T } = useApp();
     const { assetList, uploadAssets, deleteAsset } = useAsset({
         loadList: true
     });
-    const { directoryList, createDirectory, deleteDirectory } = useDirectory({
-        loadList: true
-    });
+    const { directoryList, createDirectory, editDirectory, deleteDirectory } =
+        useDirectory({
+            loadList: true
+        });
 
     const [directoryIds, setDirectoryIds] = useState<number[]>([]);
     const [progress, setProgress] = useState<number | null>(null);
@@ -47,7 +49,7 @@ const Assets = () => {
         setDirectoryIds((previous) => [...previous, id]);
     };
 
-    const onSubmitDirectory = (name: string) => {
+    const onSubmitCreateDirectory = (name: string) => {
         const parentId = directoryIds.length ? directoryIds.at(-1) : undefined;
         createDirectory({
             data: {
@@ -63,7 +65,7 @@ const Assets = () => {
             modalId: createDirModalId,
             centered: true,
             title: T('page.assets.newDirectory'),
-            children: <DirectoryForm onSubmit={onSubmitDirectory} />
+            children: <DirectoryForm onSubmit={onSubmitCreateDirectory} />
         });
     };
 
@@ -97,6 +99,34 @@ const Assets = () => {
                 });
                 setProgress(null);
             }
+        }
+    };
+
+    const onSubmitEditDirectory = (id: number, name: string) => {
+        editDirectory({
+            directoryId: id,
+            data: {
+                name
+            }
+        });
+        modals.close(editDirModalId);
+    };
+
+    const onEdit = (type: FileExplorerItemType, id: number, name: string) => {
+        if (type === FileExplorerItemType.directory) {
+            modals.open({
+                centered: true,
+                modalId: editDirModalId,
+                title: T('page.assets.editDirectory'),
+                children: (
+                    <DirectoryForm
+                        name={name}
+                        onSubmit={(updatedName: string) => {
+                            onSubmitEditDirectory(id, updatedName);
+                        }}
+                    />
+                )
+            });
         }
     };
 
@@ -160,10 +190,12 @@ const Assets = () => {
             <ContentBox.Content>
                 {items.length ? (
                     <FileExplorer
+                        sort
                         items={items}
                         directoryId={directoryIds.at(-1)}
                         onDirectoryBack={onDirectoryBack}
                         onDirectoryClick={onDirectoryClick}
+                        onEdit={onEdit}
                         onDelete={onDelete}
                     />
                 ) : (

@@ -31,7 +31,7 @@ export const getUser = async (userId: number) =>
 
 export const editUser = async (userId: number, body: UserEditBody) =>
     callApi<User>({
-        method: 'POST',
+        method: 'PATCH',
         route: `/users/${userId}`,
         body
     });

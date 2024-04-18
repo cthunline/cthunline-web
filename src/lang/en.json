@@ -65,6 +65,7 @@
         "assets": {
             "deleteAssetConfirm": "delete asset {name} ?",
             "deleteDirectoryConfirm": "delete directory {name} ?",
+            "editDirectory": "edit directory",
             "newDirectory": "new directory",
             "noAsset": "no available asset",
             "uploadAsset": "upload asset",

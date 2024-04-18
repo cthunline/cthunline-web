@@ -29,7 +29,7 @@ export const createSketch = async (body: SketchCreateBody) =>
 
 export const updateSketch = async (sketchId: number, body: SketchUpdateBody) =>
     callApi<Sketch>({
-        method: 'POST',
+        method: 'PATCH',
         route: `/sketchs/${sketchId}`,
         body
     });

@@ -2,7 +2,7 @@ import Axios, { AxiosHeaders, type AxiosProgressEvent } from 'axios';
 
 import { pathJoin } from './tools.js';
 
-type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
+type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
 
 interface ApiCallOptions {
     method: HttpMethod;

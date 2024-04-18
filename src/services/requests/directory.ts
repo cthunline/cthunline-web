@@ -26,7 +26,7 @@ export const editDirectory = async (
     body: DirectoryEditBody
 ) =>
     callApi<Directory>({
-        method: 'POST',
+        method: 'PATCH',
         route: `/directories/${directoryId}`,
         body
     });

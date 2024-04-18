@@ -32,7 +32,7 @@ export const createNote = async (sessionId: number, body: NoteCreateBody) =>
 
 export const editNote = async (noteId: number, body: NoteEditBody) =>
     callApi<Note>({
-        method: 'POST',
+        method: 'PATCH',
         route: `/notes/${noteId}`,
         body
     });

@@ -1,11 +1,14 @@
 import { ActionIcon, Stack, type StackProps } from '@mantine/core';
+import { useMemo } from 'react';
 import {
     MdFolder,
     MdOutlineInsertDriveFile,
     MdOutlineDeleteOutline,
-    MdOutlineKeyboardBackspace
+    MdOutlineKeyboardBackspace,
+    MdEdit
 } from 'react-icons/md';
 
+import { sortObjectsBy } from '../../services/tools.js';
 import InteractiveList from './InteractiveList.js';
 
 export enum FileExplorerItemType {
@@ -29,8 +32,10 @@ interface FileExplorerProps
     onDirectoryBack: () => void;
     onDirectoryClick: (id: number) => void;
     onFileClick?: (id: number) => void;
+    onEdit?: (type: FileExplorerItemType, id: number, name: string) => void;
     onDelete?: (type: FileExplorerItemType, id: number, name: string) => void;
     scroll?: boolean;
+    sort?: boolean;
 }
 
 const FileExplorer = ({
@@ -40,19 +45,30 @@ const FileExplorer = ({
     onDirectoryBack,
     onDirectoryClick,
     onFileClick,
+    onEdit,
     onDelete,
     scroll,
+    sort,
     ...props
 }: FileExplorerProps) => {
-    const filteredItems = items.filter(({ parentId }) =>
-        directoryId ? parentId === directoryId : !parentId
-    );
-    const directories = filteredItems.filter(
-        ({ type }) => type === FileExplorerItemType.directory
-    );
-    const files = filteredItems.filter(
-        ({ type }) => type === FileExplorerItemType.file
-    );
+    const [directories, files] = useMemo(() => {
+        const filteredItems = items.filter(({ parentId }) =>
+            directoryId ? parentId === directoryId : !parentId
+        );
+        const dirs = filteredItems.filter(
+            ({ type }) => type === FileExplorerItemType.directory
+        );
+        if (sort) {
+            sortObjectsBy(dirs, 'name');
+        }
+        const fls = filteredItems.filter(
+            ({ type }) => type === FileExplorerItemType.file
+        );
+        if (sort) {
+            sortObjectsBy(fls, 'name');
+        }
+        return [dirs, fls];
+    }, [items, directoryId, sort]);
 
     const getIcon = (type: FileExplorerItemType, icon?: JSX.Element) => {
         if (icon) {
@@ -90,14 +106,27 @@ const FileExplorer = ({
                             selected={!!selectedId && selectedId === id}
                             leftIcon={getIcon(type, icon)}
                             rightAction={
-                                !!onDelete && (
-                                    <ActionIcon
-                                        color="red"
-                                        onClick={() => onDelete(type, id, name)}
-                                    >
-                                        <MdOutlineDeleteOutline />
-                                    </ActionIcon>
-                                )
+                                <>
+                                    {isDirectory && !!onEdit && (
+                                        <ActionIcon
+                                            onClick={() =>
+                                                onEdit(type, id, name)
+                                            }
+                                        >
+                                            <MdEdit />
+                                        </ActionIcon>
+                                    )}
+                                    {!!onDelete && (
+                                        <ActionIcon
+                                            color="red"
+                                            onClick={() =>
+                                                onDelete(type, id, name)
+                                            }
+                                        >
+                                            <MdOutlineDeleteOutline />
+                                        </ActionIcon>
+                                    )}
+                                </>
                             }
                             onClick={() => {
                                 if (isDirectory) {
