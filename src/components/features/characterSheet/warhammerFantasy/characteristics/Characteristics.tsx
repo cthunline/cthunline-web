@@ -1,4 +1,4 @@
-import { Grid, Stack } from '@mantine/core';
+import { Grid, Group, Stack } from '@mantine/core';
 import { GiDna1 } from 'react-icons/gi';
 import {
     warhammerFantasy,
@@ -8,6 +8,7 @@ import {
 } from '@cthunline/games';
 
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import CareerLevelButton from '../generic/CareerLevelButton.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../contexts/App.js';
@@ -65,7 +66,7 @@ const Characteristics = ({
                 iconBefore={<GiDna1 size={20} />}
                 text={T('game.warhammerFantasy.common.characteristics')}
             />
-            <Grid columns={25} gutter="0.25rem">
+            <Grid columns={25} gutter="0.25rem" align="center">
                 <Grid.Col span={5} />
                 {characteristicNames.map((char) => (
                     <Grid.Col
@@ -82,7 +83,7 @@ const Characteristics = ({
                     <Grid.Col
                         key={`characteristic-name-${charVal}`}
                         span={5}
-                        display="flex"
+                        ta="start"
                     >
                         {T(`game.warhammerFantasy.characteristic.${charVal}`)}
                     </Grid.Col>,
@@ -90,6 +91,7 @@ const Characteristics = ({
                         <Grid.Col
                             key={`characteristic-name-${char}-${charVal}`}
                             span={2}
+                            ta="center"
                         >
                             <TextInput
                                 variant="contained"
@@ -111,6 +113,39 @@ const Characteristics = ({
                         </Grid.Col>
                     ))
                 ])}
+                <Grid.Col span={5} ta="start">
+                    {T(`game.warhammerFantasy.characteristic.careerLevel`)}
+                </Grid.Col>
+                {characteristicNames.map((char) => (
+                    <Grid.Col
+                        key={`characteristic-name-${char}-careerLevel`}
+                        span={2}
+                        ta="center"
+                    >
+                        <Group align="center" justify="center">
+                            <CareerLevelButton
+                                level={
+                                    character.characteristics[char].careerLevel
+                                }
+                                readonly={readonly}
+                                onChange={(level: number | undefined) => {
+                                    onChange({
+                                        ...character,
+                                        characteristics: {
+                                            ...character.characteristics,
+                                            [char]: {
+                                                ...character.characteristics[
+                                                    char
+                                                ],
+                                                careerLevel: level
+                                            }
+                                        }
+                                    });
+                                }}
+                            />
+                        </Group>
+                    </Grid.Col>
+                ))}
             </Grid>
         </Stack>
     );

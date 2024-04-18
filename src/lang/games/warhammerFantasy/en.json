@@ -44,7 +44,8 @@
         "characteristic": {
             "initial": "initial",
             "advances": "advances",
-            "current": "current"
+            "current": "current",
+            "careerLevel": "career level"
         },
         "characteristics": {
             "weaponSkill": {

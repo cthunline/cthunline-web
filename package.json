@@ -1,6 +1,6 @@
 {
     "name": "cthunline-web",
-    "version": "2.3.1",
+    "version": "2.4.0",
     "type": "module",
     "scripts": {
         "dev": "vite serve src --config vite.config.ts",
@@ -10,7 +10,7 @@
         "format": "npx eslint . --fix --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --write . && npx tsc --noEmit && npx stylelint --fix \"**/*.css\" --max-warnings=0"
     },
     "dependencies": {
-        "@cthunline/games": "^3.1.1",
+        "@cthunline/games": "^3.1.2",
         "@mantine/core": "^7.8.0",
         "@mantine/form": "^7.8.0",
         "@mantine/hooks": "^7.8.0",

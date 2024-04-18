@@ -6,6 +6,7 @@ import {
 } from '@cthunline/games';
 
 import { type MoveAction } from '../../../../../services/tools.js';
+import CareerLevelButton from '../generic/CareerLevelButton.js';
 import RowMenuButton from '../generic/RowMenuButton.js';
 import { useApp } from '../../../../contexts/App.js';
 import RowInput from '../generic/RowInput.js';
@@ -17,6 +18,7 @@ const isOtherSkill = (
 type SkillRowProps = {
     readonly: boolean;
     character: WarhammerFantasyCharacter;
+    onCareerLevelChange: (level: number | undefined) => void;
     onAdvancesChange: (advances: number) => void;
 } & (
     | {
@@ -40,12 +42,18 @@ const SkillRow = ({
     skillTranslatedName,
     onMove,
     onDelete,
+    onCareerLevelChange,
     onAdvancesChange
 }: SkillRowProps) => {
     const { T } = useApp();
     const isOther = isOtherSkill(skill);
     return (
         <Group w="100%">
+            <CareerLevelButton
+                level={skill.careerLevel}
+                readonly={readonly}
+                onChange={onCareerLevelChange}
+            />
             <Box flex="4 0">{isOther ? skill.name : skillTranslatedName}</Box>
             <Box flex="1 0">
                 {T(

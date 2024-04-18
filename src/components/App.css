@@ -55,6 +55,11 @@ body {
     --palette-darkgreen: #155d27;
     --palette-gray: #888a8b;
     --palette-darkgray: #454545;
+
+    /* podium */
+    --palette-gold: #fdb833;
+    --palette-silver: #c5c3c6;
+    --palette-bronze: #aa6c2a;
 }
 
 /* mantine styles */

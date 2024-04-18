@@ -46,6 +46,22 @@ const BasicSkills = ({ readonly, character, onChange }: BasicSkillsProps) => {
         return data;
     }, [T]);
 
+    const onBasicSkillCareerLevelChange = (
+        name: WarhammerFantasyBasicSkillName,
+        careerLevel: number | undefined
+    ) => {
+        const basicSkill = character.basicSkills[name];
+        onChange({
+            basicSkills: {
+                ...character.basicSkills,
+                [name]: {
+                    ...basicSkill,
+                    careerLevel
+                }
+            }
+        });
+    };
+
     const onBasicSkillAdvancesChange = (
         name: WarhammerFantasyBasicSkillName,
         advances: number
@@ -78,6 +94,9 @@ const BasicSkills = ({ readonly, character, onChange }: BasicSkillsProps) => {
                         character={character}
                         skill={character.basicSkills[name]}
                         skillTranslatedName={translatedName}
+                        onCareerLevelChange={(level: number | undefined) => {
+                            onBasicSkillCareerLevelChange(name, level);
+                        }}
                         onAdvancesChange={(val: number) => {
                             onBasicSkillAdvancesChange(name, val);
                         }}

@@ -25,6 +25,21 @@ interface OtherSkillsProps {
 const OtherSkills = ({ readonly, character, onChange }: OtherSkillsProps) => {
     const { T } = useApp();
 
+    const onOtherSkillCareerLevelChange = (
+        index: number,
+        careerLevel: number | undefined
+    ) => {
+        const otherSkills = [...character.otherSkills];
+        const otherSkill = otherSkills[index];
+        if (otherSkill) {
+            otherSkills[index] = {
+                ...otherSkill,
+                careerLevel
+            };
+            onChange({ otherSkills });
+        }
+    };
+
     const onOtherSkillAdvancesChange = (index: number, advances: number) => {
         const otherSkills = [...character.otherSkills];
         const otherSkill = otherSkills[index];
@@ -80,6 +95,9 @@ const OtherSkills = ({ readonly, character, onChange }: OtherSkillsProps) => {
                         readonly={readonly}
                         character={character}
                         skill={otherSkill}
+                        onCareerLevelChange={(level: number | undefined) => {
+                            onOtherSkillCareerLevelChange(index, level);
+                        }}
                         onAdvancesChange={(val: number) => {
                             onOtherSkillAdvancesChange(index, val);
                         }}
