@@ -180,6 +180,9 @@
             "autoplay": "lecture auto.",
             "repeat": "répéter",
             "shuffle": "aléatoire"
+        },
+        "characters": {
+            "empty": "aucun joueur dans la session"
         }
     }
 }

@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Box, Group, Loader, Stack, Tabs } from '@mantine/core';
+import { Box, Group, Stack, Tabs } from '@mantine/core';
+import { useState, useEffect, useMemo } from 'react';
+import { FaUsers } from 'react-icons/fa6';
 
 import { WidgetType, type SessionUser } from '../../../../../types/index.js';
 import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
@@ -18,28 +19,31 @@ const CharactersWidget = ({ users, onClose }: CharacterWidgetProps) => {
         users[0] ?? null
     );
 
-    const setTargetSessionUser = useCallback(
-        (userId: number) => {
-            setSessionUser(users.find(({ id }) => id === userId) ?? null);
-        },
+    const usersById = useMemo(
+        () =>
+            new Map<number, SessionUser>(users.map((user) => [user.id, user])),
         [users]
     );
 
     const onTabChange = (userIdString: string | null) => {
-        setTargetSessionUser(Number(userIdString));
+        const user = usersById.get(Number(userIdString));
+        if (user) {
+            setSessionUser(user);
+        }
     };
 
     useEffect(() => {
-        if (users.length) {
-            if (sessionUser) {
-                setTargetSessionUser(sessionUser.id);
-            } else {
-                setSessionUser(users[0]);
-            }
-        } else {
+        if (
+            usersById.size &&
+            (!sessionUser || !usersById.has(sessionUser.id))
+        ) {
+            const [[, firstUser]] = usersById;
+            setSessionUser(firstUser);
+        }
+        if (!usersById.size && sessionUser) {
             setSessionUser(null);
         }
-    }, [users, sessionUser, setTargetSessionUser]);
+    }, [sessionUser, usersById]);
 
     return (
         <Widget
@@ -54,59 +58,66 @@ const CharactersWidget = ({ users, onClose }: CharacterWidgetProps) => {
                 align="start"
             >
                 {users.length && sessionUser ? (
-                    <Tabs
-                        w="150px"
-                        orientation="vertical"
-                        value={sessionUser.id.toString()}
-                        onChange={onTabChange}
-                    >
-                        <Tabs.List w="100%">
-                            {users.map(({ id, name, character }) => (
-                                <Tabs.Tab
-                                    key={`characters-user-${id}`}
-                                    value={id.toString()}
-                                    w="100%"
-                                >
-                                    <Stack gap="0.25rem">
-                                        <Box
-                                            style={{
-                                                overflow: 'hidden',
-                                                whiteSpace: 'nowrap',
-                                                textOverflow: 'ellipsis'
-                                            }}
-                                        >
-                                            {character.name}
-                                        </Box>
-                                        <Box
-                                            style={{
-                                                overflow: 'hidden',
-                                                whiteSpace: 'nowrap',
-                                                textOverflow: 'ellipsis'
-                                            }}
-                                        >
-                                            <i>({name})</i>
-                                        </Box>
-                                    </Stack>
-                                </Tabs.Tab>
-                            ))}
-                        </Tabs.List>
-                    </Tabs>
-                ) : null}
-                {sessionUser ? (
-                    <Box flex={1} w="750px" h="100%">
-                        <CharacterSheet
-                            readonly
-                            gameId={sessionUser.character.gameId}
-                            data={sessionUser.character.data}
-                            portrait={sessionUser.character.portrait}
-                            listening
-                            rawContent
-                        />
-                    </Box>
+                    <>
+                        <Tabs
+                            w="150px"
+                            orientation="vertical"
+                            value={sessionUser.id.toString()}
+                            onChange={onTabChange}
+                        >
+                            <Tabs.List w="100%">
+                                {users.map(({ id, name, character }) => (
+                                    <Tabs.Tab
+                                        key={`characters-user-${id}`}
+                                        value={id.toString()}
+                                        w="100%"
+                                    >
+                                        <Stack gap="0.25rem">
+                                            <Box
+                                                style={{
+                                                    overflow: 'hidden',
+                                                    whiteSpace: 'nowrap',
+                                                    textOverflow: 'ellipsis'
+                                                }}
+                                            >
+                                                {character.name}
+                                            </Box>
+                                            <Box
+                                                style={{
+                                                    overflow: 'hidden',
+                                                    whiteSpace: 'nowrap',
+                                                    textOverflow: 'ellipsis'
+                                                }}
+                                            >
+                                                <i>({name})</i>
+                                            </Box>
+                                        </Stack>
+                                    </Tabs.Tab>
+                                ))}
+                            </Tabs.List>
+                        </Tabs>
+                        <Box flex={1} w="750px" h="100%">
+                            <CharacterSheet
+                                readonly
+                                gameId={sessionUser.character.gameId}
+                                data={sessionUser.character.data}
+                                portrait={sessionUser.character.portrait}
+                                listening
+                                rawContent
+                            />
+                        </Box>
+                    </>
                 ) : (
-                    <Group justify="center" flex={1}>
-                        <Loader size="xl" />
-                    </Group>
+                    <Stack
+                        w="100%"
+                        h="100%"
+                        align="center"
+                        justify="center"
+                        gap="1rem"
+                    >
+                        {T('widget.characters.empty')}
+                        <FaUsers size="2rem" />
+                    </Stack>
                 )}
             </Group>
         </Widget>
