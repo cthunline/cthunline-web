@@ -1,4 +1,4 @@
-import { GiDeathSkull, GiGothicCross, GiStoneCrafting } from 'react-icons/gi';
+import { GiDeathSkull, GiIronCross, GiStoneCrafting } from 'react-icons/gi';
 import { ActionIcon, Group, Menu, Text } from '@mantine/core';
 import { type IconType } from 'react-icons';
 import { FaBan, FaShield } from 'react-icons/fa6';
@@ -9,6 +9,7 @@ type CareerLevelData = {
     level: number;
     IconComponent: IconType;
     color: string;
+    contrast: string;
 };
 
 const careerLevelsMap = new Map<number, CareerLevelData>([
@@ -16,8 +17,9 @@ const careerLevelsMap = new Map<number, CareerLevelData>([
         1,
         {
             level: 1,
-            IconComponent: GiGothicCross,
-            color: 'var(--palette-gray)'
+            IconComponent: GiIronCross,
+            color: 'var(--palette-gray)',
+            contrast: 'var(--mantine-color-gray-2)'
         }
     ],
     [
@@ -25,7 +27,8 @@ const careerLevelsMap = new Map<number, CareerLevelData>([
         {
             level: 2,
             IconComponent: GiStoneCrafting,
-            color: 'var(--palette-bronze)'
+            color: 'var(--palette-bronze)',
+            contrast: 'var(--mantine-color-dark-8)'
         }
     ],
     [
@@ -33,7 +36,8 @@ const careerLevelsMap = new Map<number, CareerLevelData>([
         {
             level: 3,
             IconComponent: GiDeathSkull,
-            color: 'var(--palette-silver)'
+            color: 'var(--palette-silver)',
+            contrast: 'var(--mantine-color-dark-8)'
         }
     ],
     [
@@ -41,7 +45,8 @@ const careerLevelsMap = new Map<number, CareerLevelData>([
         {
             level: 4,
             IconComponent: FaShield,
-            color: 'var(--palette-gold)'
+            color: 'var(--palette-gold)',
+            contrast: 'var(--mantine-color-dark-8)'
         }
     ]
 ]);
@@ -78,7 +83,7 @@ const CareerLevelButton = ({
                     {careerLevelData?.IconComponent && (
                         <careerLevelData.IconComponent
                             size="0.75rem"
-                            color="var(--mantine-color-dark-8)"
+                            color={careerLevelData.contrast}
                         />
                     )}
                 </ActionIcon>

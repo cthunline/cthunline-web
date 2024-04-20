@@ -49,11 +49,13 @@ const SkillRow = ({
     const isOther = isOtherSkill(skill);
     return (
         <Group w="100%">
-            <CareerLevelButton
-                level={skill.careerLevel}
-                readonly={readonly}
-                onChange={onCareerLevelChange}
-            />
+            <Group w="1.25rem">
+                <CareerLevelButton
+                    level={skill.careerLevel}
+                    readonly={readonly}
+                    onChange={onCareerLevelChange}
+                />
+            </Group>
             <Box flex="4 0">{isOther ? skill.name : skillTranslatedName}</Box>
             <Box flex="1 0">
                 {T(
