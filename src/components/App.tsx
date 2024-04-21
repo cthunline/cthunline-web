@@ -2,7 +2,7 @@ import { Notifications } from '@mantine/notifications';
 import { ModalsProvider } from '@mantine/modals';
 import { MantineProvider } from '@mantine/core';
 
-import { AppProvider, useApp } from './contexts/App.js';
+import { AppProvider, useApp } from '../contexts/App.js';
 import { mantineTheme } from './theme.js';
 import Router from './Router.js';
 

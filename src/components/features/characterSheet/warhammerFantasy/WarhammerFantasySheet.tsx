@@ -19,7 +19,7 @@ import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
 import ArmourPoints from './armourPoints/ArmourPoints.js';
 import Portrait from '../generic/portrait/Portrait.js';
 import Encumbrance from './encumbrance/Encumbrance.js';
-import { useApp } from '../../../contexts/App.js';
+import { useApp } from '../../../../contexts/App.js';
 import BasicSkills from './skills/BasicSkills.js';
 import OtherSkills from './skills/OtherSkills.js';
 import Trappings from './trappings/Trappings.js';

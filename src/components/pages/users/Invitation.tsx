@@ -2,7 +2,7 @@ import { ActionIcon, CopyButton, Group, Input, Loader } from '@mantine/core';
 import { MdCheck, MdContentCopy } from 'react-icons/md';
 import { useState, useEffect, useRef } from 'react';
 
-import useUser from '../../hooks/useUser.js';
+import useUser from '../../../hooks/api/useUser.js';
 
 const Invitation = () => {
     const { generateInvitationCode } = useUser();

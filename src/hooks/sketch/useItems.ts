@@ -1,19 +1,19 @@
 import { useState, useEffect, useRef } from 'react';
 
-import { sketchContextMenuId } from '../../features/play/sketch/SketchContextMenu.js';
+import { sketchContextMenuId } from '../../components/features/play/sketch/SketchContextMenu.js';
 import { usePlay } from '../../contexts/Play.js';
 import {
     findById,
     findIndexById,
     isMainClick
-} from '../../../services/tools.js';
+} from '../../services/tools.js';
 import {
     getMouseEventSvgCoordinates,
     getMovingItemCoordinates,
     getResizingItemCoordAndPos,
     forwardImage,
     backwardImage
-} from '../../../services/sketch.js';
+} from '../../services/sketch.js';
 import {
     type SketchImageData,
     type SketchMovingItemData,
@@ -24,7 +24,7 @@ import {
     SketchItemType,
     TooltipPlacement,
     type SketchEvent
-} from '../../../types/index.js';
+} from '../../types/index.js';
 
 // this hook holds states and event handlers for sketch items (images and tokens)
 // it is meant to be used by the sketch component and sub components

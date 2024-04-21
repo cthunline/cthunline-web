@@ -9,13 +9,13 @@ import JukeboxWidget from '../../features/play/widgets/jukebox/JukeboxWidget.js'
 import SketchWidget from '../../features/play/widgets/sketch/SketchWidget.js';
 import NotesWidget from '../../features/play/widgets/notes/NotesWidget.js';
 import DicesWidget from '../../features/play/widgets/dices/DicesWidget.js';
-import { PlayProvider, usePlay } from '../../contexts/Play.js';
+import { PlayProvider, usePlay } from '../../../contexts/Play.js';
 import { focusWidget } from '../../../services/widget.js';
 import Console from '../../features/play/Console.js';
 import { WidgetType } from '../../../types/index.js';
 import Sketch from '../../features/play/Sketch.js';
+import { useApp } from '../../../contexts/App.js';
 import Audio from '../../features/play/Audio.js';
-import { useApp } from '../../contexts/App.js';
 import PlayMenu from './PlayMenu.js';
 
 const PlayContent = () => {

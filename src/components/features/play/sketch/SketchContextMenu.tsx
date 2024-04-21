@@ -8,8 +8,8 @@ import {
 
 import { type SessionUser, type Color } from '../../../../types/index.js';
 import ColorSelector from '../../../common/ColorSelector.js';
-import { usePlay } from '../../../contexts/Play.js';
-import { useApp } from '../../../contexts/App.js';
+import { usePlay } from '../../../../contexts/Play.js';
+import { useApp } from '../../../../contexts/App.js';
 
 export interface ContextMenuPosition {
     x: number;

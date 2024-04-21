@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react';
 
-import { type Locale } from '../../../types/index.js';
-import { ucfirst } from '../../../services/tools.js';
-import translations from '../../../lang/index.js';
+import { type Locale } from '../types/index.js';
+import { ucfirst } from '../services/tools.js';
+import translations from '../lang/index.js';
 
 export interface TranslationHookExport {
     t: (key: string, data?: Record<string, string>) => string;

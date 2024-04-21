@@ -9,7 +9,7 @@ import {
 } from '@cthunline/games';
 
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import Select from '../../../../common/Select.js';
 
 interface OtherSkillFormData {

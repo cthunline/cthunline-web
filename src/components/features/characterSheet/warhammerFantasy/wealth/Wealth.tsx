@@ -9,7 +9,7 @@ import {
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import { GameId } from '../../../../../types/index.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { wealthFields } from '../fields.js';
 
 export interface WealthProps {

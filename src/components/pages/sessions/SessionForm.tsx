@@ -5,8 +5,8 @@ import { useForm } from '@mantine/form';
 import { useMemo } from 'react';
 import z from 'zod';
 
-import { useApp } from '../../contexts/App.js';
-import useGame from '../../hooks/useGame.js';
+import useGame from '../../../hooks/api/useGame.js';
+import { useApp } from '../../../contexts/App.js';
 import Select from '../../common/Select.js';
 import Form from '../../common/Form.js';
 import {

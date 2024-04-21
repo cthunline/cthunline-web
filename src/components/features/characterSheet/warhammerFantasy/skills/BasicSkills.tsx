@@ -8,7 +8,7 @@ import {
 } from '@cthunline/games';
 
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import SkillRow from './SkillRow.js';
 
 const { basicSkillNames } = warhammerFantasy.data;

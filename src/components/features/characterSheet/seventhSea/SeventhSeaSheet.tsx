@@ -42,7 +42,7 @@ import Portrait from '../generic/portrait/Portrait.js';
 import DeathSpiral from './deathSpiral/DeathSpiral.js';
 import Advantages from './advantages/Advantages.js';
 import Textarea from '../../../common/Textarea.js';
-import { useApp } from '../../../contexts/App.js';
+import { useApp } from '../../../../contexts/App.js';
 import Stories from './stories/Stories.js';
 import {
     defaultBackground,

@@ -4,7 +4,7 @@ import { modals } from '@mantine/modals';
 
 import InteractiveList from '../../../../../common/InteractiveList.js';
 import { type Sketch } from '../../../../../../types/index.js';
-import { useApp } from '../../../../../contexts/App.js';
+import { useApp } from '../../../../../../contexts/App.js';
 
 interface UserSketchSelectorProps {
     userSketchs: Sketch[];

@@ -3,7 +3,7 @@ import { Box, Group, Stack } from '@mantine/core';
 
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 
 interface StatisticsProps {
     statistics: DnD5Statistics;

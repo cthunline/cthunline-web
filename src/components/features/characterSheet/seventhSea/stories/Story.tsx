@@ -6,7 +6,7 @@ import { ActionIcon, Box, Group, Stack, type StackProps } from '@mantine/core';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import { GameId } from '../../../../../types/index.js';
 import Textarea from '../../../../common/Textarea.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { storyFields } from '../fields.js';
 
 interface StoryProps extends Pick<StackProps, 'flex'> {

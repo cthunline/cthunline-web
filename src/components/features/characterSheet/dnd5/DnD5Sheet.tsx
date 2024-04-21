@@ -45,7 +45,7 @@ import { defaultAttack } from './attacks/attacks.data.js';
 import Spellcasting from './spellcasting/Spellcasting.js';
 import Portrait from '../generic/portrait/Portrait.js';
 import Statistics from './statistics/Statistics.js';
-import { useApp } from '../../../contexts/App.js';
+import { useApp } from '../../../../contexts/App.js';
 import DnD5Logo from '../../../svg/games/DnD5.js';
 import Abilities from './abilities/Abilities.js';
 import Equipment from './equipment/Equipment.js';

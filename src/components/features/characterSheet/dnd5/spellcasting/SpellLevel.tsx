@@ -6,7 +6,7 @@ import { FiPlusCircle } from 'react-icons/fi';
 import { spellLevelFields, defaultSpell } from './spellcasting.data.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import SpellList from './SpellList.js';
 
 interface SpellLevelProps {

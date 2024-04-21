@@ -8,7 +8,7 @@ import z from 'zod';
 
 import ContentBox from '../../common/ContentBox.js';
 import { toast } from '../../../services/toast.js';
-import { useApp } from '../../contexts/App.js';
+import { useApp } from '../../../contexts/App.js';
 import Form from '../../common/Form.js';
 import Link from '../../common/Link.js';
 

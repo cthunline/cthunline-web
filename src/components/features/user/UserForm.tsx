@@ -4,7 +4,7 @@ import { MdOutlineSave } from 'react-icons/md';
 import { useForm } from '@mantine/form';
 import z from 'zod';
 
-import { useApp } from '../../contexts/App.js';
+import { useApp } from '../../../contexts/App.js';
 import Form from '../../common/Form.js';
 
 const userFormSchema = z

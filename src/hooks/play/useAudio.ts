@@ -4,7 +4,7 @@ import {
     type PlaySocket,
     type AudioData,
     type Asset
-} from '../../../types/index.js';
+} from '../../types/index.js';
 
 export interface AudioHookExport {
     audioData: AudioData | null;

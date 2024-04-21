@@ -9,7 +9,7 @@ import {
 } from 'react-icons/io5';
 
 import { getAssetUrl } from '../../../services/api.js';
-import { usePlay } from '../../contexts/Play.js';
+import { usePlay } from '../../../contexts/Play.js';
 
 const Audio = () => {
     const { audioData } = usePlay();

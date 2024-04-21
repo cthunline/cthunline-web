@@ -4,7 +4,7 @@ import { type CoCSkill } from '@cthunline/games';
 
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { controlSkill } from '../cocSheet.helper.js';
 import { skillKeys } from './skills.data.js';
 

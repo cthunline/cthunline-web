@@ -5,11 +5,11 @@ import { FaInfo } from 'react-icons/fa6';
 import { modals } from '@mantine/modals';
 import { useState } from 'react';
 
-import useDirectory from '../../hooks/useDirectory.js';
+import useDirectory from '../../../hooks/api/useDirectory.js';
+import useAsset from '../../../hooks/api/useAsset.js';
 import ContentBox from '../../common/ContentBox.js';
 import { toast } from '../../../services/toast.js';
-import { useApp } from '../../contexts/App.js';
-import useAsset from '../../hooks/useAsset.js';
+import { useApp } from '../../../contexts/App.js';
 import DirectoryForm from './DirectoryForm.js';
 import FileExplorer, {
     type FileExplorerItem,

@@ -7,7 +7,7 @@ import {
 
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import AddOtherSkillRow from './AddOtherSkillRow.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import SkillRow from './SkillRow.js';
 import {
     type MoveAction,

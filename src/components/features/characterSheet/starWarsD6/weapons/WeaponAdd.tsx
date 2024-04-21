@@ -4,7 +4,7 @@ import { type SWD6Weapon } from '@cthunline/games';
 import { FiPlusCircle } from 'react-icons/fi';
 
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { weaponFields } from './weapons.data.js';
 
 interface WeaponAddProps {

@@ -4,7 +4,7 @@ import { FaUsers } from 'react-icons/fa6';
 
 import { WidgetType, type SessionUser } from '../../../../../types/index.js';
 import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import Widget from '../../Widget.js';
 
 interface CharacterWidgetProps {

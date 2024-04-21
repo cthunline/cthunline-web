@@ -7,12 +7,12 @@ import { modals } from '@mantine/modals';
 import { HiPlus } from 'react-icons/hi';
 import { useMemo } from 'react';
 
-import useCharacter from '../../hooks/useCharacter.js';
+import useCharacter from '../../../hooks/api/useCharacter.js';
+import useSession from '../../../hooks/api/useSession.js';
+import useGame from '../../../hooks/api/useGame.js';
 import ContentBox from '../../common/ContentBox.js';
-import useSession from '../../hooks/useSession.js';
 import { toast } from '../../../services/toast.js';
-import { useApp } from '../../contexts/App.js';
-import useGame from '../../hooks/useGame.js';
+import { useApp } from '../../../contexts/App.js';
 import Select from '../../common/Select.js';
 import SessionForm from './SessionForm.js';
 import {

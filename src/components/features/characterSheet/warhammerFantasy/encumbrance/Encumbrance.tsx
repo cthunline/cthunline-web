@@ -5,7 +5,7 @@ import { Grid, Stack } from '@mantine/core';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 
 interface EncumbranceInputProps {
     label?: string;

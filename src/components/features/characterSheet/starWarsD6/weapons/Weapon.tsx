@@ -3,7 +3,7 @@ import { ActionIcon, Box, Group } from '@mantine/core';
 import { type SWD6Weapon } from '@cthunline/games';
 
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { weaponFields } from './weapons.data.js';
 
 interface WeaponProps {

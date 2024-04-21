@@ -5,7 +5,7 @@ import { moneyFields, equipmentFields } from './equipment.data.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
 import Textarea from '../../../../common/Textarea.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 
 interface EquipmentProps {
     equipment: DnD5Equipment;

@@ -1,4 +1,4 @@
-import { type DicesRequest, type PlaySocket } from '../../../types/index.js';
+import { type DicesRequest, type PlaySocket } from '../../types/index.js';
 import { useApp } from '../../contexts/App.js';
 
 export interface DiceHookExport {

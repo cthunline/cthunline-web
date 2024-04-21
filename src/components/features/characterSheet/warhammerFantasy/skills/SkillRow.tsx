@@ -8,7 +8,7 @@ import {
 import { type MoveAction } from '../../../../../services/tools.js';
 import CareerLevelButton from '../generic/CareerLevelButton.js';
 import RowMenuButton from '../generic/RowMenuButton.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import RowInput from '../generic/RowInput.js';
 
 const isOtherSkill = (

@@ -7,7 +7,7 @@ import {
 } from 'react-icons/md';
 
 import { type Note } from '../../../../../types/index.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 
 export interface NoteListMenuDropdownProps {
     note: Note | null;

@@ -6,13 +6,13 @@ import SketchContextMenu, {
     type ContextMenuPosition,
     contextMenuHandler
 } from './sketch/SketchContextMenu.js';
-import useDrawing from '../../hooks/sketch/useDrawing.js';
+import useDrawing from '../../../hooks/sketch/useDrawing.js';
 import CharacterPortraits from './CharacterPortraits.js';
-import useItems from '../../hooks/sketch/useItems.js';
+import useItems from '../../../hooks/sketch/useItems.js';
 import { viewBox } from '../../../services/sketch.js';
 import SketchImage from './sketch/SketchImage.js';
 import SketchToken from './sketch/SketchToken.js';
-import { usePlay } from '../../contexts/Play.js';
+import { usePlay } from '../../../contexts/Play.js';
 import {
     type CardinalDirection,
     type SessionUser,

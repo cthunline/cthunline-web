@@ -9,7 +9,7 @@ import {
 } from '@cthunline/games';
 
 import WarhammerFantasySheet from './warhammerFantasy/WarhammerFantasySheet.js';
-import useCharacterSheetStatus from '../../hooks/useCharacterSheetStatus.js';
+import useCharacterSheetStatus from '../../../hooks/api/useCharacterSheetStatus.js';
 import { type CharacterData, GameId } from '../../../types/index.js';
 import SeventhSeaSheet from './seventhSea/SeventhSeaSheet.js';
 import CoCSheet from './callOfCthulhu/CoCSheet.js';

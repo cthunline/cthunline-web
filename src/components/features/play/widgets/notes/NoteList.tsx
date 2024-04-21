@@ -5,7 +5,7 @@ import { MdOutlineShare } from 'react-icons/md';
 import InteractiveList from '../../../../common/InteractiveList.js';
 import { type Note, type User } from '../../../../../types/index.js';
 import NoteListMenuDropdown from './NoteListMenuDropdown.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 
 interface NoteListProps {
     notes: Note[];

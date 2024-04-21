@@ -9,9 +9,9 @@ import {
     useMemo
 } from 'react';
 
-import { type User, type PlaySocket } from '../../types/index.js';
-import useSession from '../hooks/useSession.js';
-import { toast } from '../../services/toast.js';
+import { type User, type PlaySocket } from '../types/index.js';
+import useSession from '../hooks/api/useSession.js';
+import { toast } from '../services/toast.js';
 import { useApp } from './App.js';
 import useSketch, {
     type SketchHookExport,

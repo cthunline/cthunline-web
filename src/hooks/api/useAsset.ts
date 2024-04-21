@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { type Asset, type AssetCreateBody } from '../../types/index.js';
 import { toast } from '../../services/toast.js';
-import { useApp } from '../contexts/App.js';
+import { useApp } from '../../contexts/App.js';
 import {
     deleteAsset as deleteAssetRequest,
     getAssets as getAssetsRequest,

@@ -33,7 +33,7 @@ import { controlCharacterData } from './cocSheet.helper.js';
 import { biographyFields, storyFields } from './fields.js';
 import CoCLogo from '../../../svg/games/CallOfCthulhu.js';
 import Portrait from '../generic/portrait/Portrait.js';
-import { useApp } from '../../../contexts/App.js';
+import { useApp } from '../../../../contexts/App.js';
 import Weapons from './weapons/Weapons.js';
 import Status from './status/Status.js';
 import Skills from './skills/Skills.js';

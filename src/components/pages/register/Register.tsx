@@ -1,10 +1,10 @@
 import { Navigate, useNavigate } from 'react-router-dom';
 
 import UserForm, { type UserSubmitData } from '../../features/user/UserForm.js';
+import useUser from '../../../hooks/api/useUser.js';
 import ContentBox from '../../common/ContentBox.js';
-import { useApp } from '../../contexts/App.js';
+import { useApp } from '../../../contexts/App.js';
 import ErrorPage from '../error/ErrorPage.js';
-import useUser from '../../hooks/useUser.js';
 import Link from '../../common/Link.js';
 
 const Register = () => {

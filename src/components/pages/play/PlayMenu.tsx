@@ -5,7 +5,7 @@ import { HiMusicNote } from 'react-icons/hi';
 import { CgNotes } from 'react-icons/cg';
 
 import { WidgetType } from '../../../types/index.js';
-import { useApp } from '../../contexts/App.js';
+import { useApp } from '../../../contexts/App.js';
 
 interface PlayMenuProps {
     isMaster: boolean;

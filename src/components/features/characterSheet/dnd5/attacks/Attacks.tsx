@@ -4,7 +4,7 @@ import { type DnD5Attack } from '@cthunline/games';
 
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { attackFields } from './attacks.data.js';
 
 interface AttacksProps {

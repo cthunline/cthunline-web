@@ -1,7 +1,7 @@
 import { ActionIcon, Box, Group, Radio, Stack } from '@mantine/core';
 import { MdClose } from 'react-icons/md';
 
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 
 import './Characteristics.css';
 

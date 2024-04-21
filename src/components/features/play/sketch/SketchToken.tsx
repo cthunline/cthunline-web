@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Tooltip } from '@mantine/core';
 
 import { getCssVar, getTextColor } from '../../../../services/tools.js';
-import { useApp } from '../../../contexts/App.js';
+import { useApp } from '../../../../contexts/App.js';
 import SketchContextMenu, {
     type ContextMenuPosition,
     contextMenuHandler

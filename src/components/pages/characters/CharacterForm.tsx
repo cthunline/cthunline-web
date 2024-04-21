@@ -4,8 +4,8 @@ import { Loader } from '@mantine/core';
 
 import CharacterSheet from '../../features/characterSheet/CharacterSheet.js';
 import { type Character, type CharacterData } from '../../../types/index.js';
+import useCharacter from '../../../hooks/api/useCharacter.js';
 import { deepEqual } from '../../../services/tools.js';
-import useCharacter from '../../hooks/useCharacter.js';
 
 const CharacterForm = () => {
     const { characterId: paramCharId } = useParams();

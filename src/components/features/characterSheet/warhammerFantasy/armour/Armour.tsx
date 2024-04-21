@@ -6,7 +6,7 @@ import {
 } from '@cthunline/games';
 
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import AddArmourRow from './AddArmourRow.js';
 import ArmourRow from './ArmourRow.js';
 import {

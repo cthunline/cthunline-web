@@ -1,8 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 
-import { getConfiguration } from '../../../services/requests/configuration.js';
-import { type Configuration } from '../../../types/index.js';
-import { toast } from '../../../services/toast.js';
+import { getConfiguration } from '../services/requests/configuration.js';
+import { type Configuration } from '../types/index.js';
+import { toast } from '../services/toast.js';
 
 export interface ConfigurationHookExport {
     configuration: Configuration;

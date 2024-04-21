@@ -16,7 +16,7 @@ import {
     GiDiceTwentyFacesTwenty
 } from 'react-icons/gi';
 
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import Widget from '../../Widget.js';
 import {
     WidgetType,

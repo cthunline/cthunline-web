@@ -3,7 +3,7 @@ import { FaCircle } from 'react-icons/fa6';
 import { useMemo } from 'react';
 
 import { type CharacterSheetStatus } from '../../../types/index.js';
-import { useApp } from '../../contexts/App.js';
+import { useApp } from '../../../contexts/App.js';
 
 interface CharacterSheetStatusData {
     text: string;

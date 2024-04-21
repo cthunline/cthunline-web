@@ -1,11 +1,11 @@
 import { useState, type SetStateAction } from 'react';
 
-import { generateId, findById } from '../../../services/tools.js';
+import { generateId, findById } from '../../services/tools.js';
 import {
     forwardImage,
     backwardImage,
     getNewTokenColor
-} from '../../../services/sketch.js';
+} from '../../services/sketch.js';
 import {
     type PlaySocket,
     type SketchData,
@@ -18,7 +18,7 @@ import {
     type Color,
     TooltipPlacement,
     type SketchDrawingPath
-} from '../../../types/index.js';
+} from '../../types/index.js';
 
 interface UpdateSketchImagesOptions {
     images: SketchImageData[];

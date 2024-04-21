@@ -5,9 +5,9 @@ import { HiMusicNote } from 'react-icons/hi';
 import { WidgetType, type Asset } from '../../../../../types/index.js';
 import { shuffleArray } from '../../../../../services/tools.js';
 import { getAssetUrl } from '../../../../../services/api.js';
-import useDirectory from '../../../../hooks/useDirectory.js';
-import useAsset from '../../../../hooks/useAsset.js';
-import { useApp } from '../../../../contexts/App.js';
+import useDirectory from '../../../../../hooks/api/useDirectory.js';
+import useAsset from '../../../../../hooks/api/useAsset.js';
+import { useApp } from '../../../../../contexts/App.js';
 import Widget from '../../Widget.js';
 import FileExplorer, {
     type FileExplorerItem,

@@ -9,14 +9,14 @@ import { modals } from '@mantine/modals';
 import { useState } from 'react';
 import type React from 'react';
 
-import useUserSketch from '../../../../hooks/useUserSketch.js';
-import useDirectory from '../../../../hooks/useDirectory.js';
+import useUserSketch from '../../../../../hooks/api/useUserSketch.js';
+import useDirectory from '../../../../../hooks/api/useDirectory.js';
 import ImageAssetList from './elements/ImageAssetList.js';
 import UserSketchLoad from './elements/UserSketchLoad.js';
 import UserSketchSave from './elements/UserSketchSave.js';
-import { usePlay } from '../../../../contexts/Play.js';
-import { useApp } from '../../../../contexts/App.js';
-import useAsset from '../../../../hooks/useAsset.js';
+import { usePlay } from '../../../../../contexts/Play.js';
+import { useApp } from '../../../../../contexts/App.js';
+import useAsset from '../../../../../hooks/api/useAsset.js';
 import Widget from '../../Widget.js';
 import ActionButton, {
     type ActionButtonData

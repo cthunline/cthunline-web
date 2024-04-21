@@ -6,7 +6,7 @@ import {
 } from '@cthunline/games';
 
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import SkillAdd from './SkillAdd.js';
 import Skill from './Skill.js';
 

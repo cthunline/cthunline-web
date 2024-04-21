@@ -4,7 +4,7 @@ import { Box, Group, Stack } from '@mantine/core';
 import { displayModifier, calculateAbility } from '../dnd5Sheet.helper.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 
 interface AbilitiesProps {
     abilities: DnD5Abilities;

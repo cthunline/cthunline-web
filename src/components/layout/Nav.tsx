@@ -10,7 +10,7 @@ import {
     Text
 } from '@mantine/core';
 
-import { useApp } from '../contexts/App.js';
+import { useApp } from '../../contexts/App.js';
 import NavMenu from './NavMenu.js';
 
 import './Nav.css';

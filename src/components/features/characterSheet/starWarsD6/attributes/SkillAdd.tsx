@@ -4,7 +4,7 @@ import { FiPlusCircle } from 'react-icons/fi';
 import { useReducer, useMemo } from 'react';
 
 import { skillList, defaultSkillData } from './skills.data.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import AutocompleteInput, {
     type AutocompleteInputValue
 } from '../../../../common/AutocompleteInput.js';

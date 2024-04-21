@@ -3,7 +3,7 @@ import { Box, Group } from '@mantine/core';
 
 import { type MoveAction } from '../../../../../services/tools.js';
 import RowMenuButton from '../generic/RowMenuButton.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import RowInput from '../generic/RowInput.js';
 
 type TrappingRowProps = {

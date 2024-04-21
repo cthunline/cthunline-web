@@ -7,7 +7,7 @@ import {
 
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import AddSpellRow from './AddSpellRow.js';
 import SpellRow from './SpellRow.js';
 import {

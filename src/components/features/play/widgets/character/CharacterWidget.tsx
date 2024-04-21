@@ -3,9 +3,9 @@ import { MdEdit, MdOutlineCheck } from 'react-icons/md';
 import { ActionIcon, Box, Loader } from '@mantine/core';
 
 import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
-import useCharacter from '../../../../hooks/useCharacter.js';
+import useCharacter from '../../../../../hooks/api/useCharacter.js';
 import { deepEqual } from '../../../../../services/tools.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import Widget from '../../Widget.js';
 import {
     WidgetType,

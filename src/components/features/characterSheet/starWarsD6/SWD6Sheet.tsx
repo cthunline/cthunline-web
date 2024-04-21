@@ -35,7 +35,7 @@ import WoundStatus from './woundStatus/WoundStatus.js';
 import Portrait from '../generic/portrait/Portrait.js';
 import Attributes from './attributes/Attributes.js';
 import Statistics from './statistics/Statistics.js';
-import { useApp } from '../../../contexts/App.js';
+import { useApp } from '../../../../contexts/App.js';
 import Weapons from './weapons/Weapons.js';
 
 export interface SWD6SheetProps {

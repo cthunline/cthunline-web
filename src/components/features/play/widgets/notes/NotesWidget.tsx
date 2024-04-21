@@ -3,9 +3,9 @@ import { Stack } from '@mantine/core';
 import { useState } from 'react';
 
 import { type Note, WidgetType } from '../../../../../types/index.js';
-import { usePlay } from '../../../../contexts/Play.js';
-import { useApp } from '../../../../contexts/App.js';
-import useNote from '../../../../hooks/useNote.js';
+import { usePlay } from '../../../../../contexts/Play.js';
+import { useApp } from '../../../../../contexts/App.js';
+import useNote from '../../../../../hooks/api/useNote.js';
 import NoteCreate from './NoteCreate.js';
 import NoteEditor from './NoteEditor.js';
 import Widget from '../../Widget.js';

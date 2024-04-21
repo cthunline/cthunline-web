@@ -4,7 +4,7 @@ import { onlyNumbers } from '../../../../../services/tools.js';
 import { type GameId } from '../../../../../types/index.js';
 import SectionTitle from '../sectionTitle/SectionTitle.js';
 import Textarea from '../../../../common/Textarea.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import TextInput from '../../../../common/TextInput.js';
 
 export interface Field<DataType> {

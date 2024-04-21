@@ -9,10 +9,10 @@ import { HiPlus } from 'react-icons/hi';
 import { getDefaultData } from '../../features/characterSheet/characterSheet.helper.js';
 import { type Game, type SelectOption } from '../../../types/index.js';
 import TransferForm, { type TransferData } from './TransferForm.js';
-import useCharacter from '../../hooks/useCharacter.js';
+import useCharacter from '../../../hooks/api/useCharacter.js';
+import useGame from '../../../hooks/api/useGame.js';
 import ContentBox from '../../common/ContentBox.js';
-import { useApp } from '../../contexts/App.js';
-import useGame from '../../hooks/useGame.js';
+import { useApp } from '../../../contexts/App.js';
 import Select from '../../common/Select.js';
 
 interface TransferModalData {

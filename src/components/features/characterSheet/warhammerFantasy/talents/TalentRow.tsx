@@ -4,7 +4,7 @@ import { Box, Group, Stack } from '@mantine/core';
 import { type MoveAction } from '../../../../../services/tools.js';
 import RowMenuButton from '../generic/RowMenuButton.js';
 import Textarea from '../../../../common/Textarea.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import RowInput from '../generic/RowInput.js';
 
 type TalentRowProps = {

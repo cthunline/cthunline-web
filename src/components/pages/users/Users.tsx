@@ -6,8 +6,8 @@ import { HiPlus } from 'react-icons/hi';
 
 import UserForm, { type UserSubmitData } from '../../features/user/UserForm.js';
 import ContentBox from '../../common/ContentBox.js';
-import { useApp } from '../../contexts/App.js';
-import useUser from '../../hooks/useUser.js';
+import useUser from '../../../hooks/api/useUser.js';
+import { useApp } from '../../../contexts/App.js';
 import Invitation from './Invitation.js';
 
 const createUserModalId = 'create-user-modal';

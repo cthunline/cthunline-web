@@ -3,7 +3,7 @@ import { Loader } from '@mantine/core';
 
 import Register from './pages/register/Register.js';
 import ErrorPage from './pages/error/ErrorPage.js';
-import { useApp } from './contexts/App.js';
+import { useApp } from '../contexts/App.js';
 import Login from './pages/login/Login.js';
 import { pages } from './router.data.js';
 import Page from './layout/Page.js';

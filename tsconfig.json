@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "composite": true,
         "target": "esnext",
         "useDefineForClassFields": true,
         "lib": ["DOM", "DOM.Iterable", "ESNext"],
@@ -16,10 +17,9 @@
         "noEmit": true,
         "jsx": "react-jsx"
     },
-    "include": ["src"],
-    "references": [
-        {
-            "path": "./tsconfig.node.json"
-        }
+    "include": [
+        "src",
+        "vite",
+        "vite.config.ts"
     ]
 }

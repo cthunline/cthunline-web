@@ -26,7 +26,7 @@ import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import TextInput from '../../../../common/TextInput.js';
 import { GameId } from '../../../../../types/index.js';
 import Textarea from '../../../../common/Textarea.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import Advantage from './Advantage.js';
 import {
     controlStatus,

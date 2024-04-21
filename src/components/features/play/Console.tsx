@@ -4,7 +4,7 @@ import { ActionIcon, Stack, Text } from '@mantine/core';
 
 import { type PlayLog } from '../../../types/index.js';
 import AutoScroll from '../../common/AutoScroll.js';
-import { useApp } from '../../contexts/App.js';
+import { useApp } from '../../../contexts/App.js';
 import WidgetPaper from './WidgetPaper.js';
 
 const getBaseHeight = (el: HTMLDivElement) => {

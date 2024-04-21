@@ -5,8 +5,8 @@ import { useMemo } from 'react';
 import z from 'zod';
 
 import { type SelectOption } from '../../../types/index.js';
-import { useApp } from '../../contexts/App.js';
-import useUser from '../../hooks/useUser.js';
+import useUser from '../../../hooks/api/useUser.js';
+import { useApp } from '../../../contexts/App.js';
 import Select from '../../common/Select.js';
 import Form from '../../common/Form.js';
 

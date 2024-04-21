@@ -5,7 +5,7 @@ import { useMemo, useReducer } from 'react';
 
 import { type SkillData, skillList, defaultSkillValue } from './skills.data.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import AutocompleteInput, {
     type AutocompleteInputValue
 } from '../../../../common/AutocompleteInput.js';

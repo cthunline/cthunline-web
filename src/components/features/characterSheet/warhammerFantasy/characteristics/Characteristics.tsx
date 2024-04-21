@@ -11,7 +11,7 @@ import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import CareerLevelButton from '../generic/CareerLevelButton.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 import {
     controlCharacteristic,
     controlWounds

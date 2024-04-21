@@ -8,7 +8,7 @@ import {
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 
 interface ArmourPointsInputProps {
     readonly: boolean;

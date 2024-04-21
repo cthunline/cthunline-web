@@ -3,7 +3,7 @@ import { ActionIcon, Group, Menu, Text } from '@mantine/core';
 import { type IconType } from 'react-icons';
 import { FaBan, FaShield } from 'react-icons/fa6';
 
-import { useApp } from '../../../../contexts/App.js';
+import { useApp } from '../../../../../contexts/App.js';
 
 type CareerLevelData = {
     level: number;

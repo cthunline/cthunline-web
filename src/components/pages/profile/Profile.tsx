@@ -6,9 +6,9 @@ import { Box, Button, Group, Stack, TextInput, Title } from '@mantine/core';
 
 import { type SelectOption, languages } from '../../../types/index.js';
 import { ucfirst } from '../../../services/tools.js';
+import useUser from '../../../hooks/api/useUser.js';
 import ContentBox from '../../common/ContentBox.js';
-import { useApp } from '../../contexts/App.js';
-import useUser from '../../hooks/useUser.js';
+import { useApp } from '../../../contexts/App.js';
 import Select from '../../common/Select.js';
 import Form from '../../common/Form.js';
 
