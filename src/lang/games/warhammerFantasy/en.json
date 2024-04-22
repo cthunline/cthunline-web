@@ -1,225 +1,227 @@
 {
-    "warhammerFantasy": {
-        "common": {
-            "characteristics": "characteristics",
-            "characteristic": "characteristic",
-            "basicSkills": "basic skills",
-            "otherSkills": "grouped & advanced skills",
-            "wounds": "wounds",
-            "psychology": "psychology",
-            "corruptionMutation": "corruption & mutation",
-            "ambitions": "ambitions",
-            "party": "party",
-            "talents": "talents",
-            "spellsAndPrayers": "spells and prayers",
-            "sin": "sin",
-            "armour": "armour",
-            "armourPoints": "armour points",
-            "weapons": "weapons",
-            "trappings": "trappings",
-            "wealth": "wealth",
-            "encumbrance": "encumbrance",
-            "advantage": "advantage"
-        },
-        "tab": {
-            "biographyAndStatus": "bio & status",
-            "characteristicsAndSkills": "characs & skills",
-            "talentsAndSpells": "talents & spells",
-            "equipment": "equipment"
-        },
-        "biography": {
-            "biography": "biography",
-            "name": "name",
-            "species": "species",
-            "class": "class",
-            "career": "career",
-            "careerLevel": "career level",
-            "careerPath": "career path",
-            "status": "status",
-            "age": "age",
-            "height": "height",
-            "hair": "hair",
-            "eyes": "eyes"
-        },
-        "characteristic": {
-            "initial": "initial",
-            "advances": "advances",
-            "current": "current",
-            "careerLevel": "career level"
-        },
-        "characteristics": {
-            "weaponSkill": {
-                "long": "weapon skill",
-                "short": "WS"
+    "game": {
+        "warhammerFantasy": {
+            "common": {
+                "characteristics": "characteristics",
+                "characteristic": "characteristic",
+                "basicSkills": "basic skills",
+                "otherSkills": "grouped & advanced skills",
+                "wounds": "wounds",
+                "psychology": "psychology",
+                "corruptionMutation": "corruption & mutation",
+                "ambitions": "ambitions",
+                "party": "party",
+                "talents": "talents",
+                "spellsAndPrayers": "spells and prayers",
+                "sin": "sin",
+                "armour": "armour",
+                "armourPoints": "armour points",
+                "weapons": "weapons",
+                "trappings": "trappings",
+                "wealth": "wealth",
+                "encumbrance": "encumbrance",
+                "advantage": "advantage"
             },
-            "ballisticSkill": {
-                "long": "ballistic skill",
-                "short": "BS"
+            "tab": {
+                "biographyAndStatus": "bio & status",
+                "characteristicsAndSkills": "characs & skills",
+                "talentsAndSpells": "talents & spells",
+                "equipment": "equipment"
             },
-            "strength": {
-                "long": "strength",
-                "short": "S"
+            "biography": {
+                "biography": "biography",
+                "name": "name",
+                "species": "species",
+                "class": "class",
+                "career": "career",
+                "careerLevel": "career level",
+                "careerPath": "career path",
+                "status": "status",
+                "age": "age",
+                "height": "height",
+                "hair": "hair",
+                "eyes": "eyes"
             },
-            "toughness": {
-                "long": "toughness",
-                "short": "T"
+            "characteristic": {
+                "initial": "initial",
+                "advances": "advances",
+                "current": "current",
+                "careerLevel": "career level"
             },
-            "initiative": {
-                "long": "initiative",
-                "short": "I"
+            "characteristics": {
+                "weaponSkill": {
+                    "long": "weapon skill",
+                    "short": "WS"
+                },
+                "ballisticSkill": {
+                    "long": "ballistic skill",
+                    "short": "BS"
+                },
+                "strength": {
+                    "long": "strength",
+                    "short": "S"
+                },
+                "toughness": {
+                    "long": "toughness",
+                    "short": "T"
+                },
+                "initiative": {
+                    "long": "initiative",
+                    "short": "I"
+                },
+                "agility": {
+                    "long": "agility",
+                    "short": "Ag"
+                },
+                "dexterity": {
+                    "long": "dexterity",
+                    "short": "Dex"
+                },
+                "intelligence": {
+                    "long": "intelligence",
+                    "short": "Int"
+                },
+                "willpower": {
+                    "long": "willpower",
+                    "short": "WP"
+                },
+                "fellowship": {
+                    "long": "fellowship",
+                    "short": "Fel"
+                }
             },
-            "agility": {
-                "long": "agility",
-                "short": "Ag"
+            "fate": {
+                "fate": "fate",
+                "fortune": "fortune"
             },
-            "dexterity": {
-                "long": "dexterity",
-                "short": "Dex"
+            "resilience": {
+                "resilience": "resilience",
+                "resolve": "resolve",
+                "motivation": "motivation"
             },
-            "intelligence": {
-                "long": "intelligence",
-                "short": "Int"
+            "experience": {
+                "experience": "experience",
+                "current": "current",
+                "spent": "spent",
+                "total": "total"
             },
-            "willpower": {
-                "long": "willpower",
-                "short": "WP"
+            "movement": {
+                "movement": "movement",
+                "walk": "walk",
+                "run": "run"
             },
-            "fellowship": {
-                "long": "fellowship",
-                "short": "Fel"
+            "skill": {
+                "name": "name",
+                "advances": "adv.",
+                "skill": "skill"
+            },
+            "basicSkills": {
+                "art": "art",
+                "athletics": "athletics",
+                "bribery": "bribery",
+                "charm": "charm",
+                "charmAnimal": "charmAnimal",
+                "climb": "climb",
+                "cool": "cool",
+                "consumeAlcohol": "consumeAlcohol",
+                "dodge": "dodge",
+                "drive": "drive",
+                "endurance": "endurance",
+                "entertain": "entertain",
+                "gamble": "gamble",
+                "gossip": "gossip",
+                "haggle": "haggle",
+                "intimidate": "intimidate",
+                "intuition": "intuition",
+                "leadership": "leadership",
+                "meleeBasic": "meleeBasic",
+                "melee": "melee",
+                "navigation": "navigation",
+                "outdoorSurvival": "outdoorSurvival",
+                "perception": "perception",
+                "ride": "ride",
+                "row": "row",
+                "stealth": "stealth"
+            },
+            "talent": {
+                "name": "talent name",
+                "timesTaken": "times taken",
+                "description": "description"
+            },
+            "ambitions": {
+                "shortTerm": "short-term",
+                "longTerm": "long-term"
+            },
+            "party": {
+                "name": "party name",
+                "shortTerm": "shor- term",
+                "longTerm": "long-term",
+                "members": "members"
+            },
+            "armour": {
+                "name": "name",
+                "locations": "locations",
+                "encumbrance": "encumbrance",
+                "armourPoints": "armour points",
+                "qualities": "qualities"
+            },
+            "armourPoints": {
+                "head": "head",
+                "rightArm": "right arm",
+                "leftArm": "left arm",
+                "body": "body",
+                "rightLeg": "right leg",
+                "leftLeg": "left leg",
+                "shield": "shield"
+            },
+            "trapping": {
+                "name": "name",
+                "encumbrance": "encumbrance"
+            },
+            "wealth": {
+                "brassPennies": "brass pennies",
+                "silverShillings": "silver shillings",
+                "goldCrowns": "gold crowns",
+                "short": {
+                    "brassPennies": "p",
+                    "silverShillings": "s",
+                    "goldCrowns": "gc"
+                }
+            },
+            "encumbrance": {
+                "weapons": "weapons",
+                "armour": "armour",
+                "trappings": "trappings",
+                "total": "total",
+                "maximumBonus": "bonus",
+                "maximum": "maximum"
+            },
+            "wounds": {
+                "strengthBonus": "strength bonus",
+                "twiceToughnessBonus": "toughness bonus x 2",
+                "willpowerBonus": "willpower bonus",
+                "hardy": "hardy",
+                "total": "total",
+                "current": "current",
+                "notes": "notes"
+            },
+            "weapon": {
+                "name": "name",
+                "group": "group",
+                "encumbrance": "encumbrance",
+                "rangeReach": "range/reach",
+                "damage": "damage",
+                "qualities": "qualities"
+            },
+            "spell": {
+                "name": "name",
+                "castingNumber": "casting number",
+                "castingNumberShort": "CN",
+                "range": "range",
+                "target": "target",
+                "duration": "duration",
+                "effect": "effect"
             }
-        },
-        "fate": {
-            "fate": "fate",
-            "fortune": "fortune"
-        },
-        "resilience": {
-            "resilience": "resilience",
-            "resolve": "resolve",
-            "motivation": "motivation"
-        },
-        "experience": {
-            "experience": "experience",
-            "current": "current",
-            "spent": "spent",
-            "total": "total"
-        },
-        "movement": {
-            "movement": "movement",
-            "walk": "walk",
-            "run": "run"
-        },
-        "skill": {
-            "name": "name",
-            "advances": "adv.",
-            "skill": "skill"
-        },
-        "basicSkills": {
-            "art": "art",
-            "athletics": "athletics",
-            "bribery": "bribery",
-            "charm": "charm",
-            "charmAnimal": "charmAnimal",
-            "climb": "climb",
-            "cool": "cool",
-            "consumeAlcohol": "consumeAlcohol",
-            "dodge": "dodge",
-            "drive": "drive",
-            "endurance": "endurance",
-            "entertain": "entertain",
-            "gamble": "gamble",
-            "gossip": "gossip",
-            "haggle": "haggle",
-            "intimidate": "intimidate",
-            "intuition": "intuition",
-            "leadership": "leadership",
-            "meleeBasic": "meleeBasic",
-            "melee": "melee",
-            "navigation": "navigation",
-            "outdoorSurvival": "outdoorSurvival",
-            "perception": "perception",
-            "ride": "ride",
-            "row": "row",
-            "stealth": "stealth"
-        },
-        "talent": {
-            "name": "talent name",
-            "timesTaken": "times taken",
-            "description": "description"
-        },
-        "ambitions": {
-            "shortTerm": "short-term",
-            "longTerm": "long-term"
-        },
-        "party": {
-            "name": "party name",
-            "shortTerm": "shor- term",
-            "longTerm": "long-term",
-            "members": "members"
-        },
-        "armour": {
-            "name": "name",
-            "locations": "locations",
-            "encumbrance": "encumbrance",
-            "armourPoints": "armour points",
-            "qualities": "qualities"
-        },
-        "armourPoints": {
-            "head": "head",
-            "rightArm": "right arm",
-            "leftArm": "left arm",
-            "body": "body",
-            "rightLeg": "right leg",
-            "leftLeg": "left leg",
-            "shield": "shield"
-        },
-        "trapping": {
-            "name": "name",
-            "encumbrance": "encumbrance"
-        },
-        "wealth": {
-            "brassPennies": "brass pennies",
-            "silverShillings": "silver shillings",
-            "goldCrowns": "gold crowns",
-            "short": {
-                "brassPennies": "p",
-                "silverShillings": "s",
-                "goldCrowns": "gc"
-            }
-        },
-        "encumbrance": {
-            "weapons": "weapons",
-            "armour": "armour",
-            "trappings": "trappings",
-            "total": "total",
-            "maximumBonus": "bonus",
-            "maximum": "maximum"
-        },
-        "wounds": {
-            "strengthBonus": "strength bonus",
-            "twiceToughnessBonus": "toughness bonus x 2",
-            "willpowerBonus": "willpower bonus",
-            "hardy": "hardy",
-            "total": "total",
-            "current": "current",
-            "notes": "notes"
-        },
-        "weapon": {
-            "name": "name",
-            "group": "group",
-            "encumbrance": "encumbrance",
-            "rangeReach": "range/reach",
-            "damage": "damage",
-            "qualities": "qualities"
-        },
-        "spell": {
-            "name": "name",
-            "castingNumber": "casting number",
-            "castingNumberShort": "CN",
-            "range": "range",
-            "target": "target",
-            "duration": "duration",
-            "effect": "effect"
         }
     }
 }

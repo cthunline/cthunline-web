@@ -1,81 +1,83 @@
 {
-    "seventhSea": {
-        "advantage": {
-            "name": "nom",
-            "description": "description"
-        },
-        "arcana": {
-            "name": "nom",
-            "hubris": "travers",
-            "virtue": "vertu"
-        },
-        "background": {
-            "name": "nom",
-            "description": "description",
-            "quirk": "coup d'éclat"
-        },
-        "biography": {
-            "concept": "concept",
-            "name": "nom",
-            "nation": "nation",
-            "religion": "religion",
-            "reputations": "réputations",
-            "wealth": "richesse"
-        },
-        "common": {
-            "advantage": "avantages",
-            "advantages": "avantages",
-            "arcana": "arcanes",
-            "background": "historique",
-            "backgrounds": "historiques",
-            "biography": "biographie",
-            "characteristics": "caracs.",
-            "deathSpiral": "spirale de la mort",
-            "description": "description",
-            "heroPoint": "point d'héroïsme",
-            "heroPoints": "points d'héroïsme",
-            "items": "équipement",
-            "misc": "divers",
-            "name": "nom",
-            "notes": "notes",
-            "skill": "compétence",
-            "skills": "compétences",
-            "story": "histoire",
-            "stories": "histoires",
-            "trait": "caractéristique",
-            "traits": "caractéristiques"
-        },
-        "skill": {
-            "aim": "tir",
-            "athletics": "athlétisme",
-            "brawl": "bagarre",
-            "convince": "persuasion",
-            "empathy": "empathie",
-            "hide": "dissimulation",
-            "intimidate": "intimidation",
-            "notice": "vigilance",
-            "perform": "représentation",
-            "ride": "équitation",
-            "sailing": "navigation",
-            "scholarship": "érudition",
-            "tempt": "subornation",
-            "theft": "vol",
-            "warfare": "art militaire",
-            "weaponry": "armes blanches"
-        },
-        "story": {
-            "name": "nom",
-            "goal": "objectif",
-            "reward": "récompense",
-            "step": "étape",
-            "steps": "étapes"
-        },
-        "trait": {
-            "brawn": "force",
-            "finesse": "finesse",
-            "panache": "panache",
-            "resolve": "résolution",
-            "wits": "astuce"
+    "game": {
+        "seventhSea": {
+            "advantage": {
+                "name": "nom",
+                "description": "description"
+            },
+            "arcana": {
+                "name": "nom",
+                "hubris": "travers",
+                "virtue": "vertu"
+            },
+            "background": {
+                "name": "nom",
+                "description": "description",
+                "quirk": "coup d'éclat"
+            },
+            "biography": {
+                "concept": "concept",
+                "name": "nom",
+                "nation": "nation",
+                "religion": "religion",
+                "reputations": "réputations",
+                "wealth": "richesse"
+            },
+            "common": {
+                "advantage": "avantages",
+                "advantages": "avantages",
+                "arcana": "arcanes",
+                "background": "historique",
+                "backgrounds": "historiques",
+                "biography": "biographie",
+                "characteristics": "caracs.",
+                "deathSpiral": "spirale de la mort",
+                "description": "description",
+                "heroPoint": "point d'héroïsme",
+                "heroPoints": "points d'héroïsme",
+                "items": "équipement",
+                "misc": "divers",
+                "name": "nom",
+                "notes": "notes",
+                "skill": "compétence",
+                "skills": "compétences",
+                "story": "histoire",
+                "stories": "histoires",
+                "trait": "caractéristique",
+                "traits": "caractéristiques"
+            },
+            "skill": {
+                "aim": "tir",
+                "athletics": "athlétisme",
+                "brawl": "bagarre",
+                "convince": "persuasion",
+                "empathy": "empathie",
+                "hide": "dissimulation",
+                "intimidate": "intimidation",
+                "notice": "vigilance",
+                "perform": "représentation",
+                "ride": "équitation",
+                "sailing": "navigation",
+                "scholarship": "érudition",
+                "tempt": "subornation",
+                "theft": "vol",
+                "warfare": "art militaire",
+                "weaponry": "armes blanches"
+            },
+            "story": {
+                "name": "nom",
+                "goal": "objectif",
+                "reward": "récompense",
+                "step": "étape",
+                "steps": "étapes"
+            },
+            "trait": {
+                "brawn": "force",
+                "finesse": "finesse",
+                "panache": "panache",
+                "resolve": "résolution",
+                "wits": "astuce"
+            }
         }
     }
 }

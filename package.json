@@ -1,10 +1,10 @@
 {
     "name": "cthunline-web",
-    "version": "2.4.2",
+    "version": "2.5.0",
     "type": "module",
     "scripts": {
         "dev": "vite serve src --config vite.config.ts",
-        "build": "vite build src --config vite.config.ts --outDir ../build",
+        "build": "vite build src --config vite.config.ts --emptyOutDir --outDir ../build",
         "prepare": "husky",
         "lint": "npx eslint . --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --check . && npx tsc --noEmit && npx stylelint \"**/*.css\" --max-warnings=0",
         "format": "npx eslint . --fix --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --write . && npx tsc --noEmit && npx stylelint --fix \"**/*.css\" --max-warnings=0"
@@ -31,9 +31,10 @@
         "react-icons": "^5.1.0",
         "react-router-dom": "^6.22.3",
         "socket.io-client": "^4.7.5",
-        "zod": "^3.22.4"
+        "zod": "^3.22.5"
     },
     "devDependencies": {
+        "@pitininja/vite-translations": "file:../vite-translations",
         "@total-typescript/ts-reset": "^0.5.1",
         "@types/hoist-non-react-statics": "^3.3.5",
         "@types/node": "^20.12.7",
@@ -59,7 +60,7 @@
         "stylelint-config-standard": "^36.0.0",
         "stylelint-order": "^6.0.4",
         "typescript": "^5.4.5",
-        "vite": "^5.2.9"
+        "vite": "^5.2.10"
     },
     "overrides": {
         "react-sortable-hoc": {

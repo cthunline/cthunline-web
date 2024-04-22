@@ -1,3 +1,4 @@
+import translations from '@pitininja/vite-translations';
 import { loadEnv, defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -5,7 +6,10 @@ const env = loadEnv('dev', process.cwd());
 
 export default defineConfig({
     plugins: [
-        react()
+        react(),
+        translations({
+            dir: './src/lang'
+        })
     ],
     server: {
         port: 3030,

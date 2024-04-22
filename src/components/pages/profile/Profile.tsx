@@ -5,7 +5,6 @@ import z from 'zod';
 import { Box, Button, Group, Stack, TextInput, Title } from '@mantine/core';
 
 import { type SelectOption, languages } from '../../../types/index.js';
-import { ucfirst } from '../../../services/tools.js';
 import useUser from '../../../hooks/api/useUser.js';
 import ContentBox from '../../common/ContentBox.js';
 import { useApp } from '../../../contexts/App.js';
@@ -52,7 +51,7 @@ const themeOptions: SelectOption<string>[] = [
 
 const languageOptions: SelectOption<string>[] = Object.entries(languages).map(
     ([value, name]) => ({
-        label: ucfirst(name),
+        label: name,
         value
     })
 );

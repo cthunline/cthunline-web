@@ -1,12 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 
 import { sketchContextMenuId } from '../../components/features/play/sketch/SketchContextMenu.js';
+import { findById, findIndexById, isMainClick } from '../../services/tools.js';
 import { usePlay } from '../../contexts/Play.js';
-import {
-    findById,
-    findIndexById,
-    isMainClick
-} from '../../services/tools.js';
 import {
     getMouseEventSvgCoordinates,
     getMovingItemCoordinates,

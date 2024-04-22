@@ -1,159 +1,161 @@
 {
-    "starWarsD6": {
-        "attribute": {
-            "dexterity": "dextérité",
-            "knowledge": "savoir",
-            "mechanical": "mécanique",
-            "perception": "perception",
-            "strength": "vigueur",
-            "technical": "technique"
-        },
-        "biography": {
-            "name": "nom",
-            "occupation": "occupation",
-            "age": "age",
-            "species": "race",
-            "height": "taille",
-            "weight": "poids",
-            "description": "description"
-        },
-        "common": {
-            "biography": "biographie",
-            "attributesAndSkills": "attributs & compétences",
-            "skill": "compétence",
-            "statistics": "statistiques",
-            "woundStatus": "dommages",
-            "weapon": "arme",
-            "weapons": "armes"
-        },
-        "skill": {
-            "dexterity": {
-                "archaicGuns": "arme archaïque",
-                "blaster": "blaster",
-                "blasterArtillery": "artillerie blaster",
-                "bow": "arc",
-                "bowcaster": "arbalète",
-                "brawlingParry": "parade mains nues",
-                "dodge": "esquive",
-                "firearms": "arme à feu",
-                "grenade": "grenade",
-                "lightsaber": "sabre laser",
-                "meleeCombat": "arme blanche",
-                "meleeParry": "parade arme blanche",
-                "missileWeapons": "missiles",
-                "pickPocket": "pickpocket",
-                "running": "couse à pieds",
-                "thrownWeapons": "lance-projectiles",
-                "vehicleBlasters": "blaster de véhicule"
+    "game": {
+        "starWarsD6": {
+            "attribute": {
+                "dexterity": "dextérité",
+                "knowledge": "savoir",
+                "mechanical": "mécanique",
+                "perception": "perception",
+                "strength": "vigueur",
+                "technical": "technique"
             },
-            "knowledge": {
-                "alienSpecies": "races extraterrestres",
-                "bureaucracy": "bureaucratie",
-                "business": "affaires",
-                "cultures": "cultures",
-                "intimidation": "intimidation",
-                "languages": "langages",
-                "lawEnforcement": "maintien de l'ordre",
-                "planetarySystems": "systèmes planétaires",
-                "scholar": "érudition",
-                "streetwise": "illégalité",
-                "survival": "survie",
-                "tactics": "tactique",
-                "value": "évaluation",
-                "willpower": "volonté"
+            "biography": {
+                "name": "nom",
+                "occupation": "occupation",
+                "age": "age",
+                "species": "race",
+                "height": "taille",
+                "weight": "poids",
+                "description": "description"
             },
-            "mechanical": {
-                "archaicStarshipPiloting": "pilotage de vaisseau archaïque",
-                "astrogation": "astrogation",
-                "beastRiding": "équitation",
-                "capitalShipGunnery": "canons de vaisseau de guerre",
-                "capitalShipPiloting": "pilotage de vaisseau de guerre",
-                "capitalShipShields": "écrans de vaisseau de guerre",
-                "communications": "communications",
-                "groundVehicleOperation": "pilotage de véhicule terrestre",
-                "hoverVehicleOperation": "pilotage de véhicule à coussin d'air",
-                "jetPackOperation": "propulseur dorsal",
-                "powersuitOperation": "combinaison énergétique",
-                "repulsorliftOperation": "répulseurs",
-                "rocketPackOperation": "fusées individuelles",
-                "sensors": "senseurs",
-                "spaceTransports": "transports spaciaux",
-                "starfighterPiloting": "pilotage de chassseur stellaire",
-                "starshipPiloting": "pilotage de vaisseau",
-                "starshipGunnery": "canons de vaisseau",
-                "starshipShields": "écrans de vaisseau",
-                "swoopOperation": "pilotage de fonceur",
-                "walkerOperation": "pilotage de quadripode"
+            "common": {
+                "biography": "biographie",
+                "attributesAndSkills": "attributs & compétences",
+                "skill": "compétence",
+                "statistics": "statistiques",
+                "woundStatus": "dommages",
+                "weapon": "arme",
+                "weapons": "armes"
             },
-            "perception": {
-                "bargain": "marchandage",
-                "command": "commandement",
-                "con": "escroquerie",
-                "forgery": "falsification",
-                "gambling": "jeu",
-                "hide": "dissimulation",
-                "investigation": "investigation",
-                "persuasion": "persuasion",
-                "search": "rechercher",
-                "sneak": "discrétion"
+            "skill": {
+                "dexterity": {
+                    "archaicGuns": "arme archaïque",
+                    "blaster": "blaster",
+                    "blasterArtillery": "artillerie blaster",
+                    "bow": "arc",
+                    "bowcaster": "arbalète",
+                    "brawlingParry": "parade mains nues",
+                    "dodge": "esquive",
+                    "firearms": "arme à feu",
+                    "grenade": "grenade",
+                    "lightsaber": "sabre laser",
+                    "meleeCombat": "arme blanche",
+                    "meleeParry": "parade arme blanche",
+                    "missileWeapons": "missiles",
+                    "pickPocket": "pickpocket",
+                    "running": "couse à pieds",
+                    "thrownWeapons": "lance-projectiles",
+                    "vehicleBlasters": "blaster de véhicule"
+                },
+                "knowledge": {
+                    "alienSpecies": "races extraterrestres",
+                    "bureaucracy": "bureaucratie",
+                    "business": "affaires",
+                    "cultures": "cultures",
+                    "intimidation": "intimidation",
+                    "languages": "langages",
+                    "lawEnforcement": "maintien de l'ordre",
+                    "planetarySystems": "systèmes planétaires",
+                    "scholar": "érudition",
+                    "streetwise": "illégalité",
+                    "survival": "survie",
+                    "tactics": "tactique",
+                    "value": "évaluation",
+                    "willpower": "volonté"
+                },
+                "mechanical": {
+                    "archaicStarshipPiloting": "pilotage de vaisseau archaïque",
+                    "astrogation": "astrogation",
+                    "beastRiding": "équitation",
+                    "capitalShipGunnery": "canons de vaisseau de guerre",
+                    "capitalShipPiloting": "pilotage de vaisseau de guerre",
+                    "capitalShipShields": "écrans de vaisseau de guerre",
+                    "communications": "communications",
+                    "groundVehicleOperation": "pilotage de véhicule terrestre",
+                    "hoverVehicleOperation": "pilotage de véhicule à coussin d'air",
+                    "jetPackOperation": "propulseur dorsal",
+                    "powersuitOperation": "combinaison énergétique",
+                    "repulsorliftOperation": "répulseurs",
+                    "rocketPackOperation": "fusées individuelles",
+                    "sensors": "senseurs",
+                    "spaceTransports": "transports spaciaux",
+                    "starfighterPiloting": "pilotage de chassseur stellaire",
+                    "starshipPiloting": "pilotage de vaisseau",
+                    "starshipGunnery": "canons de vaisseau",
+                    "starshipShields": "écrans de vaisseau",
+                    "swoopOperation": "pilotage de fonceur",
+                    "walkerOperation": "pilotage de quadripode"
+                },
+                "perception": {
+                    "bargain": "marchandage",
+                    "command": "commandement",
+                    "con": "escroquerie",
+                    "forgery": "falsification",
+                    "gambling": "jeu",
+                    "hide": "dissimulation",
+                    "investigation": "investigation",
+                    "persuasion": "persuasion",
+                    "search": "rechercher",
+                    "sneak": "discrétion"
+                },
+                "strength": {
+                    "brawling": "combat mains nues",
+                    "climbingJumping": "escalade / saut",
+                    "lifting": "levage",
+                    "stamina": "résistance",
+                    "swimming": "natation"
+                },
+                "technical": {
+                    "armorRepair": "réparation d'armure",
+                    "blasterRepair": "réparation de blaster",
+                    "capitalShipRepair": "réparation de vaisseau de guerre",
+                    "capitalShipWeaponRepair": "réparation d'arme de vaisseau de guerre",
+                    "computerProgrammingRepair": "programmation / réparation d'ordinateur",
+                    "demolitions": "démolition",
+                    "droidProgramming": "programmation de droïd",
+                    "droidRepair": "réparation de droïd",
+                    "firstAid": "premiers soins",
+                    "groundVehicleRepair": "réparation de véhicule terrestre",
+                    "hoverVehicleRepair": "réparation de véhicule à coussin d'air",
+                    "medicine": "médecine",
+                    "repulsorliftRepair": "réparation de véhicule à répulseurs",
+                    "security": "sécurité",
+                    "spaceTransportsRepair": "réparation de transport spatial",
+                    "starfighterRepair": "réparation de chasseur stellaire",
+                    "starshipWeaponRepair": "réparation d'arme de vaisseau",
+                    "walkerRepair": "réparation de quadripode"
+                }
             },
-            "strength": {
-                "brawling": "combat mains nues",
-                "climbingJumping": "escalade / saut",
-                "lifting": "levage",
-                "stamina": "résistance",
-                "swimming": "natation"
+            "statistics": {
+                "move": "déplacement",
+                "forceSensitive": "sensibilité à la force",
+                "forcePoints": "points de force",
+                "darkSidePoints": "points de côté obscur",
+                "characterPoints": "points de personnage"
             },
-            "technical": {
-                "armorRepair": "réparation d'armure",
-                "blasterRepair": "réparation de blaster",
-                "capitalShipRepair": "réparation de vaisseau de guerre",
-                "capitalShipWeaponRepair": "réparation d'arme de vaisseau de guerre",
-                "computerProgrammingRepair": "programmation / réparation d'ordinateur",
-                "demolitions": "démolition",
-                "droidProgramming": "programmation de droïd",
-                "droidRepair": "réparation de droïd",
-                "firstAid": "premiers soins",
-                "groundVehicleRepair": "réparation de véhicule terrestre",
-                "hoverVehicleRepair": "réparation de véhicule à coussin d'air",
-                "medicine": "médecine",
-                "repulsorliftRepair": "réparation de véhicule à répulseurs",
-                "security": "sécurité",
-                "spaceTransportsRepair": "réparation de transport spatial",
-                "starfighterRepair": "réparation de chasseur stellaire",
-                "starshipWeaponRepair": "réparation d'arme de vaisseau",
-                "walkerRepair": "réparation de quadripode"
+            "story": {
+                "equipment": "équipment",
+                "background": "présentation",
+                "personality": "personnalité",
+                "objectives": "objectifs",
+                "quote": "citation",
+                "connections": "relations avec les autres personnages"
+            },
+            "weapon": {
+                "name": "name",
+                "damage": "dommages",
+                "shortRange": "court",
+                "mediumRange": "moyen",
+                "longRange": "long",
+                "ammo": "munitions"
+            },
+            "woundStatus": {
+                "stunned": "sonné",
+                "wounded": "blessé",
+                "doublyWounded": "blessé doublement",
+                "incapacitated": "neutralisé",
+                "mortallyWounded": "mortellement blessé"
             }
-        },
-        "statistics": {
-            "move": "déplacement",
-            "forceSensitive": "sensibilité à la force",
-            "forcePoints": "points de force",
-            "darkSidePoints": "points de côté obscur",
-            "characterPoints": "points de personnage"
-        },
-        "story": {
-            "equipment": "équipment",
-            "background": "présentation",
-            "personality": "personnalité",
-            "objectives": "objectifs",
-            "quote": "citation",
-            "connections": "relations avec les autres personnages"
-        },
-        "weapon": {
-            "name": "name",
-            "damage": "dommages",
-            "shortRange": "court",
-            "mediumRange": "moyen",
-            "longRange": "long",
-            "ammo": "munitions"
-        },
-        "woundStatus": {
-            "stunned": "sonné",
-            "wounded": "blessé",
-            "doublyWounded": "blessé doublement",
-            "incapacitated": "neutralisé",
-            "mortallyWounded": "mortellement blessé"
         }
     }
 }

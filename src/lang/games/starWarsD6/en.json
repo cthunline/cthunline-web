@@ -1,159 +1,161 @@
 {
-    "starWarsD6": {
-        "attribute": {
-            "dexterity": "dexterity",
-            "knowledge": "knowledge",
-            "mechanical": "mechanical",
-            "perception": "perception",
-            "strength": "strength",
-            "technical": "technical"
-        },
-        "biography": {
-            "name": "name",
-            "occupation": "occupation",
-            "age": "age",
-            "species": "species",
-            "height": "height",
-            "weight": "weight",
-            "description": "description"
-        },
-        "common": {
-            "biography": "biography",
-            "attributesAndSkills": "attributes & skills",
-            "skill": "skill",
-            "statistics": "statistics",
-            "woundStatus": "wound status",
-            "weapon": "weapon",
-            "weapons": "weapons"
-        },
-        "skill": {
-            "dexterity": {
-                "archaicGuns": "archaic guns",
-                "blaster": "blaster",
-                "blasterArtillery": "blaster artillery",
-                "bow": "bow",
-                "bowcaster": "bowcaster",
-                "brawlingParry": "brawling parry",
-                "dodge": "dodge",
-                "firearms": "firearms",
-                "grenade": "grenade",
-                "lightsaber": "lightsaber",
-                "meleeCombat": "melee combat",
-                "meleeParry": "melee parry",
-                "missileWeapons": "missile weapons",
-                "pickPocket": "pick pocket",
-                "running": "running",
-                "thrownWeapons": "thrown weapons",
-                "vehicleBlasters": "vehicle blasters"
+    "game": {
+        "starWarsD6": {
+            "attribute": {
+                "dexterity": "dexterity",
+                "knowledge": "knowledge",
+                "mechanical": "mechanical",
+                "perception": "perception",
+                "strength": "strength",
+                "technical": "technical"
             },
-            "knowledge": {
-                "alienSpecies": "alien species",
-                "bureaucracy": "bureaucracy",
-                "business": "business",
-                "cultures": "cultures",
-                "intimidation": "intimidation",
-                "languages": "languages",
-                "lawEnforcement": "law enforcement",
-                "planetarySystems": "planetary systems",
-                "scholar": "scholar",
-                "streetwise": "streetwise",
-                "survival": "survival",
-                "tactics": "tactics",
-                "value": "value",
-                "willpower": "willpower"
+            "biography": {
+                "name": "name",
+                "occupation": "occupation",
+                "age": "age",
+                "species": "species",
+                "height": "height",
+                "weight": "weight",
+                "description": "description"
             },
-            "mechanical": {
-                "archaicStarshipPiloting": "archaic starship piloting",
-                "astrogation": "astrogation",
-                "beastRiding": "beast riding",
-                "capitalShipGunnery": "capital ship gunnery",
-                "capitalShipPiloting": "capital ship piloting",
-                "capitalShipShields": "capital ship shields",
-                "communications": "communications",
-                "groundVehicleOperation": "ground vehicle operation",
-                "hoverVehicleOperation": "hover vehicle operation",
-                "jetPackOperation": "jet pack operation",
-                "powersuitOperation": "powersuit operation",
-                "repulsorliftOperation": "repulsorlift operation",
-                "rocketPackOperation": "rocket pack operation",
-                "sensors": "sensors",
-                "spaceTransports": "space transports",
-                "starfighterPiloting": "starfighter piloting",
-                "starshipPiloting": "starship piloting",
-                "starshipGunnery": "starship gunnery",
-                "starshipShields": "starship shields",
-                "swoopOperation": "swoop operation",
-                "walkerOperation": "walker operation"
+            "common": {
+                "biography": "biography",
+                "attributesAndSkills": "attributes & skills",
+                "skill": "skill",
+                "statistics": "statistics",
+                "woundStatus": "wound status",
+                "weapon": "weapon",
+                "weapons": "weapons"
             },
-            "perception": {
-                "bargain": "bargain",
-                "command": "command",
-                "con": "con",
-                "forgery": "forgery",
-                "gambling": "gambling",
-                "hide": "hide",
-                "investigation": "investigation",
-                "persuasion": "persuasion",
-                "search": "search",
-                "sneak": "sneak"
+            "skill": {
+                "dexterity": {
+                    "archaicGuns": "archaic guns",
+                    "blaster": "blaster",
+                    "blasterArtillery": "blaster artillery",
+                    "bow": "bow",
+                    "bowcaster": "bowcaster",
+                    "brawlingParry": "brawling parry",
+                    "dodge": "dodge",
+                    "firearms": "firearms",
+                    "grenade": "grenade",
+                    "lightsaber": "lightsaber",
+                    "meleeCombat": "melee combat",
+                    "meleeParry": "melee parry",
+                    "missileWeapons": "missile weapons",
+                    "pickPocket": "pick pocket",
+                    "running": "running",
+                    "thrownWeapons": "thrown weapons",
+                    "vehicleBlasters": "vehicle blasters"
+                },
+                "knowledge": {
+                    "alienSpecies": "alien species",
+                    "bureaucracy": "bureaucracy",
+                    "business": "business",
+                    "cultures": "cultures",
+                    "intimidation": "intimidation",
+                    "languages": "languages",
+                    "lawEnforcement": "law enforcement",
+                    "planetarySystems": "planetary systems",
+                    "scholar": "scholar",
+                    "streetwise": "streetwise",
+                    "survival": "survival",
+                    "tactics": "tactics",
+                    "value": "value",
+                    "willpower": "willpower"
+                },
+                "mechanical": {
+                    "archaicStarshipPiloting": "archaic starship piloting",
+                    "astrogation": "astrogation",
+                    "beastRiding": "beast riding",
+                    "capitalShipGunnery": "capital ship gunnery",
+                    "capitalShipPiloting": "capital ship piloting",
+                    "capitalShipShields": "capital ship shields",
+                    "communications": "communications",
+                    "groundVehicleOperation": "ground vehicle operation",
+                    "hoverVehicleOperation": "hover vehicle operation",
+                    "jetPackOperation": "jet pack operation",
+                    "powersuitOperation": "powersuit operation",
+                    "repulsorliftOperation": "repulsorlift operation",
+                    "rocketPackOperation": "rocket pack operation",
+                    "sensors": "sensors",
+                    "spaceTransports": "space transports",
+                    "starfighterPiloting": "starfighter piloting",
+                    "starshipPiloting": "starship piloting",
+                    "starshipGunnery": "starship gunnery",
+                    "starshipShields": "starship shields",
+                    "swoopOperation": "swoop operation",
+                    "walkerOperation": "walker operation"
+                },
+                "perception": {
+                    "bargain": "bargain",
+                    "command": "command",
+                    "con": "con",
+                    "forgery": "forgery",
+                    "gambling": "gambling",
+                    "hide": "hide",
+                    "investigation": "investigation",
+                    "persuasion": "persuasion",
+                    "search": "search",
+                    "sneak": "sneak"
+                },
+                "strength": {
+                    "brawling": "brawling",
+                    "climbingJumping": "climbing / jumping",
+                    "lifting": "lifting",
+                    "stamina": "stamina",
+                    "swimming": "swimming"
+                },
+                "technical": {
+                    "armorRepair": "armor repair",
+                    "blasterRepair": "blaster repair",
+                    "capitalShipRepair": "capital ship repair",
+                    "capitalShipWeaponRepair": "capital ship weapon repair",
+                    "computerProgrammingRepair": "computer programming / repair",
+                    "demolitions": "demolitions",
+                    "droidProgramming": "droid programming",
+                    "droidRepair": "droid repair",
+                    "firstAid": "first aid",
+                    "groundVehicleRepair": "ground vehicle repair",
+                    "hoverVehicleRepair": "hover vehicle repair",
+                    "medicine": "medicine",
+                    "repulsorliftRepair": "repulsorlift repair",
+                    "security": "security",
+                    "spaceTransportsRepair": "space transports repair",
+                    "starfighterRepair": "starfighter repair",
+                    "starshipWeaponRepair": "starship weapon repair",
+                    "walkerRepair": "walker repair"
+                }
             },
-            "strength": {
-                "brawling": "brawling",
-                "climbingJumping": "climbing / jumping",
-                "lifting": "lifting",
-                "stamina": "stamina",
-                "swimming": "swimming"
+            "statistics": {
+                "move": "move",
+                "forceSensitive": "force sensitive",
+                "forcePoints": "force points",
+                "darkSidePoints": "dark side points",
+                "characterPoints": "character points"
             },
-            "technical": {
-                "armorRepair": "armor repair",
-                "blasterRepair": "blaster repair",
-                "capitalShipRepair": "capital ship repair",
-                "capitalShipWeaponRepair": "capital ship weapon repair",
-                "computerProgrammingRepair": "computer programming / repair",
-                "demolitions": "demolitions",
-                "droidProgramming": "droid programming",
-                "droidRepair": "droid repair",
-                "firstAid": "first aid",
-                "groundVehicleRepair": "ground vehicle repair",
-                "hoverVehicleRepair": "hover vehicle repair",
-                "medicine": "medicine",
-                "repulsorliftRepair": "repulsorlift repair",
-                "security": "security",
-                "spaceTransportsRepair": "space transports repair",
-                "starfighterRepair": "starfighter repair",
-                "starshipWeaponRepair": "starship weapon repair",
-                "walkerRepair": "walker repair"
+            "story": {
+                "equipment": "equipment",
+                "background": "background",
+                "personality": "personality",
+                "objectives": "objectives",
+                "quote": "a quote",
+                "connections": "connection with other characters"
+            },
+            "weapon": {
+                "name": "name",
+                "damage": "damage",
+                "shortRange": "short",
+                "mediumRange": "medium",
+                "longRange": "long",
+                "ammo": "ammo"
+            },
+            "woundStatus": {
+                "stunned": "stunned",
+                "wounded": "wounded",
+                "doublyWounded": "doubly wounded",
+                "incapacitated": "incapacitated",
+                "mortallyWounded": "mortally wounded"
             }
-        },
-        "statistics": {
-            "move": "move",
-            "forceSensitive": "force sensitive",
-            "forcePoints": "force points",
-            "darkSidePoints": "dark side points",
-            "characterPoints": "character points"
-        },
-        "story": {
-            "equipment": "equipment",
-            "background": "background",
-            "personality": "personality",
-            "objectives": "objectives",
-            "quote": "a quote",
-            "connections": "connection with other characters"
-        },
-        "weapon": {
-            "name": "name",
-            "damage": "damage",
-            "shortRange": "short",
-            "mediumRange": "medium",
-            "longRange": "long",
-            "ammo": "ammo"
-        },
-        "woundStatus": {
-            "stunned": "stunned",
-            "wounded": "wounded",
-            "doublyWounded": "doubly wounded",
-            "incapacitated": "incapacitated",
-            "mortallyWounded": "mortally wounded"
         }
     }
 }

@@ -1,8 +1,9 @@
 import { useState, useCallback } from 'react';
-
-import { type Locale } from '../types/index.js';
-import { ucfirst } from '../services/tools.js';
-import translations from '../lang/index.js';
+import {
+    getTranslation,
+    locales,
+    type Locale
+} from '@pitininja/vite-translations-client';
 
 export interface TranslationHookExport {
     t: (key: string, data?: Record<string, string>) => string;
@@ -20,79 +21,36 @@ export const defaultTranslationHookData: TranslationHookExport = {
     }
 };
 
-const replaceVars = (
-    translation: string,
-    data: Record<string, string>
-): string => {
-    let replaced = translation;
-    Object.entries(data).forEach(([name, text]) => {
-        replaced = replaced.replaceAll(`{${name}}`, text);
-    });
-    return replaced;
-};
-
 const useTranslation = () => {
     const [locale, setLocale] = useState<Locale>('en');
 
     const changeLocale = useCallback((loc: Locale) => {
-        if (translations[loc]) {
+        if (locales.includes(loc)) {
             setLocale(loc);
         } else {
             throw new Error(`Invalid locale ${loc}`);
         }
     }, []);
 
-    const getTranslation = useCallback(
-        (key: string): string => {
-            const keys = key.split('.');
-            let value = translations[locale];
-            keys.forEach((keyPart) => {
-                if (value[keyPart]) {
-                    value = value[keyPart];
-                } else {
-                    throw new Error(
-                        `Translation not found for key ${key} and locale ${locale}`
-                    );
-                }
-            });
-            if (typeof value !== 'string') {
-                throw new Error(
-                    `Invalid translation value for key ${key} and locale ${locale}`
-                );
-            }
-            return value;
-        },
-        [locale]
-    );
-
     // lowercase translation text
     const t = useCallback(
-        (key: string, data?: Record<string, string>): string => {
-            try {
-                const translation = getTranslation(key);
-                if (data) {
-                    return replaceVars(translation, data);
-                }
-                return translation;
-            } catch {
-                return '';
-            }
-        },
-        [getTranslation]
+        (key: string, data?: Record<string, string>): string =>
+            getTranslation(locale, key, 'raw', data),
+        [locale]
     );
 
     // translation text with first char uppercased
     const T = useCallback(
         (key: string, data?: Record<string, string>): string =>
-            ucfirst(t(key, data)),
-        [t]
+            getTranslation(locale, key, 'ucfirst', data),
+        [locale]
     );
 
     // uppercased translation text
     const TU = useCallback(
         (key: string, data?: Record<string, string>): string =>
-            t(key, data).toLocaleUpperCase(),
-        [t]
+            getTranslation(locale, key, 'uppercase', data),
+        [locale]
     );
 
     return {

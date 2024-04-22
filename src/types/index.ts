@@ -1,3 +1,4 @@
+import { type Locale } from '@pitininja/vite-translations-client';
 import { type Socket } from 'socket.io-client';
 import {
     type CoCCharacter,
@@ -13,11 +14,9 @@ export type Theme = 'dark' | 'light';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ translation
 
-export type Locale = 'en' | 'fr';
-
 export const languages: Record<Locale, string> = {
-    en: 'english',
-    fr: 'français'
+    en: 'English',
+    fr: 'Français'
 };
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ configuration
