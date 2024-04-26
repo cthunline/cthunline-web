@@ -169,6 +169,7 @@
             "clearSketchConfirm": "clear the sketch ?",
             "clearTokensConfirm": "clear the tokens ?",
             "deleteSketchConfirm": "delete sketch ?",
+            "displaySketch": "display sketch",
             "drawing": "drawing",
             "eraseDrawings": "erase drawings",
             "loadSketch": "load sketch",

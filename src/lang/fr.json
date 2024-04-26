@@ -169,6 +169,7 @@
             "clearSketchConfirm": "vider le plateau ?",
             "clearTokensConfirm": "supprimer les tokens ?",
             "deleteSketchConfirm": "supprimer le plateau ?",
+            "displaySketch": "afficher le plateau",
             "drawing": "dessin",
             "eraseDrawings": "supprimer les dessins",
             "loadSketch": "charger un plateau",

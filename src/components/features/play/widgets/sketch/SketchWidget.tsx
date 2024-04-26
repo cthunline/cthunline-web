@@ -110,15 +110,17 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
         await deleteUserSketch({ sketchId });
     };
 
-    const actionButtons: ActionButtonData[][] = [
+    const actionButtons: (ActionButtonData & { key: string })[][] = [
         [
             {
+                key: 'drawing',
                 text: T('widget.sketch.drawing'),
                 icon: <GoPencil size="1.25rem" />,
                 variant: isFreeDrawing ? 'filled' : undefined,
                 handler: toggleFreeDrawing
             },
             {
+                key: 'eraseDrawings',
                 text: T('widget.sketch.eraseDrawings'),
                 icon: <BsEraserFill size="1.25rem" />,
                 handler: () => {
@@ -134,16 +136,19 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                 }
             },
             {
+                key: 'addToken',
                 text: T('widget.sketch.addToken'),
                 icon: <IoMdAddCircle size="1.5rem" />,
                 handler: addSketchToken
             },
             {
+                key: 'spawnPlayerTokens',
                 text: T('widget.sketch.spawnPlayerTokens'),
                 icon: <IoPeopleCircle size="1.5rem" />,
                 handler: () => addSketchUserTokens(users)
             },
             {
+                key: 'undo',
                 text: T('action.undo'),
                 icon: <MdUndo size="1.5rem" />,
                 disabled: !sketchData.events.length,
@@ -152,6 +157,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
         ],
         [
             {
+                key: 'removeTokens',
                 text: T('widget.sketch.removeTokens'),
                 icon: <IoMdCloseCircle size="1.5rem" />,
                 handler: () => {
@@ -167,6 +173,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                 }
             },
             {
+                key: 'clear',
                 text: T('action.clear'),
                 icon: <MdDelete size="1.5rem" />,
                 handler: () => {
@@ -182,6 +189,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                 }
             },
             {
+                key: 'saveSketch',
                 text: T('widget.sketch.saveSketch'),
                 icon: <GiSave size="1.5rem" />,
                 handler: () => {
@@ -201,6 +209,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                 }
             },
             {
+                key: 'loadSketch',
                 text: T('widget.sketch.loadSketch'),
                 icon: <GiLoad size="1.5rem" />,
                 handler: () => {
@@ -242,7 +251,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
         >
             <Stack align="center" w="450px" gap="0.5rem">
                 <Switch
-                    label={T('action.display')}
+                    label={T('widget.sketch.displaySketch')}
                     labelPosition="left"
                     checked={sketchData.displayed}
                     my="0.5rem"
@@ -259,18 +268,16 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                                   gap="2rem"
                               >
                                   {buttonsRow.map(
-                                      (
-                                          {
-                                              text,
-                                              icon,
-                                              variant,
-                                              disabled,
-                                              handler
-                                          },
-                                          index
-                                      ) => (
+                                      ({
+                                          key,
+                                          text,
+                                          icon,
+                                          variant,
+                                          disabled,
+                                          handler
+                                      }) => (
                                           <ActionButton
-                                              key={`scketch-action-${index.toString()}`}
+                                              key={`scketch-action-${key}`}
                                               text={text}
                                               icon={icon}
                                               variant={variant}
