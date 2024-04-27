@@ -1,11 +1,17 @@
-import { ActionIcon, type ActionIconProps, Tooltip } from '@mantine/core';
+import {
+    ActionIcon,
+    type ActionIconProps,
+    Tooltip,
+    type DefaultMantineColor
+} from '@mantine/core';
 
-export interface ActionButtonData {
+export interface ActionButtonProps {
     text: string;
     icon: JSX.Element;
     variant?: ActionIconProps['variant'];
     handler: () => void;
     disabled?: boolean;
+    color?: DefaultMantineColor;
 }
 
 const ActionButton = ({
@@ -13,13 +19,15 @@ const ActionButton = ({
     handler,
     icon,
     variant,
-    disabled
-}: ActionButtonData) => (
+    disabled,
+    color
+}: ActionButtonProps) => (
     <Tooltip position="bottom" label={text}>
         <ActionIcon
             variant={variant ?? 'subtle'}
             disabled={disabled}
             size="lg"
+            color={color}
             onClick={handler}
         >
             {icon}

@@ -1,5 +1,5 @@
+import { Divider, Group, Stack, Switch, Title } from '@mantine/core';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
-import { Group, Stack, Switch, Title } from '@mantine/core';
 import { MdDelete, MdUndo } from 'react-icons/md';
 import { IoPeopleCircle } from 'react-icons/io5';
 import { GiSave, GiLoad } from 'react-icons/gi';
@@ -11,15 +11,15 @@ import type React from 'react';
 
 import useUserSketch from '../../../../../hooks/api/useUserSketch.js';
 import useDirectory from '../../../../../hooks/api/useDirectory.js';
+import useAsset from '../../../../../hooks/api/useAsset.js';
 import ImageAssetList from './elements/ImageAssetList.js';
 import UserSketchLoad from './elements/UserSketchLoad.js';
 import UserSketchSave from './elements/UserSketchSave.js';
 import { usePlay } from '../../../../../contexts/Play.js';
 import { useApp } from '../../../../../contexts/App.js';
-import useAsset from '../../../../../hooks/api/useAsset.js';
 import Widget from '../../Widget.js';
 import ActionButton, {
-    type ActionButtonData
+    type ActionButtonProps
 } from './elements/ActionButton.js';
 import {
     WidgetType,
@@ -31,6 +31,18 @@ import FileExplorer, {
     type FileExplorerItem,
     FileExplorerItemType
 } from '../../../../common/FileExplorer.js';
+
+type ActionButtonData =
+    | {
+          key: string;
+          type: 'button';
+          props: ActionButtonProps;
+      }
+    | {
+          key: string;
+          type: 'divider';
+          props?: never;
+      };
 
 interface SketchWidgetProps {
     onClose: (widget: WidgetType) => void;
@@ -110,121 +122,159 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
         await deleteUserSketch({ sketchId });
     };
 
-    const actionButtons: (ActionButtonData & { key: string })[][] = [
+    const actionButtons: ActionButtonData[][] = [
         [
             {
                 key: 'drawing',
-                text: T('widget.sketch.drawing'),
-                icon: <GoPencil size="1.25rem" />,
-                variant: isFreeDrawing ? 'filled' : undefined,
-                handler: toggleFreeDrawing
-            },
-            {
-                key: 'eraseDrawings',
-                text: T('widget.sketch.eraseDrawings'),
-                icon: <BsEraserFill size="1.25rem" />,
-                handler: () => {
-                    modals.openConfirmModal({
-                        centered: true,
-                        title: T('widget.sketch.clearDrawingsConfirm'),
-                        labels: {
-                            confirm: T('action.confirm'),
-                            cancel: T('action.cancel')
-                        },
-                        onConfirm: clearDrawings
-                    });
+                type: 'button',
+                props: {
+                    text: T('widget.sketch.drawing'),
+                    icon: <GoPencil size="1.25rem" />,
+                    variant: isFreeDrawing ? 'filled' : undefined,
+                    handler: toggleFreeDrawing
                 }
             },
             {
+                key: 'eraseDrawings',
+                type: 'button',
+                props: {
+                    text: T('widget.sketch.eraseDrawings'),
+                    icon: <BsEraserFill size="1.25rem" />,
+                    color: 'red',
+                    handler: () => {
+                        modals.openConfirmModal({
+                            centered: true,
+                            title: T('widget.sketch.clearDrawingsConfirm'),
+                            labels: {
+                                confirm: T('action.confirm'),
+                                cancel: T('action.cancel')
+                            },
+                            onConfirm: clearDrawings
+                        });
+                    }
+                }
+            },
+            {
+                key: 'divider-drawing-token',
+                type: 'divider'
+            },
+            {
                 key: 'addToken',
-                text: T('widget.sketch.addToken'),
-                icon: <IoMdAddCircle size="1.5rem" />,
-                handler: addSketchToken
+                type: 'button',
+                props: {
+                    text: T('widget.sketch.addToken'),
+                    icon: <IoMdAddCircle size="1.5rem" />,
+                    handler: addSketchToken
+                }
             },
             {
                 key: 'spawnPlayerTokens',
-                text: T('widget.sketch.spawnPlayerTokens'),
-                icon: <IoPeopleCircle size="1.5rem" />,
-                handler: () => addSketchUserTokens(users)
+                type: 'button',
+                props: {
+                    text: T('widget.sketch.spawnPlayerTokens'),
+                    icon: <IoPeopleCircle size="1.5rem" />,
+                    handler: () => addSketchUserTokens(users)
+                }
             },
             {
-                key: 'undo',
-                text: T('action.undo'),
-                icon: <MdUndo size="1.5rem" />,
-                disabled: !sketchData.events.length,
-                handler: undoSketch
+                key: 'removeTokens',
+                type: 'button',
+                props: {
+                    text: T('widget.sketch.removeTokens'),
+                    icon: <IoMdCloseCircle size="1.5rem" />,
+                    color: 'red',
+                    handler: () => {
+                        modals.openConfirmModal({
+                            centered: true,
+                            title: T('widget.sketch.clearTokensConfirm'),
+                            labels: {
+                                confirm: T('action.confirm'),
+                                cancel: T('action.cancel')
+                            },
+                            onConfirm: clearTokens
+                        });
+                    }
+                }
             }
         ],
         [
             {
-                key: 'removeTokens',
-                text: T('widget.sketch.removeTokens'),
-                icon: <IoMdCloseCircle size="1.5rem" />,
-                handler: () => {
-                    modals.openConfirmModal({
-                        centered: true,
-                        title: T('widget.sketch.clearTokensConfirm'),
-                        labels: {
-                            confirm: T('action.confirm'),
-                            cancel: T('action.cancel')
-                        },
-                        onConfirm: clearTokens
-                    });
+                key: 'undo',
+                type: 'button',
+                props: {
+                    text: T('action.undo'),
+                    icon: <MdUndo size="1.5rem" />,
+                    disabled: !sketchData.events.length,
+                    handler: undoSketch
                 }
             },
             {
                 key: 'clear',
-                text: T('action.clear'),
-                icon: <MdDelete size="1.5rem" />,
-                handler: () => {
-                    modals.openConfirmModal({
-                        centered: true,
-                        title: T('widget.sketch.clearSketchConfirm'),
-                        labels: {
-                            confirm: T('action.confirm'),
-                            cancel: T('action.cancel')
-                        },
-                        onConfirm: clearSketch
-                    });
+                type: 'button',
+                props: {
+                    text: T('action.clear'),
+                    icon: <MdDelete size="1.5rem" />,
+                    color: 'red',
+                    handler: () => {
+                        modals.openConfirmModal({
+                            centered: true,
+                            title: T('widget.sketch.clearSketchConfirm'),
+                            labels: {
+                                confirm: T('action.confirm'),
+                                cancel: T('action.cancel')
+                            },
+                            onConfirm: clearSketch
+                        });
+                    }
                 }
             },
             {
+                key: 'divider-drawing-edit-save',
+                type: 'divider'
+            },
+            {
                 key: 'saveSketch',
-                text: T('widget.sketch.saveSketch'),
-                icon: <GiSave size="1.5rem" />,
-                handler: () => {
-                    modals.open({
-                        modalId: saveSketchModalId,
-                        centered: true,
-                        title: T('widget.sketch.saveSketch'),
-                        children: (
-                            <UserSketchSave
-                                userSketchs={userSketchs}
-                                data={sketch}
-                                onCreate={onUserSketchSave}
-                                onOverwrite={onUserSketchOverwrite}
-                            />
-                        )
-                    });
+                type: 'button',
+                props: {
+                    text: T('widget.sketch.saveSketch'),
+                    icon: <GiSave size="1.5rem" />,
+                    handler: () => {
+                        modals.open({
+                            modalId: saveSketchModalId,
+                            centered: true,
+                            title: T('widget.sketch.saveSketch'),
+                            children: (
+                                <UserSketchSave
+                                    userSketchs={userSketchs}
+                                    data={sketch}
+                                    onCreate={onUserSketchSave}
+                                    onOverwrite={onUserSketchOverwrite}
+                                />
+                            )
+                        });
+                    }
                 }
             },
             {
                 key: 'loadSketch',
-                text: T('widget.sketch.loadSketch'),
-                icon: <GiLoad size="1.5rem" />,
-                handler: () => {
-                    modals.open({
-                        modalId: loadSketchModalId,
-                        centered: true,
-                        title: T('widget.sketch.loadSketch'),
-                        children: (
-                            <UserSketchLoad
-                                userSketchs={userSketchs}
-                                onLoad={onUserSketchLoad}
-                                onDelete={onUserSketchDelete}
-                            />
-                        )
-                    });
+                type: 'button',
+                props: {
+                    text: T('widget.sketch.loadSketch'),
+                    icon: <GiLoad size="1.5rem" />,
+                    handler: () => {
+                        modals.open({
+                            modalId: loadSketchModalId,
+                            centered: true,
+                            title: T('widget.sketch.loadSketch'),
+                            children: (
+                                <UserSketchLoad
+                                    userSketchs={userSketchs}
+                                    onLoad={onUserSketchLoad}
+                                    onDelete={onUserSketchDelete}
+                                />
+                            )
+                        });
+                    }
                 }
             }
         ]
@@ -267,22 +317,17 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                                   justify="center"
                                   gap="2rem"
                               >
-                                  {buttonsRow.map(
-                                      ({
-                                          key,
-                                          text,
-                                          icon,
-                                          variant,
-                                          disabled,
-                                          handler
-                                      }) => (
+                                  {buttonsRow.map(({ key, type, props }) =>
+                                      type === 'divider' ? (
+                                          <Divider
+                                              key={`scketch-action-divider-${key}`}
+                                              size="xs"
+                                              orientation="vertical"
+                                          />
+                                      ) : (
                                           <ActionButton
-                                              key={`scketch-action-${key}`}
-                                              text={text}
-                                              icon={icon}
-                                              variant={variant}
-                                              disabled={disabled}
-                                              handler={handler}
+                                              key={`scketch-action-button-${key}`}
+                                              {...props}
                                           />
                                       )
                                   )}
