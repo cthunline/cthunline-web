@@ -180,7 +180,8 @@
         },
         "jukebox": {
             "autoplay": "autoplay",
-            "repeat": "repeat",
+            "repeatPlaylist": "repeat playlist",
+            "repeatTrack": "repeat track",
             "shuffle": "shuffle"
         },
         "characters": {
