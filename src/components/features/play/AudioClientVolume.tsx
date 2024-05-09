@@ -39,6 +39,12 @@ const AudioClientVolume = () => {
                     onChange={setVolumePercent}
                     min={0}
                     max={100}
+                    styles={{
+                        label: {
+                            bottom: 'calc(-2.5rem * var(--mantine-scale))',
+                            top: 'unset'
+                        }
+                    }}
                 />
             </Group>
         </Box>
