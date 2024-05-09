@@ -1,5 +1,5 @@
+import dayjs, { type Dayjs } from 'dayjs';
 import { useState } from 'react';
-import DayJs from 'dayjs';
 
 import { type PlayLog, type User } from '../../types/index.js';
 import { useApp } from '../../contexts/App.js';
@@ -29,15 +29,15 @@ const useLogs = () => {
         return `[${isMaster ? gmPrefix : ''}${logUser?.name}]`;
     };
 
-    const getLogTime = (dateTime: DayJs.Dayjs | Date | string) => {
-        const time = DayJs(dateTime).format(T('format.time'));
+    const getLogTime = (dateTime: Dayjs | Date | string) => {
+        const time = dayjs(dateTime).format(T('format.time'));
         return `[${time}]`;
     };
 
     const pushLog = ({ dateTime, user, isMaster, text }: PushLogOptions) => {
         const parts = [];
         if (dateTime === true) {
-            parts.push(getLogTime(DayJs()));
+            parts.push(getLogTime(dayjs()));
         } else if (dateTime) {
             parts.push(getLogTime(dateTime));
         }

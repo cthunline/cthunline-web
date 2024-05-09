@@ -26,14 +26,14 @@ interface AppContextData extends AppHookExports {
     theme: Theme;
 }
 
-const defaultDialogData: AppContextData = {
+const defaultContextData: AppContextData = {
     theme: 'dark',
     ...defaultAuthHookData,
     ...defaultConfigurationHookData,
     ...defaultTranslationHookData
 };
 
-const AppContext = createContext<AppContextData>(defaultDialogData);
+const AppContext = createContext<AppContextData>(defaultContextData);
 
 export const AppProvider = ({ children }: AppProviderProps) => {
     const {

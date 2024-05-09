@@ -9,14 +9,16 @@ import JukeboxWidget from '../../features/play/widgets/jukebox/JukeboxWidget.js'
 import SketchWidget from '../../features/play/widgets/sketch/SketchWidget.js';
 import NotesWidget from '../../features/play/widgets/notes/NotesWidget.js';
 import DicesWidget from '../../features/play/widgets/dices/DicesWidget.js';
+import AudioClientVolume from '../../features/play/AudioClientVolume.js';
+import { AudioMasterProvider } from '../../../contexts/AudioMaster.js';
 import { PlayProvider, usePlay } from '../../../contexts/Play.js';
 import { focusWidget } from '../../../services/widget.js';
 import Console from '../../features/play/Console.js';
 import { WidgetType } from '../../../types/index.js';
 import Sketch from '../../features/play/Sketch.js';
 import { useApp } from '../../../contexts/App.js';
-import Audio from '../../features/play/Audio.js';
 import PlayMenu from './PlayMenu.js';
+import { AudioClientProvider } from '../../../contexts/AudioClient.js';
 
 const PlayContent = () => {
     const { T } = useApp();
@@ -28,8 +30,6 @@ const PlayContent = () => {
         logs,
         requestDice,
         characterUpdate,
-        playAudio,
-        stopAudio,
         sketchData
     } = usePlay();
 
@@ -101,14 +101,7 @@ const PlayContent = () => {
                         />
                     );
                 case WidgetType.jukebox:
-                    return (
-                        <JukeboxWidget
-                            key={key}
-                            onPlay={playAudio}
-                            onStop={stopAudio}
-                            onClose={onWidgetClose}
-                        />
-                    );
+                    return <JukeboxWidget key={key} onClose={onWidgetClose} />;
                 case WidgetType.sketch:
                     return <SketchWidget key={key} onClose={onWidgetClose} />;
                 case WidgetType.notes:
@@ -122,7 +115,7 @@ const PlayContent = () => {
         return <Loader size="xl" />;
     }
 
-    return (
+    const content = (
         <Group w="100%" h="100%" gap={0}>
             <PlayMenu
                 isMaster={socket.isMaster}
@@ -140,11 +133,19 @@ const PlayContent = () => {
                 {sketchData.displayed ? (
                     <Sketch isMaster={socket?.isMaster} />
                 ) : null}
-                {!socket.isMaster ? <Audio /> : null}
+                {!socket.isMaster ? <AudioClientVolume /> : null}
                 <Console logs={logs} playContentRef={playContentRef} />
             </Stack>
         </Group>
     );
+
+    if (socket.isMaster) {
+        return (
+            <AudioMasterProvider socket={socket}>{content}</AudioMasterProvider>
+        );
+    }
+
+    return <AudioClientProvider socket={socket}>{content}</AudioClientProvider>;
 };
 
 const Play = () => {

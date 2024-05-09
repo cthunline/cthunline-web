@@ -260,11 +260,6 @@ export const diceTypes: DiceType[] = [
     'D100'
 ];
 
-export interface AudioData extends Asset {
-    time: number;
-    playing: boolean;
-}
-
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ play sketch
 
 export interface SketchData {

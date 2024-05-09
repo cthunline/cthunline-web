@@ -21,10 +21,6 @@ import useLogs, {
     type LogsHookExport,
     defaultLogsHookExport
 } from '../hooks/play/useLogs.js';
-import useAudio, {
-    type AudioHookExport,
-    defaultAudioHookExport
-} from '../hooks/play/useAudio.js';
 import useDice, {
     type DiceHookExport,
     defaultDiceHookExport
@@ -42,7 +38,6 @@ interface PlayProviderProps {
 
 interface PlayContextData
     extends SketchHookExport,
-        AudioHookExport,
         DiceHookExport,
         SessionUsersHookExport,
         LogsHookExport {
@@ -56,7 +51,6 @@ const defaultPlayData: PlayContextData = {
     socket: null,
     ...defaultSketchHookExport,
     ...defaultLogsHookExport,
-    ...defaultAudioHookExport,
     ...defaultDiceHookExport,
     ...defaultSessionUsersHookExport
 };
@@ -93,8 +87,6 @@ export const PlayProvider = ({
     const { users, setUsers, updateUserCharacter, characterUpdate } =
         useSessionUsers(socket);
     const { getDiceResultLog, requestDice } = useDice(socket);
-    const { audioData, setAudioTrack, clearAudioTrack, playAudio, stopAudio } =
-        useAudio(socket);
     const {
         sketchData,
         setSketchData,
@@ -246,12 +238,6 @@ export const PlayProvider = ({
                         }, characterUpdateTimerMs);
                 }
             );
-            sock.on('audioPlay', ({ asset, time }) => {
-                setAudioTrack(asset, time);
-            });
-            sock.on('audioStop', () => {
-                clearAudioTrack();
-            });
             sock.on('sketchUpdate', ({ sketch }) => {
                 setSketchData((previous) => ({
                     ...sketch,
@@ -264,8 +250,6 @@ export const PlayProvider = ({
             T,
             pushLog,
             updateUserCharacter,
-            setAudioTrack,
-            clearAudioTrack,
             getDiceResultLog,
             setUsers,
             setSketchData
@@ -362,9 +346,6 @@ export const PlayProvider = ({
             logs,
             requestDice,
             characterUpdate,
-            playAudio,
-            stopAudio,
-            audioData,
             sketchData,
             updateSketch,
             addSketchDrawPath,
@@ -398,9 +379,6 @@ export const PlayProvider = ({
             logs,
             requestDice,
             characterUpdate,
-            playAudio,
-            stopAudio,
-            audioData,
             sketchData,
             updateSketch,
             addSketchDrawPath,
