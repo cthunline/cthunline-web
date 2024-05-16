@@ -1,6 +1,6 @@
 {
     "name": "cthunline-web",
-    "version": "2.7.0",
+    "version": "2.8.0",
     "type": "module",
     "scripts": {
         "dev": "vite serve src --config vite.config.ts",
@@ -10,7 +10,7 @@
         "format": "npx eslint . --fix --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --write . && npx tsc --noEmit && npx stylelint --fix \"**/*.css\" --max-warnings=0"
     },
     "dependencies": {
-        "@cthunline/games": "^3.1.4",
+        "@cthunline/games": "^3.1.5",
         "@mantine/core": "^7.9.1",
         "@mantine/form": "^7.9.1",
         "@mantine/hooks": "^7.9.1",
@@ -25,12 +25,12 @@
         "mantine-form-zod-resolver": "^1.1.0",
         "nanoid": "^5.0.7",
         "normalize.css": "^8.0.1",
-        "npm": "^10.7.0",
+        "npm": "^10.8.0",
         "react": "^18.3.1",
         "react-dom": "^18.3.1",
         "react-draggable": "^4.4.6",
         "react-icons": "^5.2.1",
-        "react-router-dom": "^6.23.0",
+        "react-router-dom": "^6.23.1",
         "socket.io-client": "^4.7.5",
         "zod": "^3.23.8"
     },
@@ -39,11 +39,11 @@
         "@total-typescript/ts-reset": "^0.5.1",
         "@types/hoist-non-react-statics": "^3.3.5",
         "@types/howler": "^2.2.11",
-        "@types/node": "^20.12.11",
-        "@types/react": "^18.3.1",
+        "@types/node": "^20.12.12",
+        "@types/react": "^18.3.2",
         "@types/react-dom": "^18.3.0",
-        "@typescript-eslint/eslint-plugin": "^7.8.0",
-        "@typescript-eslint/parser": "^7.8.0",
+        "@typescript-eslint/eslint-plugin": "^7.9.0",
+        "@typescript-eslint/parser": "^7.9.0",
         "@vitejs/plugin-react": "^4.2.1",
         "eslint": "^8.57.0",
         "eslint-config-airbnb": "^19.0.4",
