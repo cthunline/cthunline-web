@@ -1,11 +1,11 @@
 import { modals } from '@mantine/modals';
 import { Stack } from '@mantine/core';
-import { useState } from 'react';
+import { useRef } from 'react';
 
 import { type Note, WidgetType } from '../../../../../types/index.js';
 import { usePlay } from '../../../../../contexts/Play.js';
-import { useApp } from '../../../../../contexts/App.js';
 import useNote from '../../../../../hooks/api/useNote.js';
+import { useApp } from '../../../../../contexts/App.js';
 import NoteCreate from './NoteCreate.js';
 import NoteEditor from './NoteEditor.js';
 import Widget from '../../Widget.js';
@@ -17,13 +17,20 @@ interface NotesWidgetProps {
 
 const NotesWidget = ({ onClose }: NotesWidgetProps) => {
     const { T } = useApp();
-    const { sessionId } = usePlay();
-    const { noteList, createNote, editNote, moveNote, deleteNote } = useNote({
+    const { sessionId, socket } = usePlay();
+    const {
+        noteList,
+        editorNote,
+        setEditorNote,
+        createNote,
+        editNote,
+        moveNote,
+        deleteNote
+    } = useNote({
         sessionId,
-        loadList: true
+        loadList: true,
+        socket
     });
-
-    const [noteData, setNoteData] = useState<Note | null>(null);
 
     const onCreate = async (title: string) => {
         const note = await createNote({
@@ -33,24 +40,34 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
             },
             isToast: false
         });
-        setNoteData(note);
+        setEditorNote(note);
     };
 
+    const changeTime = 1000;
+    const changeTimer = useRef<number | null>(null);
+
     const onEdit = async (note: Note) => {
-        const { id, title, text } = note;
-        await editNote({
-            noteId: id,
-            data: {
-                title,
-                text
-            },
-            isToast: false
-        });
+        setEditorNote(note);
+        if (changeTimer.current !== null) {
+            window.clearTimeout(changeTimer.current);
+        }
+        changeTimer.current = window.setTimeout(async () => {
+            const { id, title, text } = note;
+            await editNote({
+                noteId: id,
+                data: {
+                    title,
+                    text
+                },
+                isToast: false
+            });
+        }, changeTime);
     };
 
     const onShare = async (noteId: number, isShared: boolean) => {
         await editNote({
             noteId,
+            unshare: true,
             data: {
                 isShared
             },
@@ -66,7 +83,7 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
         });
     };
 
-    const onDelete = async (noteId: number) => {
+    const onDelete = async (noteId: number, isShared: boolean) => {
         const confirmText = T('page.play.note.deleteConfirm');
         modals.openConfirmModal({
             centered: true,
@@ -78,6 +95,7 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
             onConfirm: () => {
                 deleteNote({
                     noteId,
+                    isShared,
                     isToast: false
                 });
             }
@@ -91,11 +109,11 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
             onClose={() => onClose(WidgetType.notes)}
         >
             <Stack w="400px">
-                {noteData ? (
+                {editorNote ? (
                     <NoteEditor
-                        note={noteData}
+                        note={editorNote}
                         onEdit={onEdit}
-                        onBack={() => setNoteData(null)}
+                        onBack={() => setEditorNote(null)}
                     />
                 ) : (
                     [
@@ -103,7 +121,7 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
                             key="note-list"
                             notes={noteList.notes}
                             sharedNotes={noteList.sharedNotes}
-                            onSelect={(note: Note) => setNoteData(note)}
+                            onSelect={(note: Note) => setEditorNote(note)}
                             onShare={onShare}
                             onMove={onMove}
                             onDelete={onDelete}

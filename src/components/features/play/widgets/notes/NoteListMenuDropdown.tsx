@@ -15,7 +15,7 @@ export interface NoteListMenuDropdownProps {
     canMoveDown: boolean;
     onShare: (id: number, isShared: boolean) => void;
     onMove: (id: number, direction: 'up' | 'down') => void;
-    onDelete: (id: number) => void;
+    onDelete: (id: number, isShared: boolean) => void;
 }
 
 const NoteListMenuDropdown = ({
@@ -70,7 +70,7 @@ const NoteListMenuDropdown = ({
                 leftSection={<MdOutlineDelete size={20} />}
                 onClick={() => {
                     if (note) {
-                        onDelete(note.id);
+                        onDelete(note.id, note.isShared);
                     }
                 }}
             >

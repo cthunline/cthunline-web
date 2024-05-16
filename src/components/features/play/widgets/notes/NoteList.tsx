@@ -1,6 +1,7 @@
 import { ActionIcon, Box, Menu, Stack, Title, Tooltip } from '@mantine/core';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { MdOutlineShare } from 'react-icons/md';
+import { useMemo } from 'react';
 
 import InteractiveList from '../../../../common/InteractiveList.js';
 import { type Note, type User } from '../../../../../types/index.js';
@@ -13,7 +14,7 @@ interface NoteListProps {
     onSelect: (note: Note) => void;
     onShare: (id: number, isShared: boolean) => void;
     onMove: (id: number, direction: 'up' | 'down') => void;
-    onDelete: (id: number) => void;
+    onDelete: (id: number, isShared: boolean) => void;
 }
 
 interface NotesData {
@@ -37,32 +38,33 @@ const NoteList = ({
         ...notes.map(({ position }) => Number(position))
     );
 
-    const usersById: Record<string, User> = {};
-    const sharedNotesByUserId: Record<string, Note[]> = {};
-    sharedNotes.forEach((note) => {
-        if (note.user && !usersById[note.userId]) {
-            usersById[note.userId] = note.user;
-        }
-        if (!sharedNotesByUserId[note.userId]) {
-            sharedNotesByUserId[note.userId] = [];
-        }
-        sharedNotesByUserId[note.userId].push(note);
-    });
-
-    const notesData: NotesData[] = [
-        {
-            key: 'yourNotes',
-            list: notes,
-            header: T('page.play.note.yourNotes')
-        },
-        ...Object.keys(sharedNotesByUserId).map((noteUserId) => ({
-            key: `sharedNotes-${userId}`,
-            list: sharedNotesByUserId[noteUserId],
-            header: T('page.play.note.sharedUserNotes', {
-                name: usersById[noteUserId].name
-            })
-        }))
-    ];
+    const notesData: NotesData[] = useMemo(() => {
+        const usersById: Record<string, User> = {};
+        const sharedNotesByUserId: Record<string, Note[]> = {};
+        sharedNotes.forEach((note) => {
+            if (note.user && !usersById[note.userId]) {
+                usersById[note.userId] = note.user;
+            }
+            if (!sharedNotesByUserId[note.userId]) {
+                sharedNotesByUserId[note.userId] = [];
+            }
+            sharedNotesByUserId[note.userId].push(note);
+        });
+        return [
+            {
+                key: 'yourNotes',
+                list: notes,
+                header: T('page.play.note.yourNotes')
+            },
+            ...Object.keys(sharedNotesByUserId).map((noteUserId) => ({
+                key: `sharedNotes-${userId}`,
+                list: sharedNotesByUserId[noteUserId],
+                header: T('page.play.note.sharedUserNotes', {
+                    name: usersById[noteUserId].name
+                })
+            }))
+        ];
+    }, [notes, sharedNotes, T, userId]);
 
     return (
         <Box w="100%" h="360px" style={{ overflowY: 'auto' }}>
@@ -78,7 +80,7 @@ const NoteList = ({
                                 const isOwnedByUser = noteUserId === userId;
                                 return (
                                     <InteractiveList.Item
-                                        key={`note-${id}`}
+                                        key={`note-${noteUserId}-${id}`}
                                         onClick={() => onSelect(note)}
                                         leftIcon={
                                             isOwnedByUser &&

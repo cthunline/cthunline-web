@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { toast } from '../../services/toast.js';
 import { useApp } from '../../contexts/App.js';
 import {
+    type PlaySocket,
     type Note,
     type NoteCreateBody,
     type NoteEditBody
@@ -19,6 +20,7 @@ import {
 interface NoteHookOptions {
     sessionId: number;
     loadList?: boolean;
+    socket?: PlaySocket | null;
 }
 
 interface CreateNoteOptions {
@@ -30,6 +32,7 @@ interface CreateNoteOptions {
 interface EditNoteOptions {
     noteId: number;
     data: NoteEditBody;
+    unshare?: boolean;
     isRefresh?: boolean;
     isToast?: boolean;
 }
@@ -43,6 +46,7 @@ interface MoveNoteOptions {
 
 interface DeleteNoteOptions {
     noteId: number;
+    isShared: boolean;
     isRefresh?: boolean;
     isToast?: boolean;
 }
@@ -54,13 +58,42 @@ interface NoteList {
 
 const defaultNoteTitle = '?';
 
-const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
+const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
     const { handleApiError } = useApp();
 
     const [noteList, setNoteList] = useState<NoteList>({
         notes: [],
         sharedNotes: []
     });
+
+    const [editorNote, setEditorNote] = useState<Note | null>(null);
+
+    const setSharedNoteInList = (note: Note) => {
+        setNoteList(({ notes, sharedNotes }) => {
+            let existsInList = false;
+            const updatedSharedNotes = sharedNotes.map((nt) => {
+                if (nt.id === note.id) {
+                    existsInList = true;
+                    return note;
+                }
+                return nt;
+            });
+            if (!existsInList) {
+                updatedSharedNotes.push(note);
+            }
+            return {
+                notes,
+                sharedNotes: updatedSharedNotes
+            };
+        });
+    };
+
+    const deleteSharedNoteFromList = (noteId: number) => {
+        setNoteList(({ notes, sharedNotes }) => ({
+            notes,
+            sharedNotes: sharedNotes.filter(({ id }) => id !== noteId)
+        }));
+    };
 
     const getNotes = useCallback(async (): Promise<NoteList> => {
         try {
@@ -88,11 +121,9 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
     }, [getNotes]);
 
     const refresh = useCallback(async () => {
-        const tasks = [];
         if (loadList) {
-            tasks.push(refreshNoteList());
+            await refreshNoteList();
         }
-        await Promise.all(tasks);
     }, [loadList, refreshNoteList]);
 
     const createNote = useCallback(
@@ -106,6 +137,9 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
                     ...data,
                     title: data.title.trim() ? data.title : defaultNoteTitle
                 });
+                if (note.isShared) {
+                    socket?.emit('noteUpdate', { noteId: note.id });
+                }
                 if (isRefresh) {
                     await refresh();
                 }
@@ -117,13 +151,14 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
                 throw handleApiError(err);
             }
         },
-        [sessionId, refresh, handleApiError]
+        [sessionId, refresh, handleApiError, socket]
     );
 
     const editNote = useCallback(
         async ({
             noteId,
             data,
+            unshare,
             isRefresh = true,
             isToast = true
         }: EditNoteOptions): Promise<Note> => {
@@ -138,6 +173,11 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
                           }
                         : {})
                 });
+                if (note.isShared) {
+                    socket?.emit('noteUpdate', { noteId: note.id });
+                } else if (unshare) {
+                    socket?.emit('noteDelete', { noteId: note.id });
+                }
                 if (isRefresh) {
                     await refresh();
                 }
@@ -149,7 +189,7 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
                 throw handleApiError(err);
             }
         },
-        [handleApiError, refresh]
+        [handleApiError, refresh, socket]
     );
 
     const moveNote = useCallback(
@@ -161,6 +201,9 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
         }: MoveNoteOptions): Promise<Note> => {
             try {
                 const note = await moveNoteRequest(noteId, direction);
+                if (note.isShared) {
+                    socket?.emit('noteUpdate', { noteId: note.id });
+                }
                 if (isRefresh) {
                     await refresh();
                 }
@@ -172,17 +215,21 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
                 throw handleApiError(err);
             }
         },
-        [handleApiError, refresh]
+        [handleApiError, refresh, socket]
     );
 
     const deleteNote = useCallback(
         async ({
             noteId,
+            isShared,
             isRefresh = true,
             isToast = true
         }: DeleteNoteOptions): Promise<void> => {
             try {
                 await deleteNoteRequest(noteId);
+                if (isShared) {
+                    socket?.emit('noteDelete', { noteId });
+                }
                 if (isRefresh) {
                     await refresh();
                 }
@@ -193,15 +240,34 @@ const useNote = ({ sessionId, loadList }: NoteHookOptions) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh, handleApiError, socket]
     );
 
     useEffect(() => {
         refresh();
     }, [refresh]);
 
+    useEffect(() => {
+        socket?.on('noteUpdate', ({ note }) => {
+            setSharedNoteInList(note);
+            setEditorNote((prev) =>
+                prev && prev.id === note.id ? note : prev
+            );
+        });
+        socket?.on('noteDelete', ({ noteId }) => {
+            deleteSharedNoteFromList(noteId);
+            setEditorNote((prev) => (prev && prev.id === noteId ? null : prev));
+        });
+        return () => {
+            socket?.off('noteUpdate');
+            socket?.off('noteDelete');
+        };
+    }, [socket]);
+
     return {
         noteList,
+        editorNote,
+        setEditorNote,
         getNotes,
         getNote,
         createNote,

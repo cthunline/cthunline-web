@@ -1,10 +1,9 @@
 import { ActionIcon, Group, Stack, TextInput } from '@mantine/core';
-import { useState, useEffect, useRef } from 'react';
 import { MdArrowBack } from 'react-icons/md';
 
 import { type Note } from '../../../../../types/index.js';
-import Textarea from '../../../../common/Textarea.js';
 import { useApp } from '../../../../../contexts/App.js';
+import Textarea from '../../../../common/Textarea.js';
 
 interface NoteEditorProps {
     note: Note;
@@ -14,29 +13,7 @@ interface NoteEditorProps {
 
 const NoteEditor = ({ note, onEdit, onBack }: NoteEditorProps) => {
     const { userId } = useApp();
-
-    const [title, setTitle] = useState<string>(note.title);
-    const [text, setText] = useState<string>(note.text);
-
     const isOwnedByUser = note.userId === userId;
-
-    const changeTime = 1000;
-    const changeTimer = useRef<number | null>(null);
-    useEffect(() => {
-        if (isOwnedByUser) {
-            if (changeTimer.current !== null) {
-                window.clearTimeout(changeTimer.current);
-            }
-            changeTimer.current = window.setTimeout(() => {
-                onEdit({
-                    ...note,
-                    title,
-                    text
-                });
-            }, changeTime);
-        }
-    }, [isOwnedByUser, onEdit, note, title, text]);
-
     return (
         <Stack gap="0.5rem">
             <Group justify="center" w="100%" gap="0.5rem">
@@ -46,9 +23,12 @@ const NoteEditor = ({ note, onEdit, onBack }: NoteEditorProps) => {
                 <TextInput
                     readOnly={!isOwnedByUser}
                     flex={1}
-                    value={title}
+                    value={note.title}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setTitle(e.target.value);
+                        onEdit({
+                            ...note,
+                            title: e.target.value
+                        });
                     }}
                 />
             </Group>
@@ -56,9 +36,12 @@ const NoteEditor = ({ note, onEdit, onBack }: NoteEditorProps) => {
                 readOnly={!isOwnedByUser}
                 w="100%"
                 rows={14}
-                value={text}
+                value={note.text}
                 onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                    setText(e.target.value);
+                    onEdit({
+                        ...note,
+                        text: e.target.value
+                    });
                 }}
             />
         </Stack>
