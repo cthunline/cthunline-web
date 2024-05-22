@@ -1,0 +1,73 @@
+:root[data-mantine-color-scheme='light'] {
+    --aw-harm-pie-slice-background: var(--mantine-color-gray-3);
+    --aw-harm-pie-slice-background-active: var(--mantine-color-gray-5);
+    --aw-harm-pie-slice-border: var(--mantine-color-gray-6);
+}
+
+:root[data-mantine-color-scheme='dark'] {
+    --aw-harm-pie-slice-background: var(--mantine-color-dark-7);
+    --aw-harm-pie-slice-background-active: var(--mantine-color-dark-5);
+    --aw-harm-pie-slice-border: var(--mantine-color-dark-3);
+}
+
+.pie.readonly {
+    --aw-harm-pie-cursor: default;
+}
+
+.pie:not(.readonly) {
+    --aw-harm-pie-cursor: pointer;
+}
+
+.slice-container {
+    cursor: var(--aw-harm-pie-cursor);
+    fill: transparent;
+}
+
+.slice-inner {
+    cursor: var(--aw-harm-pie-cursor);
+    fill: var(--aw-harm-pie-slice-background);
+}
+
+.slice-border {
+    cursor: var(--aw-harm-pie-cursor);
+    fill: var(--aw-harm-pie-slice-border);
+}
+
+.pie:not(.readonly) .slice-group:hover .slice-inner,
+.pie:not(.readonly) .slice-group:has(~ .slice-group:hover) .slice-inner,
+.pie:not(
+        :not(.readonly):has(.slice-group:hover),
+        :not(.readonly):has(.button-group:hover)
+    )
+    .slice-group.active
+    .slice-inner,
+.pie:not(
+        :not(.readonly):has(.slice-group:hover),
+        :not(.readonly):has(.button-group:hover)
+    )
+    .slice-group:has(~ .slice-group.active)
+    .slice-inner {
+    fill: var(--aw-harm-pie-slice-background-active);
+}
+
+.pie.readonly .button-group {
+    display: none;
+}
+
+.button-inner {
+    cursor: var(--aw-harm-pie-cursor);
+    fill: var(--aw-harm-pie-slice-background);
+}
+
+.button-border {
+    fill: var(--aw-harm-pie-slice-border);
+}
+
+.button-icon {
+    cursor: var(--aw-harm-pie-cursor);
+    fill: var(--mantine-color-red-8);
+}
+
+.button-group:hover .button-inner {
+    fill: var(--aw-harm-pie-slice-background-active);
+}

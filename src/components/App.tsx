@@ -8,6 +8,7 @@ import Router from './Router.js';
 
 import 'normalize.css';
 import '@mantine/core/styles.css';
+import '@mantine/tiptap/styles.css';
 import '@mantine/notifications/styles.css';
 import '@szhsin/react-menu/dist/index.css';
 import '@szhsin/react-menu/dist/theme-dark.css';

@@ -1,0 +1,643 @@
+{
+    "game": {
+        "apocalypseWorld": {
+            "bioStats": "bio & caracs",
+            "gear": "équipement",
+            "notes": "notes",
+            "playbook": "livret",
+            "special": "spécial",
+            "gearBarter": "matos & troc",
+            "moves": "actions",
+            "otherMoves": "autres actions",
+            "hold": "je retiens",
+            "advantages": "avantages",
+            "problems": "problèmes",
+            "element": {
+                "title": "titre",
+                "description": "description"
+            },
+            "bio": {
+                "title": "bio",
+                "name": "nom",
+                "look": "look"
+            },
+            "stats": {
+                "title": "caracs",
+                "highlight": "cochée",
+                "cool": {
+                    "name": "cool",
+                    "description": "agir face au danger"
+                },
+                "hard": {
+                    "name": "dur",
+                    "description": "agresser ; prendre de force"
+                },
+                "hot": {
+                    "name": "sexy",
+                    "description": "séduire ou manipuler"
+                },
+                "sharp": {
+                    "name": "rusé",
+                    "description": "faire le point ; cerner qqu'un"
+                },
+                "weird": {
+                    "name": "zarb",
+                    "description": "ouvrir son cerveau"
+                }
+            },
+            "hx": {
+                "title": "hx",
+                "description": "aider ou interférer",
+                "character": "personnage",
+                "value": "valeur"
+            },
+            "harm": {
+                "title": "dégâts",
+                "countdown": "compteur",
+                "stabilized": "stabilisé",
+                "shattered": "détruit : -1cool",
+                "crippled": "estropié : -1dur",
+                "disfigured": "défiguré : -1sexy",
+                "broken": "brisé : -1rusé"
+            },
+            "experience": {
+                "title": "expérience",
+                "improve": "progression",
+                "improvements": {
+                    "increaseAnyStat": "+1 à une carac (max. carac+3)",
+                    "retireCharacter": "mettre son perso à la retraite",
+                    "secondCharacter": "créer un 2ème perso à jouer",
+                    "newCharacterType": "changer le type de son perso",
+                    "advanceBasicMoves": "avancer 3 actions de base",
+                    "advanceOtherBasicMoves": "avancer les 4 autres actions de base",
+                    "increaseCoolMax2": "+1cool (max cool+2)",
+                    "increaseCoolMax3": "+1cool (max cool+3)",
+                    "increaseHardMax2": "+1dur (max dur+2)",
+                    "increaseHardMax3": "+1dur (max dur+3)",
+                    "increaseHotMax2": "+1sexy (max sexy+2)",
+                    "increaseHotMax3": "+1sexy (max sexy+3)",
+                    "increaseSharpMax2": "+1rusé (max rusé+2)",
+                    "increaseSharpMax3": "+1rusé (max rusé+3)",
+                    "increaseWeirdMax2": "+1zarb (max zarb+2)",
+                    "increaseWeirdMax3": "+1zarb (max zarb+3)",
+                    "newPlaybookMove": "une nouvelle action de {playbook}",
+                    "otherPlaybookMove": "une action d'un autre livret",
+                    "twoGigsMoonlighting": "deux jobs (précise) et travail au noir",
+                    "gangLeadership": "un gang (précise) et commandement",
+                    "holdingWealth": "un domaine (précise) et richesse",
+                    "gangOption": "une nouvelle option pour ton gang",
+                    "garageCrew": "un garage (précise) et une équipe",
+                    "gangPackAlpha": "un gang (précise) et mâle alpha",
+                    "holdingOption": "une nouvelle option de domaine",
+                    "eraseHoldingOption": "efface une option de domaine",
+                    "followersOption": "une nouvelle option pour tes disciples",
+                    "gigCrew": "un job et tu peux changer ton équipe",
+                    "removeObligationGig": "laisse tomber ou résout une obligation",
+                    "lifeSupport": "ajoute une unité de soins intensifs à ton atelier pour bosser sur des gens",
+                    "followersFortunes": "des disciples (précise) et offrande"
+                }
+            },
+            "playbooks": {
+                "angel": {
+                    "long": "l'ange gardien",
+                    "short": "ange gardien",
+                    "special": "si tu couches avec un autre personnage, ton Hx avec lui sur ta fiche monte direct à +3, et il reçoit direct un +1 à son Hx avec toi, sur sa fiche. Si ça amène son Hx avec toi à +4, ça retombe à +1, comme d'hab, et il coche donc une bulle d'expérience.",
+                    "stock": "réserves",
+                    "moves": {
+                        "sixthSense": {
+                            "title": "sixième sens",
+                            "description": "quand tu ouvres ton cerveau au maelström psychique, tu jettes dés+rusé au lieu de dés+zarb."
+                        },
+                        "infirmary": {
+                            "title": "infirmerie",
+                            "description": "tu reçois une infirmerie, une unité de chirurgie avec du matos de soins intensifs, un labo pharmaceutique et deux infirmiers à tout faire (Shi- gusa & Mox, si ça se trouve). Mets-y des patients et tu peux travailler dessus comme un machiniste dans son atelier."
+                        },
+                        "professionalCompassion": {
+                            "title": "compassion professionnelle",
+                            "description": "tu peux choisir de jeter dés+rusé au lieu de dés+Hx quand tu aides quelqu'un."
+                        },
+                        "battlefieldGrace": {
+                            "title": "médecine de guerre",
+                            "description": "quand t t'occupes de quelqu'un sans penser à combattre, tu gagnes +1armure."
+                        },
+                        "healingTouch": {
+                            "title": "imposition des mains",
+                            "description": "quand tu poses tes mains peau à peau sur une personne blessée et que tu lui ouvres ton cerveau, dés+zarb. Sur 10+, soigne un segment. Sur 7-9, soigne un segment mais tu dois agir face au danger : celui de cramer le cerveau de ton patient. Sur un échec : déjà, il n'est pas soigné. Ensuite, vous avez tous les deux ouvert votre cerveau au maelström psychique, sans protection ni préparation. Pour toi, comme pour ton patient si c'est le personnage d'un autre joueur, ça marche comme si vous aviez effectivement ouvert votre cerveau au maelström et que vous aviez raté votre jet. Si le patient appartient au MC, c'est ce dernier qui décide ce qu'il subit et s'il s'en tire."
+                        },
+                        "touchedByDeath": {
+                            "title": "la mort en face",
+                            "description": "chaque fois que quelqu'un meurt sous tes soins, tu reçois +1zarb (max zarb+3)."
+                        }
+                    }
+                },
+                "battleBabe": {
+                    "long": "la beauté fatale",
+                    "short": "beauté fatale",
+                    "special": "si tu couches avec un autre personnage, tu annules son spécial. Quel qu'il soit, rien de particulier ne se passe.",
+                    "customWeapons": "tes armes sur mesure",
+                    "moves": {
+                        "dangerousSexy": {
+                            "title": "mortel & sexy",
+                            "description": "quand tu arrives dans une situation tendue, dés+sexy. Sur un 10+, tu retiens 2. Sur un 7-9, tu retiens 1. Tu dépenses ce que tu as retenu, 1 pour 1, pour regarder un PNJ présent droit dans les yeux, qui se fige ou flanche et ne peut rien faire jusqu'à ce que tu rompes le contact. Sur un 6-, tes adversaires te prennent immédiatement pour leur principal problème."
+                        },
+                        "iceCold": {
+                            "title": "nerfs d'acier",
+                            "description": "quand tu agresses un PNJ, dés+cool au lieu de dés+dur. Quand tu agresses le personnage d'un autre joueur, dés+Hx au lieu de dés+dur."
+                        },
+                        "merciless": {
+                            "title": "impitoyable",
+                            "description": "quand tu fais du mal, tu fais +1dégât."
+                        },
+                        "visionsOfDeath": {
+                            "title": "vision de mort",
+                            "description": "quand tu arrives sur un champ de bataille, dés+zarb. Sur 10+, nomme une personne qui va mourir et une personne qui va survivre. Sur 7-9, nomme une personne qui va mourir OU une personne qui va survivre. Ne désigne que des PNJ, pas les personnages d'autres joueurs. Le MC réalisera ta vision même si ça tient à peine debout. Sur un échec, tu vois ta propre mort, et en conséquence tu prends -1 pendant le reste de la bataille."
+                        },
+                        "perfectInstincts": {
+                            "title": "instinct sans faille",
+                            "description": "quand tu fais le point et que tu prends en compte les réponses du MC pour agir, prends +2 au lieu de +1."
+                        },
+                        "impossibleReflexes": {
+                            "title": "réflexes improbables",
+                            "description": "la façon dont tu bouges sans fardeau compte comme une armure. Si tu es nu ou presque, 2-armure ; si ne tu portes rien de blindé, 1-armure. Si tu portes une armure, utilise l'armure."
+                        }
+                    }
+                },
+                "brainer": {
+                    "long": "le céphale",
+                    "short": "céphale",
+                    "special": "si tu couches avec un autre person nage, tu lui fais automatiquement une sonde cérébrale en profon deur, que tu aies pris cette action-là ou pas. Dés+zarb comme d'habitude. Mais le MC choisit les questions aux quelles l'autre joueur doit répondre.",
+                    "brainerGear": {
+                        "title": "matos & troc",
+                        "implantSyringe": {
+                            "title": "seringue à implant (toucher high-tech)",
+                            "description": "après avoir touché quelqu'un avec, si une action de céphale te permet d'infliger des dégâts, inflige +1dégât."
+                        },
+                        "brainRelay": {
+                            "title": "relais cérébral (zone proche high-tech)",
+                            "description": "pour les besoins d'une action de céphale : si quelqu'un peut voir ton relais cérébral, il peut te voir toi."
+                        },
+                        "receptivityDrugs": {
+                            "title": "drogues de réceptivité (toucher high-tech)",
+                            "description": "toucher quelqu'un te permet de retenir 1 de plus pour les besoins d'une action de céphale."
+                        },
+                        "violationGlove": {
+                            "title": "gant de violation (contact high-tech)",
+                            "description": "pour les besoins d'une action de céphale : toucher simplement la peau de ta victime compte comme avoir du temps et un peu d'intimité avec elle."
+                        },
+                        "painWaveProjector": {
+                            "title": "projecteur d'ondes-douleur (1-dégât perforant zone bruyant recharge high-tech)",
+                            "description": "explose comme une grenade rechargeable et touche tout le monde sauf toi."
+                        },
+                        "deepEarPlugs": {
+                            "title": "bouchons d'oreille interne (porté high-tech)",
+                            "description": "protège le porteur contre toutes les actions et tous les matos de céphale."
+                        }
+                    },
+                    "moves": {
+                        "unnaturalLustTransfixion": {
+                            "title": "transfixion sexuelle aberrante",
+                            "description": "quand tu séduis quelqu'un, dés+zarb au lieu de dés+sexy."
+                        },
+                        "casualBrainReceptivity": {
+                            "title": "réception cérébrale passive",
+                            "description": "quand tu veux cerner quelqu'un, dés+zarb au lieu de dés+rusé. Ta victime doit être capable de te voir, mais tu n'as pas besoin d'interagir avec elle."
+                        },
+                        "preternaturalAtWillBrainAttunement": {
+                            "title": "entretien cérébral surnaturel",
+                            "description": "tu reçois +1zarb (zarb+3)."
+                        },
+                        "deepBrainScan": {
+                            "title": "sonde cérébrale en profondeur",
+                            "description": "quand tu as le temps et un peu d'intimité avec quelqu'un — volontairement, comme quand tu le tiens dans tes bras, ou pas, comme quand il est attaché à une table — tu peux lire en lui plus profondément qu'à l'habitude. Dés+zarb. Sur 10+, tu retiens 3. Sur 7-9, tu retiens 1. Quand tu lis en lui, dépense ce que tu as retenu pour poser une question à son joueur, 1 pour 1 :\n• c'était quoi, le pire moment de ton personnage ?\n• de quoi ton personnage cherche-t-il à se faire pardonner et par qui ?\n• quelles douleurs secrètes cache ton personnage ?\n• quelles sont les failles de ton personnage, dans sa tête et dans son coeur ?\nSur un échec, tu infliges 1-dégât perforant à ta victime et tu n'y gagnes rien."
+                        },
+                        "directBrainWhisperProjection": {
+                            "title": "murmure par projection cérébrale",
+                            "description": "tu peux jeter les dés+zarb pour obtenir la même chose qu'en agressant quelqu'un, sans l'agresser directement. Ta victime doit être capable de te voir, mais tu n'es pas obligé d'interagir avec elle. Si ta victime te tient tête, ton esprit compte comme une arme (1-dégât perforant proche bruyant-facultatif)."
+                        },
+                        "inBrainPuppetStrings": {
+                            "title": "marionnettiste cérébral",
+                            "description": "quand tu as du temps et un peu d'intimité avec quelqu'un — volontairement ou non, voir plus haut — tu peux implanter un ordre dans son esprit. Dés+zarb. Sur 10+, tu retiens 3. Sur 7-9, tu retiens 1. Quand tu veux, quelles que soient les circonstances, tu peux dépenser ce que tu as retenu, 1 pour 1, pour :\n• infliger 1-dégât perforant à ta victime\n• que la victime reçoive -1 à son jet là maintenant\nSi ta victime suit ton ordre, ça dépense tout ce que tu retiens encore. Sur un échec, tu infliges 1-dégât perforant à ta victime et tu n'y gagnes rien."
+                        }
+                    }
+                },
+                "chopper": {
+                    "long": "le biker",
+                    "short": "biker",
+                    "special": "si tu couches avec un autre personnage, il change de suite sa feuille pour avoir Hx+3 avec toi. Il choisit aussi si tu prends -1 ou +1 à ton Hx avec lui, sur ta feuille.",
+                    "bike": {
+                        "title": "ta bécane",
+                        "strengths": "points forts",
+                        "looks": "points faibles",
+                        "weaknesses": "apparence"
+                    },
+                    "gang": {
+                        "title": "gang",
+                        "size": "taille",
+                        "harm": "dégâts",
+                        "armor": "armure",
+                        "tags": "mots-clés",
+                        "vsGangs": "+1dégât vs. des gangs plus petits, -1dégât vs des gangs plus gros, par différence de taille"
+                    },
+                    "advantages": {
+                        "medium": "ton gang rassemble une trentaine de bâtards enragés : moyen au lieu de petit",
+                        "wellArmed": "ton gang est bien armé : +1dégât",
+                        "wellArmored": "ton gang sort couvert : +1armure",
+                        "wellDisciplined": "ton gang est discipliné : efface sauvage",
+                        "nomadic": "ton gang aime la liberté et peut rafistoler et entretenir ses bécanes sans avoir une base fixe : +mobile",
+                        "rich": "ton gang se débrouille tout seul et fait ses courses en pillant et en recyclant : +riche"
+                    },
+                    "problems": {
+                        "breakdown": "les bécanes de ton gang sont en sale état et on doit les rafistoler sans arrêt, vulnérable : panne",
+                        "grounded": "les bécanes de ton gang sont classes mais faut y faire attention, vulnérable : capricieux",
+                        "desertion": "ton gang est instable, les membres vont et viennent comme ils le sentent ; vulnérable : désertion",
+                        "obligation": "ton gang a une grosse dette envers quelqu'un de puissant, vulnérable : obligation",
+                        "disease": "ton gang est crade et malsain, vulnérable : maladie"
+                    },
+                    "moves": {
+                        "packAlpha": {
+                            "title": "mâle alpha",
+                            "description": "quand tu essaies de forcer ton gang à faire ce que tu veux, dés+dur. Sur un 10+, tous les trois. Sur 7-9, 1 au choix :\n• ils font ce que tu veux\n• ça ne déclenche pas une bagarre\n• tu n'as pas à faire un exemple de l'un d'entre eux\nSur un échec, un de tes gars essaie de prouver qu'il a plus d'autorité que toi sur le reste du gang."
+                        },
+                        "fuckingThieves": {
+                            "title": "putain de voleurs",
+                            "description": "quand tu demandes à ton gang de fouiller ses poches et ses sacs pour un truc, dés+dur. Ça doit être assez petit pour tenir dans un sac. Sur 10+, un de tes mecs a justement ça dans sa poche, ou en tout cas un truc qui peut servir. Sur 7-9, un de tes mecs a un truc qui peut servir, sauf si c'est high-tech et dans ce cas tu peux te brosser. Sur un échec, un de tes mecs en avait un, il en est sûr, mais visiblement un trou du cul a dû le piquer."
+                        }
+                    }
+                },
+                "driver": {
+                    "long": "le passeur",
+                    "short": "passeur",
+                    "special": "si tu couches avec un autre personnage, dés+cool. Sur 10+, c'est cool, juste un coup comme ça. Sur 7-9, ajoute +1 à son Hx avec toi sur sa fiche, mais donne -1 à ton Hx avec lui, sur ta fiche. Sur un échec, faut que tu y ailles : prends -1 continu jusqu'à ce que tu lui prouves que c'était pas du sérieux ni rien.",
+                    "yourCar": "ta bagnole",
+                    "car2": "bagnole n°2",
+                    "car3": "bagnole n°3",
+                    "otherCars": "autres bagnoles",
+                    "car": {
+                        "frame": "châssis",
+                        "power": "puissance",
+                        "looks": "apparence",
+                        "armor": "armure",
+                        "weak": "faiblesse",
+                        "tags": "mots-clés"
+                    },
+                    "moves": {
+                        "noShitDriver": {
+                            "title": "as du volant",
+                            "description": "quand tu tiens le volant...\n...ajoute la puissance de ta bagnole à ton jet quand tu agis face au danger.\n...ajoute la puissance de ta bagnole à ton jet quand tu prends quelque chose par la force.\n...ajoute la puissance de ta bagnole à ton jet quand tu agresses quelqu'un.\n...ajoute l'apparence de ta bagnole à ton jet quand tu séduis ou manipules quelqu'un.\n...ajoute la puissance de ta bagnole à ton jet quand tu aides quelqu'un ou interfères avec lui.\n...ajoute la faiblesse de ta bagnole au jet de ton adversaire quand on interfère avec toi."
+                        },
+                        "goodInTheClinch": {
+                            "title": "excellent sous pression",
+                            "description": "quand tu prends des risques, dés+rusé au lieu de dés+cool."
+                        },
+                        "weatherEye": {
+                            "title": "sentir l'orage",
+                            "description": "quand tu ouvres ton cerveau au maelström psychique, dés+rusé au lieu de dés+zarb."
+                        },
+                        "daredevil": {
+                            "title": "casse-cou",
+                            "description": "quand tu fonces droit vers le danger sans assurer tes arrières, tu reçois +1armure. Si tu mènes un gang ou un convoi, il reçoit +1armure tout pareil."
+                        },
+                        "collector": {
+                            "title": "collectionneur",
+                            "description": "tu reçois 2 bagnoles de plus."
+                        },
+                        "otherCarIsTank": {
+                            "title": "j'ai laissé mon tank au garage",
+                            "description": "tu reçois une bagnole de plus. Installe dessus des mitrailleuses (3-dégâts proche/loin zone salissant) ou des lancegrenades (4-dégâts proche zone salissant), et ajoute-lui +1armure."
+                        }
+                    }
+                },
+                "gunLugger": {
+                    "long": "le chien de guerre",
+                    "short": "chien de guerre",
+                    "special": "si tu couches avec un autre personnage, tu reçois +1 au prochain jet. Si tu veux, l'autre chope aussi +1 à son prochain jet.",
+                    "weaponsArmor": "armes & armure",
+                    "weapons": "armes",
+                    "armor": "armure",
+                    "fuckOffBigGuns": {
+                        "title": "putain de gros flingues",
+                        "silencedSniper": "fusil de précision avec silencieux (3-dégâts loin high-tech)",
+                        "mg": "mitrailleuse (3-dégâts proche/loin zone salissant)",
+                        "assaultRifle": "fusil d'assaut (3-dégâts proche bruyant full-auto)",
+                        "grenadeLauncher": "lance-grenades (5-dégâts proche zone salissant)"
+                    },
+                    "seriousGuns": {
+                        "title": "flingues qui ne rigolent pas",
+                        "huntingRifle": "fusil de chasse (2-dégâts loin bruyant)",
+                        "shotgun": "fusil à pompe (3-dégâts proche salissant)",
+                        "smg": "pistolet mitrailleur (2-dégâts proche zone bruyant)",
+                        "magnum": "magnum (3-dégâts proche recharge bruyant)",
+                        "grenadeTube": "tube à grenades (4-dégâts proche zone recharge bruyant)",
+                        "apAmmo": "balles perce-blindage (perforant) : ajoute perforant à tous tes flingues",
+                        "silencer": "silencieux (high-tech) : enlève bruyant à un de tes flingues"
+                    },
+                    "backupWeapons": {
+                        "title": "armes de réserve",
+                        "9mm": "automatique (2-dégâts proche bruyant)",
+                        "bigAssKnife": "grosse lame (2-dégâts contact)",
+                        "machete": "machette (3-dégâts contact salissant)",
+                        "manyKnives": "plein de couteaux (2-dégâts contact infini)",
+                        "grenades": "grenades (4-dégâts contact zone recharge salissant)"
+                    },
+                    "moves": {
+                        "battleHardened": {
+                            "title": "endurci par le feu",
+                            "description": "quand tu agis face au danger, dés+dur au lieu de dés+cool."
+                        },
+                        "fuckThisShit": {
+                            "title": "allez tous vous faire foutre",
+                            "description": "désigne ton échappatoire et jette dés+dur. Sur 10+, c'est parfait, tu te casses. Sur 7-9, tu peux rester ou te casser, mais si tu te casses ça va te coûter cher : tu laisses quelque chose derrière toi ou tu prends quelque chose avec toi, le MC te dira quoi. Sur un échec, tu es pris sur le fait, en train de te casser mais pas encore parti."
+                        },
+                        "battlefieldInstincts": {
+                            "title": "instinct du soldat",
+                            "description": "quand tu ouvres ton cerveau au maelström psychique, lance dés+dur au lieu de dés+zarb, mais seulement pendant une bataille."
+                        },
+                        "insanoLikeDrano": {
+                            "title": "gros malade",
+                            "description": "tu reçois +1dur (dur+3)."
+                        },
+                        "preparedForInevitable": {
+                            "title": "préparé à l'inévitable",
+                            "description": "tu as un kit de premiers soins bien fourni et de bonne qualité. Ça marche comme un kit d'ange gardien (cf) avec 2-réserves maximum."
+                        },
+                        "bloodcrazed": {
+                            "title": "soif de sang",
+                            "description": "quand tu infliges des dégâts, inflige +1dégât."
+                        },
+                        "notToBeFuckedWith": {
+                            "title": "ne pas faire chier",
+                            "description": "pendant une bataille, tu comptes comme un gang (3-dégâts gang petit), avec l'armure qui va bien selon les circonstances."
+                        }
+                    }
+                },
+                "hardHolder": {
+                    "long": "le taulier",
+                    "short": "taulier",
+                    "special": "si tu couches avec un autre personnage, tu peux lui filer un cadeau valant 1-troc, sans que ça te coûte le moindre centime.",
+                    "holding": {
+                        "title": "domaine",
+                        "size": "population",
+                        "surplus": "surplus",
+                        "barter": "troc",
+                        "gigs": "jobs",
+                        "want": "besoins"
+                    },
+                    "gang": {
+                        "title": "gang",
+                        "size": "taille",
+                        "harm": "dégâts",
+                        "armor": "armure",
+                        "tags": "mots-clés",
+                        "vsGangs": "+1dégât vs. des gangs plus petits, -1dégât vs des gangs plus gros, par différence de taille"
+                    },
+                    "advantages": {
+                        "largePopulation": "tes sujets sont nombreux, 200-300 âmes ; surplus: +1troc, besoin : +1maladie",
+                        "smallPopulation": "tes sujets sont peu nombreux, 50-60 âmes ; besoin : anxieux au lieu de besoin : affamé",
+                        "lucrativeRaiding": "pour les jobs, ajoute du pillage très lucratif ; surplus: +1troc, besoin : +représailles",
+                        "protectionTribute": "pour les jobs, ajoute un impôt de protection ; surplus : +1troc, besoin : +obligation",
+                        "manufactory": "pour les jobs, ajoute une usine ; surplus : +1troc, besoin : +oisif",
+                        "market": "pour les jobs, ajoute un énorme marché connu à cents lieues ; surplus : +1troc, besoin : +oisif",
+                        "largeGang": "ton gang est gros au lieu de moyen, 60 brutes environ",
+                        "wellDisciplinedGang": "ton gang est discipliné, efface indiscipliné",
+                        "goodArmory": "ton arsenal est fourni et sophistiqué, ton gang chope +1dégât",
+                        "goodCompound": "ton enceinte est grande, profonde et imposante, faite de pierre et d'acier ; ton gang chope +2armure quand défend l'enceinte"
+                    },
+                    "problems": {
+                        "disease": "tes sujets sont crasseux et malades, besoin : +maladie",
+                        "famine": "tes sujets sont fainéants et camés, besoin : +famine",
+                        "decadence": "tes sujets sont décadents et pervers, surplus : -1troc, besoin : +sauvagerie",
+                        "holdingOwesTribute": "ton domaine paie un impôt à un protecteur, surplus : -1troc, besoin : +représailles",
+                        "smallGang": "ton gang est petit au lieu de moyen, juste 10-20 brutes",
+                        "gangSavagery": "ton gang est une bande de sales hyènes, +sauvage",
+                        "shitArmory": "ton arsenal c'est de la daube, ton gang chope -1dégât",
+                        "shitCoumpound": "ton enceinte c'est des tentes, un bidonville et des planches de bois ; ton gang n'a aucune armure en plus quand il défend l'enceinte"
+                    },
+                    "moves": {
+                        "leadership": {
+                            "title": "commandement",
+                            "description": "quand ton gang combat pour toi, jette dés+dur. Sur 10+, retiens 3. Sur 7-9, retiens 1. Pendant le combat, dépense ce que tu as retenu, 1 pour 1, pour que ton gang :\n• lance une attaque frontale\n• tienne bon face à une attaque frontale\n• organise un repli stratégique\n• fasse preuve de clémence envers les perdants\n• combatte et meure jusqu'au dernier\nSur un échec ton gang se retourne contre toi ou essaie de t'abandonner aux mains de tes adversaires."
+                        },
+                        "wealth": {
+                            "title": "richesse",
+                            "description": "si ton domaine est en sécurité et que tu l'as bien en main, au début de la session jette dés+dur. Sur 10+ tu gagnes ton surplus que tu peux dépenser pour les besoins de la session. Sur 7-9, tu as ton surplus mais tu choisis 1 besoin. Sur un échec, ou si ton domaine est compromis ou ta mainmise vacillante, ton domaine est dans le besoin. La nature exacte de ton surplus et de tes besoins dépend de ton domaine, voir au verso."
+                        }
+                    }
+                },
+                "hocus": {
+                    "long": "le prophète",
+                    "short": "prophète",
+                    "special": "si tu couches avec un autre personnage, vous retenez chacun 1. Vous pouvez chacun le dépenser pour aider l'autre où interférer avec lui, à distance et malgré tout ce qui vous sépare.",
+                    "followers": {
+                        "title": "disciples",
+                        "description": "description",
+                        "surplus": "surplus",
+                        "barter": "troc",
+                        "fortune": "offrandes",
+                        "want": "besoins"
+                    },
+                    "types": {
+                        "title": "décris-les",
+                        "cult": "ta secte",
+                        "family": "ta famille",
+                        "students": "tes élèves",
+                        "scene": "ta bande",
+                        "staff": "ton équipe",
+                        "court": "ta cour"
+                    },
+                    "advantages": {
+                        "dedicated": "tes disciples te sont entièrement dévoués ; surplus : 1-troc et remplace besoin : désertion par besoin : affamé",
+                        "fortune": "tes disciples ont une activité commerciale lucrative, +1offrande",
+                        "augury": "tes disciples, en groupe, forment une antenne psychique très efficace ; surplus : +auspice",
+                        "party": "tes disciples sont pleins de joie et d'entrain, surplus : +débauche",
+                        "insight": "tes disciples aiment réfléchir et discuter, surplus : +conseil",
+                        "hardWorking": "tes disciples travaillent dur et ont les pieds sur terre, surplus : +1troc",
+                        "growth": "tes disciples sont motivés, enthousiastes et convaincants ; surplus: +croissance"
+                    },
+                    "problems": {
+                        "fewFollowers": "tu as peu de disciples, moins d'une dizaine ; surplus : -1troc",
+                        "desertion": "ce ne sont pas vraiment tes disciples, tu les subis plus qu'autre chose ; besoin : jugement au lieu de besoin : désertion",
+                        "desperation": "tes disciples sont complètement dépendants de toi et ne font rien sans te demander ton avis, besoin : +désespoir",
+                        "stupor": "tes disciples sont des gros camés, surplus : +stone",
+                        "disease": "tes disciples se foutent de la mode, des commodités et des conventions ; besoin : +maladie",
+                        "violence": "tes disciples se foutent de la loi, du calme, du bon sens et de la communauté ; surplus : +violence",
+                        "savagery": "tes disciples sont pervers et décadents, besoin : +sauvagerie"
+                    },
+                    "moves": {
+                        "fortunes": {
+                            "title": "offrande",
+                            "description": "les offrandes, les surplus et les besoins dépendent de tes disciples. Au début de la session, jette dés+offrande. Sur 10+, tes disciples ont du surplus. Sur 7-9, ils ont du surplus mais tu leur choisis 1-besoin. Sur un échec, ils sont dans le besoin. Si leur surplus comprend du troc, comme 1-troc ou 2-troc, c'est ta part."
+                        },
+                        "frenzy": {
+                            "title": "frénésie",
+                            "description": "quand ouvres ton cœur à la foule, jette dés+zarb. Sur un 10+ retiens 3. Sur 7-9 retiens 1. Dépense ce que tu as retenu, 1 pour 1, pour que la foule :\n• t'amène une ou plusieurs personne(s) devant tout le monde\n• t'amène tout son bric-à-brac de valeur\n• se rassemble et combatte pour toi comme un gang (2-dégât 0-armure\n• taille appropriée)\n• se laisse aller dans une orgie de passion sans entrave : ça baise, ça se lamente, ça se frite, ça partage tout, ça fait la fête, comme tu veux\n• retourne calmement à son train-train\nSur un échec, la foule se retourne contre toi."
+                        },
+                        "charismatic": {
+                            "title": "charismatique",
+                            "description": "quand tu manipules quelqu'un, dés+zarb au lieu de dés+sexy."
+                        },
+                        "fuckingWacknut": {
+                            "title": "complètement fondu",
+                            "description": "tu reçois +1zarb (zarb+3)."
+                        },
+                        "seeingSouls": {
+                            "title": "voir les âmes à nu",
+                            "description": "quand tu aides quelqu'un ou interfères avec lui, dés+zarb au lieu de dés+Hx."
+                        },
+                        "divineProtection": {
+                            "title": "protection divine",
+                            "description": "tes dieux te donnent 1-armure. Si tu portes une armure, utilise-la à sa place, ça ne s'ajoute pas."
+                        }
+                    }
+                },
+                "operator": {
+                    "long": "l'arrangeur",
+                    "short": "arrangeur",
+                    "special": "Si tu couches avec un autre personnage, tu reçois une nouvelle obligation : « rendre [nom] heureux » (tu le rends heureux / tu as tout fait foirer).\nSi tu couches plusieurs fois avec la même personne, tu ne reçois pas le job une seconde fois.",
+                    "crewContacts": {
+                        "title": "équipe / contacts",
+                        "help": "ton équipe ou tes contacts peuvent être tous des personnages d'autres joueurs, tous des personnages du MC, ou un mélange des deux. Si tu emploies des personnages du MC, définis-les dans les grandes lignes avec son aide : des noms (Valjean, Jaim, Pé et Crâmé par exemple) et une description en deux mots. Ils doivent savoir ce qu'ils font et servir à quelque chose dans les jobs que tu as choisis."
+                    },
+                    "payingGigs": {
+                        "title": "jobs lucratifs",
+                        "bodyguarding": "garde du corps (1-troc/grosse baston)",
+                        "surveillance": "surveillance (1-troc/trompé)",
+                        "raiding": "pillage (1-troc/grosse baston)",
+                        "enforcement": "patrouille (1-troc/renversé)",
+                        "honestWork": "travail honnête (1-troc/appauvri)",
+                        "companionship": "tenir compagnie (1-troc/impliqué)",
+                        "deliveries": "livraisons (1-troc/guet-apens)",
+                        "infiltration": "infiltration (1-troc/découvert)",
+                        "scavenging": "récupération (1-troc/appauvri)",
+                        "brokeringDeals": "intermédiaire (1-troc/mis au ban)",
+                        "technicalWork": "travail technique (1-troc/mis au ban)",
+                        "fucking": "baise (2-troc/impliqué)",
+                        "compoundDefense": "défendre un domaine (2-troc/infiltré)",
+                        "doingMurders": "buter des gens (3-troc/grosse baston)"
+                    },
+                    "obligationGigs": {
+                        "title": "obligations",
+                        "avoidingSomeone": "éviter quelqu'un (tu as la paix/il te chope au mauvais moment)",
+                        "payingDebts": "payer ses dettes (tu t'en tires/tu dois payer la note)",
+                        "revenge": "vengeance (tu malmènes quelqu'un/tu te fais humilier)",
+                        "protectingSomeone": "protéger quelqu'un (rien de grave ne lui arrive/il est cuit)",
+                        "pursuingLuxury": "chercher fortune (tout roule pour toi/tu es dans la merde)",
+                        "maintainingHonor": "défendre son honneur (tu tiens parole et tu gardes la face/tu dépasses les bornes)",
+                        "seekingAnswers": "chercher des réponses (tu as une piste/tu es sur une fausse piste)"
+                    },
+                    "moves": {
+                        "moonlighting": {
+                            "title": "travail au noir",
+                            "description": "tu reçois 2-pauses. Quand tu as du temps libre en jeu, ou entre deux sessions, décide combien de jobs tu prends parmi ceux disponibles. N'en prends pas plus que tes pauses. Dés+cool. Sur 10+ tous tes jobs font des bénéfices. Sur 7-9, au moins 1 de tes jobs fait des bénéfices : si tu en as pris plusieurs, 1 job provoque une catastrophe et les autres font du bénef. Sur un échec, catastrophe pour tous. Les jobs dont tu ne t'occupes pas ne font ni bénef, ni catastrophe. Chaque fois que tu reçois un nouveau job, tu reçois aussi +1pause."
+                        },
+                        "easyToTrust": {
+                            "title": "inspire la confiance",
+                            "description": "quand tu séduis ou manipules le personnage d'un autre joueur, lance dés+Hx au lieu de dés+sexy. Avec un PNJ, dés+cool au lieu de dés+sexy."
+                        },
+                        "eyeOnTheDoor": {
+                            "title": "les yeux sur la porte",
+                            "description": "annonce ton échappatoire et lance les dés+cool. Sur 10+ tu es déjà parti. Sur 7-9 tu restes ou tu pars, mais si tu pars ça te coûte : tu laisses quelque chose derrière toi ou tu prends quelque chose avec toi, et le MC te dit quoi. Sur un échec, tu es pris sur le fait, un pied dehors et un pied dedans."
+                        },
+                        "opportunistic": {
+                            "title": "opportuniste",
+                            "description": "quand tu interfères avec quelqu'un qui jette les dés, lance dés+cool au lieu de dés+Hx. Connard."
+                        },
+                        "reputation": {
+                            "title": "réputation",
+                            "description": "quand tu rencontres quelqu'un qui t'a l'air important, tu peux, si tu veux, lancer dés+cool. Sur une réussite, il a entendu parler de toi, et tu décides de ce qu'il a entendu : le MC le fera réagir en conséquences. Sur 10+ tu prends un +1 au prochain jet quand tu auras affaire à lui. Sur un échec, il a entendu parler de toi, mais le MC décide de ce qu'il a entendu."
+                        }
+                    }
+                },
+                "savvyHead": {
+                    "long": "le machiniste",
+                    "short": "machiniste",
+                    "special": "si tu couches avec un autre personnage, il te parle comme si c'était un objet et que tu avais tiré un 10+, que tu aies pris les choses me parlent ou pas. L'autre joueur et le MC vont répondre à tes questions en se partageant le boulot.\nÀ part dans ce cas-là, cette action ne marche pas avec les gens, jamais, seulement avec les choses.",
+                    "moves": {
+                        "thingsSpeak": {
+                            "title": "les choses me parlent",
+                            "description": "dès que tu manipules ou que tu examines un objet intéressant, dés+zarb. Sur un succès, tu peux poser des questions au MC. Sur 10+, 2 questions. Sur 7-9, 1 question :\n• qui 'est servi de cet objet en dernier avant moi ?\n• qui a fabriqué ça ?\n• si quelqu'un a eu des émotions fortes près de cet objet, lesquelles ?\n• quels mots a-t-on prononcés récemment près de cet objet ?\n• qu'est-ce qu'on a fait à, ou avec cet objet récemment ?\n• qu'est-ce qui cloche dans cet objet et comment je peux l'arranger ?\nSur un échec, fais comme si tu avais ouvert ton cerveau au maelström et que tu avais raté le jet."
+                        },
+                        "bonefeel": {
+                            "title": "comme un pressentiment",
+                            "description": "au début de la session, dés+zarb. Sur 10+, retiens 1 et +1. Sur 7-9, retiens 1. À tout moment, toi ou le MC pouvez dépenser ce que tu retiens pour être déjà sur place doté de tout ce qu'il faut et de tout ce que tu dois savoir, avec une explication crédible ou pas. Si tu as retenu 1 et +1, tu reçois +1 à ton prochain jet à partir de maintenant. Sur un échec, le MC retient 1 et peut le dépenser pour que tu sois déjà là mais coincé, pris au piège ou enfermé d'une façon ou d'une autre."
+                        },
+                        "oftenerRight": {
+                            "title": "toujours raison",
+                            "description": "quand un personnage vient te voir pour un conseil, annonce-lui ce que tu penses honnêtement être la meilleure marche à suivre. S'il suit ton conseil, il reçoit un +1 sur tous les jets concernant ce problème, et vous cochez une bulle d'expérience chacun."
+                        },
+                        "realityFrayingEdge": {
+                            "title": "la réalité perd des pièces",
+                            "description": "un de tes outils ou une de tes créations est particulièrement réceptif au maelström psychique (+auspice). Choisis lequel ou laisse le choix aux mains du MC qui te le révélera en cours de jeu."
+                        },
+                        "spookyIntense": {
+                            "title": "intense à faire peur",
+                            "description": "quand tu agis face au danger, dés+zarb au lieu de dés+cool."
+                        },
+                        "deepInsights": {
+                            "title": "introspection",
+                            "description": "tu reçois +1zarb (zarb+3)."
+                        }
+                    },
+                    "workspace": {
+                        "title": "atelier",
+                        "garage": "un garage",
+                        "darkroom": "une chambre noire",
+                        "growingEnvironment": "une serre hydroponique",
+                        "skilledLabor": "du matériel radio",
+                        "junkyard": "une casse pleine de pièces détachées",
+                        "truckVan": "un camion ou un van",
+                        "electronica": "des merdouilles électroniques",
+                        "machiningTools": "de quoi fabriquer des pièces de rechange",
+                        "transmittersReceivers": "des assistants qualifiés (Carna, Thuy et Pamming, par exemple)",
+                        "provingRange": "un terrain d'essai",
+                        "relicGoldenAge": "une relique de l'Âge d'Or passé",
+                        "boobyTraps": "des pièges à con"
+                    }
+                },
+                "skinner": {
+                    "long": "l'envoûteur",
+                    "short": "envoûteur",
+                    "special": "si tu couches avec un autre personnage, 1 au choix :\n• Tu prends +1 pour ton prochain jet et lui aussi\n• Tu prends +1 pour ton prochain jet, il prend -1 Il doit te faire un cadeau valant au moins 1-troc\n• Tu peux l'hypnotiser comme si tu avais tiré un 10+, même si tu n'as pas pris cette action-là",
+                    "graciousWeapons": {
+                        "title": "armes stylées",
+                        "sleevePistol": "flingue dans la manche (2-dégâts proche recharge bruyant)",
+                        "ornateDagger": "dague ouvragée (2-dégâts contact précieux)",
+                        "hiddenKnives": "couteaux dissimulés (2-dégâts contact inépuisable)",
+                        "ornateSword": "épée décorée (3-dégâts contact précieux)",
+                        "antiqueHandgun": "flingue ancien (2-dégâts proche recharge bruyant précieux)"
+                    },
+                    "luxeGear": {
+                        "title": "matos de luxe",
+                        "antiqueCoins": "monnaie ancienne (porté précieux) : avec un trou pour la porter comme bijou",
+                        "eyeglasses": "lunettes (porté précieux) : tu peux les mettre pour avoir +1rusé quand ta vue compte, mais si tu le fais, sans elles tu reçois -1rusé quand ta vue compte",
+                        "longCoat": "long manteau à tomber (porté précieux)",
+                        "spectacularTattoos": "tatouages spectaculaires (implanté)",
+                        "skinHairKit": "produits de beauté (appliqué précieux) : Savon, teintures, maquillage, crèmes et baumes : les utiliser te donne +1sexy pour ton prochain jet",
+                        "pet": "animal de compagnie (précieux vivant) : choisis et précise"
+                    },
+                    "moves": {
+                        "breathtaking": {
+                            "title": "à couper le souffle",
+                            "description": "tu reçois +1sexy (sexy+3)."
+                        },
+                        "lost": {
+                            "title": "perdu",
+                            "description": "quand tu murmures le nom de quelqu'un dans le maelström psychique, dés+zarb. Sur une réussite, il vient à toi, avec une explication crédible ou pas. Sur 10+, tu reçois +1 à ton prochain jet contre lui. Sur un échec, le MC te pose 3 questions, réponds-y honnêtement."
+                        },
+                        "artfulGracious": {
+                            "title": "de l'art et de la grâce",
+                            "description": "quand tu pratiques ton art de prédilection — n'importe quelle activité culturelle ou forme d'expression — ou quand tu présentes tes œuvres au public, dés+sexy. Sur 10+, dépense 3. Sur 7-9, dépense 1. Tu dépenses pour désigner un PNJ dans ton public et :\n• il doit venir te rencontrer\n• il doit faire appel à tes services\n• il tombe amoureux de toi\n• il doit te faire un cadeau\n• il admire ton mécène\nSur un échec, tu ne gagnes rien mais tu ne perds rien non plus et tu ne risques rien. Tu as juste fait de l'excellent boulot."
+                        },
+                        "arrestingSkinner": {
+                            "title": "faire tourner les têtes",
+                            "description": "quand tu enlèves un vêtement ou que tu le fais à quelqu'un d'autre, toutes les personnes qui regardent la scène sont incapables de faire autre chose que regarder. Tu as leur attention complète. Si tu veux, tu peux désigner quelqu'un qui n'est pas paralysé."
+                        },
+                        "hypnotic": {
+                            "title": "hypnotique",
+                            "description": "quand tu t'isoles un temps avec quelqu'un, il fait une fixation sur toi. Dés+sexy. Sur 10+, retiens 3. Sur 7-9, retiens 1. Ta cible peut dépenser ce que tu retiens, 1 pour 1, et :\n• il te donne quelque chose que tu veux\n• il devient tes yeux et tes oreilles\n• il se bat pour te protéger\n• il fait quelque chose que tu lui as demandé\nAvec les PNJ, tant que tu retiens quelque chose contre eux ils ne peuvent pas agir contre toi. Avec un PJ, tu peux dépenser ce que tu retiens, 1 pour 1, pour qu'il soit:\n• distrait en pensant à toi : il agit face au danger\n• inspiré en pensant à toi : il chope +1 tout de suite\nSur un échec, la cible retient 2 contre toi, selon les mêmes conditions."
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

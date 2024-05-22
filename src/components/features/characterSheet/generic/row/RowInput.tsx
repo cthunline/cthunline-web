@@ -5,6 +5,8 @@ type RowInputProps = {
     readonly: boolean;
     label?: string;
     center?: boolean;
+    w?: string;
+    flex?: string;
 } & (
     | {
           type: 'string';
@@ -21,6 +23,8 @@ type RowInputProps = {
 const RowInput = ({
     readonly,
     center,
+    w,
+    flex,
     type,
     label,
     value,
@@ -28,7 +32,8 @@ const RowInput = ({
 }: RowInputProps) => (
     <TextInput
         variant="contained"
-        w="100%"
+        w={w ?? (flex ? undefined : '100%')}
+        flex={flex}
         readOnly={readonly}
         center={center}
         ta={type === 'number' ? 'center' : undefined}

@@ -17,6 +17,7 @@ export interface SheetTabsProps {
     selectedValue: string;
     logoSvgComponent?: React.FC<React.SVGProps<SVGSVGElement>>;
     onChange: (value: string) => void;
+    contentScroll?: boolean;
 }
 
 const SheetTabs = ({
@@ -26,13 +27,14 @@ const SheetTabs = ({
     tabs,
     selectedValue,
     logoSvgComponent: SVGLogo,
-    onChange
+    onChange,
+    contentScroll = true
 }: SheetTabsProps) => {
     const handleChange = (value: string | null) => {
         onChange(value ?? '');
     };
     return (
-        <Stack mah="100%" gap="0.5rem">
+        <Stack mah="100%" gap="0.5rem" h="100%">
             {SVGLogo ? (
                 <Group
                     w="100%"
@@ -77,7 +79,9 @@ const SheetTabs = ({
                 w="100%"
                 h={0}
                 p="1rem"
-                style={{ overflowY: 'auto' }}
+                style={{
+                    overflowY: contentScroll ? 'auto' : undefined
+                }}
             >
                 {children}
             </Stack>

@@ -2,9 +2,9 @@ import { type WarhammerFantasyArmour } from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
 
 import { type MoveAction } from '../../../../../services/tools.js';
-import RowMenuButton from '../generic/RowMenuButton.js';
+import RowMenuButton from '../../generic/row/RowMenuButton.js';
 import { useApp } from '../../../../../contexts/App.js';
-import RowInput from '../generic/RowInput.js';
+import RowInput from '../../generic/row/RowInput.js';
 
 type ArmourRowProps = {
     readonly: boolean;

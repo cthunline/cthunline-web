@@ -5,11 +5,13 @@ import {
     type SeventhSeaCharacter,
     type SWD6Character,
     type DnD5Character,
-    type CoCCharacter
+    type CoCCharacter,
+    type ApocalypseWorldCharacter
 } from '@cthunline/games';
 
-import WarhammerFantasySheet from './warhammerFantasy/WarhammerFantasySheet.js';
 import useCharacterSheetStatus from '../../../hooks/api/useCharacterSheetStatus.js';
+import WarhammerFantasySheet from './warhammerFantasy/WarhammerFantasySheet.js';
+import ApocalypseWorldSheet from './apocalypseWorld/ApocalypseWorldSheet.js';
 import { type CharacterData, GameId } from '../../../types/index.js';
 import SeventhSeaSheet from './seventhSea/SeventhSeaSheet.js';
 import CoCSheet from './callOfCthulhu/CoCSheet.js';
@@ -66,6 +68,19 @@ const CharacterSheet = ({
     );
 
     const getContent = (): JSX.Element => {
+        if (gameId === GameId.apocalypseWorld) {
+            return (
+                <ApocalypseWorldSheet
+                    status={status}
+                    readonly={readonly}
+                    data={data as ApocalypseWorldCharacter}
+                    listening={listening}
+                    onChange={onChangeBuffer}
+                    portrait={portrait}
+                    onPortraitChange={onPortraitChange}
+                />
+            );
+        }
         if (gameId === GameId.callOfCthulhu) {
             return (
                 <CoCSheet

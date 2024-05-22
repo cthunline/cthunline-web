@@ -26,29 +26,29 @@ import {
     type SeventhSeaAdvantage
 } from '@cthunline/games';
 
-import {
-    type CharacterData,
-    GameId,
-    type CharacterSheetStatus
-} from '../../../../types/index.js';
+import SeventhSeaLogo from '../../../svg/games/seventhSea/SeventhSeaLogo.js';
 import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
 import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
 import Characteristics from './characteristics/Characteristics.js';
 import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
-import SeventhSeaLogo from '../../../svg/games/SeventhSea.js';
 import { biographyFields, arcanaFields } from './fields.js';
 import Backgrounds from './backgrounds/Backgrounds.js';
 import Portrait from '../generic/portrait/Portrait.js';
 import DeathSpiral from './deathSpiral/DeathSpiral.js';
+import { useApp } from '../../../../contexts/App.js';
 import Advantages from './advantages/Advantages.js';
 import Textarea from '../../../common/Textarea.js';
-import { useApp } from '../../../../contexts/App.js';
 import Stories from './stories/Stories.js';
 import {
     defaultBackground,
     defaultStory,
     defaultAdvantage
 } from './seventhSeaSheet.helper.js';
+import {
+    type CharacterData,
+    GameId,
+    type CharacterSheetStatus
+} from '../../../../types/index.js';
 
 export interface SeventhSeaSheetProps {
     status: CharacterSheetStatus;

@@ -11,8 +11,8 @@ import {
     GiLightBackpack
 } from 'react-icons/gi';
 
+import WarhammerFantasyLogo from '../../../svg/games/warhammerFantasy/WarhammerFantasyLogo.js';
 import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
-import WarhammerFantasyLogo from '../../../svg/games/WarhammerFantasy.js';
 import Characteristics from './characteristics/Characteristics.js';
 import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
 import FieldLayout from '../generic/fieldLayout/FieldLayout.js';

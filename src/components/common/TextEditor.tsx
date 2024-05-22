@@ -1,0 +1,67 @@
+import TextAlign from '@tiptap/extension-text-align';
+import Underline from '@tiptap/extension-underline';
+import { RichTextEditor } from '@mantine/tiptap';
+import { type BoxProps } from '@mantine/core';
+import StarterKit from '@tiptap/starter-kit';
+import { useEditor } from '@tiptap/react';
+
+interface TextEditorProps extends BoxProps {
+    readonly?: boolean;
+    value: string;
+    onChange?: (val: string) => void;
+}
+
+const TextEditor = ({
+    readonly,
+    value,
+    onChange,
+    ...props
+}: TextEditorProps) => {
+    const editor = useEditor({
+        extensions: [
+            StarterKit,
+            Underline,
+            TextAlign.configure({ types: ['heading', 'paragraph'] })
+        ],
+        content: value,
+        editable: !readonly,
+        onUpdate: ({ editor: e }) => onChange?.(e.getHTML())
+    });
+
+    return (
+        <RichTextEditor {...props} editor={editor}>
+            <RichTextEditor.Toolbar>
+                <RichTextEditor.ControlsGroup>
+                    <RichTextEditor.Bold />
+                    <RichTextEditor.Italic />
+                    <RichTextEditor.Underline />
+                </RichTextEditor.ControlsGroup>
+                <RichTextEditor.ControlsGroup>
+                    <RichTextEditor.H1 />
+                    <RichTextEditor.H2 />
+                    <RichTextEditor.H3 />
+                    <RichTextEditor.H4 />
+                </RichTextEditor.ControlsGroup>
+                <RichTextEditor.ControlsGroup>
+                    <RichTextEditor.Blockquote />
+                    <RichTextEditor.Hr />
+                    <RichTextEditor.BulletList />
+                    <RichTextEditor.OrderedList />
+                </RichTextEditor.ControlsGroup>
+                <RichTextEditor.ControlsGroup>
+                    <RichTextEditor.AlignLeft />
+                    <RichTextEditor.AlignCenter />
+                    <RichTextEditor.AlignJustify />
+                    <RichTextEditor.AlignRight />
+                </RichTextEditor.ControlsGroup>
+                <RichTextEditor.ControlsGroup>
+                    <RichTextEditor.Undo />
+                    <RichTextEditor.Redo />
+                </RichTextEditor.ControlsGroup>
+            </RichTextEditor.Toolbar>
+            <RichTextEditor.Content />
+        </RichTextEditor>
+    );
+};
+
+export default TextEditor;

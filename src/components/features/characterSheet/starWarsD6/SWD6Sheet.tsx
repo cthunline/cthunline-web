@@ -20,23 +20,23 @@ import {
     type SWD6Story
 } from '@cthunline/games';
 
+import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
+import SWD6Logo from '../../../svg/games/starWarsD6/StarWarsD6Logo.js';
+import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
+import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
+import { controlCharacterData } from './swd6Sheet.helper.js';
+import { biographyFields, storyFields } from './fields.js';
+import WoundStatus from './woundStatus/WoundStatus.js';
+import Portrait from '../generic/portrait/Portrait.js';
+import { useApp } from '../../../../contexts/App.js';
+import Attributes from './attributes/Attributes.js';
+import Statistics from './statistics/Statistics.js';
+import Weapons from './weapons/Weapons.js';
 import {
     type CharacterData,
     GameId,
     type CharacterSheetStatus
 } from '../../../../types/index.js';
-import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
-import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
-import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
-import { controlCharacterData } from './swd6Sheet.helper.js';
-import { biographyFields, storyFields } from './fields.js';
-import SWD6Logo from '../../../svg/games/StarWarsD6.js';
-import WoundStatus from './woundStatus/WoundStatus.js';
-import Portrait from '../generic/portrait/Portrait.js';
-import Attributes from './attributes/Attributes.js';
-import Statistics from './statistics/Statistics.js';
-import { useApp } from '../../../../contexts/App.js';
-import Weapons from './weapons/Weapons.js';
 
 export interface SWD6SheetProps {
     status: CharacterSheetStatus;

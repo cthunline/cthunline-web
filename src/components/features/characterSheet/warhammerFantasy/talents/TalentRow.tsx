@@ -2,10 +2,10 @@ import { type WarhammerFantasyTalent } from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
 
 import { type MoveAction } from '../../../../../services/tools.js';
-import RowMenuButton from '../generic/RowMenuButton.js';
-import Textarea from '../../../../common/Textarea.js';
+import RowMenuButton from '../../generic/row/RowMenuButton.js';
 import { useApp } from '../../../../../contexts/App.js';
-import RowInput from '../generic/RowInput.js';
+import Textarea from '../../../../common/Textarea.js';
+import RowInput from '../../generic/row/RowInput.js';
 
 type TalentRowProps = {
     readonly: boolean;

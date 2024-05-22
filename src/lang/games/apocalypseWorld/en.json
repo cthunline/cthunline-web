@@ -1,0 +1,643 @@
+{
+    "game": {
+        "apocalypseWorld": {
+            "bioStats": "bio & stats",
+            "gear": "gear",
+            "notes": "notes",
+            "playbook": "playbook",
+            "special": "special",
+            "gearBarter": "gear & barter",
+            "moves": "moves",
+            "otherMoves": "other moves",
+            "hold": "hold",
+            "advantages": "advantages",
+            "problems": "problems",
+            "element": {
+                "title": "title",
+                "description": "description"
+            },
+            "bio": {
+                "title": "bio",
+                "name": "name",
+                "look": "look"
+            },
+            "stats": {
+                "title": "stats",
+                "highlight": "highlight",
+                "cool": {
+                    "name": "cool",
+                    "description": "do something under fire"
+                },
+                "hard": {
+                    "name": "hard",
+                    "description": "go aggro; seise by force"
+                },
+                "hot": {
+                    "name": "hot",
+                    "description": "seduce or manipulate"
+                },
+                "sharp": {
+                    "name": "sharp",
+                    "description": "read a stich; read a person"
+                },
+                "weird": {
+                    "name": "weird",
+                    "description": "open your brain"
+                }
+            },
+            "hx": {
+                "title": "hx",
+                "description": "help or interfere; session end",
+                "character": "character",
+                "value": "value"
+            },
+            "harm": {
+                "title": "harm",
+                "countdown": "countdown",
+                "stabilized": "stabilized",
+                "shattered": "shattered (-1cool)",
+                "crippled": "crippled (-1hard)",
+                "disfigured": "disfigured (-1hot)",
+                "broken": "broken (-1sharp)"
+            },
+            "experience": {
+                "title": "experience",
+                "improve": "improve",
+                "improvements": {
+                    "increaseAnyStat": "get +1 to any stat (max stat+3)",
+                    "retireCharacter": "retire your character (to safety)",
+                    "secondCharacter": "create a second character to play",
+                    "newCharacterType": "change your character to a new type",
+                    "advanceBasicMoves": "choose 3 basic moves and advance them",
+                    "advanceOtherBasicMoves": "advance the other 4 basic moves",
+                    "increaseCoolMax2": "get +1cool (max cool+2)",
+                    "increaseCoolMax3": "get +1cool (max cool+3)",
+                    "increaseHardMax2": "get +1hard (max hard+2)",
+                    "increaseHardMax3": "get +1hard (max hard+3)",
+                    "increaseHotMax2": "get +1hot (max hot+2)",
+                    "increaseHotMax3": "get +1hot (max hot+3)",
+                    "increaseSharpMax2": "get +1sharp (max sharp+2)",
+                    "increaseSharpMax3": "get +1sharp (max sharp+3)",
+                    "increaseWeirdMax2": "get +1weird (max weird+2)",
+                    "increaseWeirdMax3": "get +1weird (max weird+3)",
+                    "newPlaybookMove": "get a new {playbook} move",
+                    "otherPlaybookMove": "get a move from another playbook",
+                    "twoGigsMoonlighting": "get 2 gigs (detail) and moonlighting",
+                    "gangLeadership": "get a gang (detail) and leadership",
+                    "holdingWealth": "get a holding (detail) and wealth",
+                    "gangOption": "choose a new option for your gang",
+                    "garageCrew": "get a garage (workspace, detail) and crew",
+                    "gangPackAlpha": "get a gang (detail) and pack alpha",
+                    "holdingOption": "choose a new option for your holding",
+                    "eraseHoldingOption": "erase an option from your holding",
+                    "followersOption": "choose a new option for your followers",
+                    "gigCrew": "add a gig and you may change your crew",
+                    "removeObligationGig": "abandon or resolve an obligation gig for good",
+                    "lifeSupport": "add life support to your workspace, and now you can work on people there too",
+                    "followersFortunes": "get followers (detail) and fortunes"
+                }
+            },
+            "playbooks": {
+                "angel": {
+                    "long": "the angel",
+                    "short": "angel",
+                    "special": "if you and another character have sex, your Hx with them on your sheet goes immediately to +3, and they immediately get +1 to their Hx with you on their sheet. If that brings their Hx with you to +4, they reset it to +1 instead, as usual, and so mark experience.",
+                    "stock": "stock",
+                    "moves": {
+                        "sixthSense": {
+                            "title": "sixth sense",
+                            "description": "when you open your brain to the world's psychic maelstrom, roll+sharp instead of roll+weird."
+                        },
+                        "infirmary": {
+                            "title": "infirmary",
+                            "description": "you get an infirmary, a workspace with life support, a drug lab and a crew of 2 (Shigusa & Mox, maybe). Get patients into it and you can work on them like a savvyhead on tech (cf)."
+                        },
+                        "professionalCompassion": {
+                            "title": "professional compassion",
+                            "description": "you can choose to roll+sharp instead of roll+Hx when you help someone who's rolling."
+                        },
+                        "battlefieldGrace": {
+                            "title": "battlefield grace",
+                            "description": "while you are caring for people, not fighting, you get +1armor."
+                        },
+                        "healingTouch": {
+                            "title": "healing touch",
+                            "description": "when you put your hands skin-to-skin on a wounded person and open your brain to them, roll+weird. On a 10+, heal 1 segment. On a 7-9, heal 1 segment, but you're acting under fire from your patient's brain. On a miss: first, you don't heal them. Second, you've opened both your brain and theirs to the world's psychic maelstrom, without protection or preparation. For you, and for your patient if your patient's a fellow player's character, treat it as though you've made that move and missed the roll. For patients belonging to the MC, their experience and fate are up to the MC."
+                        },
+                        "touchedByDeath": {
+                            "title": "touched by death",
+                            "description": "whenever someone in your care dies, you get +1weird (max +3)."
+                        }
+                    }
+                },
+                "battleBabe": {
+                    "long": "the battle babe",
+                    "short": "battle babe",
+                    "special": "if you and another character have sex, nullify the other character's sex move. Whatever it is, it just doesn't happen.",
+                    "customWeapons": "your custom weapons",
+                    "moves": {
+                        "dangerousSexy": {
+                            "title": "dangerous & sexy",
+                            "description": "when you enter into a charged situation, roll+hot. On a 10+, hold 2. On a 7-9, hold 1. Spend your hold 1 for 1 to make eye contact with an NPC present, who freezes or flinches and can't take action until you break it off. On a miss, your enemies identify you immediately as their foremost threat."
+                        },
+                        "iceCold": {
+                            "title": "ice cold",
+                            "description": "when you go aggro on an NPC, roll+cool instead of roll+hard. When you go aggro on another player's character, roll+Hx instead of roll+hard."
+                        },
+                        "merciless": {
+                            "title": "merciless",
+                            "description": "when you inflict harm, inflict +1harm."
+                        },
+                        "visionsOfDeath": {
+                            "title": "visions of death",
+                            "description": "when you go into battle, roll+weird. On a 10+, name one person who'll die and one who'll live. On a 7-9, name one person who'll die OR one person who'll live. Don't name a player's character; name NPCs only. e MC will make your vision come true, if it's even remotely possible. On a miss, you foresee your own death, and accordingly take -1 throughout the battle."
+                        },
+                        "perfectInstincts": {
+                            "title": "perfect instincts",
+                            "description": "when you've read a charged situation and you're acting on the MC's answers, take +2 instead of +1. "
+                        },
+                        "impossibleReflexes": {
+                            "title": "impossible reflexes",
+                            "description": "the way you move unencumbered counts as armor. If you're naked or nearly naked, 2-armor; if you're wearing non-armor fashion, 1-armor. If you're wearing armor, use it instead."
+                        }
+                    }
+                },
+                "brainer": {
+                    "long": "the brainer",
+                    "short": "brainer",
+                    "special": "If you and another character have sex, you automatically do a deep brain scan on them, whether you have the move or not. Roll+weird as normal. However, the MC chooses which questions the other character's player answers.",
+                    "brainerGear": {
+                        "title": "brainer gear",
+                        "implantSyringe": {
+                            "title": "implant syringe (tag hi-tech)",
+                            "description": "after you've tagged someone, if a brainer move allows you to inflict harm on them, inflict +1harm."
+                        },
+                        "brainRelay": {
+                            "title": "brain relay (area close hi-tech)",
+                            "description": "for purposes of brainer moves, if someone can see your brain relay, they can see you."
+                        },
+                        "receptivityDrugs": {
+                            "title": "receptivity drugs (tag hi-tech)",
+                            "description": "tagging someone gives you +1hold if you then use a brainer move on them."
+                        },
+                        "violationGlove": {
+                            "title": "violation glove (hand hi-tech)",
+                            "description": "for purposes of brainer moves, mere skin contact counts as time and intimacy."
+                        },
+                        "painWaveProjector": {
+                            "title": "pain-wave projector (1-harm ap area loud reload hi-tech)",
+                            "description": "goes off like a reusable grenade. Hits everyone but you."
+                        },
+                        "deepEarPlugs": {
+                            "title": "deep ear plugs (worn hi-tech)",
+                            "description": "protects the wearer from all brainer moves and gear."
+                        }
+                    },
+                    "moves": {
+                        "unnaturalLustTransfixion": {
+                            "title": "unnatural lust transfixion",
+                            "description": "when you try to seduce someone, roll+weird instead of roll+hot."
+                        },
+                        "casualBrainReceptivity": {
+                            "title": "casual brain receptivity",
+                            "description": "when you read someone, roll+weird instead of roll+sharp. Your victim has to be able to see you, but you don't have to interact."
+                        },
+                        "preternaturalAtWillBrainAttunement": {
+                            "title": "preternatural at-will brain attunement",
+                            "description": "you get +1weird (weird+3)."
+                        },
+                        "deepBrainScan": {
+                            "title": "deep brain scan",
+                            "description": "when you have time and physical intimacy with someone — mutual intimacy like holding them in your arms, or 1-sided intimacy like they're restrained to a table — you can read them more deeply than normal. Roll+weird. On a 10+, hold 3. On a 7-9, hold 1. While you're reading them, spend your hold to ask their player questions, 1 for 1:\n• what was your character's lowest moment?\n• for what does your character crave forgiveness, and of whom?\n• what are your character's secret pains?\n• in what ways are your character's mind and soul vulnerable?\nOn a miss, you inflict 1-harm (ap) upon your subject, to no benefit."
+                        },
+                        "directBrainWhisperProjection": {
+                            "title": "direct-brain whisper projection",
+                            "description": "you can roll+weird to get the effects of going aggro, without going aggro. Your victim has to be able to see you, but you don't have to interact. If your victim forces your hand, your mind counts as a weapon (1-harm ap close loud-optional)."
+                        },
+                        "inBrainPuppetStrings": {
+                            "title": "in-brain puppet strings",
+                            "description": "when you have time and physical intimacy with someone — again, mutual or 1-sided — you can plant a command inside their mind. Roll+weird. On a 10+, hold 3. On a 7-9, hold 1. At your will, no matter the circumstances, you can spend your hold 1 for 1:\n• inflict 1-harm (ap)\n• they take -1 right now\nIf they fulfill your command, that counts for all your remaining hold. On a miss, you inflict 1-harm (ap) upon your subject, to no benefit."
+                        }
+                    }
+                },
+                "chopper": {
+                    "long": "the chopper",
+                    "short": "chopper",
+                    "special": "If you and another character have sex, they immediately change their sheet to say Hx+3 with you. ey also choose whether to give you -1 or +1 to your Hx with them, on your sheet.",
+                    "bike": {
+                        "title": "bike",
+                        "strengths": "strengths",
+                        "looks": "looks",
+                        "weaknesses": "weaknesses"
+                    },
+                    "gang": {
+                        "title": "gang",
+                        "size": "size",
+                        "harm": "harm",
+                        "armor": "armor",
+                        "tags": "tags",
+                        "vsGangs": "+1harm vs smaller gangs, -1harm vs larger, per 1-size difference."
+                    },
+                    "advantages": {
+                        "medium": "your gang consists of 30 or so violent bastards. Medium instead of small.",
+                        "wellArmed": "your gang's well-armed. +1harm.",
+                        "wellArmored": "your gang's well-armored. +1armor.",
+                        "wellDisciplined": "your gang's well-disciplined. Drop savage.",
+                        "nomadic": "your gang's nomadic at heart, and able to maintain and repair its own bikes without a home base. It gets +mobile.",
+                        "rich": "your gang's self-sufficient, able to provide for itself by raiding and scavenging. It gets +rich."
+                    },
+                    "problems": {
+                        "breakdown": "your gang's bikes are in bad shape and need constant attention. Vulnerable: breakdown.",
+                        "grounded": "your gang's bikes are picky and high-maintenance. Vulnerable: grounded.",
+                        "desertion": "your gang's loose-knit, with members coming and going as they choose. Vulnerable: desertion.",
+                        "obligation": "your gang is in significant debt to someone powerful. Vulnerable: obligation.",
+                        "disease": "your gang is filthy and unwell. Vulnerable: disease."
+                    },
+                    "moves": {
+                        "packAlpha": {
+                            "title": "pack alpha",
+                            "description": "when you try to impose your will on your gang, roll+hard. On a 10+, all 3. On a 7-9, choose 1:\n• they do what you want\n• they don't fight back over it\n• you don't have to make an example of one of them\nOn a miss, someone in your gang makes a dedicated bid to replace you for alpha."
+                        },
+                        "fuckingThieves": {
+                            "title": "fucking thieves",
+                            "description": "when you have your gang search their pockets and saddlebags for something, roll+hard. It has to be something small enough to fit. On a 10+, one of you happens to have just the thing, or close enough. On a 7-9, one of you happens to have something pretty close, unless what you're looking for is hi-tech, in which case no dice. On a miss, one of you used to have just the thing, but it turns out that some asswipe stole it from you."
+                        }
+                    }
+                },
+                "driver": {
+                    "long": "the driver",
+                    "short": "driver",
+                    "special": "If you and another character have sex, roll+cool. On a 10+, it's cool, no big deal. On a 7-9, give them +1 to their Hx with you on their sheet, but give yourself -1 to your Hx with them on yours. On a miss, you gotta go: take -1 ongoing, until you prove that it's not like they own you or nothing.",
+                    "yourCar": "your car",
+                    "car2": "car #2",
+                    "car3": "car #3",
+                    "otherCars": "other cars",
+                    "car": {
+                        "frame": "frame",
+                        "power": "power",
+                        "looks": "looks",
+                        "armor": "armor",
+                        "weak": "weak",
+                        "tags": "tags"
+                    },
+                    "moves": {
+                        "noShitDriver": {
+                            "title": "A no shit driver",
+                            "description": "when behind the wheel...\n...if you do something under fire, add your car's power to your roll.\n...if you try to seize something by force, add your car's power to your roll.\n...if you go aggro, add your car's power to your roll.\n...if you try to seduce or manipulate someone, add your car's looks to yourroll.\n...if you help or interfere with someone, add your car's power to your roll.\n...if someone interferes with you, add your car's weakness to their roll."
+                        },
+                        "goodInTheClinch": {
+                            "title": "Good in the clinch",
+                            "description": "when you do something under fire, roll+sharp instead of roll+cool."
+                        },
+                        "weatherEye": {
+                            "title": "Weather eye",
+                            "description": "when you open your brain to the world's psychic maelstrom, roll+sharp instead of roll+weird."
+                        },
+                        "daredevil": {
+                            "title": "Daredevil",
+                            "description": "if you go straight into danger without hedging your bets, you get +1armor. If you happen to be leading a gang or convoy, it gets +1armor too."
+                        },
+                        "collector": {
+                            "title": "Collector",
+                            "description": "you get 2 additional cars."
+                        },
+                        "otherCarIsTank": {
+                            "title": "My other car is a tank",
+                            "description": "you get an additional car. Give it mounted machine guns (3-harm close/far area messy) or grenade launchers (4-harm close area messy) and +1armor."
+                        }
+                    }
+                },
+                "gunLugger": {
+                    "long": "the gun lugger",
+                    "short": "gun lugger",
+                    "special": "if you and another character have sex, you take +1 forward. At your option, they take +1 forward too.",
+                    "weaponsArmor": "weapons & armor",
+                    "weapons": "weapons",
+                    "armor": "armor",
+                    "fuckOffBigGuns": {
+                        "title": "fuck-off big guns",
+                        "silencedSniper": "silenced sniper rifle (3-harm far hi-tech)",
+                        "mg": "mg (3-harm close/far area messy)",
+                        "assaultRifle": "assault rifle (3-harm close loud autofire)",
+                        "grenadeLauncher": "grenade launcher (4-harm close area messy)"
+                    },
+                    "seriousGuns": {
+                        "title": "serious guns",
+                        "huntingRifle": "hunting rifle (2-harm far loud)",
+                        "shotgun": "shotgun (3-harm close messy)",
+                        "smg": "smg (2-harm close area loud)",
+                        "magnum": "magnum (3-harm close reload loud)",
+                        "grenadeTube": "grenade tube (4-harm close area reload messy)",
+                        "apAmmo": "ap ammo (ap) Add ap to all your guns.",
+                        "silencer": "silencer (hi-tech) Remove loud from any of your guns."
+                    },
+                    "backupWeapons": {
+                        "title": "backup weapons",
+                        "9mm": "9mm (2-harm close loud)",
+                        "bigAssKnife": "big-ass knife (2-harm hand)",
+                        "machete": "machete (3-harm hand messy)",
+                        "manyKnives": "many knives (2-harm hand infinite)",
+                        "grenades": "grenades (4-harm hand area reload messy)"
+                    },
+                    "moves": {
+                        "battleHardened": {
+                            "title": "battle-hardened",
+                            "description": "when you act under fire, roll+hard instead of roll+cool."
+                        },
+                        "fuckThisShit": {
+                            "title": "fuck this shit",
+                            "description": "name your escape route and roll+hard. On a 10+, sweet, you're gone. On a 7-9, you can go or stay, but if you go it costs you: leave something behind, or take something with you, the MC will tell you what. On a miss, you're caught vulnerable, half in and half out."
+                        },
+                        "battlefieldInstincts": {
+                            "title": "battlefield instincts",
+                            "description": "when you open your brain to the world's psychic maelstrom, roll+hard instead of roll+weird, but only in battle."
+                        },
+                        "insanoLikeDrano": {
+                            "title": "insano like Drano",
+                            "description": "you get +1hard (hard+3)."
+                        },
+                        "preparedForInevitable": {
+                            "title": "prepared for the inevitable",
+                            "description": "you have a well-stocked and high-quality first aid kit. It counts as an angel kit (cf ) with a capacity of 2-stock."
+                        },
+                        "bloodcrazed": {
+                            "title": "bloodcrazed",
+                            "description": "whenever you inflict harm, inflict +1harm."
+                        },
+                        "notToBeFuckedWith": {
+                            "title": "not to be fucked with",
+                            "description": "in battle, you count as a gang (3-harm gang small), with armor according to the circumstances."
+                        }
+                    }
+                },
+                "hardHolder": {
+                    "long": "the hard holder",
+                    "short": "hard holder",
+                    "special": "if you and another character have sex, you can give the other character gifts worth 1-barter, at no cost to you.",
+                    "holding": {
+                        "title": "holding",
+                        "size": "size",
+                        "surplus": "surplus",
+                        "barter": "barter",
+                        "gigs": "gigs",
+                        "want": "want"
+                    },
+                    "gang": {
+                        "title": "gang",
+                        "size": "size",
+                        "harm": "harm",
+                        "armor": "armor",
+                        "tags": "tags",
+                        "vsGangs": "+1harm vs smaller gangs, -1harm vs larger, per 1-size difference."
+                    },
+                    "advantages": {
+                        "largePopulation": "your population is large, 200-300 souls. Surplus: +1barter, want: +disease.",
+                        "smallPopulation": "your population is small, 50-60 souls. Want: anxiety instead of want: hungry.",
+                        "lucrativeRaiding": "for gigs, add lucrative raiding. Surplus: +1barter, want: +reprisals.",
+                        "protectionTribute": "for gigs, add protection tribute. Surplus: +1barter, want: +obligation.",
+                        "manufactory": "for gigs, add a manufactory. Surplus: +1barter, want: +idle.",
+                        "market": "for gigs, add a bustling, widely-known market commons. Surplus: +1barter, want: +idle.",
+                        "largeGang": "your gang is large instead of medium, 60 violent people or so.",
+                        "wellDisciplinedGang": "your gang is well-disciplined. Drop unruly.",
+                        "goodArmory": "your armory is sophisticated and extensive. Your gang gets +1harm.",
+                        "goodCompound": "your compound is tall, deep and mighty, of stone and iron. Your gang gets +2armor when fighting in its defense."
+                    },
+                    "problems": {
+                        "disease": "your population is filthy and unwell. Want: +disease.",
+                        "famine": "your population is lazy and drug-stupored. Want: +famine.",
+                        "decadence": "your population is decadent and perverse. Surplus: -1barter, want: savagery.",
+                        "holdingOwesTribute": "your holding owes protection tribute. Surplus: -1barter, want: +reprisals.",
+                        "smallGang": "your gang is small instead of medium, only 10-20 violent people.",
+                        "gangSavagery": "your gang is a pack of fucking hyenas. Want: savagery.",
+                        "shitArmory": "your armory is for shit. Your gang gets -1harm.",
+                        "shitCoumpound": "your compound is mostly tents, lean-tos and wooden walls. Your gang gets no armor bonus when fighting to defend it."
+                    },
+                    "moves": {
+                        "leadership": {
+                            "title": "leadership",
+                            "description": "when your gang fights for you, roll+hard. On a 10+, hold 3. On a 7-9, hold 1. Over the course of the fight, spend your hold 1 for 1 to make your gang:\n• make a hard advance\n• stand strong against a hard advance\n• make an organized retreat\n• show mercy to their defeated enemies\n• fight and die to the last\nOn a miss, your gang turns on you or tries to hand you over to your enemy."
+                        },
+                        "wealth": {
+                            "title": "wealth",
+                            "description": "If your hold is secure and your rule unchallenged, at the beginning of the session, roll+hard. On a 10+, you have surplus at hand and available for the needs of the session. On a 7-9, you have surplus, but choose 1 want. On a miss, or if your hold is compromised or your rule contested, your hold is in want. e precise values of your surplus and want depend on your holding, as follows."
+                        }
+                    }
+                },
+                "hocus": {
+                    "long": "the hocus",
+                    "short": "hocus",
+                    "special": "if you and another character have sex, you each hold 1. Either of you can spend your hold any time to help or interfere with the other, at a distance or despite any barriers that would normally prevent it.",
+                    "followers": {
+                        "title": "followers",
+                        "description": "description",
+                        "surplus": "surplus",
+                        "barter": "barter",
+                        "fortune": "fortune",
+                        "want": "want"
+                    },
+                    "types": {
+                        "title": "characterize them",
+                        "cult": "your cult",
+                        "family": "your family",
+                        "students": "your students",
+                        "scene": "your scene",
+                        "staff": "your staff",
+                        "court": "your court"
+                    },
+                    "advantages": {
+                        "dedicated": "your followers are dedicated to you. Surplus: +1barter, and replace want: desertion with want: hunger.",
+                        "fortune": "your followers are involved in successful commerce. +1fortune.",
+                        "augury": "your followers, taken as a body, constitute a powerful psychic antenna. Surplus: +augury.",
+                        "party": "your followers are joyous and celebretory. Surplus: +party.",
+                        "insight": "your followers are rigorous and argumentative. Surplus: +insight.",
+                        "hardWorking": "your followers are hard-working, no-nonsense. Surplus: +1barter.",
+                        "growth": "your followers are eager, enthusiastic, and successful recruiters. Surplus: +growth"
+                    },
+                    "problems": {
+                        "fewFollowers": "you have few followers, 10 or fewer. Surplus: -1barter.",
+                        "desertion": "your followers aren't really yours, more like you're theirs. Want: judgment instead of want: desertion.",
+                        "desperation": "your followers rely entirely on you for their lives and needs. Want: +desperation.",
+                        "stupor": "your followers are drug-fixated. Surplus: +stupor.",
+                        "disease": "your followers disdain fashion, luxury and convention. Want: +disease.",
+                        "violence": "your followers disdain law, peace, reason and society. Surplus: +violence.",
+                        "savagery": "your followers are decadent and perverse. Want: +savagery."
+                    },
+                    "moves": {
+                        "fortunes": {
+                            "title": "fortunes",
+                            "description": "fortune, surplus and want all depend on your followers. At the beginning of the session, roll+fortune. On a 10+, your followers have surplus. On a 7-9, they have surplus, but choose 1 want. On a miss, they are in want. If their surplus lists barter, like 1-barter or 2-barter, that's your personal share."
+                        },
+                        "frenzy": {
+                            "title": "frenzy",
+                            "description": "When you speak the truth to a mob, roll+weird. On a 10+, hold 3. On a 7-9, hold 1. Spend your hold 1 for 1 to make the mob:\n• bring people forward and deliver them.\n• bring forward all their precious things.\n• unite and fight for you as a gang (2-harm 0-armor size appropriate).\n• fall into an orgy of uninhibited emotion: fucking, lamenting, fighting, sharing, celebrating, as you choose.\n• go quietly back to their lives.\nOn a miss, the mob turns on you."
+                        },
+                        "charismatic": {
+                            "title": "charismatic",
+                            "description": "when you try to manipulate someone, roll+weird instead of roll+hot."
+                        },
+                        "fuckingWacknut": {
+                            "title": "fucking wacknut",
+                            "description": "you get +1weird (weird+3)."
+                        },
+                        "seeingSouls": {
+                            "title": "seeing souls",
+                            "description": "when you help or interfere with someone, roll+weird instead of roll+Hx."
+                        },
+                        "divineProtection": {
+                            "title": "divine protection",
+                            "description": "your gods give you 1-armor. If you wear armor, use that instead, they don't add."
+                        }
+                    }
+                },
+                "operator": {
+                    "long": "the operator",
+                    "short": "operator",
+                    "special": "if you and another character have sex, get a new obligation gig: keeping [their name] happy (you keep them happy / you fucking blow it).\n\nIf you and the same character have sex again, don't get duplicate gigs. Just the first time.",
+                    "crewContacts": {
+                        "title": "crew / contacts",
+                        "help": "your crew or contacts can consist entirely of the other players' characters, or entirely of the MC's characters, or any mix. If they include any of the MC's characters, sketch them out — names (eg Gabble, Jaim, Pe, Wasted) and 1-line descriptions — with the MC. Make sure they're competent and suited to the gigs you've chosen."
+                    },
+                    "payingGigs": {
+                        "title": "paying gigs",
+                        "bodyguarding": "bodyguarding (1-barter / embattled)",
+                        "surveillance": "surveillance (1-barter / deceived)",
+                        "raiding": "raiding (1-barter / embattled)",
+                        "enforcement": "enforcement (1-barter / overthrown)",
+                        "honestWork": "honest work (1-barter / impoverished)",
+                        "companionship": "companionship (1-barter / entangled)",
+                        "deliveries": "deliveries (1-barter / bushwacked)",
+                        "infiltration": "infiltration (1-barter / discovered)",
+                        "scavenging": "scavenging (1-barter / impoverished)",
+                        "brokeringDeals": "brokering deals (1-barter / shut out)",
+                        "technicalWork": "technical work (2-barter / shut out)",
+                        "fucking": "fucking (2-barter / entangled)",
+                        "compoundDefense": "compound defense (2-barter / infiltrated)",
+                        "doingMurders": "doing murders (3-barter / embattled)"
+                    },
+                    "obligationGigs": {
+                        "title": "obligation gigs",
+                        "avoidingSomeone": "avoiding someone (you keep well clear / they catch you in a bad spot)",
+                        "payingDebts": "paying debts (you keep up with them / they come due)",
+                        "revenge": "revenge (you victimize someone / they humilate you)",
+                        "protectingSomeone": "protecting someone (nothing bad happens to them / they're gone)",
+                        "pursuingLuxury": "pursuing luxury (beauty in your life / you wind up in a bad spot)",
+                        "maintainingHonor": "maintaining your honor (you keep your word and your name / you cross a line)",
+                        "seekingAnswers": "seeking answers (you get a clue / you chase a red herring)"
+                    },
+                    "moves": {
+                        "moonlighting": {
+                            "title": "moonlighting",
+                            "description": "you get 2-juggling. Whenever there's a stretch of downtime in play, or between sessions, choose a number of your gigs to work. Choose no more than your juggling. Roll+cool. On a 10+, you get profit from all the gigs you chose. On a 7-9, you get profit from at least 1; if you chose more, you get catastrophe from 1 and profit from the rest. On a miss, catastrophe all around. e gigs you aren't working give you neither profit nor catastrophe. Whenever you get a new gig, you also get +1juggling."
+                        },
+                        "easyToTrust": {
+                            "title": "easy to trust",
+                            "description": "when you try to seduce or manipulate another player's character, roll+Hx instead of roll+hot. An NPC, roll+cool instead of roll+hot."
+                        },
+                        "eyeOnTheDoor": {
+                            "title": "eye on the door",
+                            "description": "name your escape route and roll+cool. On a 10+ you're gone. On a 7-9, you can go or stay, but if you go it costs you: leave something behind, or take something with you, the MC will tell you what. On a miss, you're caught vulnerable, half in and half out."
+                        },
+                        "opportunistic": {
+                            "title": "opportunistic",
+                            "description": "when you interfere with someone who's rolling, roll+cool instead of roll+Hx. Asshole."
+                        },
+                        "reputation": {
+                            "title": "reputation",
+                            "description": "when you meet someone important (your call), roll+cool. On a hit, they've heard of you, and you say what they've heard; the MC will have them respond accordingly. On a 10+, you take +1forward for dealing with them as well. On a miss, they've heard of you, but the MC will decide what they've heard."
+                        }
+                    }
+                },
+                "savvyHead": {
+                    "long": "the savvy head",
+                    "short": "savvy head",
+                    "special": "If you and another character have sex, they automatically speak to you, as though they were a thing and you'd rolled a 10+, whether you have the move or not. The other player and the MC will answer your questions between them.\n\nOtherwise, that move never works on people, only things.",
+                    "moves": {
+                        "thingsSpeak": {
+                            "title": "things speak",
+                            "description": "whenever you handle or examine something interesting, roll+weird. On a hit, you can ask the MC questions. On a 10+, ask 3. On a 7-9, ask 1:\n• who handled this last before me?\n• who made this?\n• what strong emotions have been most recently nearby this?\n• what words have been said most recently nearby this?\n• what has been done most recently with this, or to this?\n• what's wrong with this, and how might I fix it?\nTreat a miss as though you've opened your brain to the world's psychic maelstrom and missed the roll."
+                        },
+                        "bonefeel": {
+                            "title": "bonefeel",
+                            "description": "at the beginning of the session, roll+weird. On a 10+, hold 1+1. On a 7-9, hold 1. At any time, either you or the MC can spend your hold to have you already be there, with the proper tools and knowledge, with or without any clear explanation why. If your hold was 1+1, take +1forward now. On a miss, the MC holds 1, and can spend it to have you already be there, but somehow pinned, caught or trapped."
+                        },
+                        "oftenerRight": {
+                            "title": "oftener right",
+                            "description": "when a character comes to you for advice, tell them what you honestly think the best course is. If they do it, they take +1 to any rolls they make in the doing, and you mark an experience circle."
+                        },
+                        "realityFrayingEdge": {
+                            "title": "reality's fraying edge",
+                            "description": "some component of your workspace, or some arrangement of components, is uniquely receptive to the world's psychic maelstrom (+augury). Choose and name it, or else leave it for the MC to reveal during play."
+                        },
+                        "spookyIntense": {
+                            "title": "spooky intense",
+                            "description": "when you do something under fire, roll+weird instead of roll+cool."
+                        },
+                        "deepInsights": {
+                            "title": "deep insights",
+                            "description": "you get +1weird (weird+3)."
+                        }
+                    },
+                    "workspace": {
+                        "title": "workspace",
+                        "garage": "a garage",
+                        "darkroom": "a darkroom",
+                        "growingEnvironment": "a controlled growing environment",
+                        "skilledLabor": "skilled labor (Carna, Thuy, Pamming, eg)",
+                        "junkyard": "a junkyard of raw materials",
+                        "truckVan": "a truck or van",
+                        "electronica": "weird-ass electronica",
+                        "machiningTools": "machining tools",
+                        "transmittersReceivers": "transmitters & receivers",
+                        "provingRange": "a proving range",
+                        "relicGoldenAge": "a relic of the golden age past",
+                        "boobyTraps": "booby traps"
+                    }
+                },
+                "skinner": {
+                    "long": "the skinner",
+                    "short": "skinner",
+                    "special": "If you and another character have sex, choose one:\n• You take +1 forward and so do they.\n• You take +1 forward; they take -1.\n• They must give you a gift worth at least 1-barter.\n• You can hypnotize them as though you'd rolled a 10+, even if you haven't chosen to get the move.",
+                    "graciousWeapons": {
+                        "title": "gracious weapons",
+                        "sleevePistol": "sleeve pistol (2-harm close reload loud)",
+                        "ornateDagger": "ornate dagger (2-harm hand valuable)",
+                        "hiddenKnives": "hidden knives (2-harm hand infinite)",
+                        "ornateSword": "ornate sword (3-harm hand valuable)",
+                        "antiqueHandgun": "antique handgun (2-harm close reload loud valuable)"
+                    },
+                    "luxeGear": {
+                        "title": "luxe gear",
+                        "antiqueCoins": "antique coins (worn valuable) - Drilled with holes for jewelry.",
+                        "eyeglasses": "eyeglasses (worn valuable) - You may use these for +1sharp when your eyesight matters, but if you do, without them you get -1sharp when your eyesight matters.",
+                        "longCoat": "long gorgeous coat (worn valuable)",
+                        "spectacularTattoos": "spectacular tattoos (implanted)",
+                        "skinHairKit": "skin & hair kit (applied valuable) - Soaps, ochres, paints, creams, salves. Using it lets you take +1hot forward.",
+                        "pet": "a pet (valuable alive) - Your choice and yours to detail."
+                    },
+                    "moves": {
+                        "breathtaking": {
+                            "title": "breathtaking",
+                            "description": "you get +1hot (hot+3)."
+                        },
+                        "lost": {
+                            "title": "lost",
+                            "description": "when you whisper someone's name to the world's psychic maelstrom, roll+weird. On a hit, they come to you, with or without any clear explanation why. On a 10+, take +1forward against them. On a miss, the MC will ask you 3 questions; answer them truthfully."
+                        },
+                        "artfulGracious": {
+                            "title": "artful & gracious",
+                            "description": "when you perform your chosen art — any act of expression or culture — or when you put its product before an audience, roll+hot. On a 10+, spend 3. On a 7-9, spend 1. Spend 1 to name an NPC member of your audience and choose one:\n• this person must meet me\n• this person must have my services\n• this person loves me\n• this person must give me a gift\n• this person admires my patron\nOn a miss, you gain no benefit, but suffer no harm or lost opportunity. You simply perform very well."
+                        },
+                        "arrestingSkinner": {
+                            "title": "an arresting skinner",
+                            "description": "when you remove a piece of clothing, your own or someone else's, no one who can see you can do anything but watch. You command their absolute attention. If you choose, you can exempt individual people, by name."
+                        },
+                        "hypnotic": {
+                            "title": "hypnotic",
+                            "description": "when you have time and solitude with someone, they become fixated upon you. Roll+hot. On a 10+, hold 3. On a 7-9, hold 2. ey can spend your hold, 1 for 1, by:\n• giving you something you want\n• acting as your eyes and ears\n• fighting to protect you\n• doing something you tell them to\nFor NPCs, while you have hold over them they can't act against you. For PCs, instead, any time you like you can spend your hold, 1 for 1:\n• they distract themselves with the thought of you. ey're acting under fire.\n• they inspire themselves with the thought of you. ey take +1 right now.\nOn a miss, they hold 2 over you, on the exact same terms."
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,6 +1,7 @@
 import { type Locale } from '@pitininja/vite-translations-client';
 import { type Socket } from 'socket.io-client';
 import {
+    type ApocalypseWorldCharacter,
     type CoCCharacter,
     type DnD5Character,
     type SeventhSeaCharacter,
@@ -181,6 +182,7 @@ export type NoteEditBody = Partial<NoteCreateBody>;
 export type CharacterSheetStatus = 'idle' | 'saving' | 'saved';
 
 export type CharacterData =
+    | ApocalypseWorldCharacter
     | CoCCharacter
     | DnD5Character
     | SeventhSeaCharacter
@@ -209,6 +211,7 @@ export interface PortraitUploadBody {
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ game
 
 export enum GameId {
+    apocalypseWorld = 'apocalypseWorld',
     callOfCthulhu = 'callOfCthulhu',
     dnd5 = 'dnd5',
     seventhSea = 'seventhSea',

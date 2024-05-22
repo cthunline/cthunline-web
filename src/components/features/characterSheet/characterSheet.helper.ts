@@ -1,4 +1,5 @@
 import {
+    apocalypseWorld,
     callOfCthulhu,
     dnd5,
     starWarsD6,
@@ -9,6 +10,9 @@ import {
 import { GameId } from '../../../types/index.js';
 
 export const getDefaultData = (gameId: string) => {
+    if (gameId === GameId.apocalypseWorld) {
+        return apocalypseWorld.default;
+    }
     if (gameId === GameId.callOfCthulhu) {
         return callOfCthulhu.default;
     }
