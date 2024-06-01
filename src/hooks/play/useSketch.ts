@@ -1,5 +1,6 @@
 import { useState, type SetStateAction } from 'react';
 
+import { widths } from '../../components/common/WidthPicker.js';
 import { generateId, findById } from '../../services/tools.js';
 import {
     forwardImage,
@@ -39,6 +40,8 @@ export interface SketchHookExport {
     isFreeDrawing: boolean;
     drawingColor: Color;
     setDrawingColor: (color: Color) => void;
+    drawingWidth: number;
+    setDrawingWidth: (width: number) => void;
     toggleFreeDrawing: () => void;
     addSketchDrawPath: (path: SketchDrawingPath) => void;
     clearDrawings: () => void;
@@ -83,6 +86,10 @@ export const defaultSketchHookExport: SketchHookExport = {
     isFreeDrawing: false,
     drawingColor: 'white',
     setDrawingColor: () => {
+        /* default */
+    },
+    drawingWidth: 5,
+    setDrawingWidth: () => {
         /* default */
     },
     toggleFreeDrawing: () => {
@@ -168,6 +175,7 @@ const useSketch = (socket: PlaySocket | null) => {
     const [sketchData, setSketchData] = useState<SketchData>(defaultSketchData);
     const [isFreeDrawing, setIsFreeDrawing] = useState<boolean>(false);
     const [drawingColor, setDrawingColor] = useState<Color>('white');
+    const [drawingWidth, setDrawingWidth] = useState<number>(widths.sm);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ sketch
 
@@ -668,6 +676,8 @@ const useSketch = (socket: PlaySocket | null) => {
         isFreeDrawing,
         drawingColor,
         setDrawingColor,
+        drawingWidth,
+        setDrawingWidth,
         toggleFreeDrawing,
         addSketchDrawPath,
         clearDrawings,

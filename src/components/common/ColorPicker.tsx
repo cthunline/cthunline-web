@@ -2,15 +2,15 @@ import { Group, type GroupProps, UnstyledButton } from '@mantine/core';
 
 import { type Color, colors } from '../../types/index.js';
 
-interface ColorSelectorProps extends Omit<GroupProps, 'onChange'> {
+interface ColorPickerProps extends Omit<GroupProps, 'onChange'> {
     onChange?: (color: Color) => void;
 }
 
-const ColorSelector = ({ onChange, ...props }: ColorSelectorProps) => (
+const ColorPicker = ({ onChange, ...props }: ColorPickerProps) => (
     <Group gap="0.25rem" p="0.5rem" align="center" justify="start" {...props}>
         {colors.map((color: Color) => (
             <UnstyledButton
-                key={`color-selector-${color}`}
+                key={`color-picker-${color}`}
                 onClick={() => onChange?.(color)}
                 bg={`var(--palette-${color})`}
                 w="1.5rem"
@@ -20,4 +20,4 @@ const ColorSelector = ({ onChange, ...props }: ColorSelectorProps) => (
     </Group>
 );
 
-export default ColorSelector;
+export default ColorPicker;

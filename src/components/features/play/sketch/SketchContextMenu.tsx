@@ -7,7 +7,8 @@ import {
 } from '@szhsin/react-menu';
 
 import { type SessionUser, type Color } from '../../../../types/index.js';
-import ColorSelector from '../../../common/ColorSelector.js';
+import WidthPicker from '../../../common/WidthPicker.js';
+import ColorPicker from '../../../common/ColorPicker.js';
 import { usePlay } from '../../../../contexts/Play.js';
 import { useApp } from '../../../../contexts/App.js';
 
@@ -46,6 +47,7 @@ interface SketchContextMenuProps {
     onUnattach?: () => void;
     onDuplicate?: () => void;
     onColorChange?: (color: Color) => void;
+    onWidthPick?: (width: number) => void;
     onColorPick?: (color: Color) => void;
     onDelete?: () => void;
 }
@@ -59,13 +61,14 @@ const SketchContextMenu = ({
     onUnattach,
     onDuplicate,
     onColorChange,
+    onWidthPick,
     onColorPick,
     onDelete
 }: SketchContextMenuProps) => {
     const { colorScheme } = useMantineColorScheme();
     const { T } = useApp();
 
-    const { users } = usePlay();
+    const { users, drawingColor } = usePlay();
 
     const playerUsers = users.filter(({ isMaster }) => !isMaster);
 
@@ -98,12 +101,24 @@ const SketchContextMenu = ({
                     {T('page.play.sketch.backward')}
                 </MenuItem>
             )}
+            {!!onWidthPick && (
+                <MenuItem key="widthPick">
+                    <WidthPicker
+                        maw="10rem"
+                        color={drawingColor}
+                        onChange={(width: number) => {
+                            onWidthPick(width);
+                            onClose();
+                        }}
+                    />
+                </MenuItem>
+            )}
             {!!onColorPick && (
-                <MenuItem key="backward" onClick={onBackward}>
-                    <ColorSelector
+                <MenuItem key="colorPick">
+                    <ColorPicker
                         maw="10rem"
                         onChange={(color: Color) => {
-                            onColorPick?.(color);
+                            onColorPick(color);
                             onClose();
                         }}
                     />
@@ -139,7 +154,7 @@ const SketchContextMenu = ({
                     key="colorChange"
                     label={T('page.play.sketch.changeColor')}
                 >
-                    <ColorSelector
+                    <ColorPicker
                         maw="10rem"
                         onChange={(color: Color) => {
                             onColorChange?.(color);

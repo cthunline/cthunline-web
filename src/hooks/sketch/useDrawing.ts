@@ -17,7 +17,8 @@ const useDrawing = (
     svgRef: React.MutableRefObject<SVGSVGElement>,
     isMaster: boolean = false
 ) => {
-    const { isFreeDrawing, addSketchDrawPath, drawingColor } = usePlay();
+    const { isFreeDrawing, addSketchDrawPath, drawingColor, drawingWidth } =
+        usePlay();
 
     // list of drawing paths (strings to put directly in path element "d" attribute)
     const [paths, setPaths] = useState<SketchDrawingPath[]>([]);
@@ -45,7 +46,8 @@ const useDrawing = (
                     ...previous,
                     {
                         d: '',
-                        color: drawingColor
+                        color: drawingColor,
+                        width: drawingWidth
                     }
                 ]);
                 // set isDrawing state

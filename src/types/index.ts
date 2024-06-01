@@ -276,6 +276,7 @@ export interface SketchData {
 export interface SketchDrawingPath {
     d: string;
     color: string;
+    width: number;
 }
 
 export interface SketchImageData {

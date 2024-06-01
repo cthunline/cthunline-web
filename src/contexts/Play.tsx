@@ -95,6 +95,8 @@ export const PlayProvider = ({
         isFreeDrawing,
         drawingColor,
         setDrawingColor,
+        drawingWidth,
+        setDrawingWidth,
         toggleFreeDrawing,
         addSketchDrawPath,
         clearDrawings,
@@ -369,6 +371,8 @@ export const PlayProvider = ({
             isFreeDrawing,
             drawingColor,
             setDrawingColor,
+            drawingWidth,
+            setDrawingWidth,
             toggleFreeDrawing
         }),
         [
@@ -402,6 +406,8 @@ export const PlayProvider = ({
             isFreeDrawing,
             drawingColor,
             setDrawingColor,
+            drawingWidth,
+            setDrawingWidth,
             toggleFreeDrawing
         ]
     );

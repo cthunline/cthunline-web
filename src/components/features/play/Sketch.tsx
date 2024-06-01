@@ -33,6 +33,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
         users,
         isFreeDrawing,
         setDrawingColor,
+        setDrawingWidth,
         sketchData,
         attachTokenData,
         unattachTokenData,
@@ -136,6 +137,10 @@ const Sketch = ({ isMaster }: SketchProps) => {
         handleItemMouseUpOrLeave();
     };
 
+    const onWidthPick = (width: number) => {
+        setDrawingWidth(width);
+    };
+
     const onColorPick = (color: Color) => {
         setDrawingColor(color);
     };
@@ -236,7 +241,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
                     <path
                         key={`sketch-path-${index.toString()}`}
                         stroke={`var(--palette-${path.color})`}
-                        strokeWidth={5}
+                        strokeWidth={path.width ?? 5}
                         d={path.d}
                         fill="none"
                     />
@@ -301,6 +306,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
             {isMaster ? (
                 <SketchContextMenu
                     position={contextMenuPosition}
+                    onWidthPick={onWidthPick}
                     onColorPick={onColorPick}
                     onClose={onContextMenuClose}
                 />
