@@ -10,7 +10,7 @@
         "format": "npx eslint . --fix --ext .js,.ts,.tsx --max-warnings=0 && npx prettier --write . && npx tsc --noEmit && npx stylelint --fix \"**/*.css\" --max-warnings=0"
     },
     "dependencies": {
-        "@cthunline/games": "^3.2.19",
+        "@cthunline/games": "^3.2.20",
         "@mantine/core": "^7.10.1",
         "@mantine/form": "^7.10.1",
         "@mantine/hooks": "^7.10.1",
