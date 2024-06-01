@@ -1,17 +1,22 @@
 import { ActionIcon, Group, Stack, TextInput } from '@mantine/core';
 import { MdArrowBack } from 'react-icons/md';
 
+import {
+    type CharacterSheetStatus,
+    type Note
+} from '../../../../../types/index.js';
 import TextEditor from '../../../../common/TextEditor.js';
-import { type Note } from '../../../../../types/index.js';
 import { useApp } from '../../../../../contexts/App.js';
+import Status from '../../../characterSheet/Status.js';
 
 interface NoteEditorProps {
+    status: CharacterSheetStatus;
     note: Note;
     onEdit: (note: Note) => void;
     onBack: () => void;
 }
 
-const NoteEditor = ({ note, onEdit, onBack }: NoteEditorProps) => {
+const NoteEditor = ({ status, note, onEdit, onBack }: NoteEditorProps) => {
     const { userId } = useApp();
     const isOwnedByUser = note.userId === userId;
     return (
@@ -31,6 +36,7 @@ const NoteEditor = ({ note, onEdit, onBack }: NoteEditorProps) => {
                         });
                     }}
                 />
+                {isOwnedByUser && <Status status={status} />}
             </Group>
             <TextEditor
                 w="100%"

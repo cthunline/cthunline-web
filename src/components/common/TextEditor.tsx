@@ -38,6 +38,9 @@ const TextEditor = ({
                     display: 'flex',
                     flexDirection: 'column'
                 },
+                toolbar: {
+                    display: readonly ? 'none' : undefined
+                },
                 typographyStylesProvider: {
                     height: 0,
                     flexGrow: 1,

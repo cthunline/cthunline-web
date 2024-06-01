@@ -2,6 +2,7 @@ import { modals } from '@mantine/modals';
 import { Stack } from '@mantine/core';
 import { useRef } from 'react';
 
+import useCharacterSheetStatus from '../../../../../hooks/api/useCharacterSheetStatus.js';
 import { type Note, WidgetType } from '../../../../../types/index.js';
 import { usePlay } from '../../../../../contexts/Play.js';
 import useNote from '../../../../../hooks/api/useNote.js';
@@ -32,6 +33,8 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
         socket
     });
 
+    const { status, updateStatus } = useCharacterSheetStatus();
+
     const onCreate = async (title: string) => {
         const note = await createNote({
             data: {
@@ -48,6 +51,7 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
 
     const onEdit = async (note: Note) => {
         setEditorNote(note);
+        updateStatus('saving');
         if (changeTimer.current !== null) {
             window.clearTimeout(changeTimer.current);
         }
@@ -61,6 +65,7 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
                 },
                 isToast: false
             });
+            updateStatus('saved');
         }, changeTime);
     };
 
@@ -111,6 +116,7 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
             <Stack w="35rem" h="30rem">
                 {editorNote ? (
                     <NoteEditor
+                        status={status}
                         note={editorNote}
                         onEdit={onEdit}
                         onBack={() => setEditorNote(null)}
