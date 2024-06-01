@@ -108,7 +108,7 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
             title={T('entity.notes')}
             onClose={() => onClose(WidgetType.notes)}
         >
-            <Stack w="400px">
+            <Stack w="35rem" h="30rem">
                 {editorNote ? (
                     <NoteEditor
                         note={editorNote}

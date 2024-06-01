@@ -29,7 +29,26 @@ const TextEditor = ({
     });
 
     return (
-        <RichTextEditor {...props} editor={editor}>
+        <RichTextEditor
+            {...props}
+            editor={editor}
+            styles={{
+                root: {
+                    minHeight: '8rem',
+                    display: 'flex',
+                    flexDirection: 'column'
+                },
+                typographyStylesProvider: {
+                    height: 0,
+                    flexGrow: 1,
+                    flexBasis: 0
+                },
+                content: {
+                    height: '100%',
+                    overflowY: 'auto'
+                }
+            }}
+        >
             <RichTextEditor.Toolbar>
                 <RichTextEditor.ControlsGroup>
                     <RichTextEditor.Bold />

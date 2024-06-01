@@ -1,9 +1,9 @@
 import { ActionIcon, Group, Stack, TextInput } from '@mantine/core';
 import { MdArrowBack } from 'react-icons/md';
 
+import TextEditor from '../../../../common/TextEditor.js';
 import { type Note } from '../../../../../types/index.js';
 import { useApp } from '../../../../../contexts/App.js';
-import Textarea from '../../../../common/Textarea.js';
 
 interface NoteEditorProps {
     note: Note;
@@ -15,7 +15,7 @@ const NoteEditor = ({ note, onEdit, onBack }: NoteEditorProps) => {
     const { userId } = useApp();
     const isOwnedByUser = note.userId === userId;
     return (
-        <Stack gap="0.5rem">
+        <Stack gap="0.5rem" w="100%" h="100%">
             <Group justify="center" w="100%" gap="0.5rem">
                 <ActionIcon onClick={onBack}>
                     <MdArrowBack />
@@ -32,16 +32,13 @@ const NoteEditor = ({ note, onEdit, onBack }: NoteEditorProps) => {
                     }}
                 />
             </Group>
-            <Textarea
-                readOnly={!isOwnedByUser}
+            <TextEditor
                 w="100%"
-                rows={14}
+                flex="1 0"
+                readonly={!isOwnedByUser}
                 value={note.text}
-                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-                    onEdit({
-                        ...note,
-                        text: e.target.value
-                    });
+                onChange={(text: string) => {
+                    onEdit({ ...note, text });
                 }}
             />
         </Stack>

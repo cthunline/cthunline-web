@@ -67,7 +67,7 @@ const NoteList = ({
     }, [notes, sharedNotes, T, userId]);
 
     return (
-        <Box w="100%" h="360px" style={{ overflowY: 'auto' }}>
+        <Box w="100%" h={0} flex="1 0" style={{ overflowY: 'auto' }}>
             {notesData.map(({ key, list, header }) =>
                 list.length ? (
                     <Stack key={`notes-section-${key}`} w="100%" gap="0.5rem">
