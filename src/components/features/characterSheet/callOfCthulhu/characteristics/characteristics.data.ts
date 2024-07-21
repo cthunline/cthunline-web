@@ -1,10 +1,10 @@
-import {
-    type CoCCharacteristic,
-    type CoCCharacteristics,
-    type CoCLuck,
-    type CoCPoints,
-    type CoCPoint,
-    type CoCSanity
+import type {
+    CoCCharacteristic,
+    CoCCharacteristics,
+    CoCLuck,
+    CoCPoint,
+    CoCPoints,
+    CoCSanity
 } from '@cthunline/games';
 
 export interface FieldData<DataType> {

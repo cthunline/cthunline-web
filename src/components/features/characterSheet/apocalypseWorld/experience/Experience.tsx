@@ -1,4 +1,10 @@
 import {
+    type ApocalypseWorldCharacter,
+    type ApocalypseWorldImprovement,
+    type ApocalypseWorldPlaybook,
+    apocalypseWorld
+} from '@cthunline/games';
+import {
     ActionIcon,
     Checkbox,
     Divider,
@@ -7,18 +13,12 @@ import {
     Stack,
     Text
 } from '@mantine/core';
+import { useMemo } from 'react';
 import { GiUpgrade } from 'react-icons/gi';
 import { MdClose } from 'react-icons/md';
-import { useMemo } from 'react';
-import {
-    type ApocalypseWorldCharacter,
-    type ApocalypseWorldPlaybook,
-    type ApocalypseWorldImprovement,
-    apocalypseWorld
-} from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
 interface ImprovementListProps {
     readonly: boolean;
@@ -46,7 +46,7 @@ const ImprovementList = ({
         useMemo(() => {
             const namesWithCount: ImprovementNameWithCountData[] = [];
             const nameMap: Map<string, number> = new Map();
-            improvementNames.forEach((name) => {
+            for (const name of improvementNames) {
                 const count = nameMap.get(name);
                 if (count) {
                     const newCount = count + 1;
@@ -62,7 +62,7 @@ const ImprovementList = ({
                     });
                     nameMap.set(name, 1);
                 }
-            });
+            }
             return namesWithCount;
         }, [improvementNames]);
 

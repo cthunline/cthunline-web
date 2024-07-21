@@ -1,14 +1,14 @@
+import type {
+    ApocalypseWorldCharacter,
+    ApocalypseWorldCharacterDriverCar
+} from '@cthunline/games';
 import { Group, Stack, type StackProps } from '@mantine/core';
 import { GiDarkSquad } from 'react-icons/gi';
-import {
-    type ApocalypseWorldCharacter,
-    type ApocalypseWorldCharacterDriverCar
-} from '@cthunline/games';
 
-import SectionTitle from '../../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../../contexts/App.js';
 import TextInput from '../../../../../common/TextInput.js';
 import Textarea from '../../../../../common/Textarea.js';
+import SectionTitle from '../../../generic/sectionTitle/SectionTitle.js';
 
 const defaultCar: ApocalypseWorldCharacterDriverCar = {
     frame: '',

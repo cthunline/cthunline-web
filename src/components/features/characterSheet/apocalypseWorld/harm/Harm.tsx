@@ -1,9 +1,9 @@
-import { type ApocalypseWorldCharacter } from '@cthunline/games';
+import type { ApocalypseWorldCharacter } from '@cthunline/games';
 import { Checkbox, Group, Stack } from '@mantine/core';
 import { GiHealthNormal } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import HarmPie from './HarmPie.js';
 
 interface HarmProps {

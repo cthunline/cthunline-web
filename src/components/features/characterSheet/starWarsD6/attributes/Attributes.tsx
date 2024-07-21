@@ -1,10 +1,10 @@
-import { Group, Stack } from '@mantine/core';
-import {
-    type SWD6Attributes,
-    type SWD6Attribute,
-    type SWD6AttributeData,
-    type SWD6Skill
+import type {
+    SWD6Attribute,
+    SWD6AttributeData,
+    SWD6Attributes,
+    SWD6Skill
 } from '@cthunline/games';
+import { Group, Stack } from '@mantine/core';
 
 import Attribute from './Attribute.js';
 

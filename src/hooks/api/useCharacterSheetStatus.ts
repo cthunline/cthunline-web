@@ -1,6 +1,6 @@
-import { useState, useRef, useCallback } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
-import { type CharacterSheetStatus } from '../../types/index.js';
+import type { CharacterSheetStatus } from '../../types/index.js';
 
 const useCharacterSheetStatus = () => {
     const [status, setStatus] = useState<CharacterSheetStatus>('idle');

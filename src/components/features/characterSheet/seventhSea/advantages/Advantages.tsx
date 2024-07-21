@@ -1,9 +1,9 @@
+import type { SeventhSeaAdvantage } from '@cthunline/games';
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
-import { type SeventhSeaAdvantage } from '@cthunline/games';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import { GameId } from '../../../../../types/index.js';
+import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import { advantageFields } from '../fields.js';
 
 interface AdvantagesProps {

@@ -1,18 +1,18 @@
-import { GiChestArmor } from 'react-icons/gi';
-import { Stack } from '@mantine/core';
-import {
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasyArmour
+import type {
+    WarhammerFantasyArmour,
+    WarhammerFantasyCharacter
 } from '@cthunline/games';
+import { Stack } from '@mantine/core';
+import { GiChestArmor } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
-import AddArmourRow from './AddArmourRow.js';
-import ArmourRow from './ArmourRow.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import AddArmourRow from './AddArmourRow.js';
+import ArmourRow from './ArmourRow.js';
 
 interface ArmourProps {
     readonly: boolean;

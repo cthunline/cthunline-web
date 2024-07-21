@@ -1,4 +1,4 @@
-import { type CoCSkill } from '@cthunline/games';
+import type { CoCSkill } from '@cthunline/games';
 
 export interface KeyData {
     key: keyof CoCSkill;

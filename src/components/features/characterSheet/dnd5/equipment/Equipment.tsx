@@ -1,11 +1,11 @@
-import { type DnD5Equipment } from '@cthunline/games';
+import type { DnD5Equipment } from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
 
-import { moneyFields, equipmentFields } from './equipment.data.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
 import Textarea from '../../../../common/Textarea.js';
-import { useApp } from '../../../../../contexts/App.js';
+import { equipmentFields, moneyFields } from './equipment.data.js';
 
 interface EquipmentProps {
     equipment: DnD5Equipment;

@@ -1,14 +1,14 @@
 import { Box, Button, Stack, TextInput } from '@mantine/core';
-import { zodResolver } from 'mantine-form-zod-resolver';
-import { Navigate } from 'react-router-dom';
-import { MdLogin } from 'react-icons/md';
 import { useForm } from '@mantine/form';
+import { zodResolver } from 'mantine-form-zod-resolver';
 import { GiD10 } from 'react-icons/gi';
+import { MdLogin } from 'react-icons/md';
+import { Navigate } from 'react-router-dom';
 import z from 'zod';
 
-import ContentBox from '../../common/ContentBox.js';
-import { toast } from '../../../services/toast.js';
 import { useApp } from '../../../contexts/App.js';
+import { toast } from '../../../services/toast.js';
+import ContentBox from '../../common/ContentBox.js';
 import Form from '../../common/Form.js';
 import Link from '../../common/Link.js';
 
@@ -33,8 +33,10 @@ const Login = () => {
     const onFormSubmit = async ({ email, password }: LoginFormData) => {
         try {
             await login(email, password);
-        } catch (err: any) {
-            toast.error(err.message);
+        } catch (err: unknown) {
+            toast.error(
+                err instanceof Error ? err.message : T('common.unexpectedError')
+            );
         }
     };
 

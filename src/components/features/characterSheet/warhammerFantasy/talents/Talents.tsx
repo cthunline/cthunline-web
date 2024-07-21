@@ -1,18 +1,18 @@
-import { GiInspiration } from 'react-icons/gi';
-import { Stack } from '@mantine/core';
-import {
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasyTalent
+import type {
+    WarhammerFantasyCharacter,
+    WarhammerFantasyTalent
 } from '@cthunline/games';
+import { Stack } from '@mantine/core';
+import { GiInspiration } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
-import AddTalentRow from './AddTalentRow.js';
-import TalentRow from './TalentRow.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import AddTalentRow from './AddTalentRow.js';
+import TalentRow from './TalentRow.js';
 
 interface TalentsProps {
     readonly: boolean;

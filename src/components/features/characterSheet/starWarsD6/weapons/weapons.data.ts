@@ -1,4 +1,4 @@
-import { type SWD6Weapon } from '@cthunline/games';
+import type { SWD6Weapon } from '@cthunline/games';
 
 export interface FieldData {
     key: keyof SWD6Weapon;

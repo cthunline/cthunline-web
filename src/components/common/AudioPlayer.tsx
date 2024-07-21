@@ -1,11 +1,4 @@
 import {
-    BsPauseFill,
-    BsPlayFill,
-    BsRepeat,
-    BsRepeat1,
-    BsShuffle
-} from 'react-icons/bs';
-import {
     ActionIcon,
     Group,
     type GroupProps,
@@ -15,6 +8,13 @@ import {
     Tooltip
 } from '@mantine/core';
 import {
+    BsPauseFill,
+    BsPlayFill,
+    BsRepeat,
+    BsRepeat1,
+    BsShuffle
+} from 'react-icons/bs';
+import {
     IoVolumeHigh,
     IoVolumeLow,
     IoVolumeMedium,
@@ -22,8 +22,8 @@ import {
     IoVolumeOff
 } from 'react-icons/io5';
 
-import { useAudioMaster } from '../../contexts/AudioMaster.js';
 import { useApp } from '../../contexts/App.js';
+import { useAudioMaster } from '../../contexts/AudioMaster.js';
 
 interface AudioVolumeIconProps {
     playing: boolean;

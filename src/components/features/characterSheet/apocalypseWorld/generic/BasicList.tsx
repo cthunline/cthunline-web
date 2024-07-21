@@ -1,4 +1,4 @@
-import { type ApocalypseWorldBasicListItem } from '@cthunline/games';
+import type { ApocalypseWorldBasicListItem } from '@cthunline/games';
 import { Box, Checkbox, Group, Stack, Text } from '@mantine/core';
 import { useMemo } from 'react';
 

@@ -1,4 +1,4 @@
-import { type PaperProps, Paper, Stack, Group, Title } from '@mantine/core';
+import { Group, Paper, type PaperProps, Stack, Title } from '@mantine/core';
 
 interface ContentBoxProps {
     children?: React.ReactNode;

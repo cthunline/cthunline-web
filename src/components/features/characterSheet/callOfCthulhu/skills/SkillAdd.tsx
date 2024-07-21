@@ -1,14 +1,14 @@
+import type { CoCSkill } from '@cthunline/games';
 import { ActionIcon, Box, Group, Switch } from '@mantine/core';
-import { type CoCSkill } from '@cthunline/games';
-import { FiPlusCircle } from 'react-icons/fi';
 import { useMemo, useReducer } from 'react';
+import { FiPlusCircle } from 'react-icons/fi';
 
-import { type SkillData, skillList, defaultSkillValue } from './skills.data.js';
-import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../../contexts/App.js';
 import AutocompleteInput, {
     type AutocompleteInputValue
 } from '../../../../common/AutocompleteInput.js';
+import TextInput from '../../../../common/TextInput.js';
+import { type SkillData, defaultSkillValue, skillList } from './skills.data.js';
 
 interface SkillAddProps {
     onSubmit: (data: CoCSkill) => void;
@@ -65,7 +65,7 @@ const SkillAdd = ({ onSubmit }: SkillAddProps) => {
                 }
             };
             if (!updateData.errors) {
-                (['name', 'base'] as const).forEach((field) => {
+                for (const field of ['name', 'base'] as const) {
                     if (
                         updateData.data &&
                         Object.hasOwn(updateData.data, field) &&
@@ -75,7 +75,7 @@ const SkillAdd = ({ onSubmit }: SkillAddProps) => {
                     } else if (!prev.data[field] && updateData.data?.[field]) {
                         updated.errors[field] = false;
                     }
-                });
+                }
             }
             return updated;
         },

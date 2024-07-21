@@ -1,11 +1,11 @@
+import Assets from './pages/assets/Assets.js';
 import CharacterForm from './pages/characters/CharacterForm.js';
 import Characters from './pages/characters/Characters.js';
-import Sessions from './pages/sessions/Sessions.js';
-import Profile from './pages/profile/Profile.js';
-import Assets from './pages/assets/Assets.js';
-import Users from './pages/users/Users.js';
 import Home from './pages/home/Home.js';
 import Play from './pages/play/Play.js';
+import Profile from './pages/profile/Profile.js';
+import Sessions from './pages/sessions/Sessions.js';
+import Users from './pages/users/Users.js';
 
 export interface RouterPage {
     path: string;

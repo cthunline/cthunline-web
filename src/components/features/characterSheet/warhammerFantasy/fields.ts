@@ -1,16 +1,16 @@
-import {
-    type WarhammerFantasyAmbitions,
-    type WarhammerFantasyExperience,
-    type WarhammerFantasyFate,
-    type WarhammerFantasyMovement,
-    type WarhammerFantasyParty,
-    type WarhammerFantasyResilience,
-    type WarhammerFantasyWealth,
-    type WarhammerFantasyWounds,
-    type WarhammerFantasyBiography
+import type {
+    WarhammerFantasyAmbitions,
+    WarhammerFantasyBiography,
+    WarhammerFantasyExperience,
+    WarhammerFantasyFate,
+    WarhammerFantasyMovement,
+    WarhammerFantasyParty,
+    WarhammerFantasyResilience,
+    WarhammerFantasyWealth,
+    WarhammerFantasyWounds
 } from '@cthunline/games';
 
-import { type Field } from '../generic/fieldLayout/FieldLayout.js';
+import type { Field } from '../generic/fieldLayout/FieldLayout.js';
 
 export const biographyFields: Field<WarhammerFantasyBiography>[] = [
     {

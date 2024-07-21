@@ -1,7 +1,7 @@
-import {
-    type SWD6Character,
-    type SWD6WoundStatus,
-    type SWD6WoundStatusKey
+import type {
+    SWD6Character,
+    SWD6WoundStatus,
+    SWD6WoundStatusKey
 } from '@cthunline/games';
 
 const orderedWoundStatus: SWD6WoundStatusKey[] = [
@@ -15,12 +15,12 @@ const orderedWoundStatus: SWD6WoundStatusKey[] = [
 export const controlWoundStatus = (woundStatusData: SWD6WoundStatus) => {
     const woundStatus = woundStatusData;
     let highestWoundStatus: SWD6WoundStatusKey | null = null;
-    orderedWoundStatus.forEach((status) => {
+    for (const status of orderedWoundStatus) {
         if (woundStatus[status]) {
             highestWoundStatus = status;
         }
         woundStatus[status] = false;
-    });
+    }
     if (highestWoundStatus) {
         woundStatus[highestWoundStatus as SWD6WoundStatusKey] = true;
         if (highestWoundStatus === 'doublyWounded') {

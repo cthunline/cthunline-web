@@ -1,10 +1,10 @@
-import {
-    type CoCCharacter,
-    type CoCCharacteristic,
-    type CoCPoint,
-    type CoCSanity,
-    type CoCSkill,
-    type CoCCombat
+import type {
+    CoCCharacter,
+    CoCCharacteristic,
+    CoCCombat,
+    CoCPoint,
+    CoCSanity,
+    CoCSkill
 } from '@cthunline/games';
 
 export const controlCharacteristic = (

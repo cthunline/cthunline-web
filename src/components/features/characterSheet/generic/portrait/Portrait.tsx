@@ -1,5 +1,5 @@
-import { MdUploadFile, MdOutlineDeleteOutline } from 'react-icons/md';
 import { ActionIcon, FileButton, Stack } from '@mantine/core';
+import { MdOutlineDeleteOutline, MdUploadFile } from 'react-icons/md';
 
 import { getAssetUrl } from '../../../../../services/api.js';
 

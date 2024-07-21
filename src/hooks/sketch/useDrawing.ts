@@ -1,21 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { isMainClick } from '../../services/tools.js';
 import { usePlay } from '../../contexts/Play.js';
 import {
     coordinatesToPath,
     getMouseEventSvgCoordinates
 } from '../../services/sketch.js';
-import {
-    type SketchDrawingPath,
-    type SketchCoordinates
+import { isMainClick } from '../../services/tools.js';
+import type {
+    SketchCoordinates,
+    SketchDrawingPath
 } from '../../types/index.js';
 
 // this hook holds state and event handlers for sketch drawing
 // it is meant to be used by the sketch component and sub components
 const useDrawing = (
     svgRef: React.MutableRefObject<SVGSVGElement>,
-    isMaster: boolean = false
+    isMaster = false
 ) => {
     const { isFreeDrawing, addSketchDrawPath, drawingColor, drawingWidth } =
         usePlay();

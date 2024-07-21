@@ -1,16 +1,16 @@
-import { ActionIcon, Box, Group } from '@mantine/core';
-import { FiPlusCircle } from 'react-icons/fi';
-import { useMemo, useReducer } from 'react';
 import {
-    warhammerFantasy,
-    type WarhammerFantasyOtherSkill,
+    type WarhammerFantasyCharacter,
     type WarhammerFantasyCharacteristicName,
-    type WarhammerFantasyCharacter
+    type WarhammerFantasyOtherSkill,
+    warhammerFantasy
 } from '@cthunline/games';
+import { ActionIcon, Box, Group } from '@mantine/core';
+import { useMemo, useReducer } from 'react';
+import { FiPlusCircle } from 'react-icons/fi';
 
-import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../../contexts/App.js';
 import Select from '../../../../common/Select.js';
+import TextInput from '../../../../common/TextInput.js';
 
 interface OtherSkillFormData {
     name: string;

@@ -1,19 +1,19 @@
+import { Stack } from '@mantine/core';
 import { useEffect, useMemo, useState } from 'react';
 import { HiMusicNote } from 'react-icons/hi';
-import { Stack } from '@mantine/core';
 
+import { useApp } from '../../../../../contexts/App.js';
 import { useAudioMaster } from '../../../../../contexts/AudioMaster.js';
+import useAsset from '../../../../../hooks/api/useAsset.js';
 import useDirectory from '../../../../../hooks/api/useDirectory.js';
 import { shuffleArray } from '../../../../../services/tools.js';
-import AudioPlayer from '../../../../common/AudioPlayer.js';
-import useAsset from '../../../../../hooks/api/useAsset.js';
 import { WidgetType } from '../../../../../types/index.js';
-import { useApp } from '../../../../../contexts/App.js';
-import Widget from '../../Widget.js';
+import AudioPlayer from '../../../../common/AudioPlayer.js';
 import FileExplorer, {
     type FileExplorerItem,
     FileExplorerItemType
 } from '../../../../common/FileExplorer.js';
+import Widget from '../../Widget.js';
 
 interface JukeboxWidgetProps {
     onClose: (widget: WidgetType) => void;

@@ -1,13 +1,13 @@
-import { type ApocalypseWorldHx } from '@cthunline/games';
+import type { ApocalypseWorldHx } from '@cthunline/games';
 import { ActionIcon, Group, Stack } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { FiPlusCircle } from 'react-icons/fi';
-import { useForm } from '@mantine/form';
 import z from 'zod';
 
-import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../../contexts/App.js';
 import Form from '../../../../common/Form.js';
+import TextInput from '../../../../common/TextInput.js';
 
 const hxFormSchema = z.object({
     character: z.string().min(1),

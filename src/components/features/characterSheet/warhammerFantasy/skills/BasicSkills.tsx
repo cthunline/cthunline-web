@@ -1,14 +1,14 @@
-import { GiSkills } from 'react-icons/gi';
+import {
+    type WarhammerFantasyBasicSkillName,
+    type WarhammerFantasyCharacter,
+    warhammerFantasy
+} from '@cthunline/games';
 import { Stack } from '@mantine/core';
 import { useMemo } from 'react';
-import {
-    warhammerFantasy,
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasyBasicSkillName
-} from '@cthunline/games';
+import { GiSkills } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import SkillRow from './SkillRow.js';
 
 const { basicSkillNames } = warhammerFantasy.data;

@@ -1,12 +1,12 @@
-import {
-    type SeventhSeaAdvantage,
-    type SeventhSeaArcana,
-    type SeventhSeaBackground,
-    type SeventhSeaBiography,
-    type SeventhSeaStory
+import type {
+    SeventhSeaAdvantage,
+    SeventhSeaArcana,
+    SeventhSeaBackground,
+    SeventhSeaBiography,
+    SeventhSeaStory
 } from '@cthunline/games';
 
-import { type Field } from '../generic/fieldLayout/FieldLayout.js';
+import type { Field } from '../generic/fieldLayout/FieldLayout.js';
 
 export const biographyFields: Field<SeventhSeaBiography>[] = [
     {

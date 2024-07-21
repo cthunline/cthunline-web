@@ -1,34 +1,34 @@
-import { io } from 'socket.io-client';
 import {
     createContext,
-    useState,
-    useEffect,
-    useContext,
     useCallback,
+    useContext,
+    useEffect,
+    useMemo,
     useRef,
-    useMemo
+    useState
 } from 'react';
+import { io } from 'socket.io-client';
 
-import { type User, type PlaySocket } from '../types/index.js';
 import useSession from '../hooks/api/useSession.js';
-import { toast } from '../services/toast.js';
-import { useApp } from './App.js';
-import useSketch, {
-    type SketchHookExport,
-    defaultSketchHookExport
-} from '../hooks/play/useSketch.js';
-import useLogs, {
-    type LogsHookExport,
-    defaultLogsHookExport
-} from '../hooks/play/useLogs.js';
 import useDice, {
     type DiceHookExport,
     defaultDiceHookExport
 } from '../hooks/play/useDice.js';
+import useLogs, {
+    type LogsHookExport,
+    defaultLogsHookExport
+} from '../hooks/play/useLogs.js';
 import useSessionUsers, {
     type SessionUsersHookExport,
     defaultSessionUsersHookExport
 } from '../hooks/play/useSessionUsers.js';
+import useSketch, {
+    type SketchHookExport,
+    defaultSketchHookExport
+} from '../hooks/play/useSketch.js';
+import { toast } from '../services/toast.js';
+import type { PlaySocket, User } from '../types/index.js';
+import { useApp } from './App.js';
 
 interface PlayProviderProps {
     children: JSX.Element | JSX.Element[];
@@ -313,15 +313,7 @@ export const PlayProvider = ({
                 );
             }
         })();
-    }, [
-        socket,
-        user,
-        session,
-        sessionId,
-        characterId,
-        connectSocket,
-        setSketchData
-    ]);
+    }, [socket, user, session, sessionId, characterId, connectSocket]);
 
     useEffect(() => {
         if (session) {

@@ -1,5 +1,5 @@
-import { notifications, type NotificationData } from '@mantine/notifications';
-import { FaInfo, FaCheck, FaXmark, FaExclamation } from 'react-icons/fa6';
+import { type NotificationData, notifications } from '@mantine/notifications';
+import { FaCheck, FaExclamation, FaInfo, FaXmark } from 'react-icons/fa6';
 
 export type ToastIntent = 'info' | 'success' | 'warning' | 'error';
 

@@ -1,7 +1,7 @@
-import { GiDeathSkull, GiIronCross, GiStoneCrafting } from 'react-icons/gi';
 import { ActionIcon, Group, Menu, Text } from '@mantine/core';
-import { type IconType } from 'react-icons';
+import type { IconType } from 'react-icons';
 import { FaBan, FaShield } from 'react-icons/fa6';
+import { GiDeathSkull, GiIronCross, GiStoneCrafting } from 'react-icons/gi';
 
 import { useApp } from '../../../../../contexts/App.js';
 

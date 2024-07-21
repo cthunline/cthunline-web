@@ -1,15 +1,15 @@
+import { Box, Button, Group, Stack, TextInput, Title } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { MdOutlineSave } from 'react-icons/md';
-import { useForm } from '@mantine/form';
 import z from 'zod';
-import { Box, Button, Group, Stack, TextInput, Title } from '@mantine/core';
 
-import { type SelectOption, languages } from '../../../types/index.js';
-import useUser from '../../../hooks/api/useUser.js';
-import ContentBox from '../../common/ContentBox.js';
 import { useApp } from '../../../contexts/App.js';
-import Select from '../../common/Select.js';
+import useUser from '../../../hooks/api/useUser.js';
+import { type SelectOption, languages } from '../../../types/index.js';
+import ContentBox from '../../common/ContentBox.js';
 import Form from '../../common/Form.js';
+import Select from '../../common/Select.js';
 
 const profileFormSchema = z
     .object({
@@ -133,18 +133,18 @@ const Profile = () => {
                         <TextInput
                             {...getInputProps('oldPassword')}
                             type="password"
-                            label={T(`page.profile.oldPassword`)}
+                            label={T('page.profile.oldPassword')}
                         />
                         <TextInput
                             {...getInputProps('password')}
                             type="password"
-                            label={T(`page.profile.newPassword`)}
+                            label={T('page.profile.newPassword')}
                             autoComplete="new-password"
                         />
                         <TextInput
                             {...getInputProps('passwordConfirm')}
                             type="password"
-                            label={T(`page.profile.newPasswordConfirm`)}
+                            label={T('page.profile.newPasswordConfirm')}
                             autoComplete="new-password"
                         />
                         <Button type="submit" leftSection={<MdOutlineSave />}>

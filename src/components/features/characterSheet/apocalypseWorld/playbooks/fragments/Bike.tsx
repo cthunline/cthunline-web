@@ -1,13 +1,13 @@
+import type {
+    ApocalypseWorldCharacter,
+    ApocalypseWorldCharacterChopperBike
+} from '@cthunline/games';
 import { Group, Stack, type StackProps } from '@mantine/core';
 import { GiFullMotorcycleHelmet } from 'react-icons/gi';
-import {
-    type ApocalypseWorldCharacterChopperBike,
-    type ApocalypseWorldCharacter
-} from '@cthunline/games';
 
-import SectionTitle from '../../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../../contexts/App.js';
 import Textarea from '../../../../../common/Textarea.js';
+import SectionTitle from '../../../generic/sectionTitle/SectionTitle.js';
 
 interface BikeProps extends Omit<StackProps, 'onChange'> {
     readonly?: boolean;

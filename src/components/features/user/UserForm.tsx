@@ -1,7 +1,7 @@
 import { Button, Stack, TextInput } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { MdOutlineSave } from 'react-icons/md';
-import { useForm } from '@mantine/form';
 import z from 'zod';
 
 import { useApp } from '../../../contexts/App.js';

@@ -1,10 +1,10 @@
-import { useCallback, useEffect, useState, useRef } from 'react';
+import type { SWD6Weapon } from '@cthunline/games';
 import { ActionIcon, Box, Group } from '@mantine/core';
-import { type SWD6Weapon } from '@cthunline/games';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../../contexts/App.js';
+import TextInput from '../../../../common/TextInput.js';
 import { weaponFields } from './weapons.data.js';
 
 interface WeaponAddProps {
@@ -33,6 +33,7 @@ const WeaponAdd = ({ onSubmit }: WeaponAddProps) => {
     }, [values]);
 
     const userChanged = useRef<boolean>(false);
+    // biome-ignore lint/correctness/useExhaustiveDependencies: values is falsly pointed as unwanted dependency
     useEffect(() => {
         if (userChanged.current) {
             controlForm();

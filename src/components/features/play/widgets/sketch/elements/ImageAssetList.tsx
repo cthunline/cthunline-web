@@ -1,7 +1,7 @@
-import { Box, type BoxProps, Grid, UnstyledButton, Image } from '@mantine/core';
+import { Box, type BoxProps, Grid, Image, UnstyledButton } from '@mantine/core';
 
 import { getAssetUrl } from '../../../../../../services/api.js';
-import { type Asset } from '../../../../../../types/index.js';
+import type { Asset } from '../../../../../../types/index.js';
 
 interface ImageListProps extends BoxProps {
     assets: Asset[];

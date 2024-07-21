@@ -1,6 +1,6 @@
+import { Box } from '@mantine/core';
 import React, { useEffect } from 'react';
 import Draggable from 'react-draggable';
-import { Box } from '@mantine/core';
 
 import { focusWidget } from '../../../services/widget.js';
 import WidgetPaper from './WidgetPaper.js';

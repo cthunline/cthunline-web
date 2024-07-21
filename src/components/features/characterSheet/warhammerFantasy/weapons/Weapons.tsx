@@ -1,18 +1,18 @@
-import { GiAxeSword } from 'react-icons/gi';
-import { Stack } from '@mantine/core';
-import {
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasyWeapon
+import type {
+    WarhammerFantasyCharacter,
+    WarhammerFantasyWeapon
 } from '@cthunline/games';
+import { Stack } from '@mantine/core';
+import { GiAxeSword } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
-import AddWeaponRow from './AddWeaponRow.js';
-import WeaponRow from './WeaponRow.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import AddWeaponRow from './AddWeaponRow.js';
+import WeaponRow from './WeaponRow.js';
 
 interface WeaponsProps {
     readonly: boolean;

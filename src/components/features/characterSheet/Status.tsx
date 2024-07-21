@@ -1,9 +1,9 @@
-import { Tooltip, Loader, Group } from '@mantine/core';
-import { FaCircle } from 'react-icons/fa6';
+import { Group, Loader, Tooltip } from '@mantine/core';
 import { useMemo } from 'react';
+import { FaCircle } from 'react-icons/fa6';
 
-import { type CharacterSheetStatus } from '../../../types/index.js';
 import { useApp } from '../../../contexts/App.js';
+import type { CharacterSheetStatus } from '../../../types/index.js';
 
 interface CharacterSheetStatusData {
     text: string;

@@ -1,10 +1,10 @@
-import { type ApocalypseWorldCharacter } from '@cthunline/games';
-import { GiHandBag } from 'react-icons/gi';
+import type { ApocalypseWorldCharacter } from '@cthunline/games';
 import { Box, Stack } from '@mantine/core';
+import { GiHandBag } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import TextEditor from '../../../../common/TextEditor.js';
 import { useApp } from '../../../../../contexts/App.js';
+import TextEditor from '../../../../common/TextEditor.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
 interface GearBarterProps {
     readonly?: boolean;

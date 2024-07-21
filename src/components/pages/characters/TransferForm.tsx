@@ -1,14 +1,14 @@
-import { zodResolver } from 'mantine-form-zod-resolver';
 import { Button, Group, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { zodResolver } from 'mantine-form-zod-resolver';
 import { useMemo } from 'react';
 import z from 'zod';
 
-import { type SelectOption } from '../../../types/index.js';
-import useUser from '../../../hooks/api/useUser.js';
 import { useApp } from '../../../contexts/App.js';
-import Select from '../../common/Select.js';
+import useUser from '../../../hooks/api/useUser.js';
+import type { SelectOption } from '../../../types/index.js';
 import Form from '../../common/Form.js';
+import Select from '../../common/Select.js';
 
 const transferFormSchema = z.object({
     userId: z.number().int().min(1)
@@ -43,14 +43,14 @@ const TransferForm = ({
 
     const userOptions = useMemo(() => {
         const options: SelectOption<number>[] = [];
-        userList.forEach(({ id, name }) => {
+        for (const { id, name } of userList) {
             if (id !== currentUserId) {
                 options.push({
                     value: id,
                     label: name
                 });
             }
-        });
+        }
         return options;
     }, [currentUserId, userList]);
 

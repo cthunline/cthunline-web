@@ -1,9 +1,9 @@
 import {
-    type StackProps,
-    UnstyledButton,
-    Group,
     Box,
-    Stack
+    Group,
+    Stack,
+    type StackProps,
+    UnstyledButton
 } from '@mantine/core';
 
 import './InteractiveList.css';

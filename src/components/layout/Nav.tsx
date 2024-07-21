@@ -1,14 +1,14 @@
+import {
+    AppShell,
+    Group,
+    type MantineStyleProp,
+    Text,
+    UnstyledButton
+} from '@mantine/core';
+import { FiFolder } from 'react-icons/fi';
 import { GiD10, GiRollingDices } from 'react-icons/gi';
 import { MdOutlineContactPage } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
-import { FiFolder } from 'react-icons/fi';
-import {
-    AppShell,
-    type MantineStyleProp,
-    UnstyledButton,
-    Group,
-    Text
-} from '@mantine/core';
 
 import { useApp } from '../../contexts/App.js';
 import NavMenu from './NavMenu.js';

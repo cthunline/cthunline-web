@@ -1,12 +1,12 @@
-import { BrowserRouter, Navigate, Routes, Route } from 'react-router-dom';
 import { Loader } from '@mantine/core';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 
-import Register from './pages/register/Register.js';
-import ErrorPage from './pages/error/ErrorPage.js';
 import { useApp } from '../contexts/App.js';
-import Login from './pages/login/Login.js';
-import { pages } from './router.data.js';
 import Page from './layout/Page.js';
+import ErrorPage from './pages/error/ErrorPage.js';
+import Login from './pages/login/Login.js';
+import Register from './pages/register/Register.js';
+import { pages } from './router.data.js';
 
 interface RequireAuthProps {
     children: React.ReactElement;

@@ -1,10 +1,10 @@
 import { callApi } from '../api.js';
 
-import {
-    type User,
-    type UserCreateBody,
-    type UserEditBody,
-    type UserRegisterBody
+import type {
+    User,
+    UserCreateBody,
+    UserEditBody,
+    UserRegisterBody
 } from '../../types/index.js';
 
 export const getUsers = async (includeDisabled?: boolean) => {

@@ -1,17 +1,17 @@
-import { useState, useCallback, useEffect, useRef } from 'react';
-import { MdEdit, MdOutlineCheck } from 'react-icons/md';
 import { ActionIcon, Box, Loader } from '@mantine/core';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { MdEdit, MdOutlineCheck } from 'react-icons/md';
 
-import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
+import { useApp } from '../../../../../contexts/App.js';
 import useCharacter from '../../../../../hooks/api/useCharacter.js';
 import { deepEqual } from '../../../../../services/tools.js';
-import { useApp } from '../../../../../contexts/App.js';
-import Widget from '../../Widget.js';
 import {
-    WidgetType,
     type Character,
-    type CharacterData
+    type CharacterData,
+    WidgetType
 } from '../../../../../types/index.js';
+import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
+import Widget from '../../Widget.js';
 
 interface CharacterWidgetProps {
     characterId: number;

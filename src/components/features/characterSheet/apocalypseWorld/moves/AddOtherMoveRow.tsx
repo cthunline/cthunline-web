@@ -1,14 +1,14 @@
-import { type ApocalypseWorldDetailedListItem } from '@cthunline/games';
+import type { ApocalypseWorldDetailedListItem } from '@cthunline/games';
 import { ActionIcon, Box, Checkbox, Group, Stack } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { FiPlusCircle } from 'react-icons/fi';
-import { useForm } from '@mantine/form';
 import z from 'zod';
 
-import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../../contexts/App.js';
-import Textarea from '../../../../common/Textarea.js';
 import Form from '../../../../common/Form.js';
+import TextInput from '../../../../common/TextInput.js';
+import Textarea from '../../../../common/Textarea.js';
 
 const moveFormSchema = z.object({
     enabled: z.boolean(),

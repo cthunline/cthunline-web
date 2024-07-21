@@ -2,8 +2,8 @@ import {
     apocalypseWorld,
     callOfCthulhu,
     dnd5,
-    starWarsD6,
     seventhSea,
+    starWarsD6,
     warhammerFantasy
 } from '@cthunline/games';
 

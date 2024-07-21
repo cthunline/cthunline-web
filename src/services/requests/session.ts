@@ -1,9 +1,9 @@
 import { callApi } from '../api.js';
 
-import {
-    type Session,
-    type SessionCreateBody,
-    type SessionEditBody
+import type {
+    Session,
+    SessionCreateBody,
+    SessionEditBody
 } from '../../types/index.js';
 
 export const getSessions = async () => {

@@ -1,5 +1,5 @@
-import { GiWizardFace } from 'react-icons/gi';
 import { Stack, Title } from '@mantine/core';
+import { GiWizardFace } from 'react-icons/gi';
 
 import { useApp } from '../../../contexts/App.js';
 

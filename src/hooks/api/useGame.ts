@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-import { getGames } from '../../services/requests/game.js';
-import { type Game } from '../../types/index.js';
 import { useApp } from '../../contexts/App.js';
+import { getGames } from '../../services/requests/game.js';
+import type { Game } from '../../types/index.js';
 
 const useGame = () => {
     const { handleApiError } = useApp();
@@ -17,7 +17,7 @@ const useGame = () => {
             try {
                 const games = await getGames();
                 setGameList(games);
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         })();

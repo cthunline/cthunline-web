@@ -1,7 +1,7 @@
 import { ActionIcon, Menu } from '@mantine/core';
 import { FaEllipsis } from 'react-icons/fa6';
 
-import { type MoveAction } from '../../../../../services/tools.js';
+import type { MoveAction } from '../../../../../services/tools.js';
 
 type RowMenuButtonProps = {
     onMove: (action: MoveAction) => void;

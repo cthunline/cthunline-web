@@ -1,25 +1,25 @@
 import { ActionIcon, Alert, Button, Chip, Table } from '@mantine/core';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
-import { GiRollingDices } from 'react-icons/gi';
-import { useNavigate } from 'react-router-dom';
-import { FaInfo } from 'react-icons/fa6';
 import { modals } from '@mantine/modals';
-import { HiPlus } from 'react-icons/hi';
 import { useMemo } from 'react';
+import { FaInfo } from 'react-icons/fa6';
+import { GiRollingDices } from 'react-icons/gi';
+import { HiPlus } from 'react-icons/hi';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
-import useCharacter from '../../../hooks/api/useCharacter.js';
-import useSession from '../../../hooks/api/useSession.js';
-import useGame from '../../../hooks/api/useGame.js';
-import ContentBox from '../../common/ContentBox.js';
-import { toast } from '../../../services/toast.js';
 import { useApp } from '../../../contexts/App.js';
+import useCharacter from '../../../hooks/api/useCharacter.js';
+import useGame from '../../../hooks/api/useGame.js';
+import useSession from '../../../hooks/api/useSession.js';
+import { toast } from '../../../services/toast.js';
+import type {
+    Character,
+    SelectOption,
+    SessionCreateBody
+} from '../../../types/index.js';
+import ContentBox from '../../common/ContentBox.js';
 import Select from '../../common/Select.js';
 import SessionForm from './SessionForm.js';
-import {
-    type SelectOption,
-    type Character,
-    type SessionCreateBody
-} from '../../../types/index.js';
 
 interface CharacterSelectorProps {
     characters: Character[];
@@ -65,11 +65,7 @@ const Sessions = () => {
         loadList: true
     });
 
-    const onJoin = (
-        gameId: string,
-        sessionId: number,
-        isMaster: boolean = false
-    ) => {
+    const onJoin = (gameId: string, sessionId: number, isMaster = false) => {
         const charList = characterList.filter(
             ({ gameId: charGameId }) => charGameId === gameId
         );

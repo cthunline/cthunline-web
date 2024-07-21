@@ -1,20 +1,20 @@
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { modals } from '@mantine/modals';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { FiPlusCircle } from 'react-icons/fi';
 import { MdSaveAs } from 'react-icons/md';
-import { modals } from '@mantine/modals';
-import { useForm } from '@mantine/form';
 import z from 'zod';
 
-import TextInput from '../../../../../common/TextInput.js';
 import { useApp } from '../../../../../../contexts/App.js';
-import Form from '../../../../../common/Form.js';
-import {
-    type SketchData,
-    type SketchCreateBody,
-    type SketchUpdateBody,
-    type Sketch
+import type {
+    Sketch,
+    SketchCreateBody,
+    SketchData,
+    SketchUpdateBody
 } from '../../../../../../types/index.js';
+import Form from '../../../../../common/Form.js';
+import TextInput from '../../../../../common/TextInput.js';
 
 const userSketchFormSchema = z.object({
     name: z.string().min(3)

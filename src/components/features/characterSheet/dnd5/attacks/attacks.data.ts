@@ -1,4 +1,4 @@
-import { type DnD5Attack } from '@cthunline/games';
+import type { DnD5Attack } from '@cthunline/games';
 
 export const defaultAttack: DnD5Attack = {
     name: '',

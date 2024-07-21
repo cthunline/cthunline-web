@@ -1,4 +1,4 @@
-import { type SWD6Skill, type SWD6Attribute } from '@cthunline/games';
+import type { SWD6Attribute, SWD6Skill } from '@cthunline/games';
 
 export interface SkillField {
     gridColumn: number;

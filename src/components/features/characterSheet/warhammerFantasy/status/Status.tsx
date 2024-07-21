@@ -1,46 +1,46 @@
+import type {
+    WarhammerFantasyAmbitions,
+    WarhammerFantasyCharacter,
+    WarhammerFantasyExperience,
+    WarhammerFantasyFate,
+    WarhammerFantasyMovement,
+    WarhammerFantasyParty,
+    WarhammerFantasyResilience,
+    WarhammerFantasyWounds
+} from '@cthunline/games';
 import { Group, Stack } from '@mantine/core';
 import {
-    GiCartwheel,
-    GiOvermind,
-    GiUpgrade,
-    GiRun,
-    GiHeartPlus,
+    GiBookAura,
     GiBrain,
     GiBrainTentacle,
-    GiBookAura,
-    GiThreeFriends
+    GiCartwheel,
+    GiHeartPlus,
+    GiOvermind,
+    GiRun,
+    GiThreeFriends,
+    GiUpgrade
 } from 'react-icons/gi';
-import {
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasyFate,
-    type WarhammerFantasyMovement,
-    type WarhammerFantasyExperience,
-    type WarhammerFantasyResilience,
-    type WarhammerFantasyWounds,
-    type WarhammerFantasyAmbitions,
-    type WarhammerFantasyParty
-} from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
-import TextInput from '../../../../common/TextInput.js';
-import { GameId } from '../../../../../types/index.js';
-import Textarea from '../../../../common/Textarea.js';
 import { useApp } from '../../../../../contexts/App.js';
-import Advantage from './Advantage.js';
+import { GameId } from '../../../../../types/index.js';
+import TextInput from '../../../../common/TextInput.js';
+import Textarea from '../../../../common/Textarea.js';
+import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import {
+    ambitionsFields,
+    experienceFields,
+    fateFields,
+    movementFields,
+    partyFields,
+    resilienceFields,
+    woundsFields
+} from '../fields.js';
 import {
     controlStatus,
     controlWounds
 } from '../warhammerFantasySheet.helper.js';
-import {
-    fateFields,
-    resilienceFields,
-    experienceFields,
-    movementFields,
-    woundsFields,
-    ambitionsFields,
-    partyFields
-} from '../fields.js';
+import Advantage from './Advantage.js';
 
 export interface StatusProps {
     readonly: boolean;

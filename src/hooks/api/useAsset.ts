@@ -1,13 +1,13 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { type Asset, type AssetCreateBody } from '../../types/index.js';
-import { toast } from '../../services/toast.js';
 import { useApp } from '../../contexts/App.js';
 import {
     deleteAsset as deleteAssetRequest,
     getAssets as getAssetsRequest,
     uploadAssets as uploadAssetsRequest
 } from '../../services/requests/asset.js';
+import { toast } from '../../services/toast.js';
+import type { Asset, AssetCreateBody } from '../../types/index.js';
 
 interface AssetHookOptions {
     loadList?: boolean;
@@ -35,7 +35,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
     const getAssets = useCallback(async (): Promise<Asset[]> => {
         try {
             return await getAssetsRequest(type);
-        } catch (err: any) {
+        } catch (err: unknown) {
             throw handleApiError(err);
         }
     }, [type, handleApiError]);
@@ -65,7 +65,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
                     toast.success(`Asset${s} uploaded`);
                 }
                 return assets;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -86,7 +86,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
                 if (isToast) {
                     toast.success('Asset deleted');
                 }
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },

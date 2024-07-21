@@ -1,9 +1,9 @@
-import { useState, useCallback } from 'react';
 import {
+    type Locale,
     getTranslation,
-    locales,
-    type Locale
+    locales
 } from '@pitininja/vite-translations-client';
+import { useCallback, useState } from 'react';
 
 export interface TranslationHookExport {
     t: (key: string, data?: Record<string, string>) => string;

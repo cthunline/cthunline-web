@@ -22,12 +22,12 @@ export const focusWidget = (target: HTMLElement) => {
     });
     // set correct ordered z-index on other widgets
     let zIndex = 1;
-    allOtherWidgets.forEach((_w, idx) => {
-        const widgetEl = allOtherWidgets[idx] as HTMLElement;
+    for (let index = 0; index < allOtherWidgets.length; index++) {
+        const widgetEl = allOtherWidgets[index] as HTMLElement;
         widgetEl.setAttribute('data-zindex', zIndex.toString());
         widgetEl.style.zIndex = zIndex.toString();
         zIndex += 1;
-    });
+    }
     // set max z-index on widget to bring forward
     thisWidget.setAttribute('data-zindex', zIndex.toString());
     thisWidget.style.zIndex = zIndex.toString();

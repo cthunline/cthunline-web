@@ -1,13 +1,13 @@
 import {
-    type Color,
-    colors,
-    type SketchImageData,
-    type SketchCoordinates,
-    type SketchSize,
     CardinalDirection,
+    type Color,
+    type SketchCoordinates,
+    type SketchImageData,
     type SketchResizingItemData,
+    type SketchSize,
     type SketchTokenData,
-    TooltipPlacement
+    TooltipPlacement,
+    colors
 } from '../types/index.js';
 import { randomItem } from './tools.js';
 
@@ -27,9 +27,9 @@ const imageMinSize: SketchSize = {
 export const coordinatesToPath = (coords: SketchCoordinates[]): string => {
     if (coords.length) {
         let path = `M ${coords[0].x} ${coords[0].y}`;
-        let p1;
-        let p2;
-        let end;
+        let p1: SketchCoordinates;
+        let p2: SketchCoordinates;
+        let end: SketchCoordinates;
         for (let i = 1; i < coords.length - 2; i += 2) {
             p1 = coords[i];
             p2 = coords[i + 1];
@@ -147,8 +147,8 @@ export const getResizingItemCoordAndPos = ({
     const movingY =
         direction === CardinalDirection.nw ||
         direction === CardinalDirection.ne;
-    let newWidth;
-    let newHeight;
+    let newWidth: number;
+    let newHeight: number;
     let newX = initialX;
     let newY = initialY;
     // calculates new item size
@@ -224,11 +224,10 @@ export const getNewTokenColor = (currentTokens: SketchTokenData[]): Color => {
     const colorUses = Object.fromEntries(
         colors.map((color) => [color, 0])
     ) as SketchColorUses;
-    currentTokens
-        .map(({ color }) => color)
-        .forEach((color) => {
-            colorUses[color] += 1;
-        });
+    const currentTokensColors = currentTokens.map(({ color }) => color);
+    for (const color of currentTokensColors) {
+        colorUses[color] += 1;
+    }
     const minUsesCount = Math.min(...Object.values(colorUses));
     const filteredColors: Partial<SketchColorUses> = Object.fromEntries(
         Object.entries(colorUses).filter(
@@ -236,7 +235,8 @@ export const getNewTokenColor = (currentTokens: SketchTokenData[]): Color => {
         )
     );
     const pickedColor: Color =
-        randomItem(Object.keys(filteredColors)) ??
-        randomItem(colors as unknown as any[]);
+        randomItem(Object.keys(filteredColors) as Color[]) ??
+        randomItem(colors) ??
+        colors[0];
     return pickedColor;
 };

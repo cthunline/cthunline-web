@@ -1,14 +1,14 @@
-import { GiPayMoney, GiReceiveMoney, GiShakingHands } from 'react-icons/gi';
-import { Stack, Text } from '@mantine/core';
 import {
-    apocalypseWorld,
     type ApocalypseWorldBasicListItem,
-    type ApocalypseWorldCharacter
+    type ApocalypseWorldCharacter,
+    apocalypseWorld
 } from '@cthunline/games';
+import { Stack, Text } from '@mantine/core';
+import { GiPayMoney, GiReceiveMoney, GiShakingHands } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import TextEditor from '../../../../common/TextEditor.js';
 import { useApp } from '../../../../../contexts/App.js';
+import TextEditor from '../../../../common/TextEditor.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import BasicList from '../generic/BasicList.js';
 
 interface OperatorProps {

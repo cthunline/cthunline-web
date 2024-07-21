@@ -34,6 +34,7 @@ const SvgIconButton = ({
             viewBox={`0 0 ${buttonSize} ${buttonSize}`}
         >
             {iconWithProps}
+            {/* biome-ignore lint/a11y/useKeyWithClickEvents: */}
             <circle
                 cx={circleRadius}
                 cy={circleRadius}

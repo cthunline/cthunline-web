@@ -1,13 +1,13 @@
+import type { DnD5SpellLevel } from '@cthunline/games';
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
-import { type DnD5SpellLevel } from '@cthunline/games';
 import { FiPlusCircle } from 'react-icons/fi';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { spellLevelFields, defaultSpell } from './spellcasting.data.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../../contexts/App.js';
 import SpellList from './SpellList.js';
+import { defaultSpell, spellLevelFields } from './spellcasting.data.js';
 
 interface SpellLevelProps {
     spellLevel: DnD5SpellLevel;

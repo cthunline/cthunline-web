@@ -1,14 +1,14 @@
-import { type WarhammerFantasyWeapon } from '@cthunline/games';
+import type { WarhammerFantasyWeapon } from '@cthunline/games';
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { FiPlusCircle } from 'react-icons/fi';
-import { useForm } from '@mantine/form';
 import z from 'zod';
 
-import { onlyNumbers } from '../../../../../services/tools.js';
-import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../../contexts/App.js';
+import { onlyNumbers } from '../../../../../services/tools.js';
 import Form from '../../../../common/Form.js';
+import TextInput from '../../../../common/TextInput.js';
 
 const weaponFormSchema = z.object({
     name: z.string().min(1),

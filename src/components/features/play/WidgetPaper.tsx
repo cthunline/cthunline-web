@@ -1,13 +1,13 @@
-import { MdClose } from 'react-icons/md';
 import {
+    ActionIcon,
     Box,
     Group,
     Paper,
     type PaperProps,
     Stack,
-    type StackProps,
-    ActionIcon
+    type StackProps
 } from '@mantine/core';
+import { MdClose } from 'react-icons/md';
 
 import { focusWidget } from '../../../services/widget.js';
 

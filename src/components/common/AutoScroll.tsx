@@ -1,5 +1,5 @@
-import { useEffect, useRef } from 'react';
 import { Box } from '@mantine/core';
+import { useEffect, useRef } from 'react';
 
 const AutoScroll = () => {
     const scrollElement = useRef<HTMLDivElement | null>(null);

@@ -1,5 +1,5 @@
+import type { MantineStyleProps } from '@mantine/core';
 import React from 'react';
-import { type MantineStyleProps } from '@mantine/core';
 
 export interface FormProps
     extends Partial<Record<keyof MantineStyleProps, string | number>> {

@@ -1,5 +1,5 @@
+import type { Howl } from 'howler';
 import { useCallback, useEffect, useState } from 'react';
-import { type Howl } from 'howler';
 
 export interface VolumeData {
     howlVolume: number;

@@ -1,24 +1,24 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useClickOutside } from '@mantine/hooks';
 import { Group } from '@mantine/core';
+import { useClickOutside } from '@mantine/hooks';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
+import { usePlay } from '../../../contexts/Play.js';
+import useDrawing from '../../../hooks/sketch/useDrawing.js';
+import useItems from '../../../hooks/sketch/useItems.js';
+import { viewBox } from '../../../services/sketch.js';
+import {
+    type CardinalDirection,
+    type Color,
+    type SessionUser,
+    SketchItemType
+} from '../../../types/index.js';
+import CharacterPortraits from './CharacterPortraits.js';
 import SketchContextMenu, {
     type ContextMenuPosition,
     contextMenuHandler
 } from './sketch/SketchContextMenu.js';
-import useDrawing from '../../../hooks/sketch/useDrawing.js';
-import CharacterPortraits from './CharacterPortraits.js';
-import useItems from '../../../hooks/sketch/useItems.js';
-import { viewBox } from '../../../services/sketch.js';
 import SketchImage from './sketch/SketchImage.js';
 import SketchToken from './sketch/SketchToken.js';
-import { usePlay } from '../../../contexts/Play.js';
-import {
-    type CardinalDirection,
-    type SessionUser,
-    type Color,
-    SketchItemType
-} from '../../../types/index.js';
 
 interface SketchProps {
     isMaster?: boolean;

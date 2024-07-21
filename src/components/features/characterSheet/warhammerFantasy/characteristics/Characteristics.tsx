@@ -1,17 +1,17 @@
+import {
+    type WarhammerFantasyCharacter,
+    type WarhammerFantasyCharacteristic,
+    type WarhammerFantasyCharacteristicName,
+    warhammerFantasy
+} from '@cthunline/games';
 import { Grid, Group, Stack } from '@mantine/core';
 import { GiDna1 } from 'react-icons/gi';
-import {
-    warhammerFantasy,
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasyCharacteristicName,
-    type WarhammerFantasyCharacteristic
-} from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import CareerLevelButton from '../generic/CareerLevelButton.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../../contexts/App.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import CareerLevelButton from '../generic/CareerLevelButton.js';
 import {
     controlCharacteristic,
     controlWounds
@@ -114,7 +114,7 @@ const Characteristics = ({
                     ))
                 ])}
                 <Grid.Col span={5} ta="start">
-                    {T(`game.warhammerFantasy.characteristic.careerLevel`)}
+                    {T('game.warhammerFantasy.characteristic.careerLevel')}
                 </Grid.Col>
                 {characteristicNames.map((char) => (
                     <Grid.Col

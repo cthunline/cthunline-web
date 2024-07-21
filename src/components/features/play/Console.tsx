@@ -1,16 +1,20 @@
-import { useState, useEffect, useRef, useMemo } from 'react';
-import { FaChevronUp, FaChevronDown } from 'react-icons/fa6';
 import { ActionIcon, Stack, Text } from '@mantine/core';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { FaChevronDown, FaChevronUp } from 'react-icons/fa6';
 
-import { type PlayLog } from '../../../types/index.js';
-import AutoScroll from '../../common/AutoScroll.js';
 import { useApp } from '../../../contexts/App.js';
+import type { PlayLog } from '../../../types/index.js';
+import AutoScroll from '../../common/AutoScroll.js';
 import WidgetPaper from './WidgetPaper.js';
 
 const getBaseHeight = (el: HTMLDivElement) => {
     const { clientHeight } = el;
     const { paddingTop, paddingBottom } = getComputedStyle(el);
-    return clientHeight - parseFloat(paddingTop) - parseFloat(paddingBottom);
+    return (
+        clientHeight -
+        Number.parseFloat(paddingTop) -
+        Number.parseFloat(paddingBottom)
+    );
 };
 
 type ConsoleDisplayMode = 'minimized' | 'normal' | 'maximized';
@@ -63,15 +67,17 @@ const Console = ({ logs, playContentRef }: ConsoleProps) => {
         return () => resizeObserver.disconnect();
     }, [playContentRef]);
 
-    const scrollToBottom = () => {
+    const scrollToBottom = useCallback(() => {
         consoleRef.current?.scrollIntoView({
             behavior: 'smooth'
         });
-    };
+    }, []);
 
+    // biome-ignore lint/correctness/useExhaustiveDependencies: logs is falsly pointed as an unwanted dependency
     useEffect(() => {
         scrollToBottom();
-    }, [logs]);
+    }, [logs, scrollToBottom]);
+
     return (
         <WidgetPaper
             id="console-widget"

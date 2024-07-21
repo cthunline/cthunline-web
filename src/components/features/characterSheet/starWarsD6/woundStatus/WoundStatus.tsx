@@ -1,5 +1,5 @@
+import type { SWD6WoundStatus } from '@cthunline/games';
 import { Box, Checkbox, Group, Stack } from '@mantine/core';
-import { type SWD6WoundStatus } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App.js';
 import {

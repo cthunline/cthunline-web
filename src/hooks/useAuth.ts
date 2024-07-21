@@ -1,13 +1,15 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
-import { getUser } from '../services/requests/user.js';
-import { type User } from '../types/index.js';
-import { toast } from '../services/toast.js';
+import { AxiosError } from 'axios';
+import { useApp } from '../contexts/App.js';
 import {
+    checkAuth as checkAuthRequest,
     login as loginRequest,
-    logout as logoutRequest,
-    checkAuth as checkAuthRequest
+    logout as logoutRequest
 } from '../services/requests/auth.js';
+import { getUser } from '../services/requests/user.js';
+import { toast } from '../services/toast.js';
+import type { User } from '../types/index.js';
 
 interface AuthData {
     isLoading: boolean;
@@ -20,7 +22,7 @@ export interface AuthHookExport extends AuthData {
     refreshUser: () => Promise<void>;
     login: (email: string, password: string) => Promise<void>;
     logout: (callApi?: boolean) => Promise<void>;
-    handleApiError: (err: any) => typeof err;
+    handleApiError: (err: unknown) => typeof err;
 }
 
 export const defaultAuthHookData: AuthHookExport = {
@@ -50,6 +52,8 @@ const defaultAuthData: AuthData = {
 };
 
 const useAuth = () => {
+    const { T } = useApp();
+
     const [authData, setAuthData] = useState<AuthData>(defaultAuthData);
 
     const refreshUser = useCallback(async () => {
@@ -62,7 +66,7 @@ const useAuth = () => {
         }
     }, [authData.userId]);
 
-    const logout = useCallback(async (callApi: boolean = true) => {
+    const logout = useCallback(async (callApi = true) => {
         if (callApi) {
             await logoutRequest();
         }
@@ -95,21 +99,29 @@ const useAuth = () => {
 
     const isAuthError = useRef<boolean>(false);
     const handleApiError = useCallback(
-        (err: any): typeof err => {
+        (err: unknown): typeof err => {
             if (
                 authData.isLoggedIn &&
                 !isAuthError.current &&
+                err instanceof AxiosError &&
                 err.response?.status === 401
             ) {
                 isAuthError.current = true;
                 toast.error('You have been disconnected');
                 logout(false);
+            } else if (
+                err instanceof AxiosError &&
+                err?.response?.data?.error
+            ) {
+                toast.error(err.response.data.error);
+            } else if (err instanceof Error) {
+                toast.error(err.message);
             } else {
-                toast.error(err?.response?.data?.error ?? err.message);
+                toast.error(T('common.unexpectedError'));
             }
             return err;
         },
-        [authData, logout]
+        [authData, logout, T]
     );
 
     useEffect(() => {
@@ -128,7 +140,7 @@ const useAuth = () => {
                     userId: user.id,
                     user
                 });
-            } catch (err: any) {
+            } catch {
                 await logout(false);
             }
         })();

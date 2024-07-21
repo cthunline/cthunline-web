@@ -1,10 +1,10 @@
+import type { CoCSkill } from '@cthunline/games';
 import { ActionIcon, Box, Checkbox, Group } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
-import { type CoCSkill } from '@cthunline/games';
 
+import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../../contexts/App.js';
 import { controlSkill } from '../cocSheet.helper.js';
 import { skillKeys } from './skills.data.js';
 

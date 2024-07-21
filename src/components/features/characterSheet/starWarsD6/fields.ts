@@ -1,6 +1,6 @@
-import { type SWD6Biography, type SWD6Story } from '@cthunline/games';
+import type { SWD6Biography, SWD6Story } from '@cthunline/games';
 
-import { type Field } from '../generic/fieldLayout/FieldLayout.js';
+import type { Field } from '../generic/fieldLayout/FieldLayout.js';
 
 export const biographyFields: Field<SWD6Biography>[] = [
     {

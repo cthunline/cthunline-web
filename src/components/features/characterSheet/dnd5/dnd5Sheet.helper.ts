@@ -1,8 +1,8 @@
-import {
-    type DnD5Character,
-    type DnD5Abilities,
-    type DnD5Skills,
-    type DnD5Ability
+import type {
+    DnD5Abilities,
+    DnD5Ability,
+    DnD5Character,
+    DnD5Skills
 } from '@cthunline/games';
 
 export const displayModifier = (modifier: number): string =>
@@ -18,9 +18,9 @@ export const calculateAbilities = (
 ): DnD5Character => {
     const abilities = { ...characterData.abilities };
     const abilityKeys = Object.keys(abilities) as (keyof DnD5Abilities)[];
-    abilityKeys.forEach((abilityKey) => {
+    for (const abilityKey of abilityKeys) {
         abilities[abilityKey] = calculateAbility(abilities[abilityKey]);
-    });
+    }
     return {
         ...characterData,
         abilities
@@ -57,13 +57,13 @@ export const calculateSkills = (
     } = characterData;
     const skills = { ...characterData.skills };
     const skillKeys = Object.keys(skills) as (keyof DnD5Skills)[];
-    skillKeys.forEach((skillKey) => {
+    for (const skillKey of skillKeys) {
         const { proficient } = skills[skillKey];
         const abilityModifier = abilities[skillAbilities[skillKey]].modifier;
         skills[skillKey].modifier = proficient
             ? abilityModifier + proficiencyBonus
             : abilityModifier;
-    });
+    }
     return {
         ...characterData,
         skills
@@ -81,13 +81,13 @@ export const calculateSavingThrows = (
     const savingThrowKeys = Object.keys(
         savingThrows
     ) as (keyof DnD5Abilities)[];
-    savingThrowKeys.forEach((ability) => {
+    for (const ability of savingThrowKeys) {
         const { proficient } = savingThrows[ability];
         const abilityModifier = abilities[ability].modifier;
         savingThrows[ability].modifier = proficient
             ? abilityModifier + proficiencyBonus
             : abilityModifier;
-    });
+    }
     return {
         ...characterData,
         savingThrows

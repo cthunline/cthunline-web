@@ -1,20 +1,20 @@
-import { MdFolder, MdOutlineImage, MdUploadFile } from 'react-icons/md';
 import { Alert, Button, FileButton, RingProgress } from '@mantine/core';
-import { HiMusicNote } from 'react-icons/hi';
-import { FaInfo } from 'react-icons/fa6';
 import { modals } from '@mantine/modals';
 import { useState } from 'react';
+import { FaInfo } from 'react-icons/fa6';
+import { HiMusicNote } from 'react-icons/hi';
+import { MdFolder, MdOutlineImage, MdUploadFile } from 'react-icons/md';
 
-import useDirectory from '../../../hooks/api/useDirectory.js';
-import useAsset from '../../../hooks/api/useAsset.js';
-import ContentBox from '../../common/ContentBox.js';
-import { toast } from '../../../services/toast.js';
 import { useApp } from '../../../contexts/App.js';
-import DirectoryForm from './DirectoryForm.js';
+import useAsset from '../../../hooks/api/useAsset.js';
+import useDirectory from '../../../hooks/api/useDirectory.js';
+import { toast } from '../../../services/toast.js';
+import ContentBox from '../../common/ContentBox.js';
 import FileExplorer, {
     type FileExplorerItem,
     FileExplorerItemType
 } from '../../common/FileExplorer.js';
+import DirectoryForm from './DirectoryForm.js';
 
 const allowedMimeTypes = [
     'image/jpeg',
@@ -72,7 +72,7 @@ const Assets = () => {
     const handleFileChange = async (files: File[]) => {
         if (files.length) {
             let valid = true;
-            files.forEach((file) => {
+            for (const file of files) {
                 const sizeInMb = file.size / (1024 * 1024);
                 if (sizeInMb > limitSizeInMb) {
                     toast.error(
@@ -83,7 +83,7 @@ const Assets = () => {
                     );
                     valid = false;
                 }
-            });
+            }
             if (valid) {
                 const directoryId = directoryIds.length
                     ? directoryIds.at(-1)

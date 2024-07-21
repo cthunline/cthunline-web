@@ -1,10 +1,10 @@
 import { ActionIcon, Box, Group, Slider } from '@mantine/core';
 import {
-    IoVolumeOff,
+    IoVolumeHigh,
     IoVolumeLow,
     IoVolumeMedium,
-    IoVolumeHigh,
-    IoVolumeMute
+    IoVolumeMute,
+    IoVolumeOff
 } from 'react-icons/io5';
 
 import { useAudioClient } from '../../../contexts/AudioClient.js';

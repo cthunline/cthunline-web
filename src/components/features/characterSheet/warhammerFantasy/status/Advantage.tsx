@@ -1,10 +1,10 @@
+import type { WarhammerFantasyCharacter } from '@cthunline/games';
 import { ActionIcon, Box, Group, type GroupProps } from '@mantine/core';
-import { type WarhammerFantasyCharacter } from '@cthunline/games';
-import { FaPlus, FaMinus } from 'react-icons/fa6';
+import { FaMinus, FaPlus } from 'react-icons/fa6';
 import { GiOrbDirection } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
 export interface AdvantageProps extends Omit<GroupProps, 'onChange'> {
     readonly: boolean;

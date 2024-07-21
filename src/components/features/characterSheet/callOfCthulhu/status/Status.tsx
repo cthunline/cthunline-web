@@ -1,5 +1,5 @@
+import type { CoCStatus } from '@cthunline/games';
 import { Box, Checkbox, Group } from '@mantine/core';
-import { type CoCStatus } from '@cthunline/games';
 
 import { useApp } from '../../../../../contexts/App.js';
 import { fields } from './status.data.js';

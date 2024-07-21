@@ -1,57 +1,57 @@
+import type {
+    DnD5Abilities,
+    DnD5Attack,
+    DnD5Biography,
+    DnD5Character,
+    DnD5Combat,
+    DnD5Equipment,
+    DnD5Features,
+    DnD5SavingThrows,
+    DnD5Skills,
+    DnD5Spellcasting,
+    DnD5Statistics,
+    DnD5Story
+} from '@cthunline/games';
+import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FiPlusCircle } from 'react-icons/fi';
-import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import {
+    GiBodyBalance,
     GiCharacter,
-    GiDiceTwentyFacesTwenty,
+    GiChart,
     GiCrossedSwords,
+    GiDiceShield,
+    GiDiceTwentyFacesTwenty,
+    GiHandBag,
+    GiOpenBook,
     GiSkills,
     GiSpellBook,
-    GiOpenBook,
-    GiBodyBalance,
-    GiDiceShield,
-    GiChart,
-    GiSwordman,
-    GiHandBag
+    GiSwordman
 } from 'react-icons/gi';
-import {
-    type DnD5Character,
-    type DnD5Biography,
-    type DnD5Story,
-    type DnD5Abilities,
-    type DnD5SavingThrows,
-    type DnD5Skills,
-    type DnD5Statistics,
-    type DnD5Combat,
-    type DnD5Attack,
-    type DnD5Equipment,
-    type DnD5Features,
-    type DnD5Spellcasting
-} from '@cthunline/games';
 
-import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
-import { biographyFields, featuresFields, storyFields } from './fields.js';
-import { getDefaulSpellLevel } from './spellcasting/spellcasting.data.js';
-import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
-import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
-import { controlCharacterData } from './dnd5Sheet.helper.js';
-import DnD5Logo from '../../../svg/games/dnd5/DnD5Logo.js';
-import SavingThrows from './savingThrows/SavingThrows.js';
-import { defaultAttack } from './attacks/attacks.data.js';
-import Spellcasting from './spellcasting/Spellcasting.js';
-import Portrait from '../generic/portrait/Portrait.js';
 import { useApp } from '../../../../contexts/App.js';
-import Statistics from './statistics/Statistics.js';
-import Abilities from './abilities/Abilities.js';
-import Equipment from './equipment/Equipment.js';
-import Attacks from './attacks/Attacks.js';
-import Combat from './combat/Combat.js';
-import Skills from './skills/Skills.js';
 import {
     type CharacterData,
-    GameId,
-    type CharacterSheetStatus
+    type CharacterSheetStatus,
+    GameId
 } from '../../../../types/index.js';
+import DnD5Logo from '../../../svg/games/dnd5/DnD5Logo.js';
+import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
+import Portrait from '../generic/portrait/Portrait.js';
+import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
+import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
+import Abilities from './abilities/Abilities.js';
+import Attacks from './attacks/Attacks.js';
+import { defaultAttack } from './attacks/attacks.data.js';
+import Combat from './combat/Combat.js';
+import { controlCharacterData } from './dnd5Sheet.helper.js';
+import Equipment from './equipment/Equipment.js';
+import { biographyFields, featuresFields, storyFields } from './fields.js';
+import SavingThrows from './savingThrows/SavingThrows.js';
+import Skills from './skills/Skills.js';
+import Spellcasting from './spellcasting/Spellcasting.js';
+import { getDefaulSpellLevel } from './spellcasting/spellcasting.data.js';
+import Statistics from './statistics/Statistics.js';
 
 type PartialDataField =
     | 'abilities'

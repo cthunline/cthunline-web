@@ -1,54 +1,54 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import type {
+    SeventhSeaAdvantage,
+    SeventhSeaArcana,
+    SeventhSeaBackground,
+    SeventhSeaBiography,
+    SeventhSeaCharacter,
+    SeventhSeaSkills,
+    SeventhSeaStory,
+    SeventhSeaTraits
+} from '@cthunline/games';
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { FiPlusCircle } from 'react-icons/fi';
 import {
-    GiCharacter,
-    GiD10,
+    GiArrowScope,
     GiBookmarklet,
     GiCardQueenHearts,
-    GiScrollQuill,
-    GiSkills,
+    GiCharacter,
+    GiD10,
+    GiHandBag,
     GiHeartBeats,
-    GiArrowScope,
     GiNotebook,
     GiSaberAndPistol,
-    GiHandBag,
-    GiSeaStar
+    GiScrollQuill,
+    GiSeaStar,
+    GiSkills
 } from 'react-icons/gi';
-import {
-    type SeventhSeaCharacter,
-    type SeventhSeaBiography,
-    type SeventhSeaArcana,
-    type SeventhSeaBackground,
-    type SeventhSeaStory,
-    type SeventhSeaTraits,
-    type SeventhSeaSkills,
-    type SeventhSeaAdvantage
-} from '@cthunline/games';
 
-import SeventhSeaLogo from '../../../svg/games/seventhSea/SeventhSeaLogo.js';
-import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
-import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
-import Characteristics from './characteristics/Characteristics.js';
-import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
-import { biographyFields, arcanaFields } from './fields.js';
-import Backgrounds from './backgrounds/Backgrounds.js';
-import Portrait from '../generic/portrait/Portrait.js';
-import DeathSpiral from './deathSpiral/DeathSpiral.js';
 import { useApp } from '../../../../contexts/App.js';
-import Advantages from './advantages/Advantages.js';
-import Textarea from '../../../common/Textarea.js';
-import Stories from './stories/Stories.js';
-import {
-    defaultBackground,
-    defaultStory,
-    defaultAdvantage
-} from './seventhSeaSheet.helper.js';
 import {
     type CharacterData,
-    GameId,
-    type CharacterSheetStatus
+    type CharacterSheetStatus,
+    GameId
 } from '../../../../types/index.js';
+import Textarea from '../../../common/Textarea.js';
+import SeventhSeaLogo from '../../../svg/games/seventhSea/SeventhSeaLogo.js';
+import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
+import Portrait from '../generic/portrait/Portrait.js';
+import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
+import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
+import Advantages from './advantages/Advantages.js';
+import Backgrounds from './backgrounds/Backgrounds.js';
+import Characteristics from './characteristics/Characteristics.js';
+import DeathSpiral from './deathSpiral/DeathSpiral.js';
+import { arcanaFields, biographyFields } from './fields.js';
+import {
+    defaultAdvantage,
+    defaultBackground,
+    defaultStory
+} from './seventhSeaSheet.helper.js';
+import Stories from './stories/Stories.js';
 
 export interface SeventhSeaSheetProps {
     status: CharacterSheetStatus;

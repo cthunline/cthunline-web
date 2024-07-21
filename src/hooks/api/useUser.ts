@@ -1,19 +1,19 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { toast } from '../../services/toast.js';
 import { useApp } from '../../contexts/App.js';
 import {
-    getUsers as getUsersRequest,
     createUser as createUserRequest,
     editUser as editUserRequest,
     generateInvitationCode as generateInvitationCodeRequest,
+    getUsers as getUsersRequest,
     registerUser as registerUserRequest
 } from '../../services/requests/user.js';
-import {
-    type User,
-    type UserCreateBody,
-    type UserEditBody,
-    type UserRegisterBody
+import { toast } from '../../services/toast.js';
+import type {
+    User,
+    UserCreateBody,
+    UserEditBody,
+    UserRegisterBody
 } from '../../types/index.js';
 
 interface UserHookOptions {
@@ -51,7 +51,7 @@ const useUser = ({
         try {
             const users = await getUsersRequest(listDisabled);
             setUserList(users);
-        } catch (err: any) {
+        } catch (err: unknown) {
             throw handleApiError(err);
         }
     }, [listDisabled, handleApiError]);
@@ -71,7 +71,7 @@ const useUser = ({
                     toast.success('User created');
                 }
                 return user;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -94,7 +94,7 @@ const useUser = ({
                     toast.success('User edited');
                 }
                 return user;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -109,7 +109,7 @@ const useUser = ({
                     toast.success('Registered successfully');
                 }
                 return user;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -120,7 +120,7 @@ const useUser = ({
         try {
             const code = await generateInvitationCodeRequest();
             return code;
-        } catch (err: any) {
+        } catch (err: unknown) {
             throw handleApiError(err);
         }
     }, [handleApiError]);

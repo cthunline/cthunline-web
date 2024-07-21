@@ -1,4 +1,4 @@
-import { type CoCStatus } from '@cthunline/games';
+import type { CoCStatus } from '@cthunline/games';
 
 export interface FieldData {
     field: keyof CoCStatus;

@@ -1,10 +1,10 @@
-import { type DnD5Abilities } from '@cthunline/games';
+import type { DnD5Abilities } from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
 
-import { displayModifier, calculateAbility } from '../dnd5Sheet.helper.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../../contexts/App.js';
+import { calculateAbility, displayModifier } from '../dnd5Sheet.helper.js';
 
 interface AbilitiesProps {
     abilities: DnD5Abilities;

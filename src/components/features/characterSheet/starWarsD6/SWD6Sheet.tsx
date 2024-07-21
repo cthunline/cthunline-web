@@ -1,42 +1,42 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import type {
+    SWD6Attribute,
+    SWD6AttributeData,
+    SWD6Biography,
+    SWD6Character,
+    SWD6Skill,
+    SWD6Statistics,
+    SWD6Story,
+    SWD6Weapon,
+    SWD6WoundStatus
+} from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
     GiCharacter,
-    GiPerspectiveDiceSixFacesSix,
-    GiLightSabers,
-    GiRollingDices,
+    GiChart,
     GiHeartBeats,
-    GiChart
+    GiLightSabers,
+    GiPerspectiveDiceSixFacesSix,
+    GiRollingDices
 } from 'react-icons/gi';
-import {
-    type SWD6Character,
-    type SWD6Biography,
-    type SWD6Attribute,
-    type SWD6AttributeData,
-    type SWD6Skill,
-    type SWD6Statistics,
-    type SWD6WoundStatus,
-    type SWD6Weapon,
-    type SWD6Story
-} from '@cthunline/games';
 
-import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
-import SWD6Logo from '../../../svg/games/starWarsD6/StarWarsD6Logo.js';
-import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
-import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
-import { controlCharacterData } from './swd6Sheet.helper.js';
-import { biographyFields, storyFields } from './fields.js';
-import WoundStatus from './woundStatus/WoundStatus.js';
-import Portrait from '../generic/portrait/Portrait.js';
 import { useApp } from '../../../../contexts/App.js';
-import Attributes from './attributes/Attributes.js';
-import Statistics from './statistics/Statistics.js';
-import Weapons from './weapons/Weapons.js';
 import {
     type CharacterData,
-    GameId,
-    type CharacterSheetStatus
+    type CharacterSheetStatus,
+    GameId
 } from '../../../../types/index.js';
+import SWD6Logo from '../../../svg/games/starWarsD6/StarWarsD6Logo.js';
+import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
+import Portrait from '../generic/portrait/Portrait.js';
+import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
+import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
+import Attributes from './attributes/Attributes.js';
+import { biographyFields, storyFields } from './fields.js';
+import Statistics from './statistics/Statistics.js';
+import { controlCharacterData } from './swd6Sheet.helper.js';
+import Weapons from './weapons/Weapons.js';
+import WoundStatus from './woundStatus/WoundStatus.js';
 
 export interface SWD6SheetProps {
     status: CharacterSheetStatus;

@@ -1,15 +1,15 @@
+import type { WarhammerFantasySpell } from '@cthunline/games';
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
-import { type WarhammerFantasySpell } from '@cthunline/games';
+import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { FiPlusCircle } from 'react-icons/fi';
-import { useForm } from '@mantine/form';
 import z from 'zod';
 
+import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import Form from '../../../../common/Form.js';
 import TextInput from '../../../../common/TextInput.js';
 import Textarea from '../../../../common/Textarea.js';
-import { useApp } from '../../../../../contexts/App.js';
-import Form from '../../../../common/Form.js';
 
 const spellFormSchema = z.object({
     name: z.string().min(1),

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { CardinalDirection } from '../../../../types/index.js';
 import SketchContextMenu, {
@@ -68,15 +68,15 @@ const SketchImage = ({
         }
     };
 
-    const onContextMenuClose = () => {
+    const onContextMenuClose = useCallback(() => {
         setContextMenuPosition(null);
-    };
+    }, []);
 
     useEffect(() => {
         if (moving || isDrawing) {
             onContextMenuClose();
         }
-    }, [moving, isDrawing]);
+    }, [moving, isDrawing, onContextMenuClose]);
 
     return (
         // image container

@@ -10,9 +10,9 @@ interface SectionTitleProps {
 }
 
 interface SectionTitleInputOptions {
-    value: any;
+    value: number;
     readonly?: boolean;
-    onChange?: (value: any) => void;
+    onChange?: (value: number) => void;
 }
 
 const SectionTitle = ({

@@ -1,20 +1,20 @@
+import type {
+    CoCCharacter,
+    CoCCharacteristic,
+    CoCCharacteristics,
+    CoCLuck,
+    CoCPoint,
+    CoCPoints,
+    CoCSanity
+} from '@cthunline/games';
 import { Grid, Group, Stack } from '@mantine/core';
 import { useCallback } from 'react';
-import {
-    type CoCCharacter,
-    type CoCCharacteristic,
-    type CoCCharacteristics,
-    type CoCPoints,
-    type CoCPoint,
-    type CoCLuck,
-    type CoCSanity
-} from '@cthunline/games';
 
-import { charFields, pointsFields } from './characteristics.data.js';
 import Characteristic from './Characteristic.js';
-import Sanity from './Sanity.js';
-import Point from './Point.js';
 import Luck from './Luck.js';
+import Point from './Point.js';
+import Sanity from './Sanity.js';
+import { charFields, pointsFields } from './characteristics.data.js';
 
 interface CharacteristicsProps {
     characteristics: CoCCharacteristics;

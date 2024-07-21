@@ -1,13 +1,13 @@
-import { type SWD6Attribute, type SWD6Skill } from '@cthunline/games';
+import type { SWD6Attribute, SWD6Skill } from '@cthunline/games';
 import { ActionIcon, Box, Group } from '@mantine/core';
+import { useMemo, useReducer } from 'react';
 import { FiPlusCircle } from 'react-icons/fi';
-import { useReducer, useMemo } from 'react';
 
-import { skillList, defaultSkillData } from './skills.data.js';
 import { useApp } from '../../../../../contexts/App.js';
 import AutocompleteInput, {
     type AutocompleteInputValue
 } from '../../../../common/AutocompleteInput.js';
+import { defaultSkillData, skillList } from './skills.data.js';
 
 interface SkillProps {
     attribute: SWD6Attribute;

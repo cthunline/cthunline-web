@@ -1,17 +1,17 @@
-import { FaRegUser } from 'react-icons/fa6';
-import { modals } from '@mantine/modals';
 import {
     BackgroundImage,
-    Text,
+    Group,
     Paper,
     Stack,
-    UnstyledButton,
-    Group,
-    type StackProps
+    type StackProps,
+    Text,
+    UnstyledButton
 } from '@mantine/core';
+import { modals } from '@mantine/modals';
+import { FaRegUser } from 'react-icons/fa6';
 
-import { type SessionUser } from '../../../types/index.js';
 import { getAssetUrl } from '../../../services/api.js';
+import type { SessionUser } from '../../../types/index.js';
 
 interface CharacterModalProps {
     player: SessionUser;

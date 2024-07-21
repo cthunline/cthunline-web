@@ -1,8 +1,8 @@
 import {
     ActionIcon,
     type ActionIconProps,
-    Tooltip,
-    type DefaultMantineColor
+    type DefaultMantineColor,
+    Tooltip
 } from '@mantine/core';
 
 export interface ActionButtonProps {

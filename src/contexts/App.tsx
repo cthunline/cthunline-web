@@ -1,6 +1,5 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 
-import { type Theme } from '../types/index.js';
 import useAuth, {
     type AuthHookExport,
     defaultAuthHookData
@@ -13,6 +12,7 @@ import useTranslation, {
     type TranslationHookExport,
     defaultTranslationHookData
 } from '../hooks/useTranslation.js';
+import type { Theme } from '../types/index.js';
 
 interface AppProviderProps {
     children: JSX.Element | JSX.Element[];

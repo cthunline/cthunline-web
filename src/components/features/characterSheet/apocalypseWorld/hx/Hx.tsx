@@ -1,18 +1,18 @@
-import { GiRelationshipBounds } from 'react-icons/gi';
-import { Stack } from '@mantine/core';
-import {
-    type ApocalypseWorldCharacter,
-    type ApocalypseWorldHx
+import type {
+    ApocalypseWorldCharacter,
+    ApocalypseWorldHx
 } from '@cthunline/games';
+import { Stack } from '@mantine/core';
+import { GiRelationshipBounds } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
-import AddHxRow from './AddHxRow.js';
-import HxRow from './HxRow.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import AddHxRow from './AddHxRow.js';
+import HxRow from './HxRow.js';
 
 interface HxProps {
     readonly: boolean;

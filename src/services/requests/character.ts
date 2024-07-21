@@ -1,10 +1,10 @@
 import { callApi } from '../api.js';
 
-import {
-    type Character,
-    type CharacterCreateBody,
-    type CharacterEditBody,
-    type PortraitUploadBody
+import type {
+    Character,
+    CharacterCreateBody,
+    CharacterEditBody,
+    PortraitUploadBody
 } from '../../types/index.js';
 
 export const getCharacters = async (userId?: number) => {

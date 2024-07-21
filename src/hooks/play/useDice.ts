@@ -1,5 +1,5 @@
-import { type DicesRequest, type PlaySocket } from '../../types/index.js';
 import { useApp } from '../../contexts/App.js';
+import type { DicesRequest, PlaySocket } from '../../types/index.js';
 
 export interface DiceHookExport {
     requestDice: (request: DicesRequest, isPrivate: boolean) => void;
@@ -21,7 +21,7 @@ const useDice = (socket: PlaySocket | null) => {
     const getDiceResultLog = (
         request: DicesRequest,
         result: number,
-        isPrivate: boolean = false
+        isPrivate = false
     ) => {
         const requestText = Object.entries(request)
             .map(([type, count]) => `${count}${type}`)

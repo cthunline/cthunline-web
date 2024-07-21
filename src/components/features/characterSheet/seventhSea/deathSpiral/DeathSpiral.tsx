@@ -90,44 +90,39 @@ const DeathSpiral = ({ value, readonly, onChange }: DeathSpiralProps) => (
         gutter={0}
         align="center"
     >
-        {['radio', 'label']
-            .map((rowType) => [
-                ...[1, 2, 3, 4]
-                    .map((sectionCount) =>
-                        [1, 2, 3, 4, 5].map((radioCount) => {
-                            const radioValue =
-                                (sectionCount - 1) * 5 + radioCount;
-                            if (rowType === 'radio') {
-                                return (
-                                    <RadioButton
-                                        key={`deathSpiral-${radioValue.toString()}`}
-                                        value={value}
-                                        radioCount={radioCount}
-                                        radioValue={radioValue}
-                                        readonly={readonly}
-                                        onChange={onChange}
-                                    />
-                                );
-                            }
-                            return (
-                                <Label
-                                    key={`deathSpiral-label-${sectionCount.toString()}-${radioCount.toString()}`}
-                                    radioCount={radioCount}
-                                    sectionCount={sectionCount}
-                                />
-                            );
-                        })
-                    )
-                    .flat(),
-                rowType === 'radio' && (
-                    <ClearButton
-                        key="deathSpiral-clear"
-                        readonly={readonly}
-                        onChange={onChange}
-                    />
-                )
-            ])
-            .flat()}
+        {['radio', 'label'].flatMap((rowType) => [
+            ...[1, 2, 3, 4].flatMap((sectionCount) =>
+                [1, 2, 3, 4, 5].map((radioCount) => {
+                    const radioValue = (sectionCount - 1) * 5 + radioCount;
+                    if (rowType === 'radio') {
+                        return (
+                            <RadioButton
+                                key={`deathSpiral-${radioValue.toString()}`}
+                                value={value}
+                                radioCount={radioCount}
+                                radioValue={radioValue}
+                                readonly={readonly}
+                                onChange={onChange}
+                            />
+                        );
+                    }
+                    return (
+                        <Label
+                            key={`deathSpiral-label-${sectionCount.toString()}-${radioCount.toString()}`}
+                            radioCount={radioCount}
+                            sectionCount={sectionCount}
+                        />
+                    );
+                })
+            ),
+            rowType === 'radio' && (
+                <ClearButton
+                    key="deathSpiral-clear"
+                    readonly={readonly}
+                    onChange={onChange}
+                />
+            )
+        ])}
     </Grid>
 );
 

@@ -1,18 +1,15 @@
 import { Button, Stack, TextInput } from '@mantine/core';
-import { zodResolver } from 'mantine-form-zod-resolver';
-import { MdOutlineSave } from 'react-icons/md';
 import { useForm } from '@mantine/form';
+import { zodResolver } from 'mantine-form-zod-resolver';
 import { useMemo } from 'react';
+import { MdOutlineSave } from 'react-icons/md';
 import z from 'zod';
 
-import useGame from '../../../hooks/api/useGame.js';
 import { useApp } from '../../../contexts/App.js';
-import Select from '../../common/Select.js';
+import useGame from '../../../hooks/api/useGame.js';
+import type { SelectOption, SessionCreateBody } from '../../../types/index.js';
 import Form from '../../common/Form.js';
-import {
-    type SelectOption,
-    type SessionCreateBody
-} from '../../../types/index.js';
+import Select from '../../common/Select.js';
 
 interface SessionFormProps {
     onSubmit: (data: SessionCreateBody) => Promise<void>;

@@ -1,16 +1,16 @@
-import { GiArmorDowngrade, GiArmorUpgrade } from 'react-icons/gi';
-import { Stack } from '@mantine/core';
 import {
-    apocalypseWorld,
     type ApocalypseWorldBasicListItem,
-    type ApocalypseWorldCharacter
+    type ApocalypseWorldCharacter,
+    apocalypseWorld
 } from '@cthunline/games';
+import { Stack } from '@mantine/core';
+import { GiArmorDowngrade, GiArmorUpgrade } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import BasicList from '../generic/BasicList.js';
-import Holding from './fragments/Holding.js';
 import Gang from './fragments/Gang.js';
+import Holding from './fragments/Holding.js';
 
 interface HardHolderProps {
     readonly?: boolean;

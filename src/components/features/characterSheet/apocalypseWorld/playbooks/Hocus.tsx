@@ -1,19 +1,19 @@
 import {
+    type ApocalypseWorldBasicListItem,
+    type ApocalypseWorldCharacter,
+    apocalypseWorld
+} from '@cthunline/games';
+import { Stack } from '@mantine/core';
+import {
     GiArmorDowngrade,
     GiArmorUpgrade,
     GiThreeFriends
 } from 'react-icons/gi';
-import { Stack } from '@mantine/core';
-import {
-    apocalypseWorld,
-    type ApocalypseWorldBasicListItem,
-    type ApocalypseWorldCharacter
-} from '@cthunline/games';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
-import Followers from './fragments/Followers.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import BasicList from '../generic/BasicList.js';
+import Followers from './fragments/Followers.js';
 
 interface HocusProps {
     readonly?: boolean;

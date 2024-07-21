@@ -1,7 +1,7 @@
 import { Autocomplete, type AutocompleteProps } from '@mantine/core';
 import { useMemo } from 'react';
 
-import { type InputVariant } from './TextInput.js';
+import type { InputVariant } from './TextInput.js';
 
 export interface AutocompleteInputValue<
     D extends { [f in F]: string },
@@ -34,12 +34,12 @@ const AutocompleteInput = <D extends { [f in F]: string }, F extends string>({
     const [dataLabels, dataMap] = useMemo(() => {
         const labels: string[] = [];
         const map = new Map<string, D>();
-        data.forEach((dt) => {
+        for (const dt of data) {
             if (dt[field]) {
                 labels.push(dt[field]);
                 map.set(dt[field], dt);
             }
-        });
+        }
         return [labels, map];
     }, [data, field]);
 

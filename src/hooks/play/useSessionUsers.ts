@@ -1,10 +1,6 @@
 import { useCallback, useState } from 'react';
 
-import {
-    type PlaySocket,
-    type SessionUser,
-    type Character
-} from '../../types/index.js';
+import type { Character, PlaySocket, SessionUser } from '../../types/index.js';
 
 export interface SessionUsersHookExport {
     users: SessionUser[];

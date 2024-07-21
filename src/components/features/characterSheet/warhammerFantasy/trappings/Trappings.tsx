@@ -1,18 +1,18 @@
-import { GiSwissArmyKnife } from 'react-icons/gi';
-import { Stack } from '@mantine/core';
-import {
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasyTrapping
+import type {
+    WarhammerFantasyCharacter,
+    WarhammerFantasyTrapping
 } from '@cthunline/games';
+import { Stack } from '@mantine/core';
+import { GiSwissArmyKnife } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
-import AddTrappingRow from './AddTrappingRow.js';
-import TrappingRow from './TrappingRow.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import AddTrappingRow from './AddTrappingRow.js';
+import TrappingRow from './TrappingRow.js';
 
 interface TrappingsProps {
     readonly: boolean;

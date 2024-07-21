@@ -1,6 +1,6 @@
 import { Box, Group, Stack, Tabs } from '@mantine/core';
 
-import { type CharacterSheetStatus } from '../../../../../types/index.js';
+import type { CharacterSheetStatus } from '../../../../../types/index.js';
 import Status from '../../Status.js';
 
 export interface SheetTab {

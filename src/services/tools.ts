@@ -16,7 +16,10 @@ export const findById = <ObjectType extends { id: string }>(
     throw new Error('Could not find object by Id');
 };
 
-export const findIndexById = (list: any[], id: string): number => {
+export const findIndexById = (
+    list: { id: string | number }[],
+    id: string | number
+): number => {
     const index = list.findIndex(({ id: objectId }) => id === objectId);
     if (index >= 0) {
         return index;
@@ -70,7 +73,7 @@ export const randomNumber = (min: number, max: number) => {
 };
 
 // pick random item from array
-export const randomItem = (array: any[]): any => {
+export const randomItem = <T>(array: T[] | readonly T[]): T | null => {
     if (!array.length) {
         return null;
     }
@@ -79,7 +82,7 @@ export const randomItem = (array: any[]): any => {
 };
 
 // shuffle an array (randomize items order)
-export const shuffleArray = (array: any[]) => {
+export const shuffleArray = <T>(array: T[]): T[] => {
     const shuffled = [...array];
     for (let i = shuffled.length - 1; i > 0; i -= 1) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -104,19 +107,19 @@ export const getTextColor = (hexColor: string): 'white' | 'black' => {
     const threshold = 130;
     const cutHex = (h: string) => h.replace(/^#/, '');
     const fullHexColor = forceFullHexColor(hexColor);
-    const hRed = parseInt(cutHex(fullHexColor).substring(0, 2), 16);
-    const hGreen = parseInt(cutHex(fullHexColor).substring(2, 4), 16);
-    const hBlue = parseInt(cutHex(fullHexColor).substring(4, 6), 16);
+    const hRed = Number.parseInt(cutHex(fullHexColor).substring(0, 2), 16);
+    const hGreen = Number.parseInt(cutHex(fullHexColor).substring(2, 4), 16);
+    const hBlue = Number.parseInt(cutHex(fullHexColor).substring(4, 6), 16);
     const brightness = (hRed * 299 + hGreen * 587 + hBlue * 114) / 1000;
     return brightness > threshold ? 'black' : 'white';
 };
 
 // check if a variable is an object
-export const isObject = (val: any): val is Record<string, any> =>
+export const isObject = (val: unknown): val is Record<string, unknown> =>
     val !== null && typeof val === 'object' && !Array.isArray(val);
 
 // deep equality check
-export const deepEqual = (val1: any, val2: any): boolean => {
+export const deepEqual = (val1: unknown, val2: unknown): boolean => {
     if (val1 === val2) {
         return true;
     }
@@ -186,7 +189,7 @@ export const sortObjectsBy = <T>(objects: T[], property: keyof T) => {
 /**
 Moves an array item from an index to another index.
 */
-export const arrayMove = <T extends any>(
+export const arrayMove = <T>(
     array: T[],
     fromIndex: number,
     toIndex: number
@@ -208,7 +211,7 @@ Moves an array item up or down. Moving an item 'up' means decreasing
 its index, moving an item 'down' means increasing its index. If the
 move is invalid then returns false.
 */
-export const arrayMoveUpDown = <T extends any>(
+export const arrayMoveUpDown = <T>(
     array: T[],
     index: number,
     action: MoveAction

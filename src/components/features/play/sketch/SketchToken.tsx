@@ -1,18 +1,18 @@
-import { useEffect, useState } from 'react';
 import { Tooltip } from '@mantine/core';
+import { useCallback, useEffect, useState } from 'react';
 
-import { getCssVar, getTextColor } from '../../../../services/tools.js';
 import { useApp } from '../../../../contexts/App.js';
+import { getCssVar, getTextColor } from '../../../../services/tools.js';
+import type {
+    Color,
+    SessionUser,
+    SketchTokenAttachedData,
+    TooltipPlacement
+} from '../../../../types/index.js';
 import SketchContextMenu, {
     type ContextMenuPosition,
     contextMenuHandler
 } from './SketchContextMenu.js';
-import {
-    type Color,
-    type SessionUser,
-    type SketchTokenAttachedData,
-    type TooltipPlacement
-} from '../../../../types/index.js';
 
 import './SketchToken.css';
 
@@ -86,16 +86,16 @@ const SketchToken = ({
         }
     };
 
-    const onContextMenuClose = () => {
+    const onContextMenuClose = useCallback(() => {
         setContextMenuPosition(null);
         setTooltipOpen(false);
-    };
+    }, []);
 
     useEffect(() => {
         if (isMoving || isDrawing) {
             onContextMenuClose();
         }
-    }, [isMoving, isDrawing]);
+    }, [isMoving, isDrawing, onContextMenuClose]);
 
     const tokenPadding = size / 15;
     const tokenSize = size + tokenPadding * 2;

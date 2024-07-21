@@ -1,16 +1,16 @@
 import { useMantineColorScheme } from '@mantine/core';
 import {
     ControlledMenu,
-    MenuItem,
     MenuDivider,
+    MenuItem,
     SubMenu
 } from '@szhsin/react-menu';
 
-import { type SessionUser, type Color } from '../../../../types/index.js';
-import WidthPicker from '../../../common/WidthPicker.js';
-import ColorPicker from '../../../common/ColorPicker.js';
-import { usePlay } from '../../../../contexts/Play.js';
 import { useApp } from '../../../../contexts/App.js';
+import { usePlay } from '../../../../contexts/Play.js';
+import type { Color, SessionUser } from '../../../../types/index.js';
+import ColorPicker from '../../../common/ColorPicker.js';
+import WidthPicker from '../../../common/WidthPicker.js';
 
 export interface ContextMenuPosition {
     x: number;

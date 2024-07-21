@@ -1,9 +1,9 @@
-import { type ApocalypseWorldCharacter } from '@cthunline/games';
+import type { ApocalypseWorldCharacter } from '@cthunline/games';
 import { Stack, Text } from '@mantine/core';
 import { GiCharm } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
 interface SpecialProps {
     character: ApocalypseWorldCharacter;

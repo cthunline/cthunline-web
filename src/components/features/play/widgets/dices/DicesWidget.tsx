@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
     ActionIcon,
     Button,
@@ -7,24 +6,25 @@ import {
     Stack,
     Tooltip
 } from '@mantine/core';
+import { useState } from 'react';
 import {
     GiD4,
-    GiDiceSixFacesSix,
-    GiDiceEightFacesEight,
     GiD10,
     GiD12,
+    GiDiceEightFacesEight,
+    GiDiceSixFacesSix,
     GiDiceTwentyFacesTwenty
 } from 'react-icons/gi';
 
 import { useApp } from '../../../../../contexts/App.js';
-import Widget from '../../Widget.js';
 import {
-    WidgetType,
     type DiceType,
     type DicesData,
     type DicesRequest,
+    WidgetType,
     diceTypes
 } from '../../../../../types/index.js';
+import Widget from '../../Widget.js';
 
 const defaultSelectedDices = Object.fromEntries(
     diceTypes.map((type) => [type, 0])

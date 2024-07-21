@@ -1,10 +1,10 @@
-import {
-    type SeventhSeaCharacter,
-    type SeventhSeaSkills,
-    type SeventhSeaTraits,
-    type SeventhSeaBackground,
-    type SeventhSeaStory,
-    type SeventhSeaAdvantage
+import type {
+    SeventhSeaAdvantage,
+    SeventhSeaBackground,
+    SeventhSeaCharacter,
+    SeventhSeaSkills,
+    SeventhSeaStory,
+    SeventhSeaTraits
 } from '@cthunline/games';
 
 export const defaultBackground: SeventhSeaBackground = {

@@ -1,43 +1,43 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import type {
+    CoCBiography,
+    CoCCharacter,
+    CoCCharacteristics,
+    CoCPoints,
+    CoCSkill,
+    CoCStatus,
+    CoCStory,
+    CoCWeapon
+} from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
+    GiBodyBalance,
     GiCharacter,
     GiD10,
-    GiPistolGun,
-    GiOpenBook,
-    GiBodyBalance,
     GiHeartBeats,
+    GiOpenBook,
+    GiPistolGun,
     GiStrong
 } from 'react-icons/gi';
-import {
-    type CoCCharacter,
-    type CoCBiography,
-    type CoCStatus,
-    type CoCSkill,
-    type CoCCharacteristics,
-    type CoCPoints,
-    type CoCWeapon,
-    type CoCStory
-} from '@cthunline/games';
 
-import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
-import CoCLogo from '../../../svg/games/callOfCthulhu/CallOfCthulhuLogo.js';
-import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
-import Characteristics from './characteristics/Characteristics.js';
-import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
-import { controlCharacterData } from './cocSheet.helper.js';
-import { biographyFields, storyFields } from './fields.js';
-import Portrait from '../generic/portrait/Portrait.js';
 import { useApp } from '../../../../contexts/App.js';
-import Weapons from './weapons/Weapons.js';
-import Status from './status/Status.js';
-import Skills from './skills/Skills.js';
-import Combat from './combat/Combat.js';
 import {
     type CharacterData,
-    GameId,
-    type CharacterSheetStatus
+    type CharacterSheetStatus,
+    GameId
 } from '../../../../types/index.js';
+import CoCLogo from '../../../svg/games/callOfCthulhu/CallOfCthulhuLogo.js';
+import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
+import Portrait from '../generic/portrait/Portrait.js';
+import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
+import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
+import Characteristics from './characteristics/Characteristics.js';
+import { controlCharacterData } from './cocSheet.helper.js';
+import Combat from './combat/Combat.js';
+import { biographyFields, storyFields } from './fields.js';
+import Skills from './skills/Skills.js';
+import Status from './status/Status.js';
+import Weapons from './weapons/Weapons.js';
 
 export interface CoCSheetProps {
     status: CharacterSheetStatus;

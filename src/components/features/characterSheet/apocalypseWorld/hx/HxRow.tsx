@@ -1,10 +1,10 @@
-import { type ApocalypseWorldHx } from '@cthunline/games';
+import type { ApocalypseWorldHx } from '@cthunline/games';
 import { Group } from '@mantine/core';
 
-import { type MoveAction } from '../../../../../services/tools.js';
-import RowMenuButton from '../../generic/row/RowMenuButton.js';
 import { useApp } from '../../../../../contexts/App.js';
+import type { MoveAction } from '../../../../../services/tools.js';
 import RowInput from '../../generic/row/RowInput.js';
+import RowMenuButton from '../../generic/row/RowMenuButton.js';
 
 type HxRowProps = {
     readonly: boolean;

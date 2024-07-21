@@ -1,11 +1,11 @@
 import { ActionIcon, Stack, type StackProps } from '@mantine/core';
 import { useMemo } from 'react';
 import {
+    MdEdit,
     MdFolder,
-    MdOutlineInsertDriveFile,
     MdOutlineDeleteOutline,
-    MdOutlineKeyboardBackspace,
-    MdEdit
+    MdOutlineInsertDriveFile,
+    MdOutlineKeyboardBackspace
 } from 'react-icons/md';
 
 import { sortObjectsBy } from '../../services/tools.js';

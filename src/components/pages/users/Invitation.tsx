@@ -1,6 +1,6 @@
 import { ActionIcon, CopyButton, Group, Input, Loader } from '@mantine/core';
+import { useEffect, useRef, useState } from 'react';
 import { MdCheck, MdContentCopy } from 'react-icons/md';
-import { useState, useEffect, useRef } from 'react';
 
 import useUser from '../../../hooks/api/useUser.js';
 

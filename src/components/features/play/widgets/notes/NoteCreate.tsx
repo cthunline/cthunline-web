@@ -1,6 +1,6 @@
-import { FiPlusCircle } from 'react-icons/fi';
 import { ActionIcon, Group, TextInput } from '@mantine/core';
 import { useState } from 'react';
+import { FiPlusCircle } from 'react-icons/fi';
 
 interface NoteCreateProps {
     onCreate: (title: string) => void;

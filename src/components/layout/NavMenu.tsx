@@ -1,8 +1,8 @@
-import { MdLogout, MdOutlineSettings } from 'react-icons/md';
-import { Avatar, UnstyledButton, Menu } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { Avatar, Menu, UnstyledButton } from '@mantine/core';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiUsers } from 'react-icons/fi';
+import { MdLogout, MdOutlineSettings } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 import { useApp } from '../../contexts/App.js';
 

@@ -1,11 +1,11 @@
-import { type WarhammerFantasyCharacter } from '@cthunline/games';
-import { GiSpikedArmor } from 'react-icons/gi';
+import type { WarhammerFantasyCharacter } from '@cthunline/games';
 import { Grid, Stack } from '@mantine/core';
+import { GiSpikedArmor } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../../contexts/App.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
 interface EncumbranceInputProps {
     label?: string;

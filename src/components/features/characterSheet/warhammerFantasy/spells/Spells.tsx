@@ -1,20 +1,20 @@
-import { GiSpellBook, GiDiabloSkull } from 'react-icons/gi';
-import { Stack } from '@mantine/core';
-import {
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasySpell
+import type {
+    WarhammerFantasyCharacter,
+    WarhammerFantasySpell
 } from '@cthunline/games';
+import { Stack } from '@mantine/core';
+import { GiDiabloSkull, GiSpellBook } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../../contexts/App.js';
-import AddSpellRow from './AddSpellRow.js';
-import SpellRow from './SpellRow.js';
 import {
     type MoveAction,
     arrayMoveUpDown,
     onlyNumbers
 } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import AddSpellRow from './AddSpellRow.js';
+import SpellRow from './SpellRow.js';
 
 interface SpellsProps {
     readonly: boolean;

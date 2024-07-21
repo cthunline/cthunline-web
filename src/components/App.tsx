@@ -1,10 +1,10 @@
-import { Notifications } from '@mantine/notifications';
-import { ModalsProvider } from '@mantine/modals';
 import { MantineProvider } from '@mantine/core';
+import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
 
 import { AppProvider, useApp } from '../contexts/App.js';
-import { mantineTheme } from './theme.js';
 import Router from './Router.js';
+import { mantineTheme } from './theme.js';
 
 import 'normalize.css';
 import '@mantine/core/styles.css';

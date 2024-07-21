@@ -1,9 +1,9 @@
-import { type CoCLuck } from '@cthunline/games';
+import type { CoCLuck } from '@cthunline/games';
 import { Box, Group } from '@mantine/core';
 
+import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../../contexts/App.js';
 import { luckKeys } from './characteristics.data.js';
 
 interface LuckProps {

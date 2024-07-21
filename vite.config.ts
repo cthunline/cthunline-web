@@ -1,6 +1,6 @@
 import translations from '@pitininja/vite-translations';
-import { loadEnv, defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import { defineConfig, loadEnv } from 'vite';
 
 const env = loadEnv('dev', process.cwd());
 

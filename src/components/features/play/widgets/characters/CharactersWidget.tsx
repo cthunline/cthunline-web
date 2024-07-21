@@ -1,10 +1,10 @@
 import { Box, Group, Stack, Tabs } from '@mantine/core';
-import { useState, useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { FaUsers } from 'react-icons/fa6';
 
-import { WidgetType, type SessionUser } from '../../../../../types/index.js';
-import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
 import { useApp } from '../../../../../contexts/App.js';
+import { type SessionUser, WidgetType } from '../../../../../types/index.js';
+import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
 import Widget from '../../Widget.js';
 
 interface CharacterWidgetProps {

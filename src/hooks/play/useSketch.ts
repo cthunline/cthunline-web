@@ -1,24 +1,24 @@
-import { useState, type SetStateAction } from 'react';
+import { type SetStateAction, useState } from 'react';
 
 import { widths } from '../../components/common/WidthPicker.js';
-import { generateId, findById } from '../../services/tools.js';
 import {
-    forwardImage,
     backwardImage,
+    forwardImage,
     getNewTokenColor
 } from '../../services/sketch.js';
+import { findById, generateId } from '../../services/tools.js';
 import {
+    type Color,
     type PlaySocket,
+    type SessionUser,
     type SketchData,
+    type SketchDrawingPath,
     type SketchEvent,
     SketchEventType,
     type SketchImageData,
-    type SketchTokenData,
-    type SessionUser,
     type SketchTokenAttachedData,
-    type Color,
-    TooltipPlacement,
-    type SketchDrawingPath
+    type SketchTokenData,
+    TooltipPlacement
 } from '../../types/index.js';
 
 interface UpdateSketchImagesOptions {
@@ -181,8 +181,8 @@ const useSketch = (socket: PlaySocket | null) => {
 
     const updateSketch = (
         updater: (previous: SketchData) => SketchData,
-        emit: boolean = true,
-        userAllowed: boolean = false
+        emit = true,
+        userAllowed = false
     ) => {
         setSketchData((prev: SketchData) => {
             const nextSketchData = updater(prev);
@@ -246,7 +246,7 @@ const useSketch = (socket: PlaySocket | null) => {
         ...defaultImageData
     });
 
-    const addSketchImage = (url: string, emit: boolean = true) => {
+    const addSketchImage = (url: string, emit = true) => {
         updateSketch((previous) => {
             const image = getNewImageData(url, previous.images.length);
             return {
@@ -353,7 +353,7 @@ const useSketch = (socket: PlaySocket | null) => {
             let y = 0;
             const tokens = [...previous.tokens];
             const events = [...previous.events];
-            users.forEach(({ id, name, isMaster, character }) => {
+            for (const { id, name, isMaster, character } of users) {
                 if (!isMaster) {
                     const token = getNewTokenData(tokens);
                     if (!x && !y) {
@@ -378,7 +378,7 @@ const useSketch = (socket: PlaySocket | null) => {
                         token
                     });
                 }
-            });
+            }
             return {
                 ...previous,
                 tokens,

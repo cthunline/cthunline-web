@@ -1,12 +1,12 @@
 import { ActionIcon, Box, Menu, Stack, Title, Tooltip } from '@mantine/core';
+import { useMemo } from 'react';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { MdOutlineShare } from 'react-icons/md';
-import { useMemo } from 'react';
 
-import InteractiveList from '../../../../common/InteractiveList.js';
-import { type Note, type User } from '../../../../../types/index.js';
-import NoteListMenuDropdown from './NoteListMenuDropdown.js';
 import { useApp } from '../../../../../contexts/App.js';
+import type { Note, User } from '../../../../../types/index.js';
+import InteractiveList from '../../../../common/InteractiveList.js';
+import NoteListMenuDropdown from './NoteListMenuDropdown.js';
 
 interface NoteListProps {
     notes: Note[];
@@ -41,7 +41,7 @@ const NoteList = ({
     const notesData: NotesData[] = useMemo(() => {
         const usersById: Record<string, User> = {};
         const sharedNotesByUserId: Record<string, Note[]> = {};
-        sharedNotes.forEach((note) => {
+        for (const note of sharedNotes) {
             if (note.user && !usersById[note.userId]) {
                 usersById[note.userId] = note.user;
             }
@@ -49,7 +49,7 @@ const NoteList = ({
                 sharedNotesByUserId[note.userId] = [];
             }
             sharedNotesByUserId[note.userId].push(note);
-        });
+        }
         return [
             {
                 key: 'yourNotes',

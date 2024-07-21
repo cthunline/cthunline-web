@@ -1,4 +1,4 @@
-import { type ApocalypseWorldCharacter } from '@cthunline/games';
+import type { ApocalypseWorldCharacter } from '@cthunline/games';
 import { Stack } from '@mantine/core';
 
 import Cars from './fragments/Cars.js';

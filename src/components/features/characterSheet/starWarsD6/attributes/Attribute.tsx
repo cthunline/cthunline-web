@@ -1,14 +1,14 @@
-import { Box, Group, Stack } from '@mantine/core';
-import {
-    type SWD6Attribute,
-    type SWD6AttributeData,
-    type SWD6Skill
+import type {
+    SWD6Attribute,
+    SWD6AttributeData,
+    SWD6Skill
 } from '@cthunline/games';
+import { Box, Group, Stack } from '@mantine/core';
 
-import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../../contexts/App.js';
-import SkillAdd from './SkillAdd.js';
+import TextInput from '../../../../common/TextInput.js';
 import Skill from './Skill.js';
+import SkillAdd from './SkillAdd.js';
 
 interface AttributeProps {
     attribute: SWD6Attribute;

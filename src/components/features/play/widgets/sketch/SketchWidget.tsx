@@ -1,36 +1,36 @@
 import { Divider, Group, Stack, Switch, Title } from '@mantine/core';
-import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
-import { MdDelete, MdUndo } from 'react-icons/md';
-import { IoPeopleCircle } from 'react-icons/io5';
-import { GiSave, GiLoad } from 'react-icons/gi';
-import { BsEraserFill } from 'react-icons/bs';
-import { GoPencil } from 'react-icons/go';
 import { modals } from '@mantine/modals';
 import { useState } from 'react';
 import type React from 'react';
+import { BsEraserFill } from 'react-icons/bs';
+import { GiLoad, GiSave } from 'react-icons/gi';
+import { GoPencil } from 'react-icons/go';
+import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
+import { IoPeopleCircle } from 'react-icons/io5';
+import { MdDelete, MdUndo } from 'react-icons/md';
 
-import useUserSketch from '../../../../../hooks/api/useUserSketch.js';
-import useDirectory from '../../../../../hooks/api/useDirectory.js';
-import useAsset from '../../../../../hooks/api/useAsset.js';
-import ImageAssetList from './elements/ImageAssetList.js';
-import UserSketchLoad from './elements/UserSketchLoad.js';
-import UserSketchSave from './elements/UserSketchSave.js';
-import { usePlay } from '../../../../../contexts/Play.js';
 import { useApp } from '../../../../../contexts/App.js';
-import Widget from '../../Widget.js';
-import ActionButton, {
-    type ActionButtonProps
-} from './elements/ActionButton.js';
+import { usePlay } from '../../../../../contexts/Play.js';
+import useAsset from '../../../../../hooks/api/useAsset.js';
+import useDirectory from '../../../../../hooks/api/useDirectory.js';
+import useUserSketch from '../../../../../hooks/api/useUserSketch.js';
 import {
-    WidgetType,
     type Asset,
     type SketchCreateBody,
-    type SketchUpdateBody
+    type SketchUpdateBody,
+    WidgetType
 } from '../../../../../types/index.js';
 import FileExplorer, {
     type FileExplorerItem,
     FileExplorerItemType
 } from '../../../../common/FileExplorer.js';
+import Widget from '../../Widget.js';
+import ActionButton, {
+    type ActionButtonProps
+} from './elements/ActionButton.js';
+import ImageAssetList from './elements/ImageAssetList.js';
+import UserSketchLoad from './elements/UserSketchLoad.js';
+import UserSketchSave from './elements/UserSketchSave.js';
 
 type ActionButtonData =
     | {

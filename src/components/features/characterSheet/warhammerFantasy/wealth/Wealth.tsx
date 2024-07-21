@@ -1,15 +1,15 @@
-import { Box, Group, Stack } from '@mantine/core';
-import { GiCash } from 'react-icons/gi';
-import { useMemo } from 'react';
-import {
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasyWealth
+import type {
+    WarhammerFantasyCharacter,
+    WarhammerFantasyWealth
 } from '@cthunline/games';
+import { Box, Group, Stack } from '@mantine/core';
+import { useMemo } from 'react';
+import { GiCash } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
-import { GameId } from '../../../../../types/index.js';
 import { useApp } from '../../../../../contexts/App.js';
+import { GameId } from '../../../../../types/index.js';
+import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { wealthFields } from '../fields.js';
 
 export interface WealthProps {

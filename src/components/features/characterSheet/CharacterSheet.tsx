@@ -1,22 +1,22 @@
-import { useCallback, useRef } from 'react';
-import { Paper } from '@mantine/core';
-import {
-    type WarhammerFantasyCharacter,
-    type SeventhSeaCharacter,
-    type SWD6Character,
-    type DnD5Character,
-    type CoCCharacter,
-    type ApocalypseWorldCharacter
+import type {
+    ApocalypseWorldCharacter,
+    CoCCharacter,
+    DnD5Character,
+    SWD6Character,
+    SeventhSeaCharacter,
+    WarhammerFantasyCharacter
 } from '@cthunline/games';
+import { Paper } from '@mantine/core';
+import { useCallback, useRef } from 'react';
 
 import useCharacterSheetStatus from '../../../hooks/api/useCharacterSheetStatus.js';
-import WarhammerFantasySheet from './warhammerFantasy/WarhammerFantasySheet.js';
-import ApocalypseWorldSheet from './apocalypseWorld/ApocalypseWorldSheet.js';
 import { type CharacterData, GameId } from '../../../types/index.js';
-import SeventhSeaSheet from './seventhSea/SeventhSeaSheet.js';
+import ApocalypseWorldSheet from './apocalypseWorld/ApocalypseWorldSheet.js';
 import CoCSheet from './callOfCthulhu/CoCSheet.js';
-import SWD6Sheet from './starWarsD6/SWD6Sheet.js';
 import DnD5Sheet from './dnd5/DnD5Sheet.js';
+import SeventhSeaSheet from './seventhSea/SeventhSeaSheet.js';
+import SWD6Sheet from './starWarsD6/SWD6Sheet.js';
+import WarhammerFantasySheet from './warhammerFantasy/WarhammerFantasySheet.js';
 
 export interface CharacterSheetProps {
     readonly: boolean;

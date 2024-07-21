@@ -1,18 +1,18 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { toast } from '../../services/toast.js';
 import { useApp } from '../../contexts/App.js';
 import {
     createSketch,
-    updateSketch,
     deleteSketch,
     getSketch,
-    getSketchs
+    getSketchs,
+    updateSketch
 } from '../../services/requests/sketch.js';
-import {
-    type Sketch,
-    type SketchCreateBody,
-    type SketchUpdateBody
+import { toast } from '../../services/toast.js';
+import type {
+    Sketch,
+    SketchCreateBody,
+    SketchUpdateBody
 } from '../../types/index.js';
 
 interface CreateUserSketchOptions {
@@ -34,7 +34,7 @@ interface DeleteUserSketchOptions {
     isToast?: boolean;
 }
 
-const useUserSketch = (loadList: boolean = false) => {
+const useUserSketch = (loadList = false) => {
     const { handleApiError } = useApp();
 
     const [userSketchs, setUserSketchs] = useState<Sketch[]>([]);
@@ -42,7 +42,7 @@ const useUserSketch = (loadList: boolean = false) => {
     const getUserSketchs = useCallback(async (): Promise<Sketch[]> => {
         try {
             return await getSketchs();
-        } catch (err: any) {
+        } catch (err: unknown) {
             throw handleApiError(err);
         }
     }, [handleApiError]);
@@ -51,7 +51,7 @@ const useUserSketch = (loadList: boolean = false) => {
         async (sketchId: number): Promise<Sketch> => {
             try {
                 return await getSketch(sketchId);
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -80,7 +80,7 @@ const useUserSketch = (loadList: boolean = false) => {
                     toast.success('Sketch saved');
                 }
                 return sketch;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -103,7 +103,7 @@ const useUserSketch = (loadList: boolean = false) => {
                     toast.success('Sketch overwritten');
                 }
                 return sketch;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -124,7 +124,7 @@ const useUserSketch = (loadList: boolean = false) => {
                 if (isToast) {
                     toast.success('Sketch deleted');
                 }
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },

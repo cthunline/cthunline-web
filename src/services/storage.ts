@@ -1,5 +1,5 @@
 export default {
-    set(key: string, data: any) {
+    set(key: string, data: unknown) {
         const json = JSON.stringify(data);
         localStorage.setItem(key, json);
     },

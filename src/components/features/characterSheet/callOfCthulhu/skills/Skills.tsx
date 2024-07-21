@@ -1,8 +1,8 @@
-import { type CoCSkill } from '@cthunline/games';
+import type { CoCSkill } from '@cthunline/games';
 import { Stack } from '@mantine/core';
 
-import SkillAdd from './SkillAdd.js';
 import Skill from './Skill.js';
+import SkillAdd from './SkillAdd.js';
 
 interface SkillsProps {
     skills: CoCSkill[];

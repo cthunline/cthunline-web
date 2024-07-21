@@ -1,18 +1,18 @@
-import { Group, Stack } from '@mantine/core';
-import { GiIdCard } from 'react-icons/gi';
-import { useMemo } from 'react';
 import {
-    type ApocalypseWorldPlaybook,
     type ApocalypseWorldCharacter,
+    type ApocalypseWorldPlaybook,
     apocalypseWorld
 } from '@cthunline/games';
+import { Group, Stack } from '@mantine/core';
+import { useMemo } from 'react';
+import { GiIdCard } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import { sortObjectsBy } from '../../../../../services/tools.js';
 import { useApp } from '../../../../../contexts/App.js';
+import { sortObjectsBy } from '../../../../../services/tools.js';
+import Select from '../../../../common/Select.js';
 import TextInput from '../../../../common/TextInput.js';
 import Textarea from '../../../../common/Textarea.js';
-import Select from '../../../../common/Select.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
 interface BioProps {
     readonly: boolean;

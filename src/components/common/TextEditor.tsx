@@ -1,9 +1,9 @@
+import type { BoxProps } from '@mantine/core';
+import { RichTextEditor } from '@mantine/tiptap';
 import TextAlign from '@tiptap/extension-text-align';
 import Underline from '@tiptap/extension-underline';
-import { RichTextEditor } from '@mantine/tiptap';
-import { type BoxProps } from '@mantine/core';
-import StarterKit from '@tiptap/starter-kit';
 import { useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
 
 interface TextEditorProps extends BoxProps {
     readonly?: boolean;

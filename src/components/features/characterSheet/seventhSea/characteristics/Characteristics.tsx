@@ -13,7 +13,7 @@ interface CharacteristicsProps<DataType> {
     onChange: (data: DataType) => void;
 }
 
-const Characteristics = <DataType extends Record<string, any>>({
+const Characteristics = <DataType extends Record<string, unknown>>({
     data,
     textKey,
     sortByText,

@@ -1,4 +1,4 @@
-import { type SWD6Statistics } from '@cthunline/games';
+import type { SWD6Statistics } from '@cthunline/games';
 
 export interface StatisticsField {
     key: keyof SWD6Statistics;

@@ -1,4 +1,4 @@
-import { type SWD6WoundStatus } from '@cthunline/games';
+import type { SWD6WoundStatus } from '@cthunline/games';
 
 export interface WoundStatusField {
     keys: (keyof SWD6WoundStatus)[];

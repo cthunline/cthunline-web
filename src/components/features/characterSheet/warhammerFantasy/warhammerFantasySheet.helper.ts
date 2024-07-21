@@ -1,13 +1,13 @@
-import {
-    type WarhammerFantasyCharacteristics,
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasyWounds,
-    type WarhammerFantasyCharacteristicName,
-    type WarhammerFantasyCharacteristic,
-    type WarhammerFantasyBasicSkills,
-    type WarhammerFantasyBasicSkillName,
-    type WarhammerFantasyOtherSkill,
-    type WarhammerFantasyEncumbrance
+import type {
+    WarhammerFantasyBasicSkillName,
+    WarhammerFantasyBasicSkills,
+    WarhammerFantasyCharacter,
+    WarhammerFantasyCharacteristic,
+    WarhammerFantasyCharacteristicName,
+    WarhammerFantasyCharacteristics,
+    WarhammerFantasyEncumbrance,
+    WarhammerFantasyOtherSkill,
+    WarhammerFantasyWounds
 } from '@cthunline/games';
 
 export const getCharacteristicBonus = (
@@ -60,9 +60,9 @@ export const controlWounds = (
 
 const sumEncumbrance = (items: { encumbrance: number }[]) => {
     let sum = 0;
-    items.forEach(({ encumbrance }) => {
+    for (const { encumbrance } of items) {
         sum += encumbrance;
-    });
+    }
     return sum;
 };
 
@@ -106,19 +106,19 @@ export const controlSkills = (
     otherSkills: WarhammerFantasyOtherSkill[]
 ): WarhammerFantasyBasicSkills => {
     const calculatedSkills: WarhammerFantasyBasicSkills = { ...basicSkills };
-    (Object.keys(calculatedSkills) as WarhammerFantasyBasicSkillName[]).forEach(
-        (skillName) => {
-            const basicSkill = calculatedSkills[skillName];
-            const char = characteristics[basicSkill.characteristicName];
-            calculatedSkills[skillName].skill =
-                char.current + basicSkill.advances;
-        }
-    );
+    for (const skillName of Object.keys(
+        calculatedSkills
+    ) as WarhammerFantasyBasicSkillName[]) {
+        const basicSkill = calculatedSkills[skillName];
+        const char = characteristics[basicSkill.characteristicName];
+        calculatedSkills[skillName].skill = char.current + basicSkill.advances;
+    }
     const calculatedOtherSkills = [...otherSkills];
-    calculatedOtherSkills.forEach((otherSkill, index) => {
+    for (let index = 0; index < calculatedOtherSkills.length; index++) {
+        const otherSkill = calculatedOtherSkills[index];
         const char = characteristics[otherSkill.characteristicName];
         calculatedOtherSkills[index].skill = char.current + otherSkill.advances;
-    });
+    }
     return calculatedSkills;
 };
 
@@ -145,11 +145,11 @@ export const controlCharacteristics = (
     const calculatedChars: WarhammerFantasyCharacteristics = {
         ...character.characteristics
     };
-    (
-        Object.keys(calculatedChars) as WarhammerFantasyCharacteristicName[]
-    ).forEach((char) => {
+    for (const char of Object.keys(
+        calculatedChars
+    ) as WarhammerFantasyCharacteristicName[]) {
         calculatedChars[char] = controlCharacteristic(calculatedChars[char]);
-    });
+    }
     return {
         ...character,
         characteristics: calculatedChars,

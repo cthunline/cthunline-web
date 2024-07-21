@@ -3,7 +3,7 @@ import {
     type TextareaProps as MantineTextareaProps
 } from '@mantine/core';
 
-import { type InputVariant } from './TextInput.js';
+import type { InputVariant } from './TextInput.js';
 
 export interface TextareaProps extends Omit<MantineTextareaProps, 'variant'> {
     variant?: InputVariant;

@@ -1,24 +1,24 @@
-import { useParams, useNavigate } from 'react-router-dom';
 import { Group, Loader, Stack } from '@mantine/core';
-import { useRef, useState } from 'react';
 import { modals } from '@mantine/modals';
+import { useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
-import CharactersWidget from '../../features/play/widgets/characters/CharactersWidget.js';
-import CharacterWidget from '../../features/play/widgets/character/CharacterWidget.js';
-import JukeboxWidget from '../../features/play/widgets/jukebox/JukeboxWidget.js';
-import SketchWidget from '../../features/play/widgets/sketch/SketchWidget.js';
-import NotesWidget from '../../features/play/widgets/notes/NotesWidget.js';
-import DicesWidget from '../../features/play/widgets/dices/DicesWidget.js';
-import AudioClientVolume from '../../features/play/AudioClientVolume.js';
+import { useApp } from '../../../contexts/App.js';
+import { AudioClientProvider } from '../../../contexts/AudioClient.js';
 import { AudioMasterProvider } from '../../../contexts/AudioMaster.js';
 import { PlayProvider, usePlay } from '../../../contexts/Play.js';
 import { focusWidget } from '../../../services/widget.js';
-import Console from '../../features/play/Console.js';
 import { WidgetType } from '../../../types/index.js';
+import AudioClientVolume from '../../features/play/AudioClientVolume.js';
+import Console from '../../features/play/Console.js';
 import Sketch from '../../features/play/Sketch.js';
-import { useApp } from '../../../contexts/App.js';
+import CharacterWidget from '../../features/play/widgets/character/CharacterWidget.js';
+import CharactersWidget from '../../features/play/widgets/characters/CharactersWidget.js';
+import DicesWidget from '../../features/play/widgets/dices/DicesWidget.js';
+import JukeboxWidget from '../../features/play/widgets/jukebox/JukeboxWidget.js';
+import NotesWidget from '../../features/play/widgets/notes/NotesWidget.js';
+import SketchWidget from '../../features/play/widgets/sketch/SketchWidget.js';
 import PlayMenu from './PlayMenu.js';
-import { AudioClientProvider } from '../../../contexts/AudioClient.js';
 
 const PlayContent = () => {
     const { T } = useApp();

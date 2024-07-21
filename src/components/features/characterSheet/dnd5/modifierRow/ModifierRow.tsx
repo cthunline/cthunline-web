@@ -1,7 +1,7 @@
 import { Box, Checkbox, Group } from '@mantine/core';
 
-import { displayModifier } from '../dnd5Sheet.helper.js';
 import TextInput from '../../../../common/TextInput.js';
+import { displayModifier } from '../dnd5Sheet.helper.js';
 
 interface ModifierRowProps {
     readonly?: boolean;

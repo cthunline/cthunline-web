@@ -1,13 +1,6 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { toast } from '../../services/toast.js';
 import { useApp } from '../../contexts/App.js';
-import {
-    type PlaySocket,
-    type Note,
-    type NoteCreateBody,
-    type NoteEditBody
-} from '../../types/index.js';
 import {
     createNote as createNoteRequest,
     deleteNote as deleteNoteRequest,
@@ -16,6 +9,13 @@ import {
     getNotes as getNotesRequest,
     moveNote as moveNoteRequest
 } from '../../services/requests/note.js';
+import { toast } from '../../services/toast.js';
+import type {
+    Note,
+    NoteCreateBody,
+    NoteEditBody,
+    PlaySocket
+} from '../../types/index.js';
 
 interface NoteHookOptions {
     sessionId: number;
@@ -68,7 +68,7 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
 
     const [editorNote, setEditorNote] = useState<Note | null>(null);
 
-    const setSharedNoteInList = (note: Note) => {
+    const setSharedNoteInList = useCallback((note: Note) => {
         setNoteList(({ notes, sharedNotes }) => {
             let existsInList = false;
             const updatedSharedNotes = sharedNotes.map((nt) => {
@@ -86,20 +86,20 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
                 sharedNotes: updatedSharedNotes
             };
         });
-    };
+    }, []);
 
-    const deleteSharedNoteFromList = (noteId: number) => {
+    const deleteSharedNoteFromList = useCallback((noteId: number) => {
         setNoteList(({ notes, sharedNotes }) => ({
             notes,
             sharedNotes: sharedNotes.filter(({ id }) => id !== noteId)
         }));
-    };
+    }, []);
 
     const getNotes = useCallback(async (): Promise<NoteList> => {
         try {
             const { notes, sharedNotes } = await getNotesRequest(sessionId);
             return { notes, sharedNotes };
-        } catch (err: any) {
+        } catch (err: unknown) {
             throw handleApiError(err);
         }
     }, [sessionId, handleApiError]);
@@ -108,7 +108,7 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
         async (noteId: number): Promise<Note> => {
             try {
                 return await getNoteRequest(noteId);
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -147,7 +147,7 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
                     toast.success('Note created');
                 }
                 return note;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -185,7 +185,7 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
                     toast.success('Note edited');
                 }
                 return note;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -211,7 +211,7 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
                     toast.success('Note moved');
                 }
                 return note;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -236,7 +236,7 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
                 if (isToast) {
                     toast.success('Note deleted');
                 }
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -262,7 +262,7 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
             socket?.off('noteUpdate');
             socket?.off('noteDelete');
         };
-    }, [socket]);
+    }, [socket, deleteSharedNoteFromList, setSharedNoteInList]);
 
     return {
         noteList,

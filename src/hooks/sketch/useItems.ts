@@ -1,32 +1,32 @@
-import { useState, useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { sketchContextMenuId } from '../../components/features/play/sketch/SketchContextMenu.js';
-import { findById, findIndexById, isMainClick } from '../../services/tools.js';
 import { usePlay } from '../../contexts/Play.js';
 import {
+    backwardImage,
+    forwardImage,
     getMouseEventSvgCoordinates,
     getMovingItemCoordinates,
-    getResizingItemCoordAndPos,
-    forwardImage,
-    backwardImage
+    getResizingItemCoordAndPos
 } from '../../services/sketch.js';
+import { findById, findIndexById, isMainClick } from '../../services/tools.js';
 import {
+    type CardinalDirection,
+    type SketchEvent,
+    SketchEventType,
     type SketchImageData,
+    SketchItemType,
     type SketchMovingItemData,
     type SketchResizingItemData,
-    type CardinalDirection,
-    SketchEventType,
     type SketchTokenData,
-    SketchItemType,
-    TooltipPlacement,
-    type SketchEvent
+    TooltipPlacement
 } from '../../types/index.js';
 
 // this hook holds states and event handlers for sketch items (images and tokens)
 // it is meant to be used by the sketch component and sub components
 const useItems = (
     svgRef: React.MutableRefObject<SVGSVGElement>,
-    isMaster: boolean = false
+    isMaster = false
 ) => {
     const {
         isFreeDrawing,

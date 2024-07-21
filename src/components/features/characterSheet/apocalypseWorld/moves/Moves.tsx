@@ -1,22 +1,22 @@
-import { GiBookmarklet, GiFrontalLobe, GiUncertainty } from 'react-icons/gi';
-import { Stack } from '@mantine/core';
 import {
-    apocalypseWorld,
-    type ApocalypseWorldCharacter,
     type ApocalypseWorldBasicListItem,
-    type ApocalypseWorldDetailedListItem
+    type ApocalypseWorldCharacter,
+    type ApocalypseWorldDetailedListItem,
+    apocalypseWorld
 } from '@cthunline/games';
+import { Stack } from '@mantine/core';
+import { GiBookmarklet, GiFrontalLobe, GiUncertainty } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import TextEditor from '../../../../common/TextEditor.js';
 import { useApp } from '../../../../../contexts/App.js';
-import AddOtherMoveRow from './AddOtherMoveRow.js';
-import BasicList from '../generic/BasicList.js';
-import OtherMoveRow from './OtherMoveRow.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import TextEditor from '../../../../common/TextEditor.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import BasicList from '../generic/BasicList.js';
+import AddOtherMoveRow from './AddOtherMoveRow.js';
+import OtherMoveRow from './OtherMoveRow.js';
 
 interface MovesProps {
     readonly: boolean;

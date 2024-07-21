@@ -1,4 +1,4 @@
-import { type DnD5Equipment, type DnD5Money } from '@cthunline/games';
+import type { DnD5Equipment, DnD5Money } from '@cthunline/games';
 
 export const moneyFields: (keyof DnD5Money)[] = [
     'copper',

@@ -1,6 +1,6 @@
-import { useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import { AppShell, Stack } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import { useApp } from '../../contexts/App.js';
 import { pages } from '../router.data.js';

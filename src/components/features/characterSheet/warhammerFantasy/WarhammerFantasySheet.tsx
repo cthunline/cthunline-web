@@ -1,45 +1,45 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { Box, Group, Stack } from '@mantine/core';
-import {
-    type WarhammerFantasyBiography,
-    type WarhammerFantasyCharacter
+import type {
+    WarhammerFantasyBiography,
+    WarhammerFantasyCharacter
 } from '@cthunline/games';
+import { Box, Group, Stack } from '@mantine/core';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
     GiCharacter,
     GiD10,
-    GiSpellBook,
-    GiLightBackpack
+    GiLightBackpack,
+    GiSpellBook
 } from 'react-icons/gi';
 
-import WarhammerFantasyLogo from '../../../svg/games/warhammerFantasy/WarhammerFantasyLogo.js';
-import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
-import Characteristics from './characteristics/Characteristics.js';
-import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
-import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
-import ArmourPoints from './armourPoints/ArmourPoints.js';
-import Portrait from '../generic/portrait/Portrait.js';
-import Encumbrance from './encumbrance/Encumbrance.js';
 import { useApp } from '../../../../contexts/App.js';
+import {
+    type CharacterData,
+    type CharacterSheetStatus,
+    GameId
+} from '../../../../types/index.js';
+import WarhammerFantasyLogo from '../../../svg/games/warhammerFantasy/WarhammerFantasyLogo.js';
+import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
+import Portrait from '../generic/portrait/Portrait.js';
+import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
+import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
+import Armour from './armour/Armour.js';
+import ArmourPoints from './armourPoints/ArmourPoints.js';
+import Characteristics from './characteristics/Characteristics.js';
+import Encumbrance from './encumbrance/Encumbrance.js';
+import { biographyFields } from './fields.js';
 import BasicSkills from './skills/BasicSkills.js';
 import OtherSkills from './skills/OtherSkills.js';
-import Trappings from './trappings/Trappings.js';
-import { biographyFields } from './fields.js';
-import Talents from './talents/Talents.js';
-import Weapons from './weapons/Weapons.js';
-import Status from './status/Status.js';
 import Spells from './spells/Spells.js';
-import Armour from './armour/Armour.js';
-import Wealth from './wealth/Wealth.js';
-import {
-    type CharacterSheetStatus,
-    GameId,
-    type CharacterData
-} from '../../../../types/index.js';
+import Status from './status/Status.js';
+import Talents from './talents/Talents.js';
+import Trappings from './trappings/Trappings.js';
 import {
     controlCharacteristics,
-    controlItems,
-    controlEncumbrance
+    controlEncumbrance,
+    controlItems
 } from './warhammerFantasySheet.helper.js';
+import Wealth from './wealth/Wealth.js';
+import Weapons from './weapons/Weapons.js';
 
 export interface WarhammerFantasySheetProps {
     status: CharacterSheetStatus;

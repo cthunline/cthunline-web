@@ -1,4 +1,4 @@
-import { type DnD5Spellcasting, type DnD5SpellLevel } from '@cthunline/games';
+import type { DnD5SpellLevel, DnD5Spellcasting } from '@cthunline/games';
 
 export interface SpellcastingField {
     key: keyof DnD5Spellcasting;

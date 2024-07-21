@@ -1,18 +1,18 @@
-import { GiJuggler } from 'react-icons/gi';
-import { Stack } from '@mantine/core';
-import {
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasyOtherSkill
+import type {
+    WarhammerFantasyCharacter,
+    WarhammerFantasyOtherSkill
 } from '@cthunline/games';
+import { Stack } from '@mantine/core';
+import { GiJuggler } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
-import AddOtherSkillRow from './AddOtherSkillRow.js';
 import { useApp } from '../../../../../contexts/App.js';
-import SkillRow from './SkillRow.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import AddOtherSkillRow from './AddOtherSkillRow.js';
+import SkillRow from './SkillRow.js';
 
 interface OtherSkillsProps {
     readonly: boolean;

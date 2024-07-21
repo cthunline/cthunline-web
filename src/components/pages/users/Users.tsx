@@ -1,13 +1,13 @@
 import { Button, Chip, Switch, Table } from '@mantine/core';
-import { FaRegHandshake } from 'react-icons/fa';
-import { MdCheck } from 'react-icons/md';
 import { modals } from '@mantine/modals';
+import { FaRegHandshake } from 'react-icons/fa';
 import { HiPlus } from 'react-icons/hi';
+import { MdCheck } from 'react-icons/md';
 
-import UserForm, { type UserSubmitData } from '../../features/user/UserForm.js';
-import ContentBox from '../../common/ContentBox.js';
-import useUser from '../../../hooks/api/useUser.js';
 import { useApp } from '../../../contexts/App.js';
+import useUser from '../../../hooks/api/useUser.js';
+import ContentBox from '../../common/ContentBox.js';
+import UserForm, { type UserSubmitData } from '../../features/user/UserForm.js';
 import Invitation from './Invitation.js';
 
 const createUserModalId = 'create-user-modal';

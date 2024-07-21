@@ -1,10 +1,6 @@
-import {
-    type DnD5Biography,
-    type DnD5Features,
-    type DnD5Story
-} from '@cthunline/games';
+import type { DnD5Biography, DnD5Features, DnD5Story } from '@cthunline/games';
 
-import { type Field } from '../generic/fieldLayout/FieldLayout.js';
+import type { Field } from '../generic/fieldLayout/FieldLayout.js';
 
 export const biographyFields: Field<DnD5Biography>[] = [
     {

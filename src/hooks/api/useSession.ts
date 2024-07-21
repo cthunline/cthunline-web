@@ -1,18 +1,18 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { toast } from '../../services/toast.js';
 import { useApp } from '../../contexts/App.js';
 import {
-    getSessions as getSessionsRequest,
-    getSession as getSessionRequest,
     createSession as createSessionRequest,
+    deleteSession as deleteSessionRequest,
     editSession as editSessionRequest,
-    deleteSession as deleteSessionRequest
+    getSession as getSessionRequest,
+    getSessions as getSessionsRequest
 } from '../../services/requests/session.js';
-import {
-    type Session,
-    type SessionCreateBody,
-    type SessionEditBody
+import { toast } from '../../services/toast.js';
+import type {
+    Session,
+    SessionCreateBody,
+    SessionEditBody
 } from '../../types/index.js';
 
 interface SessionHookOptions {
@@ -48,7 +48,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
     const getSessions = useCallback(async (): Promise<Session[]> => {
         try {
             return await getSessionsRequest();
-        } catch (err: any) {
+        } catch (err: unknown) {
             throw handleApiError(err);
         }
     }, [handleApiError]);
@@ -57,7 +57,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
         async (sessId: number): Promise<Session> => {
             try {
                 return await getSessionRequest(sessId);
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -103,7 +103,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
                     toast.success('Session created');
                 }
                 return sess;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -126,7 +126,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
                     toast.success('Session edited');
                 }
                 return sess;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -147,7 +147,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
                 if (isToast) {
                     toast.success('Session deleted');
                 }
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },

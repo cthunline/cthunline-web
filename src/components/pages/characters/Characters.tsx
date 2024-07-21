@@ -1,19 +1,19 @@
-import { MdEdit, MdOutlineDeleteOutline, MdOutlineSend } from 'react-icons/md';
 import { ActionIcon, Alert, Button, Table } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { modals } from '@mantine/modals';
 import { useMemo, useState } from 'react';
 import { FaInfo } from 'react-icons/fa6';
-import { modals } from '@mantine/modals';
 import { HiPlus } from 'react-icons/hi';
+import { MdEdit, MdOutlineDeleteOutline, MdOutlineSend } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
-import { getDefaultData } from '../../features/characterSheet/characterSheet.helper.js';
-import { type Game, type SelectOption } from '../../../types/index.js';
-import TransferForm, { type TransferData } from './TransferForm.js';
+import { useApp } from '../../../contexts/App.js';
 import useCharacter from '../../../hooks/api/useCharacter.js';
 import useGame from '../../../hooks/api/useGame.js';
+import type { Game, SelectOption } from '../../../types/index.js';
 import ContentBox from '../../common/ContentBox.js';
-import { useApp } from '../../../contexts/App.js';
 import Select from '../../common/Select.js';
+import { getDefaultData } from '../../features/characterSheet/characterSheet.helper.js';
+import TransferForm, { type TransferData } from './TransferForm.js';
 
 interface TransferModalData {
     isOpen: boolean;

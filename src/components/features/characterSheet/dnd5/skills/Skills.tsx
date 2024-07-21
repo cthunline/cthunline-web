@@ -1,8 +1,8 @@
-import { type DnD5Skills } from '@cthunline/games';
+import type { DnD5Skills } from '@cthunline/games';
 import { Stack } from '@mantine/core';
 
-import ModifierRow from '../modifierRow/ModifierRow.js';
 import { useApp } from '../../../../../contexts/App.js';
+import ModifierRow from '../modifierRow/ModifierRow.js';
 
 interface SkillsProps {
     skills: DnD5Skills;

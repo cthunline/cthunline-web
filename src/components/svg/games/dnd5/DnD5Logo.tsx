@@ -1,4 +1,4 @@
-import { type SVGProps } from 'react';
+import type { SVGProps } from 'react';
 
 const DnD5 = (props: SVGProps<SVGSVGElement>) => (
     <svg

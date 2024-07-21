@@ -1,15 +1,15 @@
-import { modals } from '@mantine/modals';
 import { Stack } from '@mantine/core';
+import { modals } from '@mantine/modals';
 import { useRef } from 'react';
 
-import useCharacterSheetStatus from '../../../../../hooks/api/useCharacterSheetStatus.js';
-import { type Note, WidgetType } from '../../../../../types/index.js';
-import { usePlay } from '../../../../../contexts/Play.js';
-import useNote from '../../../../../hooks/api/useNote.js';
 import { useApp } from '../../../../../contexts/App.js';
+import { usePlay } from '../../../../../contexts/Play.js';
+import useCharacterSheetStatus from '../../../../../hooks/api/useCharacterSheetStatus.js';
+import useNote from '../../../../../hooks/api/useNote.js';
+import { type Note, WidgetType } from '../../../../../types/index.js';
+import Widget from '../../Widget.js';
 import NoteCreate from './NoteCreate.js';
 import NoteEditor from './NoteEditor.js';
-import Widget from '../../Widget.js';
 import NoteList from './NoteList.js';
 
 interface NotesWidgetProps {

@@ -1,11 +1,11 @@
-import { MdOutlineContactPage, MdLogout, MdDraw } from 'react-icons/md';
 import { ActionIcon, Stack, Tooltip } from '@mantine/core';
+import { CgNotes } from 'react-icons/cg';
 import { GiRollingDiceCup } from 'react-icons/gi';
 import { HiMusicNote } from 'react-icons/hi';
-import { CgNotes } from 'react-icons/cg';
+import { MdDraw, MdLogout, MdOutlineContactPage } from 'react-icons/md';
 
-import { WidgetType } from '../../../types/index.js';
 import { useApp } from '../../../contexts/App.js';
+import { WidgetType } from '../../../types/index.js';
 
 interface PlayMenuProps {
     isMaster: boolean;

@@ -11,7 +11,7 @@ interface ApiCallOptions {
     progress?: (percent: number) => void;
 }
 
-export const callApi = async <ResponseBodyType extends Record<string, any>>({
+export const callApi = async <ResponseBodyType>({
     method,
     route,
     body,

@@ -1,9 +1,9 @@
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
-import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { FiPlusCircle } from 'react-icons/fi';
+import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../../contexts/App.js';
+import TextInput from '../../../../common/TextInput.js';
 
 interface CantripsProps {
     cantrips: string[];

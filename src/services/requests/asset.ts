@@ -1,6 +1,6 @@
 import { callApi } from '../api.js';
 
-import { type Asset } from '../../types/index.js';
+import type { Asset } from '../../types/index.js';
 
 export const getAssets = async (type?: 'audio' | 'image') => {
     const typeQuery = type ? `?type=${type}` : '';
@@ -23,9 +23,9 @@ interface UploadAssetsOptions {
 
 export const uploadAssets = async ({ body, progress }: UploadAssetsOptions) => {
     const formData = new FormData();
-    [...body.assets].forEach((file) => {
+    for (const file of [...body.assets]) {
         formData.append('assets', file);
-    });
+    }
     if (body.directoryId) {
         formData.append('directoryId', body.directoryId.toString());
     }

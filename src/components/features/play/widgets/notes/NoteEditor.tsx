@@ -1,12 +1,9 @@
 import { ActionIcon, Group, Stack, TextInput } from '@mantine/core';
 import { MdArrowBack } from 'react-icons/md';
 
-import {
-    type CharacterSheetStatus,
-    type Note
-} from '../../../../../types/index.js';
-import TextEditor from '../../../../common/TextEditor.js';
 import { useApp } from '../../../../../contexts/App.js';
+import type { CharacterSheetStatus, Note } from '../../../../../types/index.js';
+import TextEditor from '../../../../common/TextEditor.js';
 import Status from '../../../characterSheet/Status.js';
 
 interface NoteEditorProps {

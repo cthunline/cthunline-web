@@ -1,13 +1,13 @@
-import { type Locale } from '@pitininja/vite-translations-client';
-import { type Socket } from 'socket.io-client';
-import {
-    type ApocalypseWorldCharacter,
-    type CoCCharacter,
-    type DnD5Character,
-    type SeventhSeaCharacter,
-    type SWD6Character,
-    type WarhammerFantasyCharacter
+import type {
+    ApocalypseWorldCharacter,
+    CoCCharacter,
+    DnD5Character,
+    SWD6Character,
+    SeventhSeaCharacter,
+    WarhammerFantasyCharacter
 } from '@cthunline/games';
+import type { Locale } from '@pitininja/vite-translations-client';
+import type { Socket } from 'socket.io-client';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ theme
 

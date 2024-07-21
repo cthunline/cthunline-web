@@ -9,13 +9,13 @@ import {
     useState
 } from 'react';
 
-import { type PlaySocket, type Asset } from '../types/index.js';
-import { getAssetUrl } from '../services/api.js';
 import {
-    useAudioVolume,
     type UseAudioVolumeExport,
-    defaultUseAudioVolumeExport
+    defaultUseAudioVolumeExport,
+    useAudioVolume
 } from '../hooks/useAudioVolume.js';
+import { getAssetUrl } from '../services/api.js';
+import type { Asset, PlaySocket } from '../types/index.js';
 
 const getTimeText = (time: number) => {
     let minutes = 0;
@@ -132,7 +132,7 @@ export const AudioMasterProvider = ({
             }
             emitAudioPlay(track, howlRef.current.seek());
         }
-    }, [track, howlRef, emitAudioPlay]);
+    }, [track, emitAudioPlay]);
 
     const setTime = useCallback(
         (time: number) => {
@@ -211,7 +211,7 @@ export const AudioMasterProvider = ({
                 cancelAnimationFrame(frameRef.current);
             }
         };
-    }, [track, howlRef]);
+    }, [track]);
 
     const bindEvents = useCallback(() => {
         if (howlRef.current) {

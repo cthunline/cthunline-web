@@ -1,18 +1,18 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { toast } from '../../services/toast.js';
 import { useApp } from '../../contexts/App.js';
-import {
-    type Directory,
-    type DirectoryCreateBody,
-    type DirectoryEditBody
-} from '../../types/index.js';
 import {
     createDirectory as createDirectoryRequest,
     deleteDirectory as deleteDirectoryRequest,
     editDirectory as editDirectoryRequest,
     getDirectories as getDirectoriesRequest
 } from '../../services/requests/directory.js';
+import { toast } from '../../services/toast.js';
+import type {
+    Directory,
+    DirectoryCreateBody,
+    DirectoryEditBody
+} from '../../types/index.js';
 
 interface DirectoryHookOptions {
     loadList?: boolean;
@@ -46,7 +46,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
         try {
             const directories = await getDirectoriesRequest();
             return directories;
-        } catch (err: any) {
+        } catch (err: unknown) {
             throw handleApiError(err);
         }
     }, [handleApiError]);
@@ -73,7 +73,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
                     toast.success('Directory created');
                 }
                 return dir;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -96,7 +96,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
                     toast.success('Directory edited');
                 }
                 return dir;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -117,7 +117,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
                 if (isToast) {
                     toast.success('Directory deleted');
                 }
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },

@@ -1,11 +1,11 @@
-import { type ApocalypseWorldCharacterHardHolderGang } from '@cthunline/games';
+import type { ApocalypseWorldCharacterHardHolderGang } from '@cthunline/games';
 import { Group, Stack, type StackProps } from '@mantine/core';
 import { GiDarkSquad } from 'react-icons/gi';
 
-import SectionTitle from '../../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../../contexts/App.js';
 import TextInput from '../../../../../common/TextInput.js';
 import Textarea from '../../../../../common/Textarea.js';
+import SectionTitle from '../../../generic/sectionTitle/SectionTitle.js';
 
 type GenericGang = ApocalypseWorldCharacterHardHolderGang;
 

@@ -1,13 +1,13 @@
 import { Menu } from '@mantine/core';
 import {
-    MdOutlineArrowUpward,
     MdOutlineArrowDownward,
+    MdOutlineArrowUpward,
     MdOutlineDelete,
     MdOutlineShare
 } from 'react-icons/md';
 
-import { type Note } from '../../../../../types/index.js';
 import { useApp } from '../../../../../contexts/App.js';
+import type { Note } from '../../../../../types/index.js';
 
 export interface NoteListMenuDropdownProps {
     note: Note | null;

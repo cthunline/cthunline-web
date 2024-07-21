@@ -1,4 +1,4 @@
-import { type CoCCombat } from '@cthunline/games';
+import type { CoCCombat } from '@cthunline/games';
 
 export interface KeyData {
     key: keyof CoCCombat;

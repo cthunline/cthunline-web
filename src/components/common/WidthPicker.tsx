@@ -1,4 +1,4 @@
-import { Group, type GroupProps, UnstyledButton, Box } from '@mantine/core';
+import { Box, Group, type GroupProps, UnstyledButton } from '@mantine/core';
 
 import './WidthPicker.css';
 

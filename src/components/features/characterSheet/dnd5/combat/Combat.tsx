@@ -1,14 +1,14 @@
-import { Box, Group, Slider, Stack } from '@mantine/core';
-import {
-    type DnD5Combat,
-    type DnD5DeathSaves,
-    type DnD5HitPoints
+import type {
+    DnD5Combat,
+    DnD5DeathSaves,
+    DnD5HitPoints
 } from '@cthunline/games';
+import { Box, Group, Slider, Stack } from '@mantine/core';
 
-import { onlyNumbers } from '../../../../../services/tools.js';
-import { displayModifier } from '../dnd5Sheet.helper.js';
-import TextInput from '../../../../common/TextInput.js';
 import { useApp } from '../../../../../contexts/App.js';
+import { onlyNumbers } from '../../../../../services/tools.js';
+import TextInput from '../../../../common/TextInput.js';
+import { displayModifier } from '../dnd5Sheet.helper.js';
 
 interface CombatProps {
     combat: DnD5Combat;

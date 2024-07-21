@@ -1,14 +1,14 @@
-import { GiSpikedArmor } from 'react-icons/gi';
-import { Grid, Stack } from '@mantine/core';
-import {
-    type WarhammerFantasyCharacter,
-    type WarhammerFantasyArmourPoints
+import type {
+    WarhammerFantasyArmourPoints,
+    WarhammerFantasyCharacter
 } from '@cthunline/games';
+import { Grid, Stack } from '@mantine/core';
+import { GiSpikedArmor } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
+import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import TextInput from '../../../../common/TextInput.js';
-import { useApp } from '../../../../../contexts/App.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
 interface ArmourPointsInputProps {
     readonly: boolean;

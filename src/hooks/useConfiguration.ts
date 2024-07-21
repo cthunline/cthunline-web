@@ -1,8 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { getConfiguration } from '../services/requests/configuration.js';
-import { type Configuration } from '../types/index.js';
 import { toast } from '../services/toast.js';
+import type { Configuration } from '../types/index.js';
 
 export interface ConfigurationHookExport {
     configuration: Configuration;
@@ -31,8 +31,10 @@ const useConfiguration = () => {
         try {
             const conf = await getConfiguration();
             setConfiguration(conf);
-        } catch (err: any) {
-            toast.error(err.message);
+        } catch (err: unknown) {
+            toast.error(
+                err instanceof Error ? err.message : 'Configuration error'
+            );
             throw err;
         }
     }, []);

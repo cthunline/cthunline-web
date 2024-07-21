@@ -1,14 +1,14 @@
-import { Checkbox, Group, Stack, Text } from '@mantine/core';
-import { GiSkills } from 'react-icons/gi';
 import {
     type ApocalypseWorldCharacter,
     type ApocalypseWorldStats,
     apocalypseWorld
 } from '@cthunline/games';
+import { Checkbox, Group, Stack, Text } from '@mantine/core';
+import { GiSkills } from 'react-icons/gi';
 
-import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { useApp } from '../../../../../contexts/App.js';
 import TextInput from '../../../../common/TextInput.js';
+import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
 interface StatsProps {
     readonly: boolean;

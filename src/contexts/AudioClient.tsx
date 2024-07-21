@@ -9,13 +9,13 @@ import {
     useState
 } from 'react';
 
-import { type PlaySocket, type Asset } from '../types/index.js';
-import { getAssetUrl } from '../services/api.js';
 import {
-    useAudioVolume,
     type UseAudioVolumeExport,
-    defaultUseAudioVolumeExport
+    defaultUseAudioVolumeExport,
+    useAudioVolume
 } from '../hooks/useAudioVolume.js';
+import { getAssetUrl } from '../services/api.js';
+import type { Asset, PlaySocket } from '../types/index.js';
 
 interface AudioClientProviderProps {
     children: JSX.Element | JSX.Element[];
@@ -49,13 +49,13 @@ export const AudioClientProvider = ({
 
     const { howlVolume, ...volumeData } = useAudioVolume(howlRef.current);
 
-    const bindEvents = () => {
+    const bindEvents = useCallback(() => {
         if (howlRef.current) {
             howlRef.current.off('play').on('play', () => setPlaying(true));
             howlRef.current.off('pause').on('pause', () => setPlaying(false));
             howlRef.current.off('stop').on('stop', () => setPlaying(false));
         }
-    };
+    }, []);
 
     const playAudio = useCallback(
         (track: Asset, time: number) => {
@@ -74,7 +74,7 @@ export const AudioClientProvider = ({
                 howlRef.current?.play();
             }
         },
-        [howlVolume]
+        [howlVolume, bindEvents]
     );
 
     const stopAudio = useCallback(() => {
@@ -97,6 +97,7 @@ export const AudioClientProvider = ({
             stopAudio,
             ...volumeData
         }),
+        // biome-ignore lint/correctness/useExhaustiveDependencies: volumeData is falsly being pointed as changing every render except it's not
         [playing, playAudio, stopAudio, volumeData]
     );
 

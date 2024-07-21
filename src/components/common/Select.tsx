@@ -1,15 +1,12 @@
-import { useMemo } from 'react';
 import {
     type ComboboxItem,
     Select as MantineSelect,
     type SelectProps as MantineSelectProps
 } from '@mantine/core';
+import { useMemo } from 'react';
 
-import { type InputVariant } from './TextInput.js';
-import {
-    type SelectOption,
-    type SelectOptionGroup
-} from '../../types/index.js';
+import type { SelectOption, SelectOptionGroup } from '../../types/index.js';
+import type { InputVariant } from './TextInput.js';
 
 type SelectProps = Omit<
     MantineSelectProps,

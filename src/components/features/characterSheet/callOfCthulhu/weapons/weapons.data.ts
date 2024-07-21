@@ -1,4 +1,4 @@
-import { type CoCWeapon } from '@cthunline/games';
+import type { CoCWeapon } from '@cthunline/games';
 
 export interface KeyData {
     key: keyof CoCWeapon;

@@ -1,23 +1,23 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { toast } from '../../services/toast.js';
 import { useApp } from '../../contexts/App.js';
-import {
-    type Character,
-    type CharacterCreateBody,
-    type CharacterEditBody,
-    type PortraitUploadBody
-} from '../../types/index.js';
 import {
     createCharacter as createCharacterRequest,
     deleteCharacter as deleteCharacterRequest,
-    editCharacter as editCharacterRequest,
-    getCharacters as getCharactersRequest,
-    getCharacter as getCharacterRequest,
     deletePortrait as deletePortraitRequest,
+    editCharacter as editCharacterRequest,
+    getCharacter as getCharacterRequest,
+    getCharacters as getCharactersRequest,
     transferCharacter as transferCharacterRequest,
     uploadPortrait as uploadPortraitRequest
 } from '../../services/requests/character.js';
+import { toast } from '../../services/toast.js';
+import type {
+    Character,
+    CharacterCreateBody,
+    CharacterEditBody,
+    PortraitUploadBody
+} from '../../types/index.js';
 
 interface CharacterHookOptions {
     loadList?: boolean;
@@ -69,7 +69,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
             try {
                 const characters = await getCharactersRequest(userId);
                 return characters;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -80,7 +80,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
         async (charId: number): Promise<Character> => {
             try {
                 return await getCharacterRequest(charId);
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -128,7 +128,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                     toast.success('Character created');
                 }
                 return char;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -151,7 +151,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                     toast.success('Character edited');
                 }
                 return char;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -172,7 +172,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 if (isToast) {
                     toast.success('Character deleted');
                 }
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -194,7 +194,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 if (isToast) {
                     toast.success('Character transfered');
                 }
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -222,7 +222,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                     toast.success('Portrait uploaded');
                 }
                 return char;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
@@ -244,7 +244,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                     toast.success('Portrait deleted');
                 }
                 return char;
-            } catch (err: any) {
+            } catch (err: unknown) {
                 throw handleApiError(err);
             }
         },
