@@ -1,11 +1,11 @@
 {
     "name": "cthunline-web",
-    "version": "2.10.0",
+    "version": "2.10.1",
     "type": "module",
     "scripts": {
         "dev": "vite serve src --config vite.config.ts",
         "build": "vite build src --config vite.config.ts --emptyOutDir --outDir ../build",
-        "prepare": "husky",
+        "prepare": "[ -d '.husky' ] && husky || true",
         "lint": "npx @biomejs/biome check && npx tsc --noEmit",
         "format": "npx @biomejs/biome check --write && npx tsc --noEmit"
     },
