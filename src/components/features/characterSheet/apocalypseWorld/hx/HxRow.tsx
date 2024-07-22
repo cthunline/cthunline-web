@@ -32,7 +32,7 @@ const HxRow = ({ readonly, hx, onChange, onMove, onDelete }: HxRowProps) => {
                 readonly={readonly}
                 type="string"
                 w="5rem"
-                label={T('game.apocalypseWorld.hx.character')}
+                label={T('game.apocalypseWorld.hx.value')}
                 value={hx.value}
                 onChange={(value: string) => {
                     onChange({ ...hx, value });
