@@ -33,14 +33,15 @@ const CharactersWidget = ({ users, onClose }: CharacterWidgetProps) => {
     };
 
     useEffect(() => {
-        if (
-            usersById.size &&
-            (!sessionUser || !usersById.has(sessionUser.id))
-        ) {
+        const currentChar = sessionUser?.id
+            ? usersById.get(sessionUser.id)
+            : undefined;
+        if (currentChar) {
+            setSessionUser(currentChar);
+        } else if (usersById.size && !currentChar) {
             const [[, firstUser]] = usersById;
             setSessionUser(firstUser);
-        }
-        if (!usersById.size && sessionUser) {
+        } else {
             setSessionUser(null);
         }
     }, [sessionUser, usersById]);
