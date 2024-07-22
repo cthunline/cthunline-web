@@ -162,7 +162,6 @@ const SketchToken = ({
                         x={textX}
                         y={textY}
                         textAnchor="middle"
-                        alignmentBaseline="central"
                         stroke={textColor}
                         strokeWidth="2px"
                         fill={textColor} // eslint-disable-line react/no-unknown-property
