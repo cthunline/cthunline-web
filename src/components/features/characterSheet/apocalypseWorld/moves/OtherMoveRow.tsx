@@ -27,7 +27,7 @@ const OtherMoveRow = ({
         <Stack w="100%" gap="1rem" align="center">
             <Group w="100%" gap="1rem" align="center">
                 <Checkbox
-                    defaultChecked={otherMove.enabled}
+                    checked={otherMove.enabled}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         if (!readonly) {
                             onChange({

@@ -62,9 +62,7 @@ const Stats = ({ readonly, character, onChange }: StatsProps) => {
                                 }}
                             />
                             <Checkbox
-                                defaultChecked={
-                                    character.stats[stat].highlighted
-                                }
+                                checked={character.stats[stat].highlighted}
                                 onChange={(
                                     e: React.ChangeEvent<HTMLInputElement>
                                 ) => {

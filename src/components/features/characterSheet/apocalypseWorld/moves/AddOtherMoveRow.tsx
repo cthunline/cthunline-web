@@ -45,6 +45,8 @@ const AddOtherMoveRow = ({ onCreate }: AddMoveRowProps) => {
         reset();
     };
 
+    const enabledCheckboxProps = getInputProps('enabled');
+
     return (
         <Stack w="100%" gap={0}>
             <Form
@@ -55,7 +57,11 @@ const AddOtherMoveRow = ({ onCreate }: AddMoveRowProps) => {
             />
             <Stack w="100%" gap="1rem" align="center">
                 <Group w="100%" gap="1rem" align="center">
-                    <Checkbox {...getInputProps('enabled')} form={formId} />
+                    <Checkbox
+                        {...enabledCheckboxProps}
+                        checked={enabledCheckboxProps.value}
+                        form={formId}
+                    />
                     <TextInput
                         {...getInputProps('title')}
                         variant="contained"

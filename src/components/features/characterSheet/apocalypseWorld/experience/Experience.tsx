@@ -73,9 +73,7 @@ const ImprovementList = ({
                     <Group gap="0.5rem" key={`improvement-${nameWithCount}}`}>
                         <Checkbox
                             size="xs"
-                            defaultChecked={
-                                !!improvementValues.get(nameWithCount)
-                            }
+                            checked={!!improvementValues.get(nameWithCount)}
                             onChange={(
                                 e: React.ChangeEvent<HTMLInputElement>
                             ) => {
