@@ -10,14 +10,14 @@
         "format": "npx @biomejs/biome check --write --error-on-warnings && npx tsc --noEmit"
     },
     "dependencies": {
-        "@cthunline/games": "^3.3.4",
+        "@cthunline/games": "^3.4.1",
         "@mantine/core": "^7.11.2",
         "@mantine/form": "^7.11.2",
         "@mantine/hooks": "^7.11.2",
         "@mantine/modals": "^7.11.2",
         "@mantine/notifications": "^7.11.2",
         "@mantine/tiptap": "^7.11.2",
-        "@szhsin/react-menu": "^4.1.0",
+        "@szhsin/react-menu": "^4.2.0",
         "@tiptap/extension-link": "^2.5.5",
         "@tiptap/extension-text-align": "^2.5.5",
         "@tiptap/extension-underline": "^2.5.5",
@@ -53,7 +53,7 @@
         "postcss": "^8.4.39",
         "postcss-preset-mantine": "^1.17.0",
         "postcss-simple-vars": "^7.0.1",
-        "typescript": "^5.5.3",
+        "typescript": "^5.5.4",
         "vite": "^5.3.4"
     },
     "overrides": {
