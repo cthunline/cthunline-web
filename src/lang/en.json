@@ -25,6 +25,7 @@
         "undo": "undo"
     },
     "common": {
+        "about": "about",
         "itsYou": "it's you!",
         "language": "language",
         "name": "name",

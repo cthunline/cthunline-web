@@ -13,7 +13,8 @@ const defaultConfiguration: Configuration = {
     registrationEnabled: false,
     invitationEnabled: false,
     defaultTheme: 'dark',
-    defaultLocale: 'en'
+    defaultLocale: 'en',
+    apiVersion: '0.0.0'
 };
 
 export const defaultConfigurationHookData: ConfigurationHookExport = {

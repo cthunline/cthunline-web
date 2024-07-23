@@ -11,6 +11,16 @@ export default defineConfig({
             dir: './src/lang'
         })
     ],
+    define: {
+        'import.meta.env.VITE_WEB_VERSION': JSON.stringify(
+            process.env.npm_package_version
+        )
+    },
+    css: {
+        modules: {
+            localsConvention: 'camelCaseOnly'
+        }
+    },
     server: {
         port: 3030,
         open: true,
@@ -30,11 +40,6 @@ export default defineConfig({
                 changeOrigin: true,
                 secure: false
             }
-        }
-    },
-    css: {
-        modules: {
-            localsConvention: 'camelCaseOnly'
         }
     }
 });

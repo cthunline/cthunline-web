@@ -51,6 +51,16 @@
     },
     "overrides": [
         {
+            "include": ["*.d.ts"],
+            "linter": {
+                "rules": {
+                    "correctness": {
+                        "noUnusedVariables": "off"
+                    }
+                }
+            }
+        },
+        {
             "include": ["*.md", "*.yml", "*.yaml"],
             "formatter": {
                 "indentWidth": 2

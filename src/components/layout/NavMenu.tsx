@@ -1,10 +1,12 @@
 import { Avatar, Menu, UnstyledButton } from '@mantine/core';
+import { modals } from '@mantine/modals';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiUsers } from 'react-icons/fi';
-import { MdLogout, MdOutlineSettings } from 'react-icons/md';
+import { MdInfoOutline, MdLogout, MdOutlineSettings } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 
 import { useApp } from '../../contexts/App.js';
+import About from '../features/about/About.js';
 
 interface NavMenuItem {
     icon: JSX.Element;
@@ -40,6 +42,16 @@ const MenuItem = ({ icon, route, textKey }: NavMenuItem) => {
 
 const NavMenu = () => {
     const { T, logout, user } = useApp();
+
+    const onInfoModalOpen = () => {
+        modals.open({
+            modalId: 'about-modal',
+            centered: true,
+            title: 'À propos',
+            children: <About />
+        });
+    };
+
     return (
         <Menu shadow="md">
             <Menu.Target>
@@ -65,6 +77,12 @@ const NavMenu = () => {
                       ]
                     : null}
                 <Menu.Divider />
+                <Menu.Item
+                    leftSection={<MdInfoOutline size={20} />}
+                    onClick={onInfoModalOpen}
+                >
+                    {T('common.about')}
+                </Menu.Item>
                 <Menu.Item
                     leftSection={<MdLogout size={20} />}
                     onClick={() => logout()}

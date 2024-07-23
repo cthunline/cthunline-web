@@ -27,6 +27,7 @@ export interface Configuration {
     invitationEnabled: boolean;
     defaultTheme: Theme;
     defaultLocale: Locale;
+    apiVersion: `${number}.${number}.${number}`;
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ colors
