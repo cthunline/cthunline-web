@@ -41,7 +41,7 @@ const AddTalentRow = ({ onCreate }: AddTalentRowProps) => {
         }
     });
 
-    const onFormSubmit = async (talent: TalentFormData) => {
+    const onFormSubmit = (talent: TalentFormData) => {
         onCreate(talent);
         reset();
     };

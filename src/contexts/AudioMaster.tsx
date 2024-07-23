@@ -73,12 +73,22 @@ const defaultContextData: AudioMasterContextData = {
     howl: null,
     timeStatus: defaultTimeStatus,
     options: defaultOptions,
-    restart: () => {},
-    setTime: () => {},
-    updateOptions: () => {},
+    restart: () => {
+        /* default */
+    },
+    setTime: () => {
+        /* default */
+    },
+    updateOptions: () => {
+        /* default */
+    },
     ...defaultUseAudioVolumeExport,
-    setPlaylist: () => {},
-    selectTrack: () => {},
+    setPlaylist: () => {
+        /* default */
+    },
+    selectTrack: () => {
+        /* default */
+    },
     track: null
 };
 

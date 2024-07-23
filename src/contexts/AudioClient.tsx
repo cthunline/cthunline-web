@@ -31,8 +31,12 @@ interface AudioClientContextData
 
 const defaultContextData: AudioClientContextData = {
     playing: false,
-    playAudio: () => {},
-    stopAudio: () => {},
+    playAudio: () => {
+        /* default */
+    },
+    stopAudio: () => {
+        /* default */
+    },
     ...defaultUseAudioVolumeExport
 };
 

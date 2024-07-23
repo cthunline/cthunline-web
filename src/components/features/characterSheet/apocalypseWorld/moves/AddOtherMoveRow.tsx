@@ -40,7 +40,7 @@ const AddOtherMoveRow = ({ onCreate }: AddMoveRowProps) => {
         }
     });
 
-    const onFormSubmit = async (move: MoveFormData) => {
+    const onFormSubmit = (move: MoveFormData) => {
         onCreate(move);
         reset();
     };

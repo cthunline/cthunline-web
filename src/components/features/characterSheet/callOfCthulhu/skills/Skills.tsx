@@ -30,7 +30,7 @@ const Skills = ({
                 onDelete={onDelete}
             />
         ))}
-        {!readonly ? <SkillAdd onSubmit={onCreate} /> : null}
+        {readonly ? null : <SkillAdd onSubmit={onCreate} />}
     </Stack>
 );
 

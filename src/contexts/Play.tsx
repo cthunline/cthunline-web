@@ -295,24 +295,22 @@ export const PlayProvider = ({
     );
 
     useEffect(() => {
-        (async () => {
-            if (
-                (!socket || !socket.connected) &&
-                !isConnecting.current &&
-                sessionId &&
-                session
-            ) {
-                isConnecting.current = true;
-                const isMaster = session.masterId === user?.id;
-                setSocket(
-                    connectSocket({
-                        sessionId,
-                        isMaster,
-                        characterId
-                    })
-                );
-            }
-        })();
+        if (
+            (!socket || !socket.connected) &&
+            !isConnecting.current &&
+            sessionId &&
+            session
+        ) {
+            isConnecting.current = true;
+            const isMaster = session.masterId === user?.id;
+            setSocket(
+                connectSocket({
+                    sessionId,
+                    isMaster,
+                    characterId
+                })
+            );
+        }
     }, [socket, user, session, sessionId, characterId, connectSocket]);
 
     useEffect(() => {

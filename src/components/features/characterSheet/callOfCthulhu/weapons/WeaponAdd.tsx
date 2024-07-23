@@ -53,7 +53,9 @@ const WeaponAdd = ({ onSubmit }: WeaponAddProps) => {
 
     const initialRender = useRef<boolean>(true);
     useEffect(() => {
-        if (!initialRender.current) {
+        if (initialRender.current) {
+            initialRender.current = false;
+        } else {
             const updatedErrors: Partial<WeaponErrors> = {};
             if (values.name) {
                 updatedErrors.name = false;
@@ -71,8 +73,6 @@ const WeaponAdd = ({ onSubmit }: WeaponAddProps) => {
                 ...previous,
                 ...updatedErrors
             }));
-        } else {
-            initialRender.current = false;
         }
     }, [values]);
 

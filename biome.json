@@ -1,7 +1,7 @@
 {
     "$schema": "https://biomejs.dev/schemas/1.8.3/schema.json",
     "files": {
-        "ignore": [".husky/*", "dist", "node_modules/*"]
+        "ignore": [".husky/*", "build", "dist", "node_modules/*"]
     },
     "formatter": {
         "enabled": true,
@@ -17,24 +17,35 @@
                 "noSvgWithoutTitle": "off"
             },
             "correctness": {
+                "noNewSymbol": "error",
+                "noNodejsModules": "off",
                 "noUnusedImports": "error",
-                "noUnusedVariables": "error"
+                "noUnusedPrivateClassMembers": "error",
+                "noUnusedVariables": "error",
+                "useArrayLiterals": "error",
+                "useHookAtTopLevel": "error"
             },
             "style": {
+                "noNegationElse": "error",
+                "useBlockStatements": "error",
+                "useCollapsedElseIf": "error",
+                "useFragmentSyntax": "error",
                 "useImportType": "error"
             },
             "nursery": {
                 "noConsole": "error",
                 "useImportExtensions": "error"
+            },
+            "suspicious": {
+                "noEmptyBlockStatements": "error",
+                "useAwait": "error"
             }
         }
     },
     "javascript": {
         "formatter": {
-            "arrowParentheses": "always",
             "jsxQuoteStyle": "double",
             "quoteStyle": "single",
-            "semicolons": "always",
             "trailingCommas": "none"
         }
     },

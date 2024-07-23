@@ -30,7 +30,7 @@ const Weapons = ({
                 onDelete={onDelete}
             />
         ))}
-        {!readonly ? <WeaponAdd onSubmit={onCreate} /> : null}
+        {readonly ? null : <WeaponAdd onSubmit={onCreate} />}
     </Stack>
 );
 

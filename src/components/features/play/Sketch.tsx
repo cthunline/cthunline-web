@@ -274,11 +274,11 @@ const Sketch = ({ isMaster }: SketchProps) => {
                                     );
                                 }}
                                 onAttach={
-                                    !attachedData
-                                        ? (sessionUser: SessionUser) => {
+                                    attachedData
+                                        ? undefined
+                                        : (sessionUser: SessionUser) => {
                                               attachTokenData(id, sessionUser);
                                           }
-                                        : undefined
                                 }
                                 onUnattach={
                                     attachedData

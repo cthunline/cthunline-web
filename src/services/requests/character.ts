@@ -69,7 +69,7 @@ export const uploadPortrait = async ({
 }: UploadPortraitOptions) => {
     const formData = new FormData();
     formData.append('portrait', body.portrait);
-    return callApi<Character>({
+    return await callApi<Character>({
         method: 'POST',
         route: `/characters/${charId}/portrait`,
         body: formData,

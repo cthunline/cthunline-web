@@ -38,15 +38,15 @@ const PlayContent = () => {
     const [openWidgets, setOpenWidgets] = useState<WidgetType[]>([]);
 
     const onWidgetOpen = (widget: WidgetType) => {
-        if (!openWidgets.includes(widget)) {
-            // if widget is not open then open it
-            setOpenWidgets((previous) => [...previous, widget]);
-        } else {
+        if (openWidgets.includes(widget)) {
             // otherwise if it's already open focus it
             const widgetEl = document.querySelector(`#widget-${widget}`);
             if (widgetEl) {
                 focusWidget(widgetEl as HTMLElement);
             }
+        } else {
+            // if widget is not open then open it
+            setOpenWidgets((previous) => [...previous, widget]);
         }
     };
 
@@ -133,7 +133,7 @@ const PlayContent = () => {
                 {sketchData.displayed ? (
                     <Sketch isMaster={socket?.isMaster} />
                 ) : null}
-                {!socket.isMaster ? <AudioClientVolume /> : null}
+                {socket.isMaster ? null : <AudioClientVolume />}
                 <Console logs={logs} playContentRef={playContentRef} />
             </Stack>
         </Group>

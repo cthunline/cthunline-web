@@ -37,7 +37,7 @@ const AddHxRow = ({ onAdd }: AddHxRowProps) => {
         }
     });
 
-    const onFormSubmit = async (hx: HxFormData) => {
+    const onFormSubmit = (hx: HxFormData) => {
         onAdd(hx);
         reset();
     };

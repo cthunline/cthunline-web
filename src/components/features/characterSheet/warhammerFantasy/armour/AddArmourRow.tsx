@@ -44,7 +44,7 @@ const AddArmourRow = ({ onCreate }: AddArmourRowProps) => {
         }
     });
 
-    const onFormSubmit = async (armour: ArmourFormData) => {
+    const onFormSubmit = (armour: ArmourFormData) => {
         onCreate(armour);
         reset();
     };

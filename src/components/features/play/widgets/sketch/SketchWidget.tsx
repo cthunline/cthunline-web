@@ -95,12 +95,12 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
         setDirectoryIds((previous) => [...previous, dirId]);
     };
 
-    const onUserSketchSave = async (data: SketchCreateBody) => {
+    const onUserSketchSave = (data: SketchCreateBody) => {
         modals.close(saveSketchModalId);
         createUserSketch({ data });
     };
 
-    const onUserSketchOverwrite = async (
+    const onUserSketchOverwrite = (
         sketchId: number,
         data: SketchUpdateBody
     ) => {

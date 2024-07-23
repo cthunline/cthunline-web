@@ -12,7 +12,7 @@ interface PortraitProps {
 const allowedMimeTypes = ['image/jpeg', 'image/png'];
 
 const Portrait = ({ value, readonly, onChange }: PortraitProps) => {
-    const handleFileChange = async (file: File | null) => {
+    const handleFileChange = (file: File | null) => {
         if (file) {
             onChange?.(file);
         }

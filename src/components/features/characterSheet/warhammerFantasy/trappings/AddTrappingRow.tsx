@@ -38,7 +38,7 @@ const AddTrappingRow = ({ onCreate }: AddTrappingRowProps) => {
         }
     });
 
-    const onFormSubmit = async (trapping: TrappingFormData) => {
+    const onFormSubmit = (trapping: TrappingFormData) => {
         onCreate(trapping);
         reset();
     };

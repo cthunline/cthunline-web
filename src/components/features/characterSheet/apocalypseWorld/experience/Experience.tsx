@@ -193,7 +193,6 @@ const Experience = ({ readonly, character, onChange }: ExperienceProps) => {
                             variant="outline"
                             size="sm"
                             checked={character.experience.value >= value}
-                            onChange={() => {}}
                             onClick={() => {
                                 if (!readonly) {
                                     onExperienceValueChange(value);

@@ -49,7 +49,7 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
     const changeTime = 1000;
     const changeTimer = useRef<number | null>(null);
 
-    const onEdit = async (note: Note) => {
+    const onEdit = (note: Note) => {
         setEditorNote(note);
         updateStatus('saving');
         if (changeTimer.current !== null) {

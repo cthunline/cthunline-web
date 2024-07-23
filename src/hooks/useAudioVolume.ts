@@ -20,8 +20,12 @@ export interface UseAudioVolumeExport extends VolumeData {
 
 export const defaultUseAudioVolumeExport: UseAudioVolumeExport = {
     ...defaultVolumeData,
-    setVolumePercent: () => {},
-    toggleMute: () => {}
+    setVolumePercent: () => {
+        /* default */
+    },
+    toggleMute: () => {
+        /* default */
+    }
 };
 
 export const useAudioVolume = (howl: Howl | null): UseAudioVolumeExport => {

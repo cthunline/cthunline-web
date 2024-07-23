@@ -56,7 +56,9 @@ const Console = ({ logs, playContentRef }: ConsoleProps) => {
 
     useEffect(() => {
         if (!playContentRef.current) {
-            return () => {};
+            return () => {
+                /* empty cleaning function */
+            };
         }
         const resizeObserver = new ResizeObserver(() => {
             if (playContentRef.current) {

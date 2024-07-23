@@ -46,7 +46,7 @@ const AddWeaponRow = ({ onCreate }: AddWeaponRowProps) => {
         }
     });
 
-    const onFormSubmit = async (weapon: WeaponFormData) => {
+    const onFormSubmit = (weapon: WeaponFormData) => {
         onCreate(weapon);
         reset();
     };

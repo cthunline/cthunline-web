@@ -47,7 +47,7 @@ const AddSpellRow = ({ onCreate }: AddSpellRowProps) => {
         }
     });
 
-    const onFormSubmit = async (spell: SpellFormData) => {
+    const onFormSubmit = (spell: SpellFormData) => {
         onCreate(spell);
         reset();
     };
