@@ -1,6 +1,5 @@
 import { ActionIcon, Alert, Button, Chip, Table } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { useMemo } from 'react';
 import { FaInfo } from 'react-icons/fa6';
 import { GiRollingDices } from 'react-icons/gi';
 import { HiPlus } from 'react-icons/hi';
@@ -11,45 +10,11 @@ import { useApp } from '../../../contexts/App.js';
 import useCharacter from '../../../hooks/api/useCharacter.js';
 import useGame from '../../../hooks/api/useGame.js';
 import useSession from '../../../hooks/api/useSession.js';
-import { toast } from '../../../services/toast.js';
-import type {
-    Character,
-    SelectOption,
-    SessionCreateBody
-} from '../../../types/index.js';
+import type { SessionCreateBody } from '../../../types/index.js';
 import ContentBox from '../../common/ContentBox.js';
-import Select from '../../common/Select.js';
+import { getDefaultData } from '../../features/characterSheet/characterSheet.helper.js';
+import JoinSessionModal from './JoinSessionModal.js';
 import SessionForm from './SessionForm.js';
-
-interface CharacterSelectorProps {
-    characters: Character[];
-    onSelect: (charId: number) => void;
-}
-
-const CharacterSelector = ({
-    characters,
-    onSelect
-}: CharacterSelectorProps) => {
-    const options: SelectOption<number>[] = useMemo(
-        () =>
-            characters.map(({ id, name }) => ({
-                value: id,
-                label: name
-            })),
-        [characters]
-    );
-    return (
-        <Select
-            valueType="number"
-            options={options}
-            onChange={(characterId: number | null) => {
-                if (characterId) {
-                    onSelect(characterId);
-                }
-            }}
-        />
-    );
-};
 
 const selectCharacterModalId = 'select-character-modal';
 const createSessionModalId = 'create-session-modal';
@@ -58,36 +23,59 @@ const Sessions = () => {
     const { T, user } = useApp();
     const navigate = useNavigate();
     const { getGame } = useGame();
-    const { characterList } = useCharacter({
+    const { characterList, createCharacter } = useCharacter({
         loadList: true
     });
     const { sessionList, deleteSession, createSession } = useSession({
         loadList: true
     });
 
-    const onJoin = (gameId: string, sessionId: number, isMaster = false) => {
-        const charList = characterList.filter(
-            ({ gameId: charGameId }) => charGameId === gameId
-        );
+    const joinSession = (sessionId: number, characterId: number) => {
+        modals.close(selectCharacterModalId);
+        navigate(`/play/${sessionId}/${characterId}`);
+    };
+
+    const createCharacterAndJoin = async (
+        gameId: string,
+        sessionId: number
+    ) => {
+        const char = await createCharacter({
+            data: {
+                gameId,
+                name: 'New',
+                data: getDefaultData(gameId)
+            },
+            isRefresh: false,
+            isToast: true
+        });
+        joinSession(sessionId, char.id);
+    };
+
+    const onJoinSession = (
+        gameId: string,
+        sessionId: number,
+        isMaster = false
+    ) => {
         if (isMaster) {
             navigate(`/play/${sessionId}`);
-        } else if (charList.length) {
+        } else {
             modals.open({
                 modalId: selectCharacterModalId,
                 centered: true,
-                title: T('page.sessions.selectCharacter'),
+                title: T('page.sessions.joinSession'),
                 children: (
-                    <CharacterSelector
-                        characters={charList}
-                        onSelect={(characterId) => {
-                            modals.close(selectCharacterModalId);
-                            navigate(`/play/${sessionId}/${characterId}`);
+                    <JoinSessionModal
+                        gameId={gameId}
+                        characters={characterList}
+                        onSelect={(characterId: number) => {
+                            joinSession(sessionId, characterId);
+                        }}
+                        onCreate={() => {
+                            createCharacterAndJoin(gameId, sessionId);
                         }}
                     />
                 )
             });
-        } else {
-            toast.error(T('page.sessions.error.noCharacterAvailable'));
         }
     };
 
@@ -145,7 +133,11 @@ const Sessions = () => {
                                         <Table.Td>
                                             <ActionIcon
                                                 onClick={() =>
-                                                    onJoin(gameId, id, isMaster)
+                                                    onJoinSession(
+                                                        gameId,
+                                                        id,
+                                                        isMaster
+                                                    )
                                                 }
                                             >
                                                 <GiRollingDices />

@@ -5,6 +5,7 @@
         "clear": "clear",
         "confirm": "confirm",
         "create": "create",
+        "createAndJoin": "create a join",
         "delete": "delete",
         "dice": "dice",
         "dices": "dices",
@@ -139,12 +140,12 @@
         },
         "sessions": {
             "deleteSessionConfirm": "delete session {name} ?",
+            "joinSession": "join the session",
             "newSession": "new session",
+            "noCharacterAvailable": "no character available for this game",
             "noSession": "no available session",
-            "selectCharacter": "select a character",
-            "error": {
-                "noCharacterAvailable": "no character available for this game"
-            }
+            "orCreateCharacter": "... or create a new one",
+            "selectCharacter": "select a character"
         },
         "users": {
             "newUser": "new user"

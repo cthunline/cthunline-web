@@ -5,6 +5,7 @@
         "clear": "vider",
         "confirm": "confirmer",
         "create": "créer",
+        "createAndJoin": "créer et rejoindre",
         "delete": "supprimer",
         "dice": "dé",
         "dices": "dés",
@@ -139,12 +140,12 @@
         },
         "sessions": {
             "deleteSessionConfirm": "supprimer la session {name} ?",
+            "joinSession": "rejoindre la session",
             "newSession": "nouvelle session",
+            "noCharacterAvailable": "aucun personnage disponible pour ce jeu",
             "noSession": "aucune session disponible",
-            "selectCharacter": "sélectionner un personnage",
-            "error": {
-                "noCharacterAvailable": "aucun personnage disponible pour ce jeu"
-            }
+            "orCreateCharacter": "... ou créez-en un nouveau",
+            "selectCharacter": "sélectionner un personnage"
         },
         "users": {
             "newUser": "Nouvel utilisateur"
