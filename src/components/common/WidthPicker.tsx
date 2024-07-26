@@ -1,6 +1,6 @@
-import { Box, Group, type GroupProps, UnstyledButton } from '@mantine/core';
+import { Box, type GroupProps } from '@mantine/core';
 
-import './WidthPicker.css';
+import SizePicker from './SizePicker.js';
 
 export const widths = {
     xs: 2,
@@ -10,41 +10,29 @@ export const widths = {
     xl: 24
 } as const;
 
-interface WidthPickerProps extends Omit<GroupProps, 'onChange'> {
-    color: string;
-    onChange?: (width: number) => void;
+const sizes = Object.values(widths);
+
+interface WidthSizePickerProps extends Omit<GroupProps, 'onChange'> {
+    onPick?: (fontSize: number) => void;
 }
 
-const WidthPicker = ({ color, onChange, ...props }: WidthPickerProps) => (
-    <Group gap="0.25rem" p="0.5rem" align="center" justify="start" {...props}>
-        {Object.values(widths).map((width: number) => (
-            <UnstyledButton
-                key={`stroke-width-picker-${width}`}
-                className="width-picker-button"
-                onClick={() => onChange?.(width)}
-                bg="transparent"
-                w="1.5rem"
-                h="1.5rem"
+const WidthSizePicker = ({ color, onPick, ...props }: WidthSizePickerProps) => (
+    <SizePicker
+        {...props}
+        color={color ?? 'white'}
+        sizes={sizes}
+        onPick={onPick}
+        renderButtonContent={({ size, color }) => (
+            <Box
+                bg={`var(--palette-${color})`}
+                w={size}
+                h={size}
                 style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: '0.25rem',
-                    outlineColor: `var(--palette-${color})`,
-                    outlineStyle: 'solid'
+                    borderRadius: '50%'
                 }}
-            >
-                <Box
-                    bg={`var(--palette-${color})`}
-                    w={width}
-                    h={width}
-                    style={{
-                        borderRadius: '50%'
-                    }}
-                />
-            </UnstyledButton>
-        ))}
-    </Group>
+            />
+        )}
+    />
 );
 
-export default WidthPicker;
+export default WidthSizePicker;

@@ -1,0 +1,7 @@
+.size-picker-button {
+    outline-width: 0;
+}
+
+.size-picker-button:hover {
+    outline-width: 1px;
+}

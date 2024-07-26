@@ -8,6 +8,7 @@ import { GoPencil } from 'react-icons/go';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
 import { IoPeopleCircle } from 'react-icons/io5';
 import { MdDelete, MdUndo } from 'react-icons/md';
+import { PiTextT, PiTextTSlash } from 'react-icons/pi';
 
 import { useApp } from '../../../../../contexts/App.js';
 import { usePlay } from '../../../../../contexts/Play.js';
@@ -64,6 +65,8 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
         clearSketch,
         addSketchImage,
         clearDrawings,
+        addSketchText,
+        clearTexts,
         addSketchToken,
         addSketchUserTokens,
         clearTokens
@@ -155,7 +158,40 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                 }
             },
             {
-                key: 'divider-drawing-token',
+                key: 'divider-drawing-text',
+                type: 'divider'
+            },
+            {
+                key: 'addText',
+                type: 'button',
+                props: {
+                    text: T('widget.sketch.addText'),
+                    icon: <PiTextT size="1.25rem" />,
+                    handler: addSketchText
+                }
+            },
+            {
+                key: 'clearTexts',
+                type: 'button',
+                props: {
+                    text: T('widget.sketch.removeTexts'),
+                    icon: <PiTextTSlash size="1.25rem" />,
+                    color: 'red',
+                    handler: () => {
+                        modals.openConfirmModal({
+                            centered: true,
+                            title: T('widget.sketch.removeTextsConfirm'),
+                            labels: {
+                                confirm: T('action.confirm'),
+                                cancel: T('action.cancel')
+                            },
+                            onConfirm: clearTexts
+                        });
+                    }
+                }
+            },
+            {
+                key: 'divider-text-token',
                 type: 'divider'
             },
             {
@@ -299,7 +335,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
             title={T('entity.sketch')}
             onClose={() => onClose(WidgetType.sketch)}
         >
-            <Stack align="center" w="450px" gap="0.5rem">
+            <Stack align="center" w="450px" gap="1rem">
                 <Switch
                     label={T('widget.sketch.displaySketch')}
                     labelPosition="left"
@@ -315,7 +351,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                               <Group
                                   key={`scketch-actions-${idx.toString()}`}
                                   justify="center"
-                                  gap="2rem"
+                                  gap="1.25rem"
                               >
                                   {buttonsRow.map(({ key, type, props }) =>
                                       type === 'divider' ? (

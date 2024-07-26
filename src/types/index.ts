@@ -270,6 +270,7 @@ export interface SketchData {
     displayed: boolean;
     paths: SketchDrawingPath[];
     images: SketchImageData[];
+    texts: SketchTextData[];
     tokens: SketchTokenData[];
     events: SketchEvent[];
 }
@@ -292,13 +293,19 @@ export interface SketchImageData {
 
 export enum SketchItemType {
     image = 'image',
+    text = 'text',
     token = 'token'
+}
+
+export interface SketchSelectedItem {
+    type: SketchItemType;
+    id: string;
 }
 
 export interface SketchMovingItemData {
     type: SketchItemType;
     id: string;
-    element: SVGSVGElement;
+    element: SVGSVGElement | SVGTextElement;
     deltaX: number;
     deltaY: number;
     initialX: number;
@@ -317,6 +324,16 @@ export interface SketchResizingItemData {
     initialHeight: number;
     initialMouseX: number;
     initialMouseY: number;
+}
+
+export interface SketchTextData {
+    id: string;
+    index: number;
+    text: string;
+    fontSize: number;
+    color: Color;
+    x: number;
+    y: number;
 }
 
 export interface SketchTokenAttachedData {
@@ -344,6 +361,11 @@ export enum SketchEventType {
     imageDelete = 'imageDelete',
     imageForward = 'imageForward',
     imageBackward = 'imageBackward',
+    textAdd = 'textAdd',
+    textEdit = 'textEdit',
+    textMove = 'textMove',
+    textUpdate = 'textUpdate',
+    textDelete = 'textDelete',
     tokenAdd = 'tokenAdd',
     tokenMove = 'tokenMove',
     tokenDelete = 'tokenDelete'
@@ -354,6 +376,8 @@ export interface SketchEvent {
     type: SketchEventType;
     // image data to restore if event is undone
     image?: SketchImageData;
+    // text data to restore if event is undone
+    text?: SketchTextData;
     // token data to restore if event is undone
     token?: SketchTokenData;
 }

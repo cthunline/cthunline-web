@@ -1,5 +1,4 @@
 // bring the given widget element forward by sorting widgets z-indexes
-// eslint-disable-next-line import/prefer-default-export
 export const focusWidget = (target: HTMLElement) => {
     const reactDragClass = '.react-draggable';
     // widget to bring forward

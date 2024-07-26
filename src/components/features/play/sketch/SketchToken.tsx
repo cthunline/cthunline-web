@@ -154,7 +154,7 @@ const SketchToken = ({
                     r={circleRadius}
                     stroke="var(--palette-background-tertiary)"
                     strokeWidth={circleStrokeSize}
-                    fill={`var(--palette-${color})`} // eslint-disable-line react/no-unknown-property
+                    fill={`var(--palette-${color})`}
                 />
                 {attachedData ? (
                     <text
@@ -164,7 +164,7 @@ const SketchToken = ({
                         textAnchor="middle"
                         stroke={textColor}
                         strokeWidth="2px"
-                        fill={textColor} // eslint-disable-line react/no-unknown-property
+                        fill={textColor}
                         fontSize={fontSize}
                     >
                         {attachedData.characterName

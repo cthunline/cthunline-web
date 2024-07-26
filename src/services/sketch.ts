@@ -60,7 +60,7 @@ interface GetMovingItemCoordinatesOptions {
     event: React.MouseEvent<SVGSVGElement>;
     svgContainer: SVGSVGElement;
     svgPoint: DOMPoint;
-    itemElement: SVGSVGElement;
+    itemElement: SVGSVGElement | SVGTextElement;
     deltaX: number;
     deltaY: number;
 }

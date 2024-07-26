@@ -15,13 +15,11 @@ import NavMenu from './NavMenu.js';
 
 import './Nav.css';
 
-/* eslint-disable react/no-unused-prop-types */
 interface NavMenuItem {
     icon: JSX.Element;
     route: string;
     textKey: string;
 }
-/* eslint-enable react/no-unused-prop-types */
 
 const navMenuItems: NavMenuItem[] = [
     {

@@ -10,6 +10,7 @@
         "dice": "dice",
         "dices": "dices",
         "display": "display",
+        "edit": "edit",
         "exit": "exit",
         "invite": "invite",
         "load": "load",
@@ -167,6 +168,7 @@
     },
     "widget": {
         "sketch": {
+            "addText": "add text",
             "addToken": "add token",
             "clearDrawingsConfirm": "clear drawings ?",
             "clearSketchConfirm": "clear the sketch ?",
@@ -177,6 +179,8 @@
             "eraseDrawings": "erase drawings",
             "loadSketch": "load sketch",
             "overwriteSketchConfirm": "overwrite sketch ?",
+            "removeTexts": "remove texts",
+            "removeTextsConfirm": "remove texts ?",
             "removeTokens": "remove tokens",
             "saveSketch": "save sketch",
             "spawnPlayerTokens": "spawn player tokens"

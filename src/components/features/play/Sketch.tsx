@@ -10,6 +10,7 @@ import {
     type CardinalDirection,
     type Color,
     type SessionUser,
+    SketchEventType,
     SketchItemType
 } from '../../../types/index.js';
 import CharacterPortraits from './CharacterPortraits.js';
@@ -18,6 +19,7 @@ import SketchContextMenu, {
     contextMenuHandler
 } from './sketch/SketchContextMenu.js';
 import SketchImage from './sketch/SketchImage.js';
+import SketchText from './sketch/SketchText.js';
 import SketchToken from './sketch/SketchToken.js';
 
 interface SketchProps {
@@ -35,10 +37,13 @@ const Sketch = ({ isMaster }: SketchProps) => {
         setDrawingColor,
         setDrawingWidth,
         sketchData,
+        updateSketchText,
+        changeTextColor,
         attachTokenData,
         unattachTokenData,
         duplicateToken,
-        changeTokenColor
+        changeTokenColor,
+        changeTextFontSize
     } = usePlay();
     const {
         paths,
@@ -50,12 +55,14 @@ const Sketch = ({ isMaster }: SketchProps) => {
     const {
         images,
         setImages,
+        texts,
+        setTexts,
         tokens,
         setTokens,
         movingItem,
         resizingItem,
-        selectedImageId,
-        setSelectedImageId,
+        selectedItem,
+        setSelectedItem,
         updateImageHeight,
         handleItemContainerMouseDown,
         handleItemMouseDown,
@@ -78,8 +85,8 @@ const Sketch = ({ isMaster }: SketchProps) => {
 
     // handles mouseClick outside of the sketch
     const sketchContainerRef = useClickOutside(() => {
-        if (isMaster && selectedImageId) {
-            setSelectedImageId(null);
+        if (isMaster && selectedItem) {
+            setSelectedItem(null);
         }
     });
 
@@ -149,15 +156,16 @@ const Sketch = ({ isMaster }: SketchProps) => {
         // updates local state with context sketch data
         setPaths(sketchData.paths);
         setImages(sketchData.images);
+        setTexts(sketchData.texts);
         setTokens(sketchData.tokens);
-    }, [sketchData, setPaths, setImages, setTokens]);
+    }, [sketchData, setPaths, setImages, setTexts, setTokens]);
 
     useEffect(() => {
         // when drawing is enabled unselect images
         if (isFreeDrawing) {
-            setSelectedImageId(null);
+            setSelectedItem(null);
         }
-    }, [isFreeDrawing, setSelectedImageId]);
+    }, [isFreeDrawing, setSelectedItem]);
 
     return (
         <Group
@@ -202,7 +210,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
                         height={height}
                         x={x}
                         y={y}
-                        selected={selectedImageId === id}
+                        selected={selectedItem?.id === id}
                         isDrawing={isFreeDrawing}
                         moving={
                             movingItem?.type === SketchItemType.image &&
@@ -246,6 +254,53 @@ const Sketch = ({ isMaster }: SketchProps) => {
                         fill="none"
                     />
                 ))}
+                {/* sketch texts */}
+                {texts.map((textData) => {
+                    const { id, text, color, fontSize, x, y } = textData;
+                    return (
+                        <SketchText
+                            key={`sketch-text-${id}`}
+                            id={id}
+                            isMaster={isMaster}
+                            text={text}
+                            color={color}
+                            fontSize={fontSize}
+                            x={x}
+                            y={y}
+                            selected={selectedItem?.id === id}
+                            isDrawing={isFreeDrawing}
+                            moving={
+                                movingItem?.type === SketchItemType.text &&
+                                movingItem?.id === id
+                            }
+                            onMouseDown={(e) => {
+                                handleItemMouseDown(e, id, SketchItemType.text);
+                            }}
+                            onEdit={(text: string) => {
+                                const updatedText = {
+                                    ...textData,
+                                    text
+                                };
+                                updateSketchText({
+                                    text: updatedText,
+                                    event: {
+                                        type: SketchEventType.textEdit,
+                                        text: textData
+                                    }
+                                });
+                            }}
+                            onColorChange={(textColor: Color) => {
+                                changeTextColor(id, textColor);
+                            }}
+                            onFontSizeChange={(fontSize: number) => {
+                                changeTextFontSize(id, fontSize);
+                            }}
+                            onDelete={() => {
+                                handleItemDelete(id, SketchItemType.text);
+                            }}
+                        />
+                    );
+                })}
                 {/* tokens */}
                 {tokens.map(
                     ({ id, color, attachedData, x, y, tooltipPlacement }) => {

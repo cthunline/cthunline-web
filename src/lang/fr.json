@@ -10,6 +10,7 @@
         "dice": "dé",
         "dices": "dés",
         "display": "afficher",
+        "edit": "éditer",
         "exit": "quitter",
         "invite": "inviter",
         "load": "charger",
@@ -167,6 +168,7 @@
     },
     "widget": {
         "sketch": {
+            "addText": "ajouter un texte",
             "addToken": "ajouter un token",
             "clearDrawingsConfirm": "supprimer les dessins ?",
             "clearSketchConfirm": "vider le plateau ?",
@@ -177,6 +179,8 @@
             "eraseDrawings": "supprimer les dessins",
             "loadSketch": "charger un plateau",
             "overwriteSketchConfirm": "écraser le plateau ?",
+            "removeTexts": "supprimer les textes",
+            "removeTextsConfirm": "supprimer les textes ?",
             "removeTokens": "supprimer les tokens",
             "saveSketch": "sauvegarder le plateau",
             "spawnPlayerTokens": "générer les tokens de joueurs"

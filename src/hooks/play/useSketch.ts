@@ -16,6 +16,7 @@ import {
     type SketchEvent,
     SketchEventType,
     type SketchImageData,
+    type SketchTextData,
     type SketchTokenAttachedData,
     type SketchTokenData,
     TooltipPlacement
@@ -25,6 +26,18 @@ interface UpdateSketchImagesOptions {
     images: SketchImageData[];
     eventType: SketchEventType;
     image: SketchImageData;
+}
+
+interface UpdateSketchTextOptions {
+    text: SketchTextData;
+    event?: SketchEvent;
+    events?: SketchEvent[];
+}
+
+interface UpdateSketchTextsOptions {
+    texts: SketchTextData[];
+    eventType: SketchEventType;
+    text: SketchTextData;
 }
 
 type EventUpdater = (e: SketchEvent[]) => SketchEvent[];
@@ -54,6 +67,13 @@ export interface SketchHookExport {
     ) => void;
     updateSketchImages: (options: UpdateSketchImagesOptions) => void;
     deleteSketchImage: (id: string, imageData: SketchImageData) => void;
+    addSketchText: () => void;
+    updateSketchText: (options: UpdateSketchTextOptions) => void;
+    updateSketchTexts: (options: UpdateSketchTextsOptions) => void;
+    changeTextColor: (id: string, color: Color) => void;
+    changeTextFontSize: (id: string, fontSize: number) => void;
+    deleteSketchText: (id: string, textData: SketchTextData) => void;
+    clearTexts: () => void;
     addSketchToken: () => void;
     addSketchUserTokens: (users: SessionUser[]) => void;
     updateMovingToken: (
@@ -69,11 +89,17 @@ export interface SketchHookExport {
     clearTokens: () => void;
 }
 
+const defaultDrawingColor: Color = 'white';
+const defaultTextColor: Color = 'white';
+const defaultTextFontSize = 16;
+const defaultTextContent = 'ABCDEF';
+
 export const defaultSketchHookExport: SketchHookExport = {
     sketchData: {
         displayed: false,
         paths: [],
         images: [],
+        texts: [],
         tokens: [],
         events: []
     },
@@ -84,7 +110,7 @@ export const defaultSketchHookExport: SketchHookExport = {
         /* default */
     },
     isFreeDrawing: false,
-    drawingColor: 'white',
+    drawingColor: defaultDrawingColor,
     setDrawingColor: () => {
         /* default */
     },
@@ -117,6 +143,27 @@ export const defaultSketchHookExport: SketchHookExport = {
         /* default */
     },
     deleteSketchImage: () => {
+        /* default */
+    },
+    addSketchText: () => {
+        /* default */
+    },
+    updateSketchText: () => {
+        /* default */
+    },
+    updateSketchTexts: () => {
+        /* default */
+    },
+    changeTextColor: () => {
+        /* default */
+    },
+    changeTextFontSize: () => {
+        /* default */
+    },
+    deleteSketchText: () => {
+        /* default */
+    },
+    clearTexts: () => {
         /* default */
     },
     addSketchToken: () => {
@@ -152,6 +199,7 @@ const defaultSketchData: SketchData = {
     displayed: false,
     paths: [],
     images: [],
+    texts: [],
     tokens: [],
     events: []
 };
@@ -316,6 +364,120 @@ const useSketch = (socket: PlaySocket | null) => {
                     image
                 }
             ]
+        }));
+    };
+
+    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ texts
+
+    const addSketchText = () => {
+        updateSketch((previous) => {
+            const text: SketchTextData = {
+                id: generateId(),
+                index: previous.texts.length,
+                text: defaultTextContent,
+                fontSize: defaultTextFontSize,
+                color: defaultTextColor,
+                x: 50,
+                y: 50
+            };
+            return {
+                ...previous,
+                texts: [...previous.texts, text],
+                events: [
+                    ...previous.events,
+                    {
+                        type: SketchEventType.textAdd,
+                        text
+                    }
+                ]
+            };
+        });
+    };
+
+    const updateSketchText = ({
+        text,
+        event,
+        events
+    }: UpdateSketchTextOptions) => {
+        updateSketch((previous) => ({
+            ...previous,
+            texts: previous.texts.map((txt) =>
+                txt.id === text.id ? text : txt
+            ),
+            events: [...(events ?? previous.events), ...(event ? [event] : [])]
+        }));
+    };
+
+    const updateSketchTexts = ({
+        texts,
+        eventType,
+        text
+    }: UpdateSketchTextsOptions) => {
+        const event: SketchEvent = {
+            type: eventType,
+            text
+        };
+        updateSketch((previous) => ({
+            ...previous,
+            texts,
+            events: [...previous.events, event]
+        }));
+    };
+
+    const changeTextColor = (id: string, color: Color) => {
+        updateSketch((previous) => ({
+            ...previous,
+            texts: previous.texts.map((text) =>
+                text.id === id
+                    ? {
+                          ...text,
+                          color
+                      }
+                    : text
+            )
+        }));
+    };
+
+    const changeTextFontSize = (id: string, fontSize: number) => {
+        updateSketch((previous) => ({
+            ...previous,
+            texts: previous.texts.map((text) =>
+                text.id === id
+                    ? {
+                          ...text,
+                          fontSize
+                      }
+                    : text
+            )
+        }));
+    };
+
+    const deleteSketchText = (id: string, textData: SketchTextData) => {
+        updateSketch((previous) => ({
+            ...previous,
+            texts: previous.texts
+                .filter(({ id: txtId }) => id !== txtId)
+                .map((txt, index) => ({
+                    ...txt,
+                    index
+                })),
+            events: [
+                ...previous.events,
+                {
+                    type: SketchEventType.textDelete,
+                    text: textData
+                }
+            ]
+        }));
+    };
+
+    const clearTexts = () => {
+        updateSketch((previous) => ({
+            ...previous,
+            texts: [],
+            events: previous.events.filter(
+                ({ type }) => !type.startsWith('text')
+            )
         }));
     };
 
@@ -592,6 +754,49 @@ const useSketch = (socket: PlaySocket | null) => {
         }
     };
 
+    const undoTextAdd = (lastEvent: SketchEvent) => {
+        if (lastEvent.text) {
+            const textId = lastEvent.text.id;
+            updateSketch((previous) => ({
+                ...previous,
+                texts: previous.texts
+                    .filter(({ id }) => id !== textId)
+                    .map((txt, index) => ({
+                        ...txt,
+                        index
+                    })),
+                events: popEvents()
+            }));
+        }
+    };
+
+    const undoTextUpdate = (lastEvent: SketchEvent) => {
+        if (lastEvent.text) {
+            updateSketchText({
+                text: lastEvent.text,
+                events: popEvents()
+            });
+        }
+    };
+
+    const undoTextDelete = (lastEvent: SketchEvent) => {
+        if (lastEvent.text) {
+            const { text } = lastEvent;
+            updateSketch((previous) => ({
+                ...previous,
+                texts: [
+                    ...previous.texts.slice(0, text.index),
+                    text,
+                    ...previous.texts.slice(text.index)
+                ].map((txt, index) => ({
+                    ...txt,
+                    index
+                })),
+                events: popEvents()
+            }));
+        }
+    };
+
     const undoTokenAdd = (lastEvent: SketchEvent) => {
         if (lastEvent.token) {
             const tokenId = lastEvent.token.id;
@@ -654,6 +859,16 @@ const useSketch = (socket: PlaySocket | null) => {
                 case SketchEventType.imageBackward:
                     undoImageForwardOrBackward(lastEvent);
                     break;
+                case SketchEventType.textAdd:
+                    undoTextAdd(lastEvent);
+                    break;
+                case SketchEventType.textEdit:
+                case SketchEventType.textMove:
+                    undoTextUpdate(lastEvent);
+                    break;
+                case SketchEventType.textDelete:
+                    undoTextDelete(lastEvent);
+                    break;
                 case SketchEventType.tokenAdd:
                     undoTokenAdd(lastEvent);
                     break;
@@ -685,6 +900,13 @@ const useSketch = (socket: PlaySocket | null) => {
         updateSketchImage,
         updateSketchImages,
         deleteSketchImage,
+        addSketchText,
+        updateSketchText,
+        updateSketchTexts,
+        changeTextColor,
+        changeTextFontSize,
+        deleteSketchText,
+        clearTexts,
         addSketchToken,
         addSketchUserTokens,
         updateMovingToken,

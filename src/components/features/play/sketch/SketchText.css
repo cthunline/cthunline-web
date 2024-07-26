@@ -1,0 +1,16 @@
+.svg-container:not(.free-drawing)
+    .sketch-text.selectable:not(.selected) {
+    cursor: pointer;
+}
+
+.sketch-text.selected {
+    outline: 3px solid var(--palette-primary);
+}
+
+.sketch-text.selected {
+    cursor: grab;
+}
+
+.sketch-text.selected.moving {
+    cursor: grabbing;
+}

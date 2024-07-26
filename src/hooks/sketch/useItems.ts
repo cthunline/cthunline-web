@@ -18,6 +18,8 @@ import {
     SketchItemType,
     type SketchMovingItemData,
     type SketchResizingItemData,
+    type SketchSelectedItem,
+    type SketchTextData,
     type SketchTokenData,
     TooltipPlacement
 } from '../../types/index.js';
@@ -33,16 +35,25 @@ const useItems = (
         updateSketchImage,
         updateSketchImages,
         deleteSketchImage,
+        updateSketchTexts,
+        deleteSketchText,
         updateMovingToken,
         deleteSketchToken
     } = usePlay();
 
     // list of images in the sketch
     const [images, setImages] = useState<SketchImageData[]>([]);
+    // list of texts in the sketch
+    const [texts, setTexts] = useState<SketchTextData[]>([]);
     // list of tokens in the sketch
     const [tokens, setTokens] = useState<SketchTokenData[]>([]);
-    // current selected image index
-    const [selectedImageId, setSelectedImageId] = useState<string | null>(null);
+    // current editing item data
+    const [itemBeingEditing, setItemBeingEditing] =
+        useState<SketchSelectedItem | null>(null);
+    // current selected item data
+    const [selectedItem, setSelectedItem] = useState<SketchSelectedItem | null>(
+        null
+    );
     // data of item (image or token) currently being moved
     // (index property is reffering to the imagesRef array below)
     const [movingItem, setMovingItem] = useState<SketchMovingItemData | null>(
@@ -59,10 +70,24 @@ const useItems = (
     // mouseDown on an item without moving or resizing it
     const itemHasMovedOfResized = useRef<boolean>(false);
 
+    // activate edit mode on an item
+    const editItem = (id: string, type: SketchItemType) => {
+        if (selectedItem && selectedItem.id !== id) {
+            setSelectedItem(null);
+        }
+        setItemBeingEditing({
+            type,
+            id
+        });
+    };
+
     // gets item data from id and item type
     const getItemData = (id: string, type: SketchItemType) => {
         if (type === SketchItemType.image) {
             return findById<SketchImageData>(images, id);
+        }
+        if (type === SketchItemType.text) {
+            return findById<SketchTextData>(texts, id);
         }
         if (type === SketchItemType.token) {
             return findById<SketchTokenData>(tokens, id);
@@ -74,6 +99,13 @@ const useItems = (
     const setImage = (id: string, data: SketchImageData) => {
         setImages((previous) =>
             previous.map((image) => (image.id === id ? data : image))
+        );
+    };
+
+    // helper to set a text in the texts state array
+    const setText = (id: string, data: SketchTextData) => {
+        setTexts((previous) =>
+            previous.map((text) => (text.id === id ? data : text))
         );
     };
 
@@ -90,15 +122,21 @@ const useItems = (
     ) => {
         const target = e.target as SVGSVGElement;
         if (
-            isMainClick(e) &&
-            isMaster &&
-            !isFreeDrawing &&
-            selectedImageId &&
+            isMainClick(e) && // click is mouse main button
+            isMaster && // user triggering the action is game master
+            selectedItem?.id && // there's currently a selected item
+            !isFreeDrawing && // sketch is not currently in drawing mode
+            // click target is not an image or within an image
             !target.classList.contains('sketch-image') &&
-            !target.closest('.sketch-image')
+            !target.closest('.sketch-image') &&
+            // click target is not a text or within a text
+            !target.classList.contains('sketch-text') &&
+            !target.closest('.sketch-text')
         ) {
-            // unselect image
-            setSelectedImageId(null);
+            // unselect item
+            setSelectedItem(null);
+            // stop editing item
+            setItemBeingEditing(null);
         }
     };
 
@@ -123,6 +161,12 @@ const useItems = (
                 if (type === SketchItemType.image) {
                     setImage(id, {
                         ...(itemData as SketchImageData),
+                        x,
+                        y
+                    });
+                } else if (type === SketchItemType.text) {
+                    setText(id, {
+                        ...(itemData as SketchTextData),
                         x,
                         y
                     });
@@ -179,6 +223,13 @@ const useItems = (
                         images,
                         eventType: SketchEventType.imageMove,
                         image: { ...image, x, y }
+                    });
+                } else if (type === SketchItemType.text) {
+                    const text = findById<SketchTextData>(texts, movingItem.id);
+                    updateSketchTexts({
+                        texts,
+                        eventType: SketchEventType.textMove,
+                        text: { ...text, x, y }
                     });
                 } else if (type === SketchItemType.token) {
                     const token = findById<SketchTokenData>(
@@ -241,9 +292,9 @@ const useItems = (
         handleResizingItemMouseUpOrLeave();
     };
 
-    // handle mouseDown on items (images or tokens)
+    // handle mouseDown on items (images / texts / tokens)
     const handleItemMouseDown = (
-        e: React.MouseEvent<SVGImageElement | SVGSVGElement>,
+        e: React.MouseEvent<SVGImageElement | SVGTextElement | SVGSVGElement>,
         id: string,
         type: SketchItemType,
         movableByUser?: boolean
@@ -253,7 +304,10 @@ const useItems = (
                 e.preventDefault();
                 const itemData = getItemData(id, type);
                 // check if we clicked in the svg element
-                const element = e.currentTarget.closest('svg');
+                const element =
+                    type === SketchItemType.text
+                        ? e.currentTarget.closest('text')
+                        : e.currentTarget.closest('svg');
                 // check if we click on a context menu or context menu backdrop
                 const isContextMenu =
                     (e.target as Element).id === sketchContextMenuId ||
@@ -280,8 +334,11 @@ const useItems = (
                         initialY: itemY,
                         movableByUser
                     });
-                    if (type === SketchItemType.image) {
-                        setSelectedImageId(id);
+                    if (
+                        type === SketchItemType.image ||
+                        type === SketchItemType.text
+                    ) {
+                        setSelectedItem({ type, id });
                     }
                 }
             }
@@ -336,7 +393,12 @@ const useItems = (
         if (type === SketchItemType.image) {
             const imageData = findById<SketchImageData>(images, id);
             deleteSketchImage(id, imageData);
-            setSelectedImageId(null);
+            setSelectedItem(null);
+        } else if (type === SketchItemType.text) {
+            const textData = findById<SketchTextData>(texts, id);
+            deleteSketchText(id, textData);
+            setSelectedItem(null);
+            setItemBeingEditing(null);
         } else if (type === SketchItemType.token) {
             const tokenData = findById<SketchTokenData>(tokens, id);
             deleteSketchToken(id, tokenData);
@@ -395,14 +457,18 @@ const useItems = (
     }, [svgRef]);
 
     return {
+        itemBeingEditing,
+        editItem,
         images,
         setImages,
+        texts,
+        setTexts,
         tokens,
         setTokens,
         movingItem,
         resizingItem,
-        selectedImageId,
-        setSelectedImageId,
+        selectedItem,
+        setSelectedItem,
         updateImageHeight,
         handleItemContainerMouseDown,
         handleItemMouseDown,

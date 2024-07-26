@@ -10,6 +10,8 @@ import { useApp } from '../../../../contexts/App.js';
 import { usePlay } from '../../../../contexts/Play.js';
 import type { Color, SessionUser } from '../../../../types/index.js';
 import ColorPicker from '../../../common/ColorPicker.js';
+import FontSizePicker from '../../../common/FontSizePicker.js';
+import TextInput from '../../../common/TextInput.js';
 import WidthPicker from '../../../common/WidthPicker.js';
 
 export interface ContextMenuPosition {
@@ -43,11 +45,14 @@ interface SketchContextMenuProps {
     onClose: () => void;
     onForward?: () => void;
     onBackward?: () => void;
+    editValue?: string;
+    onEdit?: (text: string) => void;
     onAttach?: (user: SessionUser) => void;
     onUnattach?: () => void;
     onDuplicate?: () => void;
     onColorChange?: (color: Color) => void;
     onWidthPick?: (width: number) => void;
+    onFontSizePick?: (fontSize: number) => void;
     onColorPick?: (color: Color) => void;
     onDelete?: () => void;
 }
@@ -57,11 +62,14 @@ const SketchContextMenu = ({
     onClose,
     onForward,
     onBackward,
+    editValue,
+    onEdit,
     onAttach,
     onUnattach,
     onDuplicate,
     onColorChange,
     onWidthPick,
+    onFontSizePick,
     onColorPick,
     onDelete
 }: SketchContextMenuProps) => {
@@ -75,6 +83,10 @@ const SketchContextMenu = ({
     const isDivider =
         !!onForward ||
         !!onBackward ||
+        !!onWidthPick ||
+        !!onColorPick ||
+        !!onFontSizePick ||
+        !!onEdit ||
         !!onAttach ||
         !!onUnattach ||
         !!onDuplicate ||
@@ -101,13 +113,36 @@ const SketchContextMenu = ({
                     {T('page.play.sketch.backward')}
                 </MenuItem>
             )}
+            {!!onEdit && (
+                <MenuItem key="edit">
+                    <TextInput
+                        w="10rem"
+                        onClick={(e) => e.stopPropagation()}
+                        value={editValue}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            onEdit(e.target.value);
+                        }}
+                    />
+                </MenuItem>
+            )}
             {!!onWidthPick && (
                 <MenuItem key="widthPick">
                     <WidthPicker
                         maw="10rem"
                         color={drawingColor}
-                        onChange={(width: number) => {
+                        onPick={(width: number) => {
                             onWidthPick(width);
+                            onClose();
+                        }}
+                    />
+                </MenuItem>
+            )}
+            {!!onFontSizePick && (
+                <MenuItem key="fontSizePick">
+                    <FontSizePicker
+                        maw="10rem"
+                        onPick={(fontSize: number) => {
+                            onFontSizePick(fontSize);
                             onClose();
                         }}
                     />

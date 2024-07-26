@@ -102,7 +102,6 @@ const SketchImage = ({
                 className="sketch-image"
                 width="100%"
                 xlinkHref={url}
-                // eslint-disable-next-line react/no-unknown-property
                 onLoad={(e) => onLoad?.(e.currentTarget.closest('svg'))}
                 onMouseDown={onMouseDown}
             />
