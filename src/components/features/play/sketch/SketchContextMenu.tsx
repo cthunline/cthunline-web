@@ -5,6 +5,7 @@ import {
     MenuItem,
     SubMenu
 } from '@szhsin/react-menu';
+import { useEffect, useRef, useState } from 'react';
 
 import { useApp } from '../../../../contexts/App.js';
 import { usePlay } from '../../../../contexts/Play.js';
@@ -76,6 +77,21 @@ const SketchContextMenu = ({
     const { colorScheme } = useMantineColorScheme();
     const { T } = useApp();
 
+    const [editInputValue, setEditInputValue] = useState<string>(
+        editValue ?? ''
+    );
+
+    // if input is empty and menu is open / re-open then reset input with proper value
+    const wasClosedRef = useRef(!!position);
+    useEffect(() => {
+        if (wasClosedRef.current && position && editValue) {
+            wasClosedRef.current = false;
+            setEditInputValue(editValue);
+        } else if (!wasClosedRef.current && !position) {
+            wasClosedRef.current = true;
+        }
+    }, [position, editValue]);
+
     const { users, drawingColor } = usePlay();
 
     const playerUsers = users.filter(({ isMaster }) => !isMaster);
@@ -118,9 +134,13 @@ const SketchContextMenu = ({
                     <TextInput
                         w="10rem"
                         onClick={(e) => e.stopPropagation()}
-                        value={editValue}
+                        value={editInputValue}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            onEdit(e.target.value);
+                            const val = e.target.value;
+                            setEditInputValue(val);
+                            if (val) {
+                                onEdit(val);
+                            }
                         }}
                     />
                 </MenuItem>
