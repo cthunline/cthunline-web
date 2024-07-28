@@ -130,7 +130,7 @@ const SketchContextMenu = ({
                 </MenuItem>
             )}
             {!!onEdit && (
-                <MenuItem key="edit">
+                <MenuItem key="edit" disabled>
                     <TextInput
                         w="10rem"
                         onClick={(e) => e.stopPropagation()}
@@ -146,7 +146,7 @@ const SketchContextMenu = ({
                 </MenuItem>
             )}
             {!!onWidthPick && (
-                <MenuItem key="widthPick">
+                <MenuItem key="widthPick" disabled>
                     <WidthPicker
                         maw="10rem"
                         color={drawingColor}
@@ -158,7 +158,7 @@ const SketchContextMenu = ({
                 </MenuItem>
             )}
             {!!onFontSizePick && (
-                <MenuItem key="fontSizePick">
+                <MenuItem key="fontSizePick" disabled>
                     <FontSizePicker
                         maw="10rem"
                         onPick={(fontSize: number) => {
@@ -169,7 +169,7 @@ const SketchContextMenu = ({
                 </MenuItem>
             )}
             {!!onColorPick && (
-                <MenuItem key="colorPick">
+                <MenuItem key="colorPick" disabled>
                     <ColorPicker
                         maw="10rem"
                         onChange={(color: Color) => {
