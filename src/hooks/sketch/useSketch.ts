@@ -4,7 +4,8 @@ import { widths } from '../../components/common/WidthPicker.js';
 import {
     backwardImage,
     forwardImage,
-    getNewTokenColor
+    getNewTokenColor,
+    viewBox
 } from '../../services/sketch.js';
 import { findById, generateId } from '../../services/tools.js';
 import {
@@ -72,6 +73,7 @@ export interface SketchHookExport {
     updateSketchTexts: (options: UpdateSketchTextsOptions) => void;
     changeTextColor: (id: string, color: Color) => void;
     changeTextFontSize: (id: string, fontSize: number) => void;
+    duplicateText: (id: string) => void;
     deleteSketchText: (id: string, textData: SketchTextData) => void;
     clearTexts: () => void;
     addSketchToken: () => void;
@@ -158,6 +160,9 @@ export const defaultSketchHookExport: SketchHookExport = {
         /* default */
     },
     changeTextFontSize: () => {
+        /* default */
+    },
+    duplicateText: () => {
         /* default */
     },
     deleteSketchText: () => {
@@ -377,8 +382,8 @@ const useSketch = (socket: PlaySocket | null) => {
                 text: defaultTextContent,
                 fontSize: defaultTextFontSize,
                 color: defaultTextColor,
-                x: 50,
-                y: 50
+                x: 75,
+                y: 75
             };
             return {
                 ...previous,
@@ -388,6 +393,35 @@ const useSketch = (socket: PlaySocket | null) => {
                     {
                         type: SketchEventType.textAdd,
                         text
+                    }
+                ]
+            };
+        });
+    };
+
+    const duplicateText = (id: string) => {
+        updateSketch((previous) => {
+            const { texts } = previous;
+            const text = findById<SketchTextData>(texts, id);
+            const newYDelta = text.fontSize + 10;
+            const sketchMiddleY = viewBox.height / 2;
+            const newY =
+                text.y > sketchMiddleY
+                    ? text.y - newYDelta
+                    : text.y + newYDelta;
+            const newText = {
+                ...text,
+                id: generateId(),
+                y: newY
+            };
+            return {
+                ...previous,
+                texts: [...texts, newText],
+                events: [
+                    ...previous.events,
+                    {
+                        type: SketchEventType.textAdd,
+                        text: newText
                     }
                 ]
             };
@@ -623,14 +657,19 @@ const useSketch = (socket: PlaySocket | null) => {
                 token.tooltipPlacement === TooltipPlacement.bottom
                     ? token.y + 75
                     : token.y - 75;
+            const newToken = {
+                ...token,
+                id: generateId(),
+                y: newY
+            };
             return {
                 ...previous,
-                tokens: [
-                    ...tokens,
+                tokens: [...tokens, newToken],
+                events: [
+                    ...previous.events,
                     {
-                        ...token,
-                        id: generateId(),
-                        y: newY
+                        type: SketchEventType.tokenAdd,
+                        token: newToken
                     }
                 ]
             };
@@ -905,6 +944,7 @@ const useSketch = (socket: PlaySocket | null) => {
         updateSketchTexts,
         changeTextColor,
         changeTextFontSize,
+        duplicateText,
         deleteSketchText,
         clearTexts,
         addSketchToken,

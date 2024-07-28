@@ -25,6 +25,7 @@ interface SketchTextProps {
     onEdit?: (text: string) => void;
     onColorChange?: (color: Color) => void;
     onFontSizeChange?: (fontSize: number) => void;
+    onDuplicate?: () => void;
     onDelete?: () => void;
 }
 
@@ -44,6 +45,7 @@ const SketchText = ({
     onEdit,
     onColorChange,
     onFontSizeChange,
+    onDuplicate,
     onDelete
 }: SketchTextProps) => {
     const [contextMenuPosition, setContextMenuPosition] =
@@ -94,6 +96,7 @@ const SketchText = ({
                     onEdit={onEdit}
                     onColorPick={onColorChange}
                     onFontSizePick={onFontSizeChange}
+                    onDuplicate={onDuplicate}
                     onDelete={onDelete}
                     onClose={onContextMenuClose}
                 />

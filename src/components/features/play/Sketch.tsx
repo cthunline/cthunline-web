@@ -39,6 +39,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
         sketchData,
         updateSketchText,
         changeTextColor,
+        duplicateText,
         attachTokenData,
         unattachTokenData,
         duplicateToken,
@@ -294,6 +295,9 @@ const Sketch = ({ isMaster }: SketchProps) => {
                             }}
                             onFontSizeChange={(fontSize: number) => {
                                 changeTextFontSize(id, fontSize);
+                            }}
+                            onDuplicate={() => {
+                                duplicateText(id);
                             }}
                             onDelete={() => {
                                 handleItemDelete(id, SketchItemType.text);

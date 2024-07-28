@@ -25,7 +25,7 @@ import useSessionUsers, {
 import useSketch, {
     type SketchHookExport,
     defaultSketchHookExport
-} from '../hooks/play/useSketch.js';
+} from '../hooks/sketch/useSketch.js';
 import { toast } from '../services/toast.js';
 import type { PlaySocket, User } from '../types/index.js';
 import { useApp } from './App.js';
@@ -109,6 +109,7 @@ export const PlayProvider = ({
         updateSketchTexts,
         changeTextColor,
         changeTextFontSize,
+        duplicateText,
         deleteSketchText,
         clearTexts,
         addSketchToken,
@@ -360,6 +361,7 @@ export const PlayProvider = ({
             updateSketchTexts,
             changeTextColor,
             changeTextFontSize,
+            duplicateText,
             deleteSketchText,
             clearTexts,
             addSketchToken,
@@ -402,6 +404,7 @@ export const PlayProvider = ({
             updateSketchTexts,
             changeTextColor,
             changeTextFontSize,
+            duplicateText,
             deleteSketchText,
             clearTexts,
             addSketchToken,
