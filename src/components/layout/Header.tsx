@@ -1,27 +1,21 @@
-import {
-    AppShell,
-    Group,
-    type MantineStyleProp,
-    Text,
-    UnstyledButton
-} from '@mantine/core';
+import { Group, type GroupProps, Text, UnstyledButton } from '@mantine/core';
 import { FiFolder } from 'react-icons/fi';
 import { GiD10, GiRollingDices } from 'react-icons/gi';
 import { MdOutlineContactPage } from 'react-icons/md';
 import { Link, useLocation } from 'react-router-dom';
 
 import { useApp } from '../../contexts/App.js';
-import NavMenu from './NavMenu.js';
+import HeaderMenu from './HeaderMenu.js';
 
-import './Nav.css';
+import './Header.css';
 
-interface NavMenuItem {
+interface NavItem {
     icon: JSX.Element;
     route: string;
     textKey: string;
 }
 
-const navMenuItems: NavMenuItem[] = [
+const navItems: NavItem[] = [
     {
         icon: <GiRollingDices size="1.5rem" />,
         route: '/sessions',
@@ -39,36 +33,32 @@ const navMenuItems: NavMenuItem[] = [
     }
 ];
 
-const sectionStyle: MantineStyleProp = {
-    height: '100%',
-    padding: '0 1rem',
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: '2.5rem'
+const sectionProps: GroupProps = {
+    align: 'center',
+    gap: '2.5rem',
+    h: '100%',
+    p: '0 1rem'
 };
 
-const Nav = () => {
+const Header = () => {
     const { T } = useApp();
     const { pathname } = useLocation();
     return (
-        <AppShell.Header
-            component="nav"
-            style={{
-                height: '3.5rem',
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: '1.5rem'
-            }}
+        <Group
+            component="header"
+            align="center"
+            gap="1.5rem"
+            w="100%"
+            h="3.5rem"
+            className="app-header"
         >
-            <AppShell.Section style={sectionStyle}>
+            <Group {...sectionProps}>
                 <UnstyledButton component={Link} to="/home">
                     <GiD10 size="2.5rem" />
                 </UnstyledButton>
-            </AppShell.Section>
-            <AppShell.Section grow style={sectionStyle}>
-                {navMenuItems.map(({ icon, route, textKey }: NavMenuItem) => (
+            </Group>
+            <Group component="nav" flex="1" {...sectionProps}>
+                {navItems.map(({ icon, route, textKey }: NavItem) => (
                     <UnstyledButton
                         key={`nav-item-${textKey}`}
                         component={Link}
@@ -84,12 +74,12 @@ const Nav = () => {
                         </Group>
                     </UnstyledButton>
                 ))}
-            </AppShell.Section>
-            <AppShell.Section style={sectionStyle}>
-                <NavMenu />
-            </AppShell.Section>
-        </AppShell.Header>
+            </Group>
+            <Group {...sectionProps}>
+                <HeaderMenu />
+            </Group>
+        </Group>
     );
 };
 
-export default Nav;
+export default Header;

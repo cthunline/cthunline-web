@@ -1,10 +1,10 @@
-import { AppShell, Stack } from '@mantine/core';
+import { Stack } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import { useApp } from '../../contexts/App.js';
 import { pages } from '../router.data.js';
-import Nav from './Nav.js';
+import Nav from './Header.js';
 
 interface PageProps {
     children: JSX.Element | JSX.Element[];
@@ -27,28 +27,26 @@ const Page = ({ children }: PageProps) => {
     }, [location, isLoggedIn]);
 
     return (
-        <AppShell
-            header={{
-                height: '3.5rem',
-                collapsed: !showNav
-            }}
-            display="block"
+        <Stack
+            component="main"
             w="100%"
             h="100%"
+            align="center"
+            justify="center"
+            gap={0}
         >
             {showNav ? <Nav /> : null}
-            <AppShell.Main w="100%" h="100%">
-                <Stack
-                    align="center"
-                    justify="center"
-                    w="100%"
-                    h="100%"
-                    p="1rem"
-                >
-                    {children}
-                </Stack>
-            </AppShell.Main>
-        </AppShell>
+            <Stack
+                align="center"
+                justify="center"
+                w="100%"
+                mih={0}
+                flex="1"
+                p="1rem"
+            >
+                {children}
+            </Stack>
+        </Stack>
     );
 };
 

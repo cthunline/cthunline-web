@@ -95,7 +95,9 @@
             }
         },
         "home": {
-            "welcome": "welcome traveler!"
+            "greetings": "greetings, traveler!",
+            "welcome": "welcome on Cthunline",
+            "availableGames": "here are the available games"
         },
         "play": {
             "error": {
@@ -151,6 +153,13 @@
         "users": {
             "newUser": "new user"
         }
+    },
+    "statistics": {
+        "runningSessions": "running sessions",
+        "totalSessions": "total sessions",
+        "playingUsers": "in-game users",
+        "userCharacterCount": "your characters",
+        "totalCharacterCount": "total characters"
     },
     "status": {
         "saving": "changed",

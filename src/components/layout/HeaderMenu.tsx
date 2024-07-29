@@ -8,13 +8,13 @@ import { useNavigate } from 'react-router-dom';
 import { useApp } from '../../contexts/App.js';
 import About from '../features/about/About.js';
 
-interface NavMenuItem {
+interface HeaderMenuItem {
     icon: JSX.Element;
     route: string;
     textKey: string;
 }
 
-const navMenuItems: NavMenuItem[] = [
+const headerMenuItems: HeaderMenuItem[] = [
     {
         icon: <AiOutlineUser size={20} />,
         route: '/profile',
@@ -22,7 +22,7 @@ const navMenuItems: NavMenuItem[] = [
     }
 ];
 
-const settingsMenuAdminItems: NavMenuItem[] = [
+const settingsMenuAdminItems: HeaderMenuItem[] = [
     {
         icon: <FiUsers size={20} />,
         route: '/users',
@@ -30,7 +30,7 @@ const settingsMenuAdminItems: NavMenuItem[] = [
     }
 ];
 
-const MenuItem = ({ icon, route, textKey }: NavMenuItem) => {
+const MenuItem = ({ icon, route, textKey }: HeaderMenuItem) => {
     const navigate = useNavigate();
     const { T } = useApp();
     return (
@@ -40,7 +40,7 @@ const MenuItem = ({ icon, route, textKey }: NavMenuItem) => {
     );
 };
 
-const NavMenu = () => {
+const HeaderMenu = () => {
     const { T, logout, user } = useApp();
 
     const onInfoModalOpen = () => {
@@ -62,15 +62,15 @@ const NavMenu = () => {
                 </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-                {navMenuItems.map((item) => (
-                    <MenuItem key={`nav-menu-${item.route}`} {...item} />
+                {headerMenuItems.map((item) => (
+                    <MenuItem key={`header-menu-${item.route}`} {...item} />
                 ))}
                 {user?.isAdmin
                     ? [
-                          <Menu.Divider key="nav-menu-admin-divider" />,
+                          <Menu.Divider key="header-menu-admin-divider" />,
                           ...settingsMenuAdminItems.map((item) => (
                               <MenuItem
-                                  key={`nav-menu-${item.route}`}
+                                  key={`header-menu-${item.route}`}
                                   {...item}
                               />
                           ))
@@ -94,4 +94,4 @@ const NavMenu = () => {
     );
 };
 
-export default NavMenu;
+export default HeaderMenu;

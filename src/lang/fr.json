@@ -28,7 +28,7 @@
     },
     "common": {
         "about": "à propos",
-        "itsYou": "c'est vous!",
+        "itsYou": "c'est vous !",
         "language": "langue",
         "name": "nom",
         "private": "privé",
@@ -90,12 +90,14 @@
                 "message": "page non trouvée"
             },
             "forbidden": {
-                "title": "vous ne passerez pas!",
+                "title": "vous ne passerez pas !",
                 "message": "page interdite"
             }
         },
         "home": {
-            "welcome": "bienvenue voyageur!"
+            "greetings": "salutations, voyageur !",
+            "welcome": "bienvenue sur Cthunline",
+            "availableGames": "voici les jeux disponibles"
         },
         "play": {
             "error": {
@@ -151,6 +153,13 @@
         "users": {
             "newUser": "Nouvel utilisateur"
         }
+    },
+    "statistics": {
+        "runningSessions": "sessions en cours",
+        "totalSessions": "total des sessions",
+        "playingUsers": "utilisateurs en jeu",
+        "userCharacterCount": "vos personnages",
+        "totalCharacterCount": "total des personnages"
     },
     "status": {
         "saving": "modifié",

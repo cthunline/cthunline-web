@@ -421,3 +421,13 @@ export interface Sketch {
 export type SketchCreateBody = Pick<Sketch, 'name' | 'data'>;
 
 export type SketchUpdateBody = Partial<SketchCreateBody>;
+
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Statistics
+
+export type Statistics = {
+    runningSessions: number;
+    totalSessions: number;
+    playingUsers: number;
+    userCharacterCount: number;
+    totalCharacterCount: number;
+};
