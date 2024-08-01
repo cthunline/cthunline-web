@@ -387,6 +387,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                                   scroll
                                   mah="200px"
                                   items={explorerItems}
+                                  sort
                                   directoryId={directoryIds.at(-1)}
                                   onDirectoryBack={onExplorerBack}
                                   onDirectoryClick={onExplorerDirectory}

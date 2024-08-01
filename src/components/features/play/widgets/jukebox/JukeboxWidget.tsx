@@ -91,6 +91,7 @@ const JukeboxWidget = ({ onClose }: JukeboxWidgetProps) => {
                     scroll
                     mah="300px"
                     items={explorerItems}
+                    sort
                     directoryId={directoryIds.at(-1)}
                     selectedId={track?.id}
                     onDirectoryBack={onDirectoryBack}
