@@ -276,6 +276,7 @@ export interface SketchData {
 }
 
 export interface SketchDrawingPath {
+    id: string;
     d: string;
     color: string;
     width: number;
@@ -354,7 +355,8 @@ export interface SketchTokenData {
 }
 
 export enum SketchEventType {
-    draw = 'draw',
+    drawingAdd = 'drawingAdd',
+    drawingDelete = 'drawingDelete',
     imageAdd = 'imageAdd',
     imageMove = 'imageMove',
     imageResize = 'imageResize',
@@ -374,11 +376,15 @@ export enum SketchEventType {
 export interface SketchEvent {
     // type of event
     type: SketchEventType;
-    // image data to restore if event is undone
+    // drawing data to restore if delete action is undone
+    drawing?: SketchDrawingPath & {
+        index?: number;
+    };
+    // image data to restore if  delete action is undone
     image?: SketchImageData;
-    // text data to restore if event is undone
+    // text data to restore if  delete action is undone
     text?: SketchTextData;
-    // token data to restore if event is undone
+    // token data to restore if  delete action is undone
     token?: SketchTokenData;
 }
 

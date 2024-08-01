@@ -92,13 +92,15 @@ export const PlayProvider = ({
         setSketchData,
         updateSketch,
         setSketchDisplay,
-        isFreeDrawing,
+        drawingState,
         drawingColor,
         setDrawingColor,
         drawingWidth,
         setDrawingWidth,
         toggleFreeDrawing,
+        toggleDrawingEraser,
         addSketchDrawPath,
+        deleteSketchDrawPath,
         clearDrawings,
         addSketchImage,
         updateSketchImage,
@@ -349,6 +351,7 @@ export const PlayProvider = ({
             sketchData,
             updateSketch,
             addSketchDrawPath,
+            deleteSketchDrawPath,
             clearDrawings,
             undoSketch,
             clearSketch,
@@ -374,12 +377,13 @@ export const PlayProvider = ({
             deleteSketchToken,
             clearTokens,
             setSketchDisplay,
-            isFreeDrawing,
+            drawingState,
             drawingColor,
             setDrawingColor,
             drawingWidth,
             setDrawingWidth,
-            toggleFreeDrawing
+            toggleFreeDrawing,
+            toggleDrawingEraser
         }),
         [
             sessionId,
@@ -392,6 +396,7 @@ export const PlayProvider = ({
             sketchData,
             updateSketch,
             addSketchDrawPath,
+            deleteSketchDrawPath,
             undoSketch,
             clearSketch,
             addSketchImage,
@@ -417,12 +422,13 @@ export const PlayProvider = ({
             deleteSketchToken,
             clearTokens,
             setSketchDisplay,
-            isFreeDrawing,
+            drawingState,
             drawingColor,
             setDrawingColor,
             drawingWidth,
             setDrawingWidth,
-            toggleFreeDrawing
+            toggleFreeDrawing,
+            toggleDrawingEraser
         ]
     );
 
@@ -433,10 +439,10 @@ export const PlayProvider = ({
     );
 };
 
-export function usePlay() {
+export const usePlay = () => {
     const context = useContext(PlayContext);
     if (!context) {
         throw new Error('usePlay must be used within an PlayProvider');
     }
     return context;
-}
+};

@@ -31,7 +31,7 @@ const useItems = (
     isMaster = false
 ) => {
     const {
-        isFreeDrawing,
+        drawingState,
         updateSketchImage,
         updateSketchImages,
         deleteSketchImage,
@@ -125,7 +125,8 @@ const useItems = (
             isMainClick(e) && // click is mouse main button
             isMaster && // user triggering the action is game master
             selectedItem?.id && // there's currently a selected item
-            !isFreeDrawing && // sketch is not currently in drawing mode
+            !drawingState.isDrawing && // sketch is not currently in free drawing mode
+            !drawingState.isErasing && // sketch is not currently in drawing eraser mode
             // click target is not an image or within an image
             !target.classList.contains('sketch-image') &&
             !target.closest('.sketch-image') &&
@@ -300,7 +301,12 @@ const useItems = (
         movableByUser?: boolean
     ) => {
         if (isMainClick(e)) {
-            if ((isMaster || movableByUser) && !isFreeDrawing && svgPoint) {
+            if (
+                (isMaster || movableByUser) &&
+                !drawingState.isDrawing &&
+                !drawingState.isErasing &&
+                svgPoint
+            ) {
                 e.preventDefault();
                 const itemData = getItemData(id, type);
                 // check if we clicked in the svg element
@@ -353,7 +359,12 @@ const useItems = (
         direction: CardinalDirection
     ) => {
         if (isMainClick(e)) {
-            if (isMaster && !isFreeDrawing && svgPoint) {
+            if (
+                isMaster &&
+                !drawingState.isDrawing &&
+                !drawingState.isErasing &&
+                svgPoint
+            ) {
                 const itemData = getItemData(id, type);
                 const element = e.currentTarget.closest('svg');
                 if (element) {

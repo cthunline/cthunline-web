@@ -8,7 +8,7 @@ import { GoPencil } from 'react-icons/go';
 import { IoMdAddCircle, IoMdCloseCircle } from 'react-icons/io';
 import { IoPeopleCircle } from 'react-icons/io5';
 import { MdDelete, MdUndo } from 'react-icons/md';
-import { PiTextT, PiTextTSlash } from 'react-icons/pi';
+import { PiBroom, PiTextT, PiTextTSlash } from 'react-icons/pi';
 
 import { useApp } from '../../../../../contexts/App.js';
 import { usePlay } from '../../../../../contexts/Play.js';
@@ -56,8 +56,9 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
     const { T } = useApp();
     const {
         users,
-        isFreeDrawing,
+        drawingState,
         toggleFreeDrawing,
+        toggleDrawingEraser,
         sketchData,
         updateSketch,
         setSketchDisplay,
@@ -131,18 +132,29 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                 key: 'drawing',
                 type: 'button',
                 props: {
-                    text: T('widget.sketch.drawing'),
+                    text: T('widget.sketch.draw'),
                     icon: <GoPencil size="1.25rem" />,
-                    variant: isFreeDrawing ? 'filled' : undefined,
+                    variant: drawingState.isDrawing ? 'filled' : undefined,
                     handler: toggleFreeDrawing
                 }
             },
             {
-                key: 'eraseDrawings',
+                key: 'eraseDrawing',
                 type: 'button',
                 props: {
-                    text: T('widget.sketch.eraseDrawings'),
+                    text: T('widget.sketch.eraseDrawing'),
                     icon: <BsEraserFill size="1.25rem" />,
+                    color: 'orange',
+                    variant: drawingState.isErasing ? 'filled' : undefined,
+                    handler: toggleDrawingEraser
+                }
+            },
+            {
+                key: 'eraseAllDrawings',
+                type: 'button',
+                props: {
+                    text: T('widget.sketch.eraseAllDrawings'),
+                    icon: <PiBroom size="1.25rem" />,
                     color: 'red',
                     handler: () => {
                         modals.openConfirmModal({
@@ -351,7 +363,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
                               <Group
                                   key={`scketch-actions-${idx.toString()}`}
                                   justify="center"
-                                  gap="1.25rem"
+                                  gap="1rem"
                               >
                                   {buttonsRow.map(({ key, type, props }) =>
                                       type === 'divider' ? (

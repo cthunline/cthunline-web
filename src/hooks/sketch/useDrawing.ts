@@ -5,7 +5,7 @@ import {
     coordinatesToPath,
     getMouseEventSvgCoordinates
 } from '../../services/sketch.js';
-import { isMainClick } from '../../services/tools.js';
+import { generateId, isMainClick } from '../../services/tools.js';
 import type {
     SketchCoordinates,
     SketchDrawingPath
@@ -17,7 +17,7 @@ const useDrawing = (
     svgRef: React.MutableRefObject<SVGSVGElement>,
     isMaster = false
 ) => {
-    const { isFreeDrawing, addSketchDrawPath, drawingColor, drawingWidth } =
+    const { drawingState, addSketchDrawPath, drawingColor, drawingWidth } =
         usePlay();
 
     // list of drawing paths (strings to put directly in path element "d" attribute)
@@ -37,7 +37,7 @@ const useDrawing = (
         e: React.MouseEvent<SVGSVGElement>
     ) => {
         if (isMainClick(e)) {
-            if (isMaster && isFreeDrawing && !isDrawing) {
+            if (isMaster && drawingState.isDrawing && !isDrawing) {
                 e.preventDefault();
                 // initializes coordinates list for the new drawing path
                 coordinates.current = [];
@@ -45,6 +45,7 @@ const useDrawing = (
                 setPaths((previous) => [
                     ...previous,
                     {
+                        id: generateId(),
                         d: '',
                         color: drawingColor,
                         width: drawingWidth
@@ -58,7 +59,7 @@ const useDrawing = (
 
     // handles mouse move for drawing
     const handleDrawingMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
-        if (isMaster && isFreeDrawing && isDrawing && svgPoint) {
+        if (isMaster && drawingState.isDrawing && isDrawing && svgPoint) {
             // get svg-transformed mouse coordinates
             const { x, y } = getMouseEventSvgCoordinates(
                 e,
@@ -78,7 +79,7 @@ const useDrawing = (
 
     // handle mouse up or leave for drawing
     const handleDrawingMouseUpOrLeave = () => {
-        if (isMaster && isFreeDrawing && isDrawing) {
+        if (isMaster && drawingState.isDrawing && isDrawing) {
             // stops drawing path
             setIsDrawing(false);
             // insert new draw path to context sketchData

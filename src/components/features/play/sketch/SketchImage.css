@@ -1,4 +1,4 @@
-.svg-container:not(.free-drawing)
+.svg-container:not(.free-drawing):not(.drawing-eraser)
     .sketch-image.selectable.container:not(.selected) {
     cursor: pointer;
 }

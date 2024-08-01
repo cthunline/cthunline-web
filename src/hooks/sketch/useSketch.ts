@@ -23,16 +23,20 @@ import {
     TooltipPlacement
 } from '../../types/index.js';
 
+type DrawingState = {
+    isDrawing: boolean;
+    isErasing: boolean;
+};
+
+const defaultDrawingState: DrawingState = {
+    isDrawing: false,
+    isErasing: false
+};
+
 interface UpdateSketchImagesOptions {
     images: SketchImageData[];
     eventType: SketchEventType;
     image: SketchImageData;
-}
-
-interface UpdateSketchTextOptions {
-    text: SketchTextData;
-    event?: SketchEvent;
-    events?: SketchEvent[];
 }
 
 interface UpdateSketchTextsOptions {
@@ -51,25 +55,27 @@ export interface SketchHookExport {
         userAllowed?: boolean
     ) => void;
     setSketchDisplay: (value: boolean) => void;
-    isFreeDrawing: boolean;
+    drawingState: DrawingState;
     drawingColor: Color;
     setDrawingColor: (color: Color) => void;
     drawingWidth: number;
     setDrawingWidth: (width: number) => void;
     toggleFreeDrawing: () => void;
+    toggleDrawingEraser: () => void;
     addSketchDrawPath: (path: SketchDrawingPath) => void;
+    deleteSketchDrawPath: (path: SketchDrawingPath) => void;
     clearDrawings: () => void;
     undoSketch: () => void;
     clearSketch: () => void;
     addSketchImage: (url: string, emit?: boolean) => void;
     updateSketchImage: (
         image: SketchImageData,
-        newEvents?: SketchEvent[] | EventUpdater
+        updateEvents?: EventUpdater
     ) => void;
     updateSketchImages: (options: UpdateSketchImagesOptions) => void;
     deleteSketchImage: (id: string, imageData: SketchImageData) => void;
     addSketchText: () => void;
-    updateSketchText: (options: UpdateSketchTextOptions) => void;
+    updateSketchText: (text: SketchTextData, event: SketchEvent) => void;
     updateSketchTexts: (options: UpdateSketchTextsOptions) => void;
     changeTextColor: (id: string, color: Color) => void;
     changeTextFontSize: (id: string, fontSize: number) => void;
@@ -111,7 +117,7 @@ export const defaultSketchHookExport: SketchHookExport = {
     setSketchDisplay: () => {
         /* default */
     },
-    isFreeDrawing: false,
+    drawingState: defaultDrawingState,
     drawingColor: defaultDrawingColor,
     setDrawingColor: () => {
         /* default */
@@ -123,7 +129,13 @@ export const defaultSketchHookExport: SketchHookExport = {
     toggleFreeDrawing: () => {
         /* default */
     },
+    toggleDrawingEraser: () => {
+        /* default */
+    },
     addSketchDrawPath: () => {
+        /* default */
+    },
+    deleteSketchDrawPath: () => {
         /* default */
     },
     clearDrawings: () => {
@@ -226,7 +238,8 @@ const defaultTokenData: Omit<SketchTokenData, 'id' | 'index' | 'color'> = {
 // it is meant to be used in play context
 const useSketch = (socket: PlaySocket | null) => {
     const [sketchData, setSketchData] = useState<SketchData>(defaultSketchData);
-    const [isFreeDrawing, setIsFreeDrawing] = useState<boolean>(false);
+    const [drawingState, setDrawingState] =
+        useState<DrawingState>(defaultDrawingState);
     const [drawingColor, setDrawingColor] = useState<Color>('white');
     const [drawingWidth, setDrawingWidth] = useState<number>(widths.sm);
 
@@ -264,7 +277,17 @@ const useSketch = (socket: PlaySocket | null) => {
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ drawing
 
     const toggleFreeDrawing = () => {
-        setIsFreeDrawing((prev) => !prev);
+        setDrawingState((prev) => ({
+            isDrawing: !prev.isDrawing,
+            isErasing: false
+        }));
+    };
+
+    const toggleDrawingEraser = () => {
+        setDrawingState((prev) => ({
+            isDrawing: false,
+            isErasing: !prev.isErasing
+        }));
     };
 
     const addSketchDrawPath = (path: SketchDrawingPath) => {
@@ -274,10 +297,33 @@ const useSketch = (socket: PlaySocket | null) => {
             events: [
                 ...previous.events,
                 {
-                    type: SketchEventType.draw
+                    type: SketchEventType.drawingAdd,
+                    drawing: path
                 }
             ]
         }));
+    };
+
+    const deleteSketchDrawPath = (path: SketchDrawingPath) => {
+        updateSketch((previous) => {
+            const pathIndex = previous.paths.findIndex(
+                ({ id }) => id === path.id
+            );
+            return {
+                ...previous,
+                paths: previous.paths.toSpliced(pathIndex, 1),
+                events: [
+                    ...previous.events,
+                    {
+                        type: SketchEventType.drawingDelete,
+                        drawing: {
+                            ...path,
+                            index: pathIndex
+                        }
+                    }
+                ]
+            };
+        });
     };
 
     const clearDrawings = () => {
@@ -285,7 +331,7 @@ const useSketch = (socket: PlaySocket | null) => {
             ...previous,
             paths: [],
             events: previous.events.filter(
-                ({ type }) => type !== SketchEventType.draw
+                ({ type }) => type !== SketchEventType.drawingAdd
             )
         }));
     };
@@ -318,23 +364,15 @@ const useSketch = (socket: PlaySocket | null) => {
 
     const updateSketchImage = (
         image: SketchImageData,
-        newEvents?: SketchEvent[] | EventUpdater
+        updateEvents?: EventUpdater
     ) => {
-        updateSketch((previous) => {
-            let { events } = previous;
-            if (newEvents && Array.isArray(newEvents)) {
-                events = newEvents;
-            } else if (newEvents && typeof newEvents === 'function') {
-                events = newEvents(previous.events);
-            }
-            return {
-                ...previous,
-                images: previous.images.map((img) =>
-                    img.id === image.id ? image : img
-                ),
-                events
-            };
-        });
+        updateSketch((previous) => ({
+            ...previous,
+            images: previous.images.map((img) =>
+                img.id === image.id ? image : img
+            ),
+            events: updateEvents?.(previous.events) ?? previous.events
+        }));
     };
 
     const updateSketchImages = ({
@@ -428,17 +466,13 @@ const useSketch = (socket: PlaySocket | null) => {
         });
     };
 
-    const updateSketchText = ({
-        text,
-        event,
-        events
-    }: UpdateSketchTextOptions) => {
+    const updateSketchText = (text: SketchTextData, event: SketchEvent) => {
         updateSketch((previous) => ({
             ...previous,
             texts: previous.texts.map((txt) =>
                 txt.id === text.id ? text : txt
             ),
-            events: [...(events ?? previous.events), ...(event ? [event] : [])]
+            events: event ? [...previous.events, event] : previous.events
         }));
     };
 
@@ -583,19 +617,6 @@ const useSketch = (socket: PlaySocket | null) => {
         });
     };
 
-    const updateSketchToken = (
-        token: SketchTokenData,
-        events?: SketchEvent[]
-    ) => {
-        updateSketch((previous) => ({
-            ...previous,
-            tokens: previous.tokens.map((tok) =>
-                tok.id === token.id ? token : tok
-            ),
-            events: events ?? previous.events
-        }));
-    };
-
     const updateMovingToken = (
         token: SketchTokenData,
         initialToken: SketchTokenData,
@@ -721,22 +742,33 @@ const useSketch = (socket: PlaySocket | null) => {
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ events
 
-    const popEvents = () => {
-        const eventsClone = [...sketchData.events];
-        eventsClone.pop();
-        return eventsClone;
-    };
+    const removeLastEvent = (events: SketchEvent[]) => events.toSpliced(-1, 1);
 
     // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ undo
 
-    const undoDrawing = () => {
+    const undoDrawingAdd = () => {
         const pathsClone = [...sketchData.paths];
         pathsClone.pop();
         updateSketch((previous) => ({
             ...previous,
             paths: pathsClone,
-            events: popEvents()
+            events: removeLastEvent(previous.events)
         }));
+    };
+
+    const undoDrawingDelete = (lastEvent: SketchEvent) => {
+        if (lastEvent.drawing) {
+            const { index: eventIndex, ...drawing } = lastEvent.drawing;
+            updateSketch((previous) => {
+                const defaultIndex = previous.paths.length - 1;
+                const index = eventIndex ?? defaultIndex;
+                return {
+                    ...previous,
+                    paths: previous.paths.toSpliced(index, 0, drawing),
+                    events: removeLastEvent(previous.events)
+                };
+            });
+        }
     };
 
     const undoImageAdd = (lastEvent: SketchEvent) => {
@@ -750,14 +782,20 @@ const useSketch = (socket: PlaySocket | null) => {
                         ...img,
                         index
                     })),
-                events: popEvents()
+                events: removeLastEvent(previous.events)
             }));
         }
     };
 
-    const undoImageMoveOrResize = (lastEvent: SketchEvent) => {
-        if (lastEvent.image) {
-            updateSketchImage(lastEvent.image, popEvents());
+    const undoImageMoveOrResize = ({ image }: SketchEvent) => {
+        if (image) {
+            updateSketch((previous) => ({
+                ...previous,
+                images: previous.images.map((img) =>
+                    img.id === image.id ? image : img
+                ),
+                events: removeLastEvent(previous.events)
+            }));
         }
     };
 
@@ -774,7 +812,7 @@ const useSketch = (socket: PlaySocket | null) => {
                     ...img,
                     index
                 })),
-                events: popEvents()
+                events: removeLastEvent(previous.events)
             }));
         }
     };
@@ -788,7 +826,7 @@ const useSketch = (socket: PlaySocket | null) => {
                     lastEvent.type === SketchEventType.imageForward
                         ? backwardImage(previous.images, image.index)
                         : forwardImage(previous.images, image.index),
-                events: popEvents()
+                events: removeLastEvent(previous.events)
             }));
         }
     };
@@ -804,17 +842,20 @@ const useSketch = (socket: PlaySocket | null) => {
                         ...txt,
                         index
                     })),
-                events: popEvents()
+                events: removeLastEvent(previous.events)
             }));
         }
     };
 
-    const undoTextUpdate = (lastEvent: SketchEvent) => {
-        if (lastEvent.text) {
-            updateSketchText({
-                text: lastEvent.text,
-                events: popEvents()
-            });
+    const undoTextUpdate = ({ text }: SketchEvent) => {
+        if (text) {
+            updateSketch((previous) => ({
+                ...previous,
+                texts: previous.texts.map((txt) =>
+                    txt.id === text.id ? text : txt
+                ),
+                events: removeLastEvent(previous.events)
+            }));
         }
     };
 
@@ -831,7 +872,7 @@ const useSketch = (socket: PlaySocket | null) => {
                     ...txt,
                     index
                 })),
-                events: popEvents()
+                events: removeLastEvent(previous.events)
             }));
         }
     };
@@ -847,14 +888,20 @@ const useSketch = (socket: PlaySocket | null) => {
                         ...tok,
                         index
                     })),
-                events: popEvents()
+                events: removeLastEvent(previous.events)
             }));
         }
     };
 
-    const undoTokenMove = (lastEvent: SketchEvent) => {
-        if (lastEvent.token) {
-            updateSketchToken(lastEvent.token, popEvents());
+    const undoTokenMove = ({ token }: SketchEvent) => {
+        if (token) {
+            updateSketch((previous) => ({
+                ...previous,
+                tokens: previous.tokens.map((tok) =>
+                    tok.id === token.id ? token : tok
+                ),
+                events: removeLastEvent(previous.events)
+            }));
         }
     };
 
@@ -871,7 +918,7 @@ const useSketch = (socket: PlaySocket | null) => {
                     ...tok,
                     index
                 })),
-                events: popEvents()
+                events: removeLastEvent(previous.events)
             }));
         }
     };
@@ -881,8 +928,11 @@ const useSketch = (socket: PlaySocket | null) => {
         const lastEvent = sketchData.events.at(-1);
         if (lastEvent) {
             switch (lastEvent.type) {
-                case SketchEventType.draw:
-                    undoDrawing();
+                case SketchEventType.drawingAdd:
+                    undoDrawingAdd();
+                    break;
+                case SketchEventType.drawingDelete:
+                    undoDrawingDelete(lastEvent);
                     break;
                 case SketchEventType.imageAdd:
                     undoImageAdd(lastEvent);
@@ -927,13 +977,15 @@ const useSketch = (socket: PlaySocket | null) => {
         setSketchData,
         updateSketch,
         setSketchDisplay,
-        isFreeDrawing,
+        drawingState,
         drawingColor,
         setDrawingColor,
         drawingWidth,
         setDrawingWidth,
         toggleFreeDrawing,
+        toggleDrawingEraser,
         addSketchDrawPath,
+        deleteSketchDrawPath,
         clearDrawings,
         addSketchImage,
         updateSketchImage,

@@ -1,12 +1,12 @@
-.svg-container:not(.free-drawing) .sketch-token.movable .sketch-token-circle,
-.svg-container:not(.free-drawing) .sketch-token.movable .sketch-token-text {
+.svg-container:not(.free-drawing):not(.drawing-eraser) .sketch-token.movable .sketch-token-circle,
+.svg-container:not(.free-drawing):not(.drawing-eraser) .sketch-token.movable .sketch-token-text {
     cursor: grab;
 }
 
-.svg-container:not(.free-drawing)
+.svg-container:not(.free-drawing):not(.drawing-eraser)
     .sketch-token.movable.moving
     .sketch-token-circle,
-.svg-container:not(.free-drawing)
+.svg-container:not(.free-drawing):not(.drawing-eraser)
     .sketch-token.movable.moving
     .sketch-token-text {
     cursor: grabbing;

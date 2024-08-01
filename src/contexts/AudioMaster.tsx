@@ -303,7 +303,7 @@ export const AudioMasterProvider = ({
     );
 };
 
-export function useAudioMaster() {
+export const useAudioMaster = () => {
     const context = useContext(AudioMasterContext);
     if (!context) {
         throw new Error(
@@ -311,4 +311,4 @@ export function useAudioMaster() {
         );
     }
     return context;
-}
+};

@@ -22,6 +22,8 @@ import SketchImage from './sketch/SketchImage.js';
 import SketchText from './sketch/SketchText.js';
 import SketchToken from './sketch/SketchToken.js';
 
+import './Sketch.css';
+
 interface SketchProps {
     isMaster?: boolean;
 }
@@ -33,7 +35,8 @@ const Sketch = ({ isMaster }: SketchProps) => {
 
     const {
         users,
-        isFreeDrawing,
+        drawingState,
+        deleteSketchDrawPath,
         setDrawingColor,
         setDrawingWidth,
         sketchData,
@@ -103,7 +106,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
 
     // handles context menu on main sketch container
     const handleContextMenu = (e: React.MouseEvent<SVGSVGElement>) => {
-        if (isFreeDrawing) {
+        if (drawingState.isDrawing) {
             contextMenuHandler<SVGSVGElement>(
                 onContextMenu,
                 onContextMenuClose
@@ -163,10 +166,17 @@ const Sketch = ({ isMaster }: SketchProps) => {
 
     useEffect(() => {
         // when drawing is enabled unselect images
-        if (isFreeDrawing) {
+        if (drawingState.isDrawing || drawingState.isErasing) {
             setSelectedItem(null);
         }
-    }, [isFreeDrawing, setSelectedItem]);
+    }, [drawingState, setSelectedItem]);
+
+    let cursor = 'default';
+    if (drawingState.isDrawing) {
+        cursor = 'crosshair';
+    } else if (drawingState.isErasing) {
+        cursor = 'cell';
+    }
 
     return (
         <Group
@@ -185,8 +195,8 @@ const Sketch = ({ isMaster }: SketchProps) => {
                 ref={svgRef}
                 id="svg-container"
                 className={`svg-container ${
-                    isFreeDrawing ? 'free-drawing' : ''
-                }`}
+                    drawingState.isDrawing ? 'free-drawing' : ''
+                } ${drawingState.isErasing ? 'drawing-eraser' : ''}`}
                 viewBox={`0 0 ${viewBox.width} ${viewBox.height}`}
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
@@ -197,7 +207,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
                     background: 'var(--palette-background-secondary)',
                     maxWidth: '100%',
                     maxHeight: '100%',
-                    cursor: isFreeDrawing ? 'crosshair' : undefined
+                    cursor
                 }}
             >
                 {/* sketch images */}
@@ -212,7 +222,9 @@ const Sketch = ({ isMaster }: SketchProps) => {
                         x={x}
                         y={y}
                         selected={selectedItem?.id === id}
-                        isDrawing={isFreeDrawing}
+                        isDrawing={
+                            drawingState.isDrawing || drawingState.isErasing
+                        }
                         moving={
                             movingItem?.type === SketchItemType.image &&
                             movingItem?.id === id
@@ -247,12 +259,19 @@ const Sketch = ({ isMaster }: SketchProps) => {
                 ))}
                 {/* drawing paths */}
                 {paths.map((path, index) => (
+                    // biome-ignore lint/a11y/useKeyWithClickEvents: eraser is used with mouse / click
                     <path
                         key={`sketch-path-${index.toString()}`}
+                        className="sketch-drawing-path"
                         stroke={`var(--palette-${path.color})`}
                         strokeWidth={path.width ?? 5}
                         d={path.d}
                         fill="none"
+                        onClick={() => {
+                            if (drawingState.isErasing) {
+                                deleteSketchDrawPath(path);
+                            }
+                        }}
                     />
                 ))}
                 {/* sketch texts */}
@@ -269,7 +288,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
                             x={x}
                             y={y}
                             selected={selectedItem?.id === id}
-                            isDrawing={isFreeDrawing}
+                            isDrawing={drawingState.isDrawing}
                             moving={
                                 movingItem?.type === SketchItemType.text &&
                                 movingItem?.id === id
@@ -282,12 +301,9 @@ const Sketch = ({ isMaster }: SketchProps) => {
                                     ...textData,
                                     text
                                 };
-                                updateSketchText({
-                                    text: updatedText,
-                                    event: {
-                                        type: SketchEventType.textEdit,
-                                        text: textData
-                                    }
+                                updateSketchText(updatedText, {
+                                    type: SketchEventType.textEdit,
+                                    text: textData
                                 });
                             }}
                             onColorChange={(textColor: Color) => {
@@ -322,7 +338,10 @@ const Sketch = ({ isMaster }: SketchProps) => {
                                 x={x}
                                 y={y}
                                 tooltipPlacement={tooltipPlacement}
-                                isDrawing={isFreeDrawing}
+                                isDrawing={
+                                    drawingState.isDrawing ||
+                                    drawingState.isErasing
+                                }
                                 isMoving={isMoving}
                                 onMouseDown={(e, isMovable) => {
                                     handleItemMouseDown(

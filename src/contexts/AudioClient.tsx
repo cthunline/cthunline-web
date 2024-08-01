@@ -112,7 +112,7 @@ export const AudioClientProvider = ({
     );
 };
 
-export function useAudioClient() {
+export const useAudioClient = () => {
     const context = useContext(AudioClientContext);
     if (!context) {
         throw new Error(
@@ -120,4 +120,4 @@ export function useAudioClient() {
         );
     }
     return context;
-}
+};
