@@ -2,10 +2,10 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { useApp } from '../../contexts/App.js';
 import {
-    createSketch,
+    createSessionSketch,
     deleteSketch,
+    getSessionSketchs,
     getSketch,
-    getSketchs,
     updateSketch
 } from '../../services/requests/sketch.js';
 import { toast } from '../../services/toast.js';
@@ -16,6 +16,7 @@ import type {
 } from '../../types/index.js';
 
 interface CreateUserSketchOptions {
+    sessionId: number;
     data: SketchCreateBody;
     isRefresh?: boolean;
     isToast?: boolean;
@@ -34,18 +35,26 @@ interface DeleteUserSketchOptions {
     isToast?: boolean;
 }
 
-const useUserSketch = (loadList = false) => {
+type UseSessionSketchOptions = {
+    sessionId: number;
+    loadList?: boolean;
+};
+
+const useSessionSketch = ({ sessionId, loadList }: UseSessionSketchOptions) => {
     const { handleApiError } = useApp();
 
     const [userSketchs, setUserSketchs] = useState<Sketch[]>([]);
 
-    const getUserSketchs = useCallback(async (): Promise<Sketch[]> => {
-        try {
-            return await getSketchs();
-        } catch (err: unknown) {
-            throw handleApiError(err);
-        }
-    }, [handleApiError]);
+    const getUserSketchs = useCallback(
+        async (sessionId: number): Promise<Sketch[]> => {
+            try {
+                return await getSessionSketchs(sessionId);
+            } catch (err: unknown) {
+                throw handleApiError(err);
+            }
+        },
+        [handleApiError]
+    );
 
     const getUserSketch = useCallback(
         async (sketchId: number): Promise<Sketch> => {
@@ -60,19 +69,20 @@ const useUserSketch = (loadList = false) => {
 
     const refresh = useCallback(async () => {
         if (loadList) {
-            const sketchs = await getUserSketchs();
+            const sketchs = await getUserSketchs(sessionId);
             setUserSketchs(sketchs);
         }
-    }, [loadList, getUserSketchs]);
+    }, [sessionId, loadList, getUserSketchs]);
 
     const createUserSketch = useCallback(
         async ({
+            sessionId,
             data,
             isRefresh = true,
             isToast = true
         }: CreateUserSketchOptions): Promise<Sketch> => {
             try {
-                const sketch = await createSketch(data);
+                const sketch = await createSessionSketch(sessionId, data);
                 if (isRefresh) {
                     await refresh();
                 }
@@ -145,4 +155,4 @@ const useUserSketch = (loadList = false) => {
     };
 };
 
-export default useUserSketch;
+export default useSessionSketch;

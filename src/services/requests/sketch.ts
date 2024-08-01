@@ -6,10 +6,10 @@ import type {
     SketchUpdateBody
 } from '../../types/index.js';
 
-export const getSketchs = async () => {
+export const getSessionSketchs = async (sessionId: number) => {
     const { sketchs } = await callApi<{ sketchs: Sketch[] }>({
         method: 'GET',
-        route: '/sketchs'
+        route: `/sessions/${sessionId}/sketchs`
     });
     return sketchs;
 };
@@ -20,10 +20,13 @@ export const getSketch = async (sketchId: number) =>
         route: `/sketchs/${sketchId}`
     });
 
-export const createSketch = async (body: SketchCreateBody) =>
+export const createSessionSketch = async (
+    sessionId: number,
+    body: SketchCreateBody
+) =>
     callApi<Sketch>({
         method: 'POST',
-        route: '/sketchs',
+        route: `/sessions/${sessionId}/sketchs`,
         body
     });
 

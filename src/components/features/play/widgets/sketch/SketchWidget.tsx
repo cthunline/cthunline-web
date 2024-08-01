@@ -14,7 +14,7 @@ import { useApp } from '../../../../../contexts/App.js';
 import { usePlay } from '../../../../../contexts/Play.js';
 import useAsset from '../../../../../hooks/api/useAsset.js';
 import useDirectory from '../../../../../hooks/api/useDirectory.js';
-import useUserSketch from '../../../../../hooks/api/useUserSketch.js';
+import useSessionSketch from '../../../../../hooks/api/useSessionSketch.js';
 import {
     type Asset,
     type SketchCreateBody,
@@ -55,6 +55,7 @@ const loadSketchModalId = 'load-sketch-modal';
 const SketchWidget = ({ onClose }: SketchWidgetProps) => {
     const { T } = useApp();
     const {
+        sessionId,
         users,
         drawingState,
         toggleFreeDrawing,
@@ -85,7 +86,10 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
         getUserSketch,
         updateUserSketch,
         deleteUserSketch
-    } = useUserSketch(true);
+    } = useSessionSketch({
+        sessionId,
+        loadList: true
+    });
 
     const [directoryIds, setDirectoryIds] = useState<number[]>([]);
 
@@ -101,7 +105,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
 
     const onUserSketchSave = (data: SketchCreateBody) => {
         modals.close(saveSketchModalId);
-        createUserSketch({ data });
+        createUserSketch({ sessionId, data });
     };
 
     const onUserSketchOverwrite = (
