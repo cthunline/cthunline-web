@@ -45,7 +45,7 @@ const ImprovementList = ({
     const improvementNamesWithCounts: ImprovementNameWithCountData[] =
         useMemo(() => {
             const namesWithCount: ImprovementNameWithCountData[] = [];
-            const nameMap: Map<string, number> = new Map();
+            const nameMap = new Map<string, number>();
             for (const name of improvementNames) {
                 const count = nameMap.get(name);
                 if (count) {
@@ -130,7 +130,7 @@ const Experience = ({ readonly, character, onChange }: ExperienceProps) => {
     const { T } = useApp();
 
     const improvementValues: Map<string, boolean> = useMemo(() => {
-        const nameMap: Map<string, number> = new Map();
+        const nameMap = new Map<string, number>();
         return new Map(
             [
                 ...character.experience.commonImprovements,
