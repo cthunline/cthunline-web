@@ -7,7 +7,7 @@
 .interactive-list-item-selected::before {
     background-color: var(--palette-primary);
     border-radius: 0.25rem;
-    content: '';
+    content: "";
     height: 100%;
     left: 0;
     opacity: 0.075;

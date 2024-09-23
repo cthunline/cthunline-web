@@ -1,5 +1,9 @@
-.svg-container:not(.free-drawing):not(.drawing-eraser) .sketch-token.movable .sketch-token-circle,
-.svg-container:not(.free-drawing):not(.drawing-eraser) .sketch-token.movable .sketch-token-text {
+.svg-container:not(.free-drawing):not(.drawing-eraser)
+    .sketch-token.movable
+    .sketch-token-circle,
+.svg-container:not(.free-drawing):not(.drawing-eraser)
+    .sketch-token.movable
+    .sketch-token-text {
     cursor: grab;
 }
 

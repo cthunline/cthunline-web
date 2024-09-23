@@ -22,7 +22,7 @@ body {
 
 /* global variables */
 
-:root[data-mantine-color-scheme='dark'] {
+:root[data-mantine-color-scheme="dark"] {
     --palette-background: #111416;
     --palette-background-secondary: #1a1d1f;
     --palette-background-tertiary: #454545;
@@ -31,7 +31,7 @@ body {
     --palette-primary: #90caf9;
 }
 
-:root[data-mantine-color-scheme='light'] {
+:root[data-mantine-color-scheme="light"] {
     --palette-background: #f8f9fa;
     --palette-background-secondary: #e9ecef;
     --palette-background-tertiary: #dee2e6;

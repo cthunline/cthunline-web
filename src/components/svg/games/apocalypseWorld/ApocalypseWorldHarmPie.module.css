@@ -1,10 +1,10 @@
-:root[data-mantine-color-scheme='light'] {
+:root[data-mantine-color-scheme="light"] {
     --aw-harm-pie-slice-background: var(--mantine-color-gray-3);
     --aw-harm-pie-slice-background-active: var(--mantine-color-gray-5);
     --aw-harm-pie-slice-border: var(--mantine-color-gray-6);
 }
 
-:root[data-mantine-color-scheme='dark'] {
+:root[data-mantine-color-scheme="dark"] {
     --aw-harm-pie-slice-background: var(--mantine-color-dark-7);
     --aw-harm-pie-slice-background-active: var(--mantine-color-dark-5);
     --aw-harm-pie-slice-border: var(--mantine-color-dark-3);
