@@ -271,6 +271,15 @@ export const AudioMasterProvider = ({
         bindEvents();
     }, [bindEvents]);
 
+    useEffect(
+        () => () => {
+            howlRef.current?.stop();
+            howlRef.current?.unload();
+            howlRef.current = null;
+        },
+        []
+    );
+
     const contextValue = useMemo(
         () => ({
             howl: howlRef.current,

@@ -94,6 +94,15 @@ export const AudioClientProvider = ({
         });
     }, [playAudio, socket, stopAudio]);
 
+    useEffect(
+        () => () => {
+            stopAudio();
+            howlRef.current?.unload();
+            howlRef.current = null;
+        },
+        [stopAudio]
+    );
+
     const contextValue = useMemo(
         () => ({
             playing,
