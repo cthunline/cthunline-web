@@ -122,6 +122,7 @@
                 "delete": "delete",
                 "duplicate": "duplicate",
                 "forward": "forward",
+                "see": "see the sketch",
                 "unattachCharacter": "unattach character"
             },
             "note": {

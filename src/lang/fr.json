@@ -122,6 +122,7 @@
                 "delete": "supprimer",
                 "duplicate": "dupliquer",
                 "forward": "avancer",
+                "see": "voir le plateau",
                 "unattachCharacter": "désattacher personnage"
             },
             "note": {

@@ -8,7 +8,7 @@ import { AudioClientProvider } from '../../../contexts/AudioClient.js';
 import { AudioMasterProvider } from '../../../contexts/AudioMaster.js';
 import { PlayProvider, usePlay } from '../../../contexts/Play.js';
 import { focusWidget } from '../../../services/widget.js';
-import { WidgetType } from '../../../types/index.js';
+import { WidgetType, type WidgetVisibility } from '../../../types/index.js';
 import AudioClientVolume from '../../features/play/AudioClientVolume.js';
 import Console from '../../features/play/Console.js';
 import Sketch from '../../features/play/Sketch.js';
@@ -37,6 +37,9 @@ const PlayContent = () => {
 
     const [openWidgets, setOpenWidgets] = useState<WidgetType[]>([]);
 
+    const [widgetsVisibility, setWidgetsVisibility] =
+        useState<WidgetVisibility>('visible');
+
     const onWidgetOpen = (widget: WidgetType) => {
         if (openWidgets.includes(widget)) {
             // otherwise if it's already open focus it
@@ -54,6 +57,10 @@ const PlayContent = () => {
         setOpenWidgets((previous) =>
             previous.filter((openWidget) => openWidget !== widget)
         );
+    };
+
+    const onWidgetsVisibilityChange = (visibility: WidgetVisibility) => {
+        setWidgetsVisibility(visibility);
     };
 
     const onExit = () => {
@@ -116,10 +123,16 @@ const PlayContent = () => {
     }
 
     const content = (
-        <Group w="100%" h="100%" gap={0}>
+        <Group
+            w="100%"
+            h="100%"
+            gap={0}
+            className={`widgets-visibility-${widgetsVisibility}`}
+        >
             <PlayMenu
                 isMaster={socket.isMaster}
                 onWidgetOpen={onWidgetOpen}
+                onWidgetsVisibilityChange={onWidgetsVisibilityChange}
                 onExit={onExit}
             />
             <Stack

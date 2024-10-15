@@ -5,6 +5,8 @@ import Draggable from 'react-draggable';
 import { focusWidget } from '../../../services/widget.js';
 import WidgetPaper from './WidgetPaper.js';
 
+import './Widget.css';
+
 interface WidgetProps {
     title: string;
     id: string;
@@ -36,6 +38,7 @@ const Widget = (props: WidgetProps) => {
             <Box
                 id={id}
                 ref={nodeRef}
+                className="play-widget"
                 pos="absolute"
                 top="25px"
                 left="25px"
