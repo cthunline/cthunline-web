@@ -40,9 +40,13 @@ const NoteEditor = ({ status, note, onEdit, onBack }: NoteEditorProps) => {
                 flex="1 0"
                 readonly={!isOwnedByUser}
                 value={note.text}
-                onChange={(text: string) => {
-                    onEdit({ ...note, text });
-                }}
+                onChange={
+                    isOwnedByUser
+                        ? (text: string) => {
+                              onEdit({ ...note, text });
+                          }
+                        : undefined
+                }
             />
         </Stack>
     );

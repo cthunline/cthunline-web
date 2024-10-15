@@ -31,7 +31,13 @@ const TextEditor = ({
 
     useEffect(() => {
         editor?.setEditable(!readonly);
-    }, [editor?.setEditable, readonly]);
+    }, [editor, readonly]);
+
+    useEffect(() => {
+        if (readonly) {
+            editor?.commands.setContent(value);
+        }
+    }, [editor, value, readonly]);
 
     return (
         <RichTextEditor
