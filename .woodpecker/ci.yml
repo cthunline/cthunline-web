@@ -1,0 +1,41 @@
+steps:
+- name: install
+  image: node:20-alpine
+  pull: true
+  commands:
+  - npm i
+  when:
+    branch:
+    - master
+    event:
+    - push
+    - pull_request
+- name: lint
+  image: node:20-alpine
+  pull: true
+  commands:
+  - npm run lint
+  depends_on:
+  - install
+  when:
+    branch:
+    - master
+    event:
+    - push
+    - pull_request
+- name: sonarqube
+  image: sonarsource/sonar-scanner-cli:latest
+  pull: true
+  entrypoint: /usr/bin/entrypoint.sh
+  depends_on:
+  - install
+  environment:
+    SONAR_HOST_URL:
+      from_secret: sonar_host
+    SONAR_TOKEN:
+      from_secret: sonar_token
+  when:
+    branch:
+    - master
+    event:
+    - push
