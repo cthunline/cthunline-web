@@ -1,6 +1,6 @@
 steps:
 - name: install
-  image: node:20-alpine
+  image: node:22-alpine
   pull: true
   commands:
   - npm i
@@ -11,7 +11,7 @@ steps:
     - push
     - pull_request
 - name: lint
-  image: node:20-alpine
+  image: node:22-alpine
   pull: true
   commands:
   - npm run lint
