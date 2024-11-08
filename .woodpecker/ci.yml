@@ -1,15 +1,16 @@
+when:
+  branch:
+  - master
+  event:
+  - push
+  - pull_request
+
 steps:
 - name: install
   image: node:22-alpine
   pull: true
   commands:
   - npm i
-  when:
-    branch:
-    - master
-    event:
-    - push
-    - pull_request
 - name: lint
   image: node:22-alpine
   pull: true
@@ -17,12 +18,6 @@ steps:
   - npm run lint
   depends_on:
   - install
-  when:
-    branch:
-    - master
-    event:
-    - push
-    - pull_request
 - name: sonarqube
   image: sonarsource/sonar-scanner-cli:latest
   pull: true
