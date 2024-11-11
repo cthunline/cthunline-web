@@ -7,8 +7,9 @@ import { useApp } from '../../../contexts/App.js';
 import { AudioClientProvider } from '../../../contexts/AudioClient.js';
 import { AudioMasterProvider } from '../../../contexts/AudioMaster.js';
 import { PlayProvider, usePlay } from '../../../contexts/Play.js';
+import useShortcuts from '../../../hooks/play/useShortcuts.js';
 import { focusWidget } from '../../../services/widget.js';
-import { WidgetType, type WidgetVisibility } from '../../../types/index.js';
+import type { WidgetType, WidgetVisibility } from '../../../types/index.js';
 import AudioClientVolume from '../../features/play/AudioClientVolume.js';
 import Console from '../../features/play/Console.js';
 import Sketch from '../../features/play/Sketch.js';
@@ -40,7 +41,7 @@ const PlayContent = () => {
     const [widgetsVisibility, setWidgetsVisibility] =
         useState<WidgetVisibility>('visible');
 
-    const onWidgetOpen = (widget: WidgetType) => {
+    const openWidget = (widget: WidgetType) => {
         if (openWidgets.includes(widget)) {
             // otherwise if it's already open focus it
             const widgetEl = document.querySelector(`#widget-${widget}`);
@@ -53,15 +54,21 @@ const PlayContent = () => {
         }
     };
 
-    const onWidgetClose = (widget: WidgetType) => {
+    const closeWidget = (widget: WidgetType) => {
         setOpenWidgets((previous) =>
             previous.filter((openWidget) => openWidget !== widget)
         );
     };
 
-    const onWidgetsVisibilityChange = (visibility: WidgetVisibility) => {
+    const changeWidgetVisibility = (visibility: WidgetVisibility) => {
         setWidgetsVisibility(visibility);
     };
+
+    useShortcuts({
+        isMaster: !!socket?.isMaster,
+        openWidget,
+        changeWidgetVisibility
+    });
 
     const onExit = () => {
         modals.openConfirmModal({
@@ -81,38 +88,38 @@ const PlayContent = () => {
         widgs.map((widget) => {
             const key = `widget-${widget}`;
             switch (widget) {
-                case WidgetType.dices:
+                case 'dices':
                     return (
                         <DicesWidget
                             key={key}
                             isMaster={socket?.isMaster}
                             onRoll={requestDice}
-                            onClose={onWidgetClose}
+                            onClose={closeWidget}
                         />
                     );
-                case WidgetType.character:
+                case 'character':
                     return (
                         <CharacterWidget
                             key={key}
                             characterId={Number(characterId)}
                             onUpdate={characterUpdate}
-                            onClose={onWidgetClose}
+                            onClose={closeWidget}
                         />
                     );
-                case WidgetType.characters:
+                case 'characters':
                     return (
                         <CharactersWidget
                             key={key}
                             users={users.filter(({ isMaster }) => !isMaster)}
-                            onClose={onWidgetClose}
+                            onClose={closeWidget}
                         />
                     );
-                case WidgetType.jukebox:
-                    return <JukeboxWidget key={key} onClose={onWidgetClose} />;
-                case WidgetType.sketch:
-                    return <SketchWidget key={key} onClose={onWidgetClose} />;
-                case WidgetType.notes:
-                    return <NotesWidget key={key} onClose={onWidgetClose} />;
+                case 'jukebox':
+                    return <JukeboxWidget key={key} onClose={closeWidget} />;
+                case 'sketch':
+                    return <SketchWidget key={key} onClose={closeWidget} />;
+                case 'notes':
+                    return <NotesWidget key={key} onClose={closeWidget} />;
                 default:
                     return null;
             }
@@ -131,8 +138,8 @@ const PlayContent = () => {
         >
             <PlayMenu
                 isMaster={socket.isMaster}
-                onWidgetOpen={onWidgetOpen}
-                onWidgetsVisibilityChange={onWidgetsVisibilityChange}
+                onWidgetOpen={openWidget}
+                onWidgetsVisibilityChange={changeWidgetVisibility}
                 onExit={onExit}
             />
             <Stack

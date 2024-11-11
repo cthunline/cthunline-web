@@ -21,7 +21,7 @@ import {
     type DiceType,
     type DicesData,
     type DicesRequest,
-    WidgetType,
+    type WidgetType,
     diceTypes
 } from '../../../../../types/index.js';
 import Widget from '../../Widget.js';
@@ -96,9 +96,9 @@ const DicesWidget = ({ isMaster, onRoll, onClose }: DicesWidgetProps) => {
 
     return (
         <Widget
-            id={`widget-${WidgetType.dices}`}
+            id="widget-dices"
             title={T('entity.dices')}
-            onClose={() => onClose(WidgetType.dices)}
+            onClose={() => onClose('dices')}
         >
             <Stack w="400px" gap="1rem">
                 <Group gap="0.5rem 2.5rem" my="0.25rem" justify="center">

@@ -5,9 +5,9 @@ import { MdEdit, MdOutlineCheck } from 'react-icons/md';
 import { useApp } from '../../../../../contexts/App.js';
 import useCharacter from '../../../../../hooks/api/useCharacter.js';
 import { deepEqual } from '../../../../../services/tools.js';
-import {
-    type Character,
-    type CharacterData,
+import type {
+    Character,
+    CharacterData,
     WidgetType
 } from '../../../../../types/index.js';
 import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
@@ -140,10 +140,10 @@ const CharacterWidget = ({
 
     return (
         <Widget
-            id={`widget-${WidgetType.character}`}
+            id="widget-character"
             title={T('entity.character')}
             actions={widgetActions}
-            onClose={() => onClose(WidgetType.character)}
+            onClose={() => onClose('character')}
         >
             <Box w="750px" h="500px">
                 {character ? (

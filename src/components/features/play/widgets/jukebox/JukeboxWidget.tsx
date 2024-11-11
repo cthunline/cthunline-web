@@ -7,7 +7,7 @@ import { useAudioMaster } from '../../../../../contexts/AudioMaster.js';
 import useAsset from '../../../../../hooks/api/useAsset.js';
 import useDirectory from '../../../../../hooks/api/useDirectory.js';
 import { shuffleArray } from '../../../../../services/tools.js';
-import { WidgetType } from '../../../../../types/index.js';
+import type { WidgetType } from '../../../../../types/index.js';
 import AudioPlayer from '../../../../common/AudioPlayer.js';
 import FileExplorer, {
     type FileExplorerItem,
@@ -82,9 +82,9 @@ const JukeboxWidget = ({ onClose }: JukeboxWidgetProps) => {
 
     return (
         <Widget
-            id={`widget-${WidgetType.jukebox}`}
+            id="widget-jukebox"
             title={T('entity.jukebox')}
-            onClose={() => onClose(WidgetType.jukebox)}
+            onClose={() => onClose('jukebox')}
         >
             <Stack w="400px" gap="0.5rem">
                 <FileExplorer

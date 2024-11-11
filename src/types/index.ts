@@ -239,14 +239,13 @@ export interface PlayLog {
     text: string;
 }
 
-export enum WidgetType {
-    character = 'character',
-    characters = 'characters',
-    dices = 'dices',
-    sketch = 'sketch',
-    jukebox = 'jukebox',
-    notes = 'notes'
-}
+export type WidgetType =
+    | 'character'
+    | 'characters'
+    | 'dices'
+    | 'sketch'
+    | 'jukebox'
+    | 'notes';
 
 export type WidgetVisibility = 'visible' | 'hidden';
 

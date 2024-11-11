@@ -3,13 +3,14 @@ import React, { useEffect } from 'react';
 import Draggable from 'react-draggable';
 
 import { focusWidget } from '../../../services/widget.js';
+import type { WidgetType } from '../../../types/index.js';
 import WidgetPaper from './WidgetPaper.js';
 
 import './Widget.css';
 
 interface WidgetProps {
     title: string;
-    id: string;
+    id: `widget-${WidgetType}`;
     actions?: React.ReactNode;
     children?: React.ReactNode;
     onClose: () => void;
