@@ -52,7 +52,7 @@ const defaultTimeStatus: AudioTimeStatus = {
 };
 
 interface AudioMasterProviderProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.ReactElement | React.ReactElement[];
     socket: PlaySocket;
 }
 
@@ -100,7 +100,7 @@ export const AudioMasterProvider = ({
     socket
 }: AudioMasterProviderProps) => {
     const howlRef = useRef<Howl | null>(null);
-    const frameRef = useRef<number>();
+    const frameRef = useRef<number>(0);
     const loadedTrackRef = useRef<Asset | null>(null);
     const [track, setTrack] = useState<Asset | null>(null);
     const [playlist, setPlaylist] = useState<Asset[]>([]);

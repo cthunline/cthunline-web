@@ -1,5 +1,5 @@
 import { Loader } from '@mantine/core';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 
 import { useApp } from '../contexts/App.js';
 import Page from './layout/Page.js';

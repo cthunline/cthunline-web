@@ -7,7 +7,7 @@ import {
 
 export interface ActionButtonProps {
     text: string;
-    icon: JSX.Element;
+    icon: React.ReactElement;
     variant?: ActionIconProps['variant'];
     handler: () => void;
     disabled?: boolean;

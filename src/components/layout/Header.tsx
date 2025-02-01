@@ -2,7 +2,7 @@ import { Group, type GroupProps, Text, UnstyledButton } from '@mantine/core';
 import { FiFolder } from 'react-icons/fi';
 import { GiD10, GiRollingDices } from 'react-icons/gi';
 import { MdOutlineContactPage } from 'react-icons/md';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 
 import { useApp } from '../../contexts/App.js';
 import HeaderMenu from './HeaderMenu.js';
@@ -10,7 +10,7 @@ import HeaderMenu from './HeaderMenu.js';
 import './Header.css';
 
 interface NavItem {
-    icon: JSX.Element;
+    icon: React.ReactElement;
     route: string;
     textKey: string;
 }

@@ -27,7 +27,7 @@ import {
 // this hook holds states and event handlers for sketch items (images and tokens)
 // it is meant to be used by the sketch component and sub components
 const useItems = (
-    svgRef: React.MutableRefObject<SVGSVGElement>,
+    svgRef: React.RefObject<SVGSVGElement | null>,
     isMaster = false
 ) => {
     const {
@@ -143,7 +143,12 @@ const useItems = (
 
     // handles mouse move for moving item
     const handleMovingItemMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
-        if (movingItem && (isMaster || movingItem.movableByUser) && svgPoint) {
+        if (
+            svgRef.current &&
+            movingItem &&
+            (isMaster || movingItem.movableByUser) &&
+            svgPoint
+        ) {
             const { type, id, deltaX, deltaY } = movingItem;
             const itemData = getItemData(id, type);
             // gets moving item new coordinates
@@ -188,7 +193,7 @@ const useItems = (
     const handleResizingItemMouseMove = (
         e: React.MouseEvent<SVGSVGElement>
     ) => {
-        if (isMaster && resizingItem && svgPoint) {
+        if (svgRef.current && isMaster && resizingItem && svgPoint) {
             const { type, id } = resizingItem;
             const itemData = getItemData(id, type);
             // gets new coordinates and position for resizing item
@@ -302,6 +307,7 @@ const useItems = (
     ) => {
         if (isMainClick(e)) {
             if (
+                svgRef.current &&
                 (isMaster || movableByUser) &&
                 !drawingState.isDrawing &&
                 !drawingState.isErasing &&
@@ -360,6 +366,7 @@ const useItems = (
     ) => {
         if (isMainClick(e)) {
             if (
+                svgRef.current &&
                 isMaster &&
                 !drawingState.isDrawing &&
                 !drawingState.isErasing &&
@@ -464,7 +471,7 @@ const useItems = (
 
     useEffect(() => {
         // initializes svg DOMPoint in state when reference to svg container is set
-        setSvgPoint(svgRef.current.createSVGPoint());
+        setSvgPoint(svgRef.current?.createSVGPoint());
     }, [svgRef]);
 
     return {

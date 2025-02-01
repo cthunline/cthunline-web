@@ -2,8 +2,8 @@ import { Group, TextInput, Title } from '@mantine/core';
 
 interface SectionTitleProps {
     text: string;
-    iconBefore?: JSX.Element;
-    iconAfter?: JSX.Element;
+    iconBefore?: React.ReactElement;
+    iconAfter?: React.ReactElement;
     input?: SectionTitleInputOptions;
     mb?: number | string;
     mt?: number | string;

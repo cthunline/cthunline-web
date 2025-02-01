@@ -10,7 +10,8 @@ import { useApp } from '../../../contexts/App.js';
 import { WidgetType, type WidgetVisibility } from '../../../types/index.js';
 
 interface PlayMenuItemData {
-    icon: JSX.Element;
+    id: string;
+    icon: React.ReactElement;
     textKey: string;
     widget?: WidgetType;
     onClick?: () => void;
@@ -23,7 +24,7 @@ interface PlayMenuItemData {
 }
 
 interface PlayMenuItemProps {
-    icon: JSX.Element;
+    icon: React.ReactElement;
     textKey: string;
     onClick?: () => void;
     onMouseDown?: () => void;
@@ -72,68 +73,74 @@ const PlayMenu = ({
     onExit,
     onWidgetsVisibilityChange
 }: PlayMenuProps) => {
-    const playMenuItems: PlayMenuItemData[] = useMemo(
-        () =>
-            [
-                {
-                    icon: <MdOutlineContactPage size="2.25rem" />,
-                    textKey: 'entity.character',
-                    widget: WidgetType.character,
-                    playerOnly: true
-                },
-                {
-                    icon: <MdOutlineContactPage size="2.25rem" />,
-                    textKey: 'entity.characters',
-                    widget: WidgetType.characters,
-                    adminOnly: true
-                },
-                {
-                    icon: <GiRollingDiceCup size="2.25rem" />,
-                    textKey: 'entity.dices',
-                    widget: WidgetType.dices
-                },
-                {
-                    icon: <MdDraw size="2.25rem" />,
-                    textKey: 'entity.sketch',
-                    widget: WidgetType.sketch,
-                    adminOnly: true
-                },
-                {
-                    icon: <TbEyeEdit size="2.25rem" />,
-                    textKey: 'page.play.sketch.see',
-                    onMouseDown: () => onWidgetsVisibilityChange('hidden'),
-                    onMouseUp: () => onWidgetsVisibilityChange('visible'),
-                    onMouseLeave: () => onWidgetsVisibilityChange('visible')
-                },
-                {
-                    icon: <HiMusicNote size="2.25rem" />,
-                    textKey: 'entity.jukebox',
-                    widget: WidgetType.jukebox,
-                    adminOnly: true
-                },
-                {
-                    icon: <CgNotes size="2.25rem" />,
-                    textKey: 'entity.notes',
-                    widget: WidgetType.notes
-                },
-                {
-                    icon: <MdLogout size="2.25rem" />,
-                    textKey: 'action.exit',
-                    onClick: onExit
-                }
-            ] satisfies PlayMenuItemData[],
-        [onExit, onWidgetsVisibilityChange]
-    );
-
-    const items = playMenuItems.filter(
-        ({ adminOnly, playerOnly }) =>
-            (isMaster && !playerOnly) || (!isMaster && !adminOnly)
-    );
+    const items = useMemo(() => {
+        const playMenuItems: PlayMenuItemData[] = [
+            {
+                id: 'character',
+                icon: <MdOutlineContactPage size="2.25rem" />,
+                textKey: 'entity.character',
+                widget: WidgetType.character,
+                playerOnly: true
+            },
+            {
+                id: 'characters',
+                icon: <MdOutlineContactPage size="2.25rem" />,
+                textKey: 'entity.characters',
+                widget: WidgetType.characters,
+                adminOnly: true
+            },
+            {
+                id: 'dices',
+                icon: <GiRollingDiceCup size="2.25rem" />,
+                textKey: 'entity.dices',
+                widget: WidgetType.dices
+            },
+            {
+                id: 'sketch',
+                icon: <MdDraw size="2.25rem" />,
+                textKey: 'entity.sketch',
+                widget: WidgetType.sketch,
+                adminOnly: true
+            },
+            {
+                id: 'see',
+                icon: <TbEyeEdit size="2.25rem" />,
+                textKey: 'page.play.sketch.see',
+                onMouseDown: () => onWidgetsVisibilityChange('hidden'),
+                onMouseUp: () => onWidgetsVisibilityChange('visible'),
+                onMouseLeave: () => onWidgetsVisibilityChange('visible')
+            },
+            {
+                id: 'jukebox',
+                icon: <HiMusicNote size="2.25rem" />,
+                textKey: 'entity.jukebox',
+                widget: WidgetType.jukebox,
+                adminOnly: true
+            },
+            {
+                id: 'notes',
+                icon: <CgNotes size="2.25rem" />,
+                textKey: 'entity.notes',
+                widget: WidgetType.notes
+            },
+            {
+                id: 'exit',
+                icon: <MdLogout size="2.25rem" />,
+                textKey: 'action.exit',
+                onClick: onExit
+            }
+        ];
+        return playMenuItems.filter(
+            ({ adminOnly, playerOnly }) =>
+                (isMaster && !playerOnly) || (!isMaster && !adminOnly)
+        );
+    }, [onExit, onWidgetsVisibilityChange, isMaster]);
 
     return (
         <Stack w="3.5rem" h="100%" gap="1.5rem">
             {items.map(
                 ({
+                    id,
                     icon,
                     textKey,
                     widget,
@@ -144,7 +151,7 @@ const PlayMenu = ({
                     onMouseUp
                 }) => (
                     <PlayMenuItem
-                        key={`play-menu-${widget}`}
+                        key={`play-menu-${id}`}
                         icon={icon}
                         textKey={textKey}
                         onClick={widget ? () => onWidgetOpen(widget) : onClick}

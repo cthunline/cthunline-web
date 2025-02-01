@@ -9,7 +9,7 @@ import Users from './pages/users/Users.js';
 
 export interface RouterPage {
     path: string;
-    element: JSX.Element;
+    element: React.ReactElement;
     showNav: boolean;
     admin?: boolean;
     regex?: RegExp;

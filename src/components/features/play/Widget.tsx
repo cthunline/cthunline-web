@@ -1,5 +1,5 @@
 import { Box } from '@mantine/core';
-import React, { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import Draggable from 'react-draggable';
 
 import { focusWidget } from '../../../services/widget.js';
@@ -16,7 +16,7 @@ interface WidgetProps {
 }
 
 const Widget = (props: WidgetProps) => {
-    const nodeRef = React.useRef<HTMLDivElement>(null);
+    const nodeRef = useRef<HTMLDivElement>(null);
 
     const { id } = props;
 
@@ -30,7 +30,7 @@ const Widget = (props: WidgetProps) => {
         <Draggable
             bounds="parent"
             handle={`#${id}-bar`}
-            nodeRef={nodeRef}
+            nodeRef={(nodeRef as React.RefObject<HTMLDivElement>) ?? undefined}
             onStart={(e) => {
                 focusWidget(e.currentTarget as HTMLElement);
             }}

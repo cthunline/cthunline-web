@@ -1,4 +1,4 @@
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router';
 
 import { useApp } from '../../../contexts/App.js';
 import useUser from '../../../hooks/api/useUser.js';

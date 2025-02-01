@@ -1,7 +1,6 @@
 import { Divider, Group, Stack, Switch, Title } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useState } from 'react';
-import type React from 'react';
 import { BsEraserFill } from 'react-icons/bs';
 import { GiLoad, GiSave } from 'react-icons/gi';
 import { GoPencil } from 'react-icons/go';

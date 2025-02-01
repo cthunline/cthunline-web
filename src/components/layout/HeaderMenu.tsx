@@ -3,13 +3,13 @@ import { modals } from '@mantine/modals';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiUsers } from 'react-icons/fi';
 import { MdInfoOutline, MdLogout, MdOutlineSettings } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { useApp } from '../../contexts/App.js';
 import About from '../features/about/About.js';
 
 interface HeaderMenuItem {
-    icon: JSX.Element;
+    icon: React.ReactElement;
     route: string;
     textKey: string;
 }

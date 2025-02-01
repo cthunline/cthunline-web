@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 import { FaInfo } from 'react-icons/fa6';
 import { HiPlus } from 'react-icons/hi';
 import { MdEdit, MdOutlineDeleteOutline, MdOutlineSend } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { useApp } from '../../../contexts/App.js';
 import useCharacter from '../../../hooks/api/useCharacter.js';

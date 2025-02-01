@@ -23,7 +23,7 @@ const statSpans: Record<keyof Statistics, number> = {
 
 const gameData: {
     gameId: GameId;
-    Logo: (props: React.SVGProps<SVGSVGElement>) => JSX.Element;
+    Logo: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
     span: number;
 }[] = [
     { gameId: GameId.apocalypseWorld, Logo: ApocalypseWorld, span: 4 },

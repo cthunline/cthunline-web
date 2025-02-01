@@ -14,7 +14,7 @@ import type {
 // this hook holds state and event handlers for sketch drawing
 // it is meant to be used by the sketch component and sub components
 const useDrawing = (
-    svgRef: React.MutableRefObject<SVGSVGElement>,
+    svgRef: React.RefObject<SVGSVGElement | null>,
     isMaster = false
 ) => {
     const { drawingState, addSketchDrawPath, drawingColor, drawingWidth } =
@@ -59,7 +59,13 @@ const useDrawing = (
 
     // handles mouse move for drawing
     const handleDrawingMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
-        if (isMaster && drawingState.isDrawing && isDrawing && svgPoint) {
+        if (
+            svgRef.current &&
+            isMaster &&
+            drawingState.isDrawing &&
+            isDrawing &&
+            svgPoint
+        ) {
             // get svg-transformed mouse coordinates
             const { x, y } = getMouseEventSvgCoordinates(
                 e,
@@ -94,7 +100,7 @@ const useDrawing = (
 
     useEffect(() => {
         // initializes svg DOMPoint in state when reference to svg container is set
-        setSvgPoint(svgRef.current.createSVGPoint());
+        setSvgPoint(svgRef.current?.createSVGPoint());
     }, [svgRef]);
 
     return {

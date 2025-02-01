@@ -21,7 +21,7 @@ type ConsoleDisplayMode = 'minimized' | 'normal' | 'maximized';
 
 interface ConsoleProps {
     logs: PlayLog[];
-    playContentRef: React.RefObject<HTMLDivElement>;
+    playContentRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const Console = ({ logs, playContentRef }: ConsoleProps) => {

@@ -68,7 +68,7 @@ const playbooksTabsData: Partial<
     Record<
         ApocalypseWorldPlaybook,
         {
-            icon: JSX.Element;
+            icon: React.ReactElement;
         }
     >
 > = {

@@ -15,7 +15,7 @@ import useTranslation, {
 import type { Theme } from '../types/index.js';
 
 interface AppProviderProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.ReactElement | React.ReactElement[];
 }
 
 type AppHookExports = AuthHookExport &

@@ -30,8 +30,7 @@ interface SketchProps {
 
 const Sketch = ({ isMaster }: SketchProps) => {
     // reference to the main svg container element (#svg-container)
-    const svgRef =
-        useRef<SVGSVGElement>() as React.MutableRefObject<SVGSVGElement>;
+    const svgRef = useRef<SVGSVGElement | null>(null);
 
     const {
         users,

@@ -1,7 +1,7 @@
 import { Group, Loader, Stack } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router';
 
 import { useApp } from '../../../contexts/App.js';
 import { AudioClientProvider } from '../../../contexts/AudioClient.js';

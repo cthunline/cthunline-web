@@ -31,7 +31,7 @@ import type { PlaySocket, User } from '../types/index.js';
 import { useApp } from './App.js';
 
 interface PlayProviderProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.ReactElement | React.ReactElement[];
     sessionId: number;
     characterId?: number;
 }

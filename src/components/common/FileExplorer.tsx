@@ -21,7 +21,7 @@ export interface FileExplorerItem {
     name: string;
     type: FileExplorerItemType;
     parentId?: number;
-    icon?: JSX.Element;
+    icon?: React.ReactElement;
 }
 
 interface FileExplorerProps
@@ -70,7 +70,7 @@ const FileExplorer = ({
         return [dirs, fls];
     }, [items, directoryId, sort]);
 
-    const getIcon = (type: FileExplorerItemType, icon?: JSX.Element) => {
+    const getIcon = (type: FileExplorerItemType, icon?: React.ReactElement) => {
         if (icon) {
             return icon;
         }

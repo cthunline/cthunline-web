@@ -5,7 +5,7 @@ import Status from '../../Status.js';
 
 export interface SheetTab {
     key: string;
-    icon: JSX.Element;
+    icon: React.ReactElement;
     label: string;
 }
 

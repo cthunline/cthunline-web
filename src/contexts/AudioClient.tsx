@@ -18,7 +18,7 @@ import { getAssetUrl } from '../services/api.js';
 import type { Asset, PlaySocket } from '../types/index.js';
 
 interface AudioClientProviderProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.ReactElement | React.ReactElement[];
     socket: PlaySocket;
 }
 

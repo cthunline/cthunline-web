@@ -3,7 +3,7 @@ import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { GiD10 } from 'react-icons/gi';
 import { MdLogin } from 'react-icons/md';
-import { Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router';
 import z from 'zod';
 
 import { useApp } from '../../../contexts/App.js';

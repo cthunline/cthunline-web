@@ -4,7 +4,7 @@ import { FaInfo } from 'react-icons/fa6';
 import { GiRollingDices } from 'react-icons/gi';
 import { HiPlus } from 'react-icons/hi';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { useApp } from '../../../contexts/App.js';
 import useCharacter from '../../../hooks/api/useCharacter.js';

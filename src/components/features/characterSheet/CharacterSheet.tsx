@@ -67,7 +67,7 @@ const CharacterSheet = ({
         [onChange, updateStatus]
     );
 
-    const getContent = (): JSX.Element => {
+    const getContent = (): React.ReactElement => {
         if (gameId === GameId.apocalypseWorld) {
             return (
                 <ApocalypseWorldSheet

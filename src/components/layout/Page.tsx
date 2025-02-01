@@ -1,13 +1,13 @@
 import { Stack } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 import { useApp } from '../../contexts/App.js';
 import { pages } from '../router.data.js';
 import Nav from './Header.js';
 
 interface PageProps {
-    children: JSX.Element | JSX.Element[];
+    children: React.ReactElement | React.ReactElement[];
 }
 
 const Page = ({ children }: PageProps) => {
