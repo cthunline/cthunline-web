@@ -2,7 +2,6 @@ import type { SeventhSeaAdvantage } from '@cthunline/games';
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { GameId } from '../../../../../types/index.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import { advantageFields } from '../fields.js';
 
@@ -29,7 +28,7 @@ const Advantages = ({
             >
                 <Box flex="1 0">
                     <FieldLayout<SeventhSeaAdvantage>
-                        gameId={GameId.seventhSea}
+                        gameId="seventhSea"
                         fields={advantageFields}
                         textSectionKey="advantage"
                         data={advantage}

@@ -25,9 +25,7 @@ const SectionTitle = ({
 }: SectionTitleProps) => (
     <Group justify="start" align="center" gap="0.5rem" mb={mb} mt={mt}>
         {iconBefore}
-        <Title order={4} mb={mb} mt={mt}>
-            {text}
-        </Title>
+        <Title order={4}>{text}</Title>
         {iconAfter}
         {!!input && (
             <TextInput

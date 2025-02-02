@@ -1,12 +1,10 @@
 import {
-    CardinalDirection,
     type Color,
     type SketchCoordinates,
     type SketchImageData,
     type SketchResizingItemData,
     type SketchSize,
     type SketchTokenData,
-    TooltipPlacement,
     colors
 } from '../types/index.js';
 import { randomItem } from './tools.js';
@@ -91,10 +89,7 @@ export const getMovingItemCoordinates = ({
         newY + height <= viewBox.height
     ) {
         // calculate tooltip placement
-        const tooltipPlacement =
-            newY > viewBox.height / 2
-                ? TooltipPlacement.top
-                : TooltipPlacement.bottom;
+        const tooltipPlacement = newY > viewBox.height / 2 ? 'top' : 'bottom';
         // return coordinates data
         return {
             x: newX,
@@ -140,13 +135,9 @@ export const getResizingItemCoordAndPos = ({
     // ratio between item width and height
     const sizeRatio = initialWidth / initialHeight;
     // if item X position should be moving while resizing (NW and SW resize buttons)
-    const movingX =
-        direction === CardinalDirection.nw ||
-        direction === CardinalDirection.sw;
+    const movingX = direction === 'nw' || direction === 'sw';
     // if item Y position should be moving while resizing (NW and NE resize buttons)
-    const movingY =
-        direction === CardinalDirection.nw ||
-        direction === CardinalDirection.ne;
+    const movingY = direction === 'nw' || direction === 'ne';
     let newWidth: number;
     let newHeight: number;
     let newX = initialX;

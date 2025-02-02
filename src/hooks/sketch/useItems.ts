@@ -10,18 +10,16 @@ import {
     getResizingItemCoordAndPos
 } from '../../services/sketch.js';
 import { findById, findIndexById, isMainClick } from '../../services/tools.js';
-import {
-    type CardinalDirection,
-    type SketchEvent,
-    SketchEventType,
-    type SketchImageData,
+import type {
+    CardinalDirection,
+    SketchEvent,
+    SketchImageData,
     SketchItemType,
-    type SketchMovingItemData,
-    type SketchResizingItemData,
-    type SketchSelectedItem,
-    type SketchTextData,
-    type SketchTokenData,
-    TooltipPlacement
+    SketchMovingItemData,
+    SketchResizingItemData,
+    SketchSelectedItem,
+    SketchTextData,
+    SketchTokenData
 } from '../../types/index.js';
 
 // this hook holds states and event handlers for sketch items (images and tokens)
@@ -83,13 +81,13 @@ const useItems = (
 
     // gets item data from id and item type
     const getItemData = (id: string, type: SketchItemType) => {
-        if (type === SketchItemType.image) {
+        if (type === 'image') {
             return findById<SketchImageData>(images, id);
         }
-        if (type === SketchItemType.text) {
+        if (type === 'text') {
             return findById<SketchTextData>(texts, id);
         }
-        if (type === SketchItemType.token) {
+        if (type === 'token') {
             return findById<SketchTokenData>(tokens, id);
         }
         throw new Error('Could not get item data');
@@ -164,25 +162,24 @@ const useItems = (
                 itemHasMovedOfResized.current = true;
                 const { x, y, tooltipPlacement } = coord;
                 // attach new coordinates
-                if (type === SketchItemType.image) {
+                if (type === 'image') {
                     setImage(id, {
                         ...(itemData as SketchImageData),
                         x,
                         y
                     });
-                } else if (type === SketchItemType.text) {
+                } else if (type === 'text') {
                     setText(id, {
                         ...(itemData as SketchTextData),
                         x,
                         y
                     });
-                } else if (type === SketchItemType.token) {
+                } else if (type === 'token') {
                     setToken(id, {
                         ...(itemData as SketchTokenData),
                         x,
                         y,
-                        tooltipPlacement:
-                            tooltipPlacement ?? TooltipPlacement.bottom
+                        tooltipPlacement: tooltipPlacement ?? 'bottom'
                     });
                 }
             }
@@ -204,7 +201,7 @@ const useItems = (
                 resizingItemData: resizingItem
             });
             // set new size and position
-            if (data && type === SketchItemType.image) {
+            if (data && type === 'image') {
                 itemHasMovedOfResized.current = true;
                 setImage(id, {
                     ...(itemData as SketchImageData),
@@ -220,24 +217,24 @@ const useItems = (
             if (itemHasMovedOfResized.current) {
                 // updates items data in play context sketchData
                 const { type, initialX: x, initialY: y } = movingItem;
-                if (type === SketchItemType.image) {
+                if (type === 'image') {
                     const image = findById<SketchImageData>(
                         images,
                         movingItem.id
                     );
                     updateSketchImages({
                         images,
-                        eventType: SketchEventType.imageMove,
+                        eventType: 'imageMove',
                         image: { ...image, x, y }
                     });
-                } else if (type === SketchItemType.text) {
+                } else if (type === 'text') {
                     const text = findById<SketchTextData>(texts, movingItem.id);
                     updateSketchTexts({
                         texts,
-                        eventType: SketchEventType.textMove,
+                        eventType: 'textMove',
                         text: { ...text, x, y }
                     });
-                } else if (type === SketchItemType.token) {
+                } else if (type === 'token') {
                     const token = findById<SketchTokenData>(
                         tokens,
                         movingItem.id
@@ -268,14 +265,14 @@ const useItems = (
                     initialWidth: width,
                     initialHeight: height
                 } = resizingItem;
-                if (type === SketchItemType.image) {
+                if (type === 'image') {
                     const image = findById<SketchImageData>(
                         images,
                         resizingItem.id
                     );
                     updateSketchImages({
                         images,
-                        eventType: SketchEventType.imageResize,
+                        eventType: 'imageResize',
                         image: {
                             ...image,
                             x,
@@ -317,7 +314,7 @@ const useItems = (
                 const itemData = getItemData(id, type);
                 // check if we clicked in the svg element
                 const element =
-                    type === SketchItemType.text
+                    type === 'text'
                         ? e.currentTarget.closest('text')
                         : e.currentTarget.closest('svg');
                 // check if we click on a context menu or context menu backdrop
@@ -346,10 +343,7 @@ const useItems = (
                         initialY: itemY,
                         movableByUser
                     });
-                    if (
-                        type === SketchItemType.image ||
-                        type === SketchItemType.text
-                    ) {
+                    if (type === 'image' || type === 'text') {
                         setSelectedItem({ type, id });
                     }
                 }
@@ -408,16 +402,16 @@ const useItems = (
 
     // handles deletion of an item
     const handleItemDelete = (id: string, type: SketchItemType) => {
-        if (type === SketchItemType.image) {
+        if (type === 'image') {
             const imageData = findById<SketchImageData>(images, id);
             deleteSketchImage(id, imageData);
             setSelectedItem(null);
-        } else if (type === SketchItemType.text) {
+        } else if (type === 'text') {
             const textData = findById<SketchTextData>(texts, id);
             deleteSketchText(id, textData);
             setSelectedItem(null);
             setItemBeingEditing(null);
-        } else if (type === SketchItemType.token) {
+        } else if (type === 'token') {
             const tokenData = findById<SketchTokenData>(tokens, id);
             deleteSketchToken(id, tokenData);
         }
@@ -430,7 +424,7 @@ const useItems = (
             const updatedImages = forwardImage(images, currentIndex);
             updateSketchImages({
                 images: updatedImages,
-                eventType: SketchEventType.imageForward,
+                eventType: 'imageForward',
                 image: findById(updatedImages, id)
             });
         }
@@ -443,7 +437,7 @@ const useItems = (
             const updatedImages = backwardImage(images, currentIndex);
             updateSketchImages({
                 images: updatedImages,
-                eventType: SketchEventType.imageBackward,
+                eventType: 'imageBackward',
                 image: findById(updatedImages, id)
             });
         }
@@ -460,8 +454,7 @@ const useItems = (
             const updatedImage = { ...image, height };
             updateSketchImage(updatedImage, (events: SketchEvent[]) =>
                 events.map((event) =>
-                    event.type === SketchEventType.imageAdd &&
-                    event.image?.id === image.id
+                    event.type === 'imageAdd' && event.image?.id === image.id
                         ? { ...event, image: updatedImage }
                         : event
                 )

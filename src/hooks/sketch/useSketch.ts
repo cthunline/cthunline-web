@@ -8,19 +8,18 @@ import {
     viewBox
 } from '../../services/sketch.js';
 import { findById, generateId } from '../../services/tools.js';
-import {
-    type Color,
-    type PlaySocket,
-    type SessionUser,
-    type SketchData,
-    type SketchDrawingPath,
-    type SketchEvent,
+import type {
+    Color,
+    PlaySocket,
+    SessionUser,
+    SketchData,
+    SketchDrawingPath,
+    SketchEvent,
     SketchEventType,
-    type SketchImageData,
-    type SketchTextData,
-    type SketchTokenAttachedData,
-    type SketchTokenData,
-    TooltipPlacement
+    SketchImageData,
+    SketchTextData,
+    SketchTokenAttachedData,
+    SketchTokenData
 } from '../../types/index.js';
 
 type DrawingState = {
@@ -231,7 +230,7 @@ const defaultTokenData: Omit<SketchTokenData, 'id' | 'index' | 'color'> = {
     attachedData: null,
     x: 50,
     y: 50,
-    tooltipPlacement: TooltipPlacement.bottom
+    tooltipPlacement: 'bottom'
 };
 
 // this hooks holds sketch states and utility functions
@@ -297,7 +296,7 @@ const useSketch = (socket: PlaySocket | null) => {
             events: [
                 ...previous.events,
                 {
-                    type: SketchEventType.drawingAdd,
+                    type: 'drawingAdd',
                     drawing: path
                 }
             ]
@@ -315,7 +314,7 @@ const useSketch = (socket: PlaySocket | null) => {
                 events: [
                     ...previous.events,
                     {
-                        type: SketchEventType.drawingDelete,
+                        type: 'drawingDelete',
                         drawing: {
                             ...path,
                             index: pathIndex
@@ -330,9 +329,7 @@ const useSketch = (socket: PlaySocket | null) => {
         updateSketch((previous) => ({
             ...previous,
             paths: [],
-            events: previous.events.filter(
-                ({ type }) => type !== SketchEventType.drawingAdd
-            )
+            events: previous.events.filter(({ type }) => type !== 'drawingAdd')
         }));
     };
 
@@ -354,7 +351,7 @@ const useSketch = (socket: PlaySocket | null) => {
                 events: [
                     ...previous.events,
                     {
-                        type: SketchEventType.imageAdd,
+                        type: 'imageAdd',
                         image
                     }
                 ]
@@ -403,7 +400,7 @@ const useSketch = (socket: PlaySocket | null) => {
             events: [
                 ...previous.events,
                 {
-                    type: SketchEventType.imageDelete,
+                    type: 'imageDelete',
                     image
                 }
             ]
@@ -429,7 +426,7 @@ const useSketch = (socket: PlaySocket | null) => {
                 events: [
                     ...previous.events,
                     {
-                        type: SketchEventType.textAdd,
+                        type: 'textAdd',
                         text
                     }
                 ]
@@ -458,7 +455,7 @@ const useSketch = (socket: PlaySocket | null) => {
                 events: [
                     ...previous.events,
                     {
-                        type: SketchEventType.textAdd,
+                        type: 'textAdd',
                         text: newText
                     }
                 ]
@@ -532,7 +529,7 @@ const useSketch = (socket: PlaySocket | null) => {
             events: [
                 ...previous.events,
                 {
-                    type: SketchEventType.textDelete,
+                    type: 'textDelete',
                     text: textData
                 }
             ]
@@ -569,7 +566,7 @@ const useSketch = (socket: PlaySocket | null) => {
                 events: [
                     ...previous.events,
                     {
-                        type: SketchEventType.tokenAdd,
+                        type: 'tokenAdd',
                         token
                     }
                 ]
@@ -604,7 +601,7 @@ const useSketch = (socket: PlaySocket | null) => {
                         y
                     });
                     events.push({
-                        type: SketchEventType.tokenAdd,
+                        type: 'tokenAdd',
                         token
                     });
                 }
@@ -623,7 +620,7 @@ const useSketch = (socket: PlaySocket | null) => {
         userAllowed?: boolean
     ) => {
         const event: SketchEvent = {
-            type: SketchEventType.tokenMove,
+            type: 'tokenMove',
             token: initialToken
         };
         const updater = (previous: SketchData) => ({
@@ -675,7 +672,7 @@ const useSketch = (socket: PlaySocket | null) => {
             const token = findById<SketchTokenData>(tokens, id);
             // use tooltip placement to calculate new token position
             const newY =
-                token.tooltipPlacement === TooltipPlacement.bottom
+                token.tooltipPlacement === 'bottom'
                     ? token.y + 75
                     : token.y - 75;
             const newToken = {
@@ -689,7 +686,7 @@ const useSketch = (socket: PlaySocket | null) => {
                 events: [
                     ...previous.events,
                     {
-                        type: SketchEventType.tokenAdd,
+                        type: 'tokenAdd',
                         token: newToken
                     }
                 ]
@@ -723,7 +720,7 @@ const useSketch = (socket: PlaySocket | null) => {
             events: [
                 ...previous.events,
                 {
-                    type: SketchEventType.tokenDelete,
+                    type: 'tokenDelete',
                     token
                 }
             ]
@@ -823,7 +820,7 @@ const useSketch = (socket: PlaySocket | null) => {
             updateSketch((previous) => ({
                 ...previous,
                 images:
-                    lastEvent.type === SketchEventType.imageForward
+                    lastEvent.type === 'imageForward'
                         ? backwardImage(previous.images, image.index)
                         : forwardImage(previous.images, image.index),
                 events: removeLastEvent(previous.events)
@@ -928,43 +925,43 @@ const useSketch = (socket: PlaySocket | null) => {
         const lastEvent = sketchData.events.at(-1);
         if (lastEvent) {
             switch (lastEvent.type) {
-                case SketchEventType.drawingAdd:
+                case 'drawingAdd':
                     undoDrawingAdd();
                     break;
-                case SketchEventType.drawingDelete:
+                case 'drawingDelete':
                     undoDrawingDelete(lastEvent);
                     break;
-                case SketchEventType.imageAdd:
+                case 'imageAdd':
                     undoImageAdd(lastEvent);
                     break;
-                case SketchEventType.imageMove:
-                case SketchEventType.imageResize:
+                case 'imageMove':
+                case 'imageResize':
                     undoImageMoveOrResize(lastEvent);
                     break;
-                case SketchEventType.imageDelete:
+                case 'imageDelete':
                     undoImageDelete(lastEvent);
                     break;
-                case SketchEventType.imageForward:
-                case SketchEventType.imageBackward:
+                case 'imageForward':
+                case 'imageBackward':
                     undoImageForwardOrBackward(lastEvent);
                     break;
-                case SketchEventType.textAdd:
+                case 'textAdd':
                     undoTextAdd(lastEvent);
                     break;
-                case SketchEventType.textEdit:
-                case SketchEventType.textMove:
+                case 'textEdit':
+                case 'textMove':
                     undoTextUpdate(lastEvent);
                     break;
-                case SketchEventType.textDelete:
+                case 'textDelete':
                     undoTextDelete(lastEvent);
                     break;
-                case SketchEventType.tokenAdd:
+                case 'tokenAdd':
                     undoTokenAdd(lastEvent);
                     break;
-                case SketchEventType.tokenMove:
+                case 'tokenMove':
                     undoTokenMove(lastEvent);
                     break;
-                case SketchEventType.tokenDelete:
+                case 'tokenDelete':
                     undoTokenDelete(lastEvent);
                     break;
                 default:

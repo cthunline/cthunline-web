@@ -12,7 +12,7 @@ import { toast } from '../../../services/toast.js';
 import ContentBox from '../../common/ContentBox.js';
 import FileExplorer, {
     type FileExplorerItem,
-    FileExplorerItemType
+    type FileExplorerItemType
 } from '../../common/FileExplorer.js';
 import DirectoryForm from './DirectoryForm.js';
 
@@ -113,7 +113,7 @@ const Assets = () => {
     };
 
     const onEdit = (type: FileExplorerItemType, id: number, name: string) => {
-        if (type === FileExplorerItemType.directory) {
+        if (type === 'directory') {
             modals.open({
                 centered: true,
                 modalId: editDirModalId,
@@ -131,7 +131,7 @@ const Assets = () => {
     };
 
     const onDelete = (type: FileExplorerItemType, id: number, name: string) => {
-        if (type === FileExplorerItemType.directory) {
+        if (type === 'directory') {
             const confirmText = T('page.assets.deleteDirectoryConfirm', {
                 name
             });
@@ -147,7 +147,7 @@ const Assets = () => {
                 }
             });
         }
-        if (type === FileExplorerItemType.file) {
+        if (type === 'file') {
             const confirmText = T('page.assets.deleteAssetConfirm', { name });
             modals.openConfirmModal({
                 centered: true,
@@ -168,13 +168,13 @@ const Assets = () => {
             id,
             name,
             parentId,
-            type: FileExplorerItemType.directory
+            type: 'directory' as const
         })),
         ...assetList.map(({ id, name, type, directoryId }) => ({
             id,
             name,
             parentId: directoryId,
-            type: FileExplorerItemType.file,
+            type: 'file' as const,
             icon:
                 type === 'audio' ? (
                     <HiMusicNote size={25} />

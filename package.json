@@ -1,6 +1,6 @@
 {
     "name": "cthunline-web",
-    "version": "2.16.0",
+    "version": "2.17.0",
     "type": "module",
     "scripts": {
         "dev": "vite serve src --config vite.config.ts",
@@ -10,7 +10,7 @@
         "format": "npx @biomejs/biome check --write --error-on-warnings && npx tsc --noEmit"
     },
     "dependencies": {
-        "@cthunline/games": "^3.6.0",
+        "@cthunline/games": "^3.6.3",
         "@mantine/core": "^7.16.2",
         "@mantine/form": "^7.16.2",
         "@mantine/hooks": "^7.16.2",
@@ -42,7 +42,7 @@
     },
     "devDependencies": {
         "@biomejs/biome": "^1.9.4",
-        "@pitininja/vite-translations": "^1.1.1",
+        "@pitininja/vite-translations": "^1.2.0",
         "@total-typescript/ts-reset": "^0.6.1",
         "@types/howler": "^2.2.12",
         "@types/node": "^22.13.0",

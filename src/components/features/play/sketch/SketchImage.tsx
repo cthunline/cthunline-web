@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { CardinalDirection } from '../../../../types/index.js';
+import type { CardinalDirection } from '../../../../types/index.js';
 import SketchContextMenu, {
     contextMenuHandler,
     type ContextMenuPosition
@@ -8,12 +8,7 @@ import SketchContextMenu, {
 
 import './SketchImage.css';
 
-const resizeRects: CardinalDirection[] = [
-    CardinalDirection.nw,
-    CardinalDirection.ne,
-    CardinalDirection.se,
-    CardinalDirection.sw
-];
+const resizeRects: CardinalDirection[] = ['nw', 'ne', 'se', 'sw'];
 
 interface SketchImageProps {
     id: string;

@@ -21,10 +21,9 @@ import {
 } from 'react-icons/gi';
 
 import { useApp } from '../../../../contexts/App.js';
-import {
-    type CharacterData,
-    type CharacterSheetStatus,
-    GameId
+import type {
+    CharacterData,
+    CharacterSheetStatus
 } from '../../../../types/index.js';
 import CoCLogo from '../../../svg/games/callOfCthulhu/CallOfCthulhuLogo.js';
 import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
@@ -243,7 +242,7 @@ const CoCSheet = ({
                             />
                             <FieldLayout<CoCBiography>
                                 textSectionKey="biography"
-                                gameId={GameId.callOfCthulhu}
+                                gameId="callOfCthulhu"
                                 fields={biographyFields}
                                 data={characterData.biography}
                                 readonly={readonly}
@@ -265,7 +264,7 @@ const CoCSheet = ({
                         text={T('game.callOfCthulhu.common.story')}
                     />
                     <FieldLayout<CoCStory>
-                        gameId={GameId.callOfCthulhu}
+                        gameId="callOfCthulhu"
                         fields={storyFields}
                         textSectionKey="story"
                         data={characterData.story}

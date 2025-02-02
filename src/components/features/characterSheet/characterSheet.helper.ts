@@ -1,4 +1,5 @@
 import {
+    alien,
     apocalypseWorld,
     callOfCthulhu,
     dnd5,
@@ -7,25 +8,26 @@ import {
     warhammerFantasy
 } from '@cthunline/games';
 
-import { GameId } from '../../../types/index.js';
-
 export const getDefaultData = (gameId: string) => {
-    if (gameId === GameId.apocalypseWorld) {
+    if (gameId === 'alien') {
+        return alien.default;
+    }
+    if (gameId === 'apocalypseWorld') {
         return apocalypseWorld.default;
     }
-    if (gameId === GameId.callOfCthulhu) {
+    if (gameId === 'callOfCthulhu') {
         return callOfCthulhu.default;
     }
-    if (gameId === GameId.dnd5) {
+    if (gameId === 'dnd5') {
         return dnd5.default;
     }
-    if (gameId === GameId.seventhSea) {
+    if (gameId === 'seventhSea') {
         return seventhSea.default;
     }
-    if (gameId === GameId.starWarsD6) {
+    if (gameId === 'starWarsD6') {
         return starWarsD6.default;
     }
-    if (gameId === GameId.warhammerFantasy) {
+    if (gameId === 'warhammerFantasy') {
         return warhammerFantasy.default;
     }
     throw new Error('Could not get default character data');

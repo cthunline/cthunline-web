@@ -53,7 +53,11 @@ const Header = () => {
             className="app-header"
         >
             <Group {...sectionProps}>
-                <UnstyledButton component={Link} to="/home">
+                <UnstyledButton
+                    component={Link}
+                    to="/home"
+                    className="app-header-logo"
+                >
                     <GiD10 size="2.5rem" />
                 </UnstyledButton>
             </Group>

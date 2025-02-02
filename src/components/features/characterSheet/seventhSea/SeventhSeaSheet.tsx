@@ -27,10 +27,9 @@ import {
 } from 'react-icons/gi';
 
 import { useApp } from '../../../../contexts/App.js';
-import {
-    type CharacterData,
-    type CharacterSheetStatus,
-    GameId
+import type {
+    CharacterData,
+    CharacterSheetStatus
 } from '../../../../types/index.js';
 import Textarea from '../../../common/Textarea.js';
 import SeventhSeaLogo from '../../../svg/games/seventhSea/SeventhSeaLogo.js';
@@ -287,7 +286,7 @@ const SeventhSeaSheet = ({
                                 text={T('game.seventhSea.common.biography')}
                             />
                             <FieldLayout<SeventhSeaBiography>
-                                gameId={GameId.seventhSea}
+                                gameId="seventhSea"
                                 fields={biographyFields}
                                 textSectionKey="biography"
                                 data={characterData.biography}
@@ -319,7 +318,7 @@ const SeventhSeaSheet = ({
                         text={T('game.seventhSea.common.arcana')}
                     />
                     <FieldLayout<SeventhSeaArcana>
-                        gameId={GameId.seventhSea}
+                        gameId="seventhSea"
                         fields={arcanaFields}
                         textSectionKey="arcana"
                         data={characterData.arcana}

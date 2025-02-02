@@ -1,0 +1,107 @@
+{
+    "game": {
+        "alien": {
+            "attributes": {
+                "attributesAndSkills": "attributes and skills",
+                "agility": {
+                    "agility": "agility",
+                    "skills": {
+                        "mobility": "mobility",
+                        "piloting": "piloting",
+                        "rangedCombat": "ranged combat"
+                    }
+                },
+                "empathy": {
+                    "empathy": "empathy",
+                    "skills": {
+                        "command": "command",
+                        "manipulation": "manipulation",
+                        "medicalAid": "medical aid"
+                    }
+                },
+                "strength": {
+                    "strength": "strength",
+                    "skills": {
+                        "closeCombat": "close combat",
+                        "heavyMachinery": "heavy machinery",
+                        "stamina": "stamina"
+                    }
+                },
+                "wits": {
+                    "wits": "wits",
+                    "skills": {
+                        "comtech": "comtech",
+                        "observation": "observation",
+                        "survival": "survival"
+                    }
+                }
+            },
+            "biography": {
+                "biography": "biography",
+                "name": "name",
+                "career": "career",
+                "appearance": "appearance",
+                "personalAgenda": "personal agenda"
+            },
+            "consumables": {
+                "consumables": "consumables",
+                "air": "air",
+                "power": "power",
+                "food": "food",
+                "water": "water"
+            },
+            "equipment": {
+                "armor": {
+                    "armor": "armor",
+                    "name": "name",
+                    "rating": "rating"
+                },
+                "encumbrance": "encumbrance",
+                "equipment": "equipment",
+                "gear": "gear",
+                "signatureItem": "signature item",
+                "tinyItems": "tiny items",
+                "weapons": {
+                    "weapons": "weapons",
+                    "name": "name",
+                    "bonus": "bonus",
+                    "damage": "damage",
+                    "range": "range"
+                }
+            },
+            "experience": {
+                "experience": "experience",
+                "experiencePoints": "experience points",
+                "storyPoints": "story points"
+            },
+            "relationships": {
+                "relationships": "relationships",
+                "buddy": "buddy",
+                "rival": "rival"
+            },
+            "status": {
+                "status": "status",
+                "stressLevel": "stress",
+                "health": "health",
+                "radiation": "radiation",
+                "criticalInjuries": "critical injuries",
+                "conditions": {
+                    "conditions": "conditions",
+                    "starving": "starving",
+                    "dehydrated": "dehydrated",
+                    "exhausted": "exhausted",
+                    "freezing": "freezing"
+                }
+            },
+            "tab": {
+                "biography": "biography",
+                "statistics": "statistics",
+                "equipment": "equipment"
+            },
+            "talents": {
+                "talent": "talent",
+                "talents": "talents"
+            }
+        }
+    }
+}

@@ -2,7 +2,6 @@ import type { SeventhSeaBackground } from '@cthunline/games';
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { GameId } from '../../../../../types/index.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import { backgroundFields } from '../fields.js';
 
@@ -24,7 +23,7 @@ const Backgrounds = ({
             <Group key={`background-${index.toString()}`} w="100%" gap="1rem">
                 <Box flex="1 0">
                     <FieldLayout<SeventhSeaBackground>
-                        gameId={GameId.seventhSea}
+                        gameId="seventhSea"
                         fields={backgroundFields}
                         textSectionKey="background"
                         data={background}

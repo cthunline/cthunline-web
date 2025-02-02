@@ -1,23 +1,27 @@
 import { Checkbox, Grid } from '@mantine/core';
+import type { IconType } from 'react-icons';
 
 import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
 import type { GameId } from '../../../../../types/index.js';
-import TextInput from '../../../../common/TextInput.js';
+import TextInput, { type InputVariant } from '../../../../common/TextInput.js';
 import Textarea from '../../../../common/Textarea.js';
 import SectionTitle from '../sectionTitle/SectionTitle.js';
 
 export interface Field<DataType> {
     key?: keyof DataType;
     title?: boolean;
+    TitleIcon?: IconType;
     gridColumn: number;
-    type?: string;
+    type?: 'string' | 'number' | 'boolean';
     lines?: number;
     children?: Field<DataType>[];
     readonly?: boolean;
+    hideLabel?: boolean;
 }
 
 interface InputProps<DataType> {
+    variant?: InputVariant;
     index: number;
     field: Field<DataType>;
     gameId: GameId;
@@ -28,9 +32,18 @@ interface InputProps<DataType> {
 }
 
 export const FieldInput = <DataType extends {}>({
+    variant,
     index,
     gameId,
-    field: { key, title, type, lines, readonly: fieldReadonly },
+    field: {
+        key,
+        title,
+        TitleIcon,
+        type,
+        lines,
+        readonly: fieldReadonly,
+        hideLabel
+    },
     textSectionKey,
     data,
     readonly,
@@ -43,19 +56,20 @@ export const FieldInput = <DataType extends {}>({
                 <SectionTitle
                     key={`field-${String(key ?? index)}-title`}
                     text={T(`game.${gameId}.${textSectionKey}.${String(key)}`)}
-                    mb="0.25rem"
+                    iconBefore={TitleIcon ? <TitleIcon size={20} /> : undefined}
+                    mb="1rem"
                 />
             )}
             {!!key && !!lines && (
                 <Textarea
                     key={`field-${String(key ?? index)}-input`}
-                    variant="contained"
+                    variant={variant ?? 'contained'}
                     w="100%"
                     rows={lines}
                     readOnly={fieldReadonly || readonly}
                     size="sm"
                     label={
-                        title
+                        title || hideLabel
                             ? undefined
                             : T(
                                   `game.${gameId}.${textSectionKey}.${String(key ?? index)}`
@@ -74,12 +88,12 @@ export const FieldInput = <DataType extends {}>({
             {!!key && !lines && (
                 <TextInput
                     key={`field-${String(key ?? index)}-input`}
-                    variant="contained"
+                    variant={variant ?? 'contained'}
                     w="100%"
                     readOnly={fieldReadonly || readonly}
                     size="sm"
                     label={
-                        title
+                        title || hideLabel
                             ? undefined
                             : T(
                                   `game.${gameId}.${textSectionKey}.${String(key ?? index)}`
@@ -145,6 +159,8 @@ const FieldCheckbox = <DataType extends {}>({
 };
 
 interface FieldLayoutProps<DataType> {
+    flex?: string | number;
+    variant?: InputVariant;
     gameId: GameId;
     fields: Field<DataType>[];
     textSectionKey: string;
@@ -157,9 +173,9 @@ interface FieldLayoutProps<DataType> {
 const FieldLayout = <DataType extends {}>(
     props: FieldLayoutProps<DataType>
 ) => {
-    const { fields, gap } = props;
+    const { flex, fields, gap } = props;
     return (
-        <Grid w="100%" gutter={gap}>
+        <Grid w="100%" gutter={gap} flex={flex}>
             {fields.map((field, index) => (
                 <Grid.Col
                     key={`field-${String(field.key ?? index)}`}

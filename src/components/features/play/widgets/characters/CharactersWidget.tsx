@@ -3,7 +3,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { FaUsers } from 'react-icons/fa6';
 
 import { useApp } from '../../../../../contexts/App.js';
-import { type SessionUser, WidgetType } from '../../../../../types/index.js';
+import type { SessionUser, WidgetType } from '../../../../../types/index.js';
 import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
 import Widget from '../../Widget.js';
 
@@ -48,9 +48,9 @@ const CharactersWidget = ({ users, onClose }: CharacterWidgetProps) => {
 
     return (
         <Widget
-            id={`widget-${WidgetType.characters}`}
+            id="widget-characters"
             title={T('entity.characters')}
-            onClose={() => onClose(WidgetType.characters)}
+            onClose={() => onClose('characters')}
         >
             <Group
                 className="characters-widget"

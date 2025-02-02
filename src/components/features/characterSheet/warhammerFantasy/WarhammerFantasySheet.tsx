@@ -12,10 +12,9 @@ import {
 } from 'react-icons/gi';
 
 import { useApp } from '../../../../contexts/App.js';
-import {
-    type CharacterData,
-    type CharacterSheetStatus,
-    GameId
+import type {
+    CharacterData,
+    CharacterSheetStatus
 } from '../../../../types/index.js';
 import WarhammerFantasyLogo from '../../../svg/games/warhammerFantasy/WarhammerFantasyLogo.js';
 import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
@@ -193,7 +192,7 @@ const WarhammerFantasySheet = ({
                                 )}
                             />
                             <FieldLayout<WarhammerFantasyBiography>
-                                gameId={GameId.warhammerFantasy}
+                                gameId="warhammerFantasy"
                                 fields={biographyFields}
                                 textSectionKey="biography"
                                 data={characterData.biography}
@@ -214,6 +213,7 @@ const WarhammerFantasySheet = ({
                             />
                         </Box>
                     </Group>
+                    {/* status */}
                     <Status
                         readonly={readonly}
                         character={characterData}

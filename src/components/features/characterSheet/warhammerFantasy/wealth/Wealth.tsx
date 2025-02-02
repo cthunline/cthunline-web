@@ -7,7 +7,6 @@ import { useMemo } from 'react';
 import { GiCash } from 'react-icons/gi';
 
 import { useApp } from '../../../../../contexts/App.js';
-import { GameId } from '../../../../../types/index.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { wealthFields } from '../fields.js';
@@ -41,7 +40,7 @@ const Wealth = ({ readonly, character, onChange, flex }: WealthProps) => {
                 <Box flex="6 0">
                     <FieldLayout<WarhammerFantasyWealth>
                         gap="0.5rem"
-                        gameId={GameId.warhammerFantasy}
+                        gameId="warhammerFantasy"
                         fields={wealthFields}
                         textSectionKey="wealth"
                         data={character.wealth}

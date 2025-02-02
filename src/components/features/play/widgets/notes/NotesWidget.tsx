@@ -6,7 +6,7 @@ import { useApp } from '../../../../../contexts/App.js';
 import { usePlay } from '../../../../../contexts/Play.js';
 import useCharacterSheetStatus from '../../../../../hooks/api/useCharacterSheetStatus.js';
 import useNote from '../../../../../hooks/api/useNote.js';
-import { type Note, WidgetType } from '../../../../../types/index.js';
+import type { Note, WidgetType } from '../../../../../types/index.js';
 import Widget from '../../Widget.js';
 import NoteCreate from './NoteCreate.js';
 import NoteEditor from './NoteEditor.js';
@@ -109,9 +109,9 @@ const NotesWidget = ({ onClose }: NotesWidgetProps) => {
 
     return (
         <Widget
-            id={`widget-${WidgetType.notes}`}
+            id="widget-notes"
             title={T('entity.notes')}
-            onClose={() => onClose(WidgetType.notes)}
+            onClose={() => onClose('notes')}
         >
             <Stack w="35rem" h="30rem">
                 {editorNote ? (

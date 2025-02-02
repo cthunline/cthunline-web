@@ -22,7 +22,6 @@ import {
 } from 'react-icons/gi';
 
 import { useApp } from '../../../../../contexts/App.js';
-import { GameId } from '../../../../../types/index.js';
 import TextInput from '../../../../common/TextInput.js';
 import Textarea from '../../../../common/Textarea.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
@@ -62,7 +61,7 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
                                 text={T('game.warhammerFantasy.fate.fate')}
                             />
                             <FieldLayout<WarhammerFantasyFate>
-                                gameId={GameId.warhammerFantasy}
+                                gameId="warhammerFantasy"
                                 fields={fateFields}
                                 textSectionKey="fate"
                                 data={character.fate}
@@ -81,7 +80,7 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
                                 )}
                             />
                             <FieldLayout<WarhammerFantasyResilience>
-                                gameId={GameId.warhammerFantasy}
+                                gameId="warhammerFantasy"
                                 fields={resilienceFields}
                                 textSectionKey="resilience"
                                 data={character.resilience}
@@ -117,7 +116,7 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
                         text={T('game.warhammerFantasy.experience.experience')}
                     />
                     <FieldLayout<WarhammerFantasyExperience>
-                        gameId={GameId.warhammerFantasy}
+                        gameId="warhammerFantasy"
                         fields={experienceFields}
                         textSectionKey="experience"
                         data={character.experience}
@@ -134,7 +133,7 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
                         text={T('game.warhammerFantasy.movement.movement')}
                     />
                     <FieldLayout<WarhammerFantasyMovement>
-                        gameId={GameId.warhammerFantasy}
+                        gameId="warhammerFantasy"
                         fields={movementFields}
                         textSectionKey="movement"
                         data={character.movement}
@@ -164,7 +163,7 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
                         text={T('game.warhammerFantasy.common.wounds')}
                     />
                     <FieldLayout<WarhammerFantasyWounds>
-                        gameId={GameId.warhammerFantasy}
+                        gameId="warhammerFantasy"
                         fields={woundsFields}
                         textSectionKey="wounds"
                         data={character.wounds}
@@ -236,7 +235,7 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
                         text={T('game.warhammerFantasy.common.ambitions')}
                     />
                     <FieldLayout<WarhammerFantasyAmbitions>
-                        gameId={GameId.warhammerFantasy}
+                        gameId="warhammerFantasy"
                         fields={ambitionsFields}
                         textSectionKey="ambitions"
                         data={character.ambitions}
@@ -253,7 +252,7 @@ const Status = ({ readonly, character, onChange }: StatusProps) => {
                         text={T('game.warhammerFantasy.common.party')}
                     />
                     <FieldLayout<WarhammerFantasyParty>
-                        gameId={GameId.warhammerFantasy}
+                        gameId="warhammerFantasy"
                         fields={partyFields}
                         textSectionKey="party"
                         data={character.party}

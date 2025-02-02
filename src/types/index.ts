@@ -1,4 +1,5 @@
 import type {
+    AlienCharacter,
     ApocalypseWorldCharacter,
     CoCCharacter,
     DnD5Character,
@@ -183,6 +184,7 @@ export type NoteEditBody = Partial<NoteCreateBody>;
 export type CharacterSheetStatus = 'idle' | 'saving' | 'saved';
 
 export type CharacterData =
+    | AlienCharacter
     | ApocalypseWorldCharacter
     | CoCCharacter
     | DnD5Character
@@ -211,14 +213,14 @@ export interface PortraitUploadBody {
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ game
 
-export enum GameId {
-    apocalypseWorld = 'apocalypseWorld',
-    callOfCthulhu = 'callOfCthulhu',
-    dnd5 = 'dnd5',
-    seventhSea = 'seventhSea',
-    starWarsD6 = 'starWarsD6',
-    warhammerFantasy = 'warhammerFantasy'
-}
+export type GameId =
+    | 'alien'
+    | 'apocalypseWorld'
+    | 'callOfCthulhu'
+    | 'dnd5'
+    | 'seventhSea'
+    | 'starWarsD6'
+    | 'warhammerFantasy';
 
 export interface Game {
     id: string;
@@ -239,14 +241,13 @@ export interface PlayLog {
     text: string;
 }
 
-export enum WidgetType {
-    character = 'character',
-    characters = 'characters',
-    dices = 'dices',
-    sketch = 'sketch',
-    jukebox = 'jukebox',
-    notes = 'notes'
-}
+export type WidgetType =
+    | 'character'
+    | 'characters'
+    | 'dices'
+    | 'sketch'
+    | 'jukebox'
+    | 'notes';
 
 export type WidgetVisibility = 'visible' | 'hidden';
 
@@ -294,11 +295,7 @@ export interface SketchImageData {
     y: number;
 }
 
-export enum SketchItemType {
-    image = 'image',
-    text = 'text',
-    token = 'token'
-}
+export type SketchItemType = 'image' | 'text' | 'token';
 
 export interface SketchSelectedItem {
     type: SketchItemType;
@@ -356,24 +353,23 @@ export interface SketchTokenData {
     tooltipPlacement: TooltipPlacement;
 }
 
-export enum SketchEventType {
-    drawingAdd = 'drawingAdd',
-    drawingDelete = 'drawingDelete',
-    imageAdd = 'imageAdd',
-    imageMove = 'imageMove',
-    imageResize = 'imageResize',
-    imageDelete = 'imageDelete',
-    imageForward = 'imageForward',
-    imageBackward = 'imageBackward',
-    textAdd = 'textAdd',
-    textEdit = 'textEdit',
-    textMove = 'textMove',
-    textUpdate = 'textUpdate',
-    textDelete = 'textDelete',
-    tokenAdd = 'tokenAdd',
-    tokenMove = 'tokenMove',
-    tokenDelete = 'tokenDelete'
-}
+export type SketchEventType =
+    | 'drawingAdd'
+    | 'drawingDelete'
+    | 'imageAdd'
+    | 'imageMove'
+    | 'imageResize'
+    | 'imageDelete'
+    | 'imageForward'
+    | 'imageBackward'
+    | 'textAdd'
+    | 'textEdit'
+    | 'textMove'
+    | 'textUpdate'
+    | 'textDelete'
+    | 'tokenAdd'
+    | 'tokenMove'
+    | 'tokenDelete';
 
 export interface SketchEvent {
     // type of event
@@ -401,19 +397,9 @@ export interface SketchSize {
     height: number;
 }
 
-export enum CardinalDirection {
-    nw = 'nw',
-    ne = 'ne',
-    se = 'se',
-    sw = 'sw'
-}
+export type CardinalDirection = 'nw' | 'ne' | 'se' | 'sw';
 
-export enum TooltipPlacement {
-    top = 'top',
-    right = 'right',
-    bottom = 'bottom',
-    left = 'left'
-}
+export type TooltipPlacement = 'top' | 'right' | 'bottom' | 'left';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Sketch
 

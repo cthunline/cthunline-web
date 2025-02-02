@@ -21,10 +21,9 @@ import {
 } from 'react-icons/gi';
 
 import { useApp } from '../../../../contexts/App.js';
-import {
-    type CharacterData,
-    type CharacterSheetStatus,
-    GameId
+import type {
+    CharacterData,
+    CharacterSheetStatus
 } from '../../../../types/index.js';
 import SWD6Logo from '../../../svg/games/starWarsD6/StarWarsD6Logo.js';
 import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
@@ -260,7 +259,7 @@ const SWD6Sheet = ({
                                 text={T('game.starWarsD6.common.biography')}
                             />
                             <FieldLayout<SWD6Biography>
-                                gameId={GameId.starWarsD6}
+                                gameId="starWarsD6"
                                 fields={biographyFields}
                                 textSectionKey="biography"
                                 data={characterData.biography}
@@ -280,7 +279,7 @@ const SWD6Sheet = ({
                     {/* story */}
                     <FieldLayout<SWD6Story>
                         key="swd6-story"
-                        gameId={GameId.starWarsD6}
+                        gameId="starWarsD6"
                         fields={storyFields}
                         textSectionKey="story"
                         data={characterData.story}

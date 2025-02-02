@@ -8,7 +8,7 @@ import { AudioClientProvider } from '../../../contexts/AudioClient.js';
 import { AudioMasterProvider } from '../../../contexts/AudioMaster.js';
 import { PlayProvider, usePlay } from '../../../contexts/Play.js';
 import { focusWidget } from '../../../services/widget.js';
-import { WidgetType, type WidgetVisibility } from '../../../types/index.js';
+import type { WidgetType, WidgetVisibility } from '../../../types/index.js';
 import AudioClientVolume from '../../features/play/AudioClientVolume.js';
 import Console from '../../features/play/Console.js';
 import Sketch from '../../features/play/Sketch.js';
@@ -81,7 +81,7 @@ const PlayContent = () => {
         widgs.map((widget) => {
             const key = `widget-${widget}`;
             switch (widget) {
-                case WidgetType.dices:
+                case 'dices':
                     return (
                         <DicesWidget
                             key={key}
@@ -90,7 +90,7 @@ const PlayContent = () => {
                             onClose={onWidgetClose}
                         />
                     );
-                case WidgetType.character:
+                case 'character':
                     return (
                         <CharacterWidget
                             key={key}
@@ -99,7 +99,7 @@ const PlayContent = () => {
                             onClose={onWidgetClose}
                         />
                     );
-                case WidgetType.characters:
+                case 'characters':
                     return (
                         <CharactersWidget
                             key={key}
@@ -107,11 +107,11 @@ const PlayContent = () => {
                             onClose={onWidgetClose}
                         />
                     );
-                case WidgetType.jukebox:
+                case 'jukebox':
                     return <JukeboxWidget key={key} onClose={onWidgetClose} />;
-                case WidgetType.sketch:
+                case 'sketch':
                     return <SketchWidget key={key} onClose={onWidgetClose} />;
-                case WidgetType.notes:
+                case 'notes':
                     return <NotesWidget key={key} onClose={onWidgetClose} />;
                 default:
                     return null;

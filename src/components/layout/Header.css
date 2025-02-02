@@ -3,6 +3,11 @@
     border-bottom: 1px solid var(--mantine-color-dark-4);
 }
 
+.app-header-logo {
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
 .nav-item:hover,
 .nav-item.selected {
     text-decoration: underline;

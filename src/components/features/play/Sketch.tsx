@@ -6,12 +6,10 @@ import { usePlay } from '../../../contexts/Play.js';
 import useDrawing from '../../../hooks/sketch/useDrawing.js';
 import useItems from '../../../hooks/sketch/useItems.js';
 import { viewBox } from '../../../services/sketch.js';
-import {
-    type CardinalDirection,
-    type Color,
-    type SessionUser,
-    SketchEventType,
-    SketchItemType
+import type {
+    CardinalDirection,
+    Color,
+    SessionUser
 } from '../../../types/index.js';
 import CharacterPortraits from './CharacterPortraits.js';
 import SketchContextMenu, {
@@ -225,34 +223,29 @@ const Sketch = ({ isMaster }: SketchProps) => {
                             drawingState.isDrawing || drawingState.isErasing
                         }
                         moving={
-                            movingItem?.type === SketchItemType.image &&
+                            movingItem?.type === 'image' &&
                             movingItem?.id === id
                         }
                         resizing={
-                            resizingItem?.type === SketchItemType.image &&
+                            resizingItem?.type === 'image' &&
                             resizingItem?.id === id
                         }
                         onLoad={(element) => {
                             updateImageHeight(id, element);
                         }}
                         onMouseDown={(e) => {
-                            handleItemMouseDown(e, id, SketchItemType.image);
+                            handleItemMouseDown(e, id, 'image');
                         }}
                         onResizeMouseDown={(
                             e: React.MouseEvent<SVGRectElement>,
                             direction: CardinalDirection
                         ) => {
-                            handleResizeMouseDown(
-                                e,
-                                id,
-                                SketchItemType.image,
-                                direction
-                            );
+                            handleResizeMouseDown(e, id, 'image', direction);
                         }}
                         onForward={() => handleImageForward(id)}
                         onBackward={() => handleImageBackward(id)}
                         onDelete={() => {
-                            handleItemDelete(id, SketchItemType.image);
+                            handleItemDelete(id, 'image');
                         }}
                     />
                 ))}
@@ -289,11 +282,11 @@ const Sketch = ({ isMaster }: SketchProps) => {
                             selected={selectedItem?.id === id}
                             isDrawing={drawingState.isDrawing}
                             moving={
-                                movingItem?.type === SketchItemType.text &&
+                                movingItem?.type === 'text' &&
                                 movingItem?.id === id
                             }
                             onMouseDown={(e) => {
-                                handleItemMouseDown(e, id, SketchItemType.text);
+                                handleItemMouseDown(e, id, 'text');
                             }}
                             onEdit={(text: string) => {
                                 const updatedText = {
@@ -301,7 +294,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
                                     text
                                 };
                                 updateSketchText(updatedText, {
-                                    type: SketchEventType.textEdit,
+                                    type: 'textEdit',
                                     text: textData
                                 });
                             }}
@@ -315,7 +308,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
                                 duplicateText(id);
                             }}
                             onDelete={() => {
-                                handleItemDelete(id, SketchItemType.text);
+                                handleItemDelete(id, 'text');
                             }}
                         />
                     );
@@ -324,7 +317,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
                 {tokens.map(
                     ({ id, color, attachedData, x, y, tooltipPlacement }) => {
                         const isMoving =
-                            movingItem?.type === SketchItemType.token &&
+                            movingItem?.type === 'token' &&
                             movingItem?.id === id;
                         return (
                             <SketchToken
@@ -346,7 +339,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
                                     handleItemMouseDown(
                                         e,
                                         id,
-                                        SketchItemType.token,
+                                        'token',
                                         isMovable
                                     );
                                 }}
@@ -371,7 +364,7 @@ const Sketch = ({ isMaster }: SketchProps) => {
                                     changeTokenColor(id, tokenColor);
                                 }}
                                 onDelete={() => {
-                                    handleItemDelete(id, SketchItemType.token);
+                                    handleItemDelete(id, 'token');
                                 }}
                             />
                         );

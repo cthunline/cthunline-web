@@ -14,15 +14,14 @@ import { usePlay } from '../../../../../contexts/Play.js';
 import useAsset from '../../../../../hooks/api/useAsset.js';
 import useDirectory from '../../../../../hooks/api/useDirectory.js';
 import useSessionSketch from '../../../../../hooks/api/useSessionSketch.js';
-import {
-    type Asset,
-    type SketchCreateBody,
-    type SketchUpdateBody,
+import type {
+    Asset,
+    SketchCreateBody,
+    SketchUpdateBody,
     WidgetType
 } from '../../../../../types/index.js';
 import FileExplorer, {
-    type FileExplorerItem,
-    FileExplorerItemType
+    type FileExplorerItem
 } from '../../../../common/FileExplorer.js';
 import Widget from '../../Widget.js';
 import ActionButton, {
@@ -336,7 +335,7 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
             id,
             name,
             parentId,
-            type: FileExplorerItemType.directory
+            type: 'directory'
         })
     );
 
@@ -346,9 +345,9 @@ const SketchWidget = ({ onClose }: SketchWidgetProps) => {
 
     return (
         <Widget
-            id={`widget-${WidgetType.sketch}`}
+            id="widget-sketch"
             title={T('entity.sketch')}
-            onClose={() => onClose(WidgetType.sketch)}
+            onClose={() => onClose('sketch')}
         >
             <Stack align="center" w="450px" gap="1rem">
                 <Switch

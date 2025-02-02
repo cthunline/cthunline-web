@@ -1,4 +1,5 @@
 import type {
+    AlienCharacter,
     ApocalypseWorldCharacter,
     CoCCharacter,
     DnD5Character,
@@ -10,7 +11,8 @@ import { Paper } from '@mantine/core';
 import { useCallback, useRef } from 'react';
 
 import useCharacterSheetStatus from '../../../hooks/api/useCharacterSheetStatus.js';
-import { type CharacterData, GameId } from '../../../types/index.js';
+import type { CharacterData } from '../../../types/index.js';
+import AlienSheet from './alien/AlienSheet.js';
 import ApocalypseWorldSheet from './apocalypseWorld/ApocalypseWorldSheet.js';
 import CoCSheet from './callOfCthulhu/CoCSheet.js';
 import DnD5Sheet from './dnd5/DnD5Sheet.js';
@@ -68,7 +70,20 @@ const CharacterSheet = ({
     );
 
     const getContent = (): React.ReactElement => {
-        if (gameId === GameId.apocalypseWorld) {
+        if (gameId === 'alien') {
+            return (
+                <AlienSheet
+                    status={status}
+                    readonly={readonly}
+                    data={data as AlienCharacter}
+                    listening={listening}
+                    onChange={onChangeBuffer}
+                    portrait={portrait}
+                    onPortraitChange={onPortraitChange}
+                />
+            );
+        }
+        if (gameId === 'apocalypseWorld') {
             return (
                 <ApocalypseWorldSheet
                     status={status}
@@ -81,7 +96,7 @@ const CharacterSheet = ({
                 />
             );
         }
-        if (gameId === GameId.callOfCthulhu) {
+        if (gameId === 'callOfCthulhu') {
             return (
                 <CoCSheet
                     status={status}
@@ -94,7 +109,7 @@ const CharacterSheet = ({
                 />
             );
         }
-        if (gameId === GameId.dnd5) {
+        if (gameId === 'dnd5') {
             return (
                 <DnD5Sheet
                     status={status}
@@ -107,7 +122,7 @@ const CharacterSheet = ({
                 />
             );
         }
-        if (gameId === GameId.seventhSea) {
+        if (gameId === 'seventhSea') {
             return (
                 <SeventhSeaSheet
                     status={status}
@@ -120,7 +135,7 @@ const CharacterSheet = ({
                 />
             );
         }
-        if (gameId === GameId.starWarsD6) {
+        if (gameId === 'starWarsD6') {
             return (
                 <SWD6Sheet
                     status={status}
@@ -133,7 +148,7 @@ const CharacterSheet = ({
                 />
             );
         }
-        if (gameId === GameId.warhammerFantasy) {
+        if (gameId === 'warhammerFantasy') {
             return (
                 <WarhammerFantasySheet
                     status={status}

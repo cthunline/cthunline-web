@@ -30,10 +30,9 @@ import {
 } from 'react-icons/gi';
 
 import { useApp } from '../../../../contexts/App.js';
-import {
-    type CharacterData,
-    type CharacterSheetStatus,
-    GameId
+import type {
+    CharacterData,
+    CharacterSheetStatus
 } from '../../../../types/index.js';
 import DnD5Logo from '../../../svg/games/dnd5/DnD5Logo.js';
 import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
@@ -256,7 +255,7 @@ const DnD5Sheet = ({
                                 text={T('game.dnd5.common.biography')}
                             />
                             <FieldLayout<DnD5Biography>
-                                gameId={GameId.dnd5}
+                                gameId="dnd5"
                                 fields={biographyFields}
                                 textSectionKey="biography"
                                 data={characterData.biography}
@@ -279,7 +278,7 @@ const DnD5Sheet = ({
                         text={T('game.dnd5.common.story')}
                     />
                     <FieldLayout<DnD5Story>
-                        gameId={GameId.dnd5}
+                        gameId="dnd5"
                         fields={storyFields}
                         textSectionKey="story"
                         data={characterData.story}
@@ -385,7 +384,7 @@ const DnD5Sheet = ({
                         text={T('game.dnd5.common.features')}
                     />
                     <FieldLayout<DnD5Features>
-                        gameId={GameId.dnd5}
+                        gameId="dnd5"
                         fields={featuresFields}
                         textSectionKey="features"
                         data={characterData.features}

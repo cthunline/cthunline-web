@@ -7,7 +7,7 @@ import { TbEyeEdit } from 'react-icons/tb';
 
 import { useMemo } from 'react';
 import { useApp } from '../../../contexts/App.js';
-import { WidgetType, type WidgetVisibility } from '../../../types/index.js';
+import type { WidgetType, WidgetVisibility } from '../../../types/index.js';
 
 interface PlayMenuItemData {
     id: string;
@@ -79,27 +79,27 @@ const PlayMenu = ({
                 id: 'character',
                 icon: <MdOutlineContactPage size="2.25rem" />,
                 textKey: 'entity.character',
-                widget: WidgetType.character,
+                widget: 'character',
                 playerOnly: true
             },
             {
                 id: 'characters',
                 icon: <MdOutlineContactPage size="2.25rem" />,
                 textKey: 'entity.characters',
-                widget: WidgetType.characters,
+                widget: 'characters',
                 adminOnly: true
             },
             {
                 id: 'dices',
                 icon: <GiRollingDiceCup size="2.25rem" />,
                 textKey: 'entity.dices',
-                widget: WidgetType.dices
+                widget: 'dices'
             },
             {
                 id: 'sketch',
                 icon: <MdDraw size="2.25rem" />,
                 textKey: 'entity.sketch',
-                widget: WidgetType.sketch,
+                widget: 'sketch',
                 adminOnly: true
             },
             {
@@ -114,14 +114,14 @@ const PlayMenu = ({
                 id: 'jukebox',
                 icon: <HiMusicNote size="2.25rem" />,
                 textKey: 'entity.jukebox',
-                widget: WidgetType.jukebox,
+                widget: 'jukebox',
                 adminOnly: true
             },
             {
                 id: 'notes',
                 icon: <CgNotes size="2.25rem" />,
                 textKey: 'entity.notes',
-                widget: WidgetType.notes
+                widget: 'notes'
             },
             {
                 id: 'exit',

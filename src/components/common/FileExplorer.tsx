@@ -11,10 +11,7 @@ import {
 import { sortObjectsBy } from '../../services/tools.js';
 import InteractiveList from './InteractiveList.js';
 
-export enum FileExplorerItemType {
-    directory = 'directory',
-    file = 'file'
-}
+export type FileExplorerItemType = 'file' | 'directory';
 
 export interface FileExplorerItem {
     id: number;
@@ -55,15 +52,11 @@ const FileExplorer = ({
         const filteredItems = items.filter(({ parentId }) =>
             directoryId ? parentId === directoryId : !parentId
         );
-        const dirs = filteredItems.filter(
-            ({ type }) => type === FileExplorerItemType.directory
-        );
+        const dirs = filteredItems.filter(({ type }) => type === 'directory');
         if (sort) {
             sortObjectsBy(dirs, 'name');
         }
-        const fls = filteredItems.filter(
-            ({ type }) => type === FileExplorerItemType.file
-        );
+        const fls = filteredItems.filter(({ type }) => type === 'file');
         if (sort) {
             sortObjectsBy(fls, 'name');
         }
@@ -74,10 +67,10 @@ const FileExplorer = ({
         if (icon) {
             return icon;
         }
-        if (type === FileExplorerItemType.directory) {
+        if (type === 'directory') {
             return <MdFolder size={25} />;
         }
-        if (type === FileExplorerItemType.file) {
+        if (type === 'file') {
             return <MdOutlineInsertDriveFile size={25} />;
         }
         return null;
@@ -99,7 +92,7 @@ const FileExplorer = ({
                     </InteractiveList.Item>
                 ) : null}
                 {[...directories, ...files].map(({ id, name, type, icon }) => {
-                    const isDirectory = type === FileExplorerItemType.directory;
+                    const isDirectory = type === 'directory';
                     return (
                         <InteractiveList.Item
                             key={`explorer-${type}-${id}`}

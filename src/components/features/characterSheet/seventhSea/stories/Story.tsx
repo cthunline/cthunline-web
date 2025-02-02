@@ -4,7 +4,6 @@ import { FiPlusCircle } from 'react-icons/fi';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
 import { useApp } from '../../../../../contexts/App.js';
-import { GameId } from '../../../../../types/index.js';
 import Textarea from '../../../../common/Textarea.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import { storyFields } from '../fields.js';
@@ -21,7 +20,7 @@ const Story = ({ index, story, readonly, onChange }: StoryProps) => {
     return (
         <Stack gap="1rem">
             <FieldLayout<SeventhSeaStory>
-                gameId={GameId.seventhSea}
+                gameId="seventhSea"
                 fields={storyFields}
                 textSectionKey="story"
                 data={story}

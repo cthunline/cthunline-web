@@ -4,8 +4,9 @@ import { GiBookmarklet, GiWizardFace } from 'react-icons/gi';
 
 import { useApp } from '../../../contexts/App.js';
 import useStatistics from '../../../hooks/useStatistics.js';
-import { GameId, type Statistics } from '../../../types/index.js';
+import type { GameId, Statistics } from '../../../types/index.js';
 import StatCard from '../../common/StatCard.js';
+import Alien from '../../svg/games/alien/AlienLogo.js';
 import ApocalypseWorld from '../../svg/games/apocalypseWorld/ApocalypseWorldLogo.js';
 import CallOfCthulhu from '../../svg/games/callOfCthulhu/CallOfCthulhuLogo.js';
 import DnD5 from '../../svg/games/dnd5/DnD5Logo.js';
@@ -26,12 +27,13 @@ const gameData: {
     Logo: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
     span: number;
 }[] = [
-    { gameId: GameId.apocalypseWorld, Logo: ApocalypseWorld, span: 4 },
-    { gameId: GameId.callOfCthulhu, Logo: CallOfCthulhu, span: 4 },
-    { gameId: GameId.dnd5, Logo: DnD5, span: 4 },
-    { gameId: GameId.seventhSea, Logo: SeventhSea, span: 4 },
-    { gameId: GameId.starWarsD6, Logo: StarWarsD6, span: 4 },
-    { gameId: GameId.warhammerFantasy, Logo: WarhammerFantasy, span: 4 }
+    { gameId: 'alien', Logo: Alien, span: 4 },
+    { gameId: 'apocalypseWorld', Logo: ApocalypseWorld, span: 4 },
+    { gameId: 'callOfCthulhu', Logo: CallOfCthulhu, span: 4 },
+    { gameId: 'dnd5', Logo: DnD5, span: 4 },
+    { gameId: 'seventhSea', Logo: SeventhSea, span: 4 },
+    { gameId: 'starWarsD6', Logo: StarWarsD6, span: 4 },
+    { gameId: 'warhammerFantasy', Logo: WarhammerFantasy, span: 4 }
 ];
 
 const Home = () => {
@@ -84,9 +86,17 @@ const Home = () => {
                 </Group>
                 <Grid gutter="1rem" maw="75rem">
                     {gameData.map(({ gameId, Logo, span }) => (
-                        <Grid.Col span={span} key={`game-logo-${gameId}`}>
+                        <Grid.Col
+                            span={span}
+                            key={`game-logo-${gameId}`}
+                            ta="center"
+                        >
                             <Logo
-                                style={{ maxWidth: '80%', maxHeight: '4rem' }}
+                                style={{
+                                    maxWidth: '80%',
+                                    maxHeight: '4rem',
+                                    height: '4rem'
+                                }}
                                 fill="var(--palette-font)"
                             />
                         </Grid.Col>
