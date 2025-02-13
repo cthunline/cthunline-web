@@ -33,14 +33,6 @@ export const biographyIdentityFields: Field<AlienBiography>[] = [
     }
 ];
 
-export const biographyStoryFields: Field<AlienBiography>[] = [
-    {
-        key: 'personalAgenda',
-        gridColumn: 12,
-        lines: 3
-    }
-];
-
 export const relationshipsFields: Field<AlienRelationships>[] = [
     {
         key: 'buddy',

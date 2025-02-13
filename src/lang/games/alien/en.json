@@ -1,6 +1,11 @@
 {
     "game": {
         "alien": {
+            "agenda": {
+                "agenda": "agenda",
+                "personalAgenda": "personal agenda",
+                "objectives": "objectives"
+            },
             "attributes": {
                 "attributesAndSkills": "attributes and skills",
                 "agility": {
@@ -40,8 +45,7 @@
                 "biography": "biography",
                 "name": "name",
                 "career": "career",
-                "appearance": "appearance",
-                "personalAgenda": "personal agenda"
+                "appearance": "appearance"
             },
             "consumables": {
                 "consumables": "consumables",

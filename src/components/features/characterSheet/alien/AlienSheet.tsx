@@ -1,4 +1,5 @@
 import type {
+    AlienAgenda,
     AlienArmor,
     AlienAttributes,
     AlienBiography,
@@ -13,6 +14,7 @@ import { Box, Group, Stack } from '@mantine/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
     GiCharacter,
+    GiChecklist,
     GiChestArmor,
     GiD10,
     GiLightBackpack,
@@ -29,11 +31,11 @@ import FieldLayout from '../generic/fieldLayout/FieldLayout.js';
 import Portrait from '../generic/portrait/Portrait.js';
 import SectionTitle from '../generic/sectionTitle/SectionTitle.js';
 import SheetTabs, { type SheetTab } from '../generic/sheetTabs/SheetTabs.js';
+import Agenda from './agenda/Agenda.js';
 import AttributesAndSkills from './attributes/AttributesAndSkills.js';
 import {
     armorFields,
     biographyIdentityFields,
-    biographyStoryFields,
     consumablesFields,
     encumbranceFields,
     equipmentFields,
@@ -130,6 +132,11 @@ const AlienSheet = ({
             key: 'equipment',
             icon: <GiLightBackpack size={20} />,
             label: T('game.alien.tab.equipment')
+        },
+        objectives: {
+            key: 'objectives',
+            icon: <GiChecklist size={20} />,
+            label: T('game.alien.agenda.agenda')
         }
     };
 
@@ -172,17 +179,6 @@ const AlienSheet = ({
                             />
                         </Box>
                     </Group>
-                    {/* biography (story) */}
-                    <FieldLayout<AlienBiography>
-                        gameId="alien"
-                        fields={biographyStoryFields}
-                        textSectionKey="biography"
-                        data={characterData.biography}
-                        readonly={readonly}
-                        onChange={(biography: AlienBiography) => {
-                            onPartialCharacterChange({ biography });
-                        }}
-                    />
                     {/* relationships */}
                     <Stack flex="1 0">
                         <SectionTitle
@@ -319,6 +315,16 @@ const AlienSheet = ({
                         }}
                     />
                 </Stack>
+            )}
+            {/* objectives */}
+            {sheetTabs[tabValue]?.key === 'objectives' && (
+                <Agenda
+                    agenda={characterData.agenda}
+                    readonly={readonly}
+                    onChange={(agenda: AlienAgenda) => {
+                        onPartialCharacterChange({ agenda });
+                    }}
+                />
             )}
         </SheetTabs>
     );
