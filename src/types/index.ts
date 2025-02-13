@@ -257,6 +257,8 @@ export type DicesData = Record<DiceType, number>;
 
 export type DicesRequest = Partial<DicesData>;
 
+export type DicesResultDetails = Partial<Record<DiceType, number[]>>;
+
 export const diceTypes: DiceType[] = [
     'D4',
     'D6',

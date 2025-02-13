@@ -138,7 +138,11 @@ export const PlayProvider = ({
                 toast.error(T('page.play.error.connectionError'));
             });
             sock.on('error', ({ status }) => {
-                toast.error(T('page.play.error.statusError', { status }));
+                toast.error(
+                    T('page.play.error.statusError', {
+                        status: status ?? ''
+                    })
+                );
             });
             sock.on('connect', () => {
                 isConnecting.current = false;
@@ -215,14 +219,14 @@ export const PlayProvider = ({
                     user: sockUser,
                     isMaster,
                     isPrivate,
-                    request,
-                    result
+                    details,
+                    total
                 }) => {
                     pushLog({
                         dateTime,
                         user: sockUser,
                         isMaster,
-                        text: getDiceResultLog(request, result, isPrivate)
+                        text: getDiceResultLog(details, total, isPrivate)
                     });
                 }
             );

@@ -102,11 +102,11 @@
         "play": {
             "error": {
                 "connectionError": "erreur de connexion au socket",
-                "statusError": "Erreur de socket {status}"
+                "statusError": "erreur de socket {status}"
             },
             "event": {
-                "dicePrivateResult": "a secrètement jeté {request} et le résultat est {result}",
-                "diceResult": "a jeté {request} et le résultat est {result}",
+                "dicePrivateResult": "a secrètement jeté {request} et le résultat est {result} {details}",
+                "diceResult": "a jeté {request} et le résultat est {result} {details}",
                 "disconnected": "déconnecté",
                 "editedCharacter": "a édité le personnage {name}",
                 "joined": "a rejoint la session",
