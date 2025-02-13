@@ -1,6 +1,6 @@
 import { ActionIcon, Alert, Button, Table } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { FaInfo } from 'react-icons/fa6';
 import { HiPlus } from 'react-icons/hi';
 import { MdEdit, MdOutlineDeleteOutline, MdOutlineSend } from 'react-icons/md';
@@ -14,11 +14,6 @@ import ContentBox from '../../common/ContentBox.js';
 import Select from '../../common/Select.js';
 import { getDefaultData } from '../../features/characterSheet/characterSheet.helper.js';
 import TransferForm, { type TransferData } from './TransferForm.js';
-
-interface TransferModalData {
-    isOpen: boolean;
-    characterId: number;
-}
 
 interface GameSelectorProps {
     games: Game[];
@@ -63,12 +58,6 @@ const Characters = () => {
         loadList: true
     });
 
-    const [transferModalData, setTransferModalData] =
-        useState<TransferModalData>({
-            characterId: 0,
-            isOpen: false
-        });
-
     const onCreate = async (gameId: string) => {
         const char = await createCharacter({
             data: {
@@ -95,10 +84,6 @@ const Characters = () => {
     };
 
     const onTransferModalConfirm = ({ characterId, userId }: TransferData) => {
-        setTransferModalData({
-            characterId: 0,
-            isOpen: false
-        });
         modals.openConfirmModal({
             centered: true,
             title: T('page.characters.transferCharacterConfirm'),
@@ -116,17 +101,13 @@ const Characters = () => {
     };
 
     const onTransfer = (characterId: number) => {
-        setTransferModalData({
-            characterId,
-            isOpen: true
-        });
         modals.open({
             modalId: transferCharacterModalId,
             centered: true,
             title: T('page.characters.selectTransferUser'),
             children: (
                 <TransferForm
-                    characterId={transferModalData.characterId}
+                    characterId={characterId}
                     onConfirm={(data: TransferData) => {
                         onTransferModalConfirm(data);
                         modals.close(transferCharacterModalId);
