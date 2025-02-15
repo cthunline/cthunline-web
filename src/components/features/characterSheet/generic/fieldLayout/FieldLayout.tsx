@@ -18,6 +18,7 @@ export interface Field<DataType> {
     children?: Field<DataType>[];
     readonly?: boolean;
     hideLabel?: boolean;
+    labelPosition?: 'left' | 'right';
 }
 
 interface InputProps<DataType> {
@@ -121,7 +122,7 @@ export const FieldInput = <DataType extends {}>({
 const FieldCheckbox = <DataType extends {}>({
     index,
     gameId,
-    field: { key, title, readonly: fieldReadonly },
+    field: { key, title, readonly: fieldReadonly, labelPosition },
     textSectionKey,
     data,
     readonly,
@@ -142,7 +143,7 @@ const FieldCheckbox = <DataType extends {}>({
                     label={T(
                         `game.${gameId}.${textSectionKey}.${String(key ?? index)}`
                     )}
-                    labelPosition="left"
+                    labelPosition={labelPosition ?? 'left'}
                     checked={!!data[key]}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                         if (!fieldReadonly && !readonly) {

@@ -1,14 +1,18 @@
+import type { AlienTalent } from '@cthunline/games';
 import { ActionIcon, Group, Stack } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { FiPlusCircle } from 'react-icons/fi';
 import z from 'zod';
 
+import { useApp } from '../../../../../contexts/App.js';
 import Form from '../../../../common/Form.js';
 import TextInput from '../../../../common/TextInput.js';
+import Textarea from '../../../../common/Textarea.js';
 
 const talentFormSchema = z.object({
-    name: z.string().min(1)
+    name: z.string().min(1),
+    description: z.string()
 });
 
 type TalentFormData = z.infer<typeof talentFormSchema>;
@@ -16,10 +20,11 @@ type TalentFormData = z.infer<typeof talentFormSchema>;
 const formId = 'talent-add-form';
 
 type AddTalentRowProps = {
-    onCreate: (talent: string) => void;
+    onCreate: (talent: AlienTalent) => void;
 };
 
 const AddTalentRow = ({ onCreate }: AddTalentRowProps) => {
+    const { T } = useApp();
     const {
         onSubmit: handleSubmit,
         getInputProps,
@@ -27,12 +32,13 @@ const AddTalentRow = ({ onCreate }: AddTalentRowProps) => {
     } = useForm<TalentFormData>({
         validate: zodResolver(talentFormSchema),
         initialValues: {
-            name: ''
+            name: '',
+            description: ''
         }
     });
 
-    const onFormSubmit = ({ name }: TalentFormData) => {
-        onCreate(name);
+    const onFormSubmit = ({ name, description }: TalentFormData) => {
+        onCreate({ name, description });
         reset();
     };
 
@@ -45,13 +51,24 @@ const AddTalentRow = ({ onCreate }: AddTalentRowProps) => {
                 h={0}
             />
             <Group w="100%" gap="1rem">
-                <TextInput
-                    {...getInputProps('name')}
-                    flex="1 0"
-                    variant="contained"
-                    form={formId}
-                    size="sm"
-                />
+                <Stack flex="1 0">
+                    <TextInput
+                        {...getInputProps('name')}
+                        label={T('game.alien.talents.name')}
+                        flex="1 0"
+                        variant="contained"
+                        form={formId}
+                        size="sm"
+                    />
+                    <Textarea
+                        {...getInputProps('description')}
+                        variant="contained"
+                        w="100%"
+                        rows={3}
+                        size="sm"
+                        label={T('game.alien.talents.description')}
+                    />
+                </Stack>
                 <ActionIcon type="submit" form={formId}>
                     <FiPlusCircle />
                 </ActionIcon>

@@ -8,7 +8,8 @@ import type {
     AlienEquipment,
     AlienExperience,
     AlienRelationships,
-    AlienStatus
+    AlienStatus,
+    AlienTalent
 } from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -17,6 +18,7 @@ import {
     GiChecklist,
     GiChestArmor,
     GiD10,
+    GiInspiration,
     GiLightBackpack,
     GiRelationshipBounds
 } from 'react-icons/gi';
@@ -128,6 +130,11 @@ const AlienSheet = ({
             icon: <GiD10 size={20} />,
             label: T('game.alien.tab.statistics')
         },
+        talents: {
+            key: 'talents',
+            icon: <GiInspiration size={20} />,
+            label: T('game.alien.talents.talents')
+        },
         equipment: {
             key: 'equipment',
             icon: <GiLightBackpack size={20} />,
@@ -198,7 +205,7 @@ const AlienSheet = ({
                     </Stack>
                 </Stack>
             )}
-            {/* statistics (attributes, skills, talents, status, experience) */}
+            {/* statistics (attributes, skills, status, experience) */}
             {sheetTabs[tabValue]?.key === 'statistics' && (
                 <Stack w="100%">
                     {/* attributes */}
@@ -209,17 +216,16 @@ const AlienSheet = ({
                             onPartialCharacterChange({ attributes });
                         }}
                     />
-                    <Group w="100%" align="start" gap="4rem">
+                    <Stack w="100%" align="start">
                         {/* status */}
                         <Status
-                            flex="4 0"
                             status={characterData.status}
                             readonly={readonly}
                             onChange={(status: AlienStatus) => {
                                 onPartialCharacterChange({ status });
                             }}
                         />
-                        <Stack flex="4 0">
+                        <Stack w="20rem">
                             <SectionTitle
                                 iconBefore={<GiCharacter size={20} />}
                                 text={T('game.alien.experience.experience')}
@@ -234,19 +240,22 @@ const AlienSheet = ({
                                     onPartialCharacterChange({ experience });
                                 }}
                             />
-                            {/* talents */}
-                            <Talents
-                                flex="5 0"
-                                talents={characterData.talents}
-                                readonly={readonly}
-                                onChange={(
-                                    talents: AlienCharacter['talents']
-                                ) => {
-                                    onPartialCharacterChange({ talents });
-                                }}
-                            />
                         </Stack>
-                    </Group>
+                    </Stack>
+                </Stack>
+            )}
+            {/* talents */}
+            {sheetTabs[tabValue]?.key === 'talents' && (
+                <Stack w="100%">
+                    {/* talents */}
+                    <Talents
+                        flex="5 0"
+                        talents={characterData.talents}
+                        readonly={readonly}
+                        onChange={(talents: AlienTalent[]) => {
+                            onPartialCharacterChange({ talents });
+                        }}
+                    />
                 </Stack>
             )}
             {/* equipment */}

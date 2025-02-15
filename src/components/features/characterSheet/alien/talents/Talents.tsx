@@ -1,4 +1,4 @@
-import type { AlienCharacter } from '@cthunline/games';
+import type { AlienTalent } from '@cthunline/games';
 import { Stack } from '@mantine/core';
 import { GiInspiration } from 'react-icons/gi';
 
@@ -13,19 +13,19 @@ import TalentRow from './TalentRow.js';
 
 type TalentsProps = {
     readonly: boolean;
-    talents: AlienCharacter['talents'];
-    onChange: (talents: AlienCharacter['talents']) => void;
+    talents: AlienTalent[];
+    onChange: (talents: AlienTalent[]) => void;
     flex?: string | number;
 };
 
 const Talents = ({ readonly, talents, onChange, flex }: TalentsProps) => {
     const { T } = useApp();
 
-    const onTalentChange = (index: number, talent: string) => {
+    const onTalentChange = (index: number, talent: AlienTalent) => {
         onChange(talents.map((tal, idx) => (index === idx ? talent : tal)));
     };
 
-    const onTalentCreate = (talent: string) => {
+    const onTalentCreate = (talent: AlienTalent) => {
         onChange([...talents, talent]);
     };
 
@@ -52,7 +52,7 @@ const Talents = ({ readonly, talents, onChange, flex }: TalentsProps) => {
                         key={`talent-row-${index.toString()}`}
                         readonly={readonly}
                         talent={talent}
-                        onChange={(tal: string) => {
+                        onChange={(tal: AlienTalent) => {
                             onTalentChange(index, tal);
                         }}
                         onMove={(action) => {

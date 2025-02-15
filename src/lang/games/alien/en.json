@@ -86,6 +86,7 @@
             "status": {
                 "status": "status",
                 "stressLevel": "stress",
+                "maxHealth": "max health",
                 "health": "health",
                 "radiation": "radiation",
                 "criticalInjuries": "critical injuries",
@@ -104,7 +105,9 @@
             },
             "talents": {
                 "talent": "talent",
-                "talents": "talents"
+                "talents": "talents",
+                "name": "name",
+                "description": "description"
             }
         }
     }

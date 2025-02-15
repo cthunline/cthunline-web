@@ -46,12 +46,17 @@ export const relationshipsFields: Field<AlienRelationships>[] = [
 
 export const statusFields: Field<AlienStatus>[] = [
     {
-        key: 'stressLevel',
+        key: 'maxHealth',
         gridColumn: 12,
         type: 'number'
     },
     {
         key: 'health',
+        gridColumn: 12,
+        type: 'number'
+    },
+    {
+        key: 'stressLevel',
         gridColumn: 12,
         type: 'number'
     },
@@ -74,22 +79,26 @@ export const conditionsFields: Field<AlienConditions>[] = [
     {
         key: 'starving',
         gridColumn: 12,
-        type: 'boolean'
+        type: 'boolean',
+        labelPosition: 'right'
     },
     {
         key: 'dehydrated',
         gridColumn: 12,
-        type: 'boolean'
+        type: 'boolean',
+        labelPosition: 'right'
     },
     {
         key: 'exhausted',
         gridColumn: 12,
-        type: 'boolean'
+        type: 'boolean',
+        labelPosition: 'right'
     },
     {
         key: 'freezing',
         gridColumn: 12,
-        type: 'boolean'
+        type: 'boolean',
+        labelPosition: 'right'
     }
 ];
 

@@ -27,10 +27,10 @@ const Status = ({ status, flex, readonly, onChange }: StatusProps) => {
                 text={T('game.alien.status.status')}
             />
             <Group w="100%" align="start" gap="2rem">
-                <Stack flex="2 0">
+                <Stack flex="1 0">
                     <FieldLayout<AlienStatus>
                         gameId="alien"
-                        fields={statusFields}
+                        fields={statusFields.slice(0, 2)}
                         textSectionKey="status"
                         data={status}
                         readonly={readonly}
@@ -39,10 +39,22 @@ const Status = ({ status, flex, readonly, onChange }: StatusProps) => {
                         }}
                     />
                 </Stack>
-                <Stack flex="3 0">
+                <Stack flex="1 0">
+                    <FieldLayout<AlienStatus>
+                        gameId="alien"
+                        fields={statusFields.slice(2, 4)}
+                        textSectionKey="status"
+                        data={status}
+                        readonly={readonly}
+                        onChange={(status: AlienStatus) => {
+                            onChange(status);
+                        }}
+                    />
+                </Stack>
+                <Stack flex="1 0">
                     <FieldLayout<AlienConditions>
                         gameId="alien"
-                        fields={conditionsFields}
+                        fields={conditionsFields.slice(0, 2)}
                         textSectionKey="status.conditions"
                         data={status.conditions}
                         readonly={readonly}
@@ -54,17 +66,33 @@ const Status = ({ status, flex, readonly, onChange }: StatusProps) => {
                         }}
                     />
                 </Stack>
+                <Stack flex="1 0">
+                    <FieldLayout<AlienConditions>
+                        gameId="alien"
+                        fields={conditionsFields.slice(2, 4)}
+                        textSectionKey="status.conditions"
+                        data={status.conditions}
+                        readonly={readonly}
+                        onChange={(conditions: AlienConditions) => {
+                            onChange({
+                                ...status,
+                                conditions
+                            });
+                        }}
+                    />
+                </Stack>
+                <FieldLayout<AlienStatus>
+                    flex="3 0"
+                    gameId="alien"
+                    fields={criticalInjuriesFields}
+                    textSectionKey="status"
+                    data={status}
+                    readonly={readonly}
+                    onChange={(status: AlienStatus) => {
+                        onChange(status);
+                    }}
+                />
             </Group>
-            <FieldLayout<AlienStatus>
-                gameId="alien"
-                fields={criticalInjuriesFields}
-                textSectionKey="status"
-                data={status}
-                readonly={readonly}
-                onChange={(status: AlienStatus) => {
-                    onChange(status);
-                }}
-            />
         </Stack>
     );
 };
