@@ -46,7 +46,7 @@ const Talents = ({ readonly, talents, onChange, flex }: TalentsProps) => {
                 iconBefore={<GiInspiration size={20} />}
                 text={T('game.alien.talents.talents')}
             />
-            <Stack gap="1rem" w="100%">
+            <Stack gap="2rem" w="100%">
                 {talents.map((talent, index) => (
                     <TalentRow
                         key={`talent-row-${index.toString()}`}
