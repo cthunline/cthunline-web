@@ -82,6 +82,7 @@
             "noCharacter": "aucun personnage disponible",
             "selectGame": "sélectionner un jeu",
             "selectTransferUser": "sélectionner un utilisateur",
+            "transferCharacter": "transférer le personnage",
             "transferCharacterConfirm": "transférer personnage ?"
         },
         "error": {

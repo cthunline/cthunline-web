@@ -82,6 +82,7 @@
             "noCharacter": "no available character",
             "selectGame": "select a game",
             "selectTransferUser": "select a user",
+            "transferCharacter": "transfer character",
             "transferCharacterConfirm": "transfer character ?"
         },
         "error": {

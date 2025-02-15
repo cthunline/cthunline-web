@@ -66,6 +66,7 @@ const TransferForm = ({
             <Stack align="center" gap="1rem" w="100%">
                 <Select
                     {...getInputProps('userId')}
+                    label={T('page.characters.selectTransferUser')}
                     valueType="number"
                     options={userOptions}
                     w="100%"

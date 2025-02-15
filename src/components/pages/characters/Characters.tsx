@@ -104,7 +104,7 @@ const Characters = () => {
         modals.open({
             modalId: transferCharacterModalId,
             centered: true,
-            title: T('page.characters.selectTransferUser'),
+            title: T('page.characters.transferCharacter'),
             children: (
                 <TransferForm
                     characterId={characterId}
