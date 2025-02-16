@@ -1,3 +1,4 @@
+import type { GameId } from '@cthunline/games';
 import { Alert, Button, InputLabel, Stack } from '@mantine/core';
 import { useMemo } from 'react';
 import { FaInfo } from 'react-icons/fa6';
@@ -39,7 +40,7 @@ const CharacterSelect = ({ characters, onSelect }: CharacterSelectProps) => {
 };
 
 interface JoinSessionModalProps {
-    gameId: string;
+    gameId: GameId;
     characters: Character[];
     onSelect: (charId: number) => void;
     onCreate: () => void;

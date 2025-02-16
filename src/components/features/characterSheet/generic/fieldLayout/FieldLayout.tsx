@@ -1,9 +1,9 @@
+import type { GameId } from '@cthunline/games';
 import { Checkbox, Grid } from '@mantine/core';
 import type { IconType } from 'react-icons';
 
 import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
-import type { GameId } from '../../../../../types/index.js';
 import TextInput, { type InputVariant } from '../../../../common/TextInput.js';
 import Textarea from '../../../../common/Textarea.js';
 import SectionTitle from '../sectionTitle/SectionTitle.js';

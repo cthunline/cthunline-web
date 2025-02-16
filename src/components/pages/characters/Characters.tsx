@@ -1,6 +1,6 @@
+import { type GameId, gameIds, getGame, isGameId } from '@cthunline/games';
 import { ActionIcon, Alert, Button, Table } from '@mantine/core';
 import { modals } from '@mantine/modals';
-import { useMemo } from 'react';
 import { FaInfo } from 'react-icons/fa6';
 import { HiPlus } from 'react-icons/hi';
 import { MdEdit, MdOutlineDeleteOutline, MdOutlineSend } from 'react-icons/md';
@@ -8,39 +8,35 @@ import { useNavigate } from 'react-router';
 
 import { useApp } from '../../../contexts/App.js';
 import useCharacter from '../../../hooks/api/useCharacter.js';
-import useGame from '../../../hooks/api/useGame.js';
-import type { Game, SelectOption } from '../../../types/index.js';
 import ContentBox from '../../common/ContentBox.js';
 import Select from '../../common/Select.js';
-import { getDefaultData } from '../../features/characterSheet/characterSheet.helper.js';
 import TransferForm, { type TransferData } from './TransferForm.js';
 
+const gameList = gameIds.map((id) => ({
+    id,
+    name: getGame(id).name
+}));
+
+const gameOptions = gameList.map(({ id, name }) => ({
+    value: id,
+    label: name
+}));
+
 interface GameSelectorProps {
-    games: Game[];
-    onSelect: (gameId: string) => void;
+    onSelect: (gameId: GameId) => void;
 }
 
-const GameSelector = ({ games, onSelect }: GameSelectorProps) => {
-    const options: SelectOption<string>[] = useMemo(
-        () =>
-            games.map(({ id, name }) => ({
-                value: id,
-                label: name
-            })),
-        [games]
-    );
-    return (
-        <Select
-            valueType="string"
-            options={options}
-            onChange={(gameId: string | null) => {
-                if (gameId) {
-                    onSelect(gameId);
-                }
-            }}
-        />
-    );
-};
+const GameSelector = ({ onSelect }: GameSelectorProps) => (
+    <Select
+        valueType="string"
+        options={gameOptions}
+        onChange={(gameId: string | null) => {
+            if (gameId && isGameId(gameId)) {
+                onSelect(gameId);
+            }
+        }}
+    />
+);
 
 const createCharacterModalId = 'transfer-character-modal';
 const transferCharacterModalId = 'transfer-character-modal';
@@ -48,7 +44,6 @@ const transferCharacterModalId = 'transfer-character-modal';
 const Characters = () => {
     const { T } = useApp();
     const navigate = useNavigate();
-    const { getGame, gameList } = useGame();
     const {
         characterList,
         createCharacter,
@@ -58,12 +53,12 @@ const Characters = () => {
         loadList: true
     });
 
-    const onCreate = async (gameId: string) => {
+    const onCreate = async (gameId: GameId) => {
         const char = await createCharacter({
             data: {
                 gameId,
                 name: 'New',
-                data: getDefaultData(gameId)
+                data: getGame(gameId).default
             },
             isRefresh: false,
             isToast: false
@@ -79,7 +74,7 @@ const Characters = () => {
             modalId: createCharacterModalId,
             centered: true,
             title: T('page.characters.selectGame'),
-            children: <GameSelector games={gameList} onSelect={onCreate} />
+            children: <GameSelector onSelect={onCreate} />
         });
     };
 

@@ -3,6 +3,7 @@ import type {
     ApocalypseWorldCharacter,
     CoCCharacter,
     DnD5Character,
+    GameId,
     SWD6Character,
     SeventhSeaCharacter,
     WarhammerFantasyCharacter
@@ -22,7 +23,7 @@ import WarhammerFantasySheet from './warhammerFantasy/WarhammerFantasySheet.js';
 
 export interface CharacterSheetProps {
     readonly: boolean;
-    gameId: string;
+    gameId: GameId;
     data: CharacterData;
     listening?: boolean;
     rawContent?: boolean;

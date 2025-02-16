@@ -2,17 +2,12 @@ import { Box, Grid, Group, Stack, Title } from '@mantine/core';
 import { useMemo } from 'react';
 import { GiBookmarklet, GiWizardFace } from 'react-icons/gi';
 
+import { gameIds } from '@cthunline/games';
 import { useApp } from '../../../contexts/App.js';
 import useStatistics from '../../../hooks/useStatistics.js';
-import type { GameId, Statistics } from '../../../types/index.js';
+import type { Statistics } from '../../../types/index.js';
 import StatCard from '../../common/StatCard.js';
-import Alien from '../../svg/games/alien/AlienLogo.js';
-import ApocalypseWorld from '../../svg/games/apocalypseWorld/ApocalypseWorldLogo.js';
-import CallOfCthulhu from '../../svg/games/callOfCthulhu/CallOfCthulhuLogo.js';
-import DnD5 from '../../svg/games/dnd5/DnD5Logo.js';
-import SeventhSea from '../../svg/games/seventhSea/SeventhSeaLogo.js';
-import StarWarsD6 from '../../svg/games/starWarsD6/StarWarsD6Logo.js';
-import WarhammerFantasy from '../../svg/games/warhammerFantasy/WarhammerFantasyLogo.js';
+import GameLogo from '../../svg/games/GameLogo.js';
 
 const statSpans: Record<keyof Statistics, number> = {
     runningSessions: 4,
@@ -21,20 +16,6 @@ const statSpans: Record<keyof Statistics, number> = {
     userCharacterCount: 6,
     totalCharacterCount: 6
 };
-
-const gameData: {
-    gameId: GameId;
-    Logo: (props: React.SVGProps<SVGSVGElement>) => React.ReactElement;
-    span: number;
-}[] = [
-    { gameId: 'alien', Logo: Alien, span: 4 },
-    { gameId: 'apocalypseWorld', Logo: ApocalypseWorld, span: 4 },
-    { gameId: 'callOfCthulhu', Logo: CallOfCthulhu, span: 4 },
-    { gameId: 'dnd5', Logo: DnD5, span: 4 },
-    { gameId: 'seventhSea', Logo: SeventhSea, span: 4 },
-    { gameId: 'starWarsD6', Logo: StarWarsD6, span: 4 },
-    { gameId: 'warhammerFantasy', Logo: WarhammerFantasy, span: 4 }
-];
 
 const Home = () => {
     const { T } = useApp();
@@ -85,13 +66,14 @@ const Home = () => {
                     </Stack>
                 </Group>
                 <Grid gutter="1rem" maw="75rem">
-                    {gameData.map(({ gameId, Logo, span }) => (
+                    {gameIds.map((gameId) => (
                         <Grid.Col
-                            span={span}
+                            span={4}
                             key={`game-logo-${gameId}`}
                             ta="center"
                         >
-                            <Logo
+                            <GameLogo
+                                gameId={gameId}
                                 style={{
                                     maxWidth: '80%',
                                     maxHeight: '4rem',

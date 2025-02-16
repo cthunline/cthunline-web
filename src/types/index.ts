@@ -3,6 +3,7 @@ import type {
     ApocalypseWorldCharacter,
     CoCCharacter,
     DnD5Character,
+    GameId,
     SWD6Character,
     SeventhSeaCharacter,
     WarhammerFantasyCharacter
@@ -143,7 +144,7 @@ export interface Session {
     id: number;
     masterId: number;
     master?: User;
-    gameId: string;
+    gameId: GameId;
     name: string;
     sketch: SketchData;
     createdAt: string;
@@ -151,7 +152,7 @@ export interface Session {
 }
 
 export interface SessionCreateBody {
-    gameId: string;
+    gameId: GameId;
     name: string;
     sketch?: object;
 }
@@ -195,7 +196,7 @@ export type CharacterData =
 export interface Character<GenericCharacterData = CharacterData> {
     id: number;
     userId: number;
-    gameId: string;
+    gameId: GameId;
     name: string;
     portrait: string | null;
     data: GenericCharacterData;
@@ -209,22 +210,6 @@ export type CharacterEditBody = Partial<Omit<CharacterCreateBody, 'gameId'>>;
 
 export interface PortraitUploadBody {
     portrait: File;
-}
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ game
-
-export type GameId =
-    | 'alien'
-    | 'apocalypseWorld'
-    | 'callOfCthulhu'
-    | 'dnd5'
-    | 'seventhSea'
-    | 'starWarsD6'
-    | 'warhammerFantasy';
-
-export interface Game {
-    id: string;
-    name: string;
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ play

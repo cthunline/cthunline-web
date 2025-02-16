@@ -1,50 +1,52 @@
+import { gameIds, getGame, isGameId } from '@cthunline/games';
 import { Button, Stack, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
-import { useMemo } from 'react';
 import { MdOutlineSave } from 'react-icons/md';
 import z from 'zod';
 
 import { useApp } from '../../../contexts/App.js';
-import useGame from '../../../hooks/api/useGame.js';
-import type { SelectOption, SessionCreateBody } from '../../../types/index.js';
+import type { SessionCreateBody } from '../../../types/index.js';
 import Form from '../../common/Form.js';
 import Select from '../../common/Select.js';
+
+const gameOptions = gameIds.map((id) => ({
+    value: id,
+    label: getGame(id).name
+}));
 
 interface SessionFormProps {
     onSubmit: (data: SessionCreateBody) => Promise<void>;
 }
 
 const sessionFormSchema = z.object({
-    name: z.string().min(3),
-    gameId: z.string().min(1)
+    gameId: z.string().min(1),
+    name: z.string().min(3)
 });
 
 type SessionFormData = z.infer<typeof sessionFormSchema>;
 
 const SessionForm = ({ onSubmit }: SessionFormProps) => {
     const { T } = useApp();
-    const { gameList } = useGame();
-
-    const gameOptions: SelectOption<string>[] = useMemo(
-        () =>
-            gameList.map(({ id, name }) => ({
-                label: name,
-                value: id
-            })),
-        [gameList]
-    );
 
     const { onSubmit: handleSubmit, getInputProps } = useForm<SessionFormData>({
         validate: zodResolver(sessionFormSchema),
         initialValues: {
-            name: '',
-            gameId: ''
+            gameId: '',
+            name: ''
         }
     });
 
+    const onSessionSubmit = ({ gameId, name }: SessionFormData) => {
+        if (isGameId(gameId)) {
+            onSubmit({ gameId, name });
+        } else {
+            throw new Error(`Unexpected game ID ${gameId}`);
+        }
+    };
+
     return (
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSessionSubmit)}>
             <Stack gap="1rem" py="0.25rem">
                 <TextInput
                     {...getInputProps('name')}

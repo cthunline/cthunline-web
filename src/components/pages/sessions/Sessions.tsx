@@ -1,3 +1,4 @@
+import { type GameId, getGame, isGameId } from '@cthunline/games';
 import { ActionIcon, Alert, Button, Chip, Table } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { FaInfo } from 'react-icons/fa6';
@@ -8,11 +9,9 @@ import { useNavigate } from 'react-router';
 
 import { useApp } from '../../../contexts/App.js';
 import useCharacter from '../../../hooks/api/useCharacter.js';
-import useGame from '../../../hooks/api/useGame.js';
 import useSession from '../../../hooks/api/useSession.js';
 import type { SessionCreateBody } from '../../../types/index.js';
 import ContentBox from '../../common/ContentBox.js';
-import { getDefaultData } from '../../features/characterSheet/characterSheet.helper.js';
 import JoinSessionModal from './JoinSessionModal.js';
 import SessionForm from './SessionForm.js';
 
@@ -22,7 +21,6 @@ const createSessionModalId = 'create-session-modal';
 const Sessions = () => {
     const { T, user } = useApp();
     const navigate = useNavigate();
-    const { getGame } = useGame();
     const { characterList, createCharacter } = useCharacter({
         loadList: true
     });
@@ -36,23 +34,27 @@ const Sessions = () => {
     };
 
     const createCharacterAndJoin = async (
-        gameId: string,
+        gameId: GameId,
         sessionId: number
     ) => {
-        const char = await createCharacter({
-            data: {
-                gameId,
-                name: 'New',
-                data: getDefaultData(gameId)
-            },
-            isRefresh: false,
-            isToast: true
-        });
-        joinSession(sessionId, char.id);
+        if (isGameId(gameId)) {
+            const char = await createCharacter({
+                data: {
+                    gameId,
+                    name: 'New',
+                    data: getGame(gameId).default
+                },
+                isRefresh: false,
+                isToast: true
+            });
+            joinSession(sessionId, char.id);
+        } else {
+            throw new Error(`Unexpected game ID ${gameId}`);
+        }
     };
 
     const onJoinSession = (
-        gameId: string,
+        gameId: GameId,
         sessionId: number,
         isMaster = false
     ) => {
