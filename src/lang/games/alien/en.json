@@ -54,6 +54,20 @@
                 "food": "food",
                 "water": "water"
             },
+            "dice": {
+                "roll": "has rolled",
+                "privateRoll": "has secretly rolled",
+                "result": "the result is",
+                "detail": "detail",
+                "dice": "dice",
+                "dices": "dices",
+                "stress": "stress",
+                "stresses": "stresses",
+                "success": "success",
+                "successes": "successes",
+                "panic": "panic",
+                "panics": "panics"
+            },
             "equipment": {
                 "armor": {
                     "armor": "armor",

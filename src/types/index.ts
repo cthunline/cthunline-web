@@ -241,10 +241,9 @@ export type DiceType = 'D4' | 'D6' | 'D8' | 'D10' | 'D12' | 'D20' | 'D100';
 
 export type DiceRequestRoll = {
     dice: DiceType;
-    color?: string;
 };
 
-export type DicesRequestBody = {
+export type DiceRequestBody = {
     rolls: DiceRequestRoll[];
 };
 
@@ -254,16 +253,39 @@ export type DiceResult = DiceRequestRoll & {
 
 export type DiceAggregatedRolls = Partial<Record<DiceType, number>>;
 
-export type DicesResponseBody = {
+type DiceResponseCommon = {
     dateTime?: boolean | Date | string;
     user: User;
     isMaster: boolean;
+    isPrivate: boolean;
+};
+
+export type DiceResponseBody = DiceResponseCommon & {
     rolls: DiceRequestRoll[];
     aggregatedRolls: DiceAggregatedRolls;
     total: number;
     results: DiceResult[];
-    isPrivate: boolean;
 };
+
+export type DiceAlienRequestBody = {
+    dices: number;
+    stresses: number;
+};
+
+export type AlienDiceRoll = DiceRequestRoll & {
+    stress: boolean;
+};
+
+export type AlienDiceResult = AlienDiceRoll & {
+    result: number;
+};
+
+export type DiceAlienResponseBody = DiceResponseCommon &
+    DiceAlienRequestBody & {
+        successes: number;
+        panics: number;
+        results: AlienDiceResult[];
+    };
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ play sketch
 

@@ -29,6 +29,7 @@ const PlayContent = () => {
         users,
         logs,
         requestDice,
+        requestDiceAlien,
         characterUpdate,
         sketchData
     } = usePlay();
@@ -87,6 +88,7 @@ const PlayContent = () => {
                             key={key}
                             isMaster={socket?.isMaster}
                             onRoll={requestDice}
+                            onRollAlien={requestDiceAlien}
                             onClose={onWidgetClose}
                         />
                     );

@@ -106,8 +106,8 @@
                 "statusError": "socket {status} error"
             },
             "event": {
-                "dicePrivateResult": "secretly rolled {rolls} and the result is {total}",
-                "diceResult": "rolled {rolls} and the result is {total}",
+                "dicePrivateResult": "secretly rolled {rolls} and the result is",
+                "diceResult": "rolled {rolls} and the result is",
                 "disconnected": "disconnected",
                 "editedCharacter": "edited character {name}",
                 "joined": "joined the session",
@@ -178,6 +178,10 @@
         "passwordConfirm": "confirm password"
     },
     "widget": {
+        "dice": {
+            "standard": "standard",
+            "roll": "roll"
+        },
         "sketch": {
             "addText": "add text",
             "addToken": "add token",

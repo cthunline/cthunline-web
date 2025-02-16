@@ -27,7 +27,13 @@ import useSketch, {
     defaultSketchHookExport
 } from '../hooks/sketch/useSketch.js';
 import { toast } from '../services/toast.js';
-import type { DicesResponseBody, PlaySocket, User } from '../types/index.js';
+import type {
+    DiceAlienResponseBody,
+    DiceResponseBody,
+    PlaySocket,
+    Session,
+    User
+} from '../types/index.js';
 import { useApp } from './App.js';
 
 interface PlayProviderProps {
@@ -42,12 +48,14 @@ interface PlayContextData
         SessionUsersHookExport,
         LogsHookExport {
     sessionId: number;
+    session?: Session;
     characterId?: number;
     socket: PlaySocket | null;
 }
 
 const defaultPlayData: PlayContextData = {
     sessionId: 0,
+    session: undefined,
     socket: null,
     ...defaultSketchHookExport,
     ...defaultLogsHookExport,
@@ -86,7 +94,12 @@ export const PlayProvider = ({
     const { logs, pushLog } = useLogs();
     const { users, setUsers, updateUserCharacter, characterUpdate } =
         useSessionUsers(socket);
-    const { getDiceResultLog, requestDice } = useDice(socket);
+    const {
+        getDiceResultLog,
+        getDiceAlienResultLog,
+        requestDice,
+        requestDiceAlien
+    } = useDice(socket);
     const {
         sketchData,
         setSketchData,
@@ -212,22 +225,24 @@ export const PlayProvider = ({
                     setUsers(sessionUsers);
                 }
             );
-            sock.on(
-                'diceResult',
-                ({
+            sock.on('diceResult', (res: DiceResponseBody) => {
+                const { dateTime, user: sockUser, isMaster } = res;
+                pushLog({
                     dateTime,
                     user: sockUser,
                     isMaster,
-                    ...rest
-                }: DicesResponseBody) => {
-                    pushLog({
-                        dateTime,
-                        user: sockUser,
-                        isMaster,
-                        content: getDiceResultLog(rest)
-                    });
-                }
-            );
+                    content: getDiceResultLog(res)
+                });
+            });
+            sock.on('diceAlienResult', (res: DiceAlienResponseBody) => {
+                const { dateTime, user: sockUser, isMaster } = res;
+                pushLog({
+                    dateTime,
+                    user: sockUser,
+                    isMaster,
+                    content: getDiceAlienResultLog(res)
+                });
+            });
             sock.on(
                 'characterUpdate',
                 ({ dateTime, user: sockUser, isMaster, character }) => {
@@ -265,6 +280,7 @@ export const PlayProvider = ({
             pushLog,
             updateUserCharacter,
             getDiceResultLog,
+            getDiceAlienResultLog,
             setUsers,
             setSketchData
         ]
@@ -344,11 +360,13 @@ export const PlayProvider = ({
     const contextValue = useMemo(
         () => ({
             sessionId,
+            session,
             characterId,
             socket,
             users,
             logs,
             requestDice,
+            requestDiceAlien,
             characterUpdate,
             sketchData,
             updateSketch,
@@ -389,11 +407,13 @@ export const PlayProvider = ({
         }),
         [
             sessionId,
+            session,
             characterId,
             socket,
             users,
             logs,
             requestDice,
+            requestDiceAlien,
             characterUpdate,
             sketchData,
             updateSketch,

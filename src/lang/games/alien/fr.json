@@ -54,6 +54,20 @@
                 "food": "nourriture",
                 "water": "eau"
             },
+            "dice": {
+                "roll": "a lancé",
+                "privateRoll": "a secrètement lancé",
+                "result": "le résultat est",
+                "detail": "détail",
+                "dice": "dé",
+                "dices": "dés",
+                "stress": "stress",
+                "stresses": "stress",
+                "success": "succès",
+                "successes": "succès",
+                "panic": "panique",
+                "panics": "paniques"
+            },
             "equipment": {
                 "armor": {
                     "armor": "protection",
