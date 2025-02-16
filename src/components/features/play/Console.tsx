@@ -120,9 +120,9 @@ const Console = ({ logs, playContentRef }: ConsoleProps) => {
                 gap="0.25rem"
                 style={{ overflowY: 'scroll' }}
             >
-                {logs.map(({ text }, index) => (
-                    <Text key={`console-log-${index.toString()}`} fz="0.825rem">
-                        {text}
+                {logs.map(({ id, content }) => (
+                    <Text key={`console-log-${id}`} fz="0.825rem">
+                        {content}
                     </Text>
                 ))}
                 <AutoScroll />

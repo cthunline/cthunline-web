@@ -237,8 +237,9 @@ export interface PlaySocket extends Socket {
 }
 
 export interface PlayLog {
+    id: string;
     date: Date;
-    text: string;
+    content: React.ReactNode;
 }
 
 export type WidgetType =
@@ -253,21 +254,31 @@ export type WidgetVisibility = 'visible' | 'hidden';
 
 export type DiceType = 'D4' | 'D6' | 'D8' | 'D10' | 'D12' | 'D20' | 'D100';
 
-export type DicesData = Record<DiceType, number>;
+export type DiceRequestRoll = {
+    dice: DiceType;
+    color?: string;
+};
 
-export type DicesRequest = Partial<DicesData>;
+export type DicesRequestBody = {
+    rolls: DiceRequestRoll[];
+};
 
-export type DicesResultDetails = Partial<Record<DiceType, number[]>>;
+export type DiceResult = DiceRequestRoll & {
+    result: number;
+};
 
-export const diceTypes: DiceType[] = [
-    'D4',
-    'D6',
-    'D8',
-    'D10',
-    'D12',
-    'D20',
-    'D100'
-];
+export type DiceAggregatedRolls = Partial<Record<DiceType, number>>;
+
+export type DicesResponseBody = {
+    dateTime?: boolean | Date | string;
+    user: User;
+    isMaster: boolean;
+    rolls: DiceRequestRoll[];
+    aggregatedRolls: DiceAggregatedRolls;
+    total: number;
+    results: DiceResult[];
+    isPrivate: boolean;
+};
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ play sketch
 

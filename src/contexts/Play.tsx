@@ -27,7 +27,7 @@ import useSketch, {
     defaultSketchHookExport
 } from '../hooks/sketch/useSketch.js';
 import { toast } from '../services/toast.js';
-import type { PlaySocket, User } from '../types/index.js';
+import type { DicesResponseBody, PlaySocket, User } from '../types/index.js';
 import { useApp } from './App.js';
 
 interface PlayProviderProps {
@@ -154,7 +154,7 @@ export const PlayProvider = ({
                     dateTime: true,
                     user: sock.user,
                     isMaster: sock.isMaster,
-                    text: t('page.play.event.reconnecting')
+                    content: t('page.play.event.reconnecting')
                 });
             });
             sock.io.on('reconnect', () => {
@@ -163,7 +163,7 @@ export const PlayProvider = ({
                     dateTime: true,
                     user: sock.user,
                     isMaster: sock.isMaster,
-                    text: t('page.play.event.reconnected')
+                    content: t('page.play.event.reconnected')
                 });
             });
             sock.on('disconnect', (reason) => {
@@ -174,7 +174,7 @@ export const PlayProvider = ({
                         dateTime: true,
                         user: sock.user,
                         isMaster: sock.isMaster,
-                        text: t('page.play.event.disconnected')
+                        content: t('page.play.event.disconnected')
                     });
                 }
             });
@@ -190,7 +190,7 @@ export const PlayProvider = ({
                         dateTime,
                         user: sockUser,
                         isMaster,
-                        text: t('page.play.event.joined')
+                        content: t('page.play.event.joined')
                     });
                     setUsers(sessionUsers);
                 }
@@ -207,7 +207,7 @@ export const PlayProvider = ({
                         dateTime,
                         user: sockUser,
                         isMaster,
-                        text: t('page.play.event.left')
+                        content: t('page.play.event.left')
                     });
                     setUsers(sessionUsers);
                 }
@@ -218,15 +218,13 @@ export const PlayProvider = ({
                     dateTime,
                     user: sockUser,
                     isMaster,
-                    isPrivate,
-                    details,
-                    total
-                }) => {
+                    ...rest
+                }: DicesResponseBody) => {
                     pushLog({
                         dateTime,
                         user: sockUser,
                         isMaster,
-                        text: getDiceResultLog(details, total, isPrivate)
+                        content: getDiceResultLog(rest)
                     });
                 }
             );
@@ -248,7 +246,7 @@ export const PlayProvider = ({
                                 dateTime,
                                 user: sockUser,
                                 isMaster,
-                                text: eventText
+                                content: eventText
                             });
                             delete characterUpdateTimers.current[character.id];
                         }, characterUpdateTimerMs);

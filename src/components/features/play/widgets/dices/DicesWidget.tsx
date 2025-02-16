@@ -6,7 +6,7 @@ import {
     Stack,
     Tooltip
 } from '@mantine/core';
-import { useState } from 'react';
+import { useMemo, useReducer, useState } from 'react';
 import {
     GiD4,
     GiD10,
@@ -17,18 +17,15 @@ import {
 } from 'react-icons/gi';
 
 import { useApp } from '../../../../../contexts/App.js';
-import {
-    type DiceType,
-    type DicesData,
-    type DicesRequest,
-    type WidgetType,
-    diceTypes
+import { diceTypes, diceValues } from '../../../../../services/dice.js';
+import type {
+    DiceAggregatedRolls,
+    DiceRequestRoll,
+    DiceType,
+    DicesRequestBody,
+    WidgetType
 } from '../../../../../types/index.js';
 import Widget from '../../Widget.js';
-
-const defaultSelectedDices = Object.fromEntries(
-    diceTypes.map((type) => [type, 0])
-) as DicesData;
 
 const getDiceIcon = (
     type: DiceType,
@@ -59,39 +56,88 @@ const getDiceIcon = (
 
 interface DicesWidgetProps {
     isMaster?: boolean;
-    onRoll: (request: DicesRequest, isPrivate: boolean) => void;
+    onRoll: (request: DicesRequestBody, isPrivate: boolean) => void;
     onClose: (widget: WidgetType) => void;
 }
+
+type UpdateRollsOptions =
+    | {
+          action: 'add' | 'remove';
+          dice: DiceType;
+      }
+    | {
+          action: 'reset';
+          dice?: never;
+      };
 
 const DicesWidget = ({ isMaster, onRoll, onClose }: DicesWidgetProps) => {
     const { T } = useApp();
 
-    const [selectedDices, setSelectedDices] =
-        useState<DicesData>(defaultSelectedDices);
     const [isPrivate, setIsPrivate] = useState<boolean>(false);
+    const [rolls, updateRolls] = useReducer(
+        (
+            prev: DiceRequestRoll[],
+            { dice, action }: UpdateRollsOptions
+        ): DiceRequestRoll[] => {
+            if (action === 'reset') {
+                return [];
+            }
+            const next = [...prev];
+            if (action === 'add') {
+                next.push({ dice });
+            } else if (action === 'remove') {
+                const idx = next.findIndex(({ dice: d }) => d === dice);
+                if (idx >= 0) {
+                    next.splice(idx, 1);
+                }
+            }
+            return next.toSorted((a, b) => {
+                if (a.dice !== b.dice) {
+                    return (
+                        (diceValues.get(a.dice) ?? 0) -
+                        (diceValues.get(b.dice) ?? 0)
+                    );
+                }
+                if (!a.color) {
+                    return 1;
+                }
+                if (!b.color) {
+                    return -1;
+                }
+                return a.color.localeCompare(b.color);
+            });
+        },
+        []
+    );
 
-    const modifySelectedDice = (type: DiceType, modifier: number) => {
-        setSelectedDices((previous) => ({
-            ...previous,
-            [type]: previous[type] + modifier
-        }));
+    const [rollsDiceTypes, aggregatedRolls] = useMemo(() => {
+        const dTypes: DiceType[] = [];
+        const aggrRolls: DiceAggregatedRolls = {};
+        for (const { dice } of rolls) {
+            if (!aggrRolls[dice]) {
+                dTypes.push(dice);
+            }
+            aggrRolls[dice] = (aggrRolls[dice] ?? 0) + 1;
+        }
+        return [dTypes, aggrRolls];
+    }, [rolls]);
+
+    const addRoll = (dice: DiceType) => {
+        updateRolls({ action: 'add', dice });
     };
 
-    const resetSelectedDices = () => {
-        setSelectedDices(defaultSelectedDices);
+    const removeRoll = (dice: DiceType) => {
+        updateRolls({ action: 'remove', dice });
+    };
+
+    const resetRolls = () => {
+        updateRolls({ action: 'reset' });
         setIsPrivate(false);
     };
 
-    const selectedDiceTypes = diceTypes.filter(
-        (type) => selectedDices[type] > 0
-    );
-
     const onSubmit = () => {
-        const request: DicesRequest = Object.fromEntries(
-            selectedDiceTypes.map((type) => [type, selectedDices[type]])
-        );
-        onRoll(request, isPrivate);
-        resetSelectedDices();
+        onRoll({ rolls }, isPrivate);
+        resetRolls();
     };
 
     return (
@@ -114,7 +160,7 @@ const DicesWidget = ({ isMaster, onRoll, onClose }: DicesWidgetProps) => {
                                 h="3.5rem"
                                 w="auto"
                                 px="0.25rem"
-                                onClick={() => modifySelectedDice(type, 1)}
+                                onClick={() => addRoll(type)}
                             >
                                 {getDiceIcon(type, '2.5rem')}
                             </ActionIcon>
@@ -122,7 +168,7 @@ const DicesWidget = ({ isMaster, onRoll, onClose }: DicesWidgetProps) => {
                     ))}
                 </Group>
                 <Group gap="0.25rem 1rem" justify="center">
-                    {selectedDiceTypes.map((type) => (
+                    {rollsDiceTypes.map((type) => (
                         <Tooltip
                             key={`dice-selected-${type}`}
                             label={type}
@@ -136,16 +182,16 @@ const DicesWidget = ({ isMaster, onRoll, onClose }: DicesWidgetProps) => {
                                 px="0.25rem"
                                 fz="1.25rem"
                                 color="red"
-                                onClick={() => modifySelectedDice(type, -1)}
+                                onClick={() => removeRoll(type)}
                             >
-                                {`${selectedDices[type]} x`}
+                                {`${aggregatedRolls[type]} x`}
                                 &nbsp;
                                 {getDiceIcon(type, '2rem')}
                             </ActionIcon>
                         </Tooltip>
                     ))}
                 </Group>
-                {!!selectedDiceTypes.length && (
+                {!!rollsDiceTypes.length && (
                     <Stack align="center">
                         {!!isMaster && (
                             <Checkbox

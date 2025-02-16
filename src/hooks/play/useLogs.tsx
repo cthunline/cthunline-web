@@ -2,6 +2,7 @@ import dayjs, { type Dayjs } from 'dayjs';
 import { useState } from 'react';
 
 import { useApp } from '../../contexts/App.js';
+import { generateId } from '../../services/tools.js';
 import type { PlayLog, User } from '../../types/index.js';
 
 export interface LogsHookExport {
@@ -12,7 +13,7 @@ interface PushLogOptions {
     dateTime?: boolean | Date | string;
     user: User;
     isMaster: boolean;
-    text: string;
+    content: React.ReactNode;
 }
 
 export const defaultLogsHookExport: LogsHookExport = {
@@ -34,22 +35,41 @@ const useLogs = () => {
         return `[${time}]`;
     };
 
-    const pushLog = ({ dateTime, user, isMaster, text }: PushLogOptions) => {
-        const parts = [];
+    const pushLog = ({ dateTime, user, isMaster, content }: PushLogOptions) => {
+        const id = generateId();
+        const finalContent: React.ReactNode[] = [];
+        let logTime: string | undefined;
         if (dateTime === true) {
-            parts.push(getLogTime(dayjs()));
+            logTime = getLogTime(dayjs());
         } else if (dateTime) {
-            parts.push(getLogTime(dateTime));
+            logTime = getLogTime(dateTime);
         }
-        parts.push(getLogUsername(user, isMaster));
-        parts.push(text);
-        const logText = parts.join(' ');
+        if (logTime) {
+            finalContent.push(
+                <span key={`log-datetime-${id}`} className="log-datetime">
+                    {logTime}
+                </span>
+            );
+        }
+        finalContent.push(' ');
+        finalContent.push(
+            <span key={`log-username-${id}`} className="log-username">
+                {getLogUsername(user, isMaster)}
+            </span>
+        );
+        finalContent.push(' ');
+        finalContent.push(
+            <span key={`log-content-${id}`} className="log-content">
+                {content}
+            </span>
+        );
         setLogs((previous) =>
             [
                 ...previous,
                 {
+                    id,
                     date: new Date(),
-                    text: logText
+                    content: finalContent
                 }
             ].slice(-100)
         );

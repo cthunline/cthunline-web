@@ -106,8 +106,8 @@
                 "statusError": "erreur de socket {status}"
             },
             "event": {
-                "dicePrivateResult": "a secrètement jeté {request} et le résultat est {result} {details}",
-                "diceResult": "a jeté {request} et le résultat est {result} {details}",
+                "dicePrivateResult": "a secrètement jeté {rolls} et le résultat est {total}",
+                "diceResult": "a jeté {rolls} et le résultat est {total}",
                 "disconnected": "déconnecté",
                 "editedCharacter": "a édité le personnage {name}",
                 "joined": "a rejoint la session",

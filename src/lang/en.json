@@ -106,8 +106,8 @@
                 "statusError": "socket {status} error"
             },
             "event": {
-                "dicePrivateResult": "secretly rolled {request} and the result is {result} {details}",
-                "diceResult": "rolled {request} and the result is {result} {details}",
+                "dicePrivateResult": "secretly rolled {rolls} and the result is {total}",
+                "diceResult": "rolled {rolls} and the result is {total}",
                 "disconnected": "disconnected",
                 "editedCharacter": "edited character {name}",
                 "joined": "joined the session",
