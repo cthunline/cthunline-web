@@ -15,7 +15,8 @@ import {
     useAudioVolume
 } from '../hooks/useAudioVolume.js';
 import { getAssetUrl } from '../services/api.js';
-import type { Asset, PlaySocket } from '../types/index.js';
+import type { Asset } from '../types/index.js';
+import type { SocketClient } from '../types/socket.js';
 
 const getTimeText = (time: number) => {
     let minutes = 0;
@@ -53,7 +54,7 @@ const defaultTimeStatus: AudioTimeStatus = {
 
 interface AudioMasterProviderProps {
     children: React.ReactElement | React.ReactElement[];
-    socket: PlaySocket;
+    socket: SocketClient;
 }
 
 interface AudioMasterContextData

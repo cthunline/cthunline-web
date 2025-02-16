@@ -10,17 +10,13 @@ import {
     moveNote as moveNoteRequest
 } from '../../services/requests/note.js';
 import { toast } from '../../services/toast.js';
-import type {
-    Note,
-    NoteCreateBody,
-    NoteEditBody,
-    PlaySocket
-} from '../../types/index.js';
+import type { Note, NoteCreateBody, NoteEditBody } from '../../types/index.js';
+import type { SocketClient } from '../../types/socket.js';
 
 interface NoteHookOptions {
     sessionId: number;
     loadList?: boolean;
-    socket?: PlaySocket | null;
+    socket?: SocketClient | null;
 }
 
 interface CreateNoteOptions {

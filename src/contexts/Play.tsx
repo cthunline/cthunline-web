@@ -7,7 +7,6 @@ import {
     useRef,
     useState
 } from 'react';
-import { io } from 'socket.io-client';
 
 import useSession from '../hooks/api/useSession.js';
 import useDice, {
@@ -26,14 +25,15 @@ import useSketch, {
     type SketchHookExport,
     defaultSketchHookExport
 } from '../hooks/sketch/useSketch.js';
+import { createSocketClient } from '../services/socket.js';
 import { toast } from '../services/toast.js';
 import type {
     DiceAlienResponseBody,
     DiceResponseBody,
-    PlaySocket,
     Session,
     User
 } from '../types/index.js';
+import type { SocketClient } from '../types/socket.js';
 import { useApp } from './App.js';
 
 interface PlayProviderProps {
@@ -50,7 +50,7 @@ interface PlayContextData
     sessionId: number;
     session?: Session;
     characterId?: number;
-    socket: PlaySocket | null;
+    socket: SocketClient | null;
 }
 
 const defaultPlayData: PlayContextData = {
@@ -85,7 +85,7 @@ export const PlayProvider = ({
     characterId,
     children
 }: PlayProviderProps) => {
-    const [socket, setSocket] = useState<PlaySocket | null>(
+    const [socket, setSocket] = useState<SocketClient | null>(
         defaultPlayData.socket
     );
 
@@ -146,14 +146,14 @@ export const PlayProvider = ({
     const characterUpdateTimerMs = 5000;
 
     const bindSocketEvents = useCallback(
-        (sock: PlaySocket) => {
+        (sock: SocketClient) => {
             sock.on('connect_error', () => {
                 toast.error(T('page.play.error.connectionError'));
             });
             sock.on('error', ({ status }) => {
                 toast.error(
                     T('page.play.error.statusError', {
-                        status: status ?? ''
+                        status: status?.toString() ?? ''
                     })
                 );
             });
@@ -291,18 +291,20 @@ export const PlayProvider = ({
             sessionId: sessId,
             isMaster,
             characterId: charId
-        }: ConnectOptions): PlaySocket => {
-            const sock = io({
+        }: ConnectOptions): SocketClient => {
+            const sock = createSocketClient({
                 ...socketIoConnectOptions,
                 query: {
                     sessionId: sessId,
                     characterId: charId
+                },
+                data: {
+                    user: user as User,
+                    sessionId: Number(sessId),
+                    isMaster: isMaster,
+                    characterId: Number(charId)
                 }
-            }) as PlaySocket;
-            sock.user = user as User;
-            sock.sessionId = Number(sessId);
-            sock.isMaster = isMaster;
-            sock.characterId = Number(charId);
+            });
             bindSocketEvents(sock);
             return sock;
         },

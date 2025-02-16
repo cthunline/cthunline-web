@@ -4,9 +4,9 @@ import type {
     DiceAlienRequestBody,
     DiceAlienResponseBody,
     DiceRequestBody,
-    DiceResponseBody,
-    PlaySocket
+    DiceResponseBody
 } from '../../types/index.js';
+import type { SocketClient } from '../../types/socket.js';
 
 export interface DiceHookExport {
     requestDice: (req: DiceRequestBody, isPrivate: boolean) => void;
@@ -22,7 +22,7 @@ export const defaultDiceHookExport: DiceHookExport = {
     }
 };
 
-const useDice = (socket: PlaySocket | null) => {
+const useDice = (socket: SocketClient | null) => {
     const { t } = useApp();
 
     const requestDice = (request: DiceRequestBody, isPrivate: boolean) => {

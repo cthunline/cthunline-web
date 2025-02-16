@@ -15,11 +15,12 @@ import {
     useAudioVolume
 } from '../hooks/useAudioVolume.js';
 import { getAssetUrl } from '../services/api.js';
-import type { Asset, PlaySocket } from '../types/index.js';
+import type { Asset } from '../types/index.js';
+import type { SocketClient } from '../types/socket.js';
 
 interface AudioClientProviderProps {
     children: React.ReactElement | React.ReactElement[];
-    socket: PlaySocket;
+    socket: SocketClient;
 }
 
 interface AudioClientContextData
@@ -87,7 +88,7 @@ export const AudioClientProvider = ({
 
     useEffect(() => {
         socket.off('audioPlay').on('audioPlay', ({ asset, time }) => {
-            playAudio(asset, time);
+            playAudio(asset, time ?? 0);
         });
         socket.off('audioStop').on('audioStop', () => {
             stopAudio();

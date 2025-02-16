@@ -9,7 +9,6 @@ import type {
     WarhammerFantasyCharacter
 } from '@cthunline/games';
 import type { Locale } from '@pitininja/vite-translations-client';
-import type { Socket } from 'socket.io-client';
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ theme
 
@@ -213,13 +212,6 @@ export interface PortraitUploadBody {
 }
 
 // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ play
-
-export interface PlaySocket extends Socket {
-    user: User;
-    sessionId: number;
-    isMaster: boolean;
-    characterId?: number;
-}
 
 export interface PlayLog {
     id: string;

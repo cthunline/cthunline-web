@@ -10,7 +10,6 @@ import {
 import { findById, generateId } from '../../services/tools.js';
 import type {
     Color,
-    PlaySocket,
     SessionUser,
     SketchData,
     SketchDrawingPath,
@@ -21,6 +20,7 @@ import type {
     SketchTokenAttachedData,
     SketchTokenData
 } from '../../types/index.js';
+import type { SocketClient } from '../../types/socket.js';
 
 type DrawingState = {
     isDrawing: boolean;
@@ -235,7 +235,7 @@ const defaultTokenData: Omit<SketchTokenData, 'id' | 'index' | 'color'> = {
 
 // this hooks holds sketch states and utility functions
 // it is meant to be used in play context
-const useSketch = (socket: PlaySocket | null) => {
+const useSketch = (socket: SocketClient | null) => {
     const [sketchData, setSketchData] = useState<SketchData>(defaultSketchData);
     const [drawingState, setDrawingState] =
         useState<DrawingState>(defaultDrawingState);
