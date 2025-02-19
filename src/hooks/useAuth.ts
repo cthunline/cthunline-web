@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { AxiosError } from 'axios';
-import { useApp } from '../contexts/App.js';
 import {
     checkAuth as checkAuthRequest,
     login as loginRequest,
@@ -52,8 +51,6 @@ const defaultAuthData: AuthData = {
 };
 
 const useAuth = () => {
-    const { T } = useApp();
-
     const [authData, setAuthData] = useState<AuthData>(defaultAuthData);
 
     const refreshUser = useCallback(async () => {
@@ -116,12 +113,10 @@ const useAuth = () => {
                 toast.error(err.response.data.error);
             } else if (err instanceof Error) {
                 toast.error(err.message);
-            } else {
-                toast.error(T('common.unexpectedError'));
             }
             return err;
         },
-        [authData, logout, T]
+        [authData, logout]
     );
 
     useEffect(() => {

@@ -59,6 +59,7 @@ interface AudioMasterProviderProps {
 
 interface AudioMasterContextData
     extends Omit<UseAudioVolumeExport, 'howlVolume'> {
+    initialized: boolean;
     howl: Howl | null;
     timeStatus: AudioTimeStatus;
     options: AudioOptions;
@@ -71,6 +72,7 @@ interface AudioMasterContextData
 }
 
 const defaultContextData: AudioMasterContextData = {
+    initialized: false,
     howl: null,
     timeStatus: defaultTimeStatus,
     options: defaultOptions,
@@ -283,6 +285,7 @@ export const AudioMasterProvider = ({
 
     const contextValue = useMemo(
         () => ({
+            initialized: true,
             howl: howlRef.current,
             timeStatus,
             setPlaylist,
@@ -307,15 +310,13 @@ export const AudioMasterProvider = ({
     );
 
     return (
-        <AudioMasterContext.Provider value={contextValue}>
-            {children}
-        </AudioMasterContext.Provider>
+        <AudioMasterContext value={contextValue}>{children}</AudioMasterContext>
     );
 };
 
 export const useAudioMaster = () => {
     const context = useContext(AudioMasterContext);
-    if (!context) {
+    if (!context?.initialized) {
         throw new Error(
             'useAudioMaster must be used within an AudioMasterProvider'
         );

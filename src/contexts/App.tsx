@@ -23,10 +23,12 @@ type AppHookExports = AuthHookExport &
     TranslationHookExport;
 
 interface AppContextData extends AppHookExports {
+    initialized: boolean;
     theme: Theme;
 }
 
 const defaultContextData: AppContextData = {
+    initialized: false,
     theme: 'dark',
     ...defaultAuthHookData,
     ...defaultConfigurationHookData,
@@ -62,6 +64,7 @@ export const AppProvider = ({ children }: AppProviderProps) => {
 
     const contextValue = useMemo(
         () => ({
+            initialized: true,
             theme,
             refreshUser,
             isLoading,
@@ -97,16 +100,12 @@ export const AppProvider = ({ children }: AppProviderProps) => {
         ]
     );
 
-    return (
-        <AppContext.Provider value={contextValue}>
-            {children}
-        </AppContext.Provider>
-    );
+    return <AppContext value={contextValue}>{children}</AppContext>;
 };
 
 export const useApp = () => {
     const context = useContext(AppContext);
-    if (!context) {
+    if (!context?.initialized) {
         throw new Error('useApp must be used within an AppProvider');
     }
     return context;

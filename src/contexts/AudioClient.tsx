@@ -25,12 +25,14 @@ interface AudioClientProviderProps {
 
 interface AudioClientContextData
     extends Omit<UseAudioVolumeExport, 'howlVolume'> {
+    initialized: boolean;
     playing: boolean;
     playAudio: (track: Asset, time: number) => void;
     stopAudio: () => void;
 }
 
 const defaultContextData: AudioClientContextData = {
+    initialized: false,
     playing: false,
     playAudio: () => {
         /* default */
@@ -106,6 +108,7 @@ export const AudioClientProvider = ({
 
     const contextValue = useMemo(
         () => ({
+            initialized: true,
             playing,
             playAudio,
             stopAudio,
@@ -116,15 +119,13 @@ export const AudioClientProvider = ({
     );
 
     return (
-        <AudioClientContext.Provider value={contextValue}>
-            {children}
-        </AudioClientContext.Provider>
+        <AudioClientContext value={contextValue}>{children}</AudioClientContext>
     );
 };
 
 export const useAudioClient = () => {
     const context = useContext(AudioClientContext);
-    if (!context) {
+    if (!context?.initialized) {
         throw new Error(
             'useAudioClient must be used within an AudioClientProvider'
         );

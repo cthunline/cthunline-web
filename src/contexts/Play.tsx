@@ -47,6 +47,7 @@ interface PlayContextData
         DiceHookExport,
         SessionUsersHookExport,
         LogsHookExport {
+    initialized: boolean;
     sessionId: number;
     session?: Session;
     characterId?: number;
@@ -54,6 +55,7 @@ interface PlayContextData
 }
 
 const defaultPlayData: PlayContextData = {
+    initialized: false,
     sessionId: 0,
     session: undefined,
     socket: null,
@@ -361,6 +363,7 @@ export const PlayProvider = ({
 
     const contextValue = useMemo(
         () => ({
+            initialized: true,
             sessionId,
             session,
             characterId,
@@ -456,16 +459,12 @@ export const PlayProvider = ({
         ]
     );
 
-    return (
-        <PlayContext.Provider value={contextValue}>
-            {children}
-        </PlayContext.Provider>
-    );
+    return <PlayContext value={contextValue}>{children}</PlayContext>;
 };
 
 export const usePlay = () => {
     const context = useContext(PlayContext);
-    if (!context) {
+    if (!context?.initialized) {
         throw new Error('usePlay must be used within an PlayProvider');
     }
     return context;
