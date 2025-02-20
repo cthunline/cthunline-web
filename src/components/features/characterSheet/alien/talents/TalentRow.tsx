@@ -39,7 +39,7 @@ const TalentRow = ({
                 <Textarea
                     variant="contained"
                     w="100%"
-                    rows={3}
+                    rows={5}
                     readOnly={readonly}
                     size="sm"
                     label={T('game.alien.talents.description')}

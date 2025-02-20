@@ -64,7 +64,7 @@ const AddTalentRow = ({ onCreate }: AddTalentRowProps) => {
                         {...getInputProps('description')}
                         variant="contained"
                         w="100%"
-                        rows={3}
+                        rows={5}
                         size="sm"
                         label={T('game.alien.talents.description')}
                     />
