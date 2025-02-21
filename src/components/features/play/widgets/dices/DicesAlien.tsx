@@ -72,7 +72,8 @@ const DicesAlien = ({ isMaster, onRoll }: DicesAlienProps) => {
         [T]
     );
 
-    const isRoll = roll.dices > 0 || roll.stresses > 0;
+    const isDices = roll.dices > 0 || roll.stresses > 0;
+    const canRoll = roll.dices > 0;
 
     return (
         <Stack w="100%" gap="1rem">
@@ -96,7 +97,7 @@ const DicesAlien = ({ isMaster, onRoll }: DicesAlienProps) => {
                     </Tooltip>
                 ))}
             </Group>
-            {isRoll && (
+            {isDices && (
                 <Stack w="100%" align="center" gap="1rem">
                     <Title order={4}>{`${T('widget.dice.roll')} : `}</Title>
                     <Group gap="0.25rem 1rem" justify="center">
@@ -126,19 +127,25 @@ const DicesAlien = ({ isMaster, onRoll }: DicesAlienProps) => {
                                 )
                         )}
                     </Group>
-                    {!!isMaster && (
-                        <Checkbox
-                            label={T('common.private')}
-                            labelPosition="left"
-                            checked={isPrivate}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                            ) => {
-                                setIsPrivate(e.target.checked);
-                            }}
-                        />
+                    {canRoll && (
+                        <>
+                            {!!isMaster && (
+                                <Checkbox
+                                    label={T('common.private')}
+                                    labelPosition="left"
+                                    checked={isPrivate}
+                                    onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                        setIsPrivate(e.target.checked);
+                                    }}
+                                />
+                            )}
+                            <Button onClick={onSubmit}>
+                                {T('action.roll')}
+                            </Button>
+                        </>
                     )}
-                    <Button onClick={onSubmit}>{T('action.roll')}</Button>
                 </Stack>
             )}
         </Stack>
