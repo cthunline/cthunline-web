@@ -30,7 +30,7 @@
         "howler": "^2.2.4",
         "install": "^0.13.0",
         "mantine-form-zod-resolver": "^1.1.0",
-        "nanoid": "^5.1.0",
+        "nanoid": "^5.1.2",
         "normalize.css": "^8.0.1",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
@@ -54,6 +54,6 @@
         "postcss-preset-mantine": "^1.17.0",
         "postcss-simple-vars": "^7.0.1",
         "typescript": "^5.7.3",
-        "vite": "^6.1.1"
+        "vite": "^6.2.0"
     }
 }
