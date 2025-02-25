@@ -10,7 +10,7 @@
         "format": "npx @biomejs/biome check --write --error-on-warnings && npx tsc --noEmit"
     },
     "dependencies": {
-        "@cthunline/games": "^3.10.1",
+        "@cthunline/games": "^3.10.2",
         "@mantine/core": "^7.17.0",
         "@mantine/form": "^7.17.0",
         "@mantine/hooks": "^7.17.0",
