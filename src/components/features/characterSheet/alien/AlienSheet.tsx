@@ -23,7 +23,7 @@ import {
     GiRelationshipBounds
 } from 'react-icons/gi';
 
-import { useApp } from '../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../stores/locale.js';
 import type {
     CharacterData,
     CharacterSheetStatus
@@ -71,7 +71,7 @@ const AlienSheet = ({
     portrait,
     onPortraitChange
 }: AlienSheetProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [characterData, setCharacterData] = useState<AlienCharacter>(data);
     const [tabValue, setTabValue] = useState<string>('biography');

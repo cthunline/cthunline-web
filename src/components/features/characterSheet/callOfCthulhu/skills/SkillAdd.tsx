@@ -3,7 +3,7 @@ import { ActionIcon, Box, Group, Switch } from '@mantine/core';
 import { useMemo, useReducer } from 'react';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import AutocompleteInput, {
     type AutocompleteInputValue
 } from '../../../../common/AutocompleteInput.js';
@@ -46,7 +46,7 @@ const defaultSkillAddData: SkillAddData = {
 };
 
 const SkillAdd = ({ onSubmit }: SkillAddProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [skillAddData, updateSkillAddData] = useReducer(
         (prev: SkillAddData, updateData: UpdateSkillAddData): SkillAddData => {

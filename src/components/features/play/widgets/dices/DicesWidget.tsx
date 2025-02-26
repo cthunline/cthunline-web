@@ -2,8 +2,8 @@ import { type GameId, getGame } from '@cthunline/games';
 import { Stack, Tabs } from '@mantine/core';
 
 import { useState } from 'react';
-import { useApp } from '../../../../../contexts/App.js';
 import { usePlay } from '../../../../../contexts/Play.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import type {
     DiceAlienRequestBody,
     DiceRequestBody,
@@ -23,7 +23,8 @@ interface DicesWidgetProps {
 type DiceTab = 'standard' | GameId;
 
 const DicesWidget = ({ onClose, ...restProps }: DicesWidgetProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+
     const { session } = usePlay();
 
     if (!session) {

@@ -9,11 +9,11 @@ import { IoPeopleCircle } from 'react-icons/io5';
 import { MdDelete, MdUndo } from 'react-icons/md';
 import { PiBroom, PiTextT, PiTextTSlash } from 'react-icons/pi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { usePlay } from '../../../../../contexts/Play.js';
 import useAsset from '../../../../../hooks/api/useAsset.js';
 import useDirectory from '../../../../../hooks/api/useDirectory.js';
 import useSessionSketch from '../../../../../hooks/api/useSessionSketch.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import type {
     Asset,
     SketchCreateBody,
@@ -51,7 +51,8 @@ const saveSketchModalId = 'save-sketch-modal';
 const loadSketchModalId = 'load-sketch-modal';
 
 const SketchWidget = ({ onClose }: SketchWidgetProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+
     const {
         sessionId,
         users,

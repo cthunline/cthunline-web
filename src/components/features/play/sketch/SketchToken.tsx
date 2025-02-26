@@ -1,7 +1,6 @@
 import { Tooltip } from '@mantine/core';
 import { useCallback, useEffect, useState } from 'react';
 
-import { useApp } from '../../../../contexts/App.js';
 import { getCssVar, getTextColor } from '../../../../services/tools.js';
 import type {
     Color,
@@ -15,6 +14,7 @@ import SketchContextMenu, {
 } from './SketchContextMenu.js';
 
 import './SketchToken.css';
+import { useAuthStore } from '../../../../stores/auth.js';
 
 interface SketchTokenProps {
     id: string;
@@ -60,7 +60,7 @@ const SketchToken = ({
     onColorChange,
     onDelete
 }: SketchTokenProps) => {
-    const { userId } = useApp();
+    const user = useAuthStore(({ user }) => user);
 
     const [tooltipOpen, setTooltipOpen] = useState<boolean>(false);
     const [contextMenuPosition, setContextMenuPosition] =
@@ -107,7 +107,7 @@ const SketchToken = ({
 
     const isMovable = !!(
         isMaster ||
-        (attachedData && attachedData.userId === userId)
+        (attachedData && attachedData.userId === user.id)
     );
 
     const hexColor = getCssVar(`--palette-${color}`);

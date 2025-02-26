@@ -4,10 +4,10 @@ import { GiD10, GiRollingDices } from 'react-icons/gi';
 import { MdOutlineContactPage } from 'react-icons/md';
 import { Link, useLocation } from 'react-router';
 
-import { useApp } from '../../contexts/App.js';
 import HeaderMenu from './HeaderMenu.js';
 
 import './Header.css';
+import { useLocaleStore } from '../../stores/locale.js';
 
 interface NavItem {
     icon: React.ReactElement;
@@ -41,8 +41,10 @@ const sectionProps: GroupProps = {
 };
 
 const Header = () => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+
     const { pathname } = useLocation();
+
     return (
         <Group
             component="header"

@@ -3,7 +3,7 @@ import { ActionIcon, Box, Group } from '@mantine/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import { weaponFields } from './weapons.data.js';
 
@@ -21,7 +21,7 @@ const defaultValues = {
 };
 
 const WeaponAdd = ({ onSubmit }: WeaponAddProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [values, setValues] = useState<SWD6Weapon>(defaultValues);
     const [nameError, setNameError] = useState<boolean>(false);

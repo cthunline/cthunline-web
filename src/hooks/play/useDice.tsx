@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
-import { useApp } from '../../contexts/App.js';
+
+import { useLocaleStore } from '../../stores/locale.js';
 import type {
     DiceAlienRequestBody,
     DiceAlienResponseBody,
@@ -23,7 +24,7 @@ export const defaultDiceHookExport: DiceHookExport = {
 };
 
 const useDice = (socket: SocketClient | null) => {
-    const { t } = useApp();
+    const t = useLocaleStore(({ t }) => t);
 
     const requestDice = (request: DiceRequestBody, isPrivate: boolean) => {
         socket?.emit(isPrivate ? 'dicePrivateRequest' : 'diceRequest', request);

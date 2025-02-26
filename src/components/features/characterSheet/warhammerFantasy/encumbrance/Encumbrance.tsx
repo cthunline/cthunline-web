@@ -2,8 +2,8 @@ import type { WarhammerFantasyCharacter } from '@cthunline/games';
 import { Grid, Stack } from '@mantine/core';
 import { GiSpikedArmor } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
@@ -47,7 +47,7 @@ const Encumbrance = ({
     readonly,
     onChange
 }: EncumbranceProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onBonusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         onChange({

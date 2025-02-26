@@ -11,7 +11,7 @@ import {
     GiSpellBook
 } from 'react-icons/gi';
 
-import { useApp } from '../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../stores/locale.js';
 import type {
     CharacterData,
     CharacterSheetStatus
@@ -63,7 +63,7 @@ const WarhammerFantasySheet = ({
     portrait,
     onPortraitChange
 }: WarhammerFantasySheetProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [characterData, setCharacterData] =
         useState<WarhammerFantasyCharacter>(data);

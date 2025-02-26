@@ -1,8 +1,8 @@
 import dayjs, { type Dayjs } from 'dayjs';
 import { useState } from 'react';
 
-import { useApp } from '../../contexts/App.js';
 import { generateId } from '../../services/tools.js';
+import { useLocaleStore } from '../../stores/locale.js';
 import type { PlayLog, User } from '../../types/index.js';
 
 export interface LogsHookExport {
@@ -21,7 +21,7 @@ export const defaultLogsHookExport: LogsHookExport = {
 };
 
 const useLogs = () => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [logs, setLogs] = useState<PlayLog[]>([]);
 

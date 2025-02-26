@@ -22,8 +22,8 @@ import {
     IoVolumeOff
 } from 'react-icons/io5';
 
-import { useApp } from '../../contexts/App.js';
 import { useAudioMaster } from '../../contexts/AudioMaster.js';
+import { useLocaleStore } from '../../stores/locale.js';
 
 interface AudioVolumeIconProps {
     playing: boolean;
@@ -106,7 +106,7 @@ const AudioOptionButton = ({
 );
 
 const AudioPlayer = () => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const {
         howl,

@@ -1,7 +1,7 @@
 import { Loader } from '@mantine/core';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router';
 
-import { useApp } from '../contexts/App.js';
+import { useAuthStore } from '../stores/auth.js';
 import Page from './layout/Page.js';
 import ErrorPage from './pages/error/ErrorPage.js';
 import Login from './pages/login/Login.js';
@@ -14,7 +14,8 @@ interface RequireAuthProps {
 }
 
 const RequireAuth = ({ children, admin }: RequireAuthProps) => {
-    const { isLoggedIn, user } = useApp();
+    const isLoggedIn = useAuthStore(({ isLoggedIn }) => isLoggedIn);
+    const user = useAuthStore(({ user }) => user);
     if (isLoggedIn) {
         if (admin && !user?.isAdmin) {
             return <ErrorPage type="forbidden" />;
@@ -25,7 +26,7 @@ const RequireAuth = ({ children, admin }: RequireAuthProps) => {
 };
 
 const Router = () => {
-    const { isLoading } = useApp();
+    const isLoading = useAuthStore(({ isLoading }) => isLoading);
 
     if (isLoading) {
         return (

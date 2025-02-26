@@ -6,7 +6,7 @@ import {
 import { Stack } from '@mantine/core';
 import { GiArmorDowngrade, GiArmorUpgrade } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import BasicList from '../generic/BasicList.js';
 import Gang from './fragments/Gang.js';
@@ -19,7 +19,7 @@ interface HardHolderProps {
 }
 
 const HardHolder = ({ readonly, character, onChange }: HardHolderProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onHoldingChange = (
         data: Partial<ApocalypseWorldCharacter['hardHolder']['holding']>

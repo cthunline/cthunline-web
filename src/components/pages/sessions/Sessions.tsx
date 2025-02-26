@@ -7,9 +7,10 @@ import { HiPlus } from 'react-icons/hi';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 import { useNavigate } from 'react-router';
 
-import { useApp } from '../../../contexts/App.js';
 import useCharacter from '../../../hooks/api/useCharacter.js';
 import useSession from '../../../hooks/api/useSession.js';
+import { useAuthStore } from '../../../stores/auth.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import type { SessionCreateBody } from '../../../types/index.js';
 import ContentBox from '../../common/ContentBox.js';
 import JoinSessionModal from './JoinSessionModal.js';
@@ -19,7 +20,9 @@ const selectCharacterModalId = 'select-character-modal';
 const createSessionModalId = 'create-session-modal';
 
 const Sessions = () => {
-    const { T, user } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+    const user = useAuthStore(({ user }) => user);
+
     const navigate = useNavigate();
     const { characterList, createCharacter } = useCharacter({
         loadList: true
@@ -129,7 +132,7 @@ const Sessions = () => {
                         </Table.Thead>
                         <Table.Tbody>
                             {sessionList.map(({ id, name, gameId, master }) => {
-                                const isMaster = master?.id === user?.id;
+                                const isMaster = master?.id === user.id;
                                 return (
                                     <Table.Tr key={`session-${id}`}>
                                         <Table.Td>

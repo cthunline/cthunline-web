@@ -2,7 +2,7 @@ import { ActionIcon } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { useApp } from '../../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../../stores/locale.js';
 import type { Sketch } from '../../../../../../types/index.js';
 import InteractiveList from '../../../../../common/InteractiveList.js';
 
@@ -17,7 +17,7 @@ const UserSketchLoad = ({
     onLoad,
     onDelete
 }: UserSketchSelectorProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const handleDelete = (sketchId: number) => {
         modals.openConfirmModal({

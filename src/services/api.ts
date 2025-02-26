@@ -1,5 +1,11 @@
-import Axios, { AxiosHeaders, type AxiosProgressEvent } from 'axios';
+import Axios, {
+    AxiosError,
+    AxiosHeaders,
+    type AxiosProgressEvent
+} from 'axios';
 
+import { useAuthStore } from '../stores/auth.js';
+import { toast } from './toast.js';
 import { pathJoin } from './tools.js';
 
 type HttpMethod = 'GET' | 'POST' | 'PATCH' | 'PUT' | 'DELETE';
@@ -46,3 +52,21 @@ export const callApi = async <ResponseBodyType>({
 };
 
 export const getAssetUrl = (path: string) => `/static/${path}`;
+
+export const handleApiError = (err: unknown): typeof err => {
+    const { isLoggedIn, logout } = useAuthStore.getState();
+    if (
+        isLoggedIn &&
+        err instanceof AxiosError &&
+        err.response?.status === 401
+    ) {
+        logout(false);
+        toast.error('You have been disconnected');
+        logout(false);
+    } else if (err instanceof AxiosError && err?.response?.data?.error) {
+        toast.error(err.response.data.error);
+    } else if (err instanceof Error) {
+        toast.error(err.message);
+    }
+    return err;
+};

@@ -3,11 +3,11 @@ import { modals } from '@mantine/modals';
 import { useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 
-import { useApp } from '../../../contexts/App.js';
 import { AudioClientProvider } from '../../../contexts/AudioClient.js';
 import { AudioMasterProvider } from '../../../contexts/AudioMaster.js';
 import { PlayProvider, usePlay } from '../../../contexts/Play.js';
 import { focusWidget } from '../../../services/widget.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import type { WidgetType, WidgetVisibility } from '../../../types/index.js';
 import AudioClientVolume from '../../features/play/AudioClientVolume.js';
 import Console from '../../features/play/Console.js';
@@ -21,7 +21,8 @@ import SketchWidget from '../../features/play/widgets/sketch/SketchWidget.js';
 import PlayMenu from './PlayMenu.js';
 
 const PlayContent = () => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+
     const navigate = useNavigate();
     const {
         characterId,

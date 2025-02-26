@@ -2,7 +2,7 @@ import { Group, Loader, Tooltip } from '@mantine/core';
 import { useMemo } from 'react';
 import { FaCircle } from 'react-icons/fa6';
 
-import { useApp } from '../../../contexts/App.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import type { CharacterSheetStatus } from '../../../types/index.js';
 
 interface CharacterSheetStatusData {
@@ -15,7 +15,7 @@ export interface StatusProps {
 }
 
 const Status = ({ status }: StatusProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const statusData: Record<CharacterSheetStatus, CharacterSheetStatusData> =
         useMemo(

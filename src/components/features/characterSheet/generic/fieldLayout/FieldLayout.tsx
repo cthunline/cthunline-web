@@ -2,8 +2,8 @@ import type { GameId } from '@cthunline/games';
 import { Checkbox, Grid } from '@mantine/core';
 import type { IconType } from 'react-icons';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput, { type InputVariant } from '../../../../common/TextInput.js';
 import Textarea from '../../../../common/Textarea.js';
 import SectionTitle from '../sectionTitle/SectionTitle.js';
@@ -50,7 +50,7 @@ export const FieldInput = <DataType extends {}>({
     readonly,
     onChange
 }: InputProps<DataType>) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <>
             {!!title && (
@@ -128,7 +128,7 @@ const FieldCheckbox = <DataType extends {}>({
     readonly,
     onChange
 }: InputProps<DataType>) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <>
             {!!title && (

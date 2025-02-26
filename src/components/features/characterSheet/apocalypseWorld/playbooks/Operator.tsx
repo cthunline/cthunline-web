@@ -6,7 +6,7 @@ import {
 import { Stack, Text } from '@mantine/core';
 import { GiPayMoney, GiReceiveMoney, GiShakingHands } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextEditor from '../../../../common/TextEditor.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import BasicList from '../generic/BasicList.js';
@@ -18,7 +18,7 @@ interface OperatorProps {
 }
 
 const Operator = ({ readonly, character, onChange }: OperatorProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onOperatorChange = (
         data: Partial<ApocalypseWorldCharacter['operator']>

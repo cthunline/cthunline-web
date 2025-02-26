@@ -6,7 +6,7 @@ import {
 import { Stack } from '@mantine/core';
 import { GiArmorDowngrade, GiArmorUpgrade } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import BasicList from '../generic/BasicList.js';
 import Bike from './fragments/Bike.js';
@@ -19,7 +19,7 @@ interface ChopperProps {
 }
 
 const Chopper = ({ readonly, character, onChange }: ChopperProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onGangChange = (
         data: Partial<ApocalypseWorldCharacter['chopper']['gang']>

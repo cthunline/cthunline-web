@@ -7,8 +7,8 @@ import {
 import { Grid, Group, Stack } from '@mantine/core';
 import { GiDna1 } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import CareerLevelButton from '../generic/CareerLevelButton.js';
@@ -38,7 +38,7 @@ const Characteristics = ({
     character,
     onChange
 }: CharacteristicsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onCharacteristicChange = (
         char: WarhammerFantasyCharacteristicName,

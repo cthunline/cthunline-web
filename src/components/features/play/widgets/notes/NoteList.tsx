@@ -3,7 +3,8 @@ import { useMemo } from 'react';
 import { HiOutlineDotsHorizontal } from 'react-icons/hi';
 import { MdOutlineShare } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useAuthStore } from '../../../../../stores/auth.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import type { Note, User } from '../../../../../types/index.js';
 import InteractiveList from '../../../../common/InteractiveList.js';
 import NoteListMenuDropdown from './NoteListMenuDropdown.js';
@@ -32,7 +33,8 @@ const NoteList = ({
     onMove,
     onDelete
 }: NoteListProps) => {
-    const { T, userId } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+    const user = useAuthStore(({ user }) => user);
 
     const maxPosition = Math.max(
         ...notes.map(({ position }) => Number(position))
@@ -57,14 +59,14 @@ const NoteList = ({
                 header: T('page.play.note.yourNotes')
             },
             ...Object.keys(sharedNotesByUserId).map((noteUserId) => ({
-                key: `sharedNotes-${userId}`,
+                key: `sharedNotes-${user.id}`,
                 list: sharedNotesByUserId[noteUserId],
                 header: T('page.play.note.sharedUserNotes', {
                     name: usersById[noteUserId].name
                 })
             }))
         ];
-    }, [notes, sharedNotes, T, userId]);
+    }, [notes, sharedNotes, user, T]);
 
     return (
         <Box w="100%" h={0} flex="1 0" style={{ overflowY: 'auto' }}>
@@ -77,7 +79,7 @@ const NoteList = ({
                         <InteractiveList key={key}>
                             {list.map((note) => {
                                 const { id, title, userId: noteUserId } = note;
-                                const isOwnedByUser = noteUserId === userId;
+                                const isOwnedByUser = noteUserId === user.id;
                                 return (
                                     <InteractiveList.Item
                                         key={`note-${noteUserId}-${id}`}

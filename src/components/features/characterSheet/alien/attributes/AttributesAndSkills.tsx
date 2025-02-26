@@ -1,10 +1,10 @@
 import type { AlienAttribute, AlienAttributes } from '@cthunline/games';
 import { Group, Stack, Text } from '@mantine/core';
-
 import { useMemo } from 'react';
 import { GiSkills } from 'react-icons/gi';
-import { useApp } from '../../../../../contexts/App.js';
+
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
@@ -61,7 +61,8 @@ const AttributesAndSkills = ({
     readonly,
     onChange
 }: AttributesAndSkillsProps) => {
-    const { T, TU } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+    const TU = useLocaleStore(({ TU }) => TU);
 
     const attributesSkillsData: AttributesSkillsData = useMemo(
         () => [

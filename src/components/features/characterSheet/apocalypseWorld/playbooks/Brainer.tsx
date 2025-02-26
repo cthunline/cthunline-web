@@ -6,7 +6,7 @@ import {
 import { Stack } from '@mantine/core';
 import { GiCeremonialMask } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import BasicList from '../generic/BasicList.js';
 
@@ -17,7 +17,8 @@ interface BrainerProps {
 }
 
 const Brainer = ({ readonly, character, onChange }: BrainerProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+
     return (
         <Stack gap="1rem" w="100%">
             <SectionTitle

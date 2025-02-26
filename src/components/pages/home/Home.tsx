@@ -3,8 +3,8 @@ import { useMemo } from 'react';
 import { GiBookmarklet, GiWizardFace } from 'react-icons/gi';
 
 import { gameIds } from '@cthunline/games';
-import { useApp } from '../../../contexts/App.js';
 import useStatistics from '../../../hooks/useStatistics.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import type { Statistics } from '../../../types/index.js';
 import StatCard from '../../common/StatCard.js';
 import GameLogo from '../../svg/games/GameLogo.js';
@@ -18,7 +18,8 @@ const statSpans: Record<keyof Statistics, number> = {
 };
 
 const Home = () => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+
     const { statistics } = useStatistics();
 
     const statCardsData = useMemo(

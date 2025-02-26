@@ -20,7 +20,7 @@ import {
     GiStrong
 } from 'react-icons/gi';
 
-import { useApp } from '../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../stores/locale.js';
 import type {
     CharacterData,
     CharacterSheetStatus
@@ -61,7 +61,7 @@ const CoCSheet = ({
     portrait,
     onPortraitChange
 }: CoCSheetProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [characterData, setCharacterData] = useState<CoCCharacter>(data);
     const [tabValue, setTabValue] = useState<string>('biographyAndStory');

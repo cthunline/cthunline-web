@@ -7,11 +7,11 @@ import {
 import { Stack } from '@mantine/core';
 import { GiBookmarklet, GiFrontalLobe, GiUncertainty } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextEditor from '../../../../common/TextEditor.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import BasicList from '../generic/BasicList.js';
@@ -25,7 +25,7 @@ interface MovesProps {
 }
 
 const Moves = ({ readonly, character, onChange }: MovesProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onPlaybookMovesChange = (moves: ApocalypseWorldBasicListItem[]) => {
         onChange({

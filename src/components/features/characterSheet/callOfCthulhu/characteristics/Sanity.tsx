@@ -1,8 +1,8 @@
 import type { CoCSanity } from '@cthunline/games';
 import { Box, Group } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import { controlSanity } from '../cocSheet.helper.js';
 import { sanityKeys } from './characteristics.data.js';
@@ -14,7 +14,7 @@ interface SanityProps {
 }
 
 const Sanity = ({ data, readonly, onChange }: SanityProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     return (
         <Group w="100%" gap="0.25rem">

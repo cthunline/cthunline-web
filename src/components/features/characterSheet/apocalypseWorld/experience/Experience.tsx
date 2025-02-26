@@ -17,7 +17,7 @@ import { useMemo } from 'react';
 import { GiUpgrade } from 'react-icons/gi';
 import { MdClose } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
 interface ImprovementListProps {
@@ -40,8 +40,8 @@ const ImprovementList = ({
     improvementValues,
     onChange
 }: ImprovementListProps) => {
-    const { T, t } = useApp();
-
+    const t = useLocaleStore(({ t }) => t);
+    const T = useLocaleStore(({ T }) => T);
     const improvementNamesWithCounts: ImprovementNameWithCountData[] =
         useMemo(() => {
             const namesWithCount: ImprovementNameWithCountData[] = [];
@@ -127,7 +127,7 @@ interface ExperienceProps {
 }
 
 const Experience = ({ readonly, character, onChange }: ExperienceProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const improvementValues: Map<string, boolean> = useMemo(() => {
         const nameMap = new Map<string, number>();

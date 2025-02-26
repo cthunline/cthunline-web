@@ -5,7 +5,7 @@ import type {
 import { Group, Stack, type StackProps } from '@mantine/core';
 import { GiFullMotorcycleHelmet } from 'react-icons/gi';
 
-import { useApp } from '../../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../../stores/locale.js';
 import Textarea from '../../../../../common/Textarea.js';
 import SectionTitle from '../../../generic/sectionTitle/SectionTitle.js';
 
@@ -16,7 +16,7 @@ interface BikeProps extends Omit<StackProps, 'onChange'> {
 }
 
 const Bike = ({ readonly, character, onChange, ...props }: BikeProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onBikeValueChange = (
         data: Partial<ApocalypseWorldCharacterChopperBike>

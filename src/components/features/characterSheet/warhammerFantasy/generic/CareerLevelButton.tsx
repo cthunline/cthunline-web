@@ -2,8 +2,7 @@ import { ActionIcon, Group, Menu, Text } from '@mantine/core';
 import type { IconType } from 'react-icons';
 import { FaBan, FaShield } from 'react-icons/fa6';
 import { GiDeathSkull, GiIronCross, GiStoneCrafting } from 'react-icons/gi';
-
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 
 type CareerLevelData = {
     level: number;
@@ -62,7 +61,8 @@ const CareerLevelButton = ({
     onChange,
     readonly
 }: CareerLevelButtonProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+
     const careerLevelData = level ? careerLevelsMap.get(level) : undefined;
 
     if (readonly) {

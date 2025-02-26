@@ -2,7 +2,7 @@ import type { ApocalypseWorldCharacter } from '@cthunline/games';
 import { Box, Stack } from '@mantine/core';
 import { GiHandBag } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextEditor from '../../../../common/TextEditor.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
@@ -13,7 +13,7 @@ interface GearBarterProps {
 }
 
 const GearBarter = ({ readonly, character, onChange }: GearBarterProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack gap="1rem" w="100%" flex={1} h={0}>
             <SectionTitle

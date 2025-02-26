@@ -1,8 +1,8 @@
 import type { DnD5Statistics } from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 
 interface StatisticsProps {
@@ -12,7 +12,7 @@ interface StatisticsProps {
 }
 
 const Statistics = ({ statistics, readonly, onChange }: StatisticsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%" gap="1rem">
             {(Object.keys(statistics) as (keyof DnD5Statistics)[]).map(

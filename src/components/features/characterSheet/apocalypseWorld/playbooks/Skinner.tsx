@@ -6,7 +6,7 @@ import {
 import { Stack } from '@mantine/core';
 import { GiSparklingSabre, GiSpectacles } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import BasicList from '../generic/BasicList.js';
 
@@ -17,7 +17,7 @@ interface SkinnerProps {
 }
 
 const Skinner = ({ readonly, character, onChange }: SkinnerProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onSkinnerChange = (
         data: Partial<ApocalypseWorldCharacter['skinner']>

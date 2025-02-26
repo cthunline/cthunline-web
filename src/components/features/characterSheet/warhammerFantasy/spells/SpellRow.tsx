@@ -1,8 +1,8 @@
 import type { WarhammerFantasySpell } from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
 import type { MoveAction } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import Textarea from '../../../../common/Textarea.js';
 import RowInput from '../../generic/row/RowInput.js';
 import RowMenuButton from '../../generic/row/RowMenuButton.js';
@@ -22,7 +22,7 @@ const SpellRow = ({
     onMove,
     onDelete
 }: SpellRowProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Group w="100%" gap="1rem">
             <Stack flex="1 0" gap="0.5rem">

@@ -11,7 +11,7 @@ import {
     GiSteyrAug
 } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextEditor from '../../../../common/TextEditor.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import BasicList from '../generic/BasicList.js';
@@ -23,7 +23,7 @@ interface GunLuggerProps {
 }
 
 const GunLugger = ({ readonly, character, onChange }: GunLuggerProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onGunLuggerChange = (
         data: Partial<ApocalypseWorldCharacter['gunLugger']>

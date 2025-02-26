@@ -1,8 +1,8 @@
 import type { CoCLuck } from '@cthunline/games';
 import { Box, Group } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import { luckKeys } from './characteristics.data.js';
 
@@ -13,8 +13,7 @@ interface LuckProps {
 }
 
 const Luck = ({ data, readonly, onChange }: LuckProps) => {
-    const { T } = useApp();
-
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Group w="100%" gap="0.25rem">
             <Box flex="1 0">{T('game.callOfCthulhu.characteristic.luck')}</Box>

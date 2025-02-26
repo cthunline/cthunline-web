@@ -6,7 +6,7 @@ import {
 import { Checkbox, Group, Stack, Text } from '@mantine/core';
 import { GiSkills } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
@@ -17,7 +17,7 @@ interface StatsProps {
 }
 
 const Stats = ({ readonly, character, onChange }: StatsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onStatChange = (stats: Partial<ApocalypseWorldStats>) => {
         onChange({

@@ -2,7 +2,7 @@ import { ActionIcon, Stack, Text } from '@mantine/core';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa6';
 
-import { useApp } from '../../../contexts/App.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import type { PlayLog } from '../../../types/index.js';
 import AutoScroll from '../../common/AutoScroll.js';
 import WidgetPaper from './WidgetPaper.js';
@@ -25,7 +25,7 @@ interface ConsoleProps {
 }
 
 const Console = ({ logs, playContentRef }: ConsoleProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [displayMode, setDisplayMode] =
         useState<ConsoleDisplayMode>('normal');

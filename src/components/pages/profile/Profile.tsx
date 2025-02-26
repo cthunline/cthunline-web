@@ -4,8 +4,9 @@ import { zodResolver } from 'mantine-form-zod-resolver';
 import { MdOutlineSave } from 'react-icons/md';
 import z from 'zod';
 
-import { useApp } from '../../../contexts/App.js';
 import useUser from '../../../hooks/api/useUser.js';
+import { useAuthStore } from '../../../stores/auth.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import { type SelectOption, languages } from '../../../types/index.js';
 import ContentBox from '../../common/ContentBox.js';
 import Form from '../../common/Form.js';
@@ -57,7 +58,10 @@ const languageOptions: SelectOption<string>[] = Object.entries(languages).map(
 );
 
 const Profile = () => {
-    const { T, user, refreshUser } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+    const user = useAuthStore(({ user }) => user);
+    const refreshUser = useAuthStore(({ refreshUser }) => refreshUser);
+
     const { editUser } = useUser();
 
     const {
@@ -67,8 +71,8 @@ const Profile = () => {
     } = useForm<ProfileFormData>({
         validate: zodResolver(profileFormSchema),
         initialValues: {
-            theme: user?.theme ?? 'dark',
-            locale: user?.locale ?? 'en',
+            theme: user.theme,
+            locale: user.locale,
             oldPassword: '',
             password: '',
             passwordConfirm: ''
@@ -82,7 +86,7 @@ const Profile = () => {
         password
     }: ProfileFormData) => {
         await editUser({
-            userId: Number(user?.id),
+            userId: Number(user.id),
             data: {
                 theme,
                 locale,

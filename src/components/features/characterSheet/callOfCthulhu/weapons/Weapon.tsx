@@ -2,7 +2,7 @@ import type { CoCWeapon } from '@cthunline/games';
 import { ActionIcon, Box, Group } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import { weaponKeys } from './weapons.data.js';
 
@@ -15,7 +15,7 @@ interface WeaponProps {
 }
 
 const Weapon = ({ index, data, readonly, onChange, onDelete }: WeaponProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     return (
         <Group w="100%" gap="0.5rem">

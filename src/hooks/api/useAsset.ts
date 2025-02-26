@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useApp } from '../../contexts/App.js';
+import { handleApiError } from '../../services/api.js';
 import {
     deleteAsset as deleteAssetRequest,
     getAssets as getAssetsRequest,
@@ -28,8 +28,6 @@ interface DeleteOptions {
 }
 
 const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
-    const { handleApiError } = useApp();
-
     const [assetList, setAssetList] = useState<Asset[]>([]);
 
     const getAssets = useCallback(async (): Promise<Asset[]> => {
@@ -38,7 +36,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
         } catch (err: unknown) {
             throw handleApiError(err);
         }
-    }, [type, handleApiError]);
+    }, [type]);
 
     const refreshAssetList = useCallback(async () => {
         const assets = await getAssets();
@@ -69,7 +67,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [loadList, refreshAssetList, handleApiError]
+        [loadList, refreshAssetList]
     );
 
     const deleteAsset = useCallback(
@@ -90,7 +88,7 @@ const useAsset = ({ loadList, type }: AssetHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [loadList, refreshAssetList, handleApiError]
+        [loadList, refreshAssetList]
     );
 
     useEffect(() => {

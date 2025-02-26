@@ -5,7 +5,7 @@ import type {
 } from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import Skill from './Skill.js';
 import SkillAdd from './SkillAdd.js';
@@ -33,8 +33,7 @@ const Attribute = ({
     onSkillChange,
     onSkillDelete
 }: AttributeProps) => {
-    const { T } = useApp();
-
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%">
             <Group w="100%">

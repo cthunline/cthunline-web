@@ -5,11 +5,11 @@ import type {
 import { Stack } from '@mantine/core';
 import { GiAxeSword } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import AddWeaponRow from './AddWeaponRow.js';
 import WeaponRow from './WeaponRow.js';
@@ -21,7 +21,7 @@ interface WeaponsProps {
 }
 
 const Weapons = ({ readonly, character, onChange }: WeaponsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onWeaponChange = (index: number, arm: WarhammerFantasyWeapon) => {
         onChange({

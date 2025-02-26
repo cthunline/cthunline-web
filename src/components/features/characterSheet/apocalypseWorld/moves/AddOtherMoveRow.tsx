@@ -5,7 +5,7 @@ import { zodResolver } from 'mantine-form-zod-resolver';
 import { FiPlusCircle } from 'react-icons/fi';
 import z from 'zod';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import Form from '../../../../common/Form.js';
 import TextInput from '../../../../common/TextInput.js';
 import Textarea from '../../../../common/Textarea.js';
@@ -25,7 +25,7 @@ type AddMoveRowProps = {
 };
 
 const AddOtherMoveRow = ({ onCreate }: AddMoveRowProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const {
         onSubmit: handleSubmit,

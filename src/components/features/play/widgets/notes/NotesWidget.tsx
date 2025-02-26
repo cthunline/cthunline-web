@@ -2,10 +2,10 @@ import { Stack } from '@mantine/core';
 import { modals } from '@mantine/modals';
 import { useRef } from 'react';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { usePlay } from '../../../../../contexts/Play.js';
 import useCharacterSheetStatus from '../../../../../hooks/api/useCharacterSheetStatus.js';
 import useNote from '../../../../../hooks/api/useNote.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import type { Note, WidgetType } from '../../../../../types/index.js';
 import Widget from '../../Widget.js';
 import NoteCreate from './NoteCreate.js';
@@ -17,7 +17,8 @@ interface NotesWidgetProps {
 }
 
 const NotesWidget = ({ onClose }: NotesWidgetProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+
     const { sessionId, socket } = usePlay();
     const {
         noteList,

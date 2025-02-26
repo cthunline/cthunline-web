@@ -7,8 +7,8 @@ import {
 } from '@szhsin/react-menu';
 import { useEffect, useRef, useState } from 'react';
 
-import { useApp } from '../../../../contexts/App.js';
 import { usePlay } from '../../../../contexts/Play.js';
+import { useLocaleStore } from '../../../../stores/locale.js';
 import type { Color, SessionUser } from '../../../../types/index.js';
 import ColorPicker from '../../../common/ColorPicker.js';
 import FontSizePicker from '../../../common/FontSizePicker.js';
@@ -74,9 +74,9 @@ const SketchContextMenu = ({
     onColorPick,
     onDelete
 }: SketchContextMenuProps) => {
-    const { colorScheme } = useMantineColorScheme();
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
+    const { colorScheme } = useMantineColorScheme();
     const [editInputValue, setEditInputValue] = useState<string>(
         editValue ?? ''
     );

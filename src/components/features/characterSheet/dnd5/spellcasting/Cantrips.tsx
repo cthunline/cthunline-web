@@ -2,7 +2,7 @@ import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { FiPlusCircle } from 'react-icons/fi';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 
 interface CantripsProps {
@@ -12,8 +12,7 @@ interface CantripsProps {
 }
 
 const Cantrips = ({ cantrips, readonly, onChange }: CantripsProps) => {
-    const { T } = useApp();
-
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%" gap="1rem">
             <Group gap="1rem">

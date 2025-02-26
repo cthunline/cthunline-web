@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { FaInfo } from 'react-icons/fa6';
 import { HiPlus } from 'react-icons/hi';
 
-import { useApp } from '../../../contexts/App.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import type { Character, SelectOption } from '../../../types/index.js';
 import Select from '../../common/Select.js';
 
@@ -14,7 +14,7 @@ interface CharacterSelectProps {
 }
 
 const CharacterSelect = ({ characters, onSelect }: CharacterSelectProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const options: SelectOption<number>[] = useMemo(
         () =>
@@ -52,7 +52,8 @@ const JoinSessionModal = ({
     onSelect,
     onCreate
 }: JoinSessionModalProps) => {
-    const { T, t } = useApp();
+    const t = useLocaleStore(({ t }) => t);
+    const T = useLocaleStore(({ T }) => T);
 
     const gameCharacters = useMemo(
         () =>

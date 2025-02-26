@@ -4,8 +4,9 @@ import { zodResolver } from 'mantine-form-zod-resolver';
 import { useMemo } from 'react';
 import z from 'zod';
 
-import { useApp } from '../../../contexts/App.js';
 import useUser from '../../../hooks/api/useUser.js';
+import { useAuthStore } from '../../../stores/auth.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import type { SelectOption } from '../../../types/index.js';
 import Form from '../../common/Form.js';
 import Select from '../../common/Select.js';
@@ -32,8 +33,9 @@ const TransferForm = ({
     onConfirm,
     onCancel
 }: TransferFormProps) => {
+    const T = useLocaleStore(({ T }) => T);
+    const currentUser = useAuthStore(({ user }) => user);
     const { userList } = useUser({ loadList: true });
-    const { T, userId: currentUserId } = useApp();
 
     const { onSubmit: handleSubmit, getInputProps } = useForm<TransferFormData>(
         {
@@ -44,7 +46,7 @@ const TransferForm = ({
     const userOptions = useMemo(() => {
         const options: SelectOption<number>[] = [];
         for (const { id, name } of userList) {
-            if (id !== currentUserId) {
+            if (id !== currentUser.id) {
                 options.push({
                     value: id,
                     label: name
@@ -52,7 +54,7 @@ const TransferForm = ({
             }
         }
         return options;
-    }, [currentUserId, userList]);
+    }, [currentUser, userList]);
 
     const onSubmit = ({ userId }: TransferFormData) => {
         onConfirm?.({

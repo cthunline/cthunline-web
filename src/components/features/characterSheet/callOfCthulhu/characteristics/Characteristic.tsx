@@ -1,8 +1,8 @@
 import type { CoCCharacteristic } from '@cthunline/games';
 import { Box, Group, Tooltip } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import { controlCharacteristic } from '../cocSheet.helper.js';
 import { charKeys } from './characteristics.data.js';
@@ -22,7 +22,8 @@ const Characteristic = ({
     readonly,
     onChange
 }: CharacteristicProps) => {
-    const { T, TU } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+    const TU = useLocaleStore(({ TU }) => TU);
     return (
         <Group w="100%" gap="0.25rem">
             <Box flex="1 0">

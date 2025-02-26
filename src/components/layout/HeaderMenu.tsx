@@ -5,7 +5,8 @@ import { FiUsers } from 'react-icons/fi';
 import { MdInfoOutline, MdLogout, MdOutlineSettings } from 'react-icons/md';
 import { useNavigate } from 'react-router';
 
-import { useApp } from '../../contexts/App.js';
+import { useAuthStore } from '../../stores/auth.js';
+import { useLocaleStore } from '../../stores/locale.js';
 import About from '../features/about/About.js';
 
 interface HeaderMenuItem {
@@ -31,8 +32,8 @@ const settingsMenuAdminItems: HeaderMenuItem[] = [
 ];
 
 const MenuItem = ({ icon, route, textKey }: HeaderMenuItem) => {
+    const T = useLocaleStore(({ T }) => T);
     const navigate = useNavigate();
-    const { T } = useApp();
     return (
         <Menu.Item leftSection={icon} onClick={() => navigate(route)}>
             {T(textKey)}
@@ -41,7 +42,9 @@ const MenuItem = ({ icon, route, textKey }: HeaderMenuItem) => {
 };
 
 const HeaderMenu = () => {
-    const { T, logout, user } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+    const user = useAuthStore(({ user }) => user);
+    const logout = useAuthStore(({ logout }) => logout);
 
     const onInfoModalOpen = () => {
         modals.open({
@@ -65,7 +68,7 @@ const HeaderMenu = () => {
                 {headerMenuItems.map((item) => (
                     <MenuItem key={`header-menu-${item.route}`} {...item} />
                 ))}
-                {user?.isAdmin
+                {user.isAdmin
                     ? [
                           <Menu.Divider key="header-menu-admin-divider" />,
                           ...settingsMenuAdminItems.map((item) => (

@@ -21,7 +21,7 @@ import {
     GiUpgrade
 } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import Textarea from '../../../../common/Textarea.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
@@ -48,7 +48,7 @@ export interface StatusProps {
 }
 
 const Status = ({ readonly, character, onChange }: StatusProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%">
             <Group w="100%">

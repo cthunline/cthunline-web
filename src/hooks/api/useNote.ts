@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useApp } from '../../contexts/App.js';
+import { handleApiError } from '../../services/api.js';
 import {
     createNote as createNoteRequest,
     deleteNote as deleteNoteRequest,
@@ -55,8 +55,6 @@ interface NoteList {
 const defaultNoteTitle = '?';
 
 const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
-    const { handleApiError } = useApp();
-
     const [noteList, setNoteList] = useState<NoteList>({
         notes: [],
         sharedNotes: []
@@ -98,18 +96,15 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
         } catch (err: unknown) {
             throw handleApiError(err);
         }
-    }, [sessionId, handleApiError]);
+    }, [sessionId]);
 
-    const getNote = useCallback(
-        async (noteId: number): Promise<Note> => {
-            try {
-                return await getNoteRequest(noteId);
-            } catch (err: unknown) {
-                throw handleApiError(err);
-            }
-        },
-        [handleApiError]
-    );
+    const getNote = useCallback(async (noteId: number): Promise<Note> => {
+        try {
+            return await getNoteRequest(noteId);
+        } catch (err: unknown) {
+            throw handleApiError(err);
+        }
+    }, []);
 
     const refreshNoteList = useCallback(async () => {
         const { notes, sharedNotes } = await getNotes();
@@ -147,7 +142,7 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
                 throw handleApiError(err);
             }
         },
-        [sessionId, refresh, handleApiError, socket]
+        [sessionId, refresh, socket]
     );
 
     const editNote = useCallback(
@@ -185,7 +180,7 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
                 throw handleApiError(err);
             }
         },
-        [handleApiError, refresh, socket]
+        [refresh, socket]
     );
 
     const moveNote = useCallback(
@@ -211,7 +206,7 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
                 throw handleApiError(err);
             }
         },
-        [handleApiError, refresh, socket]
+        [refresh, socket]
     );
 
     const deleteNote = useCallback(
@@ -236,7 +231,7 @@ const useNote = ({ sessionId, loadList, socket }: NoteHookOptions) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError, socket]
+        [refresh, socket]
     );
 
     useEffect(() => {

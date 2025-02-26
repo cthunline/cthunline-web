@@ -3,7 +3,7 @@ import { ActionIcon, Box, Group, Stack, type StackProps } from '@mantine/core';
 import { FiPlusCircle } from 'react-icons/fi';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import Textarea from '../../../../common/Textarea.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import { storyFields } from '../fields.js';
@@ -16,7 +16,7 @@ interface StoryProps extends Pick<StackProps, 'flex'> {
 }
 
 const Story = ({ index, story, readonly, onChange }: StoryProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack gap="1rem">
             <FieldLayout<SeventhSeaStory>

@@ -5,7 +5,7 @@ import type {
 import { Group, Stack, type StackProps } from '@mantine/core';
 import { GiDarkSquad } from 'react-icons/gi';
 
-import { useApp } from '../../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../../stores/locale.js';
 import TextInput from '../../../../../common/TextInput.js';
 import Textarea from '../../../../../common/Textarea.js';
 import SectionTitle from '../../../generic/sectionTitle/SectionTitle.js';
@@ -17,7 +17,7 @@ interface HoldingProps extends Omit<StackProps, 'onChange'> {
 }
 
 const Holding = ({ readonly, character, onChange, ...props }: HoldingProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onHoldingValueChange = (
         data: Partial<ApocalypseWorldCharacterHardHolderHolding['holdingStats']>

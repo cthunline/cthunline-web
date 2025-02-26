@@ -3,8 +3,8 @@ import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { FiPlusCircle } from 'react-icons/fi';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import SpellList from './SpellList.js';
 import { defaultSpell, spellLevelFields } from './spellcasting.data.js';
@@ -24,8 +24,7 @@ const SpellLevel = ({
     isDelete,
     onDelete
 }: SpellLevelProps) => {
-    const { T } = useApp();
-
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%" gap="1rem">
             <Group gap="1rem">

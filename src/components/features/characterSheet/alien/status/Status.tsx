@@ -2,7 +2,7 @@ import type { AlienConditions, AlienStatus } from '@cthunline/games';
 import { Group, Stack } from '@mantine/core';
 import { GiRelationshipBounds } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import {
@@ -19,7 +19,7 @@ type StatusProps = {
 };
 
 const Status = ({ status, flex, readonly, onChange }: StatusProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack flex={flex}>
             <SectionTitle

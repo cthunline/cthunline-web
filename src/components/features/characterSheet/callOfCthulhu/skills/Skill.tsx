@@ -2,8 +2,8 @@ import type { CoCSkill } from '@cthunline/games';
 import { ActionIcon, Box, Checkbox, Group } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import { controlSkill } from '../cocSheet.helper.js';
 import { skillKeys } from './skills.data.js';
@@ -17,7 +17,7 @@ interface SkillProps {
 }
 
 const Skill = ({ index, data, readonly, onChange, onDelete }: SkillProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     return (
         <Group w="100%" gap="0.5rem">

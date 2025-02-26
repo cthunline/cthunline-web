@@ -5,7 +5,7 @@ import type {
 import { Group, Stack, type StackProps } from '@mantine/core';
 import { GiCultist } from 'react-icons/gi';
 
-import { useApp } from '../../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../../stores/locale.js';
 import TextInput from '../../../../../common/TextInput.js';
 import Textarea from '../../../../../common/Textarea.js';
 import SectionTitle from '../../../generic/sectionTitle/SectionTitle.js';
@@ -22,7 +22,7 @@ const Followers = ({
     onChange,
     ...props
 }: FollowersProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onFollowersChange = (
         data: Partial<ApocalypseWorldCharacterHocusFollowers>

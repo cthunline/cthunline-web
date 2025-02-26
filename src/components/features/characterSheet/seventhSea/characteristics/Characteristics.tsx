@@ -1,7 +1,7 @@
 import { ActionIcon, Box, Group, Radio, Stack } from '@mantine/core';
 import { MdClose } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 
 import './Characteristics.css';
 
@@ -20,7 +20,7 @@ const Characteristics = <DataType extends Record<string, unknown>>({
     readonly,
     onChange
 }: CharacteristicsProps<DataType>) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const translations = Object.fromEntries(
         Object.keys(data).map((key: string) => [key, T(`${textKey}.${key}`)])

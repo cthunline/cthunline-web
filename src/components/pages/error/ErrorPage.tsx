@@ -1,7 +1,6 @@
 import { Stack, Title } from '@mantine/core';
 import { GiWizardFace } from 'react-icons/gi';
-
-import { useApp } from '../../../contexts/App.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 
 type ErrorType = 'notFound' | 'forbidden';
 
@@ -10,7 +9,7 @@ interface ErrorProps {
 }
 
 const ErrorPage = ({ type }: ErrorProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const errors = {
         notFound: {

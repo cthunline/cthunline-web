@@ -6,8 +6,10 @@ import { MdLogin } from 'react-icons/md';
 import { Navigate } from 'react-router';
 import z from 'zod';
 
-import { useApp } from '../../../contexts/App.js';
 import { toast } from '../../../services/toast.js';
+import { useAuthStore } from '../../../stores/auth.js';
+import { useConfigurationStore } from '../../../stores/configuration.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import ContentBox from '../../common/ContentBox.js';
 import Form from '../../common/Form.js';
 import Link from '../../common/Link.js';
@@ -20,7 +22,12 @@ const loginFormSchema = z.object({
 type LoginFormData = z.infer<typeof loginFormSchema>;
 
 const Login = () => {
-    const { configuration, T, isLoggedIn, login } = useApp();
+    const configuration = useConfigurationStore(
+        (configuration) => configuration
+    );
+    const isLoggedIn = useAuthStore(({ isLoggedIn }) => isLoggedIn);
+    const login = useAuthStore(({ login }) => login);
+    const T = useLocaleStore(({ T }) => T);
 
     const { onSubmit: handleSubmit, getInputProps } = useForm<LoginFormData>({
         validate: zodResolver(loginFormSchema),
@@ -66,7 +73,7 @@ const Login = () => {
                         <Button type="submit" leftSection={<MdLogin />}>
                             {T('action.login')}
                         </Button>
-                        {configuration?.registrationEnabled ? (
+                        {configuration.registrationEnabled ? (
                             <Link to="/register">{T('action.register')}</Link>
                         ) : null}
                     </Stack>

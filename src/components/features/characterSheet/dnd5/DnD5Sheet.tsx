@@ -29,7 +29,7 @@ import {
     GiSwordman
 } from 'react-icons/gi';
 
-import { useApp } from '../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../stores/locale.js';
 import type {
     CharacterData,
     CharacterSheetStatus
@@ -97,7 +97,7 @@ const DnD5Sheet = ({
     portrait,
     onPortraitChange
 }: DnD5SheetProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [characterData, setCharacterData] = useState<DnD5Character>(data);
     const [tabValue, setTabValue] = useState<string>('biographyAndStory');

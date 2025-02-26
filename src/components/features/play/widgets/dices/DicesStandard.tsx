@@ -16,8 +16,8 @@ import {
     GiDiceTwentyFacesTwenty
 } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { diceTypes, diceValues } from '../../../../../services/dice.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import type {
     DiceAggregatedRolls,
     DiceRequestBody,
@@ -68,7 +68,7 @@ type UpdateRollsOptions =
       };
 
 const DicesStandard = ({ isMaster, onRoll }: DicesStandardProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [isPrivate, setIsPrivate] = useState<boolean>(false);
     const [rolls, updateRolls] = useReducer(

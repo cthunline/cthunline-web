@@ -5,11 +5,11 @@ import type {
 import { Stack } from '@mantine/core';
 import { GiSwissArmyKnife } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import AddTrappingRow from './AddTrappingRow.js';
 import TrappingRow from './TrappingRow.js';
@@ -21,7 +21,7 @@ interface TrappingsProps {
 }
 
 const Trappings = ({ readonly, character, onChange }: TrappingsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onTrappingChange = (
         index: number,

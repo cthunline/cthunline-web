@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useApp } from '../../contexts/App.js';
+import { handleApiError } from '../../services/api.js';
 import {
     createSession as createSessionRequest,
     deleteSession as deleteSessionRequest,
@@ -40,8 +40,6 @@ interface DeleteSessionOptions {
 }
 
 const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
-    const { handleApiError } = useApp();
-
     const [sessionList, setSessionList] = useState<Session[]>([]);
     const [session, setSession] = useState<Session>();
 
@@ -51,18 +49,15 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
         } catch (err: unknown) {
             throw handleApiError(err);
         }
-    }, [handleApiError]);
+    }, []);
 
-    const getSession = useCallback(
-        async (sessId: number): Promise<Session> => {
-            try {
-                return await getSessionRequest(sessId);
-            } catch (err: unknown) {
-                throw handleApiError(err);
-            }
-        },
-        [handleApiError]
-    );
+    const getSession = useCallback(async (sessId: number): Promise<Session> => {
+        try {
+            return await getSessionRequest(sessId);
+        } catch (err: unknown) {
+            throw handleApiError(err);
+        }
+    }, []);
 
     const refreshSession = useCallback(
         async (sessId: number) => {
@@ -107,7 +102,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh]
     );
 
     const editSession = useCallback(
@@ -130,7 +125,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [handleApiError, refresh]
+        [refresh]
     );
 
     const deleteSession = useCallback(
@@ -151,7 +146,7 @@ const useSession = ({ loadList, sessionId }: SessionHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh]
     );
 
     useEffect(() => {

@@ -6,7 +6,7 @@ import { MdDraw, MdLogout, MdOutlineContactPage } from 'react-icons/md';
 import { TbEyeEdit } from 'react-icons/tb';
 
 import { useMemo } from 'react';
-import { useApp } from '../../../contexts/App.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import type { WidgetType, WidgetVisibility } from '../../../types/index.js';
 
 interface PlayMenuItemData {
@@ -42,7 +42,7 @@ const PlayMenuItem = ({
     onMouseEnter,
     onMouseLeave
 }: PlayMenuItemProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Tooltip label={T(textKey)} position="right">
             <ActionIcon

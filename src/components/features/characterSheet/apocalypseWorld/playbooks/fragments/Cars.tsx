@@ -5,7 +5,7 @@ import type {
 import { Group, Stack, type StackProps } from '@mantine/core';
 import { GiDarkSquad } from 'react-icons/gi';
 
-import { useApp } from '../../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../../stores/locale.js';
 import TextInput from '../../../../../common/TextInput.js';
 import Textarea from '../../../../../common/Textarea.js';
 import SectionTitle from '../../../generic/sectionTitle/SectionTitle.js';
@@ -27,7 +27,7 @@ interface CarProps extends Omit<StackProps, 'onChange'> {
 }
 
 const Car = ({ readonly, title, car, onChange, ...props }: CarProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onCarValueChange = (
         data: Partial<ApocalypseWorldCharacterDriverCar>
@@ -157,7 +157,7 @@ interface CarsProps extends Omit<StackProps, 'onChange'> {
 }
 
 const Cars = ({ readonly, character, onChange, ...props }: CarsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const characterCars = character.driver.cars;
     const cars = [

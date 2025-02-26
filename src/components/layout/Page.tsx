@@ -2,7 +2,7 @@ import { Stack } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router';
 
-import { useApp } from '../../contexts/App.js';
+import { useAuthStore } from '../../stores/auth.js';
 import { pages } from '../router.data.js';
 import Nav from './Header.js';
 
@@ -11,7 +11,7 @@ interface PageProps {
 }
 
 const Page = ({ children }: PageProps) => {
-    const { isLoggedIn } = useApp();
+    const isLoggedIn = useAuthStore(({ isLoggedIn }) => isLoggedIn);
     const location = useLocation();
 
     const [showNav, setShowNav] = useState<boolean>(isLoggedIn);

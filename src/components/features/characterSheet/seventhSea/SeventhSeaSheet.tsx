@@ -26,7 +26,7 @@ import {
     GiSkills
 } from 'react-icons/gi';
 
-import { useApp } from '../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../stores/locale.js';
 import type {
     CharacterData,
     CharacterSheetStatus
@@ -72,7 +72,7 @@ const SeventhSeaSheet = ({
     portrait,
     onPortraitChange
 }: SeventhSeaSheetProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [characterData, setCharacterData] =
         useState<SeventhSeaCharacter>(data);

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useApp } from '../../contexts/App.js';
+import { handleApiError } from '../../services/api.js';
 import {
     createDirectory as createDirectoryRequest,
     deleteDirectory as deleteDirectoryRequest,
@@ -8,6 +8,7 @@ import {
     getDirectories as getDirectoriesRequest
 } from '../../services/requests/directory.js';
 import { toast } from '../../services/toast.js';
+import { useAuthStore } from '../../stores/auth.js';
 import type {
     Directory,
     DirectoryCreateBody,
@@ -38,7 +39,7 @@ interface DeleteOptions {
 }
 
 const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
-    const { user, handleApiError } = useApp();
+    const user = useAuthStore(({ user }) => user);
 
     const [directoryList, setDirectoryList] = useState<Directory[]>([]);
 
@@ -49,10 +50,10 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
         } catch (err: unknown) {
             throw handleApiError(err);
         }
-    }, [handleApiError]);
+    }, []);
 
     const refreshDirectoryList = useCallback(async () => {
-        if (user?.id) {
+        if (user.id) {
             const directories = await getDirectories();
             setDirectoryList(directories);
         }
@@ -77,7 +78,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [handleApiError, refreshDirectoryList, loadList]
+        [refreshDirectoryList, loadList]
     );
 
     const editDirectory = useCallback(
@@ -100,7 +101,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [handleApiError, refreshDirectoryList, loadList]
+        [refreshDirectoryList, loadList]
     );
 
     const deleteDirectory = useCallback(
@@ -121,7 +122,7 @@ const useDirectory = ({ loadList }: DirectoryHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [loadList, refreshDirectoryList, handleApiError]
+        [loadList, refreshDirectoryList]
     );
 
     useEffect(() => {

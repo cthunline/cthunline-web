@@ -1,7 +1,7 @@
 import type { CoCCombat } from '@cthunline/games';
 import { Box, Group } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import { combatKeys } from './combat.data.js';
 
@@ -10,7 +10,7 @@ interface CombatProps {
 }
 
 const Combat = ({ combat }: CombatProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     return (
         <Group w="100%" gap="1rem">

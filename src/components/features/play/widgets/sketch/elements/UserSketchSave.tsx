@@ -6,7 +6,7 @@ import { FiPlusCircle } from 'react-icons/fi';
 import { MdSaveAs } from 'react-icons/md';
 import z from 'zod';
 
-import { useApp } from '../../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../../stores/locale.js';
 import type {
     Sketch,
     SketchCreateBody,
@@ -35,7 +35,7 @@ const UserSketchSave = ({
     onCreate,
     onOverwrite
 }: UserSketchSaveProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const { onSubmit: handleSubmit, getInputProps } =
         useForm<UserSketchFormData>({

@@ -2,7 +2,7 @@ import type { ApocalypseWorldCharacterHardHolderGang } from '@cthunline/games';
 import { Group, Stack, type StackProps } from '@mantine/core';
 import { GiDarkSquad } from 'react-icons/gi';
 
-import { useApp } from '../../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../../stores/locale.js';
 import TextInput from '../../../../../common/TextInput.js';
 import Textarea from '../../../../../common/Textarea.js';
 import SectionTitle from '../../../generic/sectionTitle/SectionTitle.js';
@@ -23,7 +23,7 @@ const Gang = ({
     onChange,
     ...props
 }: GangProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onGangChange = (data: Partial<GenericGang>) => {
         onChange?.({

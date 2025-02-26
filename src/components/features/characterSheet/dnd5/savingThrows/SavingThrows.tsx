@@ -1,7 +1,7 @@
 import type { DnD5Abilities, DnD5SavingThrows } from '@cthunline/games';
 import { Stack } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import ModifierRow from '../modifierRow/ModifierRow.js';
 
 interface SavingThrowsProps {
@@ -15,7 +15,7 @@ const SavingThrows = ({
     readonly,
     onChange
 }: SavingThrowsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%" gap="1rem">
             {(Object.keys(savingThrows) as (keyof DnD5Abilities)[]).map(

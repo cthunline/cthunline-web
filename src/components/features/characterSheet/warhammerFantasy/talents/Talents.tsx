@@ -5,11 +5,11 @@ import type {
 import { Stack } from '@mantine/core';
 import { GiInspiration } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import AddTalentRow from './AddTalentRow.js';
 import TalentRow from './TalentRow.js';
@@ -21,7 +21,7 @@ interface TalentsProps {
 }
 
 const Talents = ({ readonly, character, onChange }: TalentsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onTalentChange = (index: number, talent: WarhammerFantasyTalent) => {
         onChange({

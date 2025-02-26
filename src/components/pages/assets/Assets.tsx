@@ -5,10 +5,10 @@ import { FaInfo } from 'react-icons/fa6';
 import { HiMusicNote } from 'react-icons/hi';
 import { MdFolder, MdOutlineImage, MdUploadFile } from 'react-icons/md';
 
-import { useApp } from '../../../contexts/App.js';
 import useAsset from '../../../hooks/api/useAsset.js';
 import useDirectory from '../../../hooks/api/useDirectory.js';
 import { toast } from '../../../services/toast.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import ContentBox from '../../common/ContentBox.js';
 import FileExplorer, {
     type FileExplorerItem,
@@ -29,7 +29,8 @@ const createDirModalId = 'create-directory-modal';
 const editDirModalId = 'edit-directory-modal';
 
 const Assets = () => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+
     const { assetList, uploadAssets, deleteAsset } = useAsset({
         loadList: true
     });

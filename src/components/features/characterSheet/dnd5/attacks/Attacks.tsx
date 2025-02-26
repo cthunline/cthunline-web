@@ -2,8 +2,8 @@ import type { DnD5Attack } from '@cthunline/games';
 import { ActionIcon, Box, Group, Stack } from '@mantine/core';
 import { MdOutlineDeleteOutline } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import { attackFields } from './attacks.data.js';
 
@@ -15,7 +15,7 @@ interface AttacksProps {
 }
 
 const Attacks = ({ attacks, readonly, onChange, onDelete }: AttacksProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%" gap="1.5rem">
             {attacks.flatMap((attack, index) => (

@@ -2,7 +2,7 @@ import type { ApocalypseWorldCharacter } from '@cthunline/games';
 import { Stack, Text } from '@mantine/core';
 import { GiCharm } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
 interface SpecialProps {
@@ -10,7 +10,7 @@ interface SpecialProps {
 }
 
 const Special = ({ character }: SpecialProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack gap="1rem" w="100%">
             <SectionTitle

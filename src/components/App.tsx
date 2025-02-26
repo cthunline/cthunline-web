@@ -1,8 +1,11 @@
 import { MantineProvider } from '@mantine/core';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
+import { useEffect } from 'react';
 
-import { AppProvider, useApp } from '../contexts/App.js';
+import { useApp } from '../hooks/useApp.js';
+import { useAuthStore } from '../stores/auth.js';
+import { useConfigurationStore } from '../stores/configuration.js';
 import Router from './Router.js';
 import { mantineTheme } from './theme.js';
 
@@ -15,8 +18,21 @@ import '@szhsin/react-menu/dist/theme-dark.css';
 
 import './App.css';
 
-const AppContent = () => {
+const App = () => {
     const { theme } = useApp();
+
+    const refreshConfiguration = useConfigurationStore(
+        ({ refresh }) => refresh
+    );
+    const checkAuth = useAuthStore(({ checkAuth }) => checkAuth);
+
+    useEffect(() => {
+        (async () => {
+            await refreshConfiguration();
+            await checkAuth();
+        })();
+    }, [refreshConfiguration, checkAuth]);
+
     return (
         <MantineProvider
             theme={mantineTheme}
@@ -30,11 +46,5 @@ const AppContent = () => {
         </MantineProvider>
     );
 };
-
-const App = () => (
-    <AppProvider>
-        <AppContent />
-    </AppProvider>
-);
 
 export default App;

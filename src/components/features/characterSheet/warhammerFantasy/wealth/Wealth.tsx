@@ -6,7 +6,7 @@ import { Box, Group, Stack } from '@mantine/core';
 import { useMemo } from 'react';
 import { GiCash } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import { wealthFields } from '../fields.js';
@@ -19,7 +19,8 @@ export interface WealthProps {
 }
 
 const Wealth = ({ readonly, character, onChange, flex }: WealthProps) => {
-    const { T, TU } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+    const TU = useLocaleStore(({ TU }) => TU);
 
     const [P, S, GC] = useMemo(
         () => [

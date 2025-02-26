@@ -1,8 +1,8 @@
 import type { ApocalypseWorldDetailedListItem } from '@cthunline/games';
 import { Box, Checkbox, Group, Stack } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
 import type { MoveAction } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import Textarea from '../../../../common/Textarea.js';
 import RowInput from '../../generic/row/RowInput.js';
 import RowMenuButton from '../../generic/row/RowMenuButton.js';
@@ -22,7 +22,7 @@ const OtherMoveRow = ({
     onMove,
     onDelete
 }: OtherMoveRowProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%" gap="1rem" align="center">
             <Group w="100%" gap="1rem" align="center">

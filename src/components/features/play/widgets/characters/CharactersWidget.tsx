@@ -2,7 +2,7 @@ import { Box, Group, Stack, Tabs } from '@mantine/core';
 import { useEffect, useMemo, useState } from 'react';
 import { FaUsers } from 'react-icons/fa6';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import type { SessionUser, WidgetType } from '../../../../../types/index.js';
 import CharacterSheet from '../../../characterSheet/CharacterSheet.js';
 import Widget from '../../Widget.js';
@@ -13,7 +13,7 @@ interface CharacterWidgetProps {
 }
 
 const CharactersWidget = ({ users, onClose }: CharacterWidgetProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [sessionUser, setSessionUser] = useState<SessionUser | null>(
         users[0] ?? null

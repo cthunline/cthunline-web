@@ -3,7 +3,7 @@ import { ActionIcon, Box, Group, type GroupProps } from '@mantine/core';
 import { FaMinus, FaPlus } from 'react-icons/fa6';
 import { GiOrbDirection } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
 export interface AdvantageProps extends Omit<GroupProps, 'onChange'> {
@@ -20,7 +20,7 @@ const Advantage = ({
     onChange,
     ...props
 }: AdvantageProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const handleChange = (action: 'increase' | 'decrease') => {
         if (!readonly) {

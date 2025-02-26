@@ -5,7 +5,7 @@ import { zodResolver } from 'mantine-form-zod-resolver';
 import { MdOutlineSave } from 'react-icons/md';
 import z from 'zod';
 
-import { useApp } from '../../../contexts/App.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import type { SessionCreateBody } from '../../../types/index.js';
 import Form from '../../common/Form.js';
 import Select from '../../common/Select.js';
@@ -27,7 +27,7 @@ const sessionFormSchema = z.object({
 type SessionFormData = z.infer<typeof sessionFormSchema>;
 
 const SessionForm = ({ onSubmit }: SessionFormProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const { onSubmit: handleSubmit, getInputProps } = useForm<SessionFormData>({
         validate: zodResolver(sessionFormSchema),

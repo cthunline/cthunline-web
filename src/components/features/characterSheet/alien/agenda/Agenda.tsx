@@ -2,7 +2,7 @@ import type { AlienAgenda } from '@cthunline/games';
 import { Stack } from '@mantine/core';
 import { GiNotebook } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextEditor from '../../../../common/TextEditor.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 
@@ -13,7 +13,7 @@ type AgendaProps = {
 };
 
 const Agenda = ({ readonly, agenda, onChange }: AgendaProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack gap="1rem" w="100%" h="100%">
             <Stack gap="1rem" flex="2 0">

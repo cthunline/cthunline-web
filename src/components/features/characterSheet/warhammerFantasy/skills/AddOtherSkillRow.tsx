@@ -8,7 +8,7 @@ import { ActionIcon, Box, Group } from '@mantine/core';
 import { useMemo, useReducer } from 'react';
 import { FiPlusCircle } from 'react-icons/fi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import Select from '../../../../common/Select.js';
 import TextInput from '../../../../common/TextInput.js';
 
@@ -32,7 +32,7 @@ interface AddOtherSkillRowProps {
 }
 
 const AddOtherSkillRow = ({ character, onCreate }: AddOtherSkillRowProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [otherSkillFormData, updateOtherSkillFormData] = useReducer(
         (

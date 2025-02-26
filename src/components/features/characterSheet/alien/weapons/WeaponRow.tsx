@@ -1,8 +1,8 @@
 import type { AlienWeapon } from '@cthunline/games';
 import { Box, Group } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
 import type { MoveAction } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import RowInput from '../../generic/row/RowInput.js';
 import RowMenuButton from '../../generic/row/RowMenuButton.js';
 
@@ -21,7 +21,7 @@ const WeaponRow = ({
     onMove,
     onDelete
 }: WeaponRowProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Group w="100%" gap="1rem">
             <Box flex="6 0">

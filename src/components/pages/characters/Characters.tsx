@@ -6,8 +6,8 @@ import { HiPlus } from 'react-icons/hi';
 import { MdEdit, MdOutlineDeleteOutline, MdOutlineSend } from 'react-icons/md';
 import { useNavigate } from 'react-router';
 
-import { useApp } from '../../../contexts/App.js';
 import useCharacter from '../../../hooks/api/useCharacter.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import ContentBox from '../../common/ContentBox.js';
 import Select from '../../common/Select.js';
 import TransferForm, { type TransferData } from './TransferForm.js';
@@ -42,7 +42,8 @@ const createCharacterModalId = 'transfer-character-modal';
 const transferCharacterModalId = 'transfer-character-modal';
 
 const Characters = () => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+
     const navigate = useNavigate();
     const {
         characterList,

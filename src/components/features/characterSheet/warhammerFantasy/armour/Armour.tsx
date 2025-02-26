@@ -5,11 +5,11 @@ import type {
 import { Stack } from '@mantine/core';
 import { GiChestArmor } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import AddArmourRow from './AddArmourRow.js';
 import ArmourRow from './ArmourRow.js';
@@ -21,7 +21,7 @@ interface ArmourProps {
 }
 
 const Armour = ({ readonly, character, onChange }: ArmourProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onArmourChange = (index: number, arm: WarhammerFantasyArmour) => {
         onChange({

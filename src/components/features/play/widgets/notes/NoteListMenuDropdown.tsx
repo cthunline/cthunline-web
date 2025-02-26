@@ -6,7 +6,7 @@ import {
     MdOutlineShare
 } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import type { Note } from '../../../../../types/index.js';
 
 export interface NoteListMenuDropdownProps {
@@ -26,8 +26,7 @@ const NoteListMenuDropdown = ({
     onMove,
     onDelete
 }: NoteListMenuDropdownProps) => {
-    const { T } = useApp();
-
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Menu.Dropdown>
             <Menu.Item

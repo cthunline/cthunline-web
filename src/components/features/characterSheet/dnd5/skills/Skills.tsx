@@ -1,7 +1,7 @@
 import type { DnD5Skills } from '@cthunline/games';
 import { Stack } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import ModifierRow from '../modifierRow/ModifierRow.js';
 
 interface SkillsProps {
@@ -11,7 +11,7 @@ interface SkillsProps {
 }
 
 const Skills = ({ skills, readonly, onChange }: SkillsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%" gap="1rem">
             {(Object.keys(skills) as (keyof DnD5Skills)[]).map((skill) => {

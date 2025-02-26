@@ -4,8 +4,10 @@ import { FaRegHandshake } from 'react-icons/fa';
 import { HiPlus } from 'react-icons/hi';
 import { MdCheck } from 'react-icons/md';
 
-import { useApp } from '../../../contexts/App.js';
 import useUser from '../../../hooks/api/useUser.js';
+import { useAuthStore } from '../../../stores/auth.js';
+import { useConfigurationStore } from '../../../stores/configuration.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import ContentBox from '../../common/ContentBox.js';
 import UserForm, { type UserSubmitData } from '../../features/user/UserForm.js';
 import Invitation from './Invitation.js';
@@ -13,7 +15,12 @@ import Invitation from './Invitation.js';
 const createUserModalId = 'create-user-modal';
 
 const Users = () => {
-    const { T, configuration, user } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+    const user = useAuthStore(({ user }) => user);
+    const configuration = useConfigurationStore(
+        (configuration) => configuration
+    );
+
     const { userList, editUser, createUser } = useUser({
         loadList: true,
         listDisabled: true
@@ -57,7 +64,7 @@ const Users = () => {
                     <Table.Tbody>
                         {userList.map(
                             ({ id, name, email, isAdmin, isEnabled }) => {
-                                const itsYou = id === user?.id;
+                                const itsYou = id === user.id;
                                 return (
                                     <Table.Tr key={id}>
                                         <Table.Td>

@@ -1,7 +1,7 @@
 import type { SWD6WoundStatus } from '@cthunline/games';
 import { Box, Checkbox, Group, Stack } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import {
     type WoundStatusField,
     woundStatusFields
@@ -14,8 +14,7 @@ interface WoundStatusProps {
 }
 
 const WoundStatus = ({ woundStatus, readonly, onChange }: WoundStatusProps) => {
-    const { T } = useApp();
-
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%">
             {woundStatusFields.map(

@@ -1,8 +1,8 @@
 import type { SWD6Statistics } from '@cthunline/games';
 import { Box, Checkbox, Group, Stack } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import { type StatisticsField, statisticsFields } from './statistics.data.js';
 
@@ -62,7 +62,7 @@ interface StatisticsProps {
 }
 
 const Statistics = ({ statistics, readonly, onChange }: StatisticsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%">
             {statisticsFields.map(({ key, type }: StatisticsField) => (

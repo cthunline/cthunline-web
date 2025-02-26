@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useApp } from '../../contexts/App.js';
+import { handleApiError } from '../../services/api.js';
 import {
     createUser as createUserRequest,
     editUser as editUserRequest,
@@ -43,8 +43,6 @@ const useUser = ({
     loadList = false,
     listDisabled = false
 }: UserHookOptions = {}) => {
-    const { handleApiError } = useApp();
-
     const [userList, setUserList] = useState<User[]>([]);
 
     const refreshUserList = useCallback(async () => {
@@ -54,7 +52,7 @@ const useUser = ({
         } catch (err: unknown) {
             throw handleApiError(err);
         }
-    }, [listDisabled, handleApiError]);
+    }, [listDisabled]);
 
     const createUser = useCallback(
         async ({
@@ -75,7 +73,7 @@ const useUser = ({
                 throw handleApiError(err);
             }
         },
-        [handleApiError, loadList, refreshUserList]
+        [loadList, refreshUserList]
     );
 
     const editUser = useCallback(
@@ -98,7 +96,7 @@ const useUser = ({
                 throw handleApiError(err);
             }
         },
-        [handleApiError, loadList, refreshUserList]
+        [loadList, refreshUserList]
     );
 
     const registerUser = useCallback(
@@ -113,7 +111,7 @@ const useUser = ({
                 throw handleApiError(err);
             }
         },
-        [handleApiError]
+        []
     );
 
     const generateInvitationCode = useCallback(async (): Promise<string> => {
@@ -123,7 +121,7 @@ const useUser = ({
         } catch (err: unknown) {
             throw handleApiError(err);
         }
-    }, [handleApiError]);
+    }, []);
 
     useEffect(() => {
         if (loadList) {

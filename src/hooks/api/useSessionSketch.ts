@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useApp } from '../../contexts/App.js';
+import { handleApiError } from '../../services/api.js';
 import {
     createSessionSketch,
     deleteSketch,
@@ -41,8 +41,6 @@ type UseSessionSketchOptions = {
 };
 
 const useSessionSketch = ({ sessionId, loadList }: UseSessionSketchOptions) => {
-    const { handleApiError } = useApp();
-
     const [userSketchs, setUserSketchs] = useState<Sketch[]>([]);
 
     const getUserSketchs = useCallback(
@@ -53,7 +51,7 @@ const useSessionSketch = ({ sessionId, loadList }: UseSessionSketchOptions) => {
                 throw handleApiError(err);
             }
         },
-        [handleApiError]
+        []
     );
 
     const getUserSketch = useCallback(
@@ -64,7 +62,7 @@ const useSessionSketch = ({ sessionId, loadList }: UseSessionSketchOptions) => {
                 throw handleApiError(err);
             }
         },
-        [handleApiError]
+        []
     );
 
     const refresh = useCallback(async () => {
@@ -94,7 +92,7 @@ const useSessionSketch = ({ sessionId, loadList }: UseSessionSketchOptions) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh]
     );
 
     const updateUserSketch = useCallback(
@@ -117,7 +115,7 @@ const useSessionSketch = ({ sessionId, loadList }: UseSessionSketchOptions) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh]
     );
 
     const deleteUserSketch = useCallback(
@@ -138,7 +136,7 @@ const useSessionSketch = ({ sessionId, loadList }: UseSessionSketchOptions) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh]
     );
 
     useEffect(() => {

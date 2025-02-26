@@ -27,6 +27,8 @@ import useSketch, {
 } from '../hooks/sketch/useSketch.js';
 import { createSocketClient } from '../services/socket.js';
 import { toast } from '../services/toast.js';
+import { useAuthStore } from '../stores/auth.js';
+import { useLocaleStore } from '../stores/locale.js';
 import type {
     DiceAlienResponseBody,
     DiceResponseBody,
@@ -34,7 +36,6 @@ import type {
     User
 } from '../types/index.js';
 import type { SocketClient } from '../types/socket.js';
-import { useApp } from './App.js';
 
 interface PlayProviderProps {
     children: React.ReactElement | React.ReactElement[];
@@ -91,7 +92,10 @@ export const PlayProvider = ({
         defaultPlayData.socket
     );
 
-    const { T, t, user } = useApp();
+    const user = useAuthStore(({ user }) => user);
+    const t = useLocaleStore(({ t }) => t);
+    const T = useLocaleStore(({ T }) => T);
+
     const { session } = useSession({ sessionId });
     const { logs, pushLog } = useLogs();
     const { users, setUsers, updateUserCharacter, characterUpdate } =

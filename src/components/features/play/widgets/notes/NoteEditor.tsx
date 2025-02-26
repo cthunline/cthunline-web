@@ -1,7 +1,7 @@
 import { ActionIcon, Group, Stack, TextInput } from '@mantine/core';
 import { MdArrowBack } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useAuthStore } from '../../../../../stores/auth.js';
 import type { CharacterSheetStatus, Note } from '../../../../../types/index.js';
 import TextEditor from '../../../../common/TextEditor.js';
 import Status from '../../../characterSheet/Status.js';
@@ -14,8 +14,8 @@ interface NoteEditorProps {
 }
 
 const NoteEditor = ({ status, note, onEdit, onBack }: NoteEditorProps) => {
-    const { userId } = useApp();
-    const isOwnedByUser = note.userId === userId;
+    const user = useAuthStore(({ user }) => user);
+    const isOwnedByUser = note.userId === user.id;
     return (
         <Stack gap="0.5rem" w="100%" h="100%">
             <Group justify="center" w="100%" gap="0.5rem">

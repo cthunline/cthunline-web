@@ -4,7 +4,7 @@ import { zodResolver } from 'mantine-form-zod-resolver';
 import { MdOutlineSave } from 'react-icons/md';
 import z from 'zod';
 
-import { useApp } from '../../../contexts/App.js';
+import { useLocaleStore } from '../../../stores/locale.js';
 import Form from '../../common/Form.js';
 
 const directoryFormSchema = z.object({
@@ -22,7 +22,7 @@ const DirectoryForm = ({
     name: initialName = '',
     onSubmit
 }: DirectoryFormProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const { onSubmit: handleSubmit, getInputProps } =
         useForm<DirectoryFormData>({

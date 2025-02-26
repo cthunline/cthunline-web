@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { useApp } from '../../contexts/App.js';
+import { handleApiError } from '../../services/api.js';
 import {
     createCharacter as createCharacterRequest,
     deleteCharacter as deleteCharacterRequest,
@@ -12,6 +12,7 @@ import {
     uploadPortrait as uploadPortraitRequest
 } from '../../services/requests/character.js';
 import { toast } from '../../services/toast.js';
+import { useAuthStore } from '../../stores/auth.js';
 import type {
     Character,
     CharacterCreateBody,
@@ -59,7 +60,7 @@ interface PortraitUploadOptions {
 }
 
 const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
-    const { user, handleApiError } = useApp();
+    const user = useAuthStore(({ user }) => user);
 
     const [characterList, setCharacterList] = useState<Character[]>([]);
     const [character, setCharacter] = useState<Character>();
@@ -73,7 +74,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [handleApiError]
+        []
     );
 
     const getCharacter = useCallback(
@@ -84,7 +85,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [handleApiError]
+        []
     );
 
     const refreshCharacter = useCallback(
@@ -96,7 +97,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
     );
 
     const refreshCharacterList = useCallback(async () => {
-        if (user?.id) {
+        if (user.id) {
             const chars = await getCharacters(user.id);
             setCharacterList(chars);
         }
@@ -132,7 +133,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh]
     );
 
     const editCharacter = useCallback(
@@ -155,7 +156,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh]
     );
 
     const deleteCharacter = useCallback(
@@ -176,7 +177,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh]
     );
 
     const transferCharacter = useCallback(
@@ -198,7 +199,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh]
     );
 
     const uploadPortrait = useCallback(
@@ -226,7 +227,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh]
     );
 
     const deletePortrait = useCallback(
@@ -248,7 +249,7 @@ const useCharacter = ({ loadList, characterId }: CharacterHookOptions = {}) => {
                 throw handleApiError(err);
             }
         },
-        [refresh, handleApiError]
+        [refresh]
     );
 
     useEffect(() => {

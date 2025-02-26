@@ -2,9 +2,9 @@ import { ActionIcon, Box, Loader } from '@mantine/core';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { MdEdit, MdOutlineCheck } from 'react-icons/md';
 
-import { useApp } from '../../../../../contexts/App.js';
 import useCharacter from '../../../../../hooks/api/useCharacter.js';
 import { deepEqual } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import type {
     Character,
     CharacterData,
@@ -24,7 +24,8 @@ const CharacterWidget = ({
     onUpdate,
     onClose
 }: CharacterWidgetProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
+
     const { getCharacter, editCharacter, uploadPortrait, deletePortrait } =
         useCharacter();
 

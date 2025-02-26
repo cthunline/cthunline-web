@@ -1,8 +1,8 @@
 import type { DnD5Spellcasting } from '@cthunline/games';
 import { Box, Group, Stack } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import Cantrips from './Cantrips.js';
 import SpellLevel from './SpellLevel.js';
@@ -19,7 +19,7 @@ const Spellcasting = ({
     readonly,
     onChange
 }: SpellcastingProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const maxLevel = Math.max(
         0,

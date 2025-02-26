@@ -10,7 +10,7 @@ import {
 import { useMemo, useState } from 'react';
 import { GiDiceSixFacesSix } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import type { DiceAlienRequestBody } from '../../../../../types/index.js';
 
 type DicesAlienProps = {
@@ -30,7 +30,7 @@ type AlienDiceType = {
 };
 
 const DicesAlien = ({ isMaster, onRoll }: DicesAlienProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const [isPrivate, setIsPrivate] = useState<boolean>(false);
     const [roll, setRoll] = useState<DiceAlienRequestBody>(defaultRoll);

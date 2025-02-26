@@ -2,11 +2,11 @@ import { Stack } from '@mantine/core';
 import { useEffect, useMemo, useState } from 'react';
 import { HiMusicNote } from 'react-icons/hi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { useAudioMaster } from '../../../../../contexts/AudioMaster.js';
 import useAsset from '../../../../../hooks/api/useAsset.js';
 import useDirectory from '../../../../../hooks/api/useDirectory.js';
 import { shuffleArray } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import type { WidgetType } from '../../../../../types/index.js';
 import AudioPlayer from '../../../../common/AudioPlayer.js';
 import FileExplorer, {
@@ -19,9 +19,10 @@ interface JukeboxWidgetProps {
 }
 
 const JukeboxWidget = ({ onClose }: JukeboxWidgetProps) => {
+    const T = useLocaleStore(({ T }) => T);
+
     const { setPlaylist, selectTrack, track, options } = useAudioMaster();
 
-    const { T } = useApp();
     const { assetList } = useAsset({
         loadList: true,
         type: 'audio'

@@ -5,11 +5,11 @@ import type {
 import { Stack } from '@mantine/core';
 import { GiJuggler } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import {
     type MoveAction,
     arrayMoveUpDown
 } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import AddOtherSkillRow from './AddOtherSkillRow.js';
 import SkillRow from './SkillRow.js';
@@ -23,7 +23,7 @@ interface OtherSkillsProps {
 }
 
 const OtherSkills = ({ readonly, character, onChange }: OtherSkillsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onOtherSkillCareerLevelChange = (
         index: number,

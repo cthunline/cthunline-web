@@ -5,12 +5,12 @@ import type {
 import { Stack } from '@mantine/core';
 import { GiDiabloSkull, GiSpellBook } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import {
     type MoveAction,
     arrayMoveUpDown,
     onlyNumbers
 } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import AddSpellRow from './AddSpellRow.js';
@@ -25,7 +25,7 @@ interface SpellsProps {
 }
 
 const Spells = ({ readonly, character, onChange }: SpellsProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onSpellChange = (index: number, spell: WarhammerFantasySpell) => {
         onChange({

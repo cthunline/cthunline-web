@@ -2,7 +2,7 @@ import type { ApocalypseWorldCharacter } from '@cthunline/games';
 import { Checkbox, Group, Stack } from '@mantine/core';
 import { GiHealthNormal } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
 import HarmPie from './HarmPie.js';
 
@@ -28,7 +28,7 @@ const harmStatus: HarmStatus[] = [
 ];
 
 const Harm = ({ readonly, character, onChange }: HarmProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const onStatusChange = (status: HarmStatus, checked: boolean) => {
         if (!readonly) {

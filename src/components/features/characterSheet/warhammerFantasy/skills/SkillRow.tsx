@@ -5,8 +5,8 @@ import type {
 } from '@cthunline/games';
 import { Box, Group } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
 import type { MoveAction } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import RowInput from '../../generic/row/RowInput.js';
 import RowMenuButton from '../../generic/row/RowMenuButton.js';
 import CareerLevelButton from '../generic/CareerLevelButton.js';
@@ -45,7 +45,7 @@ const SkillRow = ({
     onCareerLevelChange,
     onAdvancesChange
 }: SkillRowProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     const isOther = isOtherSkill(skill);
     return (
         <Group w="100%">

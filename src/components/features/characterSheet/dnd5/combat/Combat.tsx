@@ -5,8 +5,8 @@ import type {
 } from '@cthunline/games';
 import { Box, Group, Slider, Stack } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { onlyNumbers } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import TextInput from '../../../../common/TextInput.js';
 import { displayModifier } from '../dnd5Sheet.helper.js';
 
@@ -29,7 +29,7 @@ const hitPointKeys: (keyof DnD5HitPoints)[] = [
 ];
 
 const Combat = ({ combat, readonly, onChange }: CombatProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
     return (
         <Stack w="100%" gap="1.5rem">
             <Group w="100%" gap="1rem">

@@ -7,8 +7,8 @@ import { Group, Stack } from '@mantine/core';
 import { useMemo } from 'react';
 import { GiIdCard } from 'react-icons/gi';
 
-import { useApp } from '../../../../../contexts/App.js';
 import { sortObjectsBy } from '../../../../../services/tools.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import Select from '../../../../common/Select.js';
 import TextInput from '../../../../common/TextInput.js';
 import Textarea from '../../../../common/Textarea.js';
@@ -21,7 +21,7 @@ interface BioProps {
 }
 
 const Bio = ({ readonly, character, onChange }: BioProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     const playbookOptions = useMemo(() => {
         const options = Object.keys(apocalypseWorld.data.playbooks).map(

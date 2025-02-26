@@ -1,7 +1,7 @@
 import type { CoCStatus } from '@cthunline/games';
 import { Box, Checkbox, Group } from '@mantine/core';
 
-import { useApp } from '../../../../../contexts/App.js';
+import { useLocaleStore } from '../../../../../stores/locale.js';
 import { fields } from './status.data.js';
 
 interface StatusProps {
@@ -11,7 +11,7 @@ interface StatusProps {
 }
 
 const Status = ({ readonly, status, onChange }: StatusProps) => {
-    const { T } = useApp();
+    const T = useLocaleStore(({ T }) => T);
 
     return (
         <Group w="100%" gap="1rem">
