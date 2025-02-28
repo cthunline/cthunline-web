@@ -4,6 +4,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { FiUsers } from 'react-icons/fi';
 import { MdInfoOutline, MdLogout, MdOutlineSettings } from 'react-icons/md';
 import { useNavigate } from 'react-router';
+import { useShallow } from 'zustand/react/shallow';
 
 import { useAuthStore } from '../../stores/auth.js';
 import { useLocaleStore } from '../../stores/locale.js';
@@ -43,8 +44,12 @@ const MenuItem = ({ icon, route, textKey }: HeaderMenuItem) => {
 
 const HeaderMenu = () => {
     const T = useLocaleStore(({ T }) => T);
-    const user = useAuthStore(({ user }) => user);
-    const logout = useAuthStore(({ logout }) => logout);
+    const { user, logout } = useAuthStore(
+        useShallow(({ user, logout }) => ({
+            user,
+            logout
+        }))
+    );
 
     const onInfoModalOpen = () => {
         modals.open({

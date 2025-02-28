@@ -5,6 +5,7 @@ import type {
 import { Box, Group, Stack } from '@mantine/core';
 import { useMemo } from 'react';
 import { GiCash } from 'react-icons/gi';
+import { useShallow } from 'zustand/react/shallow';
 
 import { useLocaleStore } from '../../../../../stores/locale.js';
 import FieldLayout from '../../generic/fieldLayout/FieldLayout.js';
@@ -19,8 +20,7 @@ export interface WealthProps {
 }
 
 const Wealth = ({ readonly, character, onChange, flex }: WealthProps) => {
-    const T = useLocaleStore(({ T }) => T);
-    const TU = useLocaleStore(({ TU }) => TU);
+    const { T, TU } = useLocaleStore(useShallow(({ T, TU }) => ({ T, TU })));
 
     const [P, S, GC] = useMemo(
         () => [

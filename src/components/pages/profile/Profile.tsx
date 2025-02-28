@@ -3,6 +3,7 @@ import { useForm } from '@mantine/form';
 import { zodResolver } from 'mantine-form-zod-resolver';
 import { MdOutlineSave } from 'react-icons/md';
 import z from 'zod';
+import { useShallow } from 'zustand/react/shallow';
 
 import useUser from '../../../hooks/api/useUser.js';
 import { useAuthStore } from '../../../stores/auth.js';
@@ -59,8 +60,12 @@ const languageOptions: SelectOption<string>[] = Object.entries(languages).map(
 
 const Profile = () => {
     const T = useLocaleStore(({ T }) => T);
-    const user = useAuthStore(({ user }) => user);
-    const refreshUser = useAuthStore(({ refreshUser }) => refreshUser);
+    const { user, refreshUser } = useAuthStore(
+        useShallow(({ user, refreshUser }) => ({
+            user,
+            refreshUser
+        }))
+    );
 
     const { editUser } = useUser();
 

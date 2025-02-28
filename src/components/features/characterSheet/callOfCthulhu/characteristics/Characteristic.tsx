@@ -1,5 +1,6 @@
 import type { CoCCharacteristic } from '@cthunline/games';
 import { Box, Group, Tooltip } from '@mantine/core';
+import { useShallow } from 'zustand/react/shallow';
 
 import { onlyNumbers } from '../../../../../services/tools.js';
 import { useLocaleStore } from '../../../../../stores/locale.js';
@@ -22,8 +23,7 @@ const Characteristic = ({
     readonly,
     onChange
 }: CharacteristicProps) => {
-    const T = useLocaleStore(({ T }) => T);
-    const TU = useLocaleStore(({ TU }) => TU);
+    const { T, TU } = useLocaleStore(useShallow(({ T, TU }) => ({ T, TU })));
     return (
         <Group w="100%" gap="0.25rem">
             <Box flex="1 0">

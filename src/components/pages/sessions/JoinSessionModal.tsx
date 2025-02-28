@@ -3,6 +3,7 @@ import { Alert, Button, InputLabel, Stack } from '@mantine/core';
 import { useMemo } from 'react';
 import { FaInfo } from 'react-icons/fa6';
 import { HiPlus } from 'react-icons/hi';
+import { useShallow } from 'zustand/react/shallow';
 
 import { useLocaleStore } from '../../../stores/locale.js';
 import type { Character, SelectOption } from '../../../types/index.js';
@@ -52,8 +53,7 @@ const JoinSessionModal = ({
     onSelect,
     onCreate
 }: JoinSessionModalProps) => {
-    const t = useLocaleStore(({ t }) => t);
-    const T = useLocaleStore(({ T }) => T);
+    const { t, T } = useLocaleStore(useShallow(({ t, T }) => ({ t, T })));
 
     const gameCharacters = useMemo(
         () =>

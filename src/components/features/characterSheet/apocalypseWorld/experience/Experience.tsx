@@ -16,6 +16,7 @@ import {
 import { useMemo } from 'react';
 import { GiUpgrade } from 'react-icons/gi';
 import { MdClose } from 'react-icons/md';
+import { useShallow } from 'zustand/react/shallow';
 
 import { useLocaleStore } from '../../../../../stores/locale.js';
 import SectionTitle from '../../generic/sectionTitle/SectionTitle.js';
@@ -40,8 +41,7 @@ const ImprovementList = ({
     improvementValues,
     onChange
 }: ImprovementListProps) => {
-    const t = useLocaleStore(({ t }) => t);
-    const T = useLocaleStore(({ T }) => T);
+    const { t, T } = useLocaleStore(useShallow(({ t, T }) => ({ t, T })));
     const improvementNamesWithCounts: ImprovementNameWithCountData[] =
         useMemo(() => {
             const namesWithCount: ImprovementNameWithCountData[] = [];

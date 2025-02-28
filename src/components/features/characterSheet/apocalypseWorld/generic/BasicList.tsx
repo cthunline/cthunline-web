@@ -1,6 +1,8 @@
 import type { ApocalypseWorldBasicListItem } from '@cthunline/games';
 import { Box, Checkbox, Group, Stack, Text } from '@mantine/core';
 import { useMemo } from 'react';
+import { useShallow } from 'zustand/react/shallow';
+
 import { useLocaleStore } from '../../../../../stores/locale.js';
 
 type BasicListRowProps = {
@@ -18,8 +20,7 @@ const BasicListRow = ({
     item,
     onChange
 }: BasicListRowProps) => {
-    const t = useLocaleStore(({ t }) => t);
-    const T = useLocaleStore(({ T }) => T);
+    const { t, T } = useLocaleStore(useShallow(({ t, T }) => ({ t, T })));
     return (
         <Group w="100%" gap="1rem" align="start">
             <Checkbox

@@ -5,6 +5,7 @@ import { GiD10 } from 'react-icons/gi';
 import { MdLogin } from 'react-icons/md';
 import { Navigate } from 'react-router';
 import z from 'zod';
+import { useShallow } from 'zustand/react/shallow';
 
 import { toast } from '../../../services/toast.js';
 import { useAuthStore } from '../../../stores/auth.js';
@@ -25,9 +26,13 @@ const Login = () => {
     const configuration = useConfigurationStore(
         (configuration) => configuration
     );
-    const isLoggedIn = useAuthStore(({ isLoggedIn }) => isLoggedIn);
-    const login = useAuthStore(({ login }) => login);
     const T = useLocaleStore(({ T }) => T);
+    const { isLoggedIn, login } = useAuthStore(
+        useShallow(({ isLoggedIn, login }) => ({
+            isLoggedIn,
+            login
+        }))
+    );
 
     const { onSubmit: handleSubmit, getInputProps } = useForm<LoginFormData>({
         validate: zodResolver(loginFormSchema),

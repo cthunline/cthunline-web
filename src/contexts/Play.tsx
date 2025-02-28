@@ -7,6 +7,7 @@ import {
     useRef,
     useState
 } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 
 import useSession from '../hooks/api/useSession.js';
 import useDice, {
@@ -93,8 +94,7 @@ export const PlayProvider = ({
     );
 
     const user = useAuthStore(({ user }) => user);
-    const t = useLocaleStore(({ t }) => t);
-    const T = useLocaleStore(({ T }) => T);
+    const { t, T } = useLocaleStore(useShallow(({ t, T }) => ({ t, T })));
 
     const { session } = useSession({ sessionId });
     const { logs, pushLog } = useLogs();

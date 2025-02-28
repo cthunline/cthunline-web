@@ -1,19 +1,24 @@
 import { useEffect, useMemo } from 'react';
+import { useShallow } from 'zustand/react/shallow';
 
 import { useAuthStore } from '../stores/auth.js';
 import { useConfigurationStore } from '../stores/configuration.js';
 import { useLocaleStore } from '../stores/locale.js';
 
 export const useApp = () => {
-    const isLoggedIn = useAuthStore(({ isLoggedIn }) => isLoggedIn);
-    const userTheme = useAuthStore(({ user: { theme } }) => theme);
-    const userLocale = useAuthStore(({ user: { locale } }) => locale);
     const changeLocale = useLocaleStore(({ changeLocale }) => changeLocale);
-    const defaultTheme = useConfigurationStore(
-        ({ defaultTheme }) => defaultTheme
+    const { isLoggedIn, userTheme, userLocale } = useAuthStore(
+        useShallow(({ isLoggedIn, user: { theme, locale } }) => ({
+            isLoggedIn,
+            userTheme: theme,
+            userLocale: locale
+        }))
     );
-    const defaultLocale = useConfigurationStore(
-        ({ defaultLocale }) => defaultLocale
+    const { defaultTheme, defaultLocale } = useConfigurationStore(
+        useShallow(({ defaultTheme, defaultLocale }) => ({
+            defaultTheme,
+            defaultLocale
+        }))
     );
 
     const theme = useMemo(

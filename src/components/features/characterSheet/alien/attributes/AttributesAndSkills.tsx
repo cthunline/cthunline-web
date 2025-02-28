@@ -2,6 +2,7 @@ import type { AlienAttribute, AlienAttributes } from '@cthunline/games';
 import { Group, Stack, Text } from '@mantine/core';
 import { useMemo } from 'react';
 import { GiSkills } from 'react-icons/gi';
+import { useShallow } from 'zustand/react/shallow';
 
 import { onlyNumbers } from '../../../../../services/tools.js';
 import { useLocaleStore } from '../../../../../stores/locale.js';
@@ -61,8 +62,7 @@ const AttributesAndSkills = ({
     readonly,
     onChange
 }: AttributesAndSkillsProps) => {
-    const T = useLocaleStore(({ T }) => T);
-    const TU = useLocaleStore(({ TU }) => TU);
+    const { T, TU } = useLocaleStore(useShallow(({ T, TU }) => ({ T, TU })));
 
     const attributesSkillsData: AttributesSkillsData = useMemo(
         () => [
