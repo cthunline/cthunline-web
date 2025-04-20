@@ -103,14 +103,6 @@ const PlayMenu = ({
                 adminOnly: true
             },
             {
-                id: 'see',
-                icon: <TbEyeEdit size="2.25rem" />,
-                textKey: 'page.play.sketch.see',
-                onMouseDown: () => onWidgetsVisibilityChange('hidden'),
-                onMouseUp: () => onWidgetsVisibilityChange('visible'),
-                onMouseLeave: () => onWidgetsVisibilityChange('visible')
-            },
-            {
                 id: 'jukebox',
                 icon: <HiMusicNote size="2.25rem" />,
                 textKey: 'entity.jukebox',
@@ -122,6 +114,14 @@ const PlayMenu = ({
                 icon: <CgNotes size="2.25rem" />,
                 textKey: 'entity.notes',
                 widget: 'notes'
+            },
+            {
+                id: 'see',
+                icon: <TbEyeEdit size="2.25rem" />,
+                textKey: 'page.play.sketch.see',
+                onMouseDown: () => onWidgetsVisibilityChange('hidden'),
+                onMouseUp: () => onWidgetsVisibilityChange('visible'),
+                onMouseLeave: () => onWidgetsVisibilityChange('visible')
             },
             {
                 id: 'exit',
